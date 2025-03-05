@@ -15,11 +15,13 @@ import Image from "next/image";
 import { cn } from "~/helpers";
 import GoogleLoginIcon from "./icons/google";
 import VkLoginIcon from "./icons/vk";
-
+import PasswordEyeOpen from "./icons/password_eye_open";
+import PasswordEyeClosed from "./icons/password_eye_closed";
+import { useState } from "react";
 const SIGNIN_ERROR_URL = "/error";
 
 export default function SignInPage() {
-  const showPassword = true;
+  const [showPassword, setShowPassword] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -32,7 +34,7 @@ export default function SignInPage() {
     },
     validationSchema: Yup.object({
       username: Yup.string()
-        .max(15, "Must be 15 characters or less")
+        .max(20, "Не более 20 символов")
         .required("Не заполнено имя"),
       password: Yup.string()
         .required("Не заполнен пароль")
@@ -56,7 +58,7 @@ export default function SignInPage() {
           }
 
           if (!/^(?=.*[A-Z])/.test(value)) {
-            errors.push("Ззаглавная буква");
+            errors.push("Заглавная буква");
           }
           if (errors.length > 0) {
             throw new Yup.ValidationError(
@@ -92,7 +94,7 @@ export default function SignInPage() {
             <br />в мир web3
           </h1>
           <p className="mt-6 text-center text-[14px] leading-5 text-secondary">
-            Добропожаловать на образовательную платформу
+            Добропожаловать на платформу
             <br />
             BlockFirst. Мы рады видеть каждого!
           </p>
@@ -207,35 +209,12 @@ export default function SignInPage() {
               />
               <button
                 type="button"
-                // onClick={() => setShowPassword(!showPassword)}
-                className="text-secondary opacity-50"
+                onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? (
-                  <svg
-                    className="h-5 w-5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                    <line x1="1" y1="1" x2="23" y2="23"></line>
-                  </svg>
+                  <PasswordEyeClosed />
                 ) : (
-                  <svg
-                    className="h-5 w-5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                    <circle cx="12" cy="12" r="3"></circle>
-                  </svg>
+                  <PasswordEyeOpen />
                 )}
               </button>
             </div>
