@@ -18,9 +18,7 @@ import VkLoginIcon from "./icons/vk";
 
 const SIGNIN_ERROR_URL = "/error";
 
-export default function SignInPage(props: {
-  searchParams: { callbackUrl: string | undefined };
-}) {
+export default function SignInPage() {
   const showPassword = true;
 
   const formik = useFormik({
