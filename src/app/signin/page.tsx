@@ -13,8 +13,8 @@ import * as Yup from "yup";
 
 import Image from "next/image";
 import { cn } from "~/helpers";
-import GoogleLoginIcon from "./icons/google";
-import VkLoginIcon from "./icons/vk";
+import GoogleLoginIcon from "./icons/social/google";
+import VkLoginIcon from "./icons/social/vk";
 import PasswordEyeOpen from "./icons/password_eye_open";
 import PasswordEyeClosed from "./icons/password_eye_closed";
 import { useState } from "react";
@@ -45,9 +45,9 @@ export default function SignInPage() {
             errors.push("8+ символов");
           }
 
-          if (!/^(?=.*[!@#\$%\^&\*])/.test(value)) {
-            errors.push("Спец. символ");
-          }
+          // if (!/^(?=.*[!@#\$%\^&\*])/.test(value)) {
+          //   errors.push("Спец. символ");
+          // }
 
           if (!/^(?=.*[0-9])/.test(value)) {
             errors.push("Цифра");
@@ -171,7 +171,7 @@ export default function SignInPage() {
               />
             </div>
             {formik.touched.email && formik.errors.email ? (
-              <div className="absolute left-0 top-[52px]  flex gap-[8px] text-[12px] text-error">
+              <div className="absolute left-0 top-[52px] flex gap-[8px] text-[12px] text-error">
                 <Image
                   src={ErrorDecorationSvg}
                   alt={""}
@@ -211,11 +211,7 @@ export default function SignInPage() {
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? (
-                  <PasswordEyeClosed />
-                ) : (
-                  <PasswordEyeOpen />
-                )}
+                {showPassword ? <PasswordEyeClosed /> : <PasswordEyeOpen />}
               </button>
             </div>
             {formik.values.password && formik.errors.password ? (
