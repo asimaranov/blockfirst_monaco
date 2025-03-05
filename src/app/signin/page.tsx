@@ -37,7 +37,9 @@ export default function SignInPage() {
       password: Yup.string()
         .max(20, "Must be 20 characters or less")
         .required("Не заполнен пароль"),
-      email: Yup.string().email("Неверный формат почты").required("Не заполнена почта"),
+      email: Yup.string()
+        .email("Неверный формат почты")
+        .required("Не заполнена почта"),
     }),
   });
 
@@ -71,11 +73,18 @@ export default function SignInPage() {
         >
           {/* Username field */}
           <div className="relative">
-            <div className="group flex h-[48px] items-center border-b border-accent px-[16px] focus-within:border-foreground">
+            <div
+              className={cn(
+                "group flex h-[48px] items-center border-b border-accent px-[16px] focus-within:border-foreground",
+                formik.touched.username &&
+                  formik.errors.username &&
+                  "border-error",
+              )}
+            >
+              {" "}
               <div className="mr-[14px] h-[16px] w-[16px]">
                 <AccountSvg />
               </div>
-
               <input
                 className="h-full w-full bg-transparent text-[14px] text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
                 placeholder={"Ваше имя"}
@@ -92,8 +101,13 @@ export default function SignInPage() {
               </span>
             </div>
             {formik.touched.username && formik.errors.username ? (
-              <div className=" mt-[12px] ml-16px text-error text-[12px] flex gap-[8px] ml-[16px]">
-                <Image src={ErrorDecorationSvg} alt={""} width={14} height={14}></Image>
+              <div className="ml-16px ml-[16px] mt-[12px] flex gap-[8px] text-[12px] text-error">
+                <Image
+                  src={ErrorDecorationSvg}
+                  alt={""}
+                  width={14}
+                  height={14}
+                ></Image>
                 {formik.errors.username}
               </div>
             ) : null}
@@ -123,8 +137,13 @@ export default function SignInPage() {
               />
             </div>
             {formik.touched.email && formik.errors.email ? (
-              <div className=" mt-[12px] ml-16px text-error text-[12px] flex gap-[8px] ml-[16px]">
-                <Image src={ErrorDecorationSvg} alt={""} width={14} height={14}></Image>
+              <div className="ml-16px ml-[16px] mt-[12px] flex gap-[8px] text-[12px] text-error">
+                <Image
+                  src={ErrorDecorationSvg}
+                  alt={""}
+                  width={14}
+                  height={14}
+                ></Image>
                 {formik.errors.email}
               </div>
             ) : null}
@@ -132,7 +151,13 @@ export default function SignInPage() {
 
           {/* Password field */}
           <div className="relative">
-            <div className="group flex h-[48px] items-center border-b border-accent px-[16px] focus-within:border-foreground">
+            <div
+              className={cn(
+                "group flex h-[48px] items-center border-b border-accent px-[16px] focus-within:border-foreground",
+                formik.touched.password && formik.errors.password && "border-error",
+              )}
+            >
+              {" "}
               <div className="mr-[14px] h-[16px] w-[16px]">
                 <PasswordSvg />
               </div>
@@ -230,4 +255,3 @@ export default function SignInPage() {
     </div>
   );
 }
-
