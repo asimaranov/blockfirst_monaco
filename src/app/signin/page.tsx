@@ -5,6 +5,8 @@ import { AuthError } from "next-auth";
 import Link from "next/link";
 import LogoSvg from "./icons/logo.svg";
 import ErrorDecorationSvg from "./icons/error_decoration.svg";
+import ReviewsStuffSvg from "./icons/reviews_stuff.svg";
+
 import AccountSvg from "./input-legends/account";
 import EmailSvg from "./input-legends/email";
 import PasswordSvg from "./input-legends/password";
@@ -78,7 +80,7 @@ export default function SignInPage() {
   });
 
   return (
-    <div className="relative flex min-h-screen overflow-hidden bg-background">
+    <div className="relative flex flex-row min-h-screen overflow-hidden bg-background">
       {/* Blue glow effect */}
 
       <div className="relative z-10 flex w-full max-w-[468px] flex-col p-[64px] outline outline-[1px] outline-accent">
@@ -273,6 +275,11 @@ export default function SignInPage() {
             <VkLoginIcon />
           </button>
         </div>
+      </div>
+
+      <div className="bg-[url(/bg/planet.png)] w-full h-full min-h-screen bg-center bg-cover bg-no-repeat flex items-center justify-center">
+            <Image src={ReviewsStuffSvg} alt={""}></Image>
+      
       </div>
     </div>
   );
