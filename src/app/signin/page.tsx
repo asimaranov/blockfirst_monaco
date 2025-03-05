@@ -209,9 +209,12 @@ export default function SignInPage() {
               />
               <button
                 type="button"
+                className="group"
                 onClick={() => setShowPassword(!showPassword)}
               >
-                {showPassword ? <PasswordEyeClosed /> : <PasswordEyeOpen />}
+                <div className="group">
+                  {showPassword ? <PasswordEyeOpen /> : <PasswordEyeClosed />}
+                </div>
               </button>
             </div>
             {formik.values.password && formik.errors.password ? (
@@ -235,7 +238,7 @@ export default function SignInPage() {
 
         {/* Login link */}
         <div className="mb-[20px] h-auto text-center text-[14px] text-foreground">
-          Вы зарегистрированны?{" "}
+          Вы зарегистрированы?{" "}
           <Link href="#" className="text-primary">
             Вход
           </Link>
