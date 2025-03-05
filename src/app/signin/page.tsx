@@ -5,9 +5,9 @@ import { AuthError } from "next-auth";
 import Link from "next/link";
 import LogoSvg from "./icons/logo.svg";
 import ErrorDecorationSvg from "./icons/error_decoration.svg";
-import AccountSvg from "./icons/account";
-import EmailSvg from "./icons/email";
-import PasswordSvg from "./icons/password";
+import AccountSvg from "./input-legends/account";
+import EmailSvg from "./input-legends/email";
+import PasswordSvg from "./input-legends/password";
 import { Formik, Field, Form, useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -117,7 +117,7 @@ export default function SignInPage() {
             >
               {" "}
               <div className="mr-[14px] h-[16px] w-[16px]">
-                <AccountSvg />
+                <AccountSvg active={formik.values.username !== ""} />
               </div>
               <input
                 className="h-full w-full bg-transparent text-[14px] text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
@@ -156,7 +156,7 @@ export default function SignInPage() {
               )}
             >
               <div className="mr-[14px] h-[16px] w-[16px]">
-                <EmailSvg />
+                <EmailSvg active={formik.values.email !== ""} />
               </div>
 
               <input
@@ -195,7 +195,7 @@ export default function SignInPage() {
             >
               {" "}
               <div className="mr-[14px] h-[16px] w-[16px]">
-                <PasswordSvg />
+                <PasswordSvg active={formik.values.password !== ""} />
               </div>
               <input
                 type={showPassword ? "text" : "password"}

@@ -1,4 +1,6 @@
-export default function AccountSVG() {
+import { cn } from "~/helpers";
+
+export default function AccountSVG({ active }: { active?: boolean }) {
   return (
     <svg
       width="17"
@@ -12,7 +14,10 @@ export default function AccountSVG() {
         stroke="#9AA6B5"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className=" group-focus-within:stroke-foreground [stroke-opacity:50%] group-focus-within:[stroke-opacity:100%]"
+        className={cn(
+          "[stroke-opacity:50%] group-focus-within:stroke-foreground group-focus-within:[stroke-opacity:100%]",
+          active && "stroke-foreground [stroke-opacity:100%]",
+        )}
       />
       <path
         d="M14.2268 14.6667C14.2268 12.0867 11.6601 10 8.5001 10C5.3401 10 2.77344 12.0867 2.77344 14.6667"
@@ -20,7 +25,10 @@ export default function AccountSVG() {
         strokeOpacity="0.5"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="group-focus-within:stroke-foreground [stroke-opacity:50%] group-focus-within:[stroke-opacity:100%]"
+        className={cn(
+          "[stroke-opacity:50%] group-focus-within:stroke-foreground group-focus-within:[stroke-opacity:100%]",
+          active && "stroke-foreground [stroke-opacity:100%]",
+        )}
       />
     </svg>
   );
