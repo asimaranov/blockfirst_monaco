@@ -35,8 +35,40 @@ export default function SignInPage() {
         .max(15, "Must be 15 characters or less")
         .required("Не заполнено имя"),
       password: Yup.string()
-        .max(20, "Must be 20 characters or less")
-        .required("Не заполнен пароль"),
+        .required("Не заполнен пароль")
+        .test((value) => {
+          let errors = [];
+
+          if (!/^(?=.{8,})/.test(value)) {
+            errors.push("8+ символов");
+          }
+
+          // if (!/^(?=.*[!@#\$%\^&\*])/.test(value)) {
+          //   errors.push("1 спец. символ");
+          // }
+
+          if (!/^(?=.*[0-9])/.test(value)) {
+            errors.push("Цифра");
+          }
+
+          if (!/^(?=.*[a-z])/.test(value)) {
+            errors.push("Строчная буква");
+          }
+
+          if (!/^(?=.*[A-Z])/.test(value)) {
+            errors.push("Ззаглавная буква");
+          }
+          if (errors.length > 0) {
+            throw new Yup.ValidationError(
+              errors.join("|"),
+              errors,
+              "password",
+              value,
+            );
+          }
+
+          return true;
+        }),
       email: Yup.string()
         .email("Неверный формат почты")
         .required("Не заполнена почта"),
@@ -101,7 +133,7 @@ export default function SignInPage() {
               </span> */}
             </div>
             {formik.touched.username && formik.errors.username ? (
-              <div className="ml-16px ml-[16px] mt-[12px] flex gap-[8px] text-[12px] text-error">
+              <div className="absolute left-0 top-[52px] flex gap-[8px] text-[12px] text-error">
                 <Image
                   src={ErrorDecorationSvg}
                   alt={""}
@@ -137,7 +169,7 @@ export default function SignInPage() {
               />
             </div>
             {formik.touched.email && formik.errors.email ? (
-              <div className="ml-16px ml-[16px] mt-[12px] flex gap-[8px] text-[12px] text-error">
+              <div className="absolute left-0 top-[52px]  flex gap-[8px] text-[12px] text-error">
                 <Image
                   src={ErrorDecorationSvg}
                   alt={""}
@@ -207,9 +239,19 @@ export default function SignInPage() {
                 )}
               </button>
             </div>
-            {formik.touched.password && formik.errors.password ? (
-              <div className="absolute bg-red-500">
-                {/* {formik.errors.password} */}
+            {formik.initialTouched && formik.errors.password ? (
+              <div className="mt-[12px] flex flex-row gap-[8px]">
+                {(formik.errors.password.includes("|")
+                  ? formik.errors.password.split("|")
+                  : [formik.errors.password]
+                ).map((error, index) => (
+                  <div
+                    key={index}
+                    className="my-[5px] flex gap-[8px] rounded-[4px] bg-error px-[8px] py-[5px] text-[12px] text-foreground"
+                  >
+                    {error}
+                  </div>
+                ))}
               </div>
             ) : null}
           </div>
