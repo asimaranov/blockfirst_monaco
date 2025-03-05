@@ -95,10 +95,10 @@ export default function SignInPage() {
                 onBlur={formik.handleBlur}
                 value={formik.values.username}
               ></input>
-              <span className="ml-auto flex items-center text-xs text-success">
+              {/* <span className="ml-auto flex items-center text-xs text-success">
                 <span className="mr-1 h-1.5 w-1.5 rounded-full bg-success"></span>
                 Доступно
-              </span>
+              </span> */}
             </div>
             {formik.touched.username && formik.errors.username ? (
               <div className="ml-16px ml-[16px] mt-[12px] flex gap-[8px] text-[12px] text-error">
@@ -154,7 +154,9 @@ export default function SignInPage() {
             <div
               className={cn(
                 "group flex h-[48px] items-center border-b border-accent px-[16px] focus-within:border-foreground",
-                formik.touched.password && formik.errors.password && "border-error",
+                formik.touched.password &&
+                  formik.errors.password &&
+                  "border-error",
               )}
             >
               {" "}
