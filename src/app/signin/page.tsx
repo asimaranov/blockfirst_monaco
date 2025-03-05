@@ -43,9 +43,9 @@ export default function SignInPage() {
             errors.push("8+ символов");
           }
 
-          // if (!/^(?=.*[!@#\$%\^&\*])/.test(value)) {
-          //   errors.push("1 спец. символ");
-          // }
+          if (!/^(?=.*[!@#\$%\^&\*])/.test(value)) {
+            errors.push("Спец. символ");
+          }
 
           if (!/^(?=.*[0-9])/.test(value)) {
             errors.push("Цифра");
@@ -239,7 +239,7 @@ export default function SignInPage() {
                 )}
               </button>
             </div>
-            {formik.initialTouched && formik.errors.password ? (
+            {formik.values.password && formik.errors.password ? (
               <div className="mt-[12px] flex flex-row gap-[8px]">
                 {(formik.errors.password.includes("|")
                   ? formik.errors.password.split("|")
