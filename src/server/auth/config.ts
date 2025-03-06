@@ -3,8 +3,9 @@ import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 import GoogleProvider from "next-auth/providers/google";
 import VkProvider from "next-auth/providers/vk";
-
+import ResendProvider from "next-auth/providers/resend";
 import { db } from "~/server/db";
+import { sendVerificationRequest } from "~/app/lib/authSendRequests";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -44,7 +45,6 @@ export const authConfig = {
         },
       },
     }),
-
     VkProvider({
       clientId: process.env.VK_CLIENT_ID,
       clientSecret: process.env.VK_CLIENT_SECRET,
@@ -67,6 +67,11 @@ export const authConfig = {
           );
         },
       },
+    }),
+    ResendProvider({
+      apiKey: process.env.AUTH_RESEND_KEY,
+      from: "noreply@blockfirst.io",
+      sendVerificationRequest: sendVerificationRequest
     }),
 
     /**
