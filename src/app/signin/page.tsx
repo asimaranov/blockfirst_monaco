@@ -1,13 +1,16 @@
 "use client";
 import { redirect } from "next/navigation";
 // import { signIn, auth, providerMap } from "~/server/auth";
-import { signIn } from "next-auth/react"
+import { signIn } from "next-auth/react";
 
 import { AuthError } from "next-auth";
 import Link from "next/link";
 import LogoSvg from "./icons/logo.svg";
 import ErrorDecorationSvg from "./icons/error_decoration.svg";
-import ReviewsStuffSvg from "./icons/reviews_stuff.svg";
+import CodeSnippetSvg from "./icons/right_section/code_snippet.svg";
+import AvatarsBgSvg from "./icons/right_section/avatars_bg.svg";
+import AvatarsItems from "./icons/right_section/avatars_items.png";
+import Reviews from "./icons/right_section/reviews.svg";
 
 import AccountSvg from "./input-legends/account";
 import EmailSvg from "./input-legends/email";
@@ -82,7 +85,7 @@ export default function SignInPage() {
   });
 
   return (
-    <div className="relative flex flex-row min-h-screen overflow-hidden bg-background">
+    <div className="relative flex min-h-screen flex-row overflow-hidden bg-background">
       {/* Blue glow effect */}
 
       <div className="relative z-10 flex w-full max-w-[468px] flex-col p-[64px] outline outline-[1px] outline-accent">
@@ -270,18 +273,47 @@ export default function SignInPage() {
 
         {/* Social login */}
         <div className="mt-[40px] flex w-full items-center justify-center gap-[12px]">
-          <button className="flex items-center justify-center" onClick={() => signIn("google")}>
+          <button
+            className="flex items-center justify-center"
+            onClick={() => signIn("google")}
+          >
             <GoogleLoginIcon />
           </button>
-          <button className="flex items-center justify-center" onClick={() => signIn("vk")}>
+          <button
+            className="flex items-center justify-center"
+            onClick={() => signIn("vk")}
+          >
             <VkLoginIcon />
           </button>
         </div>
       </div>
 
-      <div className="bg-[url(/bg/planet.webp)] w-full h-full min-h-screen bg-center bg-cover bg-no-repeat flex items-center justify-center">
-            <Image src={ReviewsStuffSvg} alt={""}></Image>
-      
+      <div className="flex h-full min-h-screen w-full flex-col items-center justify-center bg-[url(/bg/planet.svg)] bg-cover bg-center bg-no-repeat">
+        <div className="flex flex-col items-center justify-center">
+          <div>
+            <Image src={CodeSnippetSvg} alt={""} className="mb-[33px] ml-[70px]"></Image>
+
+            <div className="relative flex h-[107px] w-[383px] items-center justify-center mb-[36px]">
+              <Image
+                src={AvatarsBgSvg}
+                alt={""}
+                className="absolute z-0"
+              ></Image>
+              <div className="z-10 flex h-[53px] w-[124px] flex-col justify-center">
+                <span className="text-[25px] text-foreground">2310+</span>
+                <span className="text-[14px] text-secondary">Прошли курс</span>
+              </div>
+              <Image
+                src={AvatarsItems}
+                alt={""}
+                className="h-[53px] w-[145px] z-0"
+                width={145}
+                height={53}
+              ></Image>
+            </div>
+            <Image src={Reviews} alt={""} className="mb-[33px] ml-[98px] w-[244px] h-[74px]" width={244} height={74}></Image>
+          </div>
+        </div>
       </div>
     </div>
   );
