@@ -1,6 +1,8 @@
 "use client";
 import { redirect } from "next/navigation";
-import { signIn, auth, providerMap } from "~/server/auth";
+// import { signIn, auth, providerMap } from "~/server/auth";
+import { signIn } from "next-auth/react"
+
 import { AuthError } from "next-auth";
 import Link from "next/link";
 import LogoSvg from "./icons/logo.svg";
@@ -268,16 +270,16 @@ export default function SignInPage() {
 
         {/* Social login */}
         <div className="mt-[40px] flex w-full items-center justify-center gap-[12px]">
-          <button className="flex items-center justify-center">
+          <button className="flex items-center justify-center" onClick={() => signIn("google")}>
             <GoogleLoginIcon />
           </button>
-          <button className="flex items-center justify-center">
+          <button className="flex items-center justify-center" onClick={() => signIn("vk")}>
             <VkLoginIcon />
           </button>
         </div>
       </div>
 
-      <div className="bg-[url(/bg/planet.png)] w-full h-full min-h-screen bg-center bg-cover bg-no-repeat flex items-center justify-center">
+      <div className="bg-[url(/bg/planet.webp)] w-full h-full min-h-screen bg-center bg-cover bg-no-repeat flex items-center justify-center">
             <Image src={ReviewsStuffSvg} alt={""}></Image>
       
       </div>

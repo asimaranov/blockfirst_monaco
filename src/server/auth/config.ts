@@ -1,6 +1,8 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { type DefaultSession, type NextAuthConfig } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
+import GoogleProvider from "next-auth/providers/google";
+import VkProvider from "next-auth/providers/vk";
 
 import { db } from "~/server/db";
 
@@ -33,6 +35,40 @@ declare module "next-auth" {
 export const authConfig = {
   providers: [
     DiscordProvider,
+    GoogleProvider({
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code",
+        },
+      },
+    }),
+
+    VkProvider({
+      clientId: process.env.VK_CLIENT_ID,
+      clientSecret: process.env.VK_CLIENT_SECRET,
+      checks: [],
+      token: {
+        url: "https://oauth.vk.com/access_token?v=5.131",
+        conform: async (response: { json: () => any; status: any; }) => {
+          const data = await response.json();
+          return new Response(
+            // Fix: OperationProcessingError: "response" body "token_type" property must be a string
+            JSON.stringify({
+              token_type: "dpop",
+              ...data,
+            }),
+            // Fix: OperationProcessingError: "response" content-type must be application/json
+            {
+              headers: { "content-type": "application/json" },
+              status: response.status,
+            },
+          );
+        },
+      },
+    }),
+
     /**
      * ...add more providers here.
      *
@@ -45,6 +81,13 @@ export const authConfig = {
   ],
   adapter: PrismaAdapter(db),
   callbacks: {
+    signIn({ account, profile }) {
+      if (account?.provider === "google") {
+        return profile?.email_verified ?? false;
+      }
+      return true; // Do different verification for other providers that don't have `email_verified`
+    },
+
     session: ({ session, user }) => ({
       ...session,
       user: {
@@ -54,6 +97,6 @@ export const authConfig = {
     }),
   },
   pages: {
-    signIn: '/signin'
-  }
+    signIn: "/signin",
+  },
 } satisfies NextAuthConfig;
