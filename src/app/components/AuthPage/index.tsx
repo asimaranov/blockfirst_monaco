@@ -12,7 +12,7 @@ export enum AuthStep {
 }
 
 export default function AuthPage() {
-  const [authStep, setAuthStep] = useState<AuthStep>(AuthStep.SignIn);
+  const [authStep, setAuthStep] = useState<AuthStep>(AuthStep.SignUpConfirmEmail);
   return (
     <AuthPageBase>
       {authStep === AuthStep.SignIn && <SignInForm setAuthStep={setAuthStep} />}

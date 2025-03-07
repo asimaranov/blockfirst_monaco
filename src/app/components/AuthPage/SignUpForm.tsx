@@ -27,7 +27,7 @@ export default function SignInForm({
   setAuthStep: (step: AuthStep) => void;
 }) {
   const [showPassword, setShowPassword] = useState(false);
-  const requestEmailCode = api.auth.requestEmailCode.useMutation({
+  const requestEmailCode = api.auth.requestSignupEmailCode.useMutation({
     onSuccess(data, variables, context) {
       console.log("success", data, variables, context);
     },
@@ -248,10 +248,16 @@ export default function SignInForm({
         type="submit"
         className="flex w-full items-center justify-center rounded-full bg-primary py-3.5 text-foreground"
         onClick={async () => {
-          await requestEmailCode.mutateAsync({
-            email: formik.values.email,
-          });
-          setAuthStep(AuthStep.SignUpConfirmEmail);
+          try {
+            await requestEmailCode.mutateAsync({
+              email: formik.values.email,
+            });
+            
+            setAuthStep(AuthStep.SignUpConfirmEmail);
+          } catch (error) {
+            console.error("Error", error);
+          }
+
           // try {
           //   const result = await signIn("credentials", {
           //     email: formik.values.email,

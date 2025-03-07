@@ -8,37 +8,36 @@ import {
 } from "~/server/api/trpc";
 
 export const authRouter = createTRPCRouter({
-  requestEmailCode: publicProcedure
+  requestSignupEmailCode: publicProcedure
     .input(z.object({ email: z.string().email() }))
     .mutation(async ({ ctx, input }) => {
       const { email } = input;
       const user = await ctx.db.user.findUnique({
         where: { email },
       });
-      if (!user) {
-        throw new Error("User not found");
+      if (user) {
+        throw new Error("user_already_exists");
       }
 
-      const codeDigits = Math.random().toString(36).substring(2, 15);
+      const randomFiveNumbers = Math.floor(10000 + Math.random() * 90000);
 
       await sendVerificationRequest({
         to: email,
         from: "noreply@blockfirst.io",
         url: `https://app.blockfirst.io/api/auth/verify-email`,
-        codeDigits
-      });
+        codeDigits: randomFiveNumbers.toString(),
+      });      
 
       const code = await ctx.db.emailCode.create({
         data: {
           code: Math.random().toString(36).substring(2, 15),
           expires_at: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(),
+          confirmation_type: "signup",
           email: email,
           attempts: 0,
           sent_at: new Date().toISOString(),
         },
       });
-
-      
 
       return {
         success: true,
