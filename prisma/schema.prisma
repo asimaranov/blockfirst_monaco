@@ -59,10 +59,20 @@ model User {
     name          String?
     email         String?   @unique
     emailVerified DateTime?
+    hashedPassword String?
     image         String?
     accounts      Account[]
     sessions      Session[]
     posts         Post[]
+}
+
+model EmailCode {
+    id            String    @id @default(cuid())
+    email         String   @unique
+    code          String
+    attempts      Int
+    sent_at       String
+    expires_at    DateTime
 }
 
 model VerificationToken {

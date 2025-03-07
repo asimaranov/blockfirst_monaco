@@ -242,12 +242,15 @@ export default function SignInForm({setAuthStep}: {setAuthStep: (step: AuthStep)
           className="flex w-full items-center justify-center rounded-full bg-primary py-3.5 text-foreground"
           onClick={async () => {
             try {
-              await signIn("resend", {
+              await signIn("credentials", {
                 email: formik.values.email,
+                password: formik.values.password,
+                email_code: 'abacaba',
                 redirect: false,
+                
               });
             } catch (error) {
-              console.error(error);
+              console.error('Error',error);
             } finally {
               console.log("done");
               setAuthStep(AuthStep.SignUpConfirmEmail);
