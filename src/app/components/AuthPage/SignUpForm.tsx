@@ -19,6 +19,7 @@ import PasswordEyeOpen from "./assets/password_eye_open";
 import PasswordEyeClosed from "./assets/password_eye_closed";
 import { useState } from "react";
 import { AuthStep } from ".";
+import { api } from "~/trpc/react";
 
 export default function SignInForm({
   setAuthStep,
@@ -26,6 +27,11 @@ export default function SignInForm({
   setAuthStep: (step: AuthStep) => void;
 }) {
   const [showPassword, setShowPassword] = useState(false);
+  const requestEmailCode = api.auth.requestEmailCode.useMutation({
+    onSuccess(data, variables, context) {
+      console.log("success", data, variables, context);
+    },
+  });
 
   const formik = useFormik({
     initialValues: {
@@ -242,23 +248,27 @@ export default function SignInForm({
         type="submit"
         className="flex w-full items-center justify-center rounded-full bg-primary py-3.5 text-foreground"
         onClick={async () => {
-          try {
-            const result = await signIn("credentials", {
-              email: formik.values.email,
-              password: formik.values.password,
-              email_code: "abacaba",
-              redirect: false,
-            });
-            console.log("result", result);
-            if ((result?.url || "").includes("signin?error")) {
-              setAuthStep(AuthStep.SignUpConfirmEmail);
-            }
-          } catch (error) {
-            console.error("Error", error);
-          } finally {
-            console.log("done");
-            setAuthStep(AuthStep.SignUpConfirmEmail);
-          }
+          await requestEmailCode.mutateAsync({
+            email: formik.values.email,
+          });
+          setAuthStep(AuthStep.SignUpConfirmEmail);
+          // try {
+          //   const result = await signIn("credentials", {
+          //     email: formik.values.email,
+          //     password: formik.values.password,
+          //     email_code: "abacaba",
+          //     redirect: false,
+          //   });
+          //   console.log("result", result);
+          //   if ((result?.url || "").includes("signin?error")) {
+          //     setAuthStep(AuthStep.SignUpConfirmEmail);
+          //   }
+          // } catch (error) {
+          //   console.error("Error", error);
+          // } finally {
+          //   console.log("done");
+          //   setAuthStep(AuthStep.SignUpConfirmEmail);
+          // }
         }}
       >
         <span className="text-[14px]">Зарегистрироваться</span>

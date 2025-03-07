@@ -17,7 +17,6 @@ export class CustomAuthError extends CredentialsSignin {
   constructor(message: string) {
     super(message);
     this.code = message;
-
   }
 }
 
@@ -88,12 +87,6 @@ export const authConfig = {
         },
       },
     }),
-    ResendProvider({
-      apiKey: process.env.AUTH_RESEND_KEY,
-      from: "noreply@blockfirst.io",
-      sendVerificationRequest: sendVerificationRequest,
-    }),
-
     Credentials({
       name: "Credentials",
       credentials: {

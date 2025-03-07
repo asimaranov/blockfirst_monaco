@@ -1,29 +1,29 @@
-import { EmailConfig } from "next-auth/providers";
-
-
-export async function sendVerificationRequest(params: {
-  identifier: string;
+export async function sendVerificationRequest({
+  to,
+  from,
+  url,
+  codeDigits,
+}: {
+  to: string;
+  from: string;
   url: string;
-  expires: Date;
-  provider: EmailConfig;
-  token: string;
-  theme: any;
-  request: Request;
+  codeDigits: string;
 }) {
-  const { identifier: to, provider, url, theme } = params;
   const { host } = new URL(url);
+  const apiKey = process.env.AUTH_RESEND_KEY;
+
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${provider.apiKey}`,
+      Authorization: `Bearer ${apiKey}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: provider.from,
+      from,
       to,
       subject: `Sign in to ${host}`,
-      html: html({ url, host, theme }),
-      text: text({ url, host }),
+      html: html({ url, host, codeDigits }),
+      text: text({ url, host, codeDigits }),
     }),
   });
 
@@ -31,19 +31,19 @@ export async function sendVerificationRequest(params: {
     throw new Error("Resend error: " + JSON.stringify(await res.json()));
 }
 
-function html(params: { url: string; host: string; theme: any }) {
-  const { url, host, theme } = params;
+function html(params: { url: string; host: string; codeDigits: string }) {
+  const { url, host, codeDigits } = params;
 
   const escapedHost = host.replace(/\./g, "&#8203;.");
 
-  const brandColor = theme.brandColor || "#346df1";
+  const brandColor =  "#346df1";
   const color = {
     background: "#f9f9f9",
     text: "#444",
     mainBackground: "#fff",
     buttonBackground: brandColor,
     buttonBorder: brandColor,
-    buttonText: theme.buttonText || "#fff",
+    buttonText: "#fff",
   };
 
   return `
@@ -60,10 +60,11 @@ function html(params: { url: string; host: string; theme: any }) {
       <td align="center" style="padding: 20px 0;">
         <table border="0" cellspacing="0" cellpadding="0">
           <tr>
-            <td align="center" style="border-radius: 5px;" bgcolor="${color.buttonBackground}"><a href="${url}"
-                target="_blank"
-                style="font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: ${color.buttonText}; text-decoration: none; border-radius: 5px; padding: 10px 20px; border: 1px solid ${color.buttonBorder}; display: inline-block; font-weight: bold;">Sign
-                in</a></td>
+            <td align="center" style="border-radius: 5px;" bgcolor="${color.buttonBackground}">
+            Code: ${codeDigits}
+
+            
+            </td>
           </tr>
         </table>
       </td>
@@ -80,6 +81,6 @@ function html(params: { url: string; host: string; theme: any }) {
 }
 
 // Email Text body (fallback for email clients that don't render HTML, e.g. feature phones)
-function text({ url, host }: { url: string; host: string }) {
-  return `Sign in to ${host}\n${url}\n\n`;
+function text({ url, host, codeDigits }: { url: string; host: string; codeDigits: string }) {
+  return `Your code: ${codeDigits}} ${host}\n${url}\n\n`;
 }
