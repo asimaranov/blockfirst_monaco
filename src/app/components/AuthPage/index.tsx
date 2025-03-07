@@ -1,14 +1,13 @@
-"use client";
-import { useState } from "react";
-import AuthPageBase from "./AuthPageBase";
-import SignInForm from "./SignUpForm";
-import SignUpConfirmEmailForm from "./SignUpConfirmEmailForm";
-
+'use client';
+import { useState } from 'react';
+import AuthPageBase from './AuthPageBase';
+import SignInForm from './SignUpForm';
+import SignUpConfirmEmailForm from './SignUpConfirmEmailForm';
 
 export enum AuthStep {
-  SignIn = "signIn",
-  SignUp = "signUp",
-  SignUpConfirmEmail = "signUpConfirmEmail",
+  SignIn = 'signIn',
+  SignUp = 'signUp',
+  SignUpConfirmEmail = 'signUpConfirmEmail',
 }
 
 export default function AuthPage() {

@@ -1,15 +1,19 @@
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { CredentialsSignin, type DefaultSession, type NextAuthConfig } from "next-auth";
-import DiscordProvider from "next-auth/providers/discord";
-import GoogleProvider from "next-auth/providers/google";
-import VkProvider from "next-auth/providers/vk";
-import ResendProvider from "next-auth/providers/resend";
-import { db } from "~/server/db";
-import { sendVerificationRequest } from "~/app/lib/authSendRequests";
-import Credentials from "next-auth/providers/credentials";
-import { signInSchema } from "~/app/lib/zod";
-import bcrypt from "bcryptjs";
-import { AuthError } from "next-auth";
+import { PrismaAdapter } from '@auth/prisma-adapter';
+import {
+  CredentialsSignin,
+  type DefaultSession,
+  type NextAuthConfig,
+} from 'next-auth';
+import DiscordProvider from 'next-auth/providers/discord';
+import GoogleProvider from 'next-auth/providers/google';
+import VkProvider from 'next-auth/providers/vk';
+import ResendProvider from 'next-auth/providers/resend';
+import { db } from '~/server/db';
+import { sendVerificationRequest } from '~/app/lib/authSendRequests';
+import Credentials from 'next-auth/providers/credentials';
+import { signInSchema } from '~/app/lib/zod';
+import bcrypt from 'bcryptjs';
+import { AuthError } from 'next-auth';
 
 export class CustomAuthError extends CredentialsSignin {
   public readonly kind = 'signIn';
@@ -32,13 +36,13 @@ export function saltAndHashPassword(password: any) {
  *
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
-declare module "next-auth" {
+declare module 'next-auth' {
   interface Session extends DefaultSession {
     user: {
       id: string;
       // ...other properties
       // role: UserRole;
-    } & DefaultSession["user"];
+    } & DefaultSession['user'];
   }
 
   // interface User {
@@ -58,9 +62,9 @@ export const authConfig = {
     GoogleProvider({
       authorization: {
         params: {
-          prompt: "consent",
-          access_type: "offline",
-          response_type: "code",
+          prompt: 'consent',
+          access_type: 'offline',
+          response_type: 'code',
         },
       },
     }),
@@ -69,34 +73,34 @@ export const authConfig = {
       clientSecret: process.env.VK_CLIENT_SECRET,
       checks: [],
       token: {
-        url: "https://oauth.vk.com/access_token?v=5.131",
+        url: 'https://oauth.vk.com/access_token?v=5.131',
         conform: async (response: { json: () => any; status: any }) => {
           const data = await response.json();
           return new Response(
             // Fix: OperationProcessingError: "response" body "token_type" property must be a string
             JSON.stringify({
-              token_type: "dpop",
+              token_type: 'dpop',
               ...data,
             }),
             // Fix: OperationProcessingError: "response" content-type must be application/json
             {
-              headers: { "content-type": "application/json" },
+              headers: { 'content-type': 'application/json' },
               status: response.status,
-            },
+            }
           );
         },
       },
     }),
     Credentials({
-      name: "Credentials",
+      name: 'Credentials',
       credentials: {
         email: {
-          label: "Email",
-          type: "email",
-          placeholder: "email@example.com",
+          label: 'Email',
+          type: 'email',
+          placeholder: 'email@example.com',
         },
-        password: { label: "Password", type: "password" },
-        email_code: { label: "EmailCode", type: "text" },
+        password: { label: 'Password', type: 'password' },
+        email_code: { label: 'EmailCode', type: 'text' },
       },
       authorize: async (credentials) => {
         let email: string;
@@ -107,9 +111,11 @@ export const authConfig = {
           const parseData = await signInSchema.parseAsync(credentials);
           email = parseData.email;
           password = parseData.password;
-          email_code = parseData.email_code ?? "";
+          email_code = parseData.email_code ?? '';
         } catch (error) {
-          throw new CustomAuthError("Invalid credentials, " + (error as Error)?.message);
+          throw new CustomAuthError(
+            'Invalid credentials, ' + (error as Error)?.message
+          );
         }
 
         const hash = saltAndHashPassword(password);
@@ -122,7 +128,7 @@ export const authConfig = {
 
         if (!user) {
           if (!credentials.email_code) {
-            throw new CustomAuthError("No email code provided.");
+            throw new CustomAuthError('No email code provided.');
           }
           const code = await db.emailCode.findFirst({
             where: {
@@ -131,19 +137,19 @@ export const authConfig = {
           });
 
           if (!code) {
-            throw new CustomAuthError("Invalid email code.");
+            throw new CustomAuthError('Invalid email code.');
           }
 
           if (code.expires_at < new Date()) {
-            throw new CustomAuthError("Email code expired.");
+            throw new CustomAuthError('Email code expired.');
           }
 
           if (code.attempts >= 3) {
-            throw new CustomAuthError("Email code attempts limit reached.");
+            throw new CustomAuthError('Email code attempts limit reached.');
           }
 
           if (code.code !== credentials.email_code) {
-            throw new CustomAuthError("Invalid email code");
+            throw new CustomAuthError('Invalid email code');
           }
 
           await db.emailCode.update({
@@ -164,10 +170,10 @@ export const authConfig = {
         } else {
           const isMatch = bcrypt.compareSync(
             credentials.password as string,
-            user.hashedPassword,
+            user.hashedPassword
           );
           if (!isMatch) {
-            throw new CustomAuthError("Incorrect password.");
+            throw new CustomAuthError('Incorrect password.');
           }
         }
 
@@ -188,13 +194,13 @@ export const authConfig = {
   adapter: PrismaAdapter(db),
   callbacks: {
     signIn({ account, profile }) {
-      if (account?.provider === "google") {
+      if (account?.provider === 'google') {
         return profile?.email_verified ?? false;
       }
       return true; // Do different verification for other providers that don't have `email_verified`
     },
     async redirect({ url, baseUrl }) {
-      return baseUrl
+      return baseUrl;
     },
     session: ({ session, user }) => ({
       ...session,
@@ -205,6 +211,6 @@ export const authConfig = {
     }),
   },
   pages: {
-    signIn: "/signin",
+    signIn: '/signin',
   },
 } satisfies NextAuthConfig;

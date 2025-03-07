@@ -1,11 +1,11 @@
-import { z } from "zod";
-import { sendVerificationRequest } from "~/app/lib/authSendRequests";
+import { z } from 'zod';
+import { sendVerificationRequest } from '~/app/lib/authSendRequests';
 
 import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
-} from "~/server/api/trpc";
+} from '~/server/api/trpc';
 
 export const authRouter = createTRPCRouter({
   requestSignupEmailCode: publicProcedure
@@ -23,7 +23,7 @@ export const authRouter = createTRPCRouter({
 
       await sendVerificationRequest({
         to: email,
-        from: "noreply@blockfirst.io",
+        from: 'noreply@blockfirst.io',
         url: `https://app.blockfirst.io/api/auth/verify-email`,
         codeDigits: randomFiveNumbers.toString(),
       });      
@@ -57,7 +57,7 @@ export const authRouter = createTRPCRouter({
 
   getLatest: protectedProcedure.query(async ({ ctx }) => {
     const post = await ctx.db.post.findFirst({
-      orderBy: { createdAt: "desc" },
+      orderBy: { createdAt: 'desc' },
       where: { createdBy: { id: ctx.session.user.id } },
     });
 
@@ -65,6 +65,6 @@ export const authRouter = createTRPCRouter({
   }),
 
   getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
+    return 'you can now see this secret message!';
   }),
 });

@@ -12,11 +12,11 @@ export async function sendVerificationRequest({
   const { host } = new URL(url);
   const apiKey = process.env.AUTH_RESEND_KEY;
 
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
+  const res = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
     headers: {
       Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
       from,
@@ -28,22 +28,22 @@ export async function sendVerificationRequest({
   });
 
   if (!res.ok)
-    throw new Error("Resend error: " + JSON.stringify(await res.json()));
+    throw new Error('Resend error: ' + JSON.stringify(await res.json()));
 }
 
 function html(params: { url: string; host: string; codeDigits: string }) {
   const { url, host, codeDigits } = params;
 
-  const escapedHost = host.replace(/\./g, "&#8203;.");
+  const escapedHost = host.replace(/\./g, '&#8203;.');
 
-  const brandColor =  "#346df1";
+  const brandColor = '#346df1';
   const color = {
-    background: "#f9f9f9",
-    text: "#444",
-    mainBackground: "#fff",
+    background: '#f9f9f9',
+    text: '#444',
+    mainBackground: '#fff',
     buttonBackground: brandColor,
     buttonBorder: brandColor,
-    buttonText: "#fff",
+    buttonText: '#fff',
   };
 
   return `
@@ -81,6 +81,14 @@ function html(params: { url: string; host: string; codeDigits: string }) {
 }
 
 // Email Text body (fallback for email clients that don't render HTML, e.g. feature phones)
-function text({ url, host, codeDigits }: { url: string; host: string; codeDigits: string }) {
+function text({
+  url,
+  host,
+  codeDigits,
+}: {
+  url: string;
+  host: string;
+  codeDigits: string;
+}) {
   return `Your code: ${codeDigits}} ${host}\n${url}\n\n`;
 }
