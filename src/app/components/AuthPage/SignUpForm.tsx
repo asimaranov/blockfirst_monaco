@@ -18,8 +18,9 @@ import VkLoginIcon from "./assets/social/vk";
 import PasswordEyeOpen from "./assets/password_eye_open";
 import PasswordEyeClosed from "./assets/password_eye_closed";
 import { useState } from "react";
+import { AuthStep } from ".";
 
-export default function SignInForm() {
+export default function SignInForm({setAuthStep}: {setAuthStep: (step: AuthStep) => void}) {
   const [showPassword, setShowPassword] = useState(false);
 
   const formik = useFormik({
@@ -249,6 +250,7 @@ export default function SignInForm() {
               console.error(error);
             } finally {
               console.log("done");
+              setAuthStep(AuthStep.SignUpConfirmEmail);
             }
           }}
         >
