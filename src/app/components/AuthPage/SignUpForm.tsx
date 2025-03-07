@@ -1,25 +1,25 @@
-"use client";
-import { signIn } from "next-auth/react";
+'use client';
+import { signIn } from 'next-auth/react';
 
-import Link from "next/link";
-import LogoSvg from "./assets/logo.svg";
-import ErrorDecorationSvg from "./assets/error_decoration.svg";
+import Link from 'next/link';
+import LogoSvg from './assets/logo.svg';
+import ErrorDecorationSvg from './assets/error_decoration.svg';
 
-import AccountSvg from "./assets/input-legends/account";
-import EmailSvg from "./assets/input-legends/email";
-import PasswordSvg from "./assets/input-legends/password";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+import AccountSvg from './assets/input-legends/account';
+import EmailSvg from './assets/input-legends/email';
+import PasswordSvg from './assets/input-legends/password';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
-import Image from "next/image";
-import { cn } from "~/helpers";
-import GoogleLoginIcon from "./assets/social/google";
-import VkLoginIcon from "./assets/social/vk";
-import PasswordEyeOpen from "./assets/password_eye_open";
-import PasswordEyeClosed from "./assets/password_eye_closed";
-import { useState } from "react";
-import { AuthStep } from ".";
-import { api } from "~/trpc/react";
+import Image from 'next/image';
+import { cn } from '~/helpers';
+import GoogleLoginIcon from './assets/social/google';
+import VkLoginIcon from './assets/social/vk';
+import PasswordEyeOpen from './assets/password_eye_open';
+import PasswordEyeClosed from './assets/password_eye_closed';
+import { useState } from 'react';
+import { AuthStep } from '.';
+import { api } from '~/trpc/react';
 
 export default function SignInForm({
   setAuthStep,
@@ -29,30 +29,30 @@ export default function SignInForm({
   const [showPassword, setShowPassword] = useState(false);
   const requestEmailCode = api.auth.requestEmailCode.useMutation({
     onSuccess(data, variables, context) {
-      console.log("success", data, variables, context);
+      console.log('success', data, variables, context);
     },
   });
 
   const formik = useFormik({
     initialValues: {
-      username: "",
-      email: "",
-      password: "",
+      username: '',
+      email: '',
+      password: '',
     },
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
     },
     validationSchema: Yup.object({
       username: Yup.string()
-        .max(20, "Не более 20 символов")
-        .required("Не заполнено имя"),
+        .max(20, 'Не более 20 символов')
+        .required('Не заполнено имя'),
       password: Yup.string()
-        .required("Не заполнен пароль")
+        .required('Не заполнен пароль')
         .test((value) => {
           let errors = [];
 
           if (!/^(?=.{8,})/.test(value)) {
-            errors.push("8+ символов");
+            errors.push('8+ символов');
           }
 
           // if (!/^(?=.*[!@#\$%\^&\*])/.test(value)) {
@@ -60,30 +60,30 @@ export default function SignInForm({
           // }
 
           if (!/^(?=.*[0-9])/.test(value)) {
-            errors.push("Цифра");
+            errors.push('Цифра');
           }
 
           if (!/^(?=.*[a-z])/.test(value)) {
-            errors.push("Строчная буква");
+            errors.push('Строчная буква');
           }
 
           if (!/^(?=.*[A-Z])/.test(value)) {
-            errors.push("Заглавная буква");
+            errors.push('Заглавная буква');
           }
           if (errors.length > 0) {
             throw new Yup.ValidationError(
-              errors.join("|"),
+              errors.join('|'),
               errors,
-              "password",
-              value,
+              'password',
+              value
             );
           }
 
           return true;
         }),
       email: Yup.string()
-        .email("Неверный формат почты")
-        .required("Не заполнена почта"),
+        .email('Неверный формат почты')
+        .required('Не заполнена почта'),
     }),
   });
 
@@ -108,19 +108,19 @@ export default function SignInForm({
         <div className="relative">
           <div
             className={cn(
-              "group flex h-[48px] items-center border-b border-accent px-[16px] focus-within:border-foreground",
+              'group flex h-[48px] items-center border-b border-accent px-[16px] focus-within:border-foreground',
               formik.touched.username &&
                 formik.errors.username &&
-                "border-error",
+                'border-error'
             )}
           >
-            {" "}
+            {' '}
             <div className="mr-[14px] h-[16px] w-[16px]">
-              <AccountSvg active={formik.values.username !== ""} />
+              <AccountSvg active={formik.values.username !== ''} />
             </div>
             <input
               className="h-full w-full bg-transparent text-[14px] text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
-              placeholder={"Ваше имя"}
+              placeholder={'Ваше имя'}
               id="username"
               name="username"
               type="text"
@@ -137,7 +137,7 @@ export default function SignInForm({
             <div className="absolute left-0 top-[52px] flex gap-[8px] text-[12px] text-error">
               <Image
                 src={ErrorDecorationSvg}
-                alt={""}
+                alt={''}
                 width={14}
                 height={14}
               ></Image>
@@ -150,12 +150,12 @@ export default function SignInForm({
         <div className="relative">
           <div
             className={cn(
-              "group flex h-[48px] items-center border-b border-accent px-[16px] focus-within:border-foreground",
-              formik.touched.email && formik.errors.email && "border-error",
+              'group flex h-[48px] items-center border-b border-accent px-[16px] focus-within:border-foreground',
+              formik.touched.email && formik.errors.email && 'border-error'
             )}
           >
             <div className="mr-[14px] h-[16px] w-[16px]">
-              <EmailSvg active={formik.values.email !== ""} />
+              <EmailSvg active={formik.values.email !== ''} />
             </div>
 
             <input
@@ -173,7 +173,7 @@ export default function SignInForm({
             <div className="absolute left-0 top-[52px] flex gap-[8px] text-[12px] text-error">
               <Image
                 src={ErrorDecorationSvg}
-                alt={""}
+                alt={''}
                 width={14}
                 height={14}
               ></Image>
@@ -186,18 +186,18 @@ export default function SignInForm({
         <div className="relative">
           <div
             className={cn(
-              "group flex h-[48px] items-center border-b border-accent px-[16px] focus-within:border-foreground",
+              'group flex h-[48px] items-center border-b border-accent px-[16px] focus-within:border-foreground',
               formik.touched.password &&
                 formik.errors.password &&
-                "border-error",
+                'border-error'
             )}
           >
-            {" "}
+            {' '}
             <div className="mr-[14px] h-[16px] w-[16px]">
-              <PasswordSvg active={formik.values.password !== ""} />
+              <PasswordSvg active={formik.values.password !== ''} />
             </div>
             <input
-              type={showPassword ? "text" : "password"}
+              type={showPassword ? 'text' : 'password'}
               placeholder="Пароль"
               className="h-full w-full bg-transparent text-[14px] text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
               id="password"
@@ -218,8 +218,8 @@ export default function SignInForm({
           </div>
           {formik.values.password && formik.errors.password ? (
             <div className="mt-[12px] flex flex-row gap-[8px]">
-              {(formik.errors.password.includes("|")
-                ? formik.errors.password.split("|")
+              {(formik.errors.password.includes('|')
+                ? formik.errors.password.split('|')
                 : [formik.errors.password]
               ).map((error, index) => (
                 <div
@@ -237,7 +237,7 @@ export default function SignInForm({
 
       {/* Login link */}
       <div className="mb-[20px] h-auto text-center text-[14px] text-foreground">
-        Вы зарегистрированы?{" "}
+        Вы зарегистрированы?{' '}
         <Link href="#" className="text-primary">
           Вход
         </Link>
@@ -290,13 +290,13 @@ export default function SignInForm({
       <div className="mt-[40px] flex w-full items-center justify-center gap-[12px]">
         <button
           className="flex items-center justify-center"
-          onClick={() => signIn("google")}
+          onClick={() => signIn('google')}
         >
           <GoogleLoginIcon />
         </button>
         <button
           className="flex items-center justify-center"
-          onClick={() => signIn("vk")}
+          onClick={() => signIn('vk')}
         >
           <VkLoginIcon />
         </button>

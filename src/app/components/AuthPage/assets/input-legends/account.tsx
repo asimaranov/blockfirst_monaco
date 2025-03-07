@@ -1,4 +1,4 @@
-import { cn } from "~/helpers";
+import { cn } from '~/helpers';
 
 export default function AccountSVG({ active }: { active?: boolean }) {
   return (
@@ -15,8 +15,8 @@ export default function AccountSVG({ active }: { active?: boolean }) {
         strokeLinecap="round"
         strokeLinejoin="round"
         className={cn(
-          "[stroke-opacity:50%] group-focus-within:stroke-foreground group-focus-within:[stroke-opacity:100%]",
-          active && "stroke-foreground [stroke-opacity:100%]",
+          '[stroke-opacity:50%] group-focus-within:stroke-foreground group-focus-within:[stroke-opacity:100%]',
+          active && 'stroke-foreground [stroke-opacity:100%]'
         )}
       />
       <path
@@ -26,8 +26,8 @@ export default function AccountSVG({ active }: { active?: boolean }) {
         strokeLinecap="round"
         strokeLinejoin="round"
         className={cn(
-          "[stroke-opacity:50%] group-focus-within:stroke-foreground group-focus-within:[stroke-opacity:100%]",
-          active && "stroke-foreground [stroke-opacity:100%]",
+          '[stroke-opacity:50%] group-focus-within:stroke-foreground group-focus-within:[stroke-opacity:100%]',
+          active && 'stroke-foreground [stroke-opacity:100%]'
         )}
       />
     </svg>

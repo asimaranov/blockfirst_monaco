@@ -1,9 +1,6 @@
-"use client";
-
+'use client';
 
 export default function SignUpConfirmEmailForm() {
- 
-
   return (
     <>
       {/* Main heading */}

@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import RightFiller from "./RightFiller";
-import Image from "next/image";
-import LogoSvg from "./assets/logo.svg";
+import RightFiller from './RightFiller';
+import Image from 'next/image';
+import LogoSvg from './assets/logo.svg';
 
 export default function AuthPageBase({
   children,
