@@ -1,6 +1,6 @@
 'use client';
 
-import Sidebar from '~/app/components/Dashboard/Sidebar';
+import Sidebar from '~/app/components/Sidebar/Sidebar';
 
 export default function AuthPageBase({
   children,
