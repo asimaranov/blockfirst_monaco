@@ -1,5 +1,5 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { type DefaultSession, type NextAuthConfig } from "next-auth";
+import { CredentialsSignin, type DefaultSession, type NextAuthConfig } from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 import GoogleProvider from "next-auth/providers/google";
 import VkProvider from "next-auth/providers/vk";
@@ -11,14 +11,12 @@ import { signInSchema } from "~/app/lib/zod";
 import bcrypt from "bcryptjs";
 import { AuthError } from "next-auth";
 
-export class CustomAuthError extends AuthError {
+export class CustomAuthError extends CredentialsSignin {
   public readonly kind = 'signIn';
 
   constructor(message: string) {
     super(message);
-    this.name = "CustomAuthError";
-    this.message = message;
-    this.type = 'CredentialsSignin';
+    this.code = message;
 
   }
 }
@@ -118,8 +116,7 @@ export const authConfig = {
           password = parseData.password;
           email_code = parseData.email_code ?? "";
         } catch (error) {
-          console.error("Error", error);
-          throw new CustomAuthError("Invalid credentials");
+          throw new CustomAuthError("Invalid credentials, " + (error as Error)?.message);
         }
 
         const hash = saltAndHashPassword(password);
@@ -203,7 +200,9 @@ export const authConfig = {
       }
       return true; // Do different verification for other providers that don't have `email_verified`
     },
-
+    async redirect({ url, baseUrl }) {
+      return baseUrl
+    },
     session: ({ session, user }) => ({
       ...session,
       user: {
