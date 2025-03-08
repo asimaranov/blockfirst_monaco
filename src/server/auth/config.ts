@@ -183,6 +183,8 @@ export const authConfig = {
           }
         }
 
+        console.log('User', user);
+
         return user;
       },
     }),

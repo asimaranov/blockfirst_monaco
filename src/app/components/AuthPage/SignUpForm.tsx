@@ -17,11 +17,12 @@ import GoogleLoginIcon from './assets/social/google';
 import VkLoginIcon from './assets/social/vk';
 import PasswordEyeOpen from './assets/password_eye_open';
 import PasswordEyeClosed from './assets/password_eye_closed';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AuthStep, IAuthPageState } from '.';
 import { api } from '~/trpc/react';
+import { useSearchParams } from 'next/navigation';
 
-export default function SignInForm({
+export default function SignUpForm({
   setAuthStep,
   setAuthState,
 }: {
@@ -34,6 +35,15 @@ export default function SignInForm({
       console.log('success', data, variables, context);
     },
   });
+
+  const searchParams = useSearchParams();
+  const [error, setError] = useState(searchParams.get('error'));
+
+  useEffect(() => {
+    setTimeout(() => {
+      setError(null);
+    }, 5000);
+  }, [error]);
 
   const formik = useFormik({
     initialValues: {
@@ -233,6 +243,17 @@ export default function SignInForm({
               ))}
             </div>
           ) : null}
+          {error ? (
+            <div className="absolute left-0 top-[52px] flex justify-center gap-[8px] text-[12px] text-error">
+              <Image
+                src={ErrorDecorationSvg}
+                alt={''}
+                width={14}
+                height={14}
+              ></Image>
+              <div className="text-error">Error: {error}</div>
+            </div>
+          ) : null}
         </div>
       </form>
       <div className="flex-grow"></div>
@@ -261,26 +282,8 @@ export default function SignInForm({
             });
             setAuthStep(AuthStep.SignUpConfirmEmail);
           } catch (error) {
-            console.error("Error", error);
+            console.error('Error', error);
           }
-
-          // try {
-          //   const result = await signIn("credentials", {
-          //     email: formik.values.email,
-          //     password: formik.values.password,
-          //     email_code: "abacaba",
-          //     redirect: false,
-          //   });
-          //   console.log("result", result);
-          //   if ((result?.url || "").includes("signin?error")) {
-          //     setAuthStep(AuthStep.SignUpConfirmEmail);
-          //   }
-          // } catch (error) {
-          //   console.error("Error", error);
-          // } finally {
-          //   console.log("done");
-          //   setAuthStep(AuthStep.SignUpConfirmEmail);
-          // }
         }}
       >
         <span className="text-[14px]">Зарегистрироваться</span>
@@ -302,16 +305,25 @@ export default function SignInForm({
       <div className="mt-[40px] flex w-full items-center justify-center gap-[12px]">
         <button
           className="flex items-center justify-center"
-          onClick={() => signIn('google')}
+          onClick={async () => {
+            try {
+              await signIn('google', {
+                redirect: false,
+              });
+            } catch (error) {
+              console.error('Error in google signin', error);
+              alert('Error in google signin');
+            }
+          }}
         >
           <GoogleLoginIcon />
         </button>
-        <button
+        {/* <button
           className="flex items-center justify-center"
           onClick={() => signIn('vk')}
         >
           <VkLoginIcon />
-        </button>
+        </button> */}
       </div>
     </>
   );
