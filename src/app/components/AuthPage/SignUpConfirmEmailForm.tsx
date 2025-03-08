@@ -5,6 +5,7 @@ import AuthButton from './button';
 import { api } from '~/trpc/react';
 import { cn } from '~/helpers';
 import { IAuthPageState } from '.';
+import { signIn } from 'next-auth/react';
 interface IActiveInput {
   index: number;
   clear: boolean;
@@ -142,7 +143,22 @@ export default function SignUpConfirmEmailForm({
 
         <div className="flex-grow"></div>
 
-        <AuthButton text="Войти" state="active" />
+        <AuthButton
+          text="Войти"
+          state="active"
+          onClick={async () => {
+            const wholeCode = inputRefs.current
+              .map((input) => input.value)
+              .join('');
+
+            await signIn('credentials', {
+              email: authState.email!,
+              password: authState.password!,
+              email_code: wholeCode,
+              redirect: false,
+            });
+          }}
+        />
       </div>
     </>
   );
