@@ -2,14 +2,23 @@
 
 import { useEffect, useRef, useState } from 'react';
 
+interface IActiveInput {
+  index: number;
+  clear: boolean;
+}
 export default function SignUpConfirmEmailForm() {
-  const [activeInput, setActiveInput] = useState(0);
+  const [activeInput, setActiveInput] = useState<IActiveInput>({
+    index: 0,
+    clear: false,
+  });
 
   useEffect(() => {
-    if (activeInput <= 4) {
+    if (activeInput.index <= 4) {
       setTimeout(() => {
-        inputRefs.current[activeInput]!.value = '';
-        inputRefs.current[activeInput]!.focus();
+        if (activeInput.clear) {
+          inputRefs.current[activeInput.index]!.value = '';
+        }
+        inputRefs.current[activeInput.index]!.focus();
       }, 100);
     }
   }, [activeInput]);
@@ -32,10 +41,9 @@ export default function SignUpConfirmEmailForm() {
               ref={(node: HTMLInputElement | null) => {
                 if (node) inputRefs.current[index] = node;
               }}
+              key={index}
               className="h-[58px] w-[58px] border-b bg-transparent text-center text-[24px] text-foreground placeholder:text-center focus:outline-none"
               placeholder={'-'}
-              id={`username-${index}`}
-              name={`username-${index}`}
               type="text"
               maxLength={1}
               onKeyDown={(e) => {
@@ -44,13 +52,19 @@ export default function SignUpConfirmEmailForm() {
                 if (e.key === 'Backspace') {
                   if (index > 0) {
                     e.currentTarget.value = '';
-                    inputRefs.current[index - 1]?.focus();
+                    setActiveInput({
+                      index: activeInput.index - 1,
+                      clear: false,
+                    });
                   }
                 }
 
                 if (newDigit.length > 0) {
                   e.currentTarget.value = e.key;
-                  setActiveInput(index + 1);
+                  setActiveInput({
+                    index: activeInput.index + 1,
+                    clear: true,
+                  });
                 }
               }}
               onPaste={(e) => {
