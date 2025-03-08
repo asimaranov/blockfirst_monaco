@@ -32,7 +32,7 @@ export default function SignUpConfirmEmailForm() {
           <br />
           Ваш e-mail
         </h1>
-        <p className="mt-6 text-center text-[14px] leading-5 text-secondary">
+        <p className="mt-6 text-center text-[14px] leading-5 text-secondary mb-[40px]">
           Мы выслали на ваш электронный адрес ссылку для подтверждения.
         </p>
         <div className="flex flex-row gap-[16px]">
@@ -46,6 +46,12 @@ export default function SignUpConfirmEmailForm() {
               placeholder={'-'}
               type="text"
               maxLength={1}
+              onFocus={() => {
+                setActiveInput({
+                  index: index,
+                  clear: false,
+                });
+              }}
               onKeyDown={(e) => {
                 const newDigit = e.key.replace(/[^0-9]/g, '');
 
@@ -79,6 +85,14 @@ export default function SignUpConfirmEmailForm() {
               }}
             ></input>
           ))}
+        </div>
+        <div className="flex flex-col gap-[16px] w-full items-center pt-[64px]">
+          <span className=" text-foreground text-[18px]">00:00</span>
+          <div className="flex flex-row gap-[4px]">
+            <span className=" text-foreground text-[14px]">Не получили код?</span>
+            <button className="text-primary text-[14px]">Отправить повторно</button>
+          </div>
+
         </div>
       </div>
     </>
