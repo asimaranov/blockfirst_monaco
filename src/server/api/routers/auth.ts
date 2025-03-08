@@ -30,7 +30,7 @@ export const authRouter = createTRPCRouter({
 
       const code = await ctx.db.emailCode.create({
         data: {
-          code: Math.random().toString(36).substring(2, 15),
+          code: randomFiveNumbers.toString(),
           expires_at: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(),
           confirmation_type: "signup",
           email: email,

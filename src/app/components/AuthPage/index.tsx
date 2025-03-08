@@ -8,6 +8,7 @@ export enum AuthStep {
   SignIn = 'signIn',
   SignUp = 'signUp',
   SignUpConfirmEmail = 'signUpConfirmEmail',
+  AccountCreation = 'accountCreation',
 }
 
 
@@ -18,17 +19,17 @@ export interface IAuthPageState {
 }
 
 export default function AuthPage() {
-  const [authStep, setAuthStep] = useState<AuthStep>(AuthStep.SignUpConfirmEmail);
+  const [authStep, setAuthStep] = useState<AuthStep>(AuthStep.SignUp);
   const [authState, setAuthState] = useState<IAuthPageState>({});
 
   return (
     <AuthPageBase>
-      {authStep === AuthStep.SignIn && (
+      {authStep === AuthStep.SignUp && (
         <SignInForm setAuthStep={setAuthStep} setAuthState={setAuthState} />
       )}
       {/* {authStep === AuthStep.SignUp && <SignUpForm />} */}
       {authStep === AuthStep.SignUpConfirmEmail && (
-        <SignUpConfirmEmailForm authState={authState} />
+        <SignUpConfirmEmailForm authState={authState} setAuthStep={setAuthStep} />
       )}
     </AuthPageBase>
   );

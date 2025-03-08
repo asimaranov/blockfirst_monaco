@@ -132,6 +132,7 @@ export const authConfig = {
           }
           const code = await db.emailCode.findFirst({
             where: {
+              email: email,
               code: credentials.email_code,
             },
           });

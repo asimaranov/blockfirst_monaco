@@ -1,11 +1,14 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { AuthStep } from '.';
 import AuthButton from './button';
 import { api } from '~/trpc/react';
 import { cn } from '~/helpers';
 import { IAuthPageState } from '.';
 import { signIn } from 'next-auth/react';
+import ErrorNoticeSvg from './assets/error_notice.svg';
+import Image from 'next/image';
 interface IActiveInput {
   index: number;
   clear: boolean;
@@ -15,14 +18,17 @@ const TIMER_START = 30;
 
 export default function SignUpConfirmEmailForm({
   authState,
+  setAuthStep,
 }: {
   authState: IAuthPageState;
+  setAuthStep: (step: AuthStep) => void;
 }) {
   const [activeInput, setActiveInput] = useState<IActiveInput>({
     index: 0,
     clear: false,
   });
   const [timer, setTimer] = useState(TIMER_START);
+  const [isError, setIsError] = useState(true);
 
   useEffect(() => {
     if (timer > 0) {
@@ -32,6 +38,14 @@ export default function SignUpConfirmEmailForm({
       return () => clearInterval(interval);
     }
   }, [timer]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (isError) {
+        setIsError(false);
+      }
+    }, 5000);
+  }, [isError]);
 
   useEffect(() => {
     if (activeInput.index <= 4) {
@@ -62,56 +76,71 @@ export default function SignUpConfirmEmailForm({
         <p className="mb-[40px] mt-6 text-center text-[14px] leading-5 text-secondary">
           Мы выслали на ваш электронный адрес ссылку для подтверждения.
         </p>
-        <div className="flex flex-row gap-[16px]">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <input
-              ref={(node: HTMLInputElement | null) => {
-                if (node) inputRefs.current[index] = node;
-              }}
-              key={index}
-              className="h-[58px] w-[58px] border-b bg-transparent text-center text-[24px] text-foreground placeholder:text-center focus:outline-none"
-              placeholder={'-'}
-              type="text"
-              maxLength={1}
-              onFocus={() => {
-                setActiveInput({
-                  index: index,
-                  clear: false,
-                });
-              }}
-              onKeyDown={(e) => {
-                const newDigit = e.key.replace(/[^0-9]/g, '');
+        <div className="relative">
+          <div className="relative flex flex-row gap-[16px]">
+            {Array.from({ length: 5 }).map((_, index) => (
+              <input
+                ref={(node: HTMLInputElement | null) => {
+                  if (node) inputRefs.current[index] = node;
+                }}
+                key={index}
+                className={cn(
+                  'h-[58px] w-[58px] border-b bg-transparent text-center text-[24px] text-foreground placeholder:text-center focus:outline-none',
+                  isError && 'border-error'
+                )}
+                placeholder={'-'}
+                type="text"
+                maxLength={1}
+                onFocus={() => {
+                  setActiveInput({
+                    index: index,
+                    clear: false,
+                  });
+                }}
+                onKeyDown={(e) => {
+                  const newDigit = e.key.replace(/[^0-9]/g, '');
 
-                if (e.key === 'Backspace') {
-                  if (index > 0) {
-                    e.currentTarget.value = '';
+                  if (e.key === 'Backspace') {
+                    if (index > 0) {
+                      e.currentTarget.value = '';
+                      setActiveInput({
+                        index: activeInput.index - 1,
+                        clear: false,
+                      });
+                    }
+                  }
+
+                  if (newDigit.length > 0) {
+                    e.currentTarget.value = e.key;
                     setActiveInput({
-                      index: activeInput.index - 1,
-                      clear: false,
+                      index: activeInput.index + 1,
+                      clear: true,
                     });
                   }
-                }
+                }}
+                onPaste={(e) => {
+                  const pasteData = e.clipboardData.getData('text/plain');
+                  const sanitizedData = pasteData.replace(/[^0-9]/g, '');
 
-                if (newDigit.length > 0) {
-                  e.currentTarget.value = e.key;
-                  setActiveInput({
-                    index: activeInput.index + 1,
-                    clear: true,
-                  });
-                }
-              }}
-              onPaste={(e) => {
-                const pasteData = e.clipboardData.getData('text/plain');
-                const sanitizedData = pasteData.replace(/[^0-9]/g, '');
-
-                for (let i = 0; i < Math.min(sanitizedData.length, 5); i++) {
-                  if (inputRefs.current[i]) {
-                    inputRefs.current[i]!.value = sanitizedData[i] || '';
+                  for (let i = 0; i < Math.min(sanitizedData.length, 5); i++) {
+                    if (inputRefs.current[i]) {
+                      inputRefs.current[i]!.value = sanitizedData[i] || '';
+                    }
                   }
-                }
-              }}
-            ></input>
-          ))}
+                }}
+              ></input>
+            ))}
+          </div>
+          {isError && (
+            <div className="absolute flex flex-row items-center gap-[8px] pt-[12px] text-[12px] text-error">
+              <Image
+                src={ErrorNoticeSvg}
+                alt={''}
+                className="h-[14px] w-[14px]"
+              ></Image>
+              Вы ввели неправильный код, попробуйте снова
+            </div>
+          )}
         </div>
         <div className="flex w-full flex-col items-center gap-[16px] pt-[64px]">
           <span className="text-[18px] text-foreground">
@@ -144,19 +173,29 @@ export default function SignUpConfirmEmailForm({
         <div className="flex-grow"></div>
 
         <AuthButton
-          text="Войти"
+          text="Продолжить"
           state="active"
           onClick={async () => {
             const wholeCode = inputRefs.current
               .map((input) => input.value)
               .join('');
+            try {
+              const creds = await signIn('credentials', {
+                email: authState.email!,
+                password: authState.password!,
+                email_code: wholeCode,
+                redirect: false,
+              });
+              if (creds?.error) {
+                console.log('Error in creds signup', creds);
 
-            await signIn('credentials', {
-              email: authState.email!,
-              password: authState.password!,
-              email_code: wholeCode,
-              redirect: false,
-            });
+                setIsError(true);
+              } else {
+                setAuthStep(AuthStep.AccountCreation);
+              }
+            } catch (error) {
+              setIsError(true);
+            }
           }}
         />
       </div>
