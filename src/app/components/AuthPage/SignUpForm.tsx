@@ -18,13 +18,15 @@ import VkLoginIcon from './assets/social/vk';
 import PasswordEyeOpen from './assets/password_eye_open';
 import PasswordEyeClosed from './assets/password_eye_closed';
 import { useState } from 'react';
-import { AuthStep } from '.';
+import { AuthStep, IAuthPageState } from '.';
 import { api } from '~/trpc/react';
 
 export default function SignInForm({
   setAuthStep,
+  setAuthState,
 }: {
   setAuthStep: (step: AuthStep) => void;
+  setAuthState: (state: IAuthPageState) => void;
 }) {
   const [showPassword, setShowPassword] = useState(false);
   const requestEmailCode = api.auth.requestSignupEmailCode.useMutation({
@@ -252,7 +254,11 @@ export default function SignInForm({
             await requestEmailCode.mutateAsync({
               email: formik.values.email,
             });
-            
+            setAuthState({
+              email: formik.values.email,
+              username: formik.values.username,
+              password: formik.values.password,
+            });
             setAuthStep(AuthStep.SignUpConfirmEmail);
           } catch (error) {
             console.error("Error", error);

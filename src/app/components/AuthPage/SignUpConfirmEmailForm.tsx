@@ -1,16 +1,36 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-
+import AuthButton from './button';
+import { api } from '~/trpc/react';
+import { cn } from '~/helpers';
+import { IAuthPageState } from '.';
 interface IActiveInput {
   index: number;
   clear: boolean;
 }
-export default function SignUpConfirmEmailForm() {
+
+const TIMER_START = 30;
+
+export default function SignUpConfirmEmailForm({
+  authState,
+}: {
+  authState: IAuthPageState;
+}) {
   const [activeInput, setActiveInput] = useState<IActiveInput>({
     index: 0,
     clear: false,
   });
+  const [timer, setTimer] = useState(TIMER_START);
+
+  useEffect(() => {
+    if (timer > 0) {
+      const interval = setInterval(() => {
+        setTimer(timer - 1);
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [timer]);
 
   useEffect(() => {
     if (activeInput.index <= 4) {
@@ -24,15 +44,21 @@ export default function SignUpConfirmEmailForm() {
   }, [activeInput]);
 
   const inputRefs = useRef<HTMLInputElement[]>([]);
+  const requestEmailCode = api.auth.requestSignupEmailCode.useMutation({
+    onSuccess(data, variables, context) {
+      console.log('success', data, variables, context);
+    },
+  });
+
   return (
     <>
-      <div className="mb-[40px]">
+      <div className="flex h-full flex-col">
         <h1 className="text-center text-[40px] font-bold uppercase leading-[48px] tracking-tight text-white">
           Подтвердите
           <br />
           Ваш e-mail
         </h1>
-        <p className="mt-6 text-center text-[14px] leading-5 text-secondary mb-[40px]">
+        <p className="mb-[40px] mt-6 text-center text-[14px] leading-5 text-secondary">
           Мы выслали на ваш электронный адрес ссылку для подтверждения.
         </p>
         <div className="flex flex-row gap-[16px]">
@@ -86,14 +112,37 @@ export default function SignUpConfirmEmailForm() {
             ></input>
           ))}
         </div>
-        <div className="flex flex-col gap-[16px] w-full items-center pt-[64px]">
-          <span className=" text-foreground text-[18px]">00:00</span>
+        <div className="flex w-full flex-col items-center gap-[16px] pt-[64px]">
+          <span className="text-[18px] text-foreground">
+            {String(Math.floor(timer / 60)).padStart(2, '0')}:
+            {String(timer % 60).padStart(2, '0')}
+          </span>
           <div className="flex flex-row gap-[4px]">
-            <span className=" text-foreground text-[14px]">Не получили код?</span>
-            <button className="text-primary text-[14px]">Отправить повторно</button>
+            <span className="text-[14px] text-foreground">
+              Не получили код?
+            </span>
+            <button
+              className={cn(
+                'text-[14px] text-primary',
+                timer > 0 && 'opacity-50'
+              )}
+              disabled={timer > 0}
+              onClick={async () => {
+                if (timer > 0) return;
+                await requestEmailCode.mutateAsync({
+                  email: authState.email!,
+                });
+                setTimer(TIMER_START);
+              }}
+            >
+              Отправить
+            </button>
           </div>
-
         </div>
+
+        <div className="flex-grow"></div>
+
+        <AuthButton text="Войти" state="active" />
       </div>
     </>
   );

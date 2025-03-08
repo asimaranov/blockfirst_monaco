@@ -10,13 +10,26 @@ export enum AuthStep {
   SignUpConfirmEmail = 'signUpConfirmEmail',
 }
 
+
+export interface IAuthPageState {
+  email?: string;
+  username?: string;
+  password?: string;
+}
+
 export default function AuthPage() {
   const [authStep, setAuthStep] = useState<AuthStep>(AuthStep.SignUpConfirmEmail);
+  const [authState, setAuthState] = useState<IAuthPageState>({});
+
   return (
     <AuthPageBase>
-      {authStep === AuthStep.SignIn && <SignInForm setAuthStep={setAuthStep} />}
+      {authStep === AuthStep.SignIn && (
+        <SignInForm setAuthStep={setAuthStep} setAuthState={setAuthState} />
+      )}
       {/* {authStep === AuthStep.SignUp && <SignUpForm />} */}
-      {authStep === AuthStep.SignUpConfirmEmail && <SignUpConfirmEmailForm />}
+      {authStep === AuthStep.SignUpConfirmEmail && (
+        <SignUpConfirmEmailForm authState={authState} />
+      )}
     </AuthPageBase>
   );
 }
