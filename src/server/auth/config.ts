@@ -99,6 +99,7 @@ export const authConfig = {
           type: 'email',
           placeholder: 'email@example.com',
         },
+        name: { label: 'Name', type: 'text' },
         password: { label: 'Password', type: 'password' },
         email_code: { label: 'EmailCode', type: 'text' },
       },
@@ -106,12 +107,15 @@ export const authConfig = {
         let email: string;
         let password: string;
         let email_code: string;
+        let name: string;
 
         try {
           const parseData = await signInSchema.parseAsync(credentials);
           email = parseData.email;
           password = parseData.password;
           email_code = parseData.email_code ?? '';
+          name = parseData.name;
+
         } catch (error) {
           throw new CustomAuthError(
             'Invalid credentials, ' + (error as Error)?.message
@@ -127,13 +131,13 @@ export const authConfig = {
         });
 
         if (!user) {
-          if (!credentials.email_code) {
+          if (!email_code) {
             throw new CustomAuthError('No email code provided.');
           }
           const code = await db.emailCode.findFirst({
             where: {
               email: email,
-              code: credentials.email_code,
+              code: email_code,
             },
           });
 
@@ -165,6 +169,7 @@ export const authConfig = {
           user = await db.user.create({
             data: {
               email,
+              name,
               hashedPassword: hash,
             },
           });

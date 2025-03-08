@@ -13,4 +13,7 @@ export const signInSchema = object({
     .min(5, 'Email code must be 5 characters')
     .max(5, 'Email code must be 5 characters')
     .optional(),
+  name: string({ required_error: 'Name is required' })
+    .min(1, 'Name is required')
+    .max(32, 'Name must be less than 32 characters'),
 });

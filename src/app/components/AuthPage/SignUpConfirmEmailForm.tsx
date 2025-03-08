@@ -184,6 +184,7 @@ export default function SignUpConfirmEmailForm({
                 email: authState.email!,
                 password: authState.password!,
                 email_code: wholeCode,
+                name: authState.username!,
                 redirect: false,
               });
               if (creds?.error) {
