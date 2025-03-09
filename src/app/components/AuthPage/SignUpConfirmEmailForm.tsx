@@ -6,7 +6,6 @@ import AuthButton from './button';
 import { api } from '~/trpc/react';
 import { cn } from '~/helpers';
 import { IAuthPageState } from '.';
-import { signIn } from 'next-auth/react';
 import ErrorNoticeSvg from './assets/error_notice.svg';
 import Image from 'next/image';
 import { authClient } from '~/app/lib/auth-client';

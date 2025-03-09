@@ -1,5 +1,5 @@
 'use client';
-import { signIn, useSession } from 'next-auth/react';
+import { signIn, useSession } from '~/app/lib/auth-client';
 
 import Link from 'next/link';
 import ErrorDecorationSvg from './assets/error_decoration.svg';
@@ -16,6 +16,7 @@ import PasswordEyeClosed from './assets/password_eye_closed';
 import { useEffect, useState } from 'react';
 import { AuthStep, IAuthPageState } from '.';
 import { useSearchParams } from 'next/navigation';
+import VkLoginIcon from './assets/social/vk';
 
 export default function SignШтForm({
   setAuthStep,
@@ -226,27 +227,11 @@ export default function SignШтForm({
       <button
         type="submit"
         className="flex w-full items-center justify-center rounded-full bg-primary py-3.5 text-foreground"
-        onClick={async (e) => {
-          e.preventDefault();
-          if (!formik.isValid) {
-            return;
-          }
-          try {
-            const result = await signIn('credentials', {
-              email: formik.values.email,
-              password: formik.values.password,
-              redirect: false,
-            });
-
-            if (result?.error) {
-              setError(result.error);
-            } else if (result?.ok) {
-              window.location.href = '/';
-            }
-          } catch (error) {
-            console.error('Sign in error:', error);
-            setError('Произошла ошибка при входе');
-          }
+        onClick={async () => {
+          await signIn.email({
+            email: formik.values.email,
+            password: formik.values.password,
+          });
         }}
       >
         <span className="text-[14px]">Войти</span>
@@ -270,8 +255,9 @@ export default function SignШтForm({
           className="flex items-center justify-center"
           onClick={async () => {
             try {
-              await signIn('google', {
-                redirect: false,
+              await signIn.social({
+                provider: 'google',
+                callbackURL: '/dashboard',
               });
             } catch (error) {
               console.error('Error in google signin', error);
@@ -281,12 +267,17 @@ export default function SignШтForm({
         >
           <GoogleLoginIcon />
         </button>
-        {/* <button
+        <button
           className="flex items-center justify-center"
-          onClick={() => signIn('vk')}
+          onClick={async () => {
+            await signIn.social({
+              provider: 'vk',
+              callbackURL: '/dashboard',
+            });
+          }}
         >
           <VkLoginIcon />
-        </button> */}
+        </button>
       </div>
     </>
   );

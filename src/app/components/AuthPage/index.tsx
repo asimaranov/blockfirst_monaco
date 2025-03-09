@@ -4,7 +4,6 @@ import AuthPageBase from './AuthPageBase';
 import SignUpForm from './SignUpForm';
 import SignInForm from './SignInForm';
 import SignUpConfirmEmailForm from './SignUpConfirmEmailForm';
-import { SessionProvider } from 'next-auth/react';
 
 export enum AuthStep {
   SignIn = 'signIn',
@@ -24,7 +23,6 @@ export default function AuthPage() {
   const [authState, setAuthState] = useState<IAuthPageState>({});
 
   return (
-    <SessionProvider>
       <AuthPageBase>
         {authStep === AuthStep.SignUp && (
           <SignUpForm setAuthStep={setAuthStep} setAuthState={setAuthState} />
@@ -39,6 +37,5 @@ export default function AuthPage() {
           />
         )}
       </AuthPageBase>
-    </SessionProvider>
   );
 }
