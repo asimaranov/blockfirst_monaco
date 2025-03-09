@@ -8,10 +8,14 @@ import { MenuLink } from './MenuLink';
 import PremiumSvg from 'public/premium.svg';
 import { UserInfo } from './UserInfo';
 import { IUser, SubscriptionType } from '~/app/lib/types/IUser';
-
+import { signOut, useSession } from '~/server/auth/client';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 export default function Sidebar() {
+  const session = useSession();
+
   const user: IUser = {
-    name: 'Евгений',
+    name: session.data?.user?.name ?? '',
     startTimestamp: Date.now(),
     createdAt: new Date().toISOString(),
     subscriptionType: SubscriptionType.Free,
@@ -24,8 +28,9 @@ export default function Sidebar() {
           <Image src={LogoSvg} alt="logo" />
           <div
             className={
-              'rounded-full border border-[#282D33] py-[10px] pl-[11px] pr-[9px]'
+              'rounded-full border border-[#282D33] py-[10px] pl-[11px] pr-[9px] cursor-pointer'
             }
+            onClick={() => signOut()}
           >
             <LogoutSvg />
           </div>

@@ -127,6 +127,8 @@ export default function SignШтForm({
               className="h-full w-full bg-transparent text-[14px] text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
               id="email"
               name="email"
+              required
+              autoComplete="email" 
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.email}
