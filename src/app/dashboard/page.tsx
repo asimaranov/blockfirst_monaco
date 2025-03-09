@@ -1,10 +1,10 @@
-'use client'
-import { useSession } from "~/app/lib/auth-client";
+'use client';
+import { useSession } from '~/server/auth/client';
 
 export default function DashboardPage() {
   const { data: session } = useSession();
-  console.log(session)
-  
+  console.log(session);
+
   return (
     <main className={'h-screen w-full'}>
       <div>Dashboard</div>

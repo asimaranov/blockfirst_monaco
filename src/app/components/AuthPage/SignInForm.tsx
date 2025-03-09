@@ -1,5 +1,5 @@
 'use client';
-import { signIn, useSession } from '~/app/lib/auth-client';
+import { signIn, useSession } from '~/server/auth/client';
 
 import Link from 'next/link';
 import ErrorDecorationSvg from './assets/error_decoration.svg';
@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import { AuthStep, IAuthPageState } from '.';
 import { useSearchParams } from 'next/navigation';
 import VkLoginIcon from './assets/social/vk';
+import { useRouter } from "next/navigation";
 
 export default function SignШтForm({
   setAuthStep,
@@ -29,6 +30,7 @@ export default function SignШтForm({
   const searchParams = useSearchParams();
   const [error, setError] = useState(searchParams.get('error'));
   const session = useSession();
+  const router = useRouter()
 
   console.log('session', session);
 
@@ -179,7 +181,7 @@ export default function SignШтForm({
               </div>
             </button>
           </div>
-          {formik.values.password && formik.errors.password ? (
+          {/* {formik.values.password && formik.errors.password ? (
             <div className="mt-[12px] flex flex-row gap-[8px]">
               {(formik.errors.password.includes('|')
                 ? formik.errors.password.split('|')
@@ -193,7 +195,7 @@ export default function SignШтForm({
                 </div>
               ))}
             </div>
-          ) : null}
+          ) : null} */}
           {error ? (
             <div className="absolute left-0 top-[52px] flex justify-center gap-[8px] text-[12px] text-error">
               <Image
@@ -228,10 +230,16 @@ export default function SignШтForm({
         type="submit"
         className="flex w-full items-center justify-center rounded-full bg-primary py-3.5 text-foreground"
         onClick={async () => {
-          await signIn.email({
+          const res = await signIn.email({
             email: formik.values.email,
             password: formik.values.password,
           });
+          if (res?.error) {
+            setError(res.error.message ?? 'Error in email signin');
+            console.error('Error in email signin', res);
+          } else {
+            router.push('/dashboard');
+          }
         }}
       >
         <span className="text-[14px]">Войти</span>

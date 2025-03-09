@@ -8,7 +8,7 @@ import { cn } from '~/helpers';
 import { IAuthPageState } from '.';
 import ErrorNoticeSvg from './assets/error_notice.svg';
 import Image from 'next/image';
-import { authClient } from '~/app/lib/auth-client';
+import { authClient } from '~/server/auth/client';
 interface IActiveInput {
   index: number;
   clear: boolean;
@@ -59,11 +59,6 @@ export default function SignUpConfirmEmailForm({
   }, [activeInput]);
 
   const inputRefs = useRef<HTMLInputElement[]>([]);
-  const requestEmailCode = api.auth.requestSignupEmailCode.useMutation({
-    onSuccess(data, variables, context) {
-      console.log('success', data, variables, context);
-    },
-  });
 
   return (
     <>
@@ -159,10 +154,16 @@ export default function SignUpConfirmEmailForm({
               disabled={timer > 0}
               onClick={async () => {
                 if (timer > 0) return;
-                await requestEmailCode.mutateAsync({
+                const requestEmailCode = await authClient.emailOtp.sendVerificationOtp({
                   email: authState.email!,
+                  type: 'email-verification',
                 });
-                setTimer(TIMER_START);
+                console.log('requestEmailCode', requestEmailCode)
+                if (requestEmailCode?.error) {
+                  setIsError(true);
+                } else {
+                  setTimer(TIMER_START);
+                }
               }}
             >
               Отправить

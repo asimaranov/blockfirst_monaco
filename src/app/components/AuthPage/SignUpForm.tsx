@@ -20,7 +20,7 @@ import { useEffect, useState } from 'react';
 import { AuthStep, IAuthPageState } from '.';
 import { api } from '~/trpc/react';
 import { useSearchParams } from 'next/navigation';
-import { authClient, signIn, signUp } from '~/app/lib/auth-client';
+import { authClient, signIn, signUp } from '~/server/auth/client';
 import router from 'next/router';
 
 export default function SignUpForm({
