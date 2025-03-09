@@ -14,11 +14,11 @@ import {
 } from "@react-email/components";
 
 interface VerificationEmailTemplateProps {
-  inviteLink: string;
+    otp: string;
 }
 
 const VerificationEmailTemplate = ({
-  inviteLink,
+  otp,
 }: VerificationEmailTemplateProps) => {
   const previewText = `Verify Your Email Address.`;
 
@@ -32,20 +32,23 @@ const VerificationEmailTemplate = ({
             <Heading className="mx-0 my-[30px] p-0 text-center text-[24px] font-normal text-black">
               <strong>Verify Your Email Address</strong>
             </Heading>
-            <Section className="mb-[32px] mt-[32px] text-center">
+            <Text className="text-[14px] leading-[24px] text-black">
+              Your verification code is: {otp}
+            </Text>
+            {/* <Section className="mb-[32px] mt-[32px] text-center">
               <Button
                 className="rounded-lg bg-[#000000] px-5 py-3 text-center text-[12px] font-semibold text-white no-underline"
                 href={inviteLink}
               >
                 Verify Now
               </Button>
-            </Section>
-            <Text className="text-[14px] leading-[24px] text-black">
+            </Section> */}
+            {/* <Text className="text-[14px] leading-[24px] text-black">
               or copy and paste this URL into your browser:{" "}
               <Link href={inviteLink} className="text-blue-600 no-underline">
                 {inviteLink}
               </Link>
-            </Text>
+            </Text> */}
             <Hr className="mx-0 my-[26px] w-full border border-solid border-[#eaeaea]" />
           </Container>
         </Body>

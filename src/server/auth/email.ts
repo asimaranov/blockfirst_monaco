@@ -11,17 +11,17 @@ export const resend = new Resend(env.RESERND_API_KEY);
 
 export const sendVerificationEmail = async ({
   email,
-  verificationUrl,
+  otp,
 }: {
   email: string;
-  verificationUrl: string;
+  otp: string;
 }) => {
   return await resend.emails.send({
     from: env.EMAIL_FROM,
     to: [email],
     subject: "Verify your Email address",
     html: await render(
-      VerificationEmailTemplate({ inviteLink: verificationUrl }),
+      VerificationEmailTemplate({ otp }),
     ),
   });
 };

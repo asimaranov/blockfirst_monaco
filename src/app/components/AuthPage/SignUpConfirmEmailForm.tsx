@@ -182,6 +182,8 @@ export default function SignUpConfirmEmailForm({
               .join('');
             console.log('signup confirm email', authState.email, wholeCode);
 
+            
+
             try {
               const creds = await authClient.emailOtp.verifyEmail({
                 email: authState.email!,

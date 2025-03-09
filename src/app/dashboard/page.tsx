@@ -17,9 +17,6 @@ export default function DashboardPage() {
   return (
     <main className={'h-screen w-full'}>
       <div>Dashboard</div>
-      <div>
-        <pre>{JSON.stringify(session, null, 2)}</pre>
-      </div>
     </main>
   );
 }

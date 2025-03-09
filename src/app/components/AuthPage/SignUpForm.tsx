@@ -271,10 +271,11 @@ export default function SignUpForm({
         type="submit"
         className="flex w-full items-center justify-center rounded-full bg-primary py-3.5 text-foreground"
         onClick={async () => {
-          const { data, error } = await authClient.emailOtp.sendVerificationOtp(
+          const { data, error } = await authClient.signUp.email(
             {
               email: formik.values.email,
-              type: 'email-verification', // or "email-verification", "forget-password"
+              name: formik.values.username,
+              password: formik.values.password,
             }
           );
 
