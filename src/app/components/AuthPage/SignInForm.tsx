@@ -30,8 +30,6 @@ export default function SignШтForm({
   const session = useSession();
   const router = useRouter()
 
-  console.log('session', session);
-
   useEffect(() => {
     setTimeout(() => {
       setError('');

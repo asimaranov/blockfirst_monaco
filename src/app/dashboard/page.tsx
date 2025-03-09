@@ -8,7 +8,6 @@ export default function DashboardPage() {
   const router = useRouter();
 
   useEffect(() => {
-    console.log('session', session);
     if (!session.data && !session.isPending) {
       router.push('/signin');
     }
