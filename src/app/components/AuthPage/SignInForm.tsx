@@ -15,7 +15,6 @@ import PasswordEyeOpen from './assets/password_eye_open';
 import PasswordEyeClosed from './assets/password_eye_closed';
 import { useEffect, useState } from 'react';
 import { AuthStep, IAuthPageState } from '.';
-import { useSearchParams } from 'next/navigation';
 import VkLoginIcon from './assets/social/vk';
 import { useRouter } from "next/navigation";
 
@@ -27,8 +26,7 @@ export default function SignШтForm({
   setAuthState: (state: IAuthPageState) => void;
 }) {
   const [showPassword, setShowPassword] = useState(false);
-  const searchParams = useSearchParams();
-  const [error, setError] = useState(searchParams.get('error'));
+  const [error, setError] = useState('');
   const session = useSession();
   const router = useRouter()
 
@@ -36,7 +34,7 @@ export default function SignШтForm({
 
   useEffect(() => {
     setTimeout(() => {
-      setError(null);
+      setError('');
     }, 5000);
   }, [error]);
 

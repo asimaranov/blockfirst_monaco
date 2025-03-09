@@ -1,7 +1,5 @@
 'use client'
 import Link from 'next/link';
-
-import { LatestPost } from '~/app/_components/post';
 import { useSession } from '~/server/auth/client';
 import { api } from '~/trpc/react';
 

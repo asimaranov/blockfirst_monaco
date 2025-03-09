@@ -19,7 +19,6 @@ import PasswordEyeClosed from './assets/password_eye_closed';
 import { useEffect, useState } from 'react';
 import { AuthStep, IAuthPageState } from '.';
 import { api } from '~/trpc/react';
-import { useSearchParams } from 'next/navigation';
 import { authClient, signIn, signUp } from '~/server/auth/client';
 import router from 'next/router';
 
@@ -31,18 +30,12 @@ export default function SignUpForm({
   setAuthState: (state: IAuthPageState) => void;
 }) {
   const [showPassword, setShowPassword] = useState(false);
-  const requestEmailCode = api.auth.requestSignupEmailCode.useMutation({
-    onSuccess(data, variables, context) {
-      console.log('success', data, variables, context);
-    },
-  });
 
-  const searchParams = useSearchParams();
-  const [error, setError] = useState(searchParams.get('error'));
+  const [error, setError] = useState('');
 
   useEffect(() => {
     setTimeout(() => {
-      setError(null);
+      setError('');
     }, 5000);
   }, [error]);
 
