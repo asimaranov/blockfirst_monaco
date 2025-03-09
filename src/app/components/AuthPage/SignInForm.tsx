@@ -1,5 +1,5 @@
 'use client';
-import { signIn, useSession } from '~/server/auth/client';
+import { authClient, signIn, useSession } from '~/server/auth/client';
 
 import Link from 'next/link';
 import ErrorDecorationSvg from './assets/error_decoration.svg';
@@ -14,21 +14,23 @@ import GoogleLoginIcon from './assets/social/google';
 import PasswordEyeOpen from './assets/password_eye_open';
 import PasswordEyeClosed from './assets/password_eye_closed';
 import { useEffect, useState } from 'react';
-import { AuthStep, IAuthPageState } from '.';
+import { AuthStep, IAuthPageState, ITopButtonState } from '.';
 import VkLoginIcon from './assets/social/vk';
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 
-export default function SignШтForm({
+export default function SignInForm({
   setAuthStep,
   setAuthState,
+  setTopButtonState,
 }: {
   setAuthStep: (step: AuthStep) => void;
   setAuthState: (state: IAuthPageState) => void;
+  setTopButtonState: (state: ITopButtonState) => void;
 }) {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const session = useSession();
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     setTimeout(() => {
@@ -126,7 +128,7 @@ export default function SignШтForm({
               id="email"
               name="email"
               required
-              autoComplete="email" 
+              autoComplete="email"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.email}
@@ -233,8 +235,33 @@ export default function SignШтForm({
             password: formik.values.password,
           });
           if (res?.error) {
-            setError(res.error.message ?? 'Error in email signin');
-            console.error('Error in email signin', res);
+            if (res.error.code === 'EMAIL_NOT_VERIFIED') {
+              console.log('Sending verification OTP');
+              await authClient.emailOtp.sendVerificationOtp({
+                email: formik.values.email,
+                type: 'email-verification',
+              });
+              console.log('Verification OTP sent');
+              setAuthState({
+                email: formik.values.email,
+                username: '',
+                password: formik.values.password,
+              });
+              setTopButtonState({
+                state: 'back',
+                onClick: () => {
+                  setAuthStep(AuthStep.SignIn);
+                  setTopButtonState({
+                    state: undefined,
+                    onClick: () => {},
+                  });
+                },
+              });
+              setAuthStep(AuthStep.SignUpConfirmEmail);
+            } else {
+              setError(res.error.message ?? 'Error in email signin');
+              console.error('Error in email signin', res);
+            }
           } else {
             router.push('/dashboard');
           }

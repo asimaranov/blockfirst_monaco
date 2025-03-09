@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { AuthStep } from '.';
+import { AuthStep, ITopButtonState } from '.';
 import AuthButton from './button';
 import { cn } from '~/helpers';
 import { IAuthPageState } from '.';
@@ -19,16 +19,21 @@ const TIMER_START = 30;
 export default function SignUpConfirmEmailForm({
   authState,
   setAuthStep,
+  setTopButtonState,
 }: {
   authState: IAuthPageState;
   setAuthStep: (step: AuthStep) => void;
+  setTopButtonState: (state: ITopButtonState) => void;
 }) {
   const [activeInput, setActiveInput] = useState<IActiveInput>({
     index: 0,
     clear: false,
   });
   const [timer, setTimer] = useState(TIMER_START);
-  const [isError, setIsError] = useState(true);
+  const [isError, setIsError] = useState(false);
+  const [wholeCode, setWholeCode] = useState('');
+  const inputRefs = useRef<HTMLInputElement[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     if (timer > 0) {
@@ -58,8 +63,13 @@ export default function SignUpConfirmEmailForm({
     }
   }, [activeInput]);
 
-  const inputRefs = useRef<HTMLInputElement[]>([]);
-  const router = useRouter();
+  const updateWholeCode = () => {
+    setWholeCode(inputRefs.current.map((input) => input.value).join(''));
+  };
+
+  useEffect(() => {
+    updateWholeCode();
+  }, [inputRefs.current]);
 
   return (
     <>

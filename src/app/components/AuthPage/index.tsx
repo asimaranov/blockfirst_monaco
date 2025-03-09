@@ -18,22 +18,38 @@ export interface IAuthPageState {
   password?: string;
 }
 
+export interface ITopButtonState {
+  state: 'back' | 'cross' | undefined;
+  onClick: () => void;
+}
+
 export default function AuthPage() {
   const [authStep, setAuthStep] = useState<AuthStep>(AuthStep.SignUp);
   const [authState, setAuthState] = useState<IAuthPageState>({});
+  const [topButtonState, setTopButtonState] = useState<ITopButtonState>({
+    state: undefined,
+    onClick: () => {},
+  });
 
   return (
-      <AuthPageBase>
+      <AuthPageBase topButtonState={topButtonState.state} onTopButtonClick={topButtonState.onClick}>
         {authStep === AuthStep.SignUp && (
-          <SignUpForm setAuthStep={setAuthStep} setAuthState={setAuthState} />
+          <SignUpForm
+            setAuthStep={setAuthStep}
+            setAuthState={setAuthState}
+            setTopButtonState={setTopButtonState}
+          />
         )}
         {authStep === AuthStep.SignIn && (
-          <SignInForm setAuthStep={setAuthStep} setAuthState={setAuthState} />
+          <SignInForm setAuthStep={setAuthStep} setAuthState={setAuthState}
+          setTopButtonState={setTopButtonState}
+          />
         )}
         {authStep === AuthStep.SignUpConfirmEmail && (
           <SignUpConfirmEmailForm
             authState={authState}
             setAuthStep={setAuthStep}
+            setTopButtonState={setTopButtonState}
           />
         )}
       </AuthPageBase>

@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import LogoSvg from './assets/logo.svg';
 import ErrorDecorationSvg from './assets/error_decoration.svg';
 
 import AccountSvg from './assets/input-legends/account';
@@ -17,19 +16,21 @@ import VkLoginIcon from './assets/social/vk';
 import PasswordEyeOpen from './assets/password_eye_open';
 import PasswordEyeClosed from './assets/password_eye_closed';
 import { useEffect, useState } from 'react';
-import { AuthStep, IAuthPageState } from '.';
-import { api } from '~/trpc/react';
-import { authClient, signIn, signUp } from '~/server/auth/client';
-import router from 'next/router';
+import { AuthStep, IAuthPageState, ITopButtonState } from '.';
+import { authClient, signIn, useSession} from '~/server/auth/client';
 
 export default function SignUpForm({
   setAuthStep,
   setAuthState,
+  setTopButtonState,
 }: {
   setAuthStep: (step: AuthStep) => void;
   setAuthState: (state: IAuthPageState) => void;
+  setTopButtonState: (state: ITopButtonState) => void;
 }) {
   const [showPassword, setShowPassword] = useState(false);
+  const session = useSession();
+  console.log('session', session);
 
   const [error, setError] = useState('');
 
@@ -281,6 +282,7 @@ export default function SignUpForm({
 
           if (error) {
             console.error('Error in email OTP send', error);
+            setError(error.message ?? 'Unknown error');
           }
 
           if (data) {
@@ -288,6 +290,16 @@ export default function SignUpForm({
               email: formik.values.email,
               username: formik.values.username,
               password: formik.values.password,
+            });
+            setTopButtonState({
+              state: 'back',
+              onClick: () => {
+                setAuthStep(AuthStep.SignIn);
+                setTopButtonState({
+                  state: undefined,
+                  onClick: () => {},
+                });
+              },
             });
             setAuthStep(AuthStep.SignUpConfirmEmail);
 
