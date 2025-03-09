@@ -3,12 +3,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { AuthStep } from '.';
 import AuthButton from './button';
-import { api } from '~/trpc/react';
 import { cn } from '~/helpers';
 import { IAuthPageState } from '.';
 import ErrorNoticeSvg from './assets/error_notice.svg';
 import Image from 'next/image';
 import { authClient } from '~/server/auth/client';
+import { useRouter } from 'next/navigation';
 interface IActiveInput {
   index: number;
   clear: boolean;
@@ -59,6 +59,7 @@ export default function SignUpConfirmEmailForm({
   }, [activeInput]);
 
   const inputRefs = useRef<HTMLInputElement[]>([]);
+  const router = useRouter();
 
   return (
     <>
@@ -154,11 +155,12 @@ export default function SignUpConfirmEmailForm({
               disabled={timer > 0}
               onClick={async () => {
                 if (timer > 0) return;
-                const requestEmailCode = await authClient.emailOtp.sendVerificationOtp({
-                  email: authState.email!,
-                  type: 'email-verification',
-                });
-                console.log('requestEmailCode', requestEmailCode)
+                const requestEmailCode =
+                  await authClient.emailOtp.sendVerificationOtp({
+                    email: authState.email!,
+                    type: 'email-verification',
+                  });
+                console.log('requestEmailCode', requestEmailCode);
                 if (requestEmailCode?.error) {
                   setIsError(true);
                 } else {
@@ -182,8 +184,6 @@ export default function SignUpConfirmEmailForm({
               .join('');
             console.log('signup confirm email', authState.email, wholeCode);
 
-            
-
             try {
               const creds = await authClient.emailOtp.verifyEmail({
                 email: authState.email!,
@@ -194,7 +194,8 @@ export default function SignUpConfirmEmailForm({
 
                 setIsError(true);
               } else {
-                setAuthStep(AuthStep.AccountCreation);
+                // setAuthStep(AuthStep.AccountCreation);
+                router.push('/dashboard');
               }
             } catch (error) {
               setIsError(true);
