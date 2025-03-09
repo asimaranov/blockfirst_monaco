@@ -1,8 +1,10 @@
 'use client';
 import { useState } from 'react';
 import AuthPageBase from './AuthPageBase';
-import SignInForm from './SignUpForm';
+import SignUpForm from './SignUpForm';
+import SignInForm from './SignInForm';
 import SignUpConfirmEmailForm from './SignUpConfirmEmailForm';
+import { SessionProvider } from 'next-auth/react';
 
 export enum AuthStep {
   SignIn = 'signIn',
@@ -10,7 +12,6 @@ export enum AuthStep {
   SignUpConfirmEmail = 'signUpConfirmEmail',
   AccountCreation = 'accountCreation',
 }
-
 
 export interface IAuthPageState {
   email?: string;
@@ -23,14 +24,21 @@ export default function AuthPage() {
   const [authState, setAuthState] = useState<IAuthPageState>({});
 
   return (
-    <AuthPageBase>
-      {authStep === AuthStep.SignUp && (
-        <SignInForm setAuthStep={setAuthStep} setAuthState={setAuthState} />
-      )}
-      {/* {authStep === AuthStep.SignUp && <SignUpForm />} */}
-      {authStep === AuthStep.SignUpConfirmEmail && (
-        <SignUpConfirmEmailForm authState={authState} setAuthStep={setAuthStep} />
-      )}
-    </AuthPageBase>
+    <SessionProvider>
+      <AuthPageBase>
+        {authStep === AuthStep.SignUp && (
+          <SignUpForm setAuthStep={setAuthStep} setAuthState={setAuthState} />
+        )}
+        {authStep === AuthStep.SignIn && (
+          <SignInForm setAuthStep={setAuthStep} setAuthState={setAuthState} />
+        )}
+        {authStep === AuthStep.SignUpConfirmEmail && (
+          <SignUpConfirmEmailForm
+            authState={authState}
+            setAuthStep={setAuthStep}
+          />
+        )}
+      </AuthPageBase>
+    </SessionProvider>
   );
 }

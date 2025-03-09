@@ -9,6 +9,7 @@ import { IAuthPageState } from '.';
 import { signIn } from 'next-auth/react';
 import ErrorNoticeSvg from './assets/error_notice.svg';
 import Image from 'next/image';
+import { authClient } from '~/app/lib/auth-client';
 interface IActiveInput {
   index: number;
   clear: boolean;
@@ -179,13 +180,12 @@ export default function SignUpConfirmEmailForm({
             const wholeCode = inputRefs.current
               .map((input) => input.value)
               .join('');
+            console.log('signup confirm email', authState.email, wholeCode);
+
             try {
-              const creds = await signIn('credentials', {
+              const creds = await authClient.emailOtp.verifyEmail({
                 email: authState.email!,
-                password: authState.password!,
-                email_code: wholeCode,
-                name: authState.username!,
-                redirect: false,
+                otp: wholeCode,
               });
               if (creds?.error) {
                 console.log('Error in creds signup', creds);

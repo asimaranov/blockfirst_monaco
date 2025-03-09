@@ -1,10 +1,8 @@
 'use client';
+import { signIn, useSession } from 'next-auth/react';
 
 import Link from 'next/link';
-import LogoSvg from './assets/logo.svg';
 import ErrorDecorationSvg from './assets/error_decoration.svg';
-
-import AccountSvg from './assets/input-legends/account';
 import EmailSvg from './assets/input-legends/email';
 import PasswordSvg from './assets/input-legends/password';
 import { useFormik } from 'formik';
@@ -13,17 +11,13 @@ import * as Yup from 'yup';
 import Image from 'next/image';
 import { cn } from '~/helpers';
 import GoogleLoginIcon from './assets/social/google';
-import VkLoginIcon from './assets/social/vk';
 import PasswordEyeOpen from './assets/password_eye_open';
 import PasswordEyeClosed from './assets/password_eye_closed';
 import { useEffect, useState } from 'react';
 import { AuthStep, IAuthPageState } from '.';
-import { api } from '~/trpc/react';
 import { useSearchParams } from 'next/navigation';
-import { authClient, signIn, signUp } from '~/app/lib/auth-client';
-import router from 'next/router';
 
-export default function SignUpForm({
+export default function SignШтForm({
   setAuthStep,
   setAuthState,
 }: {
@@ -31,14 +25,11 @@ export default function SignUpForm({
   setAuthState: (state: IAuthPageState) => void;
 }) {
   const [showPassword, setShowPassword] = useState(false);
-  const requestEmailCode = api.auth.requestSignupEmailCode.useMutation({
-    onSuccess(data, variables, context) {
-      console.log('success', data, variables, context);
-    },
-  });
-
   const searchParams = useSearchParams();
   const [error, setError] = useState(searchParams.get('error'));
+  const session = useSession();
+
+  console.log('session', session);
 
   useEffect(() => {
     setTimeout(() => {
@@ -117,48 +108,6 @@ export default function SignUpForm({
 
       {/* Form */}
       <form className="flex flex-col gap-[24px]" onSubmit={formik.handleSubmit}>
-        {/* Username field */}
-        <div className="relative">
-          <div
-            className={cn(
-              'group flex h-[48px] items-center border-b border-accent px-[16px] focus-within:border-foreground',
-              formik.touched.username &&
-                formik.errors.username &&
-                'border-error'
-            )}
-          >
-            {' '}
-            <div className="mr-[14px] h-[16px] w-[16px]">
-              <AccountSvg active={formik.values.username !== ''} />
-            </div>
-            <input
-              className="h-full w-full bg-transparent text-[14px] text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
-              placeholder={'Ваше имя'}
-              id="username"
-              name="username"
-              type="text"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.username}
-            ></input>
-            {/* <span className="ml-auto flex items-center text-xs text-success">
-                <span className="mr-1 h-1.5 w-1.5 rounded-full bg-success"></span>
-                Доступно
-              </span> */}
-          </div>
-          {formik.touched.username && formik.errors.username ? (
-            <div className="absolute left-0 top-[52px] flex gap-[8px] text-[12px] text-error">
-              <Image
-                src={ErrorDecorationSvg}
-                alt={''}
-                width={14}
-                height={14}
-              ></Image>
-              {formik.errors.username}
-            </div>
-          ) : null}
-        </div>
-
         {/* Email field */}
         <div className="relative">
           <div
@@ -261,15 +210,15 @@ export default function SignUpForm({
 
       {/* Login link */}
       <div className="mb-[20px] h-auto text-center text-[14px] text-foreground">
-        Вы зарегистрированы?{' '}
+        У вас нет аккаунта?{' '}
         <Link
           href="#"
           className="text-primary"
           onClick={() => {
-            setAuthStep(AuthStep.SignIn);
+            setAuthStep(AuthStep.SignUp);
           }}
         >
-          Вход
+          Регистрация
         </Link>
       </div>
 
@@ -277,31 +226,30 @@ export default function SignUpForm({
       <button
         type="submit"
         className="flex w-full items-center justify-center rounded-full bg-primary py-3.5 text-foreground"
-        onClick={async () => {
-          const { data, error } = await authClient.emailOtp.sendVerificationOtp(
-            {
-              email: formik.values.email,
-              type: 'email-verification', // or "email-verification", "forget-password"
-            }
-          );
-
-          if (error) {
-            console.error('Error in email OTP send', error);
+        onClick={async (e) => {
+          e.preventDefault();
+          if (!formik.isValid) {
+            return;
           }
-
-          if (data) {
-            setAuthState({
+          try {
+            const result = await signIn('credentials', {
               email: formik.values.email,
-              username: formik.values.username,
               password: formik.values.password,
+              redirect: false,
             });
-            setAuthStep(AuthStep.SignUpConfirmEmail);
 
-            console.log('Email OTP sent', data);
+            if (result?.error) {
+              setError(result.error);
+            } else if (result?.ok) {
+              window.location.href = '/';
+            }
+          } catch (error) {
+            console.error('Sign in error:', error);
+            setError('Произошла ошибка при входе');
           }
         }}
       >
-        <span className="text-[14px]">Зарегистрироваться</span>
+        <span className="text-[14px]">Войти</span>
         <svg
           className="ml-2 h-5 w-5"
           viewBox="0 0 24 24"
@@ -322,9 +270,8 @@ export default function SignUpForm({
           className="flex items-center justify-center"
           onClick={async () => {
             try {
-              await signIn.social({
-                provider: 'google',
-                callbackURL: '/dashboard',
+              await signIn('google', {
+                redirect: false,
               });
             } catch (error) {
               console.error('Error in google signin', error);
@@ -334,22 +281,12 @@ export default function SignUpForm({
         >
           <GoogleLoginIcon />
         </button>
-        <button
+        {/* <button
           className="flex items-center justify-center"
-          onClick={async () => {
-            try {
-              await signIn.social({
-                provider: 'vk',
-                callbackURL: '/dashboard',
-              });
-            } catch (error) {
-              console.error('Error in vk signin', error);
-              alert('Error in vk signin');
-            }
-          }}
+          onClick={() => signIn('vk')}
         >
           <VkLoginIcon />
-        </button>
+        </button> */}
       </div>
     </>
   );
