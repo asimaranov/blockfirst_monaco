@@ -33,6 +33,15 @@ export default function ForgotPasswordForm({
   const router = useRouter();
 
   useEffect(() => {
+    setTopButtonState({
+      state: 'back',
+      onClick: () => {
+        setAuthStep(AuthStep.SignIn);
+      },
+    });
+  }, []);
+
+  useEffect(() => {
     setTimeout(() => {
       setError('');
     }, 5000);
@@ -55,13 +64,11 @@ export default function ForgotPasswordForm({
       {/* Main heading */}
       <div className="mb-[40px]">
         <h1 className="text-center text-[40px] font-bold uppercase leading-[48px] tracking-tight text-white">
-          Открой двери
-          <br />в мир web3
+          Восстановить доступ
         </h1>
         <p className="mt-6 text-center text-[14px] leading-5 text-secondary">
-          Добро пожаловать на платформу
-          <br />
-          BlockFirst. Мы рады видеть каждого!
+          Введите адрес электронной почты, на который зарегистрирован ваш
+          аккаунт
         </p>
       </div>
 
@@ -107,60 +114,32 @@ export default function ForgotPasswordForm({
       </form>
       <div className="flex-grow"></div>
 
-      {/* Login link */}
-      <div className="mb-[20px] h-auto text-center text-[14px] text-foreground">
-        У вас нет аккаунта?{' '}
-        <Link
-          href="#"
-          className="text-primary"
-          onClick={() => {
-            setAuthStep(AuthStep.SignUp);
-          }}
-        >
-          Регистрация
-        </Link>
-      </div>
-
-      {/* Register button */}
       <AuthButton
-        text="Отправить"
+        text="Продолжить"
         state="active"
         onClick={async () => {
-          const res = await signIn.email({
+          const res = await authClient.emailOtp.sendVerificationOtp({
             email: formik.values.email,
+            type: 'forget-password',
+          });
+
+          console.log('Forgot password OTP sent');
+          setAuthState({
+            email: formik.values.email,
+            username: '',
             password: formik.values.password,
           });
-          if (res?.error) {
-            if (res.error.code === 'EMAIL_NOT_VERIFIED') {
-              console.log('Sending verification OTP');
-              await authClient.emailOtp.sendVerificationOtp({
-                email: formik.values.email,
-                type: 'email-verification',
-              });
-              console.log('Verification OTP sent');
-              setAuthState({
-                email: formik.values.email,
-                username: '',
-                password: formik.values.password,
-              });
+          setTopButtonState({
+            state: 'back',
+            onClick: () => {
+              setAuthStep(AuthStep.SignIn);
               setTopButtonState({
-                state: 'back',
-                onClick: () => {
-                  setAuthStep(AuthStep.SignIn);
-                  setTopButtonState({
-                    state: undefined,
-                    onClick: () => {},
-                  });
-                },
+                state: undefined,
+                onClick: () => {},
               });
-              setAuthStep(AuthStep.SignUpConfirmEmail);
-            } else {
-              setError(res.error.message ?? 'Error in email signin');
-              console.error('Error in email signin', res);
-            }
-          } else {
-            router.push('/dashboard');
-          }
+            },
+          });
+          setAuthStep(AuthStep.SignUpConfirmEmail);
         }}
       ></AuthButton>
     </>

@@ -18,7 +18,7 @@ export default function AuthPageBase({
 }) {
   return (
     <div className="relative flex min-h-screen flex-row overflow-hidden bg-background">
-      <div className="relative z-10 flex min-w-[468px] flex-col p-[64px] outline outline-[1px] outline-accent">
+      <div className="relative z-10 flex min-w-[468px] max-w-[468px] flex-col p-[64px] outline outline-[1px] outline-accent">
         <div className="relative mb-[64px] flex w-full items-center justify-center">
           {topButtonState && (
             <button

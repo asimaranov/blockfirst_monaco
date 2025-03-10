@@ -1,14 +1,14 @@
-import { betterAuth, type BetterAuthOptions } from "better-auth";
-import { prismaAdapter } from "better-auth/adapters/prisma";
-import { openAPI, admin } from "better-auth/plugins";
-import { emailOTP } from "better-auth/plugins";
-import { env } from "~/env";
+import { betterAuth, type BetterAuthOptions } from 'better-auth';
+import { prismaAdapter } from 'better-auth/adapters/prisma';
+import { openAPI, admin } from 'better-auth/plugins';
+import { emailOTP } from 'better-auth/plugins';
+import { env } from '~/env';
 import {
   sendChangeEmailVerification,
   sendResetPasswordEmail,
   sendVerificationEmail,
-} from "~/server/auth/email";
-import { PrismaClient } from "@prisma/client";
+} from '~/server/auth/email';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -19,14 +19,15 @@ export const auth = betterAuth({
   plugins: [
     emailOTP({
       sendVerificationOnSignUp: true,
-      sendVerificationOTP: async ({ email, otp }) => {
+      sendVerificationOTP: async ({ email, otp, type }) => {
         const { error } = await sendVerificationEmail({
           otp: otp,
-          email
+          email,
         });
       },
       otpLength: 5,
     }),
+
     openAPI(), // /api/auth/reference
     admin({
       impersonationSessionDuration: 60 * 60 * 24 * 7, // 7 days
@@ -43,8 +44,8 @@ export const auth = betterAuth({
   user: {
     additionalFields: {
       plan: {
-        type: "string",
-        defaultValue: "free",
+        type: 'string',
+        defaultValue: 'free',
         required: true,
       },
     },
@@ -57,7 +58,7 @@ export const auth = betterAuth({
         });
 
         if (error)
-          return console.log("sendChangeEmailVerification Error: ", error);
+          return console.log('sendChangeEmailVerification Error: ', error);
       },
     },
   },
@@ -74,12 +75,11 @@ export const auth = betterAuth({
       clientId: process.env.VK_CLIENT_ID!,
       clientSecret: process.env.VK_CLIENT_SECRET!,
     },
-
   },
   account: {
     accountLinking: {
       enabled: true,
-      trustedProviders: ["google", "vk"],
+      trustedProviders: ['google', 'vk'],
     },
   },
   emailAndPassword: {
@@ -92,7 +92,7 @@ export const auth = betterAuth({
         verificationUrl: url,
       });
 
-      if (error) return console.log("sendResetPasswordEmail Error: ", error);
+      if (error) return console.log('sendResetPasswordEmail Error: ', error);
     },
   },
-  } satisfies BetterAuthOptions);
+} satisfies BetterAuthOptions);
