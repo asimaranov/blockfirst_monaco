@@ -11,7 +11,7 @@ import {
   Section,
   Tailwind,
   Text,
-} from "@react-email/components";
+} from '@react-email/components';
 
 interface VerificationEmailTemplateProps {
   inviteLink: string;
@@ -41,7 +41,7 @@ const ResetPasswordEmailTemplate = ({
               </Button>
             </Section>
             <Text className="text-[14px] leading-[24px] text-black">
-              or copy and paste this URL into your browser:{" "}
+              or copy and paste this URL into your browser:{' '}
               <Link href={inviteLink} className="text-blue-600 no-underline">
                 {inviteLink}
               </Link>
@@ -55,7 +55,7 @@ const ResetPasswordEmailTemplate = ({
 };
 
 ResetPasswordEmailTemplate.PreviewProps = {
-  inviteLink: "http://localhost:3000",
+  inviteLink: 'http://localhost:3000',
 };
 
 export default ResetPasswordEmailTemplate;
