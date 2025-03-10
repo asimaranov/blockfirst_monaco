@@ -10,7 +10,7 @@ export default function AuthButton({
   return (
     <button
       type="submit"
-      className="flex w-full items-center justify-center gap-[14px] rounded-full bg-primary py-3.5 text-foreground"
+      className="flex w-full items-center justify-center gap-[14px] text-[14px] rounded-full bg-primary py-3.5 text-foreground"
       onClick={onClick}
     >
       {text}

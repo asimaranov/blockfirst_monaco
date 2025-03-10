@@ -1,4 +1,5 @@
 import { object, string } from 'zod';
+import * as Yup from 'yup';
 
 export const signInSchema = object({
   email: string({ required_error: 'Email is required' })
@@ -17,4 +18,49 @@ export const signInSchema = object({
     .min(1, 'Name is required')
     .max(32, 'Name must be less than 32 characters')
     .optional(),
+});
+
+
+export const frontendSchema = Yup.object({
+  username: Yup.string()
+    .max(20, 'Не более 20 символов')
+    .required('Не заполнено имя'),
+  password: Yup.string()
+    .required('Не заполнен пароль')
+    .test((value) => {
+      let errors = [];
+
+      if (!/^(?=.{8,})/.test(value)) {
+        errors.push('8+ символов');
+      }
+
+      // if (!/^(?=.*[!@#\$%\^&\*])/.test(value)) {
+      //   errors.push("Спец. символ");
+      // }
+
+      if (!/^(?=.*[0-9])/.test(value)) {
+        errors.push('Цифра');
+      }
+
+      if (!/^(?=.*[a-z])/.test(value)) {
+        errors.push('Строчная буква');
+      }
+
+      if (!/^(?=.*[A-Z])/.test(value)) {
+        errors.push('Заглавная буква');
+      }
+      if (errors.length > 0) {
+        throw new Yup.ValidationError(
+          errors.join('|'),
+          errors,
+          'password',
+          value
+        );
+      }
+
+      return true;
+    }),
+  email: Yup.string()
+    .email('Неверный формат почты')
+    .required('Не заполнена почта'),
 });

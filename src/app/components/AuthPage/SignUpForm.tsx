@@ -7,17 +7,21 @@ import AccountSvg from './assets/input-legends/account';
 import EmailSvg from './assets/input-legends/email';
 import PasswordSvg from './assets/input-legends/password';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
-
 import Image from 'next/image';
 import { cn } from '~/helpers';
 import GoogleLoginIcon from './assets/social/google';
 import VkLoginIcon from './assets/social/vk';
 import PasswordEyeOpen from './assets/password_eye_open';
 import PasswordEyeClosed from './assets/password_eye_closed';
-import { useEffect, useState } from 'react';
-import { AuthStep, IAuthPageState, ITopButtonState } from '.';
-import { authClient, signIn, useSession} from '~/server/auth/client';
+import { use, useEffect, useState } from 'react';
+import {
+  AuthStep,
+  IAuthPageState,
+  ITopButtonState,
+} from '.';
+import { authClient, signIn, useSession } from '~/server/auth/client';
+import AuthButton from './button';
+import { frontendSchema } from '~/app/lib/zod';
 
 export default function SignUpForm({
   setAuthStep,
@@ -49,49 +53,7 @@ export default function SignUpForm({
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
     },
-    validationSchema: Yup.object({
-      username: Yup.string()
-        .max(20, 'Не более 20 символов')
-        .required('Не заполнено имя'),
-      password: Yup.string()
-        .required('Не заполнен пароль')
-        .test((value) => {
-          let errors = [];
-
-          if (!/^(?=.{8,})/.test(value)) {
-            errors.push('8+ символов');
-          }
-
-          // if (!/^(?=.*[!@#\$%\^&\*])/.test(value)) {
-          //   errors.push("Спец. символ");
-          // }
-
-          if (!/^(?=.*[0-9])/.test(value)) {
-            errors.push('Цифра');
-          }
-
-          if (!/^(?=.*[a-z])/.test(value)) {
-            errors.push('Строчная буква');
-          }
-
-          if (!/^(?=.*[A-Z])/.test(value)) {
-            errors.push('Заглавная буква');
-          }
-          if (errors.length > 0) {
-            throw new Yup.ValidationError(
-              errors.join('|'),
-              errors,
-              'password',
-              value
-            );
-          }
-
-          return true;
-        }),
-      email: Yup.string()
-        .email('Неверный формат почты')
-        .required('Не заполнена почта'),
-    }),
+    validationSchema: frontendSchema,
   });
 
   return (
@@ -103,7 +65,7 @@ export default function SignUpForm({
           <br />в мир web3
         </h1>
         <p className="mt-6 text-center text-[14px] leading-5 text-secondary">
-          Добропожаловать на платформу
+          Добро пожаловать на платформу
           <br />
           BlockFirst. Мы рады видеть каждого!
         </p>
@@ -268,17 +230,15 @@ export default function SignUpForm({
       </div>
 
       {/* Register button */}
-      <button
-        type="submit"
-        className="flex w-full items-center justify-center rounded-full bg-primary py-3.5 text-foreground"
+      <AuthButton
+        text="Зарегистрироваться"
+        state="active"
         onClick={async () => {
-          const { data, error } = await authClient.signUp.email(
-            {
-              email: formik.values.email,
-              name: formik.values.username,
-              password: formik.values.password,
-            }
-          );
+          const { data, error } = await authClient.signUp.email({
+            email: formik.values.email,
+            name: formik.values.username,
+            password: formik.values.password,
+          });
 
           if (error) {
             console.error('Error in email OTP send', error);
@@ -306,21 +266,7 @@ export default function SignUpForm({
             console.log('Email OTP sent', data);
           }
         }}
-      >
-        <span className="text-[14px]">Зарегистрироваться</span>
-        <svg
-          className="ml-2 h-5 w-5"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <line x1="5" y1="12" x2="19" y2="12"></line>
-          <polyline points="12 5 19 12 12 19"></polyline>
-        </svg>
-      </button>
+      ></AuthButton>
 
       {/* Social login */}
       <div className="mt-[40px] flex w-full items-center justify-center gap-[12px]">

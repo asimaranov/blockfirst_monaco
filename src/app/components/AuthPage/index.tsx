@@ -4,12 +4,16 @@ import AuthPageBase from './AuthPageBase';
 import SignUpForm from './SignUpForm';
 import SignInForm from './SignInForm';
 import SignUpConfirmEmailForm from './SignUpConfirmEmailForm';
+import PasswordResetSuccessForm from './PasswordResetSuccessForm';
+import PasswordResetFailedForm from './PasswordResetFailedForm';
+import ForgotPasswordForm from './ForgotPasswordForm';
 
 export enum AuthStep {
   SignIn = 'signIn',
   SignUp = 'signUp',
   SignUpConfirmEmail = 'signUpConfirmEmail',
   AccountCreation = 'accountCreation',
+  ForgotPassword = 'forgotPassword',
 }
 
 export interface IAuthPageState {
@@ -30,28 +34,39 @@ export default function AuthPage() {
     state: undefined,
     onClick: () => {},
   });
-
   return (
-      <AuthPageBase topButtonState={topButtonState.state} onTopButtonClick={topButtonState.onClick}>
-        {authStep === AuthStep.SignUp && (
-          <SignUpForm
-            setAuthStep={setAuthStep}
-            setAuthState={setAuthState}
-            setTopButtonState={setTopButtonState}
-          />
-        )}
-        {authStep === AuthStep.SignIn && (
-          <SignInForm setAuthStep={setAuthStep} setAuthState={setAuthState}
+    <AuthPageBase
+      topButtonState={topButtonState.state}
+      onTopButtonClick={topButtonState.onClick}
+    >
+      {authStep === AuthStep.SignUp && (
+        <SignUpForm
+          setAuthStep={setAuthStep}
+          setAuthState={setAuthState}
           setTopButtonState={setTopButtonState}
-          />
-        )}
-        {authStep === AuthStep.SignUpConfirmEmail && (
-          <SignUpConfirmEmailForm
-            authState={authState}
-            setAuthStep={setAuthStep}
-            setTopButtonState={setTopButtonState}
-          />
-        )}
-      </AuthPageBase>
+        />
+      )}
+      {authStep === AuthStep.SignIn && (
+        <SignInForm
+          setAuthStep={setAuthStep}
+          setAuthState={setAuthState}
+          setTopButtonState={setTopButtonState}
+        />
+      )}
+      {authStep === AuthStep.SignUpConfirmEmail && (
+        <SignUpConfirmEmailForm
+          authState={authState}
+          setAuthStep={setAuthStep}
+          setTopButtonState={setTopButtonState}
+        />
+      )}
+      {authStep === AuthStep.ForgotPassword && (
+        <ForgotPasswordForm
+          setAuthState={setAuthState}
+          setAuthStep={setAuthStep}
+          setTopButtonState={setTopButtonState}
+        />
+      )}
+    </AuthPageBase>
   );
 }
