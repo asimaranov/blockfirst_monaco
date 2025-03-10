@@ -31,6 +31,9 @@ export default function ForgotPasswordForm({
 }) {
   const [error, setError] = useState('');
   const router = useRouter();
+  const [bottomButtonState, setBottomButtonState] = useState<
+    'active' | 'loading' | 'disabled'
+  >('active');
 
   useEffect(() => {
     setTopButtonState({
@@ -116,12 +119,24 @@ export default function ForgotPasswordForm({
 
       <AuthButton
         text="Продолжить"
-        state="active"
+        state={bottomButtonState}
         onClick={async () => {
-          const res = await authClient.emailOtp.sendVerificationOtp({
-            email: formik.values.email,
-            type: 'forget-password',
-          });
+          setBottomButtonState('loading');
+          try {
+            const res = await authClient.emailOtp.sendVerificationOtp({
+              email: formik.values.email,
+              type: 'forget-password',
+            });
+            if (res?.error) {
+              setError(res?.error?.message || '');
+              return;
+            }
+          } catch (error) {
+            setError('Не удалось отправить код');
+            console.log('Error in forgot password', error);
+          } finally {
+            setBottomButtonState('active');
+          }
 
           console.log('Forgot password OTP sent');
           setAuthState({
@@ -139,7 +154,7 @@ export default function ForgotPasswordForm({
               });
             },
           });
-          setAuthStep(AuthStep.SignUpConfirmEmail);
+          setAuthStep(AuthStep.ForgotPasswordConfirmEmail);
         }}
       ></AuthButton>
     </>

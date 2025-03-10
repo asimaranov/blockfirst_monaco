@@ -2,7 +2,6 @@ import { betterAuth, type BetterAuthOptions } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { openAPI, admin } from 'better-auth/plugins';
 import { emailOTP } from 'better-auth/plugins';
-import { env } from '~/env';
 import {
   sendChangeEmailVerification,
   sendResetPasswordEmail,
@@ -85,6 +84,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: true,
+    
     // autoSignIn: false,
     sendResetPassword: async ({ user, url }) => {
       const { error } = await sendResetPasswordEmail({

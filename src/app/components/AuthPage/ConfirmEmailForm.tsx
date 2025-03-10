@@ -21,11 +21,13 @@ export default function ConfirmEmailForm({
   authState,
   setAuthStep,
   setTopButtonState,
+  setResetPasswordOtp,
 }: {
-  type: 'signup' | 'forgot-password';
+  type: 'email-verification' | 'forget-password';
   authState: IAuthPageState;
   setAuthStep: (step: AuthStep) => void;
   setTopButtonState: (state: ITopButtonState) => void;
+  setResetPasswordOtp: (otp: string) => void;
 }) {
   const [activeInput, setActiveInput] = useState<IActiveInput>({
     index: 0,
@@ -37,7 +39,7 @@ export default function ConfirmEmailForm({
   const inputRefs = useRef<HTMLInputElement[]>([]);
   const [bottomButtonState, setBottomButtonState] = useState<
     'active' | 'loading' | 'disabled'
-  >('loading');
+  >('active');
   const router = useRouter();
 
   useEffect(() => {
@@ -74,7 +76,30 @@ export default function ConfirmEmailForm({
     }, 10);
   };
 
-  const handleContinue = async () => {
+  const handleContinueForgotPassword = async () => {
+    setBottomButtonState('loading');
+    const wholeCode = inputRefs.current.map((input) => input.value).join('');
+
+    try {
+      const creds = await authClient.emailOtp.resetPassword({
+        email: authState.email!,
+        password: '',
+        otp: wholeCode,
+      });
+      if (creds?.error?.code === 'INVALID_PASSWORD') {
+        setResetPasswordOtp(wholeCode);
+        setAuthStep(AuthStep.ForgotPasswordEnterNewPassword);
+      } else {
+        console.log('Error in creds signup', creds);
+        setIsError(true);
+      }
+    } catch (error) {
+      setIsError(true);
+    } finally {
+      setBottomButtonState('active');
+    }
+  };
+  const handleContinueSignup = async () => {
     setBottomButtonState('loading');
     const wholeCode = inputRefs.current.map((input) => input.value).join('');
 
@@ -98,6 +123,14 @@ export default function ConfirmEmailForm({
     }
   };
 
+  const handleContinue = async () => {
+    if (type === 'email-verification') {
+      await handleContinueSignup();
+    } else {
+      await handleContinueForgotPassword();
+    }
+  };
+
   useEffect(() => {
     if (wholeCode.length === 5) {
       handleContinue();
@@ -106,9 +139,10 @@ export default function ConfirmEmailForm({
 
   const sendEmailCode = useCallback(async () => {
     if (timer > 0) return;
+    console.log('sendEmailCode', authState.email, type);
     const requestEmailCode = await authClient.emailOtp.sendVerificationOtp({
       email: authState.email!,
-      type: 'email-verification',
+      type: type,
     });
     console.log('requestEmailCode', requestEmailCode);
     if (requestEmailCode?.error) {

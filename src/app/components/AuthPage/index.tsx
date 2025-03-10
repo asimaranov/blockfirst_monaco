@@ -8,6 +8,7 @@ import PasswordResetSuccessForm from './PasswordResetSuccessForm';
 import PasswordResetFailedForm from './PasswordResetFailedForm';
 import ForgotPasswordForm from './ForgotPasswordForm';
 import ConfirmEmailForm from './ConfirmEmailForm';
+import ForgotPasswordNewPasswordForm from './ForgotPasswordNewPasswordForm';
 
 export enum AuthStep {
   SignIn = 'signIn',
@@ -16,6 +17,7 @@ export enum AuthStep {
   AccountCreation = 'accountCreation',
   ForgotPassword = 'forgotPassword',
   ForgotPasswordConfirmEmail = 'forgotPasswordConfirmEmail',
+  ForgotPasswordEnterNewPassword = 'ForgotPasswordEnterNewPassword',
 }
 
 export interface IAuthPageState {
@@ -36,6 +38,7 @@ export default function AuthPage() {
     state: undefined,
     onClick: () => {},
   });
+  const [resetPasswordOtp, setResetPasswordOtp] = useState<string>('');
   return (
     <AuthPageBase
       topButtonState={topButtonState.state}
@@ -57,20 +60,31 @@ export default function AuthPage() {
       )}
       {authStep === AuthStep.SignUpConfirmEmail && (
         <ConfirmEmailForm
-          type="signup"
+          type="email-verification"
           authState={authState}
           setAuthStep={setAuthStep}
           setTopButtonState={setTopButtonState}
+          setResetPasswordOtp={setResetPasswordOtp}
         />
       )}
       {authStep === AuthStep.ForgotPasswordConfirmEmail && (
         <ConfirmEmailForm
-          type="forgot-password"
+          type="forget-password"
           authState={authState}
           setAuthStep={setAuthStep}
           setTopButtonState={setTopButtonState}
+          setResetPasswordOtp={setResetPasswordOtp}
         />
       )}
+      {authStep === AuthStep.ForgotPasswordEnterNewPassword && (
+        <ForgotPasswordNewPasswordForm
+          authState={authState}
+          setAuthStep={setAuthStep}
+          setTopButtonState={setTopButtonState}
+          resetPasswordOtp={resetPasswordOtp}
+        />
+      )}
+
       {authStep === AuthStep.ForgotPassword && (
         <ForgotPasswordForm
           setAuthState={setAuthState}
