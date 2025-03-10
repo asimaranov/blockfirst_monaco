@@ -81,18 +81,18 @@ export default function ConfirmEmailForm({
     const wholeCode = inputRefs.current.map((input) => input.value).join('');
 
     try {
-      const creds = await authClient.emailOtp.resetPassword({
-        email: authState.email!,
-        password: '',
-        otp: wholeCode,
-      });
-      if (creds?.error?.code === 'INVALID_PASSWORD') {
+      // const creds = await authClient.emailOtp.resetPassword({
+      //   email: authState.email!,
+      //   password: '',
+      //   otp: wholeCode,
+      // });
+      // if (creds?.error?.code === 'INVALID_PASSWORD') {
         setResetPasswordOtp(wholeCode);
         setAuthStep(AuthStep.ForgotPasswordEnterNewPassword);
-      } else {
-        console.log('Error in creds signup', creds);
-        setIsError(true);
-      }
+      // } else {
+      //   console.log('Error in creds signup', creds);
+      //   setIsError(true);
+      // }
     } catch (error) {
       setIsError(true);
     } finally {
