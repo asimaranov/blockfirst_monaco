@@ -34,12 +34,8 @@ export default function SignUpForm({
 }) {
   const [showPassword, setShowPassword] = useState(false);
   const [bottomButtonState, setBottomButtonState] = useState<
-    'error' | 'loading' | 'active'
+    'disabled' | 'loading' | 'active'
   >('active');
-
-  const session = useSession();
-  console.log('session', session);
-
   const [error, setError] = useState('');
 
   useEffect(() => {

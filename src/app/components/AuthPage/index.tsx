@@ -3,10 +3,11 @@ import { useState } from 'react';
 import AuthPageBase from './AuthPageBase';
 import SignUpForm from './SignUpForm';
 import SignInForm from './SignInForm';
-import SignUpConfirmEmailForm from './SignUpConfirmEmailForm';
+import SignUpConfirmEmailForm from './ConfirmEmailForm';
 import PasswordResetSuccessForm from './PasswordResetSuccessForm';
 import PasswordResetFailedForm from './PasswordResetFailedForm';
 import ForgotPasswordForm from './ForgotPasswordForm';
+import ConfirmEmailForm from './ConfirmEmailForm';
 
 export enum AuthStep {
   SignIn = 'signIn',
@@ -54,7 +55,8 @@ export default function AuthPage() {
         />
       )}
       {authStep === AuthStep.SignUpConfirmEmail && (
-        <SignUpConfirmEmailForm
+        <ConfirmEmailForm
+          type="signup"
           authState={authState}
           setAuthStep={setAuthStep}
           setTopButtonState={setTopButtonState}

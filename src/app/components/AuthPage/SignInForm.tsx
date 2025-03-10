@@ -29,8 +29,10 @@ export default function SignInForm({
 }) {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
-  const session = useSession();
   const router = useRouter();
+  const [bottomButtonState, setBottomButtonState] = useState<
+    'disabled' | 'loading' | 'active'
+  >('active');
 
   useEffect(() => {
     setTimeout(() => {
@@ -194,12 +196,16 @@ export default function SignInForm({
       {/* Register button */}
       <AuthButton
         text="Войти"
-        state="active"
+        state={bottomButtonState}
         onClick={async () => {
+          setBottomButtonState('loading');
+
           const res = await signIn.email({
             email: formik.values.email,
             password: formik.values.password,
           });
+          setBottomButtonState('active');
+
           if (res?.error) {
             if (res.error.code === 'EMAIL_NOT_VERIFIED') {
               console.log('Sending verification OTP');
