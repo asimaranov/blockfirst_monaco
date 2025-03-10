@@ -5,9 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 patchedDependencies:
-  better-auth:
-    hash: 6e192af34fbafb88873ca78debecb2d9f1e0e042c0362bf5db75039bcb974a3a
-    path: patches/better-auth.patch
+  better-auth@1.2.3:
+    hash: 96f3c8ee9a99d21a2fef4fd302a4c58ec95090c376400b46dea90f2941cbe6fe
+    path: patches/better-auth@1.2.3.patch
 
 importers:
 
@@ -45,7 +45,7 @@ importers:
         version: 3.0.2
       better-auth:
         specifier: '=1.2.3'
-        version: 1.2.3(patch_hash=6e192af34fbafb88873ca78debecb2d9f1e0e042c0362bf5db75039bcb974a3a)(typescript@5.8.2)
+        version: 1.2.3(patch_hash=96f3c8ee9a99d21a2fef4fd302a4c58ec95090c376400b46dea90f2941cbe6fe)(typescript@5.8.2)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -3084,7 +3084,7 @@ snapshots:
 
   bcryptjs@3.0.2: {}
 
-  better-auth@1.2.3(patch_hash=6e192af34fbafb88873ca78debecb2d9f1e0e042c0362bf5db75039bcb974a3a)(typescript@5.8.2):
+  better-auth@1.2.3(patch_hash=96f3c8ee9a99d21a2fef4fd302a4c58ec95090c376400b46dea90f2941cbe6fe)(typescript@5.8.2):
     dependencies:
       '@better-auth/utils': 0.2.3
       '@better-fetch/fetch': 1.1.15

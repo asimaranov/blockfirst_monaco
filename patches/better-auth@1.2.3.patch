@@ -1,8 +1,8 @@
 diff --git a/dist/plugins/email-otp/index.cjs b/dist/plugins/email-otp/index.cjs
-index e7410365b62ed896582412f6901f2df89d7d9570..0d86107e9d5ced2cf248c37b09bcc8517ac795ee 100644
+index e7410365b62ed896582412f6901f2df89d7d9570..e8a2288fd3e3bb9477113ba04d496c2c42da7889 100644
 --- a/dist/plugins/email-otp/index.cjs
 +++ b/dist/plugins/email-otp/index.cjs
-@@ -613,6 +613,11 @@ const emailOTP = (options) => {
+@@ -613,6 +613,12 @@ const emailOTP = (options) => {
                message: ERROR_CODES.INVALID_OTP
              });
            }
@@ -11,6 +11,7 @@ index e7410365b62ed896582412f6901f2df89d7d9570..0d86107e9d5ced2cf248c37b09bcc851
 +              message: 'INVALID_PASSWORD'
 +            });
 +          }
++  
            await ctx.context.internalAdapter.deleteVerificationValue(
              verificationValue.id
            );
