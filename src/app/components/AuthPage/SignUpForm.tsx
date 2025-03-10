@@ -33,6 +33,10 @@ export default function SignUpForm({
   setTopButtonState: (state: ITopButtonState) => void;
 }) {
   const [showPassword, setShowPassword] = useState(false);
+  const [bottomButtonState, setBottomButtonState] = useState<
+    'error' | 'loading' | 'active'
+  >('active');
+
   const session = useSession();
   console.log('session', session);
 
@@ -232,17 +236,20 @@ export default function SignUpForm({
       {/* Register button */}
       <AuthButton
         text="Зарегистрироваться"
-        state="active"
+        state={bottomButtonState}
         onClick={async () => {
+          setBottomButtonState('loading');
           const { data, error } = await authClient.signUp.email({
             email: formik.values.email,
             name: formik.values.username,
             password: formik.values.password,
           });
+          setBottomButtonState('active');
 
           if (error) {
             console.error('Error in email OTP send', error);
             setError(error.message ?? 'Unknown error');
+
           }
 
           if (data) {
