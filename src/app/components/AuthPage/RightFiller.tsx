@@ -15,12 +15,12 @@ export default function RightFiller() {
             className="mb-[33px] ml-[70px]"
           ></Image>
 
-          <div className="relative mb-[36px] flex h-[107px] w-[383px] items-center justify-center">
-            <Image src={AvatarsBgSvg} alt={''} className="absolute z-0"></Image>
-            <div className="z-10 flex h-[53px] w-[124px] flex-col justify-center">
-              <span className="text-[25px] text-foreground">2310+</span>
-              <span className="text-[14px] text-secondary">Прошли курс</span>
+          <div className="relative mb-[36px] flex h-[107px] w-[383px] items-center justify-center rounded-[8px] border-[0.5px] border-[#F2F2F2] border-opacity-10 bg-[#01050D] bg-opacity-30 px-[22px] backdrop-blur-[10px]">
+            <div className="z-10 flex h-[53px] flex-col justify-center text-nowrap">
+              <span className="text-[26.4px] text-foreground">2310+</span>
+              <span className="text-secondary text-[15.4px]">Прошедших курс</span>
             </div>
+            <div className="w-[70px]"></div>
             <Image
               src={AvatarsItems}
               alt={''}
@@ -28,6 +28,8 @@ export default function RightFiller() {
               width={145}
               height={53}
             ></Image>
+          <div className="flex-grow"></div>
+
           </div>
           <Image
             src={Reviews}
