@@ -66,8 +66,6 @@
   },
   "packageManager": "pnpm@10.6.2",
   "pnpm": {
-    "patchedDependencies": {
-      "better-auth@1.2.3": "patches/better-auth@1.2.3.patch"
-    }
+
   }
 }
