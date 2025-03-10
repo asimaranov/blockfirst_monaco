@@ -220,7 +220,7 @@ export default function SignUpForm({
         Вы зарегистрированы?{' '}
         <Link
           href="#"
-          className="text-primary"
+          className="text-primary hover:text-[#1242B2]"
           onClick={() => {
             setAuthStep(AuthStep.SignIn);
           }}

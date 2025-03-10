@@ -142,7 +142,7 @@ export default function SignInForm({
             </button>
           </div>
           <div
-            className="absolute left-0 top-[52px] flex cursor-pointer gap-[8px] pl-[16px] pt-[12px] text-[12px] text-primary"
+            className="absolute left-0 top-[52px] flex cursor-pointer gap-[8px] pl-[16px] pt-[12px] text-[12px] text-primary hover:text-[#1242B2]"
             onClick={() => {
               setAuthStep(AuthStep.ForgotPassword);
             }}
@@ -184,7 +184,7 @@ export default function SignInForm({
         У вас нет аккаунта?{' '}
         <Link
           href="#"
-          className="text-primary"
+          className="text-primary hover:text-[#1242B2]"
           onClick={() => {
             setAuthStep(AuthStep.SignUp);
           }}

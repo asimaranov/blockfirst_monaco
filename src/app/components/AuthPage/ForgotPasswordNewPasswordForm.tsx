@@ -148,7 +148,8 @@ export default function ForgotPasswordNewPasswordForm({
         У вас нет аккаунта?{' '}
         <Link
           href="#"
-          className="text-primary"
+          className="text-primary hover:text-[#1242B2]"
+
           onClick={() => {
             setAuthStep(AuthStep.SignUp);
           }}
