@@ -64,7 +64,7 @@
   "ct3aMetadata": {
     "initVersion": "7.38.1"
   },
-  "packageManager": "pnpm@9.15.1",
+  "packageManager": "pnpm@10.6.2",
   "pnpm": {
     "patchedDependencies": {
       "better-auth": "patches/better-auth.patch"
