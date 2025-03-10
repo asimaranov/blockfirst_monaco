@@ -44,7 +44,7 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2
       better-auth:
-        specifier: ^1.2.3
+        specifier: '=1.2.3'
         version: 1.2.3(patch_hash=6e192af34fbafb88873ca78debecb2d9f1e0e042c0362bf5db75039bcb974a3a)(typescript@5.8.2)
       clsx:
         specifier: ^2.1.1
