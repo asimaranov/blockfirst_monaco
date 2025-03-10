@@ -15,6 +15,7 @@ export enum AuthStep {
   SignUpConfirmEmail = 'signUpConfirmEmail',
   AccountCreation = 'accountCreation',
   ForgotPassword = 'forgotPassword',
+  ForgotPasswordConfirmEmail = 'forgotPasswordConfirmEmail',
 }
 
 export interface IAuthPageState {
@@ -57,6 +58,14 @@ export default function AuthPage() {
       {authStep === AuthStep.SignUpConfirmEmail && (
         <ConfirmEmailForm
           type="signup"
+          authState={authState}
+          setAuthStep={setAuthStep}
+          setTopButtonState={setTopButtonState}
+        />
+      )}
+      {authStep === AuthStep.ForgotPasswordConfirmEmail && (
+        <ConfirmEmailForm
+          type="forgot-password"
           authState={authState}
           setAuthStep={setAuthStep}
           setTopButtonState={setTopButtonState}

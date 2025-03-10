@@ -35,6 +35,9 @@ export default function ConfirmEmailForm({
   const [isError, setIsError] = useState(false);
   const [wholeCode, setWholeCode] = useState('');
   const inputRefs = useRef<HTMLInputElement[]>([]);
+  const [bottomButtonState, setBottomButtonState] = useState<
+    'active' | 'loading' | 'disabled'
+  >('loading');
   const router = useRouter();
 
   useEffect(() => {
@@ -65,17 +68,41 @@ export default function ConfirmEmailForm({
     }
   }, [activeInput]);
 
-  const updateWholeCode = useCallback(() => {
-    setWholeCode(inputRefs.current.map((input) => input.value).join(''));
-  }, [inputRefs.current]);
+  const updateWholeCode = () => {
+    setTimeout(() => {
+      setWholeCode(inputRefs.current.map((input) => input.value).join(''));
+    }, 10);
+  };
+
+  const handleContinue = async () => {
+    setBottomButtonState('loading');
+    const wholeCode = inputRefs.current.map((input) => input.value).join('');
+
+    try {
+      const creds = await authClient.emailOtp.verifyEmail({
+        email: authState.email!,
+        otp: wholeCode,
+      });
+      if (creds?.error) {
+        console.log('Error in creds signup', creds);
+
+        setIsError(true);
+      } else {
+        // setAuthStep(AuthStep.AccountCreation);
+        router.push('/dashboard');
+      }
+    } catch (error) {
+      setIsError(true);
+    } finally {
+      setBottomButtonState('active');
+    }
+  };
 
   useEffect(() => {
-    updateWholeCode();
-
     if (wholeCode.length === 5) {
-      sendEmailCode();
+      handleContinue();
     }
-  }, [inputRefs.current]);
+  }, [wholeCode]);
 
   const sendEmailCode = useCallback(async () => {
     if (timer > 0) return;
@@ -143,6 +170,7 @@ export default function ConfirmEmailForm({
                       clear: true,
                     });
                   }
+                  updateWholeCode();
                 }}
                 onPaste={(e) => {
                   const pasteData = e.clipboardData.getData('text/plain');
@@ -153,6 +181,7 @@ export default function ConfirmEmailForm({
                       inputRefs.current[i]!.value = sanitizedData[i] || '';
                     }
                   }
+                  updateWholeCode();
                 }}
               ></input>
             ))}
@@ -193,31 +222,9 @@ export default function ConfirmEmailForm({
         <div className="flex-grow"></div>
 
         <AuthButton
+          state={bottomButtonState}
           text="Продолжить"
-          state="active"
-          onClick={async () => {
-            const wholeCode = inputRefs.current
-              .map((input) => input.value)
-              .join('');
-            console.log('signup confirm email', authState.email, wholeCode);
-
-            try {
-              const creds = await authClient.emailOtp.verifyEmail({
-                email: authState.email!,
-                otp: wholeCode,
-              });
-              if (creds?.error) {
-                console.log('Error in creds signup', creds);
-
-                setIsError(true);
-              } else {
-                // setAuthStep(AuthStep.AccountCreation);
-                router.push('/dashboard');
-              }
-            } catch (error) {
-              setIsError(true);
-            }
-          }}
+          onClick={handleContinue}
         />
       </div>
     </>
