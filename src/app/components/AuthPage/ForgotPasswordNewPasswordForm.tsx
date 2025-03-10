@@ -112,14 +112,7 @@ export default function ForgotPasswordNewPasswordForm({
               </div>
             </button>
           </div>
-          <div
-            className="absolute left-0 top-[52px] flex cursor-pointer gap-[8px] pl-[16px] pt-[12px] text-[12px] text-primary"
-            onClick={() => {
-              setAuthStep(AuthStep.ForgotPassword);
-            }}
-          >
-            Забыли пароль?
-          </div>
+ 
           {/* {formik.values.password && formik.errors.password ? (
             <div className="mt-[12px] flex flex-row gap-[8px]">
               {(formik.errors.password.includes('|')
