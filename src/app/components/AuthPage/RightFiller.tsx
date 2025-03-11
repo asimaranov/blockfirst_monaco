@@ -62,7 +62,7 @@ export default function RightFiller() {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
-      <div className="absolute top-0 right-0 w-[133px] h-[32px] rounded-[100px] border-[0.5px] mt-[64px] mr-[64px] border-foreground/20 text-secondary text-[12px] flex items-center justify-center uppercase">
+      <div className="absolute right-0 top-0 mr-[64px] mt-[64px] flex h-[32px] w-[133px] items-center justify-center rounded-[100px] border-[0.5px] border-foreground/20 text-[12px] uppercase text-secondary">
         Version 01.12.01
       </div>
       <div className="flex flex-col items-center justify-center">
@@ -72,16 +72,17 @@ export default function RightFiller() {
               x: codeSnippetX,
               y: codeSnippetY,
             }}
+            className="mb-[33px] ml-[70px]"
           >
             <Image
               src={CodeSnippetSvg}
               alt={''}
-              className="mb-[33px] ml-[70px]"
+              className="mb-[33px] flex h-[128px] w-[417px] items-center justify-center rounded-[8px] border-[0.5px] border-[#F2F2F2] border-opacity-10 bg-[#01050D] bg-opacity-30 px-[28px] py-[24px] backdrop-blur-[10px]"
             />
           </motion.div>
 
           <motion.div
-            className="relative mb-[36px] flex h-[107px] w-[383px] items-center justify-center rounded-[8px] border-[0.5px] border-[#F2F2F2] border-opacity-10 bg-[#01050D] bg-opacity-30 px-[22px] backdrop-blur-[10px]"
+            className="mb-[36px] flex h-[107px] w-[383px] items-center justify-center rounded-[8px] border-[0.5px] border-[#F2F2F2] border-opacity-10 bg-[#01050D] bg-opacity-30 px-[22px] backdrop-blur-[10px]"
             style={{
               x: statsBoxX,
               y: statsBoxY,
@@ -109,13 +110,19 @@ export default function RightFiller() {
               x: reviewsX,
               y: reviewsY,
             }}
+            className="ml-[98px] mb-[36px] flex h-[74px] w-[244px] items-center justify-center rounded-[8px] border-[0.5px] border-[#F2F2F2] border-opacity-10 bg-[#01050D] bg-opacity-30 px-[22px] backdrop-blur-[10px]"
           >
+            <div className="z-10 flex h-[53px] flex-col justify-center text-nowrap">
+              <span className="text-[26.4px] text-foreground">4.9+</span>
+            </div>
+            <div className="flex-grow"></div>
+
             <Image
               src={Reviews}
               alt={''}
-              className="mb-[33px] ml-[98px] h-[74px] w-[244px]"
-              width={244}
-              height={74}
+              className="z-0 h-[18px] w-[110px]"
+              width={145}
+              height={53}
             />
           </motion.div>
         </div>
