@@ -35,6 +35,7 @@ import { use, useEffect } from 'react';
 export default function Sidebar({ curentPage }: { curentPage: string }) {
   const session = authClient.useSession();
   useEffect(() => {
+    // Issue https://github.com/better-auth/better-auth/issues/1006
     session.refetch();
   }, []);
 
