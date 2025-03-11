@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useSession } from '~/server/auth/client';
+import { authClient } from '~/server/auth/client';
 import { Topbar } from '../components/Dashboard/Topbar';
 import { cn } from '~/helpers';
 import { usePathname } from 'next/navigation';
@@ -13,7 +13,7 @@ import { CourseTopCard } from '../components/CourseTopCard';
 import { CourseCard } from '../components/CourseCard/CourseCard';
 
 export default function DashboardPage() {
-  const session = useSession();
+  const session = authClient.useSession();
   const router = useRouter();
   const pathname = usePathname();
 

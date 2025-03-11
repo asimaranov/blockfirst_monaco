@@ -1,5 +1,5 @@
 'use client';
-import { authClient, signIn, useSession } from '~/server/auth/client';
+import { authClient } from '~/server/auth/client';
 
 import Link from 'next/link';
 import ErrorDecorationSvg from './assets/error_decoration.svg';
@@ -200,7 +200,7 @@ export default function SignInForm({
         onClick={async () => {
           setBottomButtonState('loading');
 
-          const res = await signIn.email({
+          const res = await authClient.signIn.email({
             email: formik.values.email,
             password: formik.values.password,
           });
@@ -246,7 +246,7 @@ export default function SignInForm({
           className="flex items-center justify-center"
           onClick={async () => {
             try {
-              await signIn.social({
+              await authClient.signIn.social({
                 provider: 'google',
                 callbackURL: '/dashboard',
               });
@@ -261,7 +261,7 @@ export default function SignInForm({
         <button
           className="flex items-center justify-center"
           onClick={async () => {
-            await signIn.social({
+            await authClient.signIn.social({
               provider: 'vk',
               callbackURL: '/dashboard',
             });

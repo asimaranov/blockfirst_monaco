@@ -11,7 +11,7 @@ import { MenuLink } from './MenuLink';
 import starterIMG from 'public/subscriptions/starter.svg';
 import { UserInfo } from './UserInfo';
 import { IUser, SubscriptionType } from '~/app/lib/types/IUser';
-import { signOut, useSession } from '~/server/auth/client';
+import { authClient } from '~/server/auth/client';
 import { Socials } from './Socials';
 import courseImg from './assets/links/course.svg';
 import courseHoverImg from './assets/links/course-hover.svg';
@@ -30,9 +30,13 @@ import referralHoverImg from './assets/links/referral-hover.svg';
 import notificationImg from './assets/links/notification.svg';
 import notificationHoverImg from './assets/links/notification-hover.svg';
 import { cn } from '~/helpers';
+import { use, useEffect } from 'react';
 
 export default function Sidebar({ curentPage }: { curentPage: string }) {
-  const session = useSession();
+  const session = authClient.useSession();
+  useEffect(() => {
+    session.refetch();
+  }, []);
 
   const user: IUser = {
     name: session.data?.user?.name ?? '',
@@ -52,7 +56,7 @@ export default function Sidebar({ curentPage }: { curentPage: string }) {
             className={
               'group cursor-pointer rounded-full border border-[#282D33] py-[10px] pl-[11px] pr-[9px] hover:border-transparent hover:bg-[#F2F2F2]'
             }
-            onClick={() => signOut()}
+            onClick={() => authClient.signOut()}
           >
             <Image
               src={logoutImg}

@@ -19,7 +19,7 @@ import {
   IAuthPageState,
   ITopButtonState,
 } from '.';
-import { authClient, signIn, useSession } from '~/server/auth/client';
+import { authClient } from '~/server/auth/client';
 import AuthButton from './button';
 import { frontendSchema } from '~/app/lib/zod';
 
@@ -277,7 +277,7 @@ export default function SignUpForm({
           className="flex items-center justify-center"
           onClick={async () => {
             try {
-              await signIn.social({
+              await authClient.signIn.social({
                 provider: 'google',
                 callbackURL: '/dashboard',
               });
@@ -293,7 +293,7 @@ export default function SignUpForm({
           className="flex items-center justify-center"
           onClick={async () => {
             try {
-              await signIn.social({
+              await authClient.signIn.social({
                 provider: 'vk',
                 callbackURL: '/dashboard',
               });

@@ -1,5 +1,5 @@
 'use client';
-import { authClient, signIn, useSession } from '~/server/auth/client';
+import { authClient } from '~/server/auth/client';
 
 import Link from 'next/link';
 import ErrorDecorationSvg from './assets/error_decoration.svg';
