@@ -60,14 +60,6 @@ export default function ForgotPasswordNewPasswordForm({
     validationSchema: frontendSchema,
   });
 
-  useEffect(() => {
-    if (formik.errors.password || formik.errors.passwordConfirm) {
-      setBottomButtonState('disabled');
-    } else {
-      setBottomButtonState('active');
-    }
-  }, [formik.errors]);
-
   return (
     <>
       {/* Main heading */}
