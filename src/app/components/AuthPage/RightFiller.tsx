@@ -116,7 +116,6 @@ export default function RightFiller() {
               <span className="text-[26.4px] text-foreground">4.9+</span>
             </div>
             <div className="flex-grow"></div>
-
             <Image
               src={Reviews}
               alt={''}
