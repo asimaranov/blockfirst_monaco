@@ -4,8 +4,8 @@
 
 body {
   font-family: var(--roboto);
+  color: #f2f2f2;
 }
-
 
 @layer base {
   input[type='number'].appearance-none::-webkit-inner-spin-button,

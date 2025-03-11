@@ -42,7 +42,7 @@ export default function Sidebar({ curentPage }: { curentPage: string }) {
   };
 
   return (
-    <section className="relative z-10 flex w-full max-w-[344px] flex-col outline outline-[1px] outline-accent">
+    <section className="sticky left-0 top-0 z-10 flex h-screen w-full max-w-[344px] flex-col">
       <nav className={'flex w-full flex-col'}>
         <div className="mx-[32px] mt-[34px] flex flex-row items-center justify-between">
           <Link href="/dashboard" className="hover:opacity-80">

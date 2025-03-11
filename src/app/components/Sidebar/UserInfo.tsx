@@ -29,7 +29,7 @@ export function UserInfo({ user }: { user?: IUser }) {
             {user.name}
           </span>
         ) : (
-          <Skeleton className="h-[16px] w-[90px]" />
+          <Skeleton className="h-[16px] w-[90px] rounded-full" />
         )}
         {user?.startTimestamp ? (
           <span className="font-roboto text-[12px] text-[#9AA6B5]">
@@ -43,14 +43,14 @@ export function UserInfo({ user }: { user?: IUser }) {
             </span>
           </span>
         ) : (
-          <Skeleton className="h-[12px] w-[70px]" />
+          <Skeleton className="h-[12px] w-[70px] rounded-full" />
         )}
       </div>
       <div className="ml-[62px]">
         {user?.subscriptionType != undefined ? (
           <SubscriptionLabel type={user.subscriptionType} />
         ) : (
-          <Skeleton className="h-[24px] w-[67px]" />
+          <Skeleton className="h-[24px] w-[67px] rounded-full" />
         )}
       </div>
     </div>

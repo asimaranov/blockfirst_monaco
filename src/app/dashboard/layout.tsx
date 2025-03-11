@@ -11,10 +11,10 @@ export default function AuthPageBase({
   const pathname = usePathname();
 
   return (
-    <div className="relative flex min-h-screen flex-row overflow-hidden bg-background">
+    <div className="relative flex min-h-screen flex-row bg-background">
       <Sidebar curentPage={pathname.split('/').pop() ?? ''} />
 
-      {children}
+      <div className="w-full bg-[#0F1217] px-[64px]">{children}</div>
     </div>
   );
 }
