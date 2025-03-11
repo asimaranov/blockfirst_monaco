@@ -62,6 +62,14 @@ export default function ForgotPasswordForm({
     validationSchema: frontendSchema,
   });
 
+  useEffect(() => {
+    if (formik.errors.username || formik.errors.email || formik.errors.password) {
+      setBottomButtonState('disabled');
+    } else {
+      setBottomButtonState('active');
+    }
+  }, [formik.errors]);
+
   return (
     <>
       {/* Main heading */}
