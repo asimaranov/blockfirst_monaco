@@ -14,8 +14,8 @@ export function UserInfo({ user }: { user?: IUser }) {
             'my-auto flex h-[40px] w-[40px] flex-col items-center justify-center rounded-full bg-[#195AF4]'
           }
         >
-          <span className={'font-roboto text-[15px] text-[#F2F2F2]'}>
-            {user.name[0].toUpperCase()}
+          <span className={'font-roboto text-[15px] uppercase text-[#F2F2F2]'}>
+            {user.name[0]}
           </span>
         </div>
       ) : (

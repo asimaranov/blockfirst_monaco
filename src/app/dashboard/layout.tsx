@@ -1,5 +1,6 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import Sidebar from '~/app/components/Sidebar/Sidebar';
 
 export default function AuthPageBase({
@@ -7,9 +8,11 @@ export default function AuthPageBase({
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+
   return (
     <div className="relative flex min-h-screen flex-row overflow-hidden bg-background">
-      <Sidebar />
+      <Sidebar curentPage={pathname.split('/').pop() ?? ''} />
 
       {children}
     </div>

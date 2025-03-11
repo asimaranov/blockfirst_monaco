@@ -1,33 +1,34 @@
-import PremiumSvg from 'public/premium.svg';
+'use client';
+
 import { ReactNode } from 'react';
 import Image from 'next/image';
+import proIMG from 'public/subscriptions/pro.svg';
+import baseIMG from 'public/subscriptions/starter.svg';
 
 export function MenuItem({
   title,
   children,
-  premiumSection,
+  isPro,
+  isBase,
 }: {
   title: string;
   children: ReactNode;
-  premiumSection?: boolean;
+  isPro?: boolean;
+  isBase?: boolean;
 }) {
   return (
     <div className={'mx-[16px] mt-[32px] flex flex-col'}>
-      <div
-        className={
-          'mb-[12px] flex w-full flex-row items-center justify-between px-[16px]'
-        }
-      >
+      <div className={'mr-[16px] flex flex-row items-center justify-between'}>
         <span
           className={
-            'font-roboto text-[12px] uppercase leading-[20px] text-[#9AA6B5]'
+            'mb-[12px] ml-[16px] font-roboto text-[12px] uppercase leading-[20px] text-[#9AA6B5]'
           }
         >
           {title}
         </span>
-        {premiumSection && <Image src={PremiumSvg} alt="premium" />}
+        {isPro && <Image src={proIMG} alt="Pro" />}
+        {isBase && <Image src={baseIMG} alt="Base" />}
       </div>
-
       <div className={'flex flex-col gap-[8px]'}>{children}</div>
     </div>
   );

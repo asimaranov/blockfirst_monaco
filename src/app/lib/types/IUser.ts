@@ -1,6 +1,7 @@
 export enum SubscriptionType {
   Free,
-  Premium,
+  Base,
+  Pro,
 }
 
 export interface IUser {

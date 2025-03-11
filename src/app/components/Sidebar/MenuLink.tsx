@@ -6,24 +6,27 @@ export function MenuLink({
   children,
   href,
   locked,
+  isCurrentPage,
 }: {
   title: string;
   children: ReactNode;
   href: string;
   locked?: boolean;
+  isCurrentPage: boolean;
 }) {
   return (
     <Link
       href={href}
       className={
-        'group flex cursor-pointer flex-row items-center gap-[19px] border-b border-transparent px-[16px] py-[14px] hover:border-[#F2F2F2]'
+        'group flex cursor-pointer flex-row items-center gap-[19px] border-b border-transparent px-[16px] py-[14px] hover:border-[#282D33] data-[active=true]:border-[#F2F2F2]'
       }
+      data-active={isCurrentPage}
     >
       {children}
       <div className={'flex w-full flex-row items-center justify-between'}>
         <span
           className={
-            'font-roboto text-[16px] leading-[16px] text-[#9AA6B5] group-hover:text-[#F2F2F2]'
+            'font-roboto text-[16px] leading-[16px] text-[#9AA6B5] group-hover:text-[#F2F2F2] group-data-[active=true]:text-[#F2F2F2]'
           }
         >
           {title}
