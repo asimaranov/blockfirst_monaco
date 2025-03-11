@@ -52,7 +52,6 @@ export default function ForgotPasswordForm({
 
   const formik = useFormik({
     initialValues: {
-      username: '',
       email: '',
       password: '',
     },
@@ -63,7 +62,7 @@ export default function ForgotPasswordForm({
   });
 
   useEffect(() => {
-    if (formik.errors.username || formik.errors.email || formik.errors.password) {
+    if (formik.errors.email || formik.errors.password) {
       setBottomButtonState('disabled');
     } else {
       setBottomButtonState('active');
