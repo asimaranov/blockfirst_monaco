@@ -5,6 +5,7 @@
 body {
   font-family: var(--roboto);
   color: #f2f2f2;
+  background-color: #0f1217;
 }
 
 @layer base {

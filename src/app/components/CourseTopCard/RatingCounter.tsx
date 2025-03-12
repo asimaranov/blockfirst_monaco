@@ -1,12 +1,17 @@
 export function RatingCounter({ rating }: { rating: number }) {
   return (
-    <div className="flex flex-row items-center gap-[4px] rounded-full bg-[#01050D] px-[12px] py-[4px]">
+    <div
+      className={
+        'flex flex-row items-center gap-[0.231vw] rounded-full bg-[#01050D] px-[0.694vw] py-[0.289vw]'
+      }
+    >
       <svg
         width="14"
         height="14"
         viewBox="0 0 14 14"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        className="h-[0.81vw] w-[0.81vw]"
       >
         <path
           fillRule="evenodd"
@@ -15,7 +20,7 @@ export function RatingCounter({ rating }: { rating: number }) {
           fill="#FEF360"
         />
       </svg>
-      <span className="font-roboto text-[12px] font-medium text-[#F2F2F2]">
+      <span className="font-roboto text-[0.694vw] font-medium text-[#F2F2F2]">
         {rating}
       </span>
     </div>

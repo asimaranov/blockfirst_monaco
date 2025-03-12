@@ -10,7 +10,7 @@ export function Topbar({
   return (
     <nav
       className={cn(
-        'flex h-[88px] w-full flex-row items-center border-b border-[#282D33] px-[32px] py-[25px]',
+        'flex h-[5.093vw] w-full flex-row items-center border-b border-[#282D33] px-[1.85vw] py-[1.16vw]',
         className
       )}
     >

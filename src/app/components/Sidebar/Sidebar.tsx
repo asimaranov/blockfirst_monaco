@@ -47,27 +47,27 @@ export default function Sidebar({ curentPage }: { curentPage: string }) {
   };
 
   return (
-    <section className="sticky left-0 top-0 z-10 flex h-screen w-full max-w-[344px] flex-col">
+    <section className="sticky left-0 top-0 z-10 flex h-screen w-full max-w-[19.91vw] flex-col">
       <nav className={'flex w-full flex-col'}>
-        <div className="mx-[32px] mt-[34px] flex flex-row items-center justify-between">
+        <div className="mx-[1.85vw] mt-[1.97vw] flex flex-row items-center justify-between">
           <Link href="/dashboard" className="hover:opacity-80">
-            <Image src={LogoSvg} alt="logo" />
+            <Image src={LogoSvg} alt="logo" className="w-[9.664vw]" />
           </Link>
           <div
             className={
-              'group cursor-pointer rounded-full border border-[#282D33] py-[10px] pl-[11px] pr-[9px] hover:border-transparent hover:bg-[#F2F2F2]'
+              'group cursor-pointer rounded-full border border-[#282D33] py-[0.58vw] pl-[0.64vw] pr-[0.52vw] hover:border-transparent hover:bg-[#F2F2F2]'
             }
             onClick={() => authClient.signOut()}
           >
             <Image
               src={logoutImg}
               alt="logout"
-              className="group-hover:hidden group-data-[active=true]:hidden"
+              className="h-[0.926vw] w-[0.926vw] group-hover:hidden group-data-[active=true]:hidden"
             />
             <Image
               src={logoutHoverImg}
               alt="logout"
-              className="hidden group-hover:block group-data-[active=true]:block"
+              className="hidden h-[0.926vw] w-[0.926vw] group-hover:block group-data-[active=true]:block"
             />
           </div>
         </div>
@@ -80,12 +80,12 @@ export default function Sidebar({ curentPage }: { curentPage: string }) {
             <Image
               src={courseImg}
               alt="course"
-              className="group-hover:hidden group-data-[active=true]:hidden"
+              className="h-[0.926vw] w-[0.926vw] group-hover:hidden group-data-[active=true]:hidden"
             />
             <Image
               src={courseHoverImg}
               alt="course"
-              className="hidden group-hover:inline-block group-data-[active=true]:block"
+              className="hidden h-[0.926vw] w-[0.926vw] group-hover:inline-block group-data-[active=true]:block"
             />
           </MenuLink>
           <MenuLink
@@ -96,12 +96,12 @@ export default function Sidebar({ curentPage }: { curentPage: string }) {
             <Image
               src={tariffImg}
               alt="tariff"
-              className="group-hover:hidden group-data-[active=true]:hidden"
+              className="h-[0.926vw] w-[0.926vw] group-hover:hidden group-data-[active=true]:hidden"
             />
             <Image
               src={tariffHoverImg}
               alt="tariff"
-              className="hidden group-hover:inline-block group-data-[active=true]:block"
+              className="hidden h-[0.926vw] w-[0.926vw] group-hover:inline-block group-data-[active=true]:block"
             />
           </MenuLink>
           <MenuLink
@@ -112,12 +112,12 @@ export default function Sidebar({ curentPage }: { curentPage: string }) {
             <Image
               src={certImg}
               alt="cert"
-              className="group-hover:hidden group-data-[active=true]:hidden"
+              className="h-[0.926vw] w-[0.926vw] group-hover:hidden group-data-[active=true]:hidden"
             />
             <Image
               src={certHoverImg}
               alt="cert"
-              className="hidden group-hover:inline-block group-data-[active=true]:block"
+              className="hidden h-[0.926vw] w-[0.926vw] group-hover:inline-block group-data-[active=true]:block"
             />
           </MenuLink>
         </MenuItem>
@@ -134,12 +134,12 @@ export default function Sidebar({ curentPage }: { curentPage: string }) {
             <Image
               src={curatorImg}
               alt="curator"
-              className="group-hover:hidden group-data-[active=true]:hidden"
+              className="h-[0.926vw] w-[0.926vw] group-hover:hidden group-data-[active=true]:hidden"
             />
             <Image
               src={curatorHoverImg}
               alt="curator"
-              className="hidden group-hover:inline-block group-data-[active=true]:block"
+              className="hidden h-[0.926vw] w-[0.926vw] group-hover:inline-block group-data-[active=true]:block"
             />
           </MenuLink>
           <MenuLink
@@ -151,12 +151,12 @@ export default function Sidebar({ curentPage }: { curentPage: string }) {
             <Image
               src={cvImg}
               alt="cv"
-              className="group-hover:hidden group-data-[active=true]:hidden"
+              className="h-[0.926vw] w-[0.926vw] group-hover:hidden group-data-[active=true]:hidden"
             />
             <Image
               src={cvHoverImg}
               alt="cv"
-              className="hidden group-hover:inline-block group-data-[active=true]:block"
+              className="hidden h-[0.926vw] w-[0.926vw] group-hover:inline-block group-data-[active=true]:block"
             />
           </MenuLink>
           <MenuLink
@@ -168,12 +168,12 @@ export default function Sidebar({ curentPage }: { curentPage: string }) {
             <Image
               src={jobImg}
               alt="job"
-              className="group-hover:hidden group-data-[active=true]:hidden"
+              className="h-[0.926vw] w-[0.926vw] group-hover:hidden group-data-[active=true]:hidden"
             />
             <Image
               src={jobHoverImg}
               alt="job"
-              className="hidden group-hover:inline-block group-data-[active=true]:block"
+              className="hidden h-[0.926vw] w-[0.926vw] group-hover:inline-block group-data-[active=true]:block"
             />
           </MenuLink>
         </MenuItem>
@@ -186,12 +186,12 @@ export default function Sidebar({ curentPage }: { curentPage: string }) {
             <Image
               src={referralImg}
               alt="referral"
-              className="group-hover:hidden group-data-[active=true]:hidden"
+              className="h-[0.926vw] w-[0.926vw] group-hover:hidden group-data-[active=true]:hidden"
             />
             <Image
               src={referralHoverImg}
               alt="referral"
-              className="hidden group-hover:inline-block group-data-[active=true]:block"
+              className="hidden h-[0.926vw] w-[0.926vw] group-hover:inline-block group-data-[active=true]:block"
             />
           </MenuLink>
           <Link
@@ -203,19 +203,19 @@ export default function Sidebar({ curentPage }: { curentPage: string }) {
             <Image
               src={notificationImg}
               alt="notification"
-              className="group-hover:hidden group-data-[active=true]:hidden"
+              className="h-[0.926vw] w-[0.926vw] group-hover:hidden group-data-[active=true]:hidden"
             />
             <Image
               src={notificationHoverImg}
               alt="notification"
-              className="hidden group-hover:inline-block group-data-[active=true]:block"
+              className="hidden h-[0.926vw] w-[0.926vw] group-hover:inline-block group-data-[active=true]:block"
             />
             <div
               className={'flex w-full flex-row items-center justify-between'}
             >
               <span
                 className={
-                  'font-roboto text-[16px] leading-[16px] text-[#9AA6B5] group-hover:text-[#F2F2F2]'
+                  'font-roboto text-[0.81vw] leading-[0.69vw] text-[#9AA6B5] group-hover:text-[#F2F2F2]'
                 }
               >
                 Уведомления
@@ -228,11 +228,11 @@ export default function Sidebar({ curentPage }: { curentPage: string }) {
       <div className={'mt-auto flex flex-col border-t border-[#282D33]'}>
         <Link
           href="#"
-          className={'flex flex-row items-center px-[32px] py-[20px]'}
+          className={'flex flex-row items-center px-[1.85vw] py-[1.16vw]'}
         >
           <svg
-            width="16"
-            height="16"
+            width="0.93vw"
+            height="0.93vw"
             viewBox="0 0 16 16"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -265,14 +265,18 @@ export default function Sidebar({ curentPage }: { curentPage: string }) {
           </svg>
           <span
             className={cn(
-              'ml-[16px] mr-[32px] text-center font-roboto text-[13px] leading-[16px] text-[#9AA6B5]',
+              'ml-[0.93vw] mr-[1.85vw] text-center font-roboto text-[0.75vw] leading-[0.93vw] text-[#9AA6B5]',
               user.subscriptionType !== SubscriptionType.Pro && 'opacity-60'
             )}
           >
             Закрытый клуб BlockFirst
           </span>
           {user.subscriptionType !== SubscriptionType.Pro && (
-            <Image src={starterIMG} alt="Starter subscription" />
+            <Image
+              src={starterIMG}
+              alt="Starter subscription"
+              className="h-[1.157vw] w-[3.414vw]"
+            />
           )}
         </Link>
         <UserInfo user={user} />

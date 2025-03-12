@@ -6,11 +6,11 @@ export function Socials() {
     <div className="grid grid-cols-4 border-t border-[#282D33]">
       <Link
         href={SOCIALS.telegram}
-        className="group flex flex-col items-center justify-center border-r border-[#282D33] py-[8px] last:border-r-0 hover:bg-[#F2F2F2]"
+        className="group flex flex-col items-center justify-center border-r border-[#282D33] py-[0.46vw] last:border-r-0 hover:bg-[#F2F2F2]"
       >
         <svg
-          width="20"
-          height="20"
+          width="1.16vw"
+          height="1.16vw"
           viewBox="0 0 20 20"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -26,11 +26,11 @@ export function Socials() {
       </Link>
       <Link
         href={SOCIALS.youtube}
-        className="group flex flex-col items-center justify-center border-r border-[#282D33] py-[8px] last:border-r-0 hover:bg-[#F2F2F2]"
+        className="group flex flex-col items-center justify-center border-r border-[#282D33] py-[0.46vw] last:border-r-0 hover:bg-[#F2F2F2]"
       >
         <svg
-          width="20"
-          height="20"
+          width="1.16vw"
+          height="1.16vw"
           viewBox="0 0 20 20"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -44,11 +44,11 @@ export function Socials() {
       </Link>
       <Link
         href={SOCIALS.medium}
-        className="group flex flex-col items-center justify-center border-r border-[#282D33] py-[8px] last:border-r-0 hover:bg-[#F2F2F2]"
+        className="group flex flex-col items-center justify-center border-r border-[#282D33] py-[0.46vw] last:border-r-0 hover:bg-[#F2F2F2]"
       >
         <svg
-          width="20"
-          height="20"
+          width="1.16vw"
+          height="1.16vw"
           viewBox="0 0 20 20"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -72,11 +72,11 @@ export function Socials() {
       </Link>
       <Link
         href={SOCIALS.twitter}
-        className="group flex flex-col items-center justify-center border-r border-[#282D33] py-[8px] last:border-r-0 hover:bg-[#F2F2F2]"
+        className="group flex flex-col items-center justify-center border-r border-[#282D33] py-[0.46vw] last:border-r-0 hover:bg-[#F2F2F2]"
       >
         <svg
-          width="20"
-          height="20"
+          width="1.16vw"
+          height="1.16vw"
           viewBox="0 0 20 20"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

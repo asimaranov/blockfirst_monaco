@@ -8,22 +8,22 @@ import { CourseProgress } from './CourseProgress';
 
 export function CourseTopCard({ course }: { course: ICourse }) {
   return (
-    <section className="flex h-[354px] flex-row gap-[40px] border-b border-[#282D33]">
+    <section className="flex flex-row gap-[2.315vw] border-b border-[#282D33]">
       <Image
         src={course.coverImg}
         alt={course.title}
         width={608}
         height={354}
-        className="h-full w-full object-cover object-center"
+        className="w-[35.185vw] object-cover object-center"
       />
-      <div className="flex w-full flex-col py-[32px] pr-[32px]">
+      <div className="flex w-full flex-col py-[1.852vw] pr-[1.852vw]">
         <div className="flex flex-row items-center justify-between">
-          <div className="flex flex-row items-center gap-[4px]">
+          <div className="flex flex-row items-center gap-[0.231vw]">
             <AlumniCounter count={course.alumniCount} />
             <RatingCounter rating={course.rating} />
           </div>
           <div className="flex flex-row items-center">
-            <span className="border-r border-[#9AA6B5] border-opacity-20 pr-[12px] font-roboto text-[10px] font-medium uppercase text-[#9AA6B5]">
+            <span className="border-r border-[#9AA6B5] border-opacity-20 pr-[0.694vw] font-roboto text-[0.579vw] font-medium uppercase text-[#9AA6B5]">
               {course.lessonsCount}{' '}
               {(() => {
                 const lastDigit = course.lessonsCount % 10;
@@ -35,7 +35,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
                 return 'уроков';
               })()}
             </span>
-            <span className="pl-[12px] font-roboto text-[10px] font-medium uppercase text-[#9AA6B5]">
+            <span className="pl-[0.694vw] font-roboto text-[0.579vw] font-medium uppercase text-[#9AA6B5]">
               {(() => {
                 const months = Math.ceil(
                   course.timeToComplete / (30 * 24 * 60 * 60 * 1000)
@@ -52,32 +52,36 @@ export function CourseTopCard({ course }: { course: ICourse }) {
             </span>
           </div>
         </div>
-        <div className="mt-[24px] flex flex-col gap-[16px]">
-          <span className="font-roboto text-[28px] font-bold text-[#F2F2F2]">
+        <div className="mt-[1.389vw] flex flex-col gap-[0.926vw]">
+          <span className="font-roboto text-[1.62vw] font-bold text-[#F2F2F2]">
             {course.title}
           </span>
-          <span className="font-roboto text-[14px] leading-[20px] text-[#9AA6B5]">
+          <span className="font-roboto text-[0.81vw] leading-[1.157vw] text-[#9AA6B5]">
             {course.description}
           </span>
         </div>
-        <div className="mt-[24px] flex flex-col gap-[16px]">
-          <div className="flex flex-row gap-[16px]">
-            <Image src={medalImg} alt="progress" />
-            <span className="font-roboto text-[20px] font-semibold leading-[24px] text-[#F2F2F2]">
+        <div className="mt-[1.389vw] flex flex-col gap-[0.926vw]">
+          <div className="flex flex-row gap-[0.926vw]">
+            <Image
+              src={medalImg}
+              alt="progress"
+              className="h-[1.389vw] w-[1.389vw]"
+            />
+            <span className="font-roboto text-[1.157vw] font-semibold leading-[1.389vw] text-[#F2F2F2]">
               50%
             </span>
           </div>
           <CourseProgress progress={50} />
         </div>
-        <div className="mt-[32px] flex flex-row items-center justify-between gap-[16px]">
+        <div className="mt-[1.852vw] flex flex-row items-center justify-between gap-[0.926vw]">
           <Link
             href={`#`}
             className={
-              'flex w-full flex-col items-center justify-center rounded-full bg-[#195AF4] py-[12px] hover:opacity-80'
+              'flex w-full flex-col items-center justify-center rounded-full bg-[#195AF4] py-[0.694vw] hover:opacity-80'
             }
           >
-            <div className="flex flex-row items-center gap-[15px]">
-              <span className="font-roboto text-[14px] leading-[20px] text-[#F2F2F2]">
+            <div className="flex flex-row items-center gap-[0.868vw]">
+              <span className="font-roboto text-[0.81vw] leading-[1.157vw] text-[#F2F2F2]">
                 Продолжить
               </span>
               <svg
@@ -86,6 +90,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
                 viewBox="0 0 7 12"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className="h-[0.694vw] w-[0.405vw]"
               >
                 <path
                   fillRule="evenodd"
@@ -100,13 +105,14 @@ export function CourseTopCard({ course }: { course: ICourse }) {
             href={`#`}
             className="flex w-full flex-col items-center justify-center hover:opacity-80"
           >
-            <div className="flex flex-row items-center gap-[6px]">
+            <div className="flex flex-row items-center gap-[0.347vw]">
               <svg
                 width="16"
                 height="16"
                 viewBox="0 0 16 16"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className="h-[0.926vw] w-[0.926vw]"
               >
                 <path
                   fillRule="evenodd"
@@ -115,7 +121,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
                   fill="#F2F2F2"
                 />
               </svg>
-              <span className="font-roboto text-[14px] leading-[20px] text-[#F2F2F2]">
+              <span className="font-roboto text-[0.81vw] leading-[1.157vw] text-[#F2F2F2]">
                 Поробнее о курсе
               </span>
             </div>

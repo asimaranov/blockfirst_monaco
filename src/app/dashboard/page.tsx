@@ -52,15 +52,15 @@ export default function DashboardPage() {
   ];
 
   return (
-    <main className="border-l border-r border-[#282D33]">
+    <main className="border-x border-[#282D33]">
       <Topbar className="justify-between">
-        <div className="flex h-[40px] w-[214px] flex-row overflow-hidden rounded-[100px] bg-[#01050D]">
+        <div className="flex h-[2.315vw] w-[12.384vw] flex-row overflow-hidden rounded-full bg-[#01050D]">
           <Link
             href="/dashboard"
             className={cn(
-              'flex w-full flex-col items-center justify-center font-roboto text-[14px] font-medium hover:opacity-80',
+              'flex w-full flex-col items-center justify-center font-roboto text-[0.81vw] font-medium hover:opacity-80',
               pathname === '/dashboard'
-                ? 'rounded-r-[100px] bg-[#F2F2F2] text-[#01050D]'
+                ? 'rounded-r-full bg-[#F2F2F2] text-[#01050D]'
                 : 'bg-transparent text-[#F2F2F2]'
             )}
           >
@@ -69,19 +69,19 @@ export default function DashboardPage() {
           <Link
             href="/dashboard/history"
             className={cn(
-              'flex w-full flex-col items-center justify-center font-roboto text-[14px] font-medium hover:opacity-80',
+              'flex w-full flex-col items-center justify-center font-roboto text-[0.81vw] font-medium hover:opacity-80',
               pathname === '/dashboard/history'
-                ? 'rounded-l-[100px] bg-[#F2F2F2] text-[#01050D]'
+                ? 'rounded-l-full bg-[#F2F2F2] text-[#01050D]'
                 : 'bg-transparent text-[#F2F2F2]'
             )}
           >
             История
           </Link>
         </div>
-        <div className="flex flex-col gap-[8px]">
-          <div className="flex flex-row items-center justify-end gap-[8px]">
-            <div className="h-[6px] w-[6px] rounded-full bg-[#54EDB7]" />
-            <span className="font-roboto text-[14px] font-medium text-[#F2F2F2]">
+        <div className="flex flex-col gap-[0.463vw]">
+          <div className="flex flex-row items-center justify-end gap-[0.463vw]">
+            <div className="h-[0.347vw] w-[0.347vw] rounded-full bg-[#54EDB7]" />
+            <span className="font-roboto text-[0.81vw] font-medium text-[#F2F2F2]">
               {new Date(
                 Math.min(
                   ...courses.map((course) =>
@@ -91,7 +91,7 @@ export default function DashboardPage() {
               ).toLocaleDateString('ru-RU')}
             </span>
           </div>
-          <span className="font-roboto text-[12px] text-[#9AA6B5] opacity-50">
+          <span className="font-roboto text-[0.694vw] text-[#9AA6B5] opacity-50">
             Последнее обновление
           </span>
         </div>
@@ -99,9 +99,9 @@ export default function DashboardPage() {
       {courses?.[0] ? (
         <CourseTopCard course={courses[0]} />
       ) : (
-        <Skeleton className="h-[354px] w-full" />
+        <Skeleton className="h-[20.486vw] w-full" />
       )}
-      <section className="mt-[37px] grid grid-cols-3 divide-x divide-y divide-[#282D33]">
+      <section className="mt-[2.141vw] grid grid-cols-3 border-y border-[#282D33]">
         <CourseCard />
         <CourseCard />
         <CourseCard />

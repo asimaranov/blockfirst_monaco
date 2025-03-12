@@ -9,27 +9,29 @@ export function MenuItem({
   title,
   children,
   isPro,
-  isBase,
+  // isBase,
 }: {
   title: string;
   children: ReactNode;
   isPro?: boolean;
-  isBase?: boolean;
+  // isBase?: boolean;
 }) {
   return (
-    <div className={'mx-[16px] mt-[32px] flex flex-col'}>
-      <div className={'mr-[16px] flex flex-row items-center justify-between'}>
+    <div className={'mx-[0.93vw] mt-[1.85vw] flex flex-col'}>
+      <div className={'flex flex-row items-center justify-between'}>
         <span
           className={
-            'mb-[12px] ml-[16px] font-roboto text-[12px] uppercase leading-[20px] text-[#9AA6B5]'
+            'mb-[0.69vw] ml-[0.93vw] font-roboto text-[0.69vw] uppercase leading-[1.16vw] text-[#9AA6B5]'
           }
         >
           {title}
         </span>
-        {isPro && <Image src={proIMG} alt="Pro" />}
-        {isBase && <Image src={baseIMG} alt="Base" />}
+        {isPro && (
+          <Image src={proIMG} alt="Pro" className="h-[1.157vw] w-[1.91vw]" />
+        )}
+        {/* {isBase && <Image src={baseIMG} alt="Base" />} */}
       </div>
-      <div className={'flex flex-col gap-[8px]'}>{children}</div>
+      <div className={'flex flex-col gap-[0.46vw]'}>{children}</div>
     </div>
   );
 }
