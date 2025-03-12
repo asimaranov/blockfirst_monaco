@@ -5,6 +5,7 @@ import medalImg from 'public/misc/medal.svg';
 import { AlumniCounter } from './AlumniCounter';
 import { RatingCounter } from './RatingCounter';
 import { CourseProgress } from './CourseProgress';
+import { Progress } from '../shared/Progress';
 
 export function CourseTopCard({ course }: { course: ICourse }) {
   return (
@@ -60,19 +61,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
             {course.description}
           </span>
         </div>
-        <div className="mt-[1.389vw] flex flex-col gap-[0.926vw]">
-          <div className="flex flex-row gap-[0.926vw]">
-            <Image
-              src={medalImg}
-              alt="progress"
-              className="h-[1.389vw] w-[1.389vw]"
-            />
-            <span className="font-roboto text-[1.157vw] font-semibold leading-[1.389vw] text-[#F2F2F2]">
-              50%
-            </span>
-          </div>
-          <CourseProgress progress={50} />
-        </div>
+        <CourseProgress progress={4} className="mt-[1.389vw]" />
         <div className="mt-[1.852vw] flex flex-row items-center justify-between gap-[0.926vw]">
           <Link
             href={`#`}
