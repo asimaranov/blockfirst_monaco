@@ -52,7 +52,6 @@ export default function ForgotPasswordForm({
 
   const formik = useFormik({
     initialValues: {
-      username: '',
       email: '',
       password: '',
     },

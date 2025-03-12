@@ -42,7 +42,6 @@ export default function SignInForm({
 
   const formik = useFormik({
     initialValues: {
-      username: '',
       email: '',
       password: '',
     },
