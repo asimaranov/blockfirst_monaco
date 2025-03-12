@@ -20,46 +20,48 @@ export const signInSchema = object({
     .optional(),
 });
 
+const passwordSchema = (type: 'password' | 'passwordConfirm') => Yup.string()
+.required(`Не заполнен пароль`)
+.test((value) => {
+  let errors = [];
+
+  if (!/^(?=.{8,})/.test(value)) {
+    errors.push('8+ символов');
+  }
+
+  // if (!/^(?=.*[!@#\$%\^&\*])/.test(value)) {
+  //   errors.push("Спец. символ");
+  // }
+
+  if (!/^(?=.*[0-9])/.test(value)) {
+    errors.push('Цифра');
+  }
+
+  if (!/^(?=.*[a-z])/.test(value)) {
+    errors.push('Строчная буква');
+  }
+
+  if (!/^(?=.*[A-Z])/.test(value)) {
+    errors.push('Заглавная буква');
+  }
+  if (errors.length > 0) {
+    throw new Yup.ValidationError(
+      errors.join('|'),
+      errors,
+      type,
+      value
+    );
+  }
+
+  return true;
+})
 
 export const frontendSchema = Yup.object({
   username: Yup.string()
     .max(20, 'Не более 20 символов')
     .required('Не заполнено имя'),
-  password: Yup.string()
-    .required('Не заполнен пароль')
-    .test((value) => {
-      let errors = [];
-
-      if (!/^(?=.{8,})/.test(value)) {
-        errors.push('8+ символов');
-      }
-
-      // if (!/^(?=.*[!@#\$%\^&\*])/.test(value)) {
-      //   errors.push("Спец. символ");
-      // }
-
-      if (!/^(?=.*[0-9])/.test(value)) {
-        errors.push('Цифра');
-      }
-
-      if (!/^(?=.*[a-z])/.test(value)) {
-        errors.push('Строчная буква');
-      }
-
-      if (!/^(?=.*[A-Z])/.test(value)) {
-        errors.push('Заглавная буква');
-      }
-      if (errors.length > 0) {
-        throw new Yup.ValidationError(
-          errors.join('|'),
-          errors,
-          'password',
-          value
-        );
-      }
-
-      return true;
-    }),
+  password: passwordSchema('password'),
+  passwordConfirm: passwordSchema('passwordConfirm'),
   email: Yup.string()
     .email('Неверный формат почты')
     .required('Не заполнена почта'),
