@@ -6,9 +6,9 @@ export default function PasswordResetFailedForm() {
   const router = useRouter();
 
   return (
-    <div className="flex flex-col items-center justify-center h-full">
+    <div className="flex h-full flex-col items-center justify-center">
       {/* Error Message */}
-      <div className="flex flex-col items-center justify-center h-full">
+      <div className="flex h-full flex-col items-center justify-center">
         {/* Error Icon Circle */}
         <div className="relative mb-10 h-[150px] w-[150px]">
           <div className="h-full w-full rounded-full bg-error"></div>
@@ -30,10 +30,10 @@ export default function PasswordResetFailedForm() {
 
         {/* Error Text */}
         <div className="flex flex-col items-center gap-[16px]">
-          <h2 className="text-center text-[24px] font-bold text-foreground">
+          <h2 className="text-center text-2xl font-bold text-foreground">
             Ошибка восстановления
           </h2>
-          <p className="text-center text-[14px] leading-5 text-secondary">
+          <p className="text-center text-sm leading-5 text-secondary">
             Что-то пошло не так, возможно проблема с интернет соединением
           </p>
         </div>

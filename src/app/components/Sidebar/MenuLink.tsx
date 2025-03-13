@@ -21,7 +21,7 @@ export function MenuLink({
     <Link
       href={href}
       className={
-        'group flex cursor-pointer flex-row items-center gap-[1.1vw] border-b border-transparent px-[0.93vw] py-[0.81vw] hover:border-[#282D33] data-[active=true]:border-[#F2F2F2]'
+        'group flex cursor-pointer flex-row items-center gap-[1.1vw] border-b border-transparent px-4 py-[0.81vw] hover:border-[#282D33] data-[active=true]:border-[#F2F2F2]'
       }
       data-active={isCurrentPage}
     >
@@ -29,14 +29,12 @@ export function MenuLink({
       <div className={'flex w-full flex-row items-center justify-between'}>
         <span
           className={
-            'font-roboto text-[0.81vw] leading-[0.69vw] text-[#9AA6B5] group-hover:text-[#F2F2F2] group-data-[active=true]:text-[#F2F2F2]'
+            'font-roboto text-[0.81vw] leading-3 text-[#9AA6B5] group-hover:text-[#F2F2F2] group-data-[active=true]:text-[#F2F2F2]'
           }
         >
           {title}
         </span>
-        {notificationCount && (
-          <NotificationCounter count={notificationCount} />
-        )}
+        {notificationCount && <NotificationCounter count={notificationCount} />}
         {locked && (
           <svg
             width="0.926vw"

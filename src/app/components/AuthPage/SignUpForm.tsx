@@ -35,7 +35,7 @@ export default function SignUpForm({
   >('active');
   const [error, setError] = useState('');
   const router = useRouter();
-  
+
   useEffect(() => {
     setTimeout(() => {
       setError('');
@@ -81,7 +81,6 @@ export default function SignUpForm({
     };
   }, []);
 
-
   return (
     <>
       <MainHeading
@@ -109,7 +108,7 @@ export default function SignUpForm({
                 <AccountSvg active={formik.values.username !== ''} />
               </div>
               <input
-                className="h-full w-full bg-transparent text-[14px] text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
+                className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
                 placeholder={'Ваше имя'}
                 id="username"
                 name="username"
@@ -129,7 +128,7 @@ export default function SignUpForm({
               </span> */}
             </div>
             {formik.touched.username && formik.errors.username ? (
-              <div className="absolute left-0 top-[52px] flex gap-[8px] text-[12px] text-error">
+              <div className="absolute left-0 top-[52px] flex gap-[8px] text-xs text-error">
                 <Image
                   src={ErrorDecorationSvg}
                   alt={''}
@@ -156,7 +155,7 @@ export default function SignUpForm({
               <input
                 type="email"
                 placeholder="Электронная почта"
-                className="h-full w-full bg-transparent text-[14px] text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
+                className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
                 id="email"
                 name="email"
                 onChange={formik.handleChange}
@@ -170,7 +169,7 @@ export default function SignUpForm({
               />
             </div>
             {formik.touched.email && formik.errors.email ? (
-              <div className="absolute left-0 top-[52px] flex gap-[8px] text-[12px] text-error">
+              <div className="absolute left-0 top-[52px] flex gap-[8px] text-xs text-error">
                 <Image
                   src={ErrorDecorationSvg}
                   alt={''}
@@ -199,7 +198,7 @@ export default function SignUpForm({
               <input
                 type={showPassword ? 'text' : 'password'}
                 placeholder="Пароль"
-                className="h-full w-full bg-transparent text-[14px] text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
+                className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
                 id="password"
                 name="password"
                 onChange={formik.handleChange}
@@ -229,7 +228,7 @@ export default function SignUpForm({
                 ).map((error, index) => (
                   <div
                     key={index}
-                    className="my-[5px] flex gap-[8px] rounded-[4px] bg-error px-[8px] py-[5px] text-[12px] text-foreground"
+                    className="my-[5px] flex gap-[8px] rounded-[4px] bg-error px-[8px] py-[5px] text-xs text-foreground"
                   >
                     {error}
                   </div>
@@ -237,7 +236,7 @@ export default function SignUpForm({
               </div>
             ) : null}
             {error ? (
-              <div className="absolute left-0 top-[52px] flex justify-center gap-[8px] text-[12px] text-error">
+              <div className="absolute left-0 top-[52px] flex justify-center gap-[8px] text-xs text-error">
                 <Image
                   src={ErrorDecorationSvg}
                   alt={''}
@@ -252,7 +251,7 @@ export default function SignUpForm({
         </div>
 
         {/* Login link */}
-        <div className="mb-[20px] h-auto text-center text-[14px] text-foreground">
+        <div className="mb-[20px] h-auto text-center text-sm text-foreground">
           Вы зарегистрированы?{' '}
           <Link
             href="#"

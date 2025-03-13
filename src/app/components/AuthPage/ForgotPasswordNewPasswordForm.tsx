@@ -94,7 +94,7 @@ export default function ForgotPasswordNewPasswordForm({
             <input
               type={showPassword ? 'text' : 'password'}
               placeholder="Пароль"
-              className="h-full w-full bg-transparent text-[14px] text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
+              className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
               id="password"
               name="password"
               onChange={formik.handleChange}
@@ -125,7 +125,7 @@ export default function ForgotPasswordNewPasswordForm({
               ).map((error, index) => (
                 <div
                   key={index}
-                  className="my-[5px] flex gap-[8px] rounded-[4px] bg-error px-[8px] py-[5px] text-[12px] text-foreground"
+                  className="my-[5px] flex gap-[8px] rounded-[4px] bg-error px-[8px] py-[5px] text-xs text-foreground"
                 >
                   {error}
                 </div>
@@ -133,7 +133,7 @@ export default function ForgotPasswordNewPasswordForm({
             </div>
           ) : null}
           {error ? (
-            <div className="absolute left-0 top-[52px] flex justify-center gap-[8px] text-[12px] text-error">
+            <div className="absolute left-0 top-[52px] flex justify-center gap-[8px] text-xs text-error">
               <Image
                 src={ErrorDecorationSvg}
                 alt={''}
@@ -161,7 +161,7 @@ export default function ForgotPasswordNewPasswordForm({
             <input
               type={showPassword ? 'text' : 'password'}
               placeholder="Повторите пароль"
-              className="h-full w-full bg-transparent text-[14px] text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
+              className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
               id="passwordConfirm"
               name="passwordConfirm"
               onChange={formik.handleChange}
@@ -184,14 +184,14 @@ export default function ForgotPasswordNewPasswordForm({
           formik.values.passwordConfirm !== formik.values.password ? (
             <div className="mt-[12px] flex flex-row gap-[8px]">
               {formik.values.passwordConfirm !== formik.values.password && (
-                <div className="my-[5px] flex gap-[8px] rounded-[4px] bg-error px-[8px] py-[5px] text-[12px] text-foreground">
+                <div className="my-[5px] flex gap-[8px] rounded-[4px] bg-error px-[8px] py-[5px] text-xs text-foreground">
                   Пароли не совпадают
                 </div>
               )}
             </div>
           ) : null}
           {error ? (
-            <div className="absolute left-0 top-[52px] flex justify-center gap-[8px] text-[12px] text-error">
+            <div className="absolute left-0 top-[52px] flex justify-center gap-[8px] text-xs text-error">
               <Image
                 src={ErrorDecorationSvg}
                 alt={''}
@@ -206,7 +206,7 @@ export default function ForgotPasswordNewPasswordForm({
       <div className="flex-grow"></div>
 
       {/* Login link */}
-      <div className="mb-[20px] h-auto text-center text-[14px] text-foreground">
+      <div className="mb-[20px] h-auto text-center text-sm text-foreground">
         У вас нет аккаунта?{' '}
         <Link
           href="#"

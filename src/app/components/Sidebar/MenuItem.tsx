@@ -17,11 +17,11 @@ export function MenuItem({
   // isBase?: boolean;
 }) {
   return (
-    <div className={'mx-[0.93vw] mt-[1.85vw] flex flex-col'}>
+    <div className={'mx-4 mt-[1.85vw] flex flex-col'}>
       <div className={'flex flex-row items-center justify-between'}>
         <span
           className={
-            'mb-[0.69vw] ml-[0.93vw] font-roboto text-[0.69vw] uppercase leading-[1.16vw] text-secondary opacity-50'
+            'mb-[0.69vw] ml-4 font-roboto text-[0.69vw] uppercase leading-[1.16vw] text-secondary opacity-50'
           }
         >
           {title}
@@ -31,7 +31,7 @@ export function MenuItem({
         )}
         {/* {isBase && <Image src={baseIMG} alt="Base" />} */}
       </div>
-      <div className={'flex flex-col gap-[0.46vw]'}>{children}</div>
+      <div className={'flex flex-col gap-2'}>{children}</div>
     </div>
   );
 }

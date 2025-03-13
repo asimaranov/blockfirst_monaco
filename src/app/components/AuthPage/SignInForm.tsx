@@ -132,7 +132,7 @@ export default function SignInForm({
               <input
                 type="email"
                 placeholder="Электронная почта"
-                className="h-full w-full bg-transparent text-[14px] text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
+                className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
                 id="email"
                 name="email"
                 required
@@ -148,7 +148,7 @@ export default function SignInForm({
               />
             </div>
             {formik.touched.email && formik.errors.email ? (
-              <div className="absolute left-0 top-[52px] flex gap-[8px] text-[12px] text-error">
+              <div className="absolute left-0 top-[52px] flex gap-[8px] text-xs text-error">
                 <Image
                   src={ErrorDecorationSvg}
                   alt={''}
@@ -176,7 +176,7 @@ export default function SignInForm({
               <input
                 type={showPassword ? 'text' : 'password'}
                 placeholder="Пароль"
-                className="h-full w-full bg-transparent text-[14px] text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
+                className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
                 id="password"
                 name="password"
                 onChange={formik.handleChange}
@@ -199,7 +199,7 @@ export default function SignInForm({
               </button>
             </div>
             <div
-              className="absolute left-0 top-[52px] flex cursor-pointer gap-[8px] pl-[16px] pt-[12px] text-[12px] text-primary hover:text-[#1242B2]"
+              className="absolute left-0 top-[52px] flex cursor-pointer gap-[8px] pl-[16px] pt-[12px] text-xs text-primary hover:text-[#1242B2]"
               onClick={() => {
                 setAuthStep(AuthStep.ForgotPassword);
               }}
@@ -214,7 +214,7 @@ export default function SignInForm({
               ).map((error, index) => (
                 <div
                   key={index}
-                  className="my-[5px] flex gap-[8px] rounded-[4px] bg-error px-[8px] py-[5px] text-[12px] text-foreground"
+                  className="my-[5px] flex gap-[8px] rounded-[4px] bg-error px-[8px] py-[5px] text-xs text-foreground"
                 >
                   {error}
                 </div>
@@ -222,7 +222,7 @@ export default function SignInForm({
             </div>
           ) : null} */}
             {error ? (
-              <div className="absolute left-0 top-[52px] flex justify-center gap-[8px] text-[12px] text-error">
+              <div className="absolute left-0 top-[52px] flex justify-center gap-[8px] text-xs text-error">
                 <Image
                   src={ErrorDecorationSvg}
                   alt={''}
@@ -235,7 +235,7 @@ export default function SignInForm({
           </div>
         </div>
         {/* Login link */}
-        <div className="mb-[20px] mt-auto h-auto text-center text-[14px] text-foreground">
+        <div className="mb-[20px] mt-auto h-auto text-center text-sm text-foreground">
           У вас нет аккаунта?{' '}
           <Link
             href="#"

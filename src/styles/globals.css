@@ -50,3 +50,8 @@ input:-webkit-autofill:active {
   /* Revert background color */
   transition: background-color 5000s ease-in-out 0s;
 }
+
+
+@theme {
+  --spacing: 0.23vw; 
+}

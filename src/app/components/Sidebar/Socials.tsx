@@ -6,7 +6,7 @@ export function Socials() {
     <div className="grid grid-cols-4 border-t border-[#282D33]">
       <Link
         href={SOCIALS.telegram}
-        className="group flex flex-col items-center justify-center border-r border-[#282D33] py-[0.46vw] last:border-r-0 hover:bg-[#F2F2F2]"
+        className="group flex flex-col items-center justify-center border-r border-[#282D33] py-2 last:border-r-0 hover:bg-[#F2F2F2]"
       >
         <svg
           width="1.16vw"
@@ -26,7 +26,7 @@ export function Socials() {
       </Link>
       <Link
         href={SOCIALS.youtube}
-        className="group flex flex-col items-center justify-center border-r border-[#282D33] py-[0.46vw] last:border-r-0 hover:bg-[#F2F2F2]"
+        className="group flex flex-col items-center justify-center border-r border-[#282D33] py-2 last:border-r-0 hover:bg-[#F2F2F2]"
       >
         <svg
           width="1.16vw"
@@ -44,7 +44,7 @@ export function Socials() {
       </Link>
       <Link
         href={SOCIALS.medium}
-        className="group flex flex-col items-center justify-center border-r border-[#282D33] py-[0.46vw] last:border-r-0 hover:bg-[#F2F2F2]"
+        className="group flex flex-col items-center justify-center border-r border-[#282D33] py-2 last:border-r-0 hover:bg-[#F2F2F2]"
       >
         <svg
           width="1.16vw"
@@ -72,7 +72,7 @@ export function Socials() {
       </Link>
       <Link
         href={SOCIALS.twitter}
-        className="group flex flex-col items-center justify-center border-r border-[#282D33] py-[0.46vw] last:border-r-0 hover:bg-[#F2F2F2]"
+        className="group flex flex-col items-center justify-center border-r border-[#282D33] py-2 last:border-r-0 hover:bg-[#F2F2F2]"
       >
         <svg
           width="1.16vw"

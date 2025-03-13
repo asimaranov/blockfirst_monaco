@@ -11,14 +11,14 @@ export function CourseProgress({
   className?: string;
 }) {
   return (
-    <div className={cn('flex flex-col gap-[0.926vw]', className)}>
-      <div className="flex flex-row gap-[0.926vw]">
+    <div className={cn('flex flex-col gap-4', className)}>
+      <div className="flex flex-row gap-4">
         <Image
           src={medalImg}
           alt="progress"
-          className="h-[1.389vw] w-[1.389vw]"
+          className="h-6 w-6"
         />
-        <span className="font-roboto text-[1.157vw] font-semibold leading-[1.389vw] text-[#F2F2F2]">
+        <span className="font-roboto text-5 font-semibold leading-6 text-[#F2F2F2]">
           {progress}%
         </span>
       </div>

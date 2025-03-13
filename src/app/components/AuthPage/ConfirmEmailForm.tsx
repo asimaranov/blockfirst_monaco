@@ -170,7 +170,7 @@ export default function ConfirmEmailForm({
                 }}
                 key={index}
                 className={cn(
-                  'h-[58px] w-[58px] border-b bg-transparent text-center text-[24px] text-foreground placeholder:text-center focus:outline-none',
+                  'h-[58px] w-[58px] border-b bg-transparent text-center text-2xl text-foreground placeholder:text-center focus:outline-none',
                   isError && 'border-error'
                 )}
                 placeholder={'-'}
@@ -219,7 +219,7 @@ export default function ConfirmEmailForm({
             ))}
           </div>
           {isError && (
-            <div className="absolute flex flex-row items-center gap-[8px] pt-[12px] text-[12px] text-error">
+            <div className="absolute flex flex-row items-center gap-2 pt-3 text-xs text-error">
               <Image
                 src={ErrorNoticeSvg}
                 alt={''}
@@ -230,17 +230,17 @@ export default function ConfirmEmailForm({
           )}
         </div>
         <div className="flex w-full flex-col items-center gap-[16px] pt-[64px]">
-          <span className="text-[18px] text-foreground">
+          <span className="text-lg text-foreground">
             {String(Math.floor(timer / 60)).padStart(2, '0')}:
             {String(timer % 60).padStart(2, '0')}
           </span>
           <div className="flex flex-row gap-[4px]">
-            <span className="text-[14px] text-foreground">
+            <span className="text-sm text-foreground">
               Не получили код?
             </span>
             <button
               className={cn(
-                'text-[14px] text-primary',
+                'text-sm text-primary',
                 timer > 0 && 'opacity-50'
               )}
               disabled={timer > 0}

@@ -50,7 +50,7 @@ export default function Dashboard({ session }: { session: Session }) {
           <Link
             href="/dashboard"
             className={cn(
-              'flex w-full flex-col items-center justify-center font-roboto text-[14px] font-medium hover:opacity-80',
+              'flex w-full flex-col items-center justify-center font-roboto text-sm font-medium hover:opacity-80',
               pathname === '/dashboard'
                 ? 'rounded-r-[100px] bg-[#F2F2F2] text-[#01050D]'
                 : 'bg-transparent text-[#F2F2F2]'
@@ -61,7 +61,7 @@ export default function Dashboard({ session }: { session: Session }) {
           <Link
             href="/dashboard/history"
             className={cn(
-              'flex w-full flex-col items-center justify-center font-roboto text-[14px] font-medium hover:opacity-80',
+              'flex w-full flex-col items-center justify-center font-roboto text-sm font-medium hover:opacity-80',
               pathname === '/dashboard/history'
                 ? 'rounded-l-[100px] bg-[#F2F2F2] text-[#01050D]'
                 : 'bg-transparent text-[#F2F2F2]'
@@ -73,7 +73,7 @@ export default function Dashboard({ session }: { session: Session }) {
         <div className="flex flex-col gap-[8px]">
           <div className="flex flex-row items-center justify-end gap-[8px]">
             <div className="h-[6px] w-[6px] rounded-full bg-[#54EDB7]" />
-            <span className="font-roboto text-[14px] font-medium text-[#F2F2F2]">
+            <span className="font-roboto text-sm font-medium text-[#F2F2F2]">
               {new Date(
                 Math.min(
                   ...courses.map((course) =>
@@ -83,7 +83,7 @@ export default function Dashboard({ session }: { session: Session }) {
               ).toLocaleDateString('ru-RU')}
             </span>
           </div>
-          <span className="font-roboto text-[12px] text-secondary opacity-50">
+          <span className="font-roboto text-xs text-secondary opacity-50">
             Последнее обновление
           </span>
         </div>

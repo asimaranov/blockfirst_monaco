@@ -19,7 +19,7 @@ export default function AuthButton({
       type="submit"
       disabled={state === 'disabled'}
       className={cn(
-        'flex w-full items-center justify-center gap-[14px] rounded-full bg-primary py-3.5 text-[14px] text-foreground',
+        'flex w-full items-center justify-center gap-[14px] rounded-full bg-primary py-3.5 text-sm text-foreground',
         'transition-colors duration-300',
         state != 'disabled'  && 'hover:bg-[#1242B2]',
         state === 'loading' && 'bg-[#1242B2]',

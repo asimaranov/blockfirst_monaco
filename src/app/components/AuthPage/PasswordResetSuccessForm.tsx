@@ -28,10 +28,10 @@ export default function PasswordResetSuccessForm() {
 
           {/* Success Text */}
           <div className="flex flex-col items-center gap-4">
-            <h2 className="text-center text-[24px] font-bold text-foreground">
+            <h2 className="text-center text-2xl font-bold text-foreground">
               Поздравляем
             </h2>
-            <p className="text-center text-[14px] leading-5 text-secondary">
+            <p className="text-center text-sm leading-5 text-secondary">
               Вы успешно создали новый пароль и можете войти в систему
             </p>
           </div>

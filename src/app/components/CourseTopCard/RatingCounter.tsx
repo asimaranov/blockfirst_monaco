@@ -2,7 +2,7 @@ export function RatingCounter({ rating }: { rating: number }) {
   return (
     <div
       className={
-        'flex flex-row items-center gap-[0.231vw] rounded-full bg-[#01050D] px-[0.694vw] py-[0.289vw]'
+        'flex flex-row items-center gap-[0.231vw] rounded-full bg-[#01050D] px-3 py-[0.289vw]'
       }
     >
       <svg
@@ -20,7 +20,7 @@ export function RatingCounter({ rating }: { rating: number }) {
           fill="#FEF360"
         />
       </svg>
-      <span className="font-roboto text-[0.694vw] font-medium text-[#F2F2F2]">
+      <span className="text-xs font-roboto font-medium text-[#F2F2F2]">
         {rating}
       </span>
     </div>

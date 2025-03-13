@@ -9,7 +9,7 @@ import { Progress } from '../shared/Progress';
 
 export function CourseTopCard({ course }: { course: ICourse }) {
   return (
-    <section className="flex flex-row gap-[2.315vw] border-b border-[#282D33]">
+    <section className="flex flex-row gap-10 border-b border-[#282D33]">
       <Image
         src={course.coverImg}
         alt={course.title}
@@ -17,14 +17,14 @@ export function CourseTopCard({ course }: { course: ICourse }) {
         height={354}
         className="w-[35.185vw] object-cover object-center"
       />
-      <div className="flex w-full flex-col py-[1.852vw] pr-[1.852vw]">
+      <div className="flex w-full flex-col py-8 pr-8">
         <div className="flex flex-row items-center justify-between">
-          <div className="flex flex-row items-center gap-[0.231vw]">
+          <div className="flex flex-row items-center gap-1">
             <AlumniCounter count={course.alumniCount} />
             <RatingCounter rating={course.rating} />
           </div>
           <div className="flex flex-row items-center">
-            <span className="border-r border-[#9AA6B5] border-opacity-20 pr-[0.694vw] font-roboto text-[0.579vw] font-medium uppercase text-[#9AA6B5]">
+            <span className="border-r border-[#9AA6B5] border-opacity-20 pr-3 font-roboto text-[0.579vw] font-medium uppercase text-[#9AA6B5]">
               {course.lessonsCount}{' '}
               {(() => {
                 const lastDigit = course.lessonsCount % 10;
@@ -36,7 +36,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
                 return 'уроков';
               })()}
             </span>
-            <span className="pl-[0.694vw] font-roboto text-[0.579vw] font-medium uppercase text-[#9AA6B5]">
+            <span className="pl-3 font-roboto text-[0.579vw] font-medium uppercase text-[#9AA6B5]">
               {(() => {
                 const months = Math.ceil(
                   course.timeToComplete / (30 * 24 * 60 * 60 * 1000)
@@ -53,7 +53,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
             </span>
           </div>
         </div>
-        <div className="mt-[1.389vw] flex flex-col gap-[0.926vw]">
+        <div className="mt-6 flex flex-col gap-4">
           <span className="font-roboto text-[1.62vw] font-bold text-[#F2F2F2]">
             {course.title}
           </span>
@@ -61,12 +61,12 @@ export function CourseTopCard({ course }: { course: ICourse }) {
             {course.description}
           </span>
         </div>
-        <CourseProgress progress={4} className="mt-[1.389vw]" />
-        <div className="mt-[1.852vw] flex flex-row items-center justify-between gap-[0.926vw]">
+        <CourseProgress progress={4} className="mt-6" />
+        <div className="mt-[1.852vw] flex flex-row items-center justify-between gap-4">
           <Link
             href={`#`}
             className={
-              'flex w-full flex-col items-center justify-center rounded-full bg-[#195AF4] py-[0.694vw] hover:opacity-80'
+              'flex w-full flex-col items-center justify-center rounded-full bg-[#195AF4] py-3 hover:opacity-80'
             }
           >
             <div className="flex flex-row items-center gap-[0.868vw]">
@@ -79,7 +79,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
                 viewBox="0 0 7 12"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-[0.694vw] w-[0.405vw]"
+                className="h-3 w-[0.405vw]"
               >
                 <path
                   fillRule="evenodd"
@@ -94,14 +94,14 @@ export function CourseTopCard({ course }: { course: ICourse }) {
             href={`#`}
             className="flex w-full flex-col items-center justify-center hover:opacity-80"
           >
-            <div className="flex flex-row items-center gap-[0.347vw]">
+            <div className="flex flex-row items-center gap-1">
               <svg
                 width="16"
                 height="16"
                 viewBox="0 0 16 16"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-[0.926vw] w-[0.926vw]"
+                className="h-4 w-4"
               >
                 <path
                   fillRule="evenodd"

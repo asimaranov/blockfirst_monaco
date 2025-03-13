@@ -5,15 +5,11 @@ import { SubscriptionLabel } from './assets/SubscriptionLabel';
 
 export function UserInfo({ user }: { user?: IUser }) {
   return (
-    <div
-      className={
-        'flex flex-row border-t border-[#282D33] px-[1.85vw] py-[1.16vw]'
-      }
-    >
+    <div className={'flex flex-row border-t border-[#282D33] px-8 py-5'}>
       {user?.name?.[0] ? (
         <div
           className={
-            'my-auto flex h-[2.31vw] w-[2.31vw] flex-col items-center justify-center rounded-full bg-[#195AF4]'
+            'my-auto flex h-10 w-10 flex-col items-center justify-center rounded-full bg-[#195AF4]'
           }
         >
           <span
@@ -23,22 +19,24 @@ export function UserInfo({ user }: { user?: IUser }) {
           </span>
         </div>
       ) : (
-        <Skeleton className="my-auto h-[2.31vw] w-[2.31vw] rounded-full" />
+        <Skeleton className="my-auto h-10 w-10 rounded-full" />
       )}
-      <div className={'ml-[0.93vw] flex flex-col gap-[0.46vw]'}>
+      <div className={'ml-4 flex flex-col gap-2'}>
         {user?.name ? (
           <span
-            className={'font-roboto text-[0.93vw] font-medium text-[#F2F2F2] line-clamp-1'}
+            className={
+              'text-base line-clamp-1 font-roboto font-medium text-[#F2F2F2]'
+            }
           >
             {user.name.split(' ')[0]}
           </span>
         ) : (
-          <Skeleton className="h-[0.93vw] w-[5.21vw] rounded-full" />
+          <Skeleton className="h-4 w-[5.21vw] rounded-full" />
         )}
         {user?.startTimestamp ? (
-          <span className="font-roboto text-[0.69vw] text-[#9AA6B5]">
+          <span className="text-xs font-roboto text-[#9AA6B5]">
             Старт —{' '}
-            <span className="font-roboto text-[0.69vw] text-[#F2F2F2]">
+            <span className="text-xs font-roboto text-[#F2F2F2]">
               {new Date(user?.startTimestamp).toLocaleDateString('ru-RU', {
                 day: '2-digit',
                 month: '2-digit',
@@ -47,14 +45,14 @@ export function UserInfo({ user }: { user?: IUser }) {
             </span>
           </span>
         ) : (
-          <Skeleton className="h-[0.69vw] w-[4.05vw] rounded-full" />
+          <Skeleton className="h-3 w-[4.05vw] rounded-full" />
         )}
       </div>
       <div className="ml-auto">
         {user?.subscriptionType != undefined ? (
           <SubscriptionLabel type={user.subscriptionType} />
         ) : (
-          <Skeleton className="h-[1.39vw] w-[3.88vw] rounded-full" />
+          <Skeleton className="w-34 h-6 rounded-full" />
         )}
       </div>
     </div>

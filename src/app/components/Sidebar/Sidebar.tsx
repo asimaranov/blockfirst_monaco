@@ -142,7 +142,7 @@ export default function Sidebar() {
   return (
     <section className="z-10 flex h-screen w-full max-w-[19.91vw] flex-col">
       <nav className={'flex w-full flex-col'}>
-        <div className="mx-[1.85vw] mt-[1.97vw] flex flex-row items-center justify-between">
+        <div className="mx-8 mt-[1.97vw] flex flex-row items-center justify-between">
           <Link href="/dashboard" className="hover:opacity-80">
             <Image src={LogoSvg} alt="logo" className="w-[9.664vw]" />
           </Link>
@@ -163,12 +163,12 @@ export default function Sidebar() {
             <Image
               src={logoutImg}
               alt="logout"
-              className="h-[0.926vw] w-[0.926vw] group-hover:hidden group-data-[active=true]:hidden"
+              className="h-4 w-4 group-hover:hidden group-data-[active=true]:hidden"
             />
             <Image
               src={logoutHoverImg}
               alt="logout"
-              className="hidden h-[0.926vw] w-[0.926vw] group-hover:block group-data-[active=true]:block"
+              className="hidden h-4 w-4 group-hover:block group-data-[active=true]:block"
             />
           </div>
         </div>
@@ -190,12 +190,12 @@ export default function Sidebar() {
                 <Image
                   src={item.icon}
                   alt={item.title}
-                  className="h-[0.926vw] w-[0.926vw] group-hover:hidden group-data-[active=true]:hidden"
+                  className="h-4 w-4 group-hover:hidden group-data-[active=true]:hidden"
                 />
                 <Image
                   src={item.iconHover}
                   alt={item.title}
-                  className="hidden h-[0.926vw] w-[0.926vw] group-hover:inline-block group-data-[active=true]:block"
+                  className="hidden h-4 w-4 group-hover:inline-block group-data-[active=true]:block"
                 />
               </MenuLink>
             ))}
@@ -203,10 +203,7 @@ export default function Sidebar() {
         ))}
       </nav>
       <div className={'mt-auto flex flex-col border-t border-[#282D33]'}>
-        <Link
-          href="#"
-          className={'flex flex-row items-center px-[1.85vw] py-[1.16vw]'}
-        >
+        <Link href="#" className={'flex flex-row items-center px-8 py-5'}>
           <svg
             width="0.93vw"
             height="0.93vw"
@@ -242,7 +239,7 @@ export default function Sidebar() {
           </svg>
           <span
             className={cn(
-              'ml-[0.93vw] mr-[1.85vw] text-center font-roboto text-[0.75vw] leading-[0.93vw] text-secondary',
+              'ml-4 mr-8 text-center font-roboto text-[0.75vw] leading-4 text-secondary text-nowrap',
               user.subscriptionType !== SubscriptionType.Pro && 'opacity-60'
             )}
           >
