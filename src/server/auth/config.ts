@@ -62,9 +62,9 @@ export const auth = betterAuth({
     },
   },
   rateLimit: {
-    window: 60, // time window in seconds
-    max: 5, // max requests in the window
-  },
+    window: 10, // time window in seconds
+    max: 100, // max requests in the window
+},
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID!,
