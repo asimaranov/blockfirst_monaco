@@ -18,6 +18,7 @@ import AuthButton from './button';
 import { frontendSchema } from '~/app/lib/zod';
 import MainHeading from './components/MainHeading';
 import SocialLogin from './components/SocialLogin';
+import { useRouter } from 'next/navigation';
 
 export default function SignUpForm({
   setAuthStep,
@@ -33,7 +34,8 @@ export default function SignUpForm({
     'disabled' | 'loading' | 'active'
   >('active');
   const [error, setError] = useState('');
-
+  const router = useRouter();
+  
   useEffect(() => {
     setTimeout(() => {
       setError('');
@@ -63,6 +65,22 @@ export default function SignUpForm({
       setBottomButtonState('active');
     }
   }, [formik.errors]);
+
+  useEffect(() => {
+    setTopButtonState({
+      state: 'cross',
+      onClick: () => {
+        router.push('https://blockfirst.io/');
+      },
+    });
+    return () => {
+      setTopButtonState({
+        state: undefined,
+        onClick: () => {},
+      });
+    };
+  }, []);
+
 
   return (
     <>

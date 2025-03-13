@@ -33,6 +33,10 @@ export default function ForgotPasswordForm({
       state: 'back',
       onClick: () => {
         setAuthStep(AuthStep.SignIn);
+        setTopButtonState({
+          state: undefined,
+          onClick: () => {},
+        });
       },
     });
   }, []);

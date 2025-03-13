@@ -40,6 +40,21 @@ export default function SignInForm({
     }, 5000);
   }, [error]);
 
+  useEffect(() => {
+    setTopButtonState({
+      state: 'cross',
+      onClick: () => {
+        router.push('https://blockfirst.io/');
+      },
+    });
+    return () => {
+      setTopButtonState({
+        state: undefined,
+        onClick: () => {},
+      });
+    };
+  }, []);
+
   const formik = useFormik({
     initialValues: {
       email: '',
