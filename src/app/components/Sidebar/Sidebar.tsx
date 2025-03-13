@@ -33,13 +33,6 @@ import { cn } from '~/helpers';
 import { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
-enum SidebarPage {
-  Dashboard = 'dashboard',
-  Pricing = 'pricing',
-  Diploma = 'diploma',
-  NotImplemented = 'not-implemented',
-}
-
 interface SidebarSection {
   title: string;
   isPro: boolean;
@@ -179,7 +172,11 @@ export default function Sidebar() {
           </div>
         </div>
         {sidebarSections.map((section) => (
-          <MenuItem key={section.title} title={section.title} isPro={section.isPro}>
+          <MenuItem
+            key={section.title}
+            title={section.title}
+            isPro={section.isPro}
+          >
             {section.items.map((item) => (
               <MenuLink
                 key={item.title}
