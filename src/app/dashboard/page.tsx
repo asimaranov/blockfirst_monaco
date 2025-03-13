@@ -16,12 +16,13 @@ export default function DashboardPage() {
   const session = authClient.useSession();
   const router = useRouter();
   const pathname = usePathname();
+  console.log(session);
 
-  useEffect(() => {
-    if (!session.data && !session.isPending) {
-      router.push('/signin');
-    }
-  }, [session]);
+  // useEffect(() => {
+  //   if (!session.data && !session.isPending) {
+  //     router.push('/signin');
+  //   }
+  // }, [session]);
 
   const courses: ICourse[] = [
     {
