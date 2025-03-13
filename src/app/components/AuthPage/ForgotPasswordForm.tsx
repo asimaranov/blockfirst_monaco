@@ -70,8 +70,47 @@ export default function ForgotPasswordForm({
         secondText={`Введите адрес электронной почты, на который зарегистрирован ваш
           аккаунт`}
       />
-      {/* Form */}
-      <form className="flex flex-col gap-[24px]" onSubmit={formik.handleSubmit}>
+      <form
+        className="flex flex-1 flex-col"
+        onSubmit={async (e) => {
+          e.preventDefault();
+
+          setBottomButtonState('loading');
+          try {
+            const res = await authClient.emailOtp.sendVerificationOtp({
+              email: formik.values.email,
+              type: 'forget-password',
+            });
+            if (res?.error) {
+              setError(res?.error?.message || '');
+              return;
+            }
+          } catch (error) {
+            setError('Не удалось отправить код');
+            console.log('Error in forgot password', error);
+          } finally {
+            setBottomButtonState('active');
+          }
+
+          console.log('Forgot password OTP sent');
+          setAuthState({
+            email: formik.values.email,
+            username: '',
+            password: formik.values.password,
+          });
+          setTopButtonState({
+            state: 'back',
+            onClick: () => {
+              setAuthStep(AuthStep.SignIn);
+              setTopButtonState({
+                state: undefined,
+                onClick: () => {},
+              });
+            },
+          });
+          setAuthStep(AuthStep.ForgotPasswordConfirmEmail);
+        }}
+      >
         {/* Email field */}
         <div className="relative">
           <div
@@ -114,49 +153,13 @@ export default function ForgotPasswordForm({
             </div>
           ) : null}
         </div>
+        <div className="flex-1"></div>
+        <AuthButton
+          text="Продолжить"
+          state={bottomButtonState}
+          onClick={async () => {}}
+        ></AuthButton>
       </form>
-      <div className="flex-grow"></div>
-
-      <AuthButton
-        text="Продолжить"
-        state={bottomButtonState}
-        onClick={async () => {
-          setBottomButtonState('loading');
-          try {
-            const res = await authClient.emailOtp.sendVerificationOtp({
-              email: formik.values.email,
-              type: 'forget-password',
-            });
-            if (res?.error) {
-              setError(res?.error?.message || '');
-              return;
-            }
-          } catch (error) {
-            setError('Не удалось отправить код');
-            console.log('Error in forgot password', error);
-          } finally {
-            setBottomButtonState('active');
-          }
-
-          console.log('Forgot password OTP sent');
-          setAuthState({
-            email: formik.values.email,
-            username: '',
-            password: formik.values.password,
-          });
-          setTopButtonState({
-            state: 'back',
-            onClick: () => {
-              setAuthStep(AuthStep.SignIn);
-              setTopButtonState({
-                state: undefined,
-                onClick: () => {},
-              });
-            },
-          });
-          setAuthStep(AuthStep.ForgotPasswordConfirmEmail);
-        }}
-      ></AuthButton>
     </>
   );
 }
