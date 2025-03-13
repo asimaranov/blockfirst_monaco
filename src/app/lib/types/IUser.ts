@@ -1,6 +1,6 @@
 export enum SubscriptionType {
   Free,
-  Base,
+  Starter,
   Pro,
 }
 

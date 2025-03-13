@@ -135,7 +135,7 @@ export default function Sidebar() {
     name: session.data?.user?.name ?? '',
     startTimestamp: Date.now(),
     createdAt: new Date().toISOString(),
-    subscriptionType: SubscriptionType.Base,
+    subscriptionType: SubscriptionType.Starter,
   };
 
   return (
