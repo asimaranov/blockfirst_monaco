@@ -1,11 +1,5 @@
-'use client';
-
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { Topbar } from '~/app/components/Dashboard/Topbar';
-import { cn } from '~/helpers';
-import { usePathname } from 'next/navigation';
-import Link from 'next/link';
 import { ICourse } from '~/app/lib/types/ICourse';
 import { Skeleton } from '~/app/components/shared/Skeleton';
 import { CourseTopCard } from '~/app/components/CourseTopCard';
@@ -13,8 +7,6 @@ import { CourseCard } from '~/app/components/CourseCard/CourseCard';
 import { Session } from '~/server/auth';
 
 export default function Dashboard({ session }: { session: Session }) {
-  const pathname = usePathname();
-
   const courses: ICourse[] = [
     {
       id: 'solidity-defi',
@@ -43,50 +35,58 @@ export default function Dashboard({ session }: { session: Session }) {
     },
   ];
 
-  const topBarItems = [
-    {
-      label: 'Курсы',
-      href: '/dashboard',
-    },
-    {
-      label: 'История',
-      href: '/dashboard/history',
-    },
-  ];
-
   const lastUpdate = new Date(
     Math.min(...courses.map((course) => new Date(course.updatedAt).getTime()))
   ).toLocaleDateString('ru-RU');
+
+  const [dashboardSection, setDashboardSection] = useState<
+    'courses' | 'history'
+  >('courses');
 
   return (
     <main className="border-l border-r border-[#282D33]">
       <Topbar
         lastestUpdate={lastUpdate}
-        pathname={pathname}
         items={[
           {
             label: 'Курсы',
-            href: '/dashboard',
+            onClick: () => setDashboardSection('courses'),
+            active: dashboardSection === 'courses',
           },
           {
             label: 'История',
-            href: '/dashboard/history',
+            onClick: () => setDashboardSection('history'),
+            active: dashboardSection === 'history',
           },
         ]}
       />
-      {courses?.[0] ? (
-        <CourseTopCard course={courses[0]} />
-      ) : (
-        <Skeleton className="h-[354px] w-full" />
+      {dashboardSection === 'courses' && (
+        <>
+          {courses?.[0] ? (
+            <CourseTopCard course={courses[0]} />
+          ) : (
+            <Skeleton className="h-[354px] w-full" />
+          )}
+          <section className="mt-[37px] grid grid-cols-3 divide-x divide-y divide-[#282D33]">
+            <CourseCard />
+            <CourseCard />
+            <CourseCard />
+            <CourseCard />
+            <CourseCard />
+            <CourseCard />
+          </section>
+        </>
       )}
-      <section className="mt-[37px] grid grid-cols-3 divide-x divide-y divide-[#282D33]">
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-      </section>
+      {dashboardSection === 'history' && (
+          <section className="mt-[37px] grid grid-cols-3 divide-x divide-y divide-[#282D33]">
+            <CourseCard />
+            <CourseCard />
+            <CourseCard />
+            <CourseCard />
+            <CourseCard />
+            <CourseCard />
+          </section>
+      )}
     </main>
   );
 }

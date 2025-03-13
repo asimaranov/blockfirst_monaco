@@ -3,15 +3,14 @@ import { cn } from '~/helpers';
 
 interface TopbarItem {
   label: string;
-  href: string;
+  active: boolean;
+  onClick: () => void;
 }
 
 export function Topbar({
-  pathname,
   lastestUpdate,
   items,
 }: {
-  pathname: string;
   lastestUpdate: string;
   items: TopbarItem[];
 }) {
@@ -23,18 +22,18 @@ export function Topbar({
     >
       <div className="flex flex-row rounded-[100px] bg-[#01050D]">
         {items.map((item) => (
-          <Link
-            href={item.href}
+          <div
+            onClick={item.onClick}
             className={cn(
-              'flex items-center justify-center px-8 py-3 font-roboto text-sm font-medium hover:opacity-80',
-              'shrink-0',
-              pathname === item.href
+              'flex items-center justify-center px-8 py-3 font-roboto text-sm font-medium',
+              'shrink-0 cursor-pointer',
+              item.active
                 ? 'rounded-[100px] bg-[#F2F2F2] text-[#01050D]'
-                : 'bg-transparent text-[#F2F2F2]'
+                : 'bg-transparent text-[#F2F2F2] hover:opacity-80'
             )}
           >
             {item.label}
-          </Link>
+          </div>
         ))}
       </div>
       <div className="flex flex-col gap-[8px]">
