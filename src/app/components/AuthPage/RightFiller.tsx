@@ -96,7 +96,7 @@ export default function RightFiller() {
 
   return (
     <div
-      className="relative flex h-full min-h-screen w-full flex-col items-center justify-center overflow-hidden"
+      className="relative hidden md:flex h-full w-full flex-col items-center justify-center overflow-hidden"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{
