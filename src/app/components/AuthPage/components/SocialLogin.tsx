@@ -4,7 +4,7 @@ import GoogleLoginIcon from '../assets/social/google';
 
 export default function SocialLogin() {
   return (
-    <div className="mt-[40px] flex w-full items-center justify-center gap-[12px]">
+    <div className="mt-10 flex w-full items-center justify-center gap-[12px]">
       <button
         className="flex items-center justify-center"
         onClick={async () => {

@@ -43,51 +43,37 @@ export default function Dashboard({ session }: { session: Session }) {
     },
   ];
 
+  const topBarItems = [
+    {
+      label: 'Курсы',
+      href: '/dashboard',
+    },
+    {
+      label: 'История',
+      href: '/dashboard/history',
+    },
+  ];
+
+  const lastUpdate = new Date(
+    Math.min(...courses.map((course) => new Date(course.updatedAt).getTime()))
+  ).toLocaleDateString('ru-RU');
+
   return (
     <main className="border-l border-r border-[#282D33]">
-      <Topbar className="justify-between">
-        <div className="flex h-[40px] w-[214px] flex-row overflow-hidden rounded-[100px] bg-[#01050D]">
-          <Link
-            href="/dashboard"
-            className={cn(
-              'flex w-full flex-col items-center justify-center font-roboto text-sm font-medium hover:opacity-80',
-              pathname === '/dashboard'
-                ? 'rounded-r-[100px] bg-[#F2F2F2] text-[#01050D]'
-                : 'bg-transparent text-[#F2F2F2]'
-            )}
-          >
-            Курсы
-          </Link>
-          <Link
-            href="/dashboard/history"
-            className={cn(
-              'flex w-full flex-col items-center justify-center font-roboto text-sm font-medium hover:opacity-80',
-              pathname === '/dashboard/history'
-                ? 'rounded-l-[100px] bg-[#F2F2F2] text-[#01050D]'
-                : 'bg-transparent text-[#F2F2F2]'
-            )}
-          >
-            История
-          </Link>
-        </div>
-        <div className="flex flex-col gap-[8px]">
-          <div className="flex flex-row items-center justify-end gap-[8px]">
-            <div className="h-[6px] w-[6px] rounded-full bg-[#54EDB7]" />
-            <span className="font-roboto text-sm font-medium text-[#F2F2F2]">
-              {new Date(
-                Math.min(
-                  ...courses.map((course) =>
-                    new Date(course.updatedAt).getTime()
-                  )
-                )
-              ).toLocaleDateString('ru-RU')}
-            </span>
-          </div>
-          <span className="font-roboto text-xs text-secondary opacity-50">
-            Последнее обновление
-          </span>
-        </div>
-      </Topbar>
+      <Topbar
+        lastestUpdate={lastUpdate}
+        pathname={pathname}
+        items={[
+          {
+            label: 'Курсы',
+            href: '/dashboard',
+          },
+          {
+            label: 'История',
+            href: '/dashboard/history',
+          },
+        ]}
+      />
       {courses?.[0] ? (
         <CourseTopCard course={courses[0]} />
       ) : (
