@@ -139,7 +139,7 @@ export default function Sidebar() {
   };
 
   return (
-    <section className="sticky left-0 top-0 z-10 flex h-screen w-full max-w-[19.91vw] flex-col">
+    <section className="z-10 flex h-screen w-full max-w-[19.91vw] flex-col">
       <nav className={'flex w-full flex-col'}>
         <div className="mx-[1.85vw] mt-[1.97vw] flex flex-row items-center justify-between">
           <Link href="/dashboard" className="hover:opacity-80">
