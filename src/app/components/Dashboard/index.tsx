@@ -83,7 +83,7 @@ export default function Dashboard({ session }: { session: Session }) {
               ).toLocaleDateString('ru-RU')}
             </span>
           </div>
-          <span className="font-roboto text-[12px] text-[#9AA6B5] opacity-50">
+          <span className="font-roboto text-[12px] text-secondary opacity-50">
             Последнее обновление
           </span>
         </div>

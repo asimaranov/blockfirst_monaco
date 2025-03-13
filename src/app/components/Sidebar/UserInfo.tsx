@@ -28,9 +28,9 @@ export function UserInfo({ user }: { user?: IUser }) {
       <div className={'ml-[0.93vw] flex flex-col gap-[0.46vw]'}>
         {user?.name ? (
           <span
-            className={'font-roboto text-[0.93vw] font-medium text-[#F2F2F2]'}
+            className={'font-roboto text-[0.93vw] font-medium text-[#F2F2F2] line-clamp-1'}
           >
-            {user.name}
+            {user.name.split(' ')[0]}
           </span>
         ) : (
           <Skeleton className="h-[0.93vw] w-[5.21vw] rounded-full" />
@@ -50,7 +50,7 @@ export function UserInfo({ user }: { user?: IUser }) {
           <Skeleton className="h-[0.69vw] w-[4.05vw] rounded-full" />
         )}
       </div>
-      <div className="ml-[3.59vw]">
+      <div className="ml-auto">
         {user?.subscriptionType != undefined ? (
           <SubscriptionLabel type={user.subscriptionType} />
         ) : (

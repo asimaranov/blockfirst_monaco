@@ -10,7 +10,7 @@ import { MenuItem } from './MenuItem';
 import { MenuLink } from './MenuLink';
 import starterIMG from 'public/subscriptions/starter.svg';
 import { UserInfo } from './UserInfo';
-import { IUser, SubscriptionType } from '~/app/lib/types/IUser';
+import { IUser } from '~/app/lib/types/IUser';
 import { authClient } from '~/server/auth/client';
 import { Socials } from './Socials';
 import courseImg from './assets/links/course.svg';
@@ -32,6 +32,7 @@ import notificationHoverImg from './assets/links/notification-hover.svg';
 import { cn } from '~/helpers';
 import { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
+import { SubscriptionType } from '~/app/lib/constants/subsctiptions';
 
 interface SidebarSection {
   title: string;
@@ -241,7 +242,7 @@ export default function Sidebar() {
           </svg>
           <span
             className={cn(
-              'ml-[0.93vw] mr-[1.85vw] text-center font-roboto text-[0.75vw] leading-[0.93vw] text-[#9AA6B5]',
+              'ml-[0.93vw] mr-[1.85vw] text-center font-roboto text-[0.75vw] leading-[0.93vw] text-secondary',
               user.subscriptionType !== SubscriptionType.Pro && 'opacity-60'
             )}
           >

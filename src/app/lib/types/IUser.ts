@@ -1,8 +1,4 @@
-export enum SubscriptionType {
-  Free,
-  Starter,
-  Pro,
-}
+import { SubscriptionType } from "../constants/subsctiptions";
 
 export interface IUser {
   name: string;
