@@ -24,6 +24,7 @@ export function Topbar({
         {items.map((item) => (
           <div
             onClick={item.onClick}
+            key={item.label}
             className={cn(
               'flex items-center justify-center px-8 py-3 font-roboto text-sm font-medium',
               'shrink-0 cursor-pointer',

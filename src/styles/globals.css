@@ -53,5 +53,41 @@ input:-webkit-autofill:active {
 
 
 @theme {
-  --spacing: 0.23vw; 
+  --spacing: 4px;
+
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-lg: 18px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+  --text-3xl: 32px;
+
+  --text-xs-line-height: 14px;
+  --text-sm-line-height: 14px;
+  --text-base-line-height: 16px;
+  --text-lg-line-height: 18px;
+  --text-xl-line-height: 20px;
+  --text-2xl-line-height: 24px;
+  --text-3xl-line-height: 32px;
+
+  @media screen(lg) {
+    --spacing: 0.23vw;
+    --text-xs: 0.69vw;
+    --text-sm: 0.81vw;
+    --text-base: 0.93vw;
+    --text-lg: 1.04vw;
+    --text-xl: 1.16vw;
+    --text-2xl: 1.39vw;
+    --text-3xl: 1.85vw;
+
+    --text-xs-line-height: 14px;
+    --text-sm-line-height: 14px;
+    --text-base-line-height: 16px;
+    --text-lg-line-height: 18px;
+    --text-xl-line-height: 20px;
+    --text-2xl-line-height: 24px;
+    --text-3xl-line-height: 32px;
+  
+  }
 }

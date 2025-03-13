@@ -70,23 +70,23 @@ export default function Dashboard({ session }: { session: Session }) {
             <Skeleton className="h-[354px] w-full" />
           )}
           <section className="mt-[37px] grid grid-cols-3 divide-x divide-y divide-[#282D33]">
-            <CourseCard />
-            <CourseCard />
-            <CourseCard />
-            <CourseCard />
-            <CourseCard />
-            <CourseCard />
+            <CourseCard course={courses[0]!} />
+            <CourseCard course={courses[1]!} />
+            <CourseCard course={courses[2]!} />
+            <CourseCard course={courses[3]!} />
+            <CourseCard course={courses[4]!} />
+            <CourseCard course={courses[5]!} />
           </section>
         </>
       )}
       {dashboardSection === 'history' && (
           <section className="mt-[37px] grid grid-cols-3 divide-x divide-y divide-[#282D33]">
-            <CourseCard />
-            <CourseCard />
-            <CourseCard />
-            <CourseCard />
-            <CourseCard />
-            <CourseCard />
+            <CourseCard course={courses[0]!} />
+            <CourseCard course={courses[1]!} />
+            <CourseCard course={courses[2]!} />
+            <CourseCard course={courses[3]!} />
+            <CourseCard course={courses[4]!} />
+            <CourseCard course={courses[5]!} />
           </section>
       )}
     </main>
