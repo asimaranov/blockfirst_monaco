@@ -33,9 +33,104 @@ import { cn } from '~/helpers';
 import { useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
+enum SidebarPage {
+  Dashboard = 'dashboard',
+  Pricing = 'pricing',
+  Diploma = 'diploma',
+  NotImplemented = 'not-implemented',
+}
+
+interface SidebarSection {
+  title: string;
+  isPro: boolean;
+  items: SidebarItem[];
+}
+interface SidebarItem {
+  title: string;
+  href: string;
+  icon: string;
+  iconHover: string;
+  locked?: boolean;
+  notificationCount?: number;
+}
+
+const sidebarSections: SidebarSection[] = [
+  {
+    title: 'Основное',
+    isPro: false,
+    items: [
+      {
+        title: 'Мои Курсы',
+        href: '/dashboard',
+        icon: courseImg,
+        iconHover: courseHoverImg,
+      },
+      {
+        title: 'Тариф',
+        href: '/pricing',
+        icon: tariffImg,
+        iconHover: tariffHoverImg,
+      },
+      {
+        title: 'Диплом',
+        href: '/diploma',
+        icon: certImg,
+        iconHover: certHoverImg,
+      },
+    ],
+  },
+  {
+    title: 'Персонально',
+    isPro: true,
+    items: [
+      {
+        title: 'Твой куратор',
+        href: '#',
+        icon: curatorImg,
+        iconHover: curatorHoverImg,
+        locked: true,
+      },
+      {
+        title: 'Подготовка резюме',
+        href: '#',
+        icon: cvImg,
+        iconHover: cvHoverImg,
+        locked: true,
+      },
+      {
+        title: 'Трудоустройство',
+        href: '#',
+        icon: jobImg,
+        iconHover: jobHoverImg,
+        locked: true,
+      },
+    ],
+  },
+  {
+    title: 'Аккаунт',
+    isPro: false,
+    items: [
+      {
+        title: 'Реферальная программа',
+        href: '#',
+        icon: referralImg,
+        iconHover: referralHoverImg,
+        locked: false,
+      },
+      {
+        title: 'Уведомления',
+        href: '#',
+        icon: notificationImg,
+        iconHover: notificationHoverImg,
+        notificationCount: 3,
+        locked: false,
+      },
+    ],
+  },
+];
+
 export default function Sidebar() {
   const pathname = usePathname();
-  const curentPage = pathname.split('/').pop() ?? '';
   const router = useRouter();
   const session = authClient.useSession();
   useEffect(() => {
@@ -83,159 +178,31 @@ export default function Sidebar() {
             />
           </div>
         </div>
-        <MenuItem title="Основное">
-          <MenuLink
-            title="Мои Курсы"
-            href="/dashboard"
-            isCurrentPage={curentPage === 'dashboard'}
-          >
-            <Image
-              src={courseImg}
-              alt="course"
-              className="h-[0.926vw] w-[0.926vw] group-hover:hidden group-data-[active=true]:hidden"
-            />
-            <Image
-              src={courseHoverImg}
-              alt="course"
-              className="hidden h-[0.926vw] w-[0.926vw] group-hover:inline-block group-data-[active=true]:block"
-            />
-          </MenuLink>
-          <MenuLink
-            title="Тариф"
-            href="/pricing"
-            isCurrentPage={curentPage === 'pricing'}
-          >
-            <Image
-              src={tariffImg}
-              alt="tariff"
-              className="h-[0.926vw] w-[0.926vw] group-hover:hidden group-data-[active=true]:hidden"
-            />
-            <Image
-              src={tariffHoverImg}
-              alt="tariff"
-              className="hidden h-[0.926vw] w-[0.926vw] group-hover:inline-block group-data-[active=true]:block"
-            />
-          </MenuLink>
-          <MenuLink
-            title="Диплом"
-            href="/diploma"
-            isCurrentPage={curentPage === 'diploma'}
-          >
-            <Image
-              src={certImg}
-              alt="cert"
-              className="h-[0.926vw] w-[0.926vw] group-hover:hidden group-data-[active=true]:hidden"
-            />
-            <Image
-              src={certHoverImg}
-              alt="cert"
-              className="hidden h-[0.926vw] w-[0.926vw] group-hover:inline-block group-data-[active=true]:block"
-            />
-          </MenuLink>
-        </MenuItem>
-        <MenuItem
-          title="Персонально"
-          isPro={user.subscriptionType !== SubscriptionType.Pro}
-        >
-          <MenuLink
-            title="Твой куратор"
-            href="#"
-            locked={user.subscriptionType !== SubscriptionType.Pro}
-            isCurrentPage={curentPage === 'not-implemented'}
-          >
-            <Image
-              src={curatorImg}
-              alt="curator"
-              className="h-[0.926vw] w-[0.926vw] group-hover:hidden group-data-[active=true]:hidden"
-            />
-            <Image
-              src={curatorHoverImg}
-              alt="curator"
-              className="hidden h-[0.926vw] w-[0.926vw] group-hover:inline-block group-data-[active=true]:block"
-            />
-          </MenuLink>
-          <MenuLink
-            title="Подготовка резюме"
-            href="#"
-            locked={user.subscriptionType !== SubscriptionType.Pro}
-            isCurrentPage={curentPage === 'not-implemented'}
-          >
-            <Image
-              src={cvImg}
-              alt="cv"
-              className="h-[0.926vw] w-[0.926vw] group-hover:hidden group-data-[active=true]:hidden"
-            />
-            <Image
-              src={cvHoverImg}
-              alt="cv"
-              className="hidden h-[0.926vw] w-[0.926vw] group-hover:inline-block group-data-[active=true]:block"
-            />
-          </MenuLink>
-          <MenuLink
-            title="Трудоустройство"
-            href="#"
-            locked={user.subscriptionType !== SubscriptionType.Pro}
-            isCurrentPage={curentPage === 'not-implemented'}
-          >
-            <Image
-              src={jobImg}
-              alt="job"
-              className="h-[0.926vw] w-[0.926vw] group-hover:hidden group-data-[active=true]:hidden"
-            />
-            <Image
-              src={jobHoverImg}
-              alt="job"
-              className="hidden h-[0.926vw] w-[0.926vw] group-hover:inline-block group-data-[active=true]:block"
-            />
-          </MenuLink>
-        </MenuItem>
-        <MenuItem title="Аккаунт">
-          <MenuLink
-            title="Реферальная программа"
-            href="#"
-            isCurrentPage={curentPage === 'not-implemented'}
-          >
-            <Image
-              src={referralImg}
-              alt="referral"
-              className="h-[0.926vw] w-[0.926vw] group-hover:hidden group-data-[active=true]:hidden"
-            />
-            <Image
-              src={referralHoverImg}
-              alt="referral"
-              className="hidden h-[0.926vw] w-[0.926vw] group-hover:inline-block group-data-[active=true]:block"
-            />
-          </MenuLink>
-          <Link
-            href={'#'}
-            className={
-              'group flex cursor-pointer flex-row items-center gap-[19px] border-b border-transparent px-[16px] py-[14px] hover:border-[#F2F2F2]'
-            }
-          >
-            <Image
-              src={notificationImg}
-              alt="notification"
-              className="h-[0.926vw] w-[0.926vw] group-hover:hidden group-data-[active=true]:hidden"
-            />
-            <Image
-              src={notificationHoverImg}
-              alt="notification"
-              className="hidden h-[0.926vw] w-[0.926vw] group-hover:inline-block group-data-[active=true]:block"
-            />
-            <div
-              className={'flex w-full flex-row items-center justify-between'}
-            >
-              <span
-                className={
-                  'font-roboto text-[0.81vw] leading-[0.69vw] text-[#9AA6B5] group-hover:text-[#F2F2F2]'
-                }
+        {sidebarSections.map((section) => (
+          <MenuItem key={section.title} title={section.title} isPro={section.isPro}>
+            {section.items.map((item) => (
+              <MenuLink
+                key={item.title}
+                title={item.title}
+                href={item.href}
+                isCurrentPage={pathname === item.href}
+                locked={item.locked}
+                notificationCount={item.notificationCount}
               >
-                Уведомления
-              </span>
-              <NotificationCounter count={3} />
-            </div>
-          </Link>
-        </MenuItem>
+                <Image
+                  src={item.icon}
+                  alt={item.title}
+                  className="h-[0.926vw] w-[0.926vw] group-hover:hidden group-data-[active=true]:hidden"
+                />
+                <Image
+                  src={item.iconHover}
+                  alt={item.title}
+                  className="hidden h-[0.926vw] w-[0.926vw] group-hover:inline-block group-data-[active=true]:block"
+                />
+              </MenuLink>
+            ))}
+          </MenuItem>
+        ))}
       </nav>
       <div className={'mt-auto flex flex-col border-t border-[#282D33]'}>
         <Link

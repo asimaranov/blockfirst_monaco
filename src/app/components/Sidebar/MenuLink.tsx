@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ReactNode } from 'react';
+import { NotificationCounter } from '../shared/NotificationCounter';
 
 export function MenuLink({
   title,
@@ -7,12 +8,14 @@ export function MenuLink({
   href,
   locked,
   isCurrentPage,
+  notificationCount,
 }: {
   title: string;
   children: ReactNode;
   href: string;
   locked?: boolean;
   isCurrentPage: boolean;
+  notificationCount?: number;
 }) {
   return (
     <Link
@@ -31,6 +34,9 @@ export function MenuLink({
         >
           {title}
         </span>
+        {notificationCount && (
+          <NotificationCounter count={notificationCount} />
+        )}
         {locked && (
           <svg
             width="0.926vw"
