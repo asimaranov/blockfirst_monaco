@@ -175,7 +175,7 @@ export default function RightFiller() {
               y: codeSnippetY,
               transformStyle: 'preserve-3d',
             }}
-            className="mb-[33px] ml-[70px]"
+            className="mb-[33px] ml-[4.05vw]"
           >
             <Image
               src={CodeSnippetSvg}
@@ -215,7 +215,7 @@ export default function RightFiller() {
               y: reviewsY,
               transformStyle: 'preserve-3d',
             }}
-            className="relative mb-[36px] ml-[98px] flex h-[74px] w-[244px] items-center justify-center rounded-[8px] border-[0.5px] border-[#F2F2F2] border-opacity-10 bg-[#01050D] bg-opacity-30 px-[22px] backdrop-blur-[10px]"
+            className="relative mb-[36px] ml-[5.67vw] flex h-[74px] w-[244px] items-center justify-center rounded-[8px] border-[0.5px] border-[#F2F2F2] border-opacity-10 bg-[#01050D] bg-opacity-30 px-[22px] backdrop-blur-[10px]"
           >
             <div className="flex h-[53px] flex-col justify-center text-nowrap">
               <span className="text-[26.4px] text-foreground">4.9+</span>

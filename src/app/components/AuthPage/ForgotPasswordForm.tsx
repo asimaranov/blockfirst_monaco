@@ -19,6 +19,7 @@ import VkLoginIcon from './assets/social/vk';
 import { useRouter } from 'next/navigation';
 import AuthButton from './button';
 import { frontendSchema } from '~/app/lib/zod';
+import MainHeading from './components/MainHeading';
 
 export default function ForgotPasswordForm({
   setAuthStep,
@@ -63,17 +64,12 @@ export default function ForgotPasswordForm({
 
   return (
     <>
-      {/* Main heading */}
-      <div className="mb-[40px]">
-        <h1 className="text-center text-[40px] font-bold uppercase leading-[48px] tracking-tight text-white">
-          Восстановить доступ
-        </h1>
-        <p className="mt-6 text-center text-[14px] leading-5 text-secondary">
-          Введите адрес электронной почты, на который зарегистрирован ваш
-          аккаунт
-        </p>
-      </div>
-
+      <MainHeading
+        mainText={`Восстановить
+          доступ`}
+        secondText={`Введите адрес электронной почты, на который зарегистрирован ваш
+          аккаунт`}
+      />
       {/* Form */}
       <form className="flex flex-col gap-[24px]" onSubmit={formik.handleSubmit}>
         {/* Email field */}
@@ -99,6 +95,11 @@ export default function ForgotPasswordForm({
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.email}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  formik.handleSubmit();
+                }
+              }}
             />
           </div>
           {formik.touched.email && formik.errors.email ? (

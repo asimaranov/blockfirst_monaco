@@ -19,10 +19,9 @@ export default function AuthPageBase({
 }) {
   return (
     <div className="relative flex min-h-screen flex-row overflow-hidden bg-background">
-      <div className="relative z-10 flex min-w-[468px] max-w-[468px] flex-col p-[64px] outline outline-[1px] outline-accent">
-      <Image src={GridLeftSvg} alt="grid" className="absolute left-0 top-0 w-full -z-10" />
-
-        <div className="relative mb-[64px] flex w-full items-center justify-center z-10">
+      <div className="relative z-10 flex md:min-w-[468px] md:max-w-[468px] min-w-full max-w-full flex-col md:p-[64px] p-[32px] outline outline-[1px] outline-accent">
+      <Image src={GridLeftSvg} alt="grid" className="absolute left-0 top-[-24px] md:top-0 w-full -z-10" />
+        <div className="relative md:mb-[64px] mb-[40px] flex w-full items-center justify-center z-10">
           {topButtonState && (
             <button
               className="absolute left-0 top-0 pt-[10px]"
@@ -35,7 +34,7 @@ export default function AuthPageBase({
               ) : null}
             </button>
           )}
-          <Image src={LogoSvg} alt="logo" />
+          <Image src={LogoSvg} alt="logo" className="w-[124px] md:w-[152px]" />
         </div>
         <div className="flex h-full w-full flex-col">{children}</div>
       </div>

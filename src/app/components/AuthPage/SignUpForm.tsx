@@ -14,14 +14,12 @@ import VkLoginIcon from './assets/social/vk';
 import PasswordEyeOpen from './assets/password_eye_open';
 import PasswordEyeClosed from './assets/password_eye_closed';
 import { use, useEffect, useState } from 'react';
-import {
-  AuthStep,
-  IAuthPageState,
-  ITopButtonState,
-} from '.';
+import { AuthStep, IAuthPageState, ITopButtonState } from '.';
 import { authClient } from '~/server/auth/client';
 import AuthButton from './button';
 import { frontendSchema } from '~/app/lib/zod';
+import MainHeading from './components/MainHeading';
+import SocialLogin from './components/SocialLogin';
 
 export default function SignUpForm({
   setAuthStep,
@@ -57,7 +55,11 @@ export default function SignUpForm({
   });
 
   useEffect(() => {
-    if (formik.errors.username || formik.errors.email || formik.errors.password) {
+    if (
+      formik.errors.username ||
+      formik.errors.email ||
+      formik.errors.password
+    ) {
       setBottomButtonState('disabled');
     } else {
       setBottomButtonState('active');
@@ -66,18 +68,12 @@ export default function SignUpForm({
 
   return (
     <>
-      {/* Main heading */}
-      <div className="mb-[40px]">
-        <h1 className="text-center text-[40px] font-bold uppercase leading-[48px] tracking-tight text-white">
-          Открой двери
-          <br />в мир web3
-        </h1>
-        <p className="mt-6 text-center text-[14px] leading-5 text-secondary">
-          Добро пожаловать на платформу
-          <br />
-          BlockFirst. Мы рады видеть каждого!
-        </p>
-      </div>
+      <MainHeading
+        mainText={`Открой двери
+          в мир web3`}
+        secondText={`Добро пожаловать на платформу
+          BlockFirst. Мы рады видеть каждого!`}
+      />
 
       {/* Form */}
       <form className="flex flex-col gap-[24px]" onSubmit={formik.handleSubmit}>
@@ -104,6 +100,11 @@ export default function SignUpForm({
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.username}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  formik.handleSubmit();
+                }
+              }}
             ></input>
             {/* <span className="ml-auto flex items-center text-xs text-success">
                 <span className="mr-1 h-1.5 w-1.5 rounded-full bg-success"></span>
@@ -144,6 +145,11 @@ export default function SignUpForm({
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.email}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  formik.handleSubmit();
+                }
+              }}
             />
           </div>
           {formik.touched.email && formik.errors.email ? (
@@ -182,6 +188,11 @@ export default function SignUpForm({
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.password}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  formik.handleSubmit();
+                }
+              }}
             />
             <button
               type="button"
@@ -253,7 +264,6 @@ export default function SignUpForm({
           if (error) {
             console.error('Error in email OTP send', error);
             setError(error.message ?? 'Unknown error');
-
           }
 
           if (data) {
@@ -277,43 +287,8 @@ export default function SignUpForm({
             console.log('Email OTP sent', data);
           }
         }}
-      ></AuthButton>
-
-      {/* Social login */}
-      <div className="mt-[40px] flex w-full items-center justify-center gap-[12px]">
-        <button
-          className="flex items-center justify-center"
-          onClick={async () => {
-            try {
-              await authClient.signIn.social({
-                provider: 'google',
-                callbackURL: '/dashboard',
-              });
-            } catch (error) {
-              console.error('Error in google signin', error);
-              alert('Error in google signin');
-            }
-          }}
-        >
-          <GoogleLoginIcon />
-        </button>
-        <button
-          className="flex items-center justify-center"
-          onClick={async () => {
-            try {
-              await authClient.signIn.social({
-                provider: 'vk',
-                callbackURL: '/dashboard',
-              });
-            } catch (error) {
-              console.error('Error in vk signin', error);
-              alert('Error in vk signin');
-            }
-          }}
-        >
-          <VkLoginIcon />
-        </button>
-      </div>
+      />
+      <SocialLogin />
     </>
   );
 }

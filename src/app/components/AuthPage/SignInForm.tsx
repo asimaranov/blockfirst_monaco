@@ -17,6 +17,8 @@ import VkLoginIcon from './assets/social/vk';
 import { useRouter } from 'next/navigation';
 import AuthButton from './button';
 import { frontendSchema } from '~/app/lib/zod';
+import MainHeading from './components/MainHeading';
+import SocialLogin from './components/SocialLogin';
 
 export default function SignInForm({
   setAuthStep,
@@ -45,26 +47,18 @@ export default function SignInForm({
       email: '',
       password: '',
     },
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
+    onSubmit: (values) => {},
     validationSchema: frontendSchema,
   });
 
   return (
     <>
-      {/* Main heading */}
-      <div className="mb-[40px]">
-        <h1 className="text-center text-[40px] font-bold uppercase leading-[48px] tracking-tight text-white">
-          Открой двери
-          <br />в мир web3
-        </h1>
-        <p className="mt-6 text-center text-[14px] leading-5 text-secondary">
-          Добро пожаловать на платформу
-          <br />
-          BlockFirst. Мы рады видеть каждого!
-        </p>
-      </div>
+      <MainHeading
+        mainText={`Открой двери
+          в мир web3`}
+        secondText={`Добро пожаловать на платформу
+          BlockFirst. Мы рады видеть каждого!`}
+      />
 
       {/* Form */}
       <form className="flex flex-col gap-[24px]" onSubmit={formik.handleSubmit}>
@@ -91,6 +85,11 @@ export default function SignInForm({
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.email}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  formik.handleSubmit();
+                }
+              }}
             />
           </div>
           {formik.touched.email && formik.errors.email ? (
@@ -129,6 +128,11 @@ export default function SignInForm({
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.password}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  formik.handleSubmit();
+                }
+              }}
             />
             <button
               type="button"
@@ -238,37 +242,8 @@ export default function SignInForm({
           }
         }}
       />
-
-      {/* Social login */}
-      <div className="mt-[40px] flex w-full items-center justify-center gap-[12px]">
-        <button
-          className="flex items-center justify-center"
-          onClick={async () => {
-            try {
-              await authClient.signIn.social({
-                provider: 'google',
-                callbackURL: '/dashboard',
-              });
-            } catch (error) {
-              console.error('Error in google signin', error);
-              alert('Error in google signin');
-            }
-          }}
-        >
-          <GoogleLoginIcon />
-        </button>
-        <button
-          className="flex items-center justify-center"
-          onClick={async () => {
-            await authClient.signIn.social({
-              provider: 'vk',
-              callbackURL: '/dashboard',
-            });
-          }}
-        >
-          <VkLoginIcon />
-        </button>
-      </div>
+      <SocialLogin />
+      
     </>
   );
 }

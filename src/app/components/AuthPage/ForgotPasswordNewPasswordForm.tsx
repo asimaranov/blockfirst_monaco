@@ -16,13 +16,7 @@ import PasswordEyeOpen from './assets/password_eye_open';
 import PasswordEyeClosed from './assets/password_eye_closed';
 import Link from 'next/link';
 import ErrorDecorationSvg from './assets/error_decoration.svg';
-
-interface IActiveInput {
-  index: number;
-  clear: boolean;
-}
-
-const TIMER_START = 30;
+import MainHeading from './components/MainHeading';
 
 export default function ForgotPasswordNewPasswordForm({
   authState,
@@ -75,15 +69,11 @@ export default function ForgotPasswordNewPasswordForm({
 
   return (
     <>
-      {/* Main heading */}
-      <div className="mb-[40px]">
-        <h1 className="text-center text-[40px] font-bold uppercase leading-[48px] tracking-tight text-white">
-          Изменение пароля
-        </h1>
-        <p className="mt-6 text-center text-[14px] leading-5 text-secondary">
-          Придумайте и введите новый пароль для вашей учетной записи
-        </p>
-      </div>
+      <MainHeading
+        mainText={`Изменение
+          пароля`}
+        secondText={`Придумайте и введите новый пароль для вашей учетной записи`}
+      />
 
       {/* Form */}
       <form className="flex flex-col gap-[24px]" onSubmit={formik.handleSubmit}>
@@ -110,6 +100,11 @@ export default function ForgotPasswordNewPasswordForm({
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.password}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  formik.handleSubmit();
+                }
+              }}
             />
             <button
               type="button"
