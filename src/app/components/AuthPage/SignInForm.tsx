@@ -113,7 +113,7 @@ export default function SignInForm({
               console.error('Error in email signin', res);
             }
           } else {
-            router.push('/dashboard');
+            router.push('/');
           }
         }}
       >

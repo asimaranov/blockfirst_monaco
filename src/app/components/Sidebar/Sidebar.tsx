@@ -31,8 +31,12 @@ import notificationImg from './assets/links/notification.svg';
 import notificationHoverImg from './assets/links/notification-hover.svg';
 import { cn } from '~/helpers';
 import { useEffect } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 
-export default function Sidebar({ curentPage }: { curentPage: string }) {
+export default function Sidebar() {
+  const pathname = usePathname();
+  const curentPage = pathname.split('/').pop() ?? '';
+  const router = useRouter();
   const session = authClient.useSession();
   useEffect(() => {
     // Issue https://github.com/better-auth/better-auth/issues/1006
@@ -57,7 +61,15 @@ export default function Sidebar({ curentPage }: { curentPage: string }) {
             className={
               'group cursor-pointer rounded-full border border-[#282D33] py-[0.58vw] pl-[0.64vw] pr-[0.52vw] hover:border-transparent hover:bg-[#F2F2F2]'
             }
-            onClick={() => authClient.signOut()}
+            onClick={async () => {
+              try {
+                await authClient.signOut();
+              } catch (error) {
+                console.error('Sign out error', error);
+              } finally {
+                router.push('/signin');
+              }
+            }}
           >
             <Image
               src={logoutImg}
