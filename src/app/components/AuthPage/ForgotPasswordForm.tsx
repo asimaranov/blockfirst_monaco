@@ -1,21 +1,13 @@
 'use client';
 import { authClient } from '~/server/auth/client';
 
-import Link from 'next/link';
 import ErrorDecorationSvg from './assets/error_decoration.svg';
 import EmailSvg from './assets/input-legends/email';
-import PasswordSvg from './assets/input-legends/password';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
-
 import Image from 'next/image';
 import { cn } from '~/helpers';
-import GoogleLoginIcon from './assets/social/google';
-import PasswordEyeOpen from './assets/password_eye_open';
-import PasswordEyeClosed from './assets/password_eye_closed';
 import { useEffect, useState } from 'react';
 import { AuthStep, IAuthPageState, ITopButtonState } from '.';
-import VkLoginIcon from './assets/social/vk';
 import { useRouter } from 'next/navigation';
 import AuthButton from './button';
 import { frontendSchema } from '~/app/lib/zod';

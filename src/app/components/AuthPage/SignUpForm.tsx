@@ -9,8 +9,6 @@ import PasswordSvg from './assets/input-legends/password';
 import { useFormik } from 'formik';
 import Image from 'next/image';
 import { cn } from '~/helpers';
-import GoogleLoginIcon from './assets/social/google';
-import VkLoginIcon from './assets/social/vk';
 import PasswordEyeOpen from './assets/password_eye_open';
 import PasswordEyeClosed from './assets/password_eye_closed';
 import { use, useEffect, useState } from 'react';
