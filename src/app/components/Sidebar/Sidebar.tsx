@@ -210,11 +210,12 @@ export default function Sidebar() {
             viewBox="0 0 16 16"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className={
+            className={cn(
+              'min-h-[16px] min-w-[16px]',
               user.subscriptionType !== SubscriptionType.Pro
                 ? 'opacity-60'
                 : undefined
-            }
+            )}
           >
             <g clipPath="url(#clip0_650_6475)">
               <rect width="16" height="16" rx="3.2" fill="#9AA6B5" />
@@ -239,7 +240,7 @@ export default function Sidebar() {
           </svg>
           <span
             className={cn(
-              'ml-4 mr-8 text-center font-roboto text-[0.75vw] leading-4 text-secondary text-nowrap',
+              'ml-4 mr-8 text-nowrap text-center font-roboto text-[0.75vw] leading-4 text-secondary',
               user.subscriptionType !== SubscriptionType.Pro && 'opacity-60'
             )}
           >
