@@ -30,13 +30,13 @@ import referralHoverImg from './assets/links/referral-hover.svg';
 import notificationImg from './assets/links/notification.svg';
 import notificationHoverImg from './assets/links/notification-hover.svg';
 import { cn } from '~/helpers';
-import { use, useEffect } from 'react';
+import { useEffect } from 'react';
 
 export default function Sidebar({ curentPage }: { curentPage: string }) {
   const session = authClient.useSession();
   useEffect(() => {
     // Issue https://github.com/better-auth/better-auth/issues/1006
-    session.refetch();
+    // session.refetch();
   }, []);
 
   const user: IUser = {

@@ -11,7 +11,7 @@ import Image from 'next/image';
 import { cn } from '~/helpers';
 import PasswordEyeOpen from './assets/password_eye_open';
 import PasswordEyeClosed from './assets/password_eye_closed';
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AuthStep, IAuthPageState, ITopButtonState } from '.';
 import { authClient } from '~/server/auth/client';
 import AuthButton from './button';
