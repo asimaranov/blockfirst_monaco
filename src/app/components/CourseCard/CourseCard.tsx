@@ -41,13 +41,13 @@ export function CourseCard({ course }: { course: ICourse }) {
         <div className="bg-dark-bg absolute top-0 left-0 h-full w-full opacity-50"></div>
       )}
 
-      <div className="mb-7 w-full">
+      <div className="mb-7 w-full bg-background">
         <Image
           src={course.smallImg}
           alt={course.title}
           width={320}
           height={176}
-          className="w-full"
+          className="w-full "
         />
       </div>
       <div className="flex w-full flex-col gap-6 p-8 pt-7">
