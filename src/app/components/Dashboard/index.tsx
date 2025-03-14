@@ -66,6 +66,76 @@ export default function Dashboard({ session }: { session: Session }) {
       lessonsCount: 1,
       duration: 1,
     },
+    {
+      id: 'crypto_advanced',
+      title: 'Криптография и математика',
+      description:
+        'Узнайте что такое эллиптическая кривая, узнайте, как рассчитать подпись своими руками. Изучите...',
+      smallImg: '/courses/cryptography/small.png',
+      bigImg: '/courses/cryptography/big.png',
+      rating: 2,
+      updatedAt: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
+      author: { name: 'Автор 2', image: '#' },
+      alumniCount: 123,
+      lessonsCount: 1,
+      duration: 1,
+    },
+    {
+      id: 'evm_assembler',
+      title: 'EVM assembler & YUL язык',
+      description:
+        'Изучите ассемблерные опкоды, научитесь писать ассемблерные вставки, использовать ассемблер...',
+      smallImg: '/courses/evm_assembler_yul/small.png',
+      bigImg: '/courses/evm_assembler_yul/big.png',
+      rating: 2,
+      updatedAt: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
+      author: { name: 'Автор 2', image: '#' },
+      alumniCount: 123,
+      lessonsCount: 1,
+      duration: 1,
+    },
+    {
+      id: 'upgradeable_contracts',
+      title: 'Обновляемые контракты',
+      description:
+        'Помогите Алексу сделать логику контрактов обновляемой. Изучите типы прокси...',
+      smallImg: '/courses/upgradeable/small.png',
+      bigImg: '/courses/upgradeable/big.png',
+      rating: 2,
+      updatedAt: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
+      author: { name: 'Автор 2', image: '#' },
+      alumniCount: 123,
+      lessonsCount: 1,
+      duration: 1,
+    },
+    {
+      id: 'gas_advanced',
+      title: 'Усовершенствованная оптимизация газа',
+      description:
+        'Cэкономите деньги Алекса и его пользователей, изучив и используя передовые...',
+      smallImg: '/courses/advanced_gas/small.png',
+      bigImg: '/courses/advanced_gas/big.png',
+      rating: 2,
+      updatedAt: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
+      author: { name: 'Автор 2', image: '#' },
+      alumniCount: 123,
+      lessonsCount: 1,
+      duration: 1,
+    },
+    {
+      id: 'wagmi',
+      title: 'Wagmi',
+      description:
+        'Узнаете как написать надежный и современный фронтенд для смартконтрактов. Работа с событиями, EVM, кросс...',
+      smallImg: '/courses/wagmi/small.png',
+      bigImg: '/courses/wagmi/big.png',
+      rating: 2,
+      updatedAt: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
+      author: { name: 'Автор 2', image: '#' },
+      alumniCount: 123,
+      lessonsCount: 1,
+      duration: 1,
+    },
   ];
 
   const lastUpdate = new Date(
@@ -102,13 +172,14 @@ export default function Dashboard({ session }: { session: Session }) {
               <Skeleton className="h-[354px] w-full" />
             )}
             <section className="divide [&>*]:border-accent divide-accent border-accent mb-[37px] grid grid-cols-1 gap-y-9 divide-x-1 sm:grid-cols-2 lg:grid-cols-3 [&>*]:border-y">
-              {courses.map((course) => (
+              {courses.slice(1).map((course) => (
                 <CourseCard key={course.id} course={course} />
               ))}
-              {Array.from({ length: 3 - (courses.length % 3) }).map((x) => (
-                <div>
-                </div>
-              ))}
+              {Array.from({ length: 3 - ((courses.length - 1) % 3) }).map(
+                () => (
+                  <div></div>
+                )
+              )}
             </section>
           </>
         )}
