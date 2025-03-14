@@ -1,9 +1,4 @@
-export interface ICourse {
-  id: string;
-  title: string;
-  description: string;
-  smallImg: string;
-  bigImg: string;
+export interface IReadyCourseInfo {
   rating: number;
   alumniCount: number;
   lessonsCount: number;
@@ -13,4 +8,13 @@ export interface ICourse {
     image: string;
   };
   updatedAt: string;
+}
+export interface ICourse {
+  id: string;
+  title: string;
+  description: string;
+  smallImg: string;
+  bigImg: string;
+  soon: boolean;
+  info?: IReadyCourseInfo;
 }

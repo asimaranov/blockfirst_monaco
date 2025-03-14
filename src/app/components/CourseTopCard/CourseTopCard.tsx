@@ -24,16 +24,17 @@ export function CourseTopCard({ course }: { course: ICourse }) {
       <div className="flex w-full flex-col py-8 pr-8">
         <div className="flex flex-row items-center justify-between">
           <div className="flex flex-row items-center gap-1">
-            <AlumniCounter count={course.alumniCount} />
-            <RatingCounter rating={course.rating} />
+            <AlumniCounter count={course.info!.alumniCount} />
+            <RatingCounter rating={course.info!.rating} />
           </div>
           <div className="flex flex-row items-center">
-            <span className="border-r border-[#9AA6B5] border-opacity-20 pr-3 font-roboto text-[0.579vw] font-medium uppercase text-[#9AA6B5]">
-              {course.lessonsCount}{' '}
-              {t('lesson', { count: course.lessonsCount })}
+            <span className="border-opacity-20 font-roboto border-r border-[#9AA6B5] pr-3 text-[0.579vw] font-medium text-[#9AA6B5] uppercase">
+              {course.info?.lessonsCount || 0}{' '}
+              {t('lesson', { count: course.info?.lessonsCount || 0 })}
             </span>
-            <span className="pl-3 font-roboto text-[0.579vw] font-medium uppercase text-[#9AA6B5]">
-              {course.duration} {t('month', { count: course.duration })}
+            <span className="font-roboto pl-3 text-[0.579vw] font-medium text-[#9AA6B5] uppercase">
+              {course.info?.duration || 0}{' '}
+              {t('month', { count: course.info?.duration || 0 })}
             </span>
           </div>
         </div>
@@ -50,25 +51,24 @@ export function CourseTopCard({ course }: { course: ICourse }) {
           <Link
             href={`#`}
             className={
-              'flex w-full flex-col items-center justify-center rounded-full bg-[#195AF4] py-3 hover:opacity-80'
+              'flex w-full flex-col items-center justify-center rounded-full bg-primary py-3 hover:bg-transparent border border-primary duration-300'
             }
           >
-            <div className="flex flex-row items-center gap-[0.868vw]">
+            <div className="flex flex-row items-center">
               <span className="font-roboto text-[0.81vw] leading-[1.157vw] text-[#F2F2F2]">
                 Продолжить
               </span>
               <svg
-                width="7"
-                height="12"
-                viewBox="0 0 7 12"
+                width="21"
+                height="20"
+                viewBox="0 0 21 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-3 w-[0.405vw]"
               >
                 <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M0.230661 0.432781C0.5295 0.145957 1.00427 0.155698 1.2911 0.454538L5.90648 5.26327C6.18502 5.55348 6.18502 6.01175 5.90648 6.30195L1.2911 11.1107C1.00427 11.4095 0.5295 11.4193 0.230661 11.1324C-0.0681787 10.8456 -0.0779195 10.3708 0.208904 10.072L4.32583 5.78261L0.208904 1.49322C-0.0779195 1.19438 -0.0681787 0.719605 0.230661 0.432781Z"
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M14.2307 4.43278C14.5295 4.14596 15.0043 4.1557 15.2911 4.45454L19.9065 9.26327C20.185 9.55348 20.185 10.0117 19.9065 10.302L15.2911 15.1107C15.0043 15.4095 14.5295 15.4193 14.2307 15.1324C13.9318 14.8456 13.9221 14.3708 14.2089 14.072L18.3258 9.78261L14.2089 5.49322C13.9221 5.19438 13.9318 4.7196 14.2307 4.43278Z"
                   fill="#F2F2F2"
                 />
               </svg>
@@ -76,7 +76,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
           </Link>
           <Link
             href={`#`}
-            className="flex w-full flex-col items-center justify-center hover:opacity-80"
+            className="flex w-full flex-col items-center justify-center border border-transparent hover:border-secondary duration-300 rounded-full h-full"
           >
             <div className="flex flex-row items-center gap-1">
               <svg
@@ -94,7 +94,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
                   fill="#F2F2F2"
                 />
               </svg>
-              <span className="font-roboto text-[0.81vw] leading-[1.157vw] text-[#F2F2F2]">
+              <span className="font-roboto text-sm ">
                 Подробнее о курсе
               </span>
             </div>

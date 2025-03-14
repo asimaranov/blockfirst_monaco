@@ -17,12 +17,15 @@ export default function Dashboard({ session }: { session: Session }) {
         'Помогите Алексу создать свой собственный токен, продать его инвесторам, внедрить стейкинг, наделение правами, мультисигму...',
       smallImg: '/courses/solidity/small.png',
       bigImg: '/courses/solidity/big.png',
-      rating: 4.5,
-      alumniCount: 1265,
-      lessonsCount: 123,
-      duration: 5,
-      author: { name: 'Автор 1', image: '#' },
-      updatedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+      soon: false,
+      info: {
+        rating: 4.5,
+        alumniCount: 1265,
+        lessonsCount: 123,
+        duration: 5,
+        author: { name: 'Автор 1', image: '#' },
+        updatedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+      },
     },
     {
       id: 'uniswap_advanced',
@@ -31,12 +34,15 @@ export default function Dashboard({ session }: { session: Session }) {
         'Реализуйте свой собственный uniswap с нуля и помогите Алексу запустить его новую блестящую ...',
       smallImg: '/courses/uniswap/small.png',
       bigImg: '/courses/uniswap/big.png',
-      rating: 2,
-      alumniCount: 123,
-      lessonsCount: 1,
-      duration: 1,
-      author: { name: 'Автор 2', image: '#' },
-      updatedAt: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
+      soon: false,
+      info: {
+        rating: 2,
+        alumniCount: 123,
+        lessonsCount: 1,
+        duration: 1,
+        author: { name: 'Автор 2', image: '#' },
+        updatedAt: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
+      },
     },
     {
       id: 'lending_advanced',
@@ -45,12 +51,7 @@ export default function Dashboard({ session }: { session: Session }) {
         'Исследуйте архитектуру AAVE и Compound и сделайте лучший проект по кредитованию ...',
       smallImg: '/courses/aave_compound/small.png',
       bigImg: '/courses/aave_compound/big.png',
-      rating: 2,
-      alumniCount: 123,
-      lessonsCount: 1,
-      duration: 1,
-      author: { name: 'Автор 2', image: '#' },
-      updatedAt: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
+      soon: true,
     },
     {
       id: 'solidity_advanced',
@@ -59,12 +60,7 @@ export default function Dashboard({ session }: { session: Session }) {
         'Изучение сложных подписей, оракулов, ценовых факторов, построение calldata, работа с multicall ...',
       smallImg: '/courses/solidity_advanced/small.png',
       bigImg: '/courses/solidity_advanced/big.png',
-      rating: 2,
-      updatedAt: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
-      author: { name: 'Автор 2', image: '#' },
-      alumniCount: 123,
-      lessonsCount: 1,
-      duration: 1,
+      soon: true,
     },
     {
       id: 'crypto_advanced',
@@ -73,12 +69,7 @@ export default function Dashboard({ session }: { session: Session }) {
         'Узнайте что такое эллиптическая кривая, узнайте, как рассчитать подпись своими руками. Изучите...',
       smallImg: '/courses/cryptography/small.png',
       bigImg: '/courses/cryptography/big.png',
-      rating: 2,
-      updatedAt: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
-      author: { name: 'Автор 2', image: '#' },
-      alumniCount: 123,
-      lessonsCount: 1,
-      duration: 1,
+      soon: true,
     },
     {
       id: 'evm_assembler',
@@ -87,12 +78,7 @@ export default function Dashboard({ session }: { session: Session }) {
         'Изучите ассемблерные опкоды, научитесь писать ассемблерные вставки, использовать ассемблер...',
       smallImg: '/courses/evm_assembler_yul/small.png',
       bigImg: '/courses/evm_assembler_yul/big.png',
-      rating: 2,
-      updatedAt: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
-      author: { name: 'Автор 2', image: '#' },
-      alumniCount: 123,
-      lessonsCount: 1,
-      duration: 1,
+      soon: true,
     },
     {
       id: 'upgradeable_contracts',
@@ -101,12 +87,7 @@ export default function Dashboard({ session }: { session: Session }) {
         'Помогите Алексу сделать логику контрактов обновляемой. Изучите типы прокси...',
       smallImg: '/courses/upgradeable/small.png',
       bigImg: '/courses/upgradeable/big.png',
-      rating: 2,
-      updatedAt: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
-      author: { name: 'Автор 2', image: '#' },
-      alumniCount: 123,
-      lessonsCount: 1,
-      duration: 1,
+      soon: true,
     },
     {
       id: 'gas_advanced',
@@ -115,12 +96,7 @@ export default function Dashboard({ session }: { session: Session }) {
         'Cэкономите деньги Алекса и его пользователей, изучив и используя передовые...',
       smallImg: '/courses/advanced_gas/small.png',
       bigImg: '/courses/advanced_gas/big.png',
-      rating: 2,
-      updatedAt: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
-      author: { name: 'Автор 2', image: '#' },
-      alumniCount: 123,
-      lessonsCount: 1,
-      duration: 1,
+      soon: true,
     },
     {
       id: 'wagmi',
@@ -129,17 +105,16 @@ export default function Dashboard({ session }: { session: Session }) {
         'Узнаете как написать надежный и современный фронтенд для смартконтрактов. Работа с событиями, EVM, кросс...',
       smallImg: '/courses/wagmi/small.png',
       bigImg: '/courses/wagmi/big.png',
-      rating: 2,
-      updatedAt: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
-      author: { name: 'Автор 2', image: '#' },
-      alumniCount: 123,
-      lessonsCount: 1,
-      duration: 1,
+      soon: true,
     },
   ];
 
   const lastUpdate = new Date(
-    Math.min(...courses.map((course) => new Date(course.updatedAt).getTime()))
+    Math.min(
+      ...courses
+        .filter((x) => !x.soon)
+        .map((course) => new Date(course.info!.updatedAt).getTime())
+    )
   ).toLocaleDateString('ru-RU');
 
   const [dashboardSection, setDashboardSection] = useState<
@@ -176,8 +151,8 @@ export default function Dashboard({ session }: { session: Session }) {
                 <CourseCard key={course.id} course={course} />
               ))}
               {Array.from({ length: 3 - ((courses.length - 1) % 3) }).map(
-                () => (
-                  <div></div>
+                (_, index) => (
+                  <div key={index}></div>
                 )
               )}
             </section>
