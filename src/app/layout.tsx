@@ -4,6 +4,8 @@ import { type Metadata } from 'next';
 
 import { TRPCReactProvider } from '~/trpc/react';
 import { robotoFont } from './font';
+import { NextIntlClientProvider } from 'next-intl';
+import { getLocale } from 'next-intl/server';
 
 export const metadata: Metadata = {
   title: 'Create T3 App',
@@ -11,16 +13,20 @@ export const metadata: Metadata = {
   icons: [{ rel: 'icon', url: '/favicon.ico' }],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const locale = await getLocale();
+
   return (
-    <html lang="en" className={`${robotoFont.variable}`}>
+    <html lang={locale} className={`${robotoFont.variable}`}>
       <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body>
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <TRPCReactProvider>
+          <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        </TRPCReactProvider>
       </body>
     </html>
   );

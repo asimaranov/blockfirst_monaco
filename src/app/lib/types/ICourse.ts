@@ -2,11 +2,12 @@ export interface ICourse {
   id: string;
   title: string;
   description: string;
-  coverImg: string;
+  smallImg: string;
+  bigImg: string;
   rating: number;
   alumniCount: number;
   lessonsCount: number;
-  timeToComplete: number;
+  duration: number;
   author: {
     name: string;
     image: string;

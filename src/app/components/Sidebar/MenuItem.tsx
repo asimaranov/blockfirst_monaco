@@ -21,7 +21,7 @@ export function MenuItem({
       <div className={'flex flex-row items-center justify-between'}>
         <span
           className={
-            'mb-[0.69vw] ml-4 font-roboto text-[0.69vw] uppercase leading-[1.16vw] text-secondary opacity-50'
+            'mb-[0.69vw] ml-4 font-roboto text-[0.69vw] uppercase leading-[1.16vw] text-secondary opacity-50 flex items-center justify-center'
           }
         >
           {title}

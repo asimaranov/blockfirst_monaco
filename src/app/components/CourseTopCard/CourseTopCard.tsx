@@ -6,16 +6,22 @@ import { AlumniCounter } from './AlumniCounter';
 import { RatingCounter } from './RatingCounter';
 import { CourseProgress } from './CourseProgress';
 import { Progress } from '../shared/Progress';
+import { useTranslation } from 'react-i18next';
+import { useTranslations } from 'next-intl';
 
 export function CourseTopCard({ course }: { course: ICourse }) {
+  const t = useTranslations('UserSpace');
+
+
   return (
     <section className="flex flex-row gap-10 border-b border-[#282D33]">
       <Image
-        src={course.coverImg}
+        src={course.bigImg}
         alt={course.title}
         width={608}
         height={354}
-        className="w-[35.185vw] object-cover object-center"
+        className="w-[35.185vw] shrink-0 object-cover object-center"
+        quality={100}
       />
       <div className="flex w-full flex-col py-8 pr-8">
         <div className="flex flex-row items-center justify-between">
@@ -26,30 +32,11 @@ export function CourseTopCard({ course }: { course: ICourse }) {
           <div className="flex flex-row items-center">
             <span className="border-r border-[#9AA6B5] border-opacity-20 pr-3 font-roboto text-[0.579vw] font-medium uppercase text-[#9AA6B5]">
               {course.lessonsCount}{' '}
-              {(() => {
-                const lastDigit = course.lessonsCount % 10;
-                const lastTwoDigits = course.lessonsCount % 100;
-
-                if (lastTwoDigits >= 11 && lastTwoDigits <= 19) return 'уроков';
-                if (lastDigit === 1) return 'урок';
-                if (lastDigit >= 2 && lastDigit <= 4) return 'урока';
-                return 'уроков';
-              })()}
+              {t('lesson', { count: course.lessonsCount })}
             </span>
             <span className="pl-3 font-roboto text-[0.579vw] font-medium uppercase text-[#9AA6B5]">
-              {(() => {
-                const months = Math.ceil(
-                  course.timeToComplete / (30 * 24 * 60 * 60 * 1000)
-                );
-                const lastDigit = months % 10;
-                const lastTwoDigits = months % 100;
+            {course.duration}{' '}{t('month', { count: course.duration })}
 
-                if (lastTwoDigits >= 11 && lastTwoDigits <= 19)
-                  return `${months} месяцев`;
-                if (lastDigit === 1) return `${months} месяц`;
-                if (lastDigit >= 2 && lastDigit <= 4) return `${months} месяца`;
-                return `${months} месяцев`;
-              })()}
             </span>
           </div>
         </div>

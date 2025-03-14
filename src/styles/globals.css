@@ -81,13 +81,13 @@ input:-webkit-autofill:active {
     --text-2xl: 1.39vw;
     --text-3xl: 1.85vw;
 
-    --text-xs-line-height: 14px;
-    --text-sm-line-height: 14px;
-    --text-base-line-height: 16px;
-    --text-lg-line-height: 18px;
-    --text-xl-line-height: 20px;
-    --text-2xl-line-height: 24px;
-    --text-3xl-line-height: 32px;
+    --text-xs-line-height: 0.81vw;
+    --text-sm-line-height: 0.81vw;
+    --text-base-line-height: 0.93vw;
+    --text-lg-line-height: 1.04vw;
+    --text-xl-line-height: 1.16vw;
+    --text-2xl-line-height: 1.39vw;
+    --text-3xl-line-height: 1.85vw;
   
   }
 }

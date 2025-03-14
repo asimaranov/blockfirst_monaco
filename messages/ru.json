@@ -1,0 +1,6 @@
+{
+  "UserSpace": {
+    "month": "{count, plural, zero {месяцев} one {месяц} few {месяцев} other {месяца}}",
+    "lesson": "{count, plural, zero {уроков} one {урок} few {урока} other {уроков}}"
+  }
+}
