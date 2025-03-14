@@ -5,32 +5,6 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 import { ChevronRight } from '../icons/ChevronRight';
 import { Info } from '../icons/Info';
-import { Skeleton } from '../shared/Skeleton';
-
-interface ButtonProps {
-  variant: 'primary' | 'secondary';
-  children: React.ReactNode;
-  onClick?: () => void;
-}
-
-const Button = ({ variant, children, onClick }: ButtonProps) => {
-  const baseStyles = 'h-11 rounded-full flex items-center justify-center gap-2';
-  const variantStyles = {
-    primary: 'border border-primary text-[#F2F2F2]',
-    secondary: 'text-[#F2F2F2]',
-  };
-
-  return (
-    <button
-      className={`${baseStyles} ${variantStyles[variant]} w-[169px]`}
-      onClick={onClick}
-    >
-      {variant === 'secondary' && <Info />}
-      {children}
-      {variant === 'primary' && <ChevronRight />}
-    </button>
-  );
-};
 
 export function CourseCard({ course }: { course: ICourse }) {
   const t = useTranslations('UserSpace');
