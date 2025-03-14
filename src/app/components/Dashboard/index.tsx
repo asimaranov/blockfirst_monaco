@@ -169,7 +169,7 @@ export default function Dashboard({ session }: { session: Session }) {
       </div>
 
       {/* Footer */}
-      <footer className="bg-[#010514] py-16">
+      <footer className="bg-background pt-16 border-t border-accent">
         {/* Top section */}
         <div className="mb-16 flex w-full px-8">
           {/* Newsletter signup */}
@@ -335,10 +335,7 @@ export default function Dashboard({ session }: { session: Session }) {
                   />
                 </svg>
 
-                <a
-                  href="https://t.me/blockfirst_edu/app"
-                  className=""
-                >
+                <a href="https://t.me/blockfirst_edu/app" className="">
                   t.me/blockfirst_edu/app
                 </a>
               </div>
@@ -361,7 +358,7 @@ export default function Dashboard({ session }: { session: Session }) {
         </div>
 
         {/* Copyright section */}
-        <div className="mt-16 flex flex-col items-center gap-4 px-8 text-xs md:flex-row md:justify-between">
+        <div className="pt-8 pb-8  flex flex-col items-center px-8 text-xs md:flex-row md:justify-between">
           <div className="text-secondary flex gap-6 text-xs">
             <a href="#" className="">
               Правила сервиса
@@ -372,10 +369,15 @@ export default function Dashboard({ session }: { session: Session }) {
             <span className="text-secondary">
               © 2025-2026 BlockFirst. Все права защищены.
             </span>
-            <div className="flex items-center gap-1">
-              <a href="#" className="text-sm">
-                В начало
-              </a>
+            <div
+              className="flex cursor-pointer items-center gap-1"
+              onClick={() => {
+                document
+                  .getElementById('content-view')
+                  ?.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+            >
+              <a className="text-sm">В начало</a>
               <svg
                 width="21"
                 height="20"
