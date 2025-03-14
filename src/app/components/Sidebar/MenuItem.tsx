@@ -17,17 +17,17 @@ export function MenuItem({
   // isBase?: boolean;
 }) {
   return (
-    <div className={'mx-4 mt-[1.85vw] flex flex-col'}>
-      <div className={'flex flex-row items-center justify-between'}>
+    <div className={'mx-4 mt-7 flex flex-col'}>
+      <div className={'flex flex-row items-center justify-between mb-3'}>
         <span
           className={
-            'mb-[0.69vw] ml-4 font-roboto text-[0.69vw] uppercase leading-[1.16vw] text-secondary opacity-50 flex items-center justify-center'
+            'ml-4 font-roboto text-xs uppercase text-secondary opacity-50 flex items-center justify-center'
           }
         >
           {title}
         </span>
         {isPro && (
-          <Image src={proIMG} alt="Pro" className="h-[1.157vw] w-[1.91vw]" />
+          <Image src={proIMG} alt="Pro" className="h-[1.157vw] w-[1.91vw] mr-4" />
         )}
         {/* {isBase && <Image src={baseIMG} alt="Base" />} */}
       </div>

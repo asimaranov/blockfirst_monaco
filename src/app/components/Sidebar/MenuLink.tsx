@@ -21,7 +21,7 @@ export function MenuLink({
     <Link
       href={href}
       className={
-        'group flex cursor-pointer flex-row items-center gap-[1.1vw] border-b border-transparent px-4 py-[0.81vw] hover:border-[#282D33] data-[active=true]:border-[#F2F2F2]'
+        'group flex cursor-pointer flex-row items-center gap-4 border-b border-transparent px-4 py-[0.81vw] hover:border-[#282D33] data-[active=true]:border-[#F2F2F2]'
       }
       data-active={isCurrentPage}
     >
