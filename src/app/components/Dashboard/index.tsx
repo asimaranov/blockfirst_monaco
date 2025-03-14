@@ -208,49 +208,49 @@ export default function Dashboard({ session }: { session: Session }) {
           {/* Links section */}
           <div className="ml-auto flex gap-16 lg:justify-end">
             <div className="flex flex-col gap-8">
-              <span className="text-secondary text-sm uppercase opacity-50">
+              <span className="text-secondary text-xs uppercase opacity-50">
                 Медиа
               </span>
-              <div className="flex flex-col gap-6">
-                <a href="#" className="text-gray-50">
+              <div className="flex flex-col gap-6 text-sm">
+                <a href="#" className="">
                   Youtube
                 </a>
-                <a href="#" className="text-gray-50">
+                <a href="#" className="">
                   Twitter
                 </a>
-                <a href="#" className="text-gray-50">
+                <a href="#" className="">
                   Medium
                 </a>
-                <a href="#" className="text-gray-50">
+                <a href="#" className="">
                   Telegram
                 </a>
               </div>
             </div>
             <div className="flex flex-col gap-8">
-              <span className="text-secondary text-sm uppercase opacity-50">
+              <span className="text-secondary text-xs uppercase opacity-50">
                 Сообщество
               </span>
-              <div className="flex flex-col gap-6">
-                <a href="#" className="text-gray-50">
+              <div className="flex flex-col gap-6 text-sm">
+                <a href="#" className="">
                   Блог
                 </a>
-                <a href="#" className="text-gray-50">
+                <a href="#" className="">
                   Статьи
                 </a>
               </div>
             </div>
             <div className="flex flex-col gap-8">
-              <span className="text-secondary text-sm uppercase opacity-50">
+              <span className="text-secondary text-xs uppercase opacity-50">
                 Компания
               </span>
-              <div className="flex flex-col gap-6">
-                <a href="#" className="text-gray-50">
+              <div className="flex flex-col gap-6 text-sm">
+                <a href="#" className="">
                   Стоимость
                 </a>
-                <a href="#" className="text-gray-50">
+                <a href="#" className="">
                   F.A.Q
                 </a>
-                <a href="#" className="text-gray-50">
+                <a href="#" className="">
                   Курс Solidity
                 </a>
               </div>
@@ -280,7 +280,7 @@ export default function Dashboard({ session }: { session: Session }) {
                 />
               </svg>
 
-              <a href="mailto:business@blockfirst.io" className="text-gray-50">
+              <a href="mailto:business@blockfirst.io" className="">
                 business@blockfirst.io
               </a>
             </div>
@@ -308,7 +308,7 @@ export default function Dashboard({ session }: { session: Session }) {
                 />
               </svg>
 
-              <a href="mailto:hello@blockfirst.io" className="text-gray-50">
+              <a href="mailto:hello@blockfirst.io" className="">
                 hello@blockfirst.io
               </a>
             </div>
@@ -337,7 +337,7 @@ export default function Dashboard({ session }: { session: Session }) {
 
                 <a
                   href="https://t.me/blockfirst_edu/app"
-                  className="text-gray-50"
+                  className=""
                 >
                   t.me/blockfirst_edu/app
                 </a>
