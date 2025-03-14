@@ -11,7 +11,6 @@ import { useTranslations } from 'next-intl';
 export function CourseTopCard({ course }: { course: ICourse }) {
   const t = useTranslations('UserSpace');
 
-
   return (
     <section className="flex flex-row gap-10 border-b border-[#282D33]">
       <Image
@@ -34,8 +33,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
               {t('lesson', { count: course.lessonsCount })}
             </span>
             <span className="pl-3 font-roboto text-[0.579vw] font-medium uppercase text-[#9AA6B5]">
-            {course.duration}{' '}{t('month', { count: course.duration })}
-
+              {course.duration} {t('month', { count: course.duration })}
             </span>
           </div>
         </div>
