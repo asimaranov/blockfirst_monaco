@@ -159,17 +159,21 @@ export default function Dashboard({ session }: { session: Session }) {
           </>
         )}
         {dashboardSection === 'history' && (
-          <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <section className="divide [&>*]:border-accent divide-accent border-accent mb-[37px] grid grid-cols-1 gap-y-9 divide-x-1 sm:grid-cols-2 lg:grid-cols-3 [&>*]:border-y">
             {courses.map((course) => (
               <CourseCard key={course.id} course={course} />
             ))}
-            <div className="bg-accent flex h-full w-full flex-grow">aaa</div>
+            {Array.from({ length: 3 - ((courses.length) % 3) }).map(
+              (_, index) => (
+                <div key={index}></div>
+              )
+            )}
           </section>
         )}
       </div>
 
       {/* Footer */}
-      <footer className="bg-background pt-16 border-t border-accent">
+      <footer className="bg-background border-accent border-t pt-16">
         {/* Top section */}
         <div className="mb-16 flex w-full px-8">
           {/* Newsletter signup */}
@@ -358,7 +362,7 @@ export default function Dashboard({ session }: { session: Session }) {
         </div>
 
         {/* Copyright section */}
-        <div className="pt-8 pb-8  flex flex-col items-center px-8 text-xs md:flex-row md:justify-between">
+        <div className="flex flex-col items-center px-8 pt-8 pb-8 text-xs md:flex-row md:justify-between">
           <div className="text-secondary flex gap-6 text-xs">
             <a href="#" className="">
               Правила сервиса
