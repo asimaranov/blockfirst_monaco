@@ -5,12 +5,14 @@
 @theme {
   --spacing: 4px;
 
+  --text-xxs: 10px;
   --text-xs: 12px;
   --text-sm: 14px;
   --text-base: 16px;
   --text-lg: 18px;
   --text-xl: 20px;
   --text-2xl: 24px;
+  --text-2xll: 28px;
   --text-3xl: 32px;
 
   --text-xs-line-height: 14px;
@@ -19,6 +21,8 @@
   --text-lg-line-height: 18px;
   --text-xl-line-height: 20px;
   --text-2xl-line-height: 24px;
+  --text-2xll-line-height: 24px;
+
   --text-3xl-line-height: 32px;
 
   --color-white: #fff;
@@ -41,6 +45,7 @@
   :root {
     @media (width >= theme(--breakpoint-lg)) {
       --spacing: 0.23vw;
+      --text-xxs: 0.58vw;
       --text-xs: 0.69vw;
       --text-sm: 0.81vw;
       --text-base: 0.93vw;

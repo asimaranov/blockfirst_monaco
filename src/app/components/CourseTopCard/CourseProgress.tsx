@@ -18,7 +18,7 @@ export function CourseProgress({
           alt="progress"
           className="h-6 w-6"
         />
-        <span className="font-roboto text-5 font-semibold leading-6 text-[#F2F2F2]">
+        <span className="font-roboto text-xl font-semibold leading-6 text-[#F2F2F2]">
           {progress}%
         </span>
       </div>

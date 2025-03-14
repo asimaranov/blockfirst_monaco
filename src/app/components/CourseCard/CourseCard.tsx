@@ -15,7 +15,7 @@ export function CourseCard({ course }: { course: ICourse }) {
         <div className="bg-dark-bg absolute top-0 left-0 h-full w-full opacity-50"></div>
       )}
 
-      <div className="mb-7 w-full bg-background">
+      <div className="w-full bg-background">
         <Image
           src={course.smallImg}
           alt={course.title}
@@ -27,8 +27,8 @@ export function CourseCard({ course }: { course: ICourse }) {
       <div className="flex w-full flex-col gap-6 p-8 pt-7">
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
-            <div className="flex gap-4">
-              <div className="flex items-center gap-1 rounded-full bg-[#01050D] px-3 py-1">
+            <div className="flex gap-2">
+              <div className="flex items-center gap-1 rounded-full bg-[#01050D] px-2 py-1">
                 <div className="flex">
                   {course.soon ? (
                     <>
@@ -53,18 +53,18 @@ export function CourseCard({ course }: { course: ICourse }) {
                     </>
                   )}
                 </div>
-                <span className="text-sm text-[#F2F2F2]">
+                <span className="text-xs">
                   {course.info?.alumniCount || 0}+
                 </span>
               </div>
-              <div className="flex items-center gap-1 rounded-full bg-[#01050D] px-3 py-1">
+              <div className="flex items-center gap-1 rounded-full bg-[#01050D] px-2 py-1">
                 {course.soon ? <StarGrey /> : <Star />}
-                <span className="text-sm text-[#F2F2F2]">
+                <span className="text-xs">
                   {(course.info?.rating || 0).toFixed(1)}
                 </span>
               </div>
             </div>
-            <div className="text-secondary flex items-center gap-3 text-sm">
+            <div className="text-secondary flex items-center gap-3 text-xxs">
               {!course.soon ? (
                 <span>
                   {course.info?.lessonsCount || 0}{' '}
@@ -73,7 +73,7 @@ export function CourseCard({ course }: { course: ICourse }) {
               ) : (
                 <>–</>
               )}
-              <div className="bg-secondary h-6 w-px opacity-20"></div>
+              <div className="bg-secondary h-6 w-px opacity-20 text-xxs"></div>
               {!course.soon ? (
                 <span>
                   {course.info?.duration || 0}{' '}

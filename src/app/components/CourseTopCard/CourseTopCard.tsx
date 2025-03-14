@@ -27,22 +27,22 @@ export function CourseTopCard({ course }: { course: ICourse }) {
             <AlumniCounter count={course.info!.alumniCount} />
             <RatingCounter rating={course.info!.rating} />
           </div>
-          <div className="flex flex-row items-center">
-            <span className="border-opacity-20 font-roboto border-r border-[#9AA6B5] pr-3 text-[0.579vw] font-medium text-[#9AA6B5] uppercase">
+          <div className="flex flex-row items-center text-xxs">
+            <span className="border-opacity-20 border-r border-secondary pr-3 font-medium text-[#9AA6B5] uppercase">
               {course.info?.lessonsCount || 0}{' '}
               {t('lesson', { count: course.info?.lessonsCount || 0 })}
             </span>
-            <span className="font-roboto pl-3 text-[0.579vw] font-medium text-[#9AA6B5] uppercase">
+            <span className="pl-3  font-medium text-secondary uppercase">
               {course.info?.duration || 0}{' '}
               {t('month', { count: course.info?.duration || 0 })}
             </span>
           </div>
         </div>
         <div className="mt-6 flex flex-col gap-4">
-          <span className="font-roboto text-[1.62vw] font-bold text-[#F2F2F2]">
+          <span className="text-2xll font-bold">
             {course.title}
           </span>
-          <span className="font-roboto text-[0.81vw] leading-[1.157vw] text-[#9AA6B5]">
+          <span className="text-sm text-secondary">
             {course.description}
           </span>
         </div>
@@ -55,7 +55,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
             }
           >
             <div className="flex flex-row items-center">
-              <span className="font-roboto text-[0.81vw] leading-[1.157vw] text-[#F2F2F2]">
+              <span className="text-[0.81vw] leading-[1.157vw] text-[#F2F2F2]">
                 Продолжить
               </span>
               <svg
@@ -94,7 +94,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
                   fill="#F2F2F2"
                 />
               </svg>
-              <span className="font-roboto text-sm ">
+              <span className="text-sm ">
                 Подробнее о курсе
               </span>
             </div>
