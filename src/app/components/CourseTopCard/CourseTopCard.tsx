@@ -6,7 +6,6 @@ import { AlumniCounter } from './AlumniCounter';
 import { RatingCounter } from './RatingCounter';
 import { CourseProgress } from './CourseProgress';
 import { Progress } from '../shared/Progress';
-import { useTranslation } from 'react-i18next';
 import { useTranslations } from 'next-intl';
 
 export function CourseTopCard({ course }: { course: ICourse }) {
