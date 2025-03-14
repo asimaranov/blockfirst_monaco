@@ -170,7 +170,7 @@ export default function ConfirmEmailForm({
                 }}
                 key={index}
                 className={cn(
-                  'h-[58px] w-[58px] border-b bg-transparent text-center text-2xl text-foreground placeholder:text-center focus:outline-none',
+                  'h-[58px] w-[58px] border-b bg-transparent text-center text-2xl text-foreground placeholder:text-center focus:outline-hidden',
                   isError && 'border-error'
                 )}
                 placeholder={'-'}
@@ -251,7 +251,7 @@ export default function ConfirmEmailForm({
           </div>
         </div>
 
-        <div className="flex-grow"></div>
+        <div className="grow"></div>
 
         <AuthButton
           state={bottomButtonState}

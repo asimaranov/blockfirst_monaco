@@ -17,7 +17,7 @@ const Progress = React.forwardRef<
     )}
     {...props}
   >
-    <div className="absolute left-[0.116vw] top-[0.116vw] z-[1] h-[0.463vw] w-[0.463vw] rounded-full bg-[#01050D]" />
+    <div className="absolute left-[0.116vw] top-[0.116vw] z-1 h-[0.463vw] w-[0.463vw] rounded-full bg-[#01050D]" />
     <div
       className={cn(
         'h-full w-full flex-1 overflow-hidden rounded-full',
@@ -26,7 +26,7 @@ const Progress = React.forwardRef<
     >
       <ProgressPrimitive.Indicator
         className={cn(
-          'h-full w-full flex-1 rounded-full bg-gradient-to-r from-[#FFF93E] to-[#FF974C] transition-all',
+          'h-full w-full flex-1 rounded-full bg-linear-to-r from-[#FFF93E] to-[#FF974C] transition-all',
           value === 100 && 'rounded-r-none'
         )}
         style={{
@@ -34,7 +34,7 @@ const Progress = React.forwardRef<
         }}
       />
     </div>
-    <div className="absolute bottom-0 right-0 z-[1]">
+    <div className="absolute bottom-0 right-0 z-1">
       <svg
         width="12"
         height="52"

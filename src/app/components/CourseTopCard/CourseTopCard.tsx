@@ -95,7 +95,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
                 />
               </svg>
               <span className="font-roboto text-[0.81vw] leading-[1.157vw] text-[#F2F2F2]">
-                Поробнее о курсе
+                Подробнее о курсе
               </span>
             </div>
           </Link>

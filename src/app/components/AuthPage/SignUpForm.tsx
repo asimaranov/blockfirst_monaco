@@ -108,7 +108,7 @@ export default function SignUpForm({
                 <AccountSvg active={formik.values.username !== ''} />
               </div>
               <input
-                className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
+                className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-hidden"
                 placeholder={'Ваше имя'}
                 id="username"
                 name="username"
@@ -155,7 +155,7 @@ export default function SignUpForm({
               <input
                 type="email"
                 placeholder="Электронная почта"
-                className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
+                className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-hidden"
                 id="email"
                 name="email"
                 onChange={formik.handleChange}
@@ -198,7 +198,7 @@ export default function SignUpForm({
               <input
                 type={showPassword ? 'text' : 'password'}
                 placeholder="Пароль"
-                className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
+                className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-hidden"
                 id="password"
                 name="password"
                 onChange={formik.handleChange}
@@ -247,7 +247,7 @@ export default function SignUpForm({
               </div>
             ) : null}
           </div>
-          <div className="flex-grow"></div>
+          <div className="grow"></div>
         </div>
 
         {/* Login link */}

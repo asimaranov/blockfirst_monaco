@@ -27,7 +27,8 @@ export default function Dashboard({ session }: { session: Session }) {
     {
       id: 'uniswap_advanced',
       title: 'Продвинутый Uniswap курс',
-      description: 'Реализуйте свой собственный uniswap с нуля и помогите Алексу запустить его новую блестящую ...',
+      description:
+        'Реализуйте свой собственный uniswap с нуля и помогите Алексу запустить его новую блестящую ...',
       smallImg: '/courses/uniswap/small.png',
       bigImg: '/courses/uniswap/big.png',
       rating: 2,
@@ -40,7 +41,8 @@ export default function Dashboard({ session }: { session: Session }) {
     {
       id: 'lending_advanced',
       title: 'Передовое кредитование',
-      description: 'Исследуйте архитектуру AAVE и Compound и сделайте лучший проект по кредитованию ...',
+      description:
+        'Исследуйте архитектуру AAVE и Compound и сделайте лучший проект по кредитованию ...',
       smallImg: '/courses/aave_compound/small.png',
       bigImg: '/courses/aave_compound/big.png',
       rating: 2,
@@ -53,7 +55,8 @@ export default function Dashboard({ session }: { session: Session }) {
     {
       id: 'solidity_advanced',
       title: 'Продвинутый Solidity курс',
-      description: 'Изучение сложных подписей, оракулов, ценовых факторов, построение calldata, работа с multicall ...',
+      description:
+        'Изучение сложных подписей, оракулов, ценовых факторов, построение calldata, работа с multicall ...',
       smallImg: '/courses/solidity_advanced/small.png',
       bigImg: '/courses/solidity_advanced/big.png',
       rating: 2,
@@ -74,7 +77,7 @@ export default function Dashboard({ session }: { session: Session }) {
   >('courses');
 
   return (
-    <main className="border-l border-r border-[#282D33]">
+    <main className="border-accent border-r border-l">
       <Topbar
         lastestUpdate={lastUpdate}
         items={[
@@ -90,27 +93,34 @@ export default function Dashboard({ session }: { session: Session }) {
           },
         ]}
       />
-      {dashboardSection === 'courses' && (
-        <>
-          {courses?.[0] ? (
-            <CourseTopCard course={courses[0]} />
-          ) : (
-            <Skeleton className="h-[354px] w-full" />
-          )}
-          <section className="mt-[37px] grid grid-cols-3 divide-x divide-y divide-[#282D33]">
+      <div className="grid grid-cols-1 gap-8">
+        {dashboardSection === 'courses' && (
+          <>
+            {courses?.[0] ? (
+              <CourseTopCard course={courses[0]} />
+            ) : (
+              <Skeleton className="h-[354px] w-full" />
+            )}
+            <section className="divide [&>*]:border-accent divide-accent border-accent mb-[37px] grid grid-cols-1 gap-y-9 divide-x-1 sm:grid-cols-2 lg:grid-cols-3 [&>*]:border-y">
+              {courses.map((course) => (
+                <CourseCard key={course.id} course={course} />
+              ))}
+              {Array.from({ length: 3 - (courses.length % 3) }).map((x) => (
+                <div>
+                </div>
+              ))}
+            </section>
+          </>
+        )}
+        {dashboardSection === 'history' && (
+          <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {courses.map((course) => (
               <CourseCard key={course.id} course={course} />
             ))}
+            <div className="bg-accent flex h-full w-full flex-grow">aaa</div>
           </section>
-        </>
-      )}
-      {dashboardSection === 'history' && (
-        <section className="mt-[37px] grid grid-cols-3 divide-x divide-y divide-[#282D33]">
-          {courses.map((course) => (
-            <CourseCard key={course.id} course={course} />
-          ))}
-        </section>
-      )}
+        )}
+      </div>
     </main>
   );
 }

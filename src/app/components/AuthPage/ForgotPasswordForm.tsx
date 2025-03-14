@@ -122,7 +122,7 @@ export default function ForgotPasswordForm({
             <input
               type="email"
               placeholder="Электронная почта"
-              className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
+              className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-hidden"
               id="email"
               name="email"
               required

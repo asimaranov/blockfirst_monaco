@@ -1,56 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-body {
-  font-family: var(--roboto);
-  color: #f2f2f2;
-  background-color: #0f1217;
-}
-
-@layer base {
-  input[type='number'].appearance-none::-webkit-inner-spin-button,
-  input[type='number'].appearance-none::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  input[type='number'].appearance-none {
-    -moz-appearance: textfield;
-  }
-}
-
-/* clears the ‘X’ from Internet Explorer */
-input[type='search']::-ms-clear {
-  display: none;
-  width: 0;
-  height: 0;
-}
-input[type='search']::-ms-reveal {
-  display: none;
-  width: 0;
-  height: 0;
-}
-/* clears the ‘X’ from Chrome */
-input[type='search']::-webkit-search-decoration,
-input[type='search']::-webkit-search-cancel-button,
-input[type='search']::-webkit-search-results-button,
-input[type='search']::-webkit-search-results-decoration {
-  display: none;
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  /* Revert text color */
-  -webkit-text-fill-color: white !important;
-  color: white !important;
-  caret-color: white !important;
-
-  /* Revert background color */
-  transition: background-color 5000s ease-in-out 0s;
-}
-
+/* @config '../tailwind.config.ts'; */
 
 @theme {
   --spacing: 4px;
@@ -71,23 +21,93 @@ input:-webkit-autofill:active {
   --text-2xl-line-height: 24px;
   --text-3xl-line-height: 32px;
 
-  @media screen(lg) {
-    --spacing: 0.23vw;
-    --text-xs: 0.69vw;
-    --text-sm: 0.81vw;
-    --text-base: 0.93vw;
-    --text-lg: 1.04vw;
-    --text-xl: 1.16vw;
-    --text-2xl: 1.39vw;
-    --text-3xl: 1.85vw;
+  --color-white: #fff;
+  --color-black: #000;
 
-    --text-xs-line-height: 0.81vw;
-    --text-sm-line-height: 0.81vw;
-    --text-base-line-height: 0.93vw;
-    --text-lg-line-height: 1.04vw;
-    --text-xl-line-height: 1.16vw;
-    --text-2xl-line-height: 1.39vw;
-    --text-3xl-line-height: 1.85vw;
-  
+  --color-background: #01050d;
+  --color-foreground: #f2f2f2;
+  --color-primary: #195af4;
+  --color-secondary: #9aa6b5;
+  --color-accent: #282d33;
+  --color-success: #48cc9e;
+  --color-error: #CF3336;
+
+  --font-roboto: var(--roboto); 
+
+}
+
+@layer theme {
+  :root {
+    @media (width >= theme(--breakpoint-lg)) {
+      --spacing: 0.23vw;
+      --text-xs: 0.69vw;
+      --text-sm: 0.81vw;
+      --text-base: 0.93vw;
+      --text-lg: 1.04vw;
+      --text-xl: 1.16vw;
+      --text-2xl: 1.39vw;
+      --text-3xl: 1.85vw;
+
+      --text-xs-line-height: 0.81vw;
+      --text-sm-line-height: 0.81vw;
+      --text-base-line-height: 0.93vw;
+      --text-lg-line-height: 1.04vw;
+      --text-xl-line-height: 1.16vw;
+      --text-2xl-line-height: 1.39vw;
+      --text-3xl-line-height: 1.85vw;
+    }
+  }
+}
+
+@layer utilities {
+  body {
+    font-family: var(--roboto);
+    color: #f2f2f2;
+    background-color: #0f1217;
+  }
+}
+
+@layer base {
+  input[type='number'].appearance-none::-webkit-inner-spin-button,
+  input[type='number'].appearance-none::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type='number'].appearance-none {
+    -moz-appearance: textfield;
+  }
+}
+
+@layer utilities {
+  /* clears the ‘X’ from Internet Explorer */
+  input[type='search']::-ms-clear {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+  input[type='search']::-ms-reveal {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+  /* clears the ‘X’ from Chrome */
+  input[type='search']::-webkit-search-decoration,
+  input[type='search']::-webkit-search-cancel-button,
+  input[type='search']::-webkit-search-results-button,
+  input[type='search']::-webkit-search-results-decoration {
+    display: none;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    /* Revert text color */
+    -webkit-text-fill-color: white !important;
+    color: white !important;
+    caret-color: white !important;
+
+    /* Revert background color */
+    transition: background-color 5000s ease-in-out 0s;
   }
 }

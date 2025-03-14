@@ -94,7 +94,7 @@ export default function ForgotPasswordNewPasswordForm({
             <input
               type={showPassword ? 'text' : 'password'}
               placeholder="Пароль"
-              className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
+              className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-hidden"
               id="password"
               name="password"
               onChange={formik.handleChange}
@@ -161,7 +161,7 @@ export default function ForgotPasswordNewPasswordForm({
             <input
               type={showPassword ? 'text' : 'password'}
               placeholder="Повторите пароль"
-              className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
+              className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-hidden"
               id="passwordConfirm"
               name="passwordConfirm"
               onChange={formik.handleChange}
@@ -203,7 +203,7 @@ export default function ForgotPasswordNewPasswordForm({
           ) : null}
         </div>
       </form>
-      <div className="flex-grow"></div>
+      <div className="grow"></div>
 
       {/* Login link */}
       <div className="mb-[20px] h-auto text-center text-sm text-foreground">

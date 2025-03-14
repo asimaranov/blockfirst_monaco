@@ -35,7 +35,7 @@ export function CourseCard({ course }: { course: ICourse }) {
   const t = useTranslations('UserSpace');
 
   return (
-    <div className="flex flex-shrink-0 flex-col items-center border border-accent">
+    <div className="flex shrink-0 flex-col items-center ">
       <div className="mb-7 w-full">
         <Image
           src={course.smallImg}

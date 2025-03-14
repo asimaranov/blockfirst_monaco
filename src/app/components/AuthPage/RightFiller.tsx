@@ -206,7 +206,7 @@ export default function RightFiller() {
               width={145}
               height={53}
             />
-            <div className="flex-grow"></div>
+            <div className="grow"></div>
           </motion.div>
 
           <motion.div
@@ -220,7 +220,7 @@ export default function RightFiller() {
             <div className="flex h-[53px] flex-col justify-center text-nowrap">
               <span className="text-[26.4px] text-foreground">4.9+</span>
             </div>
-            <div className="flex-grow"></div>
+            <div className="grow"></div>
             <Image
               src={Reviews}
               alt={''}

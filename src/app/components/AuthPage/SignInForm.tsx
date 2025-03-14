@@ -117,7 +117,7 @@ export default function SignInForm({
           }
         }}
       >
-        <div className="flex flex-grow flex-col gap-[24px]">
+        <div className="flex grow flex-col gap-[24px]">
           <div className="relative">
             <div
               className={cn(
@@ -132,7 +132,7 @@ export default function SignInForm({
               <input
                 type="email"
                 placeholder="Электронная почта"
-                className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
+                className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-hidden"
                 id="email"
                 name="email"
                 required
@@ -176,7 +176,7 @@ export default function SignInForm({
               <input
                 type={showPassword ? 'text' : 'password'}
                 placeholder="Пароль"
-                className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-none"
+                className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-hidden"
                 id="password"
                 name="password"
                 onChange={formik.handleChange}
