@@ -244,16 +244,16 @@ export default function Dashboard({ session }: { session: Session }) {
                 Медиа
               </span>
               <div className="flex flex-col gap-6 text-sm">
-                <a href="#" className="">
+                <a href="#" className="hover:opacity-50">
                   Youtube
                 </a>
-                <a href="#" className="">
+                <a href="#" className="hover:opacity-50">
                   Twitter
                 </a>
-                <a href="#" className="">
+                <a href="#" className="hover:opacity-50">
                   Medium
                 </a>
-                <a href="#" className="">
+                <a href="#" className="hover:opacity-50">
                   Telegram
                 </a>
               </div>
@@ -263,10 +263,10 @@ export default function Dashboard({ session }: { session: Session }) {
                 Сообщество
               </span>
               <div className="flex flex-col gap-6 text-sm">
-                <a href="#" className="">
+                <a href="#" className="hover:opacity-50">
                   Блог
                 </a>
-                <a href="#" className="">
+                <a href="#" className="hover:opacity-50">
                   Статьи
                 </a>
               </div>
@@ -276,13 +276,13 @@ export default function Dashboard({ session }: { session: Session }) {
                 Компания
               </span>
               <div className="flex flex-col gap-6 text-sm">
-                <a href="#" className="">
+                <a href="#" className="hover:opacity-50">
                   Стоимость
                 </a>
-                <a href="#" className="">
+                <a href="#" className="hover:opacity-50">
                   F.A.Q
                 </a>
-                <a href="#" className="">
+                <a href="#" className="hover:opacity-50">
                   Курс Solidity
                 </a>
               </div>
