@@ -2,12 +2,6 @@ import Link from 'next/link';
 import { cn } from '~/helpers';
 import Image from 'next/image';
 
-interface TopbarItem {
-  label: string;
-  active: boolean;
-  onClick: () => void;
-}
-
 export function Topbar({
   courseAuthor,
   courseAuthorAvatar,
@@ -46,7 +40,6 @@ export function Topbar({
             width={16}
             height={16}
           />
-
           {courseAuthor}
         </div>
         <span className="font-roboto text-secondary text-xs opacity-50">
