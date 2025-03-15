@@ -22,7 +22,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
         className="absolute w-157 object-cover object-center"
         quality={100}
       />
-      <div className="relative h-full w-157 shrink-0 bg-background z-0">
+      <div className="bg-background relative z-0 h-full w-157 shrink-0">
         <Image
           src={course.bigImg}
           alt={course.title}
@@ -89,8 +89,8 @@ export function CourseTopCard({ course }: { course: ICourse }) {
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
+                  fillRule="evenodd"
+                  clipRule="evenodd"
                   d="M14.2307 4.43278C14.5295 4.14596 15.0043 4.1557 15.2911 4.45454L19.9065 9.26327C20.185 9.55348 20.185 10.0117 19.9065 10.302L15.2911 15.1107C15.0043 15.4095 14.5295 15.4193 14.2307 15.1324C13.9318 14.8456 13.9221 14.3708 14.2089 14.072L18.3258 9.78261L14.2089 5.49322C13.9221 5.19438 13.9318 4.7196 14.2307 4.43278Z"
                   fill="#F2F2F2"
                 />
