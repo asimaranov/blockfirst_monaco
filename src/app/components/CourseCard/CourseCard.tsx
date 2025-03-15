@@ -1,4 +1,4 @@
-import { ICourse } from '~/app/lib/types/ICourse';
+import { ICourse } from '~/app/lib/constants/courses';
 import Image from 'next/image';
 import { Star, StarGrey } from '../icons/Star';
 import { useTranslations } from 'next-intl';

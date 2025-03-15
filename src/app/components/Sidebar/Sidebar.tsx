@@ -203,7 +203,7 @@ export default function Sidebar() {
         ))}
       </nav>
       <div className={'mt-auto flex flex-col border-t border-[#282D33]'}>
-        <Link href="#" className={'flex flex-row items-center px-8 py-5'}>
+        <Link href="#" className={'flex flex-row items-center px-8 py-6'}>
           <svg
             width="0.93vw"
             height="0.93vw"
