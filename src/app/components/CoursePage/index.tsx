@@ -89,7 +89,7 @@ export default function CoursePage({
         courseAuthor={course?.info?.author.name ?? ''}
         courseAuthorAvatar={course?.info?.author.image ?? ''}
       />
-      <div className="grid grid-cols-2">
+      <div className="grid grid-cols-2 mb-9.5 border-accent border-b">
         <CourseInfoTopCard course={course} />
         <div className="border-accent flex flex-col border-l">
           {/* Top section with Starter and Pro blocks */}
@@ -270,10 +270,10 @@ export default function CoursePage({
           <div className="text-secondary/50 border-accent border-b px-8 py-4 text-xs uppercase">
             Структура курса
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-8">
             {courseStructure.map((section, index) => (
-              <div key={section.id} className="flex flex-col ">
-                <div className="flex items-center justify-between bg-[#14171C] px-8 py-3 cursor-pointer">
+              <div key={section.id} className="flex flex-col">
+                <div className="flex cursor-pointer items-center justify-between bg-[#14171C] px-8 py-3">
                   <div className="flex items-center gap-4">
                     <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#01050D]">
                       <span className="text-xs text-gray-100">
@@ -307,7 +307,15 @@ export default function CoursePage({
                         <div className="flex h-5 w-5 items-center justify-center">
                           <div className="h-1 w-1 rounded-full bg-[#9AA6B5] opacity-50" />
                         </div>
-                        <span className="text-sm text-gray-100">{lesson.split(' – ')[0]}<span className='text-secondary'> – {lesson.split(' – ')[1]}</span></span>
+                        <span className="text-sm text-gray-100">
+                          {lesson.split(' – ')[0]}{' '}
+                          {lesson.split(' – ')[1] && (
+                            <span className="text-secondary">
+                              {' '}
+                              – {lesson.split(' – ')[1]}
+                            </span>
+                          )}{' '}
+                        </span>
                       </div>
                     ))}
                   </div>
