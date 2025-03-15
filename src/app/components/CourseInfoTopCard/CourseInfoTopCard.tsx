@@ -59,7 +59,7 @@ export default function CourseInfoTopCard({ course }: { course: ICourse }) {
             <RatingCounter rating={course.info!.rating} />
           </div>
           <div className="text-xxs flex flex-row items-center">
-            <span className="border-opacity-20 border-secondary border-r pr-3 font-medium text-[#9AA6B5] uppercase">
+            <span className="border-secondary/20 border-r pr-3 font-medium text-[#9AA6B5] uppercase">
               {course.info?.lessonsCount || 0}{' '}
               {t('lesson', { count: course.info?.lessonsCount || 0 })}
             </span>
