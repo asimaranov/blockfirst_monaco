@@ -143,7 +143,7 @@ export const COURSES: ICourse[] = [
     id: 'wagmi',
     title: 'Wagmi',
     description:
-      'Узнаете как написать надежный и современный фронтенд для смартконтрактов. Работа с событиями, EVM, кросс...',
+      'Узнаете как написать надежный и современный фронтенд для смартконтрактов...',
     smallImg: '/courses/wagmi/small.png',
     bigImg: '/courses/wagmi/big.png',
     soon: true,
