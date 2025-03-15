@@ -13,54 +13,66 @@ export function CourseTopCard({ course }: { course: ICourse }) {
   const t = useTranslations('UserSpace');
 
   return (
-    <section className="relative flex flex-row gap-10 border-b divide-accent divide-x border-accent">
+    <section className="divide-accent border-accent relative flex flex-row gap-10 divide-x border-b">
       <Image
         src={GridSvg}
         alt={''}
         width={608}
         height={354}
-        className="w-157 absolute  object-cover object-center"
+        className="absolute w-157 object-cover object-center"
         quality={100}
       />
-      <Image
-        src={course.bigImg}
-        alt={course.title}
-        width={608}
-        height={354}
-        className="w-157 shrink-0 object-cover object-center"
-        quality={100}
-      />
+      <div className="relative h-full w-157 shrink-0">
+        <Image
+          src={course.bigImg}
+          alt={course.title}
+          width={608}
+          height={354}
+          className="w-157 object-cover object-center"
+          quality={100}
+        />
+        <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center">
+          <span className="flex items-center justify-center gap-2 bg-background/30 border-foreground/20 rounded-full border px-4 py-3 text-sm font-bold backdrop-blur-sm">
+            {course.info?.labelImg && (
+              <Image
+                src={course.info.labelImg}
+                alt={course.info.labelTitle}
+                width={16}
+                height={16}
+              />
+            )}
+            {course.info?.labelTitle}
+          </span>
+        </div>
+      </div>
+
       <div className="flex w-full flex-col py-8 pr-8">
         <div className="flex flex-row items-center justify-between">
           <div className="flex flex-row items-center gap-1">
             <AlumniCounter count={course.info!.alumniCount} />
             <RatingCounter rating={course.info!.rating} />
           </div>
-          <div className="flex flex-row items-center text-xxs">
-            <span className="border-opacity-20 border-r border-secondary pr-3 font-medium text-[#9AA6B5] uppercase">
+          <div className="text-xxs flex flex-row items-center">
+            <span className="border-opacity-20 border-secondary border-r pr-3 font-medium text-[#9AA6B5] uppercase">
               {course.info?.lessonsCount || 0}{' '}
               {t('lesson', { count: course.info?.lessonsCount || 0 })}
             </span>
-            <span className="pl-3  font-medium text-secondary uppercase">
+            <span className="text-secondary pl-3 font-medium uppercase">
               {course.info?.duration || 0}{' '}
               {t('month', { count: course.info?.duration || 0 })}
             </span>
           </div>
         </div>
         <div className="mt-6 flex flex-col gap-4">
-          <span className="text-2xll font-bold">
-            {course.title}
-          </span>
-          <span className="text-sm text-secondary">
-            {course.description}
-          </span>
+          <span className="text-2xll font-bold">{course.title}</span>
+          <span className="text-secondary text-sm">{course.description}</span>
         </div>
         <CourseProgress progress={4} className="mt-6" />
         <div className="mt-[1.852vw] flex flex-row items-center justify-between gap-4">
           <Link
             href={`#`}
             className={
-              'flex w-full flex-col items-center justify-center rounded-full bg-primary py-3 hover:bg-transparent border border-primary duration-300'
+              'bg-primary border-primary flex w-full flex-col items-center justify-center rounded-full border py-3 duration-300 hover:bg-transparent'
             }
           >
             <div className="flex flex-row items-center">
@@ -85,7 +97,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
           </Link>
           <Link
             href={`#`}
-            className="flex w-full flex-col items-center justify-center border border-transparent hover:border-secondary duration-300 rounded-full h-full"
+            className="hover:border-secondary flex h-full w-full flex-col items-center justify-center rounded-full border border-transparent duration-300"
           >
             <div className="flex flex-row items-center gap-1">
               <svg
@@ -103,9 +115,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
                   fill="#F2F2F2"
                 />
               </svg>
-              <span className="text-sm ">
-                Подробнее о курсе
-              </span>
+              <span className="text-sm">Подробнее о курсе</span>
             </div>
           </Link>
         </div>

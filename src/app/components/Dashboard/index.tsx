@@ -19,12 +19,14 @@ export default function Dashboard({ session }: { session: Session }) {
       bigImg: '/courses/solidity/big.png',
       soon: false,
       info: {
+        labelTitle: 'Solidity & Defi',
         rating: 4.9,
         alumniCount: 1289,
         lessonsCount: 24,
         duration: 1,
         author: { name: 'Автор 1', image: '#' },
         updatedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+        labelImg: '/courses/solidity/label.svg',
       },
     },
     {
@@ -36,12 +38,14 @@ export default function Dashboard({ session }: { session: Session }) {
       bigImg: '/courses/uniswap/big.png',
       soon: false,
       info: {
+        labelTitle: 'Uniswap',
         rating: 5,
         alumniCount: 789,
         lessonsCount: 12,
         duration: 2,
         author: { name: 'Автор 2', image: '#' },
         updatedAt: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
+        labelImg: '/courses/uniswap/label.svg',
       },
     },
     {

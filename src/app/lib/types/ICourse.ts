@@ -8,6 +8,9 @@ export interface IReadyCourseInfo {
     image: string;
   };
   updatedAt: string;
+  labelTitle: string;
+  labelImg: string;
+
 }
 export interface ICourse {
   id: string;

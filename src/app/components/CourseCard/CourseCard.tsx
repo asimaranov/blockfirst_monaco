@@ -10,27 +10,39 @@ export function CourseCard({ course }: { course: ICourse }) {
   const t = useTranslations('UserSpace');
 
   return (
-    <div className="relative flex shrink-0 flex-col items-center relative">
+    <div className="relative flex shrink-0 flex-col items-center">
       {course.soon && (
         <div className="bg-dark-bg absolute top-0 left-0 h-full w-full opacity-50"></div>
       )}
-
-      <div className="w-full bg-background">
+      <Image
+        src={GridSvg}
+        alt={''}
+        width={320}
+        height={176}
+        className="absolute top-0 left-0 w-full"
+        quality={100}
+      />
+      <div className="bg-background relative w-full">
         <Image
           src={course.smallImg}
           alt={course.title}
           width={320}
           height={176}
-          className="w-full "
+          className="w-full"
         />
-        <Image
-          src={GridSvg}
-          alt={course.title}
-          width={320}
-          height={176}
-          className="w-full absolute top-0 left-0"
-          quality={100}
-        />
+        <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center">
+          <span className="flex items-center justify-center gap-1 text-xxs bg-background/30 border-foreground/20 rounded-full border px-4 py-3 font-bold backdrop-blur-sm">
+            {course.info?.labelImg && (
+              <Image
+                src={course.info.labelImg}
+                alt={course.info.labelTitle}
+                width={16}
+                height={16}
+              />
+            )}
+            <span className='mt-0.5'>{course.info?.labelTitle}</span>
+          </span>
+        </div>
       </div>
       <div className="flex w-full flex-col gap-6 p-8 pt-7">
         <div className="flex flex-col gap-6">
@@ -72,7 +84,7 @@ export function CourseCard({ course }: { course: ICourse }) {
                 </span>
               </div>
             </div>
-            <div className="text-secondary flex items-center gap-3 text-xxs">
+            <div className="text-secondary text-xxs flex items-center gap-3">
               {!course.soon ? (
                 <span>
                   {course.info?.lessonsCount || 0}{' '}
@@ -81,7 +93,7 @@ export function CourseCard({ course }: { course: ICourse }) {
               ) : (
                 <>–</>
               )}
-              <div className="bg-secondary h-6 w-px opacity-20 text-xxs"></div>
+              <div className="bg-secondary text-xxs h-6 w-px opacity-20"></div>
               {!course.soon ? (
                 <span>
                   {course.info?.duration || 0}{' '}
@@ -104,12 +116,12 @@ export function CourseCard({ course }: { course: ICourse }) {
         {!course?.soon ? (
           <div className="flex w-full gap-4 text-sm">
             <button
-              className={`border-primary hover:bg-primary duration-300 flex flex-1 h-11  items-center justify-center gap-2 rounded-full border cursor-pointer`}
+              className={`border-primary hover:bg-primary flex h-11 flex-1 cursor-pointer items-center justify-center gap-2 rounded-full border duration-300`}
             >
               Начать <ChevronRight />
             </button>
             <button
-              className={`border border-transparent hover:border-secondary duration-300 flex h-11 flex-1 items-center justify-center gap-2 rounded-full  cursor-pointer`}
+              className={`hover:border-secondary flex h-11 flex-1 cursor-pointer items-center justify-center gap-2 rounded-full border border-transparent duration-300`}
             >
               <Info /> Подробнее
             </button>
