@@ -111,7 +111,7 @@ export default function ForgotPasswordForm({
         <div className="relative">
           <div
             className={cn(
-              'group flex h-[48px] items-center border-b border-accent px-[16px] focus-within:border-foreground',
+              'group border-accent focus-within:border-foreground flex h-[48px] items-center border-b px-[16px]',
               formik.touched.email && formik.errors.email && 'border-error'
             )}
           >
@@ -122,7 +122,7 @@ export default function ForgotPasswordForm({
             <input
               type="email"
               placeholder="Электронная почта"
-              className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-hidden"
+              className="text-foreground placeholder:text-secondary h-full w-full bg-transparent text-sm placeholder:opacity-50 focus:outline-hidden"
               id="email"
               name="email"
               required
@@ -138,7 +138,7 @@ export default function ForgotPasswordForm({
             />
           </div>
           {formik.touched.email && formik.errors.email ? (
-            <div className="absolute left-0 top-[52px] flex gap-[8px] text-xs text-error">
+            <div className="text-error absolute top-[52px] left-0 flex gap-2 text-xs">
               <Image
                 src={ErrorDecorationSvg}
                 alt={''}

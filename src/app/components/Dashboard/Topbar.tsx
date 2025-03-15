@@ -26,7 +26,7 @@ export function Topbar({
             onClick={item.onClick}
             key={item.label}
             className={cn(
-              'flex items-center justify-center px-8 py-3 font-roboto text-sm font-medium',
+              'font-roboto flex items-center justify-center px-8 py-3 text-sm font-medium',
               'shrink-0 cursor-pointer',
               item.active
                 ? 'rounded-[100px] bg-[#F2F2F2] text-[#01050D]'
@@ -37,14 +37,14 @@ export function Topbar({
           </div>
         ))}
       </div>
-      <div className="flex flex-col gap-[8px]">
-        <div className="flex flex-row items-center justify-end gap-[8px]">
+      <div className="flex flex-col gap-2">
+        <div className="flex flex-row items-center justify-end gap-2">
           <div className="h-[6px] w-[6px] rounded-full bg-[#54EDB7]" />
           <span className="font-roboto text-sm font-medium text-[#F2F2F2]">
             {lastestUpdate}
           </span>
         </div>
-        <span className="font-roboto text-xs text-secondary opacity-50">
+        <span className="font-roboto text-secondary text-xs opacity-50">
           Последнее обновление
         </span>
       </div>

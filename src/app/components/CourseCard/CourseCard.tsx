@@ -5,12 +5,12 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 import { ChevronRight } from '../icons/ChevronRight';
 import { Info } from '../icons/Info';
-
+import GridSvg from './assets/grid.svg';
 export function CourseCard({ course }: { course: ICourse }) {
   const t = useTranslations('UserSpace');
 
   return (
-    <div className="relative flex shrink-0 flex-col items-center">
+    <div className="relative flex shrink-0 flex-col items-center relative">
       {course.soon && (
         <div className="bg-dark-bg absolute top-0 left-0 h-full w-full opacity-50"></div>
       )}
@@ -22,6 +22,14 @@ export function CourseCard({ course }: { course: ICourse }) {
           width={320}
           height={176}
           className="w-full "
+        />
+        <Image
+          src={GridSvg}
+          alt={course.title}
+          width={320}
+          height={176}
+          className="w-full absolute top-0 left-0"
+          quality={100}
         />
       </div>
       <div className="flex w-full flex-col gap-6 p-8 pt-7">

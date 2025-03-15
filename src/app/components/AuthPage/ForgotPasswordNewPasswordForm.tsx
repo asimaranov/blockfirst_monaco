@@ -81,7 +81,7 @@ export default function ForgotPasswordNewPasswordForm({
         <div className="relative">
           <div
             className={cn(
-              'group flex h-[48px] items-center border-b border-accent px-[16px] focus-within:border-foreground',
+              'group border-accent focus-within:border-foreground flex h-[48px] items-center border-b px-[16px]',
               formik.touched.password &&
                 formik.errors.password &&
                 'border-error'
@@ -94,7 +94,7 @@ export default function ForgotPasswordNewPasswordForm({
             <input
               type={showPassword ? 'text' : 'password'}
               placeholder="Пароль"
-              className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-hidden"
+              className="text-foreground placeholder:text-secondary h-full w-full bg-transparent text-sm placeholder:opacity-50 focus:outline-hidden"
               id="password"
               name="password"
               onChange={formik.handleChange}
@@ -118,14 +118,14 @@ export default function ForgotPasswordNewPasswordForm({
           </div>
 
           {formik.values.password && formik.errors.password ? (
-            <div className="mt-[12px] flex flex-row gap-[8px]">
+            <div className="mt-[12px] flex flex-row gap-2">
               {(formik.errors.password.includes('|')
                 ? formik.errors.password.split('|')
                 : [formik.errors.password]
               ).map((error, index) => (
                 <div
                   key={index}
-                  className="my-[5px] flex gap-[8px] rounded-[4px] bg-error px-[8px] py-[5px] text-xs text-foreground"
+                  className="bg-error text-foreground my-[5px] flex gap-2 rounded-[4px] px-[8px] py-[5px] text-xs"
                 >
                   {error}
                 </div>
@@ -133,7 +133,7 @@ export default function ForgotPasswordNewPasswordForm({
             </div>
           ) : null}
           {error ? (
-            <div className="absolute left-0 top-[52px] flex justify-center gap-[8px] text-xs text-error">
+            <div className="text-error absolute top-[52px] left-0 flex justify-center gap-2 text-xs">
               <Image
                 src={ErrorDecorationSvg}
                 alt={''}
@@ -148,7 +148,7 @@ export default function ForgotPasswordNewPasswordForm({
         <div className="relative">
           <div
             className={cn(
-              'group flex h-[48px] items-center border-b border-accent px-[16px] focus-within:border-foreground',
+              'group border-accent focus-within:border-foreground flex h-[48px] items-center border-b px-[16px]',
               formik.touched.passwordConfirm &&
                 formik.errors.passwordConfirm &&
                 'border-error'
@@ -161,7 +161,7 @@ export default function ForgotPasswordNewPasswordForm({
             <input
               type={showPassword ? 'text' : 'password'}
               placeholder="Повторите пароль"
-              className="h-full w-full bg-transparent text-sm text-foreground placeholder:text-secondary placeholder:opacity-50 focus:outline-hidden"
+              className="text-foreground placeholder:text-secondary h-full w-full bg-transparent text-sm placeholder:opacity-50 focus:outline-hidden"
               id="passwordConfirm"
               name="passwordConfirm"
               onChange={formik.handleChange}
@@ -182,16 +182,16 @@ export default function ForgotPasswordNewPasswordForm({
           {formik.values.passwordConfirm &&
           formik.values.password &&
           formik.values.passwordConfirm !== formik.values.password ? (
-            <div className="mt-[12px] flex flex-row gap-[8px]">
+            <div className="mt-[12px] flex flex-row gap-2">
               {formik.values.passwordConfirm !== formik.values.password && (
-                <div className="my-[5px] flex gap-[8px] rounded-[4px] bg-error px-[8px] py-[5px] text-xs text-foreground">
+                <div className="bg-error text-foreground my-[5px] flex gap-2 rounded-[4px] px-[8px] py-[5px] text-xs">
                   Пароли не совпадают
                 </div>
               )}
             </div>
           ) : null}
           {error ? (
-            <div className="absolute left-0 top-[52px] flex justify-center gap-[8px] text-xs text-error">
+            <div className="text-error absolute top-[52px] left-0 flex justify-center gap-2 text-xs">
               <Image
                 src={ErrorDecorationSvg}
                 alt={''}
@@ -206,7 +206,7 @@ export default function ForgotPasswordNewPasswordForm({
       <div className="grow"></div>
 
       {/* Login link */}
-      <div className="mb-[20px] h-auto text-center text-sm text-foreground">
+      <div className="text-foreground mb-[20px] h-auto text-center text-sm">
         У вас нет аккаунта?{' '}
         <Link
           href="#"

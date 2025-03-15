@@ -7,18 +7,27 @@ import { RatingCounter } from './RatingCounter';
 import { CourseProgress } from './CourseProgress';
 import { Progress } from '../shared/Progress';
 import { useTranslations } from 'next-intl';
+import GridSvg from './assets/grid.svg';
 
 export function CourseTopCard({ course }: { course: ICourse }) {
   const t = useTranslations('UserSpace');
 
   return (
-    <section className="flex flex-row gap-10 border-b border-[#282D33]">
+    <section className="relative flex flex-row gap-10 border-b divide-accent divide-x border-accent">
+      <Image
+        src={GridSvg}
+        alt={''}
+        width={608}
+        height={354}
+        className="w-157 absolute  object-cover object-center"
+        quality={100}
+      />
       <Image
         src={course.bigImg}
         alt={course.title}
         width={608}
         height={354}
-        className="w-[35.185vw] shrink-0 object-cover object-center"
+        className="w-157 shrink-0 object-cover object-center"
         quality={100}
       />
       <div className="flex w-full flex-col py-8 pr-8">
