@@ -41,7 +41,7 @@ const InfoIcon = () => (
     viewBox="0 0 16 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="text-[#9AA5B5]"
+    className="text-[#9AA5B5] group-hover:text-[#F2F2F2] transition ease-in-out duration-300 delay-100"
   >
     <circle cx="8" cy="8" r="6.66667" stroke="currentColor" />
     <path d="M8 7.33333V10.6667" stroke="currentColor" />
