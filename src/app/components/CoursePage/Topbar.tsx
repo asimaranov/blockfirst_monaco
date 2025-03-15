@@ -34,7 +34,7 @@ export function Topbar({
         </svg>
         Подробности курса
       </Link>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 items-end">
         <div className="flex flex-row items-center justify-end gap-2 text-sm">
           <Image
             src={courseAuthorAvatar}
