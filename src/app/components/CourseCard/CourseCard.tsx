@@ -11,9 +11,7 @@ export function CourseCard({ course }: { course: ICourse }) {
 
   return (
     <div className="relative flex shrink-0 flex-col items-center">
-      {course.soon && (
-        <div className="bg-dark-bg absolute top-0 left-0 h-full w-full opacity-50 z-20"></div>
-      )}
+      
       <Image
         src={GridSvg}
         alt={''}
@@ -31,15 +29,19 @@ export function CourseCard({ course }: { course: ICourse }) {
           className="w-full"
         />
         <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center">
-          {course.info?.labelTitle && (
+          {course.bage?.title && (
             <span className="text-xxs bg-background/30 border-foreground/20 flex items-center justify-center gap-2 rounded-full border px-4 py-3 font-bold backdrop-blur-sm z-30">
-                <Image
-                  src={course.info.labelImg}
-                  alt={course.info.labelTitle}
-                  width={16}
-                  height={16}
-                />
-              <span className="mt-0.5">{course.info.labelTitle}</span>
+              {
+                course.bage?.img && (
+                  <Image
+                    src={course.bage.img}
+                    alt={course.bage?.title}
+                    width={16}
+                    height={16}
+                  />
+                )
+              }
+              <span className="mt-0.5">{course.bage?.title}</span>
             </span>
           )}
         </div>
@@ -134,6 +136,9 @@ export function CourseCard({ course }: { course: ICourse }) {
           </button>
         )}
       </div>
+      {course.soon && (
+        <div className="bg-dark-bg absolute top-0 left-0 h-full w-full opacity-50 z-30"></div>
+      )}
     </div>
   );
 }

@@ -8,9 +8,10 @@ export interface IReadyCourseInfo {
     image: string;
   };
   updatedAt: string;
-  labelTitle: string;
-  labelImg: string;
-
+}
+export interface ICourseBageInfo {
+  title: string;
+  img?: string;
 }
 export interface ICourse {
   id: string;
@@ -20,6 +21,7 @@ export interface ICourse {
   bigImg: string;
   soon: boolean;
   info?: IReadyCourseInfo;
+  bage?: ICourseBageInfo;
 }
 
 export const COURSES: ICourse[] = [
@@ -31,15 +33,17 @@ export const COURSES: ICourse[] = [
     smallImg: '/courses/solidity/small.png',
     bigImg: '/courses/solidity/big.png',
     soon: false,
+    bage: {
+      title: 'Solidity & Defi',
+      img: '/courses/solidity/label.svg',
+    },
     info: {
-      labelTitle: 'Solidity & Defi',
       rating: 4.9,
       alumniCount: 1289,
       lessonsCount: 24,
       duration: 1,
       author: { name: 'Андрей Симаранов', image: '/courses/solidity/author.png' },
       updatedAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-      labelImg: '/courses/solidity/label.svg',
     },
   },
   {
@@ -50,15 +54,17 @@ export const COURSES: ICourse[] = [
     smallImg: '/courses/uniswap/small.png',
     bigImg: '/courses/uniswap/big.png',
     soon: false,
+    bage: {
+      title: 'Uniswap',
+      img: '/courses/uniswap/label.svg',
+    },
     info: {
-      labelTitle: 'Uniswap',
       rating: 5,
       alumniCount: 789,
       lessonsCount: 12,
       duration: 2,
       author: { name: 'Автор 2', image: '#' },
       updatedAt: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
-      labelImg: '/courses/uniswap/label.svg',
     },
   },
   {
@@ -69,6 +75,9 @@ export const COURSES: ICourse[] = [
     smallImg: '/courses/aave_compound/small.png',
     bigImg: '/courses/aave_compound/big.png',
     soon: true,
+    bage: {
+      title: 'Aave & Compound',
+    },
   },
   {
     id: 'solidity_advanced',
@@ -78,6 +87,9 @@ export const COURSES: ICourse[] = [
     smallImg: '/courses/solidity_advanced/small.png',
     bigImg: '/courses/solidity_advanced/big.png',
     soon: true,
+    bage: {
+      title: 'Solidity Advanced',
+    },
   },
   {
     id: 'crypto_advanced',
@@ -87,6 +99,9 @@ export const COURSES: ICourse[] = [
     smallImg: '/courses/cryptography/small.png',
     bigImg: '/courses/cryptography/big.png',
     soon: true,
+    bage: {
+      title: 'Cryptography',
+    },
   },
   {
     id: 'evm_assembler',
@@ -96,6 +111,9 @@ export const COURSES: ICourse[] = [
     smallImg: '/courses/evm_assembler_yul/small.png',
     bigImg: '/courses/evm_assembler_yul/big.png',
     soon: true,
+    bage: {
+      title: 'EVM Assembler & YUL',
+    },
   },
   {
     id: 'upgradeable_contracts',
@@ -105,6 +123,9 @@ export const COURSES: ICourse[] = [
     smallImg: '/courses/upgradeable/small.png',
     bigImg: '/courses/upgradeable/big.png',
     soon: true,
+    bage: {
+      title: 'Upgradeable Contracts',
+    },
   },
   {
     id: 'gas_advanced',
@@ -114,6 +135,9 @@ export const COURSES: ICourse[] = [
     smallImg: '/courses/advanced_gas/small.png',
     bigImg: '/courses/advanced_gas/big.png',
     soon: true,
+    bage: {
+      title: 'Advanced Gas',
+    },
   },
   {
     id: 'wagmi',
@@ -123,5 +147,8 @@ export const COURSES: ICourse[] = [
     smallImg: '/courses/wagmi/small.png',
     bigImg: '/courses/wagmi/big.png',
     soon: true,
+    bage: {
+      title: 'Wagmi',
+    },
   },
 ];

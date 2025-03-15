@@ -33,17 +33,17 @@ export function CourseTopCard({ course }: { course: ICourse }) {
           quality={100}
         />
         <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center">
-          {course.info?.labelTitle && (
+          {course.bage?.title && (
             <span className="bg-background/30 border-foreground/20 flex items-center justify-center gap-2 rounded-full border px-6 py-4 text-sm font-bold backdrop-blur-sm z-30">
-              {course.info?.labelImg && (
+              {course.bage?.img && (
                 <Image
-                  src={course.info.labelImg}
-                  alt={course.info.labelTitle}
+                  src={course.bage.img}
+                  alt={course.bage.title}
                   width={16}
                   height={16}
                 />
               )}
-              <span className="mt-0.5">{course.info?.labelTitle}</span>
+              <span className="mt-0.5">{course.bage.title}</span>
             </span>
           )}
         </div>
