@@ -14,26 +14,27 @@ export function CourseTopCard({ course }: { course: ICourse }) {
 
   return (
     <section className="divide-accent border-accent relative flex flex-row gap-10 divide-x border-b">
+      
+      <div className="bg-background relative z-0 h-full w-157 shrink-0">
       <Image
         src={GridSvg}
         alt={''}
         width={608}
         height={354}
-        className="absolute w-157 object-cover object-center"
+        className="absolute top-0 left-0 w-full z-20"
         quality={100}
       />
-      <div className="bg-background relative z-0 h-full w-157 shrink-0">
         <Image
           src={course.bigImg}
           alt={course.title}
           width={608}
           height={354}
-          className="w-157 object-cover object-center"
+          className="w-full"
           quality={100}
         />
         <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center">
           {course.info?.labelTitle && (
-            <span className="bg-background/30 border-foreground/20 flex items-center justify-center gap-2 rounded-full border px-4 py-3 text-sm font-bold backdrop-blur-sm">
+            <span className="bg-background/30 border-foreground/20 flex items-center justify-center gap-2 rounded-full border px-6 py-4 text-sm font-bold backdrop-blur-sm z-30">
               {course.info?.labelImg && (
                 <Image
                   src={course.info.labelImg}
