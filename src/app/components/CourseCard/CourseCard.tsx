@@ -12,14 +12,14 @@ export function CourseCard({ course }: { course: ICourse }) {
   return (
     <div className="relative flex shrink-0 flex-col items-center">
       {course.soon && (
-        <div className="bg-dark-bg absolute top-0 left-0 h-full w-full opacity-50"></div>
+        <div className="bg-dark-bg absolute top-0 left-0 h-full w-full opacity-50 z-20"></div>
       )}
       <Image
         src={GridSvg}
         alt={''}
         width={320}
         height={176}
-        className="absolute top-0 left-0 w-full"
+        className="absolute top-0 left-0 w-full z-20"
         quality={100}
       />
       <div className="bg-background relative w-full">
@@ -32,7 +32,7 @@ export function CourseCard({ course }: { course: ICourse }) {
         />
         <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center">
           {course.info?.labelTitle && (
-            <span className="text-xxs bg-background/30 border-foreground/20 flex items-center justify-center gap-1 rounded-full border px-4 py-3 font-bold backdrop-blur-sm">
+            <span className="text-xxs bg-background/30 border-foreground/20 flex items-center justify-center gap-1 rounded-full border px-4 py-3 font-bold backdrop-blur-sm z-30">
                 <Image
                   src={course.info.labelImg}
                   alt={course.info.labelTitle}
