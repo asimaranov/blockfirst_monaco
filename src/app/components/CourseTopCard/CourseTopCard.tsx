@@ -32,17 +32,19 @@ export function CourseTopCard({ course }: { course: ICourse }) {
           quality={100}
         />
         <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center">
-          <span className="flex items-center justify-center gap-2 bg-background/30 border-foreground/20 rounded-full border px-4 py-3 text-sm font-bold backdrop-blur-sm">
-            {course.info?.labelImg && (
-              <Image
-                src={course.info.labelImg}
-                alt={course.info.labelTitle}
-                width={16}
-                height={16}
-              />
-            )}
-            {course.info?.labelTitle}
-          </span>
+          {course.info?.labelTitle && (
+            <span className="bg-background/30 border-foreground/20 flex items-center justify-center gap-2 rounded-full border px-4 py-3 text-sm font-bold backdrop-blur-sm">
+              {course.info?.labelImg && (
+                <Image
+                  src={course.info.labelImg}
+                  alt={course.info.labelTitle}
+                  width={16}
+                  height={16}
+                />
+              )}
+              <span className="mt-0.5">{course.info?.labelTitle}</span>
+            </span>
+          )}
         </div>
       </div>
 

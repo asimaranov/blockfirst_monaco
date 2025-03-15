@@ -31,17 +31,17 @@ export function CourseCard({ course }: { course: ICourse }) {
           className="w-full"
         />
         <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center">
-          <span className="flex items-center justify-center gap-1 text-xxs bg-background/30 border-foreground/20 rounded-full border px-4 py-3 font-bold backdrop-blur-sm">
-            {course.info?.labelImg && (
-              <Image
-                src={course.info.labelImg}
-                alt={course.info.labelTitle}
-                width={16}
-                height={16}
-              />
-            )}
-            <span className='mt-0.5'>{course.info?.labelTitle}</span>
-          </span>
+          {course.info?.labelTitle && (
+            <span className="text-xxs bg-background/30 border-foreground/20 flex items-center justify-center gap-1 rounded-full border px-4 py-3 font-bold backdrop-blur-sm">
+                <Image
+                  src={course.info.labelImg}
+                  alt={course.info.labelTitle}
+                  width={16}
+                  height={16}
+                />
+              <span className="mt-0.5">{course.info.labelTitle}</span>
+            </span>
+          )}
         </div>
       </div>
       <div className="flex w-full flex-col gap-6 p-8 pt-7">
