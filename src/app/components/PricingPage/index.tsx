@@ -161,9 +161,25 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
         {tariff.features.map((feature, index) => (
           <div
             key={index}
-            className={`flex items-center gap-4 px-8 py-3 ${feature.bg ? 'bg-[#141719]' : ''}`}
+            className={`flex items-center gap-4 px-8 py-3 ${feature.bg ? 'bg-[#14171C]' : ''}`}
           >
-            <CheckIcon />
+            
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
+                stroke={tariff.price ? "#195AF4" : "#9aa6b5"}
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+
             <span className="text-sm">{feature.text}</span>
           </div>
         ))}
@@ -184,7 +200,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
               )}
             </div>
             <div className="flex items-center gap-2">
-              <button className="flex items-center rounded-full bg-[#1959F4] px-11 py-3">
+              <button className="flex cursor-pointer items-center rounded-full bg-[#1959F4] px-11 py-3">
                 Оплатить
                 <svg
                   width="20"
@@ -202,7 +218,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
               </button>
             </div>
           </div>
-          <div className="mt-auto flex h-8 items-center justify-center gap-1 bg-[#141719] text-sm text-[#9AA5B5]">
+          <div className="mt-auto flex h-8 items-center justify-center gap-1 bg-[#14171C] text-sm text-[#9AA5B5]">
             Весь курс{' '}
             <span className="text-foreground">₽{tariff.price.total}</span>
           </div>
@@ -211,13 +227,13 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
 
       {tariff.isActive && (
         <div className="mt-auto flex flex-col gap-6 pt-8 pb-0">
-          <div className="mt-auto mx-8 flex h-[52px] items-center justify-center gap-1 rounded-full bg-[rgba(51,207,142,0.1)]">
+          <div className="mx-8 mt-auto flex h-[52px] cursor-pointer items-center justify-center gap-1 rounded-full bg-[#33CF8E]/10">
             <div className="flex items-center gap-1">
               <CheckIcon />
               <span className="text-sm text-[#33CF8E]">Активный тариф</span>
             </div>
           </div>
-          <div className="mt-auto flex h-8 items-center justify-center gap-1 bg-[#141719] text-sm text-[#9AA5B5]">
+          <div className="mt-auto flex h-8 items-center justify-center gap-1 bg-[#14171C] text-sm text-[#9AA5B5]">
             Стартовый тариф
           </div>
         </div>
