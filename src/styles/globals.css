@@ -44,7 +44,7 @@
 @layer theme {
   :root {
     @media (width >= theme(--breakpoint-lg)) {
-      --spacing: 0.23vw;
+      --spacing: 0.2315vw;
       --text-xxs: 0.58vw;
       --text-xs: 0.69vw;
       --text-sm: 0.81vw;
