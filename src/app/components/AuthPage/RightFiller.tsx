@@ -180,12 +180,12 @@ export default function RightFiller() {
             <Image
               src={CodeSnippetSvg}
               alt={''}
-              className="relative mb-[33px] flex h-[128px] w-[417px] items-center justify-center rounded-[8px] border-[0.5px] border-[#F2F2F2] border-opacity-10 bg-[#01050D] bg-opacity-30 px-[28px] py-[24px] backdrop-blur-[10px]"
+              className="relative mb-[33px] flex h-[128px] w-[417px] items-center justify-center rounded-[8px] border-[0.5px] border-foreground/10 bg-background/30 px-[28px] py-[24px] backdrop-blur-[10px]"
             />
           </motion.div>
 
           <motion.div
-            className="relative mb-[36px] flex h-[107px] w-[383px] items-center justify-center rounded-[8px] border-[0.5px] border-[#F2F2F2] border-opacity-10 bg-[#01050D] bg-opacity-30 px-[22px] backdrop-blur-[10px]"
+            className="relative mb-[36px] flex h-[107px] w-[383px] items-center justify-center rounded-[8px] border-[0.5px] border-foreground/10 bg-background/30 px-[22px] backdrop-blur-[10px]"
             style={{
               x: statsBoxX,
               y: statsBoxY,
@@ -215,7 +215,7 @@ export default function RightFiller() {
               y: reviewsY,
               transformStyle: 'preserve-3d',
             }}
-            className="relative mb-[36px] ml-[5.67vw] flex h-[74px] w-[244px] items-center justify-center rounded-[8px] border-[0.5px] border-[#F2F2F2] border-opacity-10 bg-[#01050D] bg-opacity-30 px-[22px] backdrop-blur-[10px]"
+            className="relative mb-[36px] ml-[5.67vw] flex h-[74px] w-[244px] items-center justify-center rounded-[8px] border-[0.5px] border-foreground/10 bg-background/30 px-[22px] backdrop-blur-[10px]"
           >
             <div className="flex h-[53px] flex-col justify-center text-nowrap">
               <span className="text-[26.4px] text-foreground">4.9+</span>
