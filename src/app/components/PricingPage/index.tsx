@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Topbar } from './Topbar';
 import { COURSES, ICourse } from '~/app/lib/constants/courses';
 import { Skeleton } from '~/app/components/shared/Skeleton';
@@ -12,82 +12,9 @@ import FreePlan from './assets/pricing/free.png';
 import ProPlan from './assets/pricing/pro.png';
 import StarterPlan from './assets/pricing/starter.png';
 import Image from 'next/image';
-
-interface TariffFeature {
-  text: string;
-  bg?: boolean;
-}
-
-interface Tariff {
-  name: string;
-  description: string;
-  image: any;
-  features: TariffFeature[];
-  price?: {
-    monthly: number;
-    total: number;
-    installments?: number;
-  };
-  sale?: {
-    percent: number;
-  };
-  isActive?: boolean;
-}
-
-const TARIFFS: Tariff[] = [
-  {
-    name: 'Free',
-    description:
-      'Стартовый тариф, который включает в себя ознакомление с курсами и платформой в целом.',
-    image: FreePlan,
-    features: [
-      { text: 'Ознакомление с курсами', bg: true },
-      { text: '5 лекций / уроков' },
-      { text: 'Реферальная программа', bg: true },
-    ],
-    isActive: true,
-  },
-  {
-    name: 'Starter',
-    description:
-      'Подходит для самостоятельного обучения. В тарифе не предусмотрен ментор, консультации и резюме.',
-    image: StarterPlan,
-    features: [
-      { text: 'Доступ ко всем основным материалам курса', bg: true },
-      { text: 'Доступ к телеграм чату учеников курса' },
-      { text: 'Автоматическая проверка решений', bg: true },
-      { text: 'Образовательные материалы по теме курса' },
-      { text: 'NFT Диплом', bg: true },
-    ],
-    price: {
-      monthly: 14000,
-      total: 140000,
-      installments: 10,
-    },
-  },
-  {
-    name: 'Pro',
-    description:
-      'Получи максимум от прохождения курсов. Менторы, консультации, комьюнити и многое другое.',
-    image: ProPlan,
-    features: [
-      { text: 'Все что включает Starter тариф', bg: true },
-      { text: 'Персональный ai ментор' },
-      { text: 'Обсуждение задач с куратором', bg: true },
-      { text: 'Премиумные материалы и задачи' },
-      { text: 'Консультация для трудоустройства', bg: true },
-      { text: 'Помощь в подготовке резюме' },
-    ],
-    price: {
-      monthly: 18000,
-      total: 180000,
-      installments: 10,
-    },
-    sale: {
-      percent: 16,
-    },
-  },
-];
+import { api } from '~/trpc/react';
+import { Tariff, TARIFFS } from '~/app/lib/constants/tariff';
+import { cn } from '~/helpers';
 
 const CheckIcon = () => (
   <svg
@@ -123,6 +50,36 @@ const InfoIcon = () => (
 );
 
 const TariffCard = ({ tariff }: { tariff: Tariff }) => {
+  const {
+    mutate: createPaymentLink,
+    isPending,
+    isError,
+    error,
+    data,
+  } = api.tinkoff.createPaymentLink.useMutation({
+    onSuccess: () => {
+      setIsLoading(false);
+    },
+    onError: () => {
+      setIsLoading(false);
+    },
+    onSettled: () => {
+      setIsLoading(false);
+    },
+    onMutate: () => {
+      setIsLoading(true);
+    },
+  });
+
+  useEffect(() => {
+    if (data) {
+      const newWindow = window.open(data, '_blank');
+      newWindow?.focus();
+    }
+  }, [data]);
+
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <div className="flex flex-col">
       <div className="bg-[#010514] p-8">
@@ -137,7 +94,9 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
           <div className="flex flex-col items-center gap-5">
             <div className="h-[92px] w-[92px] overflow-hidden rounded-full">
               <Image
-                src={tariff.image}
+                src={tariff.bigIcon}
+                width={92}
+                height={92}
                 alt={`${tariff.name} plan`}
                 className="h-full w-full object-cover"
               />
@@ -155,7 +114,11 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
           <span className="text-xs text-[#9AA5B5] uppercase">
             Что включено?
           </span>
-          <InfoIcon />
+          {tariff.price && (
+            <div className="cursor-pointer">
+              <InfoIcon />
+            </div>
+          )}
         </div>
 
         {tariff.features.map((feature, index) => (
@@ -163,7 +126,6 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
             key={index}
             className={`flex items-center gap-4 px-8 py-3 ${feature.bg ? 'bg-[#14171C]' : ''}`}
           >
-            
             <svg
               width="20"
               height="20"
@@ -173,7 +135,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
             >
               <path
                 d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
-                stroke={tariff.price ? "#195AF4" : "#9aa6b5"}
+                stroke={tariff.price ? '#195AF4' : '#9aa6b5'}
                 stroke-width="1.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -200,21 +162,60 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
               )}
             </div>
             <div className="flex items-center gap-2">
-              <button className="flex cursor-pointer items-center rounded-full bg-[#1959F4] px-11 py-3">
+              <button
+                className={cn(
+                  ' flex  items-center rounded-full border border-[#1959F4] bg-[#1959F4] px-11 py-3 duration-300',
+                  isLoading ? 'border-[#1242B2] bg-[#1242B2]' : 'hover:bg-dark-bg cursor-pointer'
+                  
+                )}
+                disabled={isLoading}
+                onClick={async () => {
+                  console.log('clicked');
+                  createPaymentLink({ tariff: tariff.name });
+                }}
+              >
                 Оплатить
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M14.75 4.97386L19.3654 9.58924L14.75 14.2046"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                  />
-                </svg>
+                {!isLoading ? (
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M14.75 4.97386L19.3654 9.58924L14.75 14.2046"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={cn(
+                      'ml-2',
+                      isLoading && 'animate-spin'
+                    )}
+                  >
+                    <path
+                      opacity="0.4"
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M9.25 3.33398C9.25 2.91977 9.58579 2.58398 10 2.58398C14.0961 2.58398 17.4167 5.90454 17.4167 10.0007C17.4167 10.4149 17.0809 10.7507 16.6667 10.7507C16.2525 10.7507 15.9167 10.4149 15.9167 10.0007C15.9167 6.73297 13.2677 4.08398 10 4.08398C9.58579 4.08398 9.25 3.7482 9.25 3.33398Z"
+                      fill="#F2F2F2"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M4.36269 6.36564C4.73362 6.54998 4.88489 7.00012 4.70055 7.37105C4.30737 8.16222 4.08594 9.0543 4.08594 10.0002C4.08594 13.2679 6.73492 15.9169 10.0026 15.9169C13.2703 15.9169 15.9193 13.2679 15.9193 10.0002C15.9193 9.58602 16.2551 9.25024 16.6693 9.25024C17.0835 9.25024 17.4193 9.58602 17.4193 10.0002C17.4193 14.0964 14.0987 17.4169 10.0026 17.4169C5.90649 17.4169 2.58594 14.0964 2.58594 10.0002C2.58594 8.81753 2.86333 7.69745 3.35728 6.7035C3.54162 6.33257 3.99176 6.1813 4.36269 6.36564Z"
+                      fill="#F2F2F2"
+                    />
+                  </svg>
+                )}
               </button>
             </div>
           </div>

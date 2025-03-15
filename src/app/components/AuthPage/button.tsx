@@ -28,7 +28,7 @@ export default function AuthButton({
       onClick={onClick}
     >
       {text}
-      {true && state === 'loading' ? (
+      {state === 'loading' ? (
         <Spinner />
       ) : (
         <svg

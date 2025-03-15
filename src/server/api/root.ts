@@ -1,4 +1,5 @@
 import { postRouter } from '~/server/api/routers/post';
+import { tinkoffRouter } from '~/server/api/routers/tinkoff';
 import { createCallerFactory, createTRPCRouter } from '~/server/api/trpc';
 
 /**
@@ -8,6 +9,7 @@ import { createCallerFactory, createTRPCRouter } from '~/server/api/trpc';
  */
 export const appRouter = createTRPCRouter({
   post: postRouter,
+  tinkoff: tinkoffRouter,
 });
 
 // export type definition of API
