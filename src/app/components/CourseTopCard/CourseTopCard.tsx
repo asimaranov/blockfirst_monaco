@@ -22,7 +22,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
         className="absolute w-157 object-cover object-center"
         quality={100}
       />
-      <div className="relative h-full w-157 shrink-0">
+      <div className="relative h-full w-157 shrink-0 bg-background z-0">
         <Image
           src={course.bigImg}
           alt={course.title}
