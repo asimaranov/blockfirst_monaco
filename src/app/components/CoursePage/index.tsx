@@ -129,7 +129,7 @@ export default function CoursePage({
                               </g>
                             </svg>
                           </div>
-                          <span className="text-sm">{feature}</span>
+                          <span className="text-xs">{feature}</span>
                         </div>
                       </div>
                     ))}
