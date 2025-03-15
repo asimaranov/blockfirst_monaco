@@ -2,45 +2,68 @@ import { ICourse } from '~/app/lib/constants/courses';
 import Image from 'next/image';
 import { Star, StarGrey } from '../icons/Star';
 import { useTranslations } from 'next-intl';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ChevronRight } from '../icons/ChevronRight';
 import { Info } from '../icons/Info';
 import GridSvg from './assets/grid.svg';
+import { motion, useAnimation } from 'framer-motion';
+
 export function CourseCard({ course }: { course: ICourse }) {
   const t = useTranslations('UserSpace');
+  const controls = useAnimation();
 
   return (
-    <div className="relative flex shrink-0 flex-col items-center">
-      
-      <Image
-        src={GridSvg}
-        alt={''}
-        width={320}
-        height={176}
-        className="absolute top-0 left-0 w-full z-20"
-        quality={100}
-      />
-      <div className="bg-background relative w-full">
+    <div
+      className="group relative flex shrink-0 flex-col items-center hover:bg-[#14171C]"
+      onMouseEnter={() => {
+        if (!course.soon) {
+          controls.start({ rotate: -30, scale: 1.2 });
+        }
+      }}
+      onMouseLeave={() => {
+        if (!course.soon) {
+          controls.start({ rotate: 0, scale: 1 });
+        }
+      }}
+    >
+      <div className="bg-background relative w-full overflow-hidden">
+        <motion.div
+          className="relative z-10"
+          animate={controls}
+          initial={{ rotate: 0, scale: 1 }}
+          transition={{
+            duration: 0.3,
+            ease: 'easeInOut',
+          }}
+        >
+          <Image
+            src={course.smallImg}
+            alt={course.title}
+            width={320}
+            height={176}
+            className="w-full"
+            quality={100}
+          />
+        </motion.div>
         <Image
-          src={course.smallImg}
-          alt={course.title}
+          src={GridSvg}
+          alt={''}
           width={320}
           height={176}
-          className="w-full"
+          className="pointer-events-none absolute top-0 left-0 z-20 w-full"
+          quality={100}
         />
-        <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center">
+        <div className="pointer-events-none absolute top-0 left-0 z-30 flex h-full w-full items-center justify-center">
           {course.bage?.title && (
-            <span className="text-xxs bg-background/30 border-foreground/20 flex items-center justify-center gap-2 rounded-full border px-4 py-3 font-bold backdrop-blur-sm z-30">
-              {
-                course.bage?.img && (
-                  <Image
-                    src={course.bage.img}
-                    alt={course.bage?.title}
-                    width={16}
-                    height={16}
-                  />
-                )
-              }
+            <span className="text-xxs bg-background/30 border-foreground/20 flex items-center justify-center gap-2 rounded-full border px-4 py-3 font-bold backdrop-blur-sm">
+              {course.bage?.img && (
+                <Image
+                  src={course.bage.img}
+                  alt={course.bage?.title}
+                  width={16}
+                  height={16}
+                />
+              )}
               <span className="mt-0.5">{course.bage?.title}</span>
             </span>
           )}
@@ -137,7 +160,7 @@ export function CourseCard({ course }: { course: ICourse }) {
         )}
       </div>
       {course.soon && (
-        <div className="bg-dark-bg absolute top-0 left-0 h-full w-full opacity-50 z-30"></div>
+        <div className="bg-dark-bg absolute top-0 left-0 z-30 h-full w-full opacity-50"></div>
       )}
     </div>
   );
