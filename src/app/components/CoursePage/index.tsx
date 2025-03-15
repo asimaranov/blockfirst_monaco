@@ -116,7 +116,7 @@ export default function CoursePage({
                             <div className="flex items-center gap-3">
                               <span className="">{tariff.name}</span>
                               {!!tariff.sale && (
-                                  <span className="text-xs bg-error rounded-full px-1.5 py-1">
+                                  <span className="text-xs bg-error rounded-full px-1 py-2">
                                     Sale {tariff.sale}%
                                   </span>
                               )}
