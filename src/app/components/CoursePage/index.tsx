@@ -33,6 +33,47 @@ const Tariffs = [
   },
 ];
 
+const courseStructure = [
+  {
+    id: 1,
+    title: 'Мир токенов',
+    status: 'available',
+    lessons: [
+      'Видеолекция – Введение в solidity',
+      'Путешествие начинается – типы данных в первой лексеме',
+      'Отображение и адреса – типы данных и работу с ними в первой лексеме',
+      'Утверждения и видимость – изучаем вложенные отображения, утверждения',
+      'События – узнайте, зачем контрактам нужны события',
+      'Десятичные числа – узнайте, как работать с плавающими точками',
+      'Изучите openzeppelin, Erc20',
+    ],
+  },
+  {
+    id: 2,
+    title: 'Основы блокчейна и стэйкинг',
+    status: 'starter',
+    lessons: [
+      'Лекция как работает блокчейн – txs, ноды, консенсус, mempool',
+      'Практика работы со стакинг–контрактами – учимся работать со временем',
+      'Практика работы со стабконтрактами – изучить кросс–контрактный вызов',
+      'Практика стабконтракта – изучаем openzeppelin',
+      'Практика заключения контрактов – изучить получение, оплату в ethereum',
+      'Практика заключения контрактов – изучить получение ethereum, тестирование',
+      'Практика ставочных контрактов – uniswap lp token & liquidity staking',
+    ],
+  },
+  {
+    id: 3,
+    title: 'Основы блокчейна и мультисиг',
+    status: 'starter',
+  },
+  {
+    id: 4,
+    title: 'Основы блокчейна и NFT',
+    status: 'starter',
+  },
+];
+
 export default function CoursePage({
   session,
   courseId,
@@ -50,7 +91,7 @@ export default function CoursePage({
       />
       <div className="grid grid-cols-2">
         <CourseInfoTopCard course={course} />
-        <div className="border-accent flex flex-col gap-10 border-l">
+        <div className="border-accent flex flex-col border-l">
           {/* Top section with Starter and Pro blocks */}
           <div className="border-accent flex flex-row border-b">
             {Tariffs.map((tariff) => (
@@ -138,6 +179,7 @@ export default function CoursePage({
               </div>
             ))}
           </div>
+          <div className="h-9.5 w-full"></div>
 
           {/* Bottom section with stats */}
           <div className="border-accent flex flex-row border-t border-b">
@@ -224,6 +266,54 @@ export default function CoursePage({
                 <span className="text-secondary text-xs">Лекций в курсе</span>
               </div>
             </div>
+          </div>
+          <div className="text-secondary/50 border-accent border-b px-8 py-4 text-xs uppercase">
+            Структура курса
+          </div>
+          <div className="flex flex-col">
+            {courseStructure.map((section, index) => (
+              <div key={section.id} className="flex flex-col ">
+                <div className="flex items-center justify-between bg-[#14171C] px-8 py-3 cursor-pointer">
+                  <div className="flex items-center gap-4">
+                    <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#01050D]">
+                      <span className="text-xs text-gray-100">
+                        {section.id}
+                      </span>
+                    </div>
+                    <span className="text-base">{section.title}</span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <div
+                      className={`h-1 w-1 rounded-full ${section.status === 'available' ? 'bg-[#33CF89]' : 'bg-[#FF2052]'}`}
+                    />
+                    <span
+                      className={`text-xs ${
+                        section.status === 'available'
+                          ? 'text-[#33CF89]'
+                          : 'bg-gradient-to-r from-[#FF20A2] to-[#FF2020] bg-clip-text text-transparent'
+                      }`}
+                    >
+                      {section.status === 'available' ? 'Available' : 'STARTER'}
+                    </span>
+                  </div>
+                </div>
+                {section.lessons && (
+                  <div className="flex flex-col gap-4 px-8 py-4">
+                    {section.lessons.map((lesson, lessonIndex) => (
+                      <div
+                        key={lessonIndex}
+                        className="flex items-center gap-1"
+                      >
+                        <div className="flex h-5 w-5 items-center justify-center">
+                          <div className="h-1 w-1 rounded-full bg-[#9AA6B5] opacity-50" />
+                        </div>
+                        <span className="text-sm text-gray-100">{lesson.split(' – ')[0]}<span className='text-secondary'> – {lesson.split(' – ')[1]}</span></span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </div>

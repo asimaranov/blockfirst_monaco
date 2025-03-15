@@ -17,7 +17,7 @@ export function Topbar({
     >
       <Link
         href={`/dashboard`}
-       className="flex flex-row items-center justify-center gap-2 rounded-[100px] bg-[#01050D] text-sm">
+       className="flex flex-row items-center justify-center gap-2 text-sm">
         <svg
           width="24"
           height="24"
