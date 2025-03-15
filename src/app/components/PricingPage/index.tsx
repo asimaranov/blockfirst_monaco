@@ -41,7 +41,7 @@ const InfoIcon = () => (
     viewBox="0 0 16 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="text-[#9AA5B5] group-hover:text-[#F2F2F2] transition ease-in-out duration-300 delay-100"
+    className="text-secondary transition delay-100 duration-300 ease-in-out group-hover:text-[#F2F2F2]"
   >
     <circle cx="8" cy="8" r="6.66667" stroke="currentColor" />
     <path d="M8 7.33333V10.6667" stroke="currentColor" />
@@ -103,7 +103,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
             </div>
             <div className="flex flex-col items-center gap-3 text-center">
               <h3 className="text-2xll">{tariff.name}</h3>
-              <p className="text-xs text-[#9AA5B5]">{tariff.description}</p>
+              <p className="text-secondary text-xs">{tariff.description}</p>
             </div>
           </div>
         </div>
@@ -111,16 +111,16 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
 
       <div className="flex flex-col">
         <div className="flex items-center justify-between px-8 py-4">
-          <span className="text-xs text-[#9AA5B5] uppercase">
+          <span className="text-secondary text-xs uppercase opacity-50">
             Что включено?
           </span>
           {tariff.price && (
             <div className="group cursor-pointer">
               <InfoIcon />
               <div className="relative">
-                <div className="absolute top-4 -right-8 invisible opacity-0 w-112 bg-[#1D2026] flex group-hover:visible group-hover:opacity-100 transition-discrete ease-in-out transition-all duration-300 delay-100 flex-col gap-3 p-6">
-                  <div className='text-sm'>Структура курса заблокирована?</div>
-                  <div className='text-xs text-secondary'>
+                <div className="invisible absolute top-4 -right-8 flex w-112 flex-col gap-3 bg-[#1D2026] p-6 opacity-0 transition-all transition-discrete delay-100 duration-300 ease-in-out group-hover:visible group-hover:opacity-100">
+                  <div className="text-sm">Структура курса заблокирована?</div>
+                  <div className="text-secondary text-xs">
                     Доступ к курсам по платному тарифу сохраняется на 6 месяцев.
                     Вы сможете просматривать пройденные курсы, но функции
                     проверок, AI и другие будут отключены.
@@ -166,7 +166,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
                 <span className="text-base">/мес</span>
               </span>
               {tariff.price.installments && (
-                <span className="text-xs text-[#9AA5B5]">
+                <span className="text-secondary text-xs">
                   Рассрочка {tariff.price.installments} месяцев
                 </span>
               )}
@@ -227,7 +227,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
               </button>
             </div>
           </div>
-          <div className="mt-auto flex h-8 items-center justify-center gap-1 bg-[#14171C] text-xs text-[#9AA5B5]">
+          <div className="text-secondary mt-auto flex h-8 items-center justify-center gap-1 bg-[#14171C] text-xs">
             Весь курс{' '}
             <span className="text-foreground">₽{tariff.price.total}</span>
           </div>
@@ -242,7 +242,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
               <span className="text-sm text-[#33CF8E]">Активный тариф</span>
             </div>
           </div>
-          <div className="mt-auto flex h-8 items-center justify-center gap-1 bg-[#14171C] text-xs text-[#9AA5B5]">
+          <div className="text-secondary mt-auto flex h-8 items-center justify-center gap-1 bg-[#14171C] text-xs">
             Стартовый тариф
           </div>
         </div>
