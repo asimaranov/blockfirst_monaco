@@ -8,12 +8,12 @@ export function Topbar() {
   return (
     <nav
       className={cn(
-        'grid w-full grid-cols-3 divide-x divide-[#282D33] border-b border-[#282D33]'
+        'grid w-full grid-cols-3 border-b border-[#282D33]'
       )}
     >
       <Link
         href={`/dashboard`}
-        className="flex flex-row items-center gap-2 text-xl py-6"
+        className="flex flex-row items-center gap-2 text-xl py-6 border-r border-accent"
       >
         <div className="pl-8">Тарифы BlockFirst</div>
       </Link>
