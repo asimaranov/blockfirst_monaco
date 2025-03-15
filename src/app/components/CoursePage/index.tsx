@@ -123,7 +123,7 @@ export default function CoursePage({
                                 </div>
                               )}
                             </div>
-                            <div className="text-secondary text-sm">
+                            <div className="text-secondary text-xs">
                               Платный тариф
                             </div>
                           </div>
