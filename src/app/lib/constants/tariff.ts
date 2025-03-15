@@ -54,7 +54,7 @@ export const TARIFFS: Tariff[] = [
     name: 'Pro',
     description:
       'Получи максимум от прохождения курсов. Менторы, консультации, комьюнити и многое другое.',
-    bigIcon: '/pricing/big_icon/free.png',
+    bigIcon: '/pricing/big_icon/pro.png',
     features: [
       { text: 'Все что включает Starter тариф', bg: true },
       { text: 'Персональный ai ментор' },
