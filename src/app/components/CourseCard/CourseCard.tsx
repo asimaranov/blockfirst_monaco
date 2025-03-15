@@ -32,7 +32,7 @@ export function CourseCard({ course }: { course: ICourse }) {
         />
         <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center">
           {course.info?.labelTitle && (
-            <span className="text-xxs bg-background/30 border-foreground/20 flex items-center justify-center gap-1 rounded-full border px-4 py-3 font-bold backdrop-blur-sm z-30">
+            <span className="text-xxs bg-background/30 border-foreground/20 flex items-center justify-center gap-2 rounded-full border px-4 py-3 font-bold backdrop-blur-sm z-30">
                 <Image
                   src={course.info.labelImg}
                   alt={course.info.labelTitle}
