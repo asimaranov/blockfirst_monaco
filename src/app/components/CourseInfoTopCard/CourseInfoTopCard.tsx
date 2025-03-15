@@ -17,7 +17,7 @@ export default function CourseInfoTopCard({ course }: { course: ICourse }) {
   const t = useTranslations('UserSpace');
 
   return (
-    <section className="border-accent relative flex flex-col gap-10">
+    <section className="border-accent flex flex-col gap-10 sticky top-0 self-start">
       <div className="bg-background relative z-0">
         <Image
           src={GridSvg}
