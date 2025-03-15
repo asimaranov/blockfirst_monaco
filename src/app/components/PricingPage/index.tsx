@@ -82,7 +82,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
 
   return (
     <div className="flex flex-col">
-      <div className="bg-[#010514] p-8">
+      <div className="bg-[#01050D] p-8">
         <div className="relative">
           {tariff.sale && (
             <div className="absolute top-0 right-0">
@@ -115,8 +115,18 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
             Что включено?
           </span>
           {tariff.price && (
-            <div className="cursor-pointer">
+            <div className="group cursor-pointer">
               <InfoIcon />
+              <div className="relative">
+                <div className="absolute top-4 -right-8 invisible opacity-0 w-112 bg-[#1D2026] flex group-hover:visible group-hover:opacity-100 transition-discrete ease-in-out transition-all duration-300 delay-100 flex-col gap-3 p-6">
+                  <div className='text-sm'>Структура курса заблокирована?</div>
+                  <div className='text-xs text-secondary'>
+                    Доступ к курсам по платному тарифу сохраняется на 6 месяцев.
+                    Вы сможете просматривать пройденные курсы, но функции
+                    проверок, AI и другие будут отключены.
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </div>
@@ -164,9 +174,10 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
             <div className="flex items-center gap-2">
               <button
                 className={cn(
-                  ' flex  items-center rounded-full border border-[#1959F4] bg-[#1959F4] px-11 py-3 duration-300',
-                  isLoading ? 'border-[#1242B2] bg-[#1242B2]' : 'hover:bg-dark-bg cursor-pointer'
-                  
+                  'flex items-center rounded-full border border-[#1959F4] bg-[#1959F4] px-11 py-3 duration-300',
+                  isLoading
+                    ? 'border-[#1242B2] bg-[#1242B2]'
+                    : 'hover:bg-dark-bg cursor-pointer'
                 )}
                 disabled={isLoading}
                 onClick={async () => {
@@ -196,10 +207,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
                     viewBox="0 0 20 20"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    className={cn(
-                      'ml-2',
-                      isLoading && 'animate-spin'
-                    )}
+                    className={cn('ml-2', isLoading && 'animate-spin')}
                   >
                     <path
                       opacity="0.4"
@@ -219,7 +227,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
               </button>
             </div>
           </div>
-          <div className="mt-auto flex h-8 items-center justify-center gap-1 bg-[#14171C] text-sm text-[#9AA5B5]">
+          <div className="mt-auto flex h-8 items-center justify-center gap-1 bg-[#14171C] text-xs text-[#9AA5B5]">
             Весь курс{' '}
             <span className="text-foreground">₽{tariff.price.total}</span>
           </div>
@@ -234,7 +242,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
               <span className="text-sm text-[#33CF8E]">Активный тариф</span>
             </div>
           </div>
-          <div className="mt-auto flex h-8 items-center justify-center gap-1 bg-[#14171C] text-sm text-[#9AA5B5]">
+          <div className="mt-auto flex h-8 items-center justify-center gap-1 bg-[#14171C] text-xs text-[#9AA5B5]">
             Стартовый тариф
           </div>
         </div>

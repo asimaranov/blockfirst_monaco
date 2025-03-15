@@ -98,14 +98,14 @@ export default function CoursePage({
               <div className="flex-1 border-r border-[#282D33]">
                 <div className="flex flex-col">
                   {/* Dark header */}
-                  <div className="relative h-[81px] bg-[#010514]">
+                  <div className="relative h-[81px] bg-[#01050D]">
                     <div className="pointer-events-none absolute inset-0 opacity-50 mix-blend-soft-light">
                       <div className="bg-gradient-radial h-full w-full from-gray-100 to-transparent" />
                     </div>
                     <div className="px-8 py-5">
                       <div className="flex flex-row items-center justify-between">
                         <div className="flex flex-row items-center gap-4">
-                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#010514]">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#01050D]">
                             <Image
                               src={tariff.badgeSvg}
                               alt=""
