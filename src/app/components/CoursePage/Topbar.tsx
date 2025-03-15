@@ -15,7 +15,9 @@ export function Topbar({
         'flex w-full flex-row items-center justify-between border-b border-[#282D33] px-8 py-6'
       )}
     >
-      <div className="flex cursor-pointer flex-row items-center justify-center gap-2 rounded-[100px] bg-[#01050D] text-sm">
+      <Link
+        href={`/dashboard`}
+       className="flex flex-row items-center justify-center gap-2 rounded-[100px] bg-[#01050D] text-sm">
         <svg
           width="24"
           height="24"
@@ -31,7 +33,7 @@ export function Topbar({
           />
         </svg>
         Подробности курса
-      </div>
+      </Link>
       <div className="flex flex-col gap-2">
         <div className="flex flex-row items-center justify-end gap-2 text-sm">
           <Image

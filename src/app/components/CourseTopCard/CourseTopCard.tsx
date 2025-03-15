@@ -99,7 +99,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
             </div>
           </Link>
           <Link
-            href={`#`}
+            href={`/dashboard/${course.id}`}
             className="hover:border-secondary flex h-full w-full flex-col items-center justify-center rounded-full border border-transparent duration-300"
           >
             <div className="flex flex-row items-center gap-1">
