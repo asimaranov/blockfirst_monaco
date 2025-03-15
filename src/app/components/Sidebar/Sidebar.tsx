@@ -183,7 +183,7 @@ export default function Sidebar() {
                 key={item.title}
                 title={item.title}
                 href={item.href}
-                isCurrentPage={pathname === item.href}
+                isCurrentPage={pathname.startsWith(item.href)}
                 locked={item.locked}
                 notificationCount={item.notificationCount}
               >
