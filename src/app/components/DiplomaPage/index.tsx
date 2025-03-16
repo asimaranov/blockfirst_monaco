@@ -12,10 +12,10 @@ import { useTranslations } from 'next-intl';
 
 const competencies = [
   'Изучите блокчейны Ethereum, BSC, Polygon и библиотеки',
-  'Освойте написание смарт-контрактов на Solidity: стейкинг, фарминг, токены, NFT-маркетплейс, DAO, кроссчейн-бриджи и IDO-платформы',
-  'Разрабатывать архитектуру децентрализованных приложений с нуля',
   'Освоите базовые принципы работы протоколов и паттернов в Web3',
+  'Написание смарт-контрактов на Solidity: стейкинг, фарминг, токены, NFT-маркетплейс, DAO, кроссчейн-бриджи и IDO-платформы',
   'Писать чистый код, покрывать функциональность тестами',
+  'Разрабатывать архитектуру децентрализованных приложений с нуля',
   'Поймете разницу версий Solidity',
 ];
 
@@ -74,7 +74,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
                   </div>
 
                   {/* Competencies Grid */}
-                  <div className="bg-dark-bg mb-8 grid grid-cols-2 gap-x-16 gap-y-8 p-8">
+                  <div className="bg-dark-bg mb-8 grid grid-cols-2 gap-x-16 gap-y-5 p-8">
                     {competencies.map((competency, index) => (
                       <div key={index} className="flex items-start gap-4">
                         <div className="h-5 w-5">
