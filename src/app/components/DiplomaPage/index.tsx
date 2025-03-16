@@ -95,7 +95,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
                           </svg>
                         </div>
 
-                        <span className="text-foreground text-xs">
+                        <span className="text-foreground text-sm">
                           {competency}
                         </span>
                       </div>
