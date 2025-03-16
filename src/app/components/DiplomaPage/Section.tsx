@@ -20,7 +20,7 @@ export function Section({
 }: SectionProps) {
   return (
     <div className="border-accent flex w-full flex-col border-b">
-      <div className="flex items-center justify-between px-8 py-5 border-b border-accent">
+      <div className="border-accent flex cursor-pointer items-center justify-between border-b px-8 py-5" onClick={onToggle}>
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-3">
             <h1 className="text-foreground text-xl">{title}</h1>
@@ -43,8 +43,7 @@ export function Section({
         </div>
         <button
           className={cn(
-            'group flex h-10 w-10 items-center justify-center rounded-full transition-colors',
-            isExpanded ? 'bg-accent' : 'hover:bg-accent'
+            'group flex h-10 w-10 items-center justify-center cursor-pointer',
           )}
           onClick={onToggle}
         >
@@ -56,16 +55,31 @@ export function Section({
             xmlns="http://www.w3.org/2000/svg"
             className={cn(
               'transition-transform duration-300',
-              isExpanded
-                ? 'text-foreground rotate-180'
-                : 'group-hover:text-foreground'
+              isExpanded ? 'text-foreground' : 'group-hover:text-foreground'
             )}
           >
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M14.7803 7.21967C15.0732 7.51256 15.0732 7.98744 14.7803 8.28033L10.5303 12.5303C10.2374 12.8232 9.76256 12.8232 9.46967 12.5303L5.21967 8.28033C4.92678 7.98744 4.92678 7.51256 5.21967 7.21967C5.51256 6.92678 5.98744 6.92678 6.28033 7.21967L10 10.9393L13.7197 7.21967C14.0126 6.92678 14.4874 6.92678 14.7803 7.21967Z"
-              fill="currentColor"
+            <line
+              x1="5"
+              y1="10"
+              x2="15"
+              y2="10"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              className="transition-transform duration-300"
+            />
+            <line
+              x1="10"
+              y1="5"
+              x2="10"
+              y2="15"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              className={cn(
+                'origin-center transition-transform duration-300',
+                isExpanded ? 'scale-0' : 'scale-100'
+              )}
             />
           </svg>
         </button>

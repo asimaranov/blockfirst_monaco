@@ -92,7 +92,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
 
               {/* Course List */}
               <div className="bg-dark-bg relative">
-                <div className="border-accent grid grid-cols-[24px_1fr_114px_150px] items-center gap-x-10 border-b bg-[#14171C] px-8 py-3">
+                <div className="border-accent grid grid-cols-[24px_1fr_114px_150px] items-center gap-x-10  bg-[#14171C] px-8 py-2.75">
                   <span className="text-secondary text-xs opacity-50">#</span>
                   <span className="text-secondary text-xs uppercase opacity-50">
                     Название курса
@@ -124,7 +124,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
                     {COURSES.map((course, index) => (
                       <div
                         key={course.id}
-                        className="grid grid-cols-[24px_1fr_114px_150px] items-center gap-x-10 py-6 first:pt-8 last:pb-8"
+                        className="grid grid-cols-[24px_1fr_114px_150px] items-center gap-x-5 py-3 first:pt-7 last:pb-8"
                       >
                         <div className="flex h-6 w-6 items-center justify-center">
                           <span className="text-secondary text-sm">
@@ -146,14 +146,14 @@ export default function DiplomaPage({ session }: { session: Session }) {
                             </span>
                             {(course.info?.lessonsCount || 0) > 0 ? (
                               <div className="flex items-center gap-3 text-xs">
-                                <span className="text-secondary">
+                                <span className="text-secondary text-xxs uppercase">
                                   {course.info?.lessonsCount || 0}{' '}
                                   {t('lesson', {
                                     count: course.info?.lessonsCount || 0,
                                   })}
                                 </span>
                                 <div className="bg-secondary/20 h-0.5 w-0.5 rounded-full" />
-                                <span className="text-secondary">
+                                <span className="text-secondary text-xxs uppercase">
                                   {course.info?.duration || 0}{' '}
                                   {t('month', {
                                     count: course.info?.duration || 0,
@@ -171,8 +171,8 @@ export default function DiplomaPage({ session }: { session: Session }) {
                         </div>
 
                         <span className="text-foreground text-sm">
-                          {userProgress[course.id]}/
-                          {course.info?.lessonsCount || 0}
+                          {userProgress[course.id]}
+                          <span className='text-secondary text-xs'>/{course.info?.lessonsCount || 0}</span>
                         </span>
 
                         <div className="relative">
