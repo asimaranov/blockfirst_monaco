@@ -15,16 +15,16 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
       {isOpen && (
         <>
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            exit={{ opacity: 1 }}
             onClick={onClose}
             className="fixed inset-0 z-50 bg-black/50"
           />
           <motion.div
-            initial={{ opacity: 0, x: '100%' }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: '100%' }}
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
             transition={{ type: 'tween', duration: 0.3 }}
             className="fixed top-0 right-0 z-50 h-screen"
           >
