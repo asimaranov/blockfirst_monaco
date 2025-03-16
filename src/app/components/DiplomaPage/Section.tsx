@@ -20,17 +20,17 @@ export function Section({
 }: SectionProps) {
   return (
     <div className="border-accent flex w-full flex-col border-b">
-      <div className="flex items-center justify-between px-8 py-5">
+      <div className="flex items-center justify-between px-8 py-5 border-b border-accent">
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-3">
-            <h1 className="text-foreground text-2xl">{title}</h1>
+            <h1 className="text-foreground text-xl">{title}</h1>
             {status === 'coming_soon' && (
               <div className="border-accent/50 rounded-full border bg-gradient-to-r from-[#F54F19] to-[#F4195A] bg-clip-text px-3 py-1 text-xs text-transparent">
                 Coming Soon
               </div>
             )}
           </div>
-          <div className="text-secondary flex items-center gap-2 text-sm">
+          <div className="text-secondary flex items-center gap-2 text-xs opacity-50">
             {tags.map((tag, index) => (
               <>
                 {index > 0 && (

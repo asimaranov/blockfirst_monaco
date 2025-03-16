@@ -46,14 +46,12 @@ export default function DiplomaPage({ session }: { session: Session }) {
           <div className="flex flex-row">
             <div className="flex flex-col">
               {/* NFT Diploma Section */}
-              <div className="bg-background flex items-start gap-5 p-6">
-                <div className="bg-background h-[61px] w-[61px] overflow-hidden rounded-lg">
+              <div className="bg-background flex items-start gap-5 px-8 py-6">
                   <Image
                     src={DiplomaIcon}
                     alt="NFT Diploma"
-                    className="h-full w-full object-cover"
+                    className="w-15 object-cover"
                   />
-                </div>
                 <div className="flex flex-col gap-2">
                   <h2 className="text-foreground text-2xll">NFT диплом</h2>
                   <p className="text-secondary text-xs">
@@ -64,7 +62,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
               </div>
 
               {/* Competencies Grid */}
-              <div className="bg-dark-bg mb-8 grid grid-cols-2 gap-x-16 gap-y-5 p-8">
+              <div className="bg-dark-bg grid grid-cols-2 gap-x-16 gap-y-5 p-8">
                 {competencies.map((competency, index) => (
                   <div key={index} className="flex items-start gap-4">
                     <div className="h-5 w-5">
@@ -95,15 +93,15 @@ export default function DiplomaPage({ session }: { session: Session }) {
               {/* Course List */}
               <div className="bg-dark-bg relative">
                 <div className="border-accent grid grid-cols-[24px_1fr_114px_150px] items-center gap-x-10 border-b bg-[#14171C] px-8 py-3">
-                  <span className="text-secondary text-xs">#</span>
-                  <span className="text-secondary text-xs uppercase">
+                  <span className="text-secondary text-xs opacity-50">#</span>
+                  <span className="text-secondary text-xs uppercase opacity-50">
                     Название курса
                   </span>
-                  <span className="text-secondary text-xs uppercase">
+                  <span className="text-secondary text-xs uppercase opacity-50">
                     Уроки
                   </span>
                   <div className="text-secondary flex items-center justify-between text-xs uppercase">
-                    <span>Прогресс</span>
+                    <span className='opacity-50'>Прогресс</span>
                     <svg
                       width="16"
                       height="16"
@@ -121,81 +119,83 @@ export default function DiplomaPage({ session }: { session: Session }) {
                   </div>
                 </div>
 
-                <div className="flex flex-col px-8">
-                  {COURSES.slice(0, 3).map((course, index) => (
-                    <div
-                      key={course.id}
-                      className="grid grid-cols-[24px_1fr_114px_150px] items-center gap-x-10 py-6 first:pt-8 last:pb-8"
-                    >
-                      <div className="flex h-6 w-6 items-center justify-center">
-                        <span className="text-secondary text-sm">
-                          {index + 1}.
-                        </span>
-                      </div>
-
-                      <div className="flex items-center gap-5">
-                        <div className="h-10 w-10 overflow-hidden rounded-lg bg-[#01050D]">
-                          <img
-                            src={course.smallImg}
-                            alt={course.title}
-                            className="h-full w-full object-cover mix-blend-lighten"
-                          />
-                        </div>
-                        <div className="flex flex-col gap-3">
-                          <span className="text-foreground text-sm">
-                            {course.title}
+                <div className="max-h-76.5 overflow-y-auto">
+                  <div className="flex flex-col px-8">
+                    {COURSES.map((course, index) => (
+                      <div
+                        key={course.id}
+                        className="grid grid-cols-[24px_1fr_114px_150px] items-center gap-x-10 py-6 first:pt-8 last:pb-8"
+                      >
+                        <div className="flex h-6 w-6 items-center justify-center">
+                          <span className="text-secondary text-sm">
+                            {index + 1}.
                           </span>
-                          {(course.info?.lessonsCount || 0) > 0 ? (
-                            <div className="flex items-center gap-3 text-xs">
-                              <span className="text-secondary">
-                                {course.info?.lessonsCount || 0}{' '}
-                                {t('lesson', {
-                                  count: course.info?.lessonsCount || 0,
-                                })}
-                              </span>
-                              <div className="bg-secondary/20 h-0.5 w-0.5 rounded-full" />
-                              <span className="text-secondary">
-                                {course.info?.duration || 0}{' '}
-                                {t('month', {
-                                  count: course.info?.duration || 0,
-                                })}
-                              </span>
-                            </div>
-                          ) : (
-                            <div className="flex items-center gap-3 text-xs">
-                              <span className="text-secondary">—</span>
-                              <div className="bg-secondary/20 h-0.5 w-0.5 rounded-full" />
-                              <span className="text-secondary">—</span>
-                            </div>
+                        </div>
+
+                        <div className="flex items-center gap-5">
+                          <div className="h-10 w-10 overflow-hidden rounded-lg bg-[#01050D]">
+                            <img
+                              src={course.smallImg}
+                              alt={course.title}
+                              className="h-full w-full object-cover mix-blend-lighten"
+                            />
+                          </div>
+                          <div className="flex flex-col gap-3">
+                            <span className="text-foreground text-sm">
+                              {course.title}
+                            </span>
+                            {(course.info?.lessonsCount || 0) > 0 ? (
+                              <div className="flex items-center gap-3 text-xs">
+                                <span className="text-secondary">
+                                  {course.info?.lessonsCount || 0}{' '}
+                                  {t('lesson', {
+                                    count: course.info?.lessonsCount || 0,
+                                  })}
+                                </span>
+                                <div className="bg-secondary/20 h-0.5 w-0.5 rounded-full" />
+                                <span className="text-secondary">
+                                  {course.info?.duration || 0}{' '}
+                                  {t('month', {
+                                    count: course.info?.duration || 0,
+                                  })}
+                                </span>
+                              </div>
+                            ) : (
+                              <div className="flex items-center gap-3 text-xs">
+                                <span className="text-secondary">—</span>
+                                <div className="bg-secondary/20 h-0.5 w-0.5 rounded-full" />
+                                <span className="text-secondary">—</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        <span className="text-foreground text-sm">
+                          {userProgress[course.id]}/
+                          {course.info?.lessonsCount || 0}
+                        </span>
+
+                        <div className="relative">
+                          <div className="bg-accent h-2 w-full rounded-full">
+                            <div
+                              className="h-full rounded-full bg-gradient-to-r from-[#FFf93f] to-[#FF973f]"
+                              style={{
+                                width: `${((userProgress[course.id] || 0) / (course.info?.lessonsCount || 1)) * 100}%`,
+                              }}
+                            />
+                          </div>
+                          {(userProgress[course.id] || 0) > 0 && (
+                            <div
+                              className="absolute top-1/2 left-0 h-1 w-1 -translate-y-1/2 rounded-full bg-[#01050D]"
+                              style={{
+                                left: `${((userProgress[course.id] || 0) / (course.info?.lessonsCount || 1)) * 100}%`,
+                              }}
+                            />
                           )}
                         </div>
                       </div>
-
-                      <span className="text-foreground text-sm">
-                        {userProgress[course.id]}/
-                        {course.info?.lessonsCount || 0}
-                      </span>
-
-                      <div className="relative">
-                        <div className="bg-accent h-2 w-full rounded-full">
-                          <div
-                            className="h-full rounded-full bg-gradient-to-r from-[#FFf93f] to-[#FF973f]"
-                            style={{
-                              width: `${((userProgress[course.id] || 0) / (course.info?.lessonsCount || 1)) * 100}%`,
-                            }}
-                          />
-                        </div>
-                        {(userProgress[course.id] || 0) > 0 && (
-                          <div
-                            className="absolute top-1/2 left-0 h-1 w-1 -translate-y-1/2 rounded-full bg-[#01050D]"
-                            style={{
-                              left: `${((userProgress[course.id] || 0) / (course.info?.lessonsCount || 1)) * 100}%`,
-                            }}
-                          />
-                        )}
-                      </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
 
                 {/* Shadow overlay */}
