@@ -27,9 +27,9 @@ const CheckIcon = () => (
     <path
       d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
       stroke="#33CF8E"
-      stroke-width="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );
@@ -146,9 +146,9 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
               <path
                 d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
                 stroke={tariff.price ? '#195AF4' : '#9aa6b5'}
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
 

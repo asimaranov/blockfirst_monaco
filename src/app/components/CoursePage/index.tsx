@@ -89,7 +89,7 @@ export default function CoursePage({
         courseAuthor={course?.info?.author.name ?? ''}
         courseAuthorAvatar={course?.info?.author.image ?? ''}
       />
-      <div className="grid grid-cols-2 mb-9.5 border-accent border-b">
+      <div className="border-accent mb-9.5 grid grid-cols-2 border-b">
         <CourseInfoTopCard course={course} />
         <div className="border-accent flex flex-col border-l">
           {/* Top section with Starter and Pro blocks */}
@@ -116,9 +116,9 @@ export default function CoursePage({
                             <div className="flex items-center gap-3">
                               <span className="">{tariff.name}</span>
                               {!!tariff.sale && (
-                                  <span className="text-xs bg-error rounded-full px-2 py-1">
-                                    Sale {tariff.sale}%
-                                  </span>
+                                <span className="bg-error rounded-full px-2 py-1 text-xs">
+                                  Sale {tariff.sale}%
+                                </span>
                               )}
                             </div>
                             <div className="text-secondary text-xs">
@@ -161,9 +161,9 @@ export default function CoursePage({
                                   id="Vector"
                                   d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
                                   stroke="#195AF4"
-                                  stroke-width="1.5"
-                                  stroke-linecap="round"
-                                  stroke-linejoin="round"
+                                  strokeWidth="1.5"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
                                 />
                               </g>
                             </svg>
