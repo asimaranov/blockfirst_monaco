@@ -15,6 +15,7 @@ import Image from 'next/image';
 import { api } from '~/trpc/react';
 import { Tariff, TARIFFS } from '~/app/lib/constants/tariff';
 import { cn } from '~/helpers';
+import PaymentMethodsModal from './PaymentMethodsModal';
 
 const CheckIcon = () => (
   <svg
@@ -50,35 +51,8 @@ const InfoIcon = () => (
 );
 
 const TariffCard = ({ tariff }: { tariff: Tariff }) => {
-  const {
-    mutate: createPaymentLink,
-    isPending,
-    isError,
-    error,
-    data,
-  } = api.tinkoff.createPaymentLink.useMutation({
-    onSuccess: () => {
-      setIsLoading(false);
-    },
-    onError: () => {
-      setIsLoading(false);
-    },
-    onSettled: () => {
-      setIsLoading(false);
-    },
-    onMutate: () => {
-      setIsLoading(true);
-    },
-  });
-
-  useEffect(() => {
-    if (data) {
-      const newWindow = window.open(data, '_blank');
-      newWindow?.focus();
-    }
-  }, [data]);
-
   const [isLoading, setIsLoading] = useState(false);
+  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   return (
     <div className="flex flex-col">
@@ -180,10 +154,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
                     : 'hover:bg-dark-bg cursor-pointer'
                 )}
                 disabled={isLoading}
-                onClick={async () => {
-                  console.log('clicked');
-                  createPaymentLink({ tariff: tariff.name });
-                }}
+                onClick={() => setIsPaymentModalOpen(true)}
               >
                 Оплатить
                 {!isLoading ? (
@@ -212,13 +183,13 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
                     <path
                       opacity="0.4"
                       fillRule="evenodd"
-                      clip-rule="evenodd"
+                      clipRule="evenodd"
                       d="M9.25 3.33398C9.25 2.91977 9.58579 2.58398 10 2.58398C14.0961 2.58398 17.4167 5.90454 17.4167 10.0007C17.4167 10.4149 17.0809 10.7507 16.6667 10.7507C16.2525 10.7507 15.9167 10.4149 15.9167 10.0007C15.9167 6.73297 13.2677 4.08398 10 4.08398C9.58579 4.08398 9.25 3.7482 9.25 3.33398Z"
                       fill="#F2F2F2"
                     />
                     <path
                       fillRule="evenodd"
-                      clip-rule="evenodd"
+                      clipRule="evenodd"
                       d="M4.36269 6.36564C4.73362 6.54998 4.88489 7.00012 4.70055 7.37105C4.30737 8.16222 4.08594 9.0543 4.08594 10.0002C4.08594 13.2679 6.73492 15.9169 10.0026 15.9169C13.2703 15.9169 15.9193 13.2679 15.9193 10.0002C15.9193 9.58602 16.2551 9.25024 16.6693 9.25024C17.0835 9.25024 17.4193 9.58602 17.4193 10.0002C17.4193 14.0964 14.0987 17.4169 10.0026 17.4169C5.90649 17.4169 2.58594 14.0964 2.58594 10.0002C2.58594 8.81753 2.86333 7.69745 3.35728 6.7035C3.54162 6.33257 3.99176 6.1813 4.36269 6.36564Z"
                       fill="#F2F2F2"
                     />
@@ -247,6 +218,12 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
           </div>
         </div>
       )}
+
+      <PaymentMethodsModal
+        isOpen={isPaymentModalOpen}
+        onClose={() => setIsPaymentModalOpen(false)}
+        tariff={tariff}
+      />
     </div>
   );
 };
