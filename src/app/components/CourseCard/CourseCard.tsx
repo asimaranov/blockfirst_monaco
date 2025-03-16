@@ -153,7 +153,7 @@ export function CourseCard({ course }: { course: ICourse }) {
           </div>
         ) : (
           <button
-            className={`flex h-11 w-full items-center justify-center gap-2 rounded-full z-100 bg-background`}
+            className={`flex h-11 w-full items-center justify-center gap-2 rounded-full z-100 bg-background text-sm`}
           >
             🔥Скоро🔥
           </button>

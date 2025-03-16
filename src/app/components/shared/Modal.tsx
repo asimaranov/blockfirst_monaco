@@ -22,9 +22,10 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
             className="fixed inset-0 z-50 bg-black/50"
           />
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, x: '100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '100%' }}
+            transition={{ type: 'tween', duration: 0.3 }}
             className="fixed top-0 right-0 z-50 h-screen"
           >
             {children}

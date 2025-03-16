@@ -31,7 +31,7 @@ export function StudentForm({ onClose }: StudentFormProps) {
               <h2 className="text-foreground text-2xll">
                 Анкета для студентов
               </h2>
-              <p className="text-secondary text-sm">
+              <p className="text-secondary text-sm text-center">
                 Заполните анкету и напишите краткое мотивационное письмо. Мы
                 рассмотрим для вас персональные условия
               </p>
