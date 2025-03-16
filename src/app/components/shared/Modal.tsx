@@ -15,9 +15,10 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
       {isOpen && (
         <>
           <motion.div
-            initial={{ opacity: 1 }}
+            initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
             onClick={onClose}
             className="fixed inset-0 z-50 bg-black/50"
           />
