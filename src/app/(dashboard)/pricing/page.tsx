@@ -1,4 +1,4 @@
-import DiplomaPage from '../components/DiplomaPage';
+import PricingPage from '../../components/PricingPage';
 import { getServerSession } from '~/server/auth';
 import { redirect } from 'next/navigation';
 
@@ -9,5 +9,5 @@ export default async function Pricing() {
   //   redirect('/signin');
   // }
 
-  return <DiplomaPage session={{} as any} />;
+  return <PricingPage session={{} as any} />;
 }
