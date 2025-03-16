@@ -36,7 +36,7 @@ export function StudentForm({ onClose }: StudentFormProps) {
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
-              className="flex flex-1 flex-col items-center gap-10"
+              className="flex flex-1 flex-col items-center justify-center gap-10"
             >
               <div className="relative flex items-center justify-center">
                 <div className="h-[150px] w-[150px] rounded-full" />
