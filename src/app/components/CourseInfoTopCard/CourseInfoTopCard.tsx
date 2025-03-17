@@ -75,15 +75,15 @@ export default function CourseInfoTopCard({ course }: { course: ICourse }) {
           <div className="flex flex-row gap-2">
             <div className="flex items-center gap-1 rounded-lg border border-[#282C32] px-4 py-2">
               <Image src={VideoIcon} alt="" width={14} height={14} />
-              <span className="text-sm text-white">Видеолекции</span>
+              <span className="text-sm text-foreground">Видеолекции</span>
             </div>
             <div className="flex items-center gap-1 rounded-lg border border-[#282C32] px-4 py-2">
               <Image src={PracticeIcon} alt="" width={14} height={14} />
-              <span className="text-sm text-white">Практика</span>
+              <span className="text-sm text-foreground">Практика</span>
             </div>
             <div className="flex items-center gap-1 rounded-lg border border-[#282C32] px-4 py-2">
               <Image src={TheoryIcon} alt="" width={14} height={14} />
-              <span className="text-sm text-white">Теория</span>
+              <span className="text-sm text-foreground">Теория</span>
             </div>
           </div>
         </div>
@@ -124,7 +124,7 @@ export default function CourseInfoTopCard({ course }: { course: ICourse }) {
               </span>
 
               <Image src={ClockIcon} alt="" width={16} height={16} className='mr-1.5' />
-              <span className="text-sm text-white">10 дней</span>
+              <span className="text-sm text-foreground">10 дней</span>
             </div>
           </div>
         </div>

@@ -35,7 +35,7 @@ const VerificationEmailTemplate = ({ otp }: VerificationEmailTemplateProps) => {
             </Text>
             {/* <Section className="mb-[32px] mt-[32px] text-center">
               <Button
-                className="rounded-lg bg-[#000000] px-5 py-3 text-center text-xs font-semibold text-white no-underline"
+                className="rounded-lg bg-[#000000] px-5 py-3 text-center text-xs font-semibold text-foreground no-underline"
                 href={inviteLink}
               >
                 Verify Now

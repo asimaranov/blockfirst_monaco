@@ -74,7 +74,7 @@ const PaymentMethod = ({
         <div className="flex gap-4">
           <Image src={method.icon} alt={method.name} width={41} height={41} />
           <div className="flex flex-col gap-2">
-            <h4 className="text-white">{method.name}</h4>
+            <h4 className="text-foreground">{method.name}</h4>
             <p className="text-xs text-[#9AA6B5]">{method.description}</p>
           </div>
         </div>
@@ -86,7 +86,7 @@ const PaymentMethod = ({
         </div>
       </div>
       <div className="mt-5 flex items-center justify-between">
-        <span className="text-2xll text-white">
+        <span className="text-2xll text-foreground">
           {price}
           {method.type === 'installment' && (
             <span className="text-base">/мес</span>
@@ -94,7 +94,7 @@ const PaymentMethod = ({
         </span>
         <button
           className={cn(
-            'flex cursor-pointer items-center rounded-full border border-[#195AF4] px-6 py-2.5 text-sm text-white transition-colors hover:bg-[#195AF4]',
+            'flex cursor-pointer items-center rounded-full border border-[#195AF4] px-6 py-2.5 text-sm text-foreground transition-colors hover:bg-[#195AF4]',
             !isEnabled ? 'cursor-not-allowed opacity-50' : ''
           )}
           onClick={onPaymentClick}
@@ -210,7 +210,7 @@ const PaymentMethodsModal = ({
             <Image src={LogoSvg} alt="Logo" width={152} height={44} />
 
             <div className="flex flex-col items-center gap-4 pb-8 text-center">
-              <h3 className="text-2xll text-white">Выбор метода оплаты</h3>
+              <h3 className="text-2xll text-foreground">Выбор метода оплаты</h3>
               <p className="text-sm text-[#9AA6B5]">
                 Пожалуйста, выберите предпочтительный метод оплаты тарифа.
                 Доступны рассрочка, оплата через Т-банк и Tether
