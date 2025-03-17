@@ -207,15 +207,15 @@ export default function DiplomaPage({ session }: { session: Session }) {
               </div>
             </div>
             <div className="bg-background flex h-full w-full flex-col p-5">
-            <Diploma
-        name="Андрей Симаранов"
-        jobTitle="Smart Contract Engineer"
-        uniqueCode="0xa6193A2A141d8572480fA19312B96F721ec80a4D"
-        startDate="21.02.2025"
-        endDate="22.04.2025"
-        curatorName="Андрей Симаранов"
-        curatorTitle="Основатель BlockFirst"
-      />
+              <Diploma
+                name="Андрей Симаранов"
+                jobTitle="Smart Contract Engineer"
+                uniqueCode="0xa6193A2A141d8572480fA19312B96F721ec80a4D"
+                startDate="21.02.2025"
+                endDate="22.04.2025"
+                curatorName="Андрей Симаранов"
+                curatorTitle="Основатель BlockFirst"
+              />
             </div>
           </div>
         </Section>
@@ -236,7 +236,6 @@ export default function DiplomaPage({ session }: { session: Session }) {
       </div>
       <div className="border-accent h-9.5 border-t"></div>
       <Footer />
-      
     </main>
   );
 }

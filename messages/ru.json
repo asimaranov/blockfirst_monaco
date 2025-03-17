@@ -2,5 +2,8 @@
   "UserSpace": {
     "month": "{count, plural, zero {месяцев} one {месяц} few {месяца} other {месяцев}}",
     "lesson": "{count, plural, zero {уроков} one {урок} few {урока} other {уроков}}"
+  },
+  "EmploymentPage": {
+    "vacanciesCount": "{count, plural, zero {вакансий} one {вакансия} few {вакансии} other {вакансий}}"
   }
 }

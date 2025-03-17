@@ -93,7 +93,7 @@ const sidebarSections: SidebarSection[] = [
       },
       {
         title: 'Трудоустройство',
-        href: '#',
+        href: '/employment',
         icon: jobImg,
         iconHover: jobHoverImg,
         locked: true,
@@ -148,7 +148,7 @@ export default function Sidebar() {
           </Link>
           <div
             className={
-              'group cursor-pointer rounded-full border border-[#282D33] py-[0.58vw] pl-[0.64vw] pr-[0.52vw] hover:border-transparent hover:bg-[#F2F2F2]'
+              'group cursor-pointer rounded-full border border-[#282D33] py-[0.58vw] pr-[0.52vw] pl-[0.64vw] hover:border-transparent hover:bg-[#F2F2F2]'
             }
             onClick={async () => {
               try {
@@ -240,7 +240,7 @@ export default function Sidebar() {
           </svg>
           <span
             className={cn(
-              'ml-4 mr-8 text-nowrap text-center font-roboto text-[0.75vw] leading-4 text-secondary',
+              'font-roboto text-secondary mr-8 ml-4 text-center text-[0.75vw] leading-4 text-nowrap',
               user.subscriptionType !== SubscriptionType.Pro && 'opacity-60'
             )}
           >

@@ -8,12 +8,13 @@ import { CourseTopCard } from '~/app/components/CourseTopCard';
 import { CourseCard } from '~/app/components/CourseCard/CourseCard';
 import { Session } from '~/server/auth';
 import Footer from '~/app/components/Footer';
+
 export default function Dashboard({ session }: { session: Session }) {
   const lastUpdate = new Date(
     Math.min(
-      ...COURSES
-        .filter((x) => !x.soon)
-        .map((course) => new Date(course.info!.updatedAt).getTime())
+      ...COURSES.filter((x) => !x.soon).map((course) =>
+        new Date(course.info!.updatedAt).getTime()
+      )
     )
   ).toLocaleDateString('ru-RU');
 

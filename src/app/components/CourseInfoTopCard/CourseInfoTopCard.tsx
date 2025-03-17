@@ -1,11 +1,9 @@
 import Link from 'next/link';
 import { ICourse } from '~/app/lib/constants/courses';
 import Image from 'next/image';
-import medalImg from 'public/misc/medal.svg';
 import { AlumniCounter } from './AlumniCounter';
 import { RatingCounter } from './RatingCounter';
 import { CourseProgress } from './CourseProgress';
-import { Progress } from '../shared/Progress';
 import { useTranslations } from 'next-intl';
 import GridSvg from './assets/grid.svg';
 import TheoryIcon from './assets/TheoryIcon.svg';
@@ -17,7 +15,7 @@ export default function CourseInfoTopCard({ course }: { course: ICourse }) {
   const t = useTranslations('UserSpace');
 
   return (
-    <section className="border-accent flex flex-col gap-10 sticky top-0 self-start">
+    <section className="border-accent sticky top-0 flex flex-col gap-10 self-start">
       <div className="bg-background relative z-0">
         <Image
           src={GridSvg}
@@ -75,15 +73,15 @@ export default function CourseInfoTopCard({ course }: { course: ICourse }) {
           <div className="flex flex-row gap-2">
             <div className="flex items-center gap-1 rounded-lg border border-[#282C32] px-4 py-2">
               <Image src={VideoIcon} alt="" width={14} height={14} />
-              <span className="text-sm text-foreground">Видеолекции</span>
+              <span className="text-foreground text-sm">Видеолекции</span>
             </div>
             <div className="flex items-center gap-1 rounded-lg border border-[#282C32] px-4 py-2">
               <Image src={PracticeIcon} alt="" width={14} height={14} />
-              <span className="text-sm text-foreground">Практика</span>
+              <span className="text-foreground text-sm">Практика</span>
             </div>
             <div className="flex items-center gap-1 rounded-lg border border-[#282C32] px-4 py-2">
               <Image src={TheoryIcon} alt="" width={14} height={14} />
-              <span className="text-sm text-foreground">Теория</span>
+              <span className="text-foreground text-sm">Теория</span>
             </div>
           </div>
         </div>
@@ -115,16 +113,20 @@ export default function CourseInfoTopCard({ course }: { course: ICourse }) {
               </svg>
             </div>
           </Link>
-          <div
-            className="flex w-full flex-col items-center justify-center rounded-full"
-          >
+          <div className="flex w-full flex-col items-center justify-center rounded-full">
             <div className="flex flex-row items-center">
-              <span className="text-secondary text-sm opacity-50 mr-2.5">
+              <span className="text-secondary mr-2.5 text-sm opacity-50">
                 Обучаешься:{' '}
               </span>
 
-              <Image src={ClockIcon} alt="" width={16} height={16} className='mr-1.5' />
-              <span className="text-sm text-foreground">10 дней</span>
+              <Image
+                src={ClockIcon}
+                alt=""
+                width={16}
+                height={16}
+                className="mr-1.5"
+              />
+              <span className="text-foreground text-sm">10 дней</span>
             </div>
           </div>
         </div>
