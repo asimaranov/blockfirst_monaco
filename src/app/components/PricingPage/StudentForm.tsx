@@ -60,9 +60,9 @@ export function StudentForm({ onClose }: StudentFormProps) {
                     <path
                       d="M61 77.5L68.5 85L88.5 65"
                       stroke="#F2F2F2"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                   </svg>
                 </motion.div>

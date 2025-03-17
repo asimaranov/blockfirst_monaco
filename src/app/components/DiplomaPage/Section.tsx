@@ -19,8 +19,11 @@ export function Section({
   children,
 }: SectionProps) {
   return (
-    <div className="border-accent flex w-full flex-col border-b">
-      <div className="border-accent flex cursor-pointer items-center justify-between border-b px-8 py-5" onClick={onToggle}>
+    <div className="border-accent flex w-full flex-col border-b" key={title}>
+      <div
+        className="border-accent flex cursor-pointer items-center justify-between border-b px-8 py-5"
+        onClick={onToggle}
+      >
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-3">
             <h1 className="text-foreground text-xl">{title}</h1>
@@ -32,18 +35,20 @@ export function Section({
           </div>
           <div className="text-secondary flex items-center gap-2 text-xs opacity-50">
             {tags.map((tag, index) => (
-              <>
+              <div key={`div-${index}`}>
                 {index > 0 && (
-                  <div className="bg-secondary h-1 w-1 rounded-full opacity-50" />
+                  <div
+                    className="bg-secondary h-1 w-1 rounded-full opacity-50"
+                  />
                 )}
-                <span key={tag}>{tag}</span>
-              </>
+                <span>{tag}</span>
+              </div>
             ))}
           </div>
         </div>
         <button
           className={cn(
-            'group flex h-10 w-10 items-center justify-center cursor-pointer',
+            'group flex h-10 w-10 cursor-pointer items-center justify-center'
           )}
           onClick={onToggle}
         >
