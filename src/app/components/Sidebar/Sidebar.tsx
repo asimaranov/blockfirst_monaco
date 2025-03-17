@@ -42,6 +42,7 @@ interface SidebarSection {
 interface SidebarItem {
   title: string;
   href: string;
+  otherHref?: string;
   icon: string;
   iconHover: string;
   locked?: boolean;
@@ -58,6 +59,7 @@ const sidebarSections: SidebarSection[] = [
         href: '/dashboard',
         icon: courseImg,
         iconHover: courseHoverImg,
+        otherHref: '/course',
       },
       {
         title: 'Тариф',
@@ -183,7 +185,10 @@ export default function Sidebar() {
                 key={item.title}
                 title={item.title}
                 href={item.href}
-                isCurrentPage={pathname.startsWith(item.href)}
+                isCurrentPage={
+                  pathname.startsWith(item.href) ||
+                  (!!item.otherHref && pathname.startsWith(item.otherHref))
+                }
                 locked={item.locked}
                 notificationCount={item.notificationCount}
               >

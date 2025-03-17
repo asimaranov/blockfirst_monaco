@@ -22,7 +22,7 @@ export function Diploma({
   curatorTitle,
 }: DiplomaProps) {
   return (
-    <div className="bg-background flex h-full w-full flex-col p-5">
+    <div className="h-full">
       <div className="bg-dark-bg flex h-full w-full flex-col p-5">
         {/* Header with logo and unique code */}
         <div className="flex flex-row items-start gap-5">
@@ -56,7 +56,7 @@ export function Diploma({
         </div>
 
         {/* Stats */}
-        <div className="divide-accent border-accent mt-5 flex flex-row divide-x border ">
+        <div className="divide-accent border-accent mt-5 flex flex-row divide-x border">
           <div className="flex flex-1 flex-col items-center justify-center gap-1 px-8 py-3">
             <div className="flex flex-col items-center justify-center gap-1">
               <span className="text-foreground text-xl">100+</span>

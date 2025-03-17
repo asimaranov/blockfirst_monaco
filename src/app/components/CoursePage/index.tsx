@@ -95,7 +95,7 @@ export default function CoursePage({
           {/* Top section with Starter and Pro blocks */}
           <div className="border-accent flex flex-row border-b">
             {Tariffs.map((tariff) => (
-              <div className="flex-1 border-r border-[#282D33]">
+              <div className="flex-1 border-r border-[#282D33]" key={tariff.name}>
                 <div className="flex flex-col">
                   {/* Dark header */}
                   <div className="relative h-[81px] bg-[#01050D]">
@@ -146,7 +146,10 @@ export default function CoursePage({
                   {/* Features list */}
                   <div className="flex flex-col">
                     {tariff.features.map((feature) => (
-                      <div className="flex h-[44px] items-center px-8 odd:bg-[#14171C]">
+                      <div
+                        className="flex h-[44px] items-center px-8 odd:bg-[#14171C]"
+                        key={feature}
+                      >
                         <div className="flex items-center gap-3">
                           <div className="flex h-5 w-5 items-center justify-center rounded-full">
                             <svg
