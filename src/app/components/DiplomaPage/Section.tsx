@@ -97,7 +97,8 @@ export function Section({
               height: 'auto',
               transition: {
                 height: {
-                  duration: 0.3,
+                  duration: 0.5,
+                  ease: 'easeInOut',
                 },
               },
             }}
@@ -105,10 +106,8 @@ export function Section({
               height: 0,
               transition: {
                 height: {
-                  duration: 0.3,
-                },
-                opacity: {
-                  duration: 0.2,
+                  duration: 0.5,
+                  ease: 'easeInOut',
                 },
               },
             }}
