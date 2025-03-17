@@ -97,7 +97,7 @@ export function Section({
               height: 'auto',
               transition: {
                 height: {
-                  duration: 0.5,
+                  duration: 0.3,
                   ease: 'easeInOut',
                 },
               },
@@ -106,7 +106,7 @@ export function Section({
               height: 0,
               transition: {
                 height: {
-                  duration: 0.5,
+                  duration: 0.3,
                   ease: 'easeInOut',
                 },
               },
