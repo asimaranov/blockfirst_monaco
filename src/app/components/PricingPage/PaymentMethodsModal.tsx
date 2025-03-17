@@ -26,6 +26,7 @@ const paymentMethods = [
     currency: 'RUB',
     type: 'installment',
     bgColor: 'bg-[#195AF4]',
+    enabled: false,
   },
   {
     name: 'Т-Банк',
@@ -34,6 +35,7 @@ const paymentMethods = [
     currency: 'RUB',
     type: 't-bank',
     bgColor: 'bg-[#FFDE2A]',
+    enabled: true,
   },
   {
     name: 'Tether (TRC20)',
@@ -42,6 +44,7 @@ const paymentMethods = [
     currency: 'USDT',
     type: 'tether',
     bgColor: 'bg-[#26C7B6]',
+    enabled: false,
   },
 ];
 
@@ -50,6 +53,7 @@ interface PaymentMethodProps {
   price: string;
   onPaymentClick: () => void;
   isLoading?: boolean;
+  isEnabled: boolean;
 }
 
 const PaymentMethod = ({
@@ -57,6 +61,7 @@ const PaymentMethod = ({
   price,
   onPaymentClick,
   isLoading,
+  isEnabled,
 }: PaymentMethodProps) => {
   const isInstallment = method.type === 'installment';
   const statusColor = isInstallment
@@ -90,10 +95,10 @@ const PaymentMethod = ({
         <button
           className={cn(
             'flex cursor-pointer items-center rounded-full border border-[#195AF4] px-6 py-2.5 text-sm text-white transition-colors hover:bg-[#195AF4]',
-            isLoading ? 'cursor-not-allowed opacity-50' : ''
+            !isEnabled ? 'cursor-not-allowed opacity-50' : ''
           )}
           onClick={onPaymentClick}
-          disabled={isLoading}
+          disabled={isLoading || !isEnabled}
         >
           Оплатить
           {!isLoading ? (
@@ -106,17 +111,25 @@ const PaymentMethod = ({
             </svg>
           ) : (
             <svg
-              width="21"
+              width="20"
               height="20"
-              viewBox="0 0 21 20"
+              viewBox="0 0 20 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              className={cn('ml-2', isLoading && 'animate-spin')}
             >
+              <path
+                opacity="0.4"
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M9.25 3.33398C9.25 2.91977 9.58579 2.58398 10 2.58398C14.0961 2.58398 17.4167 5.90454 17.4167 10.0007C17.4167 10.4149 17.0809 10.7507 16.6667 10.7507C16.2525 10.7507 15.9167 10.4149 15.9167 10.0007C15.9167 6.73297 13.2677 4.08398 10 4.08398C9.58579 4.08398 9.25 3.7482 9.25 3.33398Z"
+                fill="#F2F2F2"
+              />
               <path
                 fillRule="evenodd"
                 clipRule="evenodd"
-                d="M14.2307 4.43254C14.5295 4.14571 15.0043 4.15545 15.2911 4.45429L19.9065 9.26303C20.185 9.55324 20.185 10.0115 19.9065 10.3017L15.2911 15.1104C15.0043 15.4093 14.5295 15.419 14.2307 15.1322C13.9318 14.8454 13.9221 14.3706 14.2089 14.0718L18.3258 9.78237L14.2089 5.49297C13.9221 5.19413 13.9318 4.71936 14.2307 4.43254Z"
-                fill="white"
+                d="M4.36269 6.36564C4.73362 6.54998 4.88489 7.00012 4.70055 7.37105C4.30737 8.16222 4.08594 9.0543 4.08594 10.0002C4.08594 13.2679 6.73492 15.9169 10.0026 15.9169C13.2703 15.9169 15.9193 13.2679 15.9193 10.0002C15.9193 9.58602 16.2551 9.25024 16.6693 9.25024C17.0835 9.25024 17.4193 9.58602 17.4193 10.0002C17.4193 14.0964 14.0987 17.4169 10.0026 17.4169C5.90649 17.4169 2.58594 14.0964 2.58594 10.0002C2.58594 8.81753 2.86333 7.69745 3.35728 6.7035C3.54162 6.33257 3.99176 6.1813 4.36269 6.36564Z"
+                fill="#F2F2F2"
               />
             </svg>
           )}
@@ -196,7 +209,7 @@ const PaymentMethodsModal = ({
           <div className="flex flex-col items-center gap-8 px-10 pt-8">
             <Image src={LogoSvg} alt="Logo" width={152} height={44} />
 
-            <div className="flex flex-col items-center gap-4 text-center pb-8">
+            <div className="flex flex-col items-center gap-4 pb-8 text-center">
               <h3 className="text-2xll text-white">Выбор метода оплаты</h3>
               <p className="text-sm text-[#9AA6B5]">
                 Пожалуйста, выберите предпочтительный метод оплаты тарифа.
@@ -218,6 +231,7 @@ const PaymentMethodsModal = ({
                 price={getPrice(method)}
                 onPaymentClick={() => handlePayment(method.type)}
                 isLoading={isLoading && method.type === 't-bank'}
+                isEnabled={method.enabled}
               />
             ))}
           </div>
@@ -232,8 +246,8 @@ const PaymentMethodsModal = ({
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M7.4974 1.60352C4.51736 1.60352 2.10156 4.01931 2.10156 6.99935C2.10156 9.97939 4.51736 12.3952 7.4974 12.3952C10.4774 12.3952 12.8932 9.97939 12.8932 6.99935C12.8932 4.01931 10.4774 1.60352 7.4974 1.60352ZM1.22656 6.99935C1.22656 3.53606 4.03411 0.728516 7.4974 0.728516C10.9607 0.728516 13.7682 3.53606 13.7682 6.99935C13.7682 10.4626 10.9607 13.2702 7.4974 13.2702C4.03411 13.2702 1.22656 10.4626 1.22656 6.99935ZM7.4974 5.97852C7.73902 5.97852 7.9349 6.17439 7.9349 6.41602V9.33268C7.9349 9.57431 7.73902 9.77018 7.4974 9.77018C7.25577 9.77018 7.0599 9.57431 7.0599 9.33268V6.41602C7.0599 6.17439 7.25577 5.97852 7.4974 5.97852ZM7.4974 5.24935C7.81956 5.24935 8.08073 4.98818 8.08073 4.66602C8.08073 4.34385 7.81956 4.08268 7.4974 4.08268C7.17523 4.08268 6.91406 4.34385 6.91406 4.66602C6.91406 4.98818 7.17523 5.24935 7.4974 5.24935Z"
                 fill="#9AA6B5"
               />
