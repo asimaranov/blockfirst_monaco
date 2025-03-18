@@ -95,7 +95,7 @@ const sidebarSections: SidebarSection[] = [
       },
       {
         title: 'Трудоустройство',
-        href: '#',
+        href: '/employment',
         icon: jobImg,
         iconHover: jobHoverImg,
         locked: true,

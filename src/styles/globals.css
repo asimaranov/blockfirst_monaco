@@ -34,11 +34,13 @@
   --color-secondary: #9aa6b5;
   --color-accent: #282d33;
   --color-success: #48cc9e;
-  --color-error: #CF3336;
+  --color-error: #cf3336;
   --color-dark-bg: #0f1217;
 
-  --font-roboto: var(--roboto); 
+  --font-roboto: var(--roboto);
+  --font-roboto: var(--roboto);
 
+  --font-roboto: var(--roboto);
 }
 
 @layer theme {
