@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { cn } from '~/helpers';
 import { api } from '~/trpc/react';
 import LogoSvg from './assets/logo.svg';
+import { formatPrice } from '~/app/lib/utils';
 
 interface PaymentMethodsModalProps {
   isOpen: boolean;
@@ -189,11 +190,11 @@ const PaymentMethodsModal = ({
 
     switch (method.type) {
       case 'installment':
-        return `₽${formatter.format(tariff.price.monthly)}`;
+        return formatPrice(tariff.price.monthly);
       case 'tether':
-        return '1700 USDT';
+        return `${formatPrice(tariff.price.total / 90)} USDT`;
       default:
-        return `₽${formatter.format(tariff.price.total)}`;
+        return formatPrice(tariff.price.total);
     }
   };
 

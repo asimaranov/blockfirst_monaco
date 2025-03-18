@@ -16,6 +16,7 @@ import { api } from '~/trpc/react';
 import { Tariff, TARIFFS } from '~/app/lib/constants/tariff';
 import { cn } from '~/helpers';
 import PaymentMethodsModal from './PaymentMethodsModal';
+import { formatPrice } from '~/app/lib/utils';
 
 const CheckIcon = () => (
   <svg
@@ -136,7 +137,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
           <div className="flex justify-between px-8">
             <div className="flex flex-col gap-2">
               <span className="text-2xll font-semibold text-gray-50">
-                ₽{tariff.price.monthly}
+                {formatPrice(tariff.price.monthly)}
                 <span className="text-base">/мес</span>
               </span>
               {tariff.price.installments && (
@@ -200,7 +201,9 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
           </div>
           <div className="text-secondary mt-auto flex h-8 items-center justify-center gap-1 bg-[#14171C] text-xs">
             Весь курс{' '}
-            <span className="text-foreground">₽{tariff.price.total}</span>
+            <span className="text-foreground">
+              {formatPrice(tariff.price.total)}
+            </span>
           </div>
         </div>
       )}
