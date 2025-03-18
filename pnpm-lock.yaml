@@ -48,8 +48,8 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2
       better-auth:
-        specifier: '=v1.2.5-beta.2'
-        version: 1.2.5-beta.2(typescript@5.8.2)
+        specifier: '=1.2.5-beta.4'
+        version: 1.2.5-beta.4(typescript@5.8.2)
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -1002,8 +1002,8 @@ packages:
     resolution: {integrity: sha512-k38b3XOZKv60C4E2hVsXTolJWfkGRMbILBIe2IBITXciy5bOsTKot5kDrf3ZfufQtQOUN5mXceUEpU1rTl9Uog==}
     hasBin: true
 
-  better-auth@1.2.5-beta.2:
-    resolution: {integrity: sha512-kzuyYr+okitjPVQ2Y3OVD4Xulpd/wL3s3c4YLCcZrIcEs+ue5ICEoG1FfX/JjIFIvAI9AE6VxUE7aBaS4cZF7A==}
+  better-auth@1.2.5-beta.4:
+    resolution: {integrity: sha512-6YQVHHZG0W9pfoZzVsgl5BPvLp0ybUrbPNfmkRBxEr4UriRn0Uuk9L99VLObW+KjghQ023OaiV13lBlvP47uXg==}
 
   better-call@1.0.4:
     resolution: {integrity: sha512-NdAihYdkS0IOz1mtz8mw1gWacCxR9r921U8YqB+VB6++rt8edMG13vVL16Y4TBL4XkjMK/DUewEsOOFkw9LJYQ==}
@@ -3399,7 +3399,7 @@ snapshots:
 
   bcryptjs@3.0.2: {}
 
-  better-auth@1.2.5-beta.2(typescript@5.8.2):
+  better-auth@1.2.5-beta.4(typescript@5.8.2):
     dependencies:
       '@better-auth/utils': 0.2.4
       '@better-fetch/fetch': 1.1.15

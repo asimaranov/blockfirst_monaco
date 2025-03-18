@@ -34,7 +34,7 @@
     "@trpc/react-query": "^11.0.0-rc.446",
     "@trpc/server": "^11.0.0-rc.446",
     "bcryptjs": "^3.0.2",
-    "better-auth": "=v1.2.5-beta.2",
+    "better-auth": "=1.2.5-beta.4",
     "clsx": "^2.1.1",
     "formik": "^2.4.6",
     "framer-motion": "^12.4.11",
