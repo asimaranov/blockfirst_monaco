@@ -120,7 +120,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
 
               {/* Course List */}
               <div className="bg-dark-bg relative">
-                <div className="border-accent grid grid-cols-[24px_1fr_114px_150px] items-center gap-x-5 bg-[#14171C] px-8 py-2.75">
+                <div className="border-accent grid grid-cols-[calc(6*var(--spacing))_1fr_calc(28.5*var(--spacing))_calc(37.5*var(--spacing))] items-center gap-x-5 bg-[#14171C] px-8 py-2.75">
                   <span className="text-secondary text-xs opacity-50">#</span>
                   <span className="text-secondary text-xs uppercase opacity-50">
                     Название курса
@@ -152,7 +152,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
                     {COURSES.map((course, index) => (
                       <div
                         key={course.id}
-                        className="grid grid-cols-[24px_1fr_114px_150px] items-center gap-x-5 py-3 first:pt-7 last:pb-8"
+                        className="grid grid-cols-[calc(6*var(--spacing))_1fr_calc(28.5*var(--spacing))_calc(37.5*var(--spacing))] items-center gap-x-5 py-3 first:pt-7 last:pb-8"
                       >
                         <div className="flex h-6 w-6 items-center justify-center">
                           <span className="text-secondary text-sm">
