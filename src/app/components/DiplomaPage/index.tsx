@@ -241,6 +241,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
             <div className="bg-background @container flex h-full w-full flex-col pb-0">
               <div className="p-5">
                 <Diploma
+                  locked={diplomaStatus === 'locked'}
                   name="Андрей Симаранов"
                   jobTitle="Smart Contract Engineer"
                   uniqueCode="0xa6193A2A141d8572480fA19312B96F721ec80a4D"
@@ -258,7 +259,10 @@ export default function DiplomaPage({ session }: { session: Session }) {
                 />
               </div>
               {diplomaStatus === 'locked' && (
-                <div className="bg-background text-secondary flex flex-row items-center justify-center gap-2 py-3 text-xs opacity-50">
+                <div
+                  className="bg-background text-secondary flex flex-row items-center justify-center gap-2 py-3 text-xs opacity-50"
+                  onClick={() => setDiplomaStatus('available')}
+                >
                   <Image src={LockIcon} alt="Lock" className="h-4 w-4" />
                   Недоступен
                 </div>
@@ -271,7 +275,11 @@ export default function DiplomaPage({ session }: { session: Session }) {
                   >
                     <ExpandIcon />
                   </div>
-                  <div className="hover:bg-foreground group flex flex-row items-center justify-center py-3.5">
+                  <div className="hover:bg-foreground group flex flex-row items-center justify-center py-3.5"
+                    onClick={() => {
+                      setDiplomaStatus('locked');
+                    }}
+                  >
                     <CopyIcon />
                   </div>
                   <div className="hover:bg-foreground group flex flex-row items-center justify-center py-3.5">

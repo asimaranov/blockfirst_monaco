@@ -13,6 +13,7 @@ interface DiplomaProps {
   curatorName: string;
   curatorTitle: string;
   skills: string[];
+  locked?: boolean;
 }
 
 export function Diploma({
@@ -24,9 +25,14 @@ export function Diploma({
   curatorName,
   curatorTitle,
   skills,
+  locked = false,
 }: DiplomaProps) {
   return (
-    <div className="h-full font-lato">
+    <div className="font-lato relative h-full">
+      {locked && (
+        <div className="absolute top-0 left-0 h-full w-full bg-[#0F1217]/80 z-100" />
+      )}
+
       <div className="bg-dark-bg flex h-full w-full flex-col p-[calc(100*100cqw/1626)] pb-0">
         {/* Header with logo and unique code */}
         <div className="border-accent flex flex-row items-start gap-[calc(20*100cqw/1626)] border-[calc(0.25*100cqw/1626)]">
@@ -35,7 +41,7 @@ export function Diploma({
             alt="Logo"
             className="w-[calc(713*100cqw/1626)] shrink-0"
           />
-          <div className="flex w-full flex-col items-end gap-[calc(4*100cqw/1626)] pr-[calc(64*100cqw/1626)] pt-[calc(64*100cqw/1626)]">
+          <div className="flex w-full flex-col items-end gap-[calc(4*100cqw/1626)] pt-[calc(64*100cqw/1626)] pr-[calc(64*100cqw/1626)]">
             <div className="flex items-center gap-[calc(12*100cqw/1626)]">
               <div className="bg-primary h-[calc(10*100cqw/1626)] w-[calc(10*100cqw/1626)] rounded-full" />
               <span className="text-foreground text-[calc(28*100cqw/1626)]">
@@ -134,7 +140,11 @@ export function Diploma({
           </div>
 
           <div className="mb-[calc(100*100cqw/1626)] flex flex-col justify-end">
-            <Image src={QrSvg} alt="Logo" className="w-[calc(100*100cqw/1626)]" />
+            <Image
+              src={QrSvg}
+              alt="Logo"
+              className="w-[calc(100*100cqw/1626)]"
+            />
           </div>
           <div>
             <Image
