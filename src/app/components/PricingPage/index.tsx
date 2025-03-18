@@ -66,13 +66,13 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
             </div>
           )}
           <div className="flex flex-col items-center gap-5">
-            <div className="h-[92px] w-[92px] overflow-hidden rounded-full">
+            <div className="h-23 w-23 overflow-hidden rounded-full">
               <Image
                 src={tariff.bigIcon}
                 width={92}
                 height={92}
                 alt={`${tariff.name} plan`}
-                className="h-full w-full object-cover"
+                className="h-23 w-23 object-cover"
               />
             </div>
             <div className="flex flex-col items-center gap-3 text-center">

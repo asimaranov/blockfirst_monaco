@@ -30,7 +30,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
   const [isFrontendExpanded, setIsFrontendExpanded] = useState(true);
   const [isDiplomaExpanded, setIsDiplomaExpanded] = useState(false);
   const [diplomaStatus, setDiplomaStatus] = useState<'locked' | 'available'>(
-    'available'
+    'locked'
   );
   const t = useTranslations('UserSpace');
 

@@ -129,10 +129,6 @@ export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const session = authClient.useSession();
-  useEffect(() => {
-    // Issue https://github.com/better-auth/better-auth/issues/1006
-    // session.refetch();
-  }, []);
 
   const user: IUser = {
     name: session.data?.user?.name ?? '',

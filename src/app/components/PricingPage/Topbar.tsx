@@ -15,16 +15,19 @@ export function Topbar() {
   return (
     <>
       <nav className={cn('grid w-full grid-cols-3 border-b border-[#282D33]')}>
-        <Link
-          href={`/dashboard`}
-          className="border-accent flex flex-row items-center gap-2 border-r py-6 text-xl"
-        >
+        <div className="border-accent flex flex-row items-center gap-2 border-r py-6 text-xl">
           <div className="pl-8">Тарифы BlockFirst</div>
-        </Link>
+        </div>
         <div className="py-6">
           <div className="flex flex-col gap-2 pl-8">
             <div className="flex flex-row items-center gap-2 text-sm">
-              <Image src={StudentIcon} alt="Student" width={24} height={24} />
+              <Image
+                src={StudentIcon}
+                alt="Student"
+                width={24}
+                height={24}
+                className="w-6 h-6"
+              />
               Для студентов
             </div>
             <button
