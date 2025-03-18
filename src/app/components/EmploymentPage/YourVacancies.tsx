@@ -83,7 +83,7 @@ export default function YourVacancies({
           </div>
           <div className="flex w-full flex-row items-center justify-between gap-1 px-8">
             <span className="text-sm">Персональные вакансии</span>
-            <Image src={soonBageImg} alt="Soon" className="h-[24px] w-[53px]" />
+            <Image src={soonBageImg} alt="Soon" className="h-6 w-13" />
           </div>
         </div>
       </div>
