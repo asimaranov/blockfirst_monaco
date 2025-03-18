@@ -136,7 +136,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
         <div className="mt-auto flex flex-col gap-6 pt-8 pb-0">
           <div className="flex justify-between px-8">
             <div className="flex flex-col gap-2">
-              <span className="text-2xll font-semibold text-gray-50">
+              <span className="text-2xll font-medium text-gray-50">
                 {formatPrice(tariff.price.monthly)}
                 <span className="text-base">/мес</span>
               </span>
@@ -152,7 +152,8 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
                   'flex items-center rounded-full border border-[#1959F4] bg-[#1959F4] px-11 py-3 duration-300',
                   isLoading
                     ? 'border-[#1242B2] bg-[#1242B2]'
-                    : 'hover:bg-dark-bg cursor-pointer'
+                    : 'hover:bg-dark-bg cursor-pointer',
+                  'text-sm'
                 )}
                 disabled={isLoading}
                 onClick={() => setIsPaymentModalOpen(true)}

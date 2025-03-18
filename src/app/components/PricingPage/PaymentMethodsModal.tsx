@@ -96,7 +96,8 @@ const PaymentMethod = ({
         <button
           className={cn(
             'flex cursor-pointer items-center rounded-full border border-[#195AF4] px-6 py-2.5 text-sm text-foreground transition-colors hover:bg-[#195AF4]',
-            !isEnabled ? 'cursor-not-allowed opacity-50' : ''
+            !isEnabled ? 'cursor-not-allowed opacity-50' : '',
+            'text-sm'
           )}
           onClick={onPaymentClick}
           disabled={isLoading || !isEnabled}
