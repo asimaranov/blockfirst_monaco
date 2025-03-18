@@ -362,9 +362,10 @@ export default function MentorPage({ session }: { session: Session }) {
                 </div>
               </div>
 
-              <div className="bg-dark-bg flex h-8 items-center justify-center">
+              <div className="bg-[#14171C] flex h-8 items-center justify-center">
                 <p className="text-secondary text-sm">
-                  Не нравится куратор? Сменить
+                  Не нравится куратор?{' '}
+                  <span className="text-white underline cursor-pointer">Сменить</span>
                 </p>
               </div>
             </div>
@@ -553,7 +554,7 @@ export default function MentorPage({ session }: { session: Session }) {
               </div>
 
               {/* Privacy notice */}
-              <div className="bg-dark-bg mt-auto flex h-8 items-center justify-center">
+              <div className="bg-[#14171C] mt-auto flex h-8 items-center justify-center">
                 <div className="flex items-center gap-2">
                   <div className="text-secondary h-3.5 w-3.5">
                     <svg
@@ -570,8 +571,11 @@ export default function MentorPage({ session }: { session: Session }) {
                       />
                     </svg>
                   </div>
-                  <span className="text-secondary text-sm">
-                    Ваши данные полностью Конфиденциальны
+                  <span className="text-secondary text-sm ">
+                    Ваши данные полностью{' '}
+                    <span className="text-white underline cursor-pointer">
+                      Конфиденциальны
+                    </span>
                   </span>
                 </div>
               </div>
