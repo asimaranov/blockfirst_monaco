@@ -107,14 +107,6 @@ export default function MentorPage({ session }: { session: Session }) {
       soon: true,
       current: false,
     },
-    {
-      name: 'Кирилл Мартышенко',
-      bigImage: '/mentors/kirill_martyshenko/big.png',
-      smallImage: '/mentors/kirill_martyshenko/small.png',
-      description: 'Fullstack Developer',
-      soon: true,
-      current: false,
-    },
   ];
 
   const [name, setName] = useState('');
@@ -343,7 +335,6 @@ export default function MentorPage({ session }: { session: Session }) {
 
               {/* Selected mentor indicator */}
             </div>
-
 
             <div className="flex flex-1 flex-col gap-6">
               <div className="mx-8 mt-auto">
