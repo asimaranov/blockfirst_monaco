@@ -363,14 +363,14 @@ export default function MentorPage({ session }: { session: Session }) {
         </section>
 
         {/* Right side - Interaction area */}
-        <section className="flex flex-1 flex-col gap-[38px]">
+        <section className="flex flex-1 flex-col gap-9.5">
           {/* Contact methods */}
           <div className="flex flex-col">
             {/* Header */}
             <div className="border-accent h-12 border-b">
               <div className="flex h-full items-center justify-between px-8">
-                <span className="text-secondary text-base uppercase">
-                  сВЯЗЬ С КУРАТОРОМ
+                <span className="text-secondary text-xs uppercase opacity-50 ">
+                  связь с куратором
                 </span>
                 <div className="text-secondary h-4 w-4">
                   <svg
@@ -441,7 +441,7 @@ export default function MentorPage({ session }: { session: Session }) {
           <div className="flex flex-1 flex-col gap-6">
             {/* Header with instructions */}
             <div>
-              <div className="bg-dark-bg flex h-12 items-center">
+              <div className="bg-[#14171C] flex h-12 items-center">
                 <div className="flex items-center gap-4 px-8">
                   <div className="h-6 w-6 overflow-hidden rounded-full">
                     <Image
@@ -451,7 +451,7 @@ export default function MentorPage({ session }: { session: Session }) {
                       height={24}
                     />
                   </div>
-                  <span className="text-foreground text-base">
+                  <span className="text-foreground text-base ">
                     Как добавить куратора?
                   </span>
                 </div>
@@ -492,7 +492,7 @@ export default function MentorPage({ session }: { session: Session }) {
                         />
                       </svg>
                     </div>
-                    <span className="text-secondary/50 text-base">
+                    <span className="text-secondary/50 text-sm">
                       Ваше имя
                     </span>
                   </div>
@@ -511,7 +511,7 @@ export default function MentorPage({ session }: { session: Session }) {
                         <path d="M2 8.994C2 5.13 5.134 2 9 2h6c3.866 0 7 3.13 7 6.994v6.012C22 18.87 18.866 22 15 22H9c-3.866 0-7-3.13-7-6.994V8.994zM9 16.5h3.5a5.5 5.5 0 005.5-5.5V9.5H9V16.5zm9.5-10h-13v2.5h13V6.5z" />
                       </svg>
                     </div>
-                    <span className="text-secondary/50 text-base">
+                    <span className="text-secondary/50 text-sm">
                       Ваш телеграм
                     </span>
                   </div>
@@ -535,7 +535,7 @@ export default function MentorPage({ session }: { session: Session }) {
                         />
                       </svg>
                     </div>
-                    <span className="text-secondary/50 text-base">
+                    <span className="text-secondary/50 text-sm">
                       Курс который вы проходите
                     </span>
                   </div>
