@@ -106,7 +106,10 @@ export function Diploma({
         <div className="mt-[calc(100*100cqw/1626)] flex flex-col gap-[calc(20*100cqw/1626)]">
           <div className="flex flex-wrap gap-[calc(20*100cqw/1626)]">
             {skills.map((skill) => (
-              <span className="text-foreground border-foreground rounded-full border-[0.25px] px-2 py-1 text-[calc(28*100cqw/1626)]">
+              <span
+                className="text-foreground border-foreground rounded-full border-[0.25px] px-2 py-1 text-[calc(28*100cqw/1626)]"
+                key={skill}
+              >
                 {skill}
               </span>
             ))}
