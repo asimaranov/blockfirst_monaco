@@ -11,6 +11,7 @@ import { COURSES } from '~/app/lib/constants/courses';
 import { useTranslations } from 'next-intl';
 import LockIcon from './assets/lock.svg';
 import { Diploma } from './Diploma';
+import { DiplomaView } from './DiplomaView';
 
 const competencies = [
   'Изучите блокчейны Ethereum, BSC, Polygon и библиотеки',
@@ -24,6 +25,7 @@ const competencies = [
 export default function DiplomaPage({ session }: { session: Session }) {
   const [isSmartContractExpanded, setIsSmartContractExpanded] = useState(true);
   const [isFrontendExpanded, setIsFrontendExpanded] = useState(true);
+  const [isDiplomaExpanded, setIsDiplomaExpanded] = useState(true);
   const t = useTranslations('UserSpace');
 
   const userProgress = {
@@ -39,6 +41,30 @@ export default function DiplomaPage({ session }: { session: Session }) {
   return (
     <main className="border-accent flex min-h-screen w-full flex-col border-r border-l">
       <div className="flex flex-1 flex-col">
+        <DiplomaView
+          isOpen={isDiplomaExpanded}
+          onClose={() => {
+            console.log('close');
+            setIsDiplomaExpanded(false);
+          }}
+        >
+          <Diploma
+            name="Андрей Симаранов"
+            jobTitle="Smart Contract Engineer"
+            uniqueCode="0xa6193A2A141d8572480fA19312B96F721ec80a4D"
+            startDate="21.02.2025"
+            endDate="22.04.2025"
+            curatorName="Андрей Симаранов"
+            curatorTitle="Основатель BlockFirst"
+            skills={[
+              'Освоил язык Solidity',
+              'Разработка смарт-контрактов',
+              'Получен опыт DeFI',
+              'Может скамить на 200%',
+              'Холодные продажи',
+            ]}
+          />
+        </DiplomaView>
         <Section
           title="Smart Contract Engineer"
           tags={['Solidity', 'Смарт-контракты', 'DeFi']}
@@ -206,16 +232,27 @@ export default function DiplomaPage({ session }: { session: Session }) {
                 <div className="pointer-events-none absolute right-0 bottom-0 left-0 h-[76px] bg-gradient-to-b from-transparent via-[#0F121780] to-[#0F1217]" />
               </div>
             </div>
-            <div className="bg-background flex h-full w-full flex-col p-5">
-            <Diploma
-        name="Андрей Симаранов"
-        jobTitle="Smart Contract Engineer"
-        uniqueCode="0xa6193A2A141d8572480fA19312B96F721ec80a4D"
-        startDate="21.02.2025"
-        endDate="22.04.2025"
-        curatorName="Андрей Симаранов"
-        curatorTitle="Основатель BlockFirst"
-      />
+            <div className="bg-background @container flex h-full w-full flex-col p-5 pb-0">
+              <Diploma
+                name="Андрей Симаранов"
+                jobTitle="Smart Contract Engineer"
+                uniqueCode="0xa6193A2A141d8572480fA19312B96F721ec80a4D"
+                startDate="21.02.2025"
+                endDate="22.04.2025"
+                curatorName="Андрей Симаранов"
+                curatorTitle="Основатель BlockFirst"
+                skills={[
+                  'Освоил язык Solidity',
+                  'Разработка смарт-контрактов',
+                  'Получен опыт DeFI',
+                  'Может скамить на 200%',
+                  'Холодные продажи',
+                ]}
+              />
+              <div className="bg-background text-secondary flex flex-row items-center justify-center gap-2 py-3 text-xs opacity-50">
+        <Image src={LockIcon} alt="Lock" className="h-4 w-4" />
+        Недоступен
+      </div>
             </div>
           </div>
         </Section>
@@ -236,7 +273,6 @@ export default function DiplomaPage({ session }: { session: Session }) {
       </div>
       <div className="border-accent h-9.5 border-t"></div>
       <Footer />
-      
     </main>
   );
 }
