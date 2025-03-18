@@ -26,16 +26,16 @@ export function Diploma({
   skills,
 }: DiplomaProps) {
   return (
-    <div className="h-full">
+    <div className="h-full font-lato">
       <div className="bg-dark-bg flex h-full w-full flex-col p-[calc(100*100cqw/1626)] pb-0">
         {/* Header with logo and unique code */}
-        <div className="border-accent flex flex-row items-start gap-[calc(20*100cqw/1626)] border">
+        <div className="border-accent flex flex-row items-start gap-[calc(20*100cqw/1626)] border-[calc(0.25*100cqw/1626)]">
           <Image
             src={LogoBig}
             alt="Logo"
             className="w-[calc(713*100cqw/1626)] shrink-0"
           />
-          <div className="flex w-full flex-col items-end gap-[calc(4*100cqw/1626)] p-[calc(64*100cqw/1626)]">
+          <div className="flex w-full flex-col items-end gap-[calc(4*100cqw/1626)] pr-[calc(64*100cqw/1626)] pt-[calc(64*100cqw/1626)]">
             <div className="flex items-center gap-[calc(12*100cqw/1626)]">
               <div className="bg-primary h-[calc(10*100cqw/1626)] w-[calc(10*100cqw/1626)] rounded-full" />
               <span className="text-foreground text-[calc(28*100cqw/1626)]">
@@ -50,7 +50,7 @@ export function Diploma({
 
         {/* Student info */}
         <div className="mt-[calc(100*100cqw/1626)] flex flex-col gap-[calc(8*100cqw/1626)]">
-          <span className="text-foreground border-b-accent border-b pb-[calc(32*100cqw/1626)] text-[calc(80*100cqw/1626)]">
+          <span className="text-foreground border-b-accent border-b-border-[calc(0.25*100cqw/1626)] pb-[calc(32*100cqw/1626)] text-[calc(80*100cqw/1626)]">
             {name}
           </span>
           <div className="flex items-center justify-between pt-[calc(32*100cqw/1626)]">
@@ -58,7 +58,7 @@ export function Diploma({
               <span className="text-foreground text-[calc(32*100cqw/1626)]">
                 {jobTitle}
               </span>
-              <span className="border-success text-success rounded-full border px-[calc(24*100cqw/1626)] py-[calc(10*100cqw/1626)] text-[calc(24*100cqw/1626)]">
+              <span className="border-success text-success rounded-full border-[calc(0.25*100cqw/1626)] px-[calc(24*100cqw/1626)] py-[calc(10*100cqw/1626)] text-[calc(24*100cqw/1626)]">
                 Completed
               </span>
             </div>
@@ -69,7 +69,7 @@ export function Diploma({
         </div>
 
         {/* Stats */}
-        <div className="divide-accent border-accent mt-[calc(80*100cqw/1626)] flex flex-row divide-x border">
+        <div className="divide-accent border-accent mt-[calc(80*100cqw/1626)] flex flex-row divide-x border-[calc(0.25*100cqw/1626)]">
           <div className="flex flex-1 flex-col items-center justify-center gap-[calc(4*100cqw/1626)] px-[calc(32*100cqw/1626)] py-[calc(12*100cqw/1626)]">
             <div className="flex flex-col items-center justify-center gap-[calc(4*100cqw/1626)]">
               <span className="text-foreground text-[calc(80*100cqw/1626)]">
@@ -107,7 +107,7 @@ export function Diploma({
           <div className="flex flex-wrap gap-[calc(20*100cqw/1626)]">
             {skills.map((skill) => (
               <span
-                className="text-foreground border-foreground rounded-full border-[0.25px] px-2 py-1 text-[calc(28*100cqw/1626)]"
+                className="text-foreground border-foreground rounded-full border-[calc(0.25*100cqw/1626)] px-2 py-1 text-[calc(28*100cqw/1626)]"
                 key={skill}
               >
                 {skill}
@@ -134,7 +134,7 @@ export function Diploma({
           </div>
 
           <div className="mb-[calc(100*100cqw/1626)] flex flex-col justify-end">
-            <Image src={QrSvg} alt="Logo" className="" />
+            <Image src={QrSvg} alt="Logo" className="w-[calc(100*100cqw/1626)]" />
           </div>
           <div>
             <Image

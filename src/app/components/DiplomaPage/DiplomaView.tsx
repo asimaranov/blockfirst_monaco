@@ -21,7 +21,7 @@ export function DiplomaView({ isOpen, onClose, children }: ModalProps) {
             className="fixed inset-0 z-50 bg-black/50"
           />
           <div
-            className="fixed z-50 w-[calc(1626px)] h-[calc(2301px)] @container"
+            className="fixed z-50 w-[calc(1626px/3)] h-[calc(2301px/3)] @container"
           >
             {children}
           </div>

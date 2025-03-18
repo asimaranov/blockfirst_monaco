@@ -12,6 +12,9 @@ import { useTranslations } from 'next-intl';
 import LockIcon from './assets/lock.svg';
 import { Diploma } from './Diploma';
 import { DiplomaView } from './DiplomaView';
+import CopyIcon from './assets/copy';
+import ExpandIcon from './assets/expand';
+import DownloadIcon from './assets/download';
 
 const competencies = [
   'Изучите блокчейны Ethereum, BSC, Polygon и библиотеки',
@@ -25,7 +28,10 @@ const competencies = [
 export default function DiplomaPage({ session }: { session: Session }) {
   const [isSmartContractExpanded, setIsSmartContractExpanded] = useState(true);
   const [isFrontendExpanded, setIsFrontendExpanded] = useState(true);
-  const [isDiplomaExpanded, setIsDiplomaExpanded] = useState(true);
+  const [isDiplomaExpanded, setIsDiplomaExpanded] = useState(false);
+  const [diplomaStatus, setDiplomaStatus] = useState<'locked' | 'available'>(
+    'available'
+  );
   const t = useTranslations('UserSpace');
 
   const userProgress = {
@@ -232,27 +238,47 @@ export default function DiplomaPage({ session }: { session: Session }) {
                 <div className="pointer-events-none absolute right-0 bottom-0 left-0 h-[76px] bg-gradient-to-b from-transparent via-[#0F121780] to-[#0F1217]" />
               </div>
             </div>
-            <div className="bg-background @container flex h-full w-full flex-col p-5 pb-0">
-              <Diploma
-                name="Андрей Симаранов"
-                jobTitle="Smart Contract Engineer"
-                uniqueCode="0xa6193A2A141d8572480fA19312B96F721ec80a4D"
-                startDate="21.02.2025"
-                endDate="22.04.2025"
-                curatorName="Андрей Симаранов"
-                curatorTitle="Основатель BlockFirst"
-                skills={[
-                  'Освоил язык Solidity',
-                  'Разработка смарт-контрактов',
-                  'Получен опыт DeFI',
-                  'Может скамить на 200%',
-                  'Холодные продажи',
-                ]}
-              />
-              <div className="bg-background text-secondary flex flex-row items-center justify-center gap-2 py-3 text-xs opacity-50">
-                <Image src={LockIcon} alt="Lock" className="h-4 w-4" />
-                Недоступен
+            <div className="bg-background @container flex h-full w-full flex-col pb-0">
+              <div className="p-5">
+                <Diploma
+                  name="Андрей Симаранов"
+                  jobTitle="Smart Contract Engineer"
+                  uniqueCode="0xa6193A2A141d8572480fA19312B96F721ec80a4D"
+                  startDate="21.02.2025"
+                  endDate="22.04.2025"
+                  curatorName="Андрей Симаранов"
+                  curatorTitle="Основатель BlockFirst"
+                  skills={[
+                    'Освоил язык Solidity',
+                    'Разработка смарт-контрактов',
+                    'Получен опыт DeFI',
+                    'Может скамить на 200%',
+                    'Холодные продажи',
+                  ]}
+                />
               </div>
+              {diplomaStatus === 'locked' && (
+                <div className="bg-background text-secondary flex flex-row items-center justify-center gap-2 py-3 text-xs opacity-50">
+                  <Image src={LockIcon} alt="Lock" className="h-4 w-4" />
+                  Недоступен
+                </div>
+              )}
+              {diplomaStatus === 'available' && (
+                <div className="grid w-full cursor-pointer grid-cols-3 items-center justify-center gap-2">
+                  <div
+                    className="hover:bg-foreground group flex flex-row items-center justify-center py-3.5"
+                    onClick={() => setIsDiplomaExpanded(true)}
+                  >
+                    <ExpandIcon />
+                  </div>
+                  <div className="hover:bg-foreground group flex flex-row items-center justify-center py-3.5">
+                    <CopyIcon />
+                  </div>
+                  <div className="hover:bg-foreground group flex flex-row items-center justify-center py-3.5">
+                    <DownloadIcon />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </Section>
