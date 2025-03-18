@@ -1,14 +1,15 @@
-import { useState } from 'react';
+'use client';
+
+import { useEffect, useState } from 'react';
 import { IVacancy, VacancyCurrency } from '~/app/lib/constants/vacancies';
 import { cn } from '~/helpers';
-
+import { useViewedVacancyStore } from '~/store/viewedVacancy';
 export const VacancyItem = ({ vacancy }: { vacancy: IVacancy }) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
-  const renderSalary = (salary?: {
-    amount: number | { from?: number; to?: number };
-    currency: VacancyCurrency;
-  }) => {
+  const { viewedVacancies, add: addViewedVacancy } = useViewedVacancyStore();
+
+  const renderSalary = (salary?: IVacancy['salary']) => {
     if (!salary) return '—';
 
     if (typeof salary.amount === 'number') {
@@ -23,26 +24,39 @@ export const VacancyItem = ({ vacancy }: { vacancy: IVacancy }) => {
     return `${salary.amount.from} — ${salary.amount.to} ${salary.currency}`;
   };
 
+  useEffect(() => {
+    if (isExpanded) {
+      if (viewedVacancies.includes(vacancy.id)) return;
+
+      addViewedVacancy(vacancy.id);
+    }
+  }, [isExpanded]);
+
   return (
     <div
       onClick={() => setIsExpanded(!isExpanded)}
       className="border-accent relative grid grid-cols-11 items-center gap-10 px-8 py-6 not-last:border-b hover:bg-[#14171C]"
     >
+      {/* Publisher name */}
       <div className="col-span-2 flex flex-col gap-1.5">
         <span className="text-sm font-medium">{vacancy.title}</span>
         <span className="text-secondary text-xs opacity-50">
           {vacancy.publisher.name}
         </span>
       </div>
+      {/* Salary */}
       <span className="col-span-2 text-sm">{renderSalary(vacancy.salary)}</span>
+      {/* Format */}
       <div className="text-secondary col-span-2 flex flex-row gap-1 text-sm opacity-50">
         {Array.isArray(vacancy.format)
           ? vacancy.format.map((format) => format).join(' / ')
           : vacancy.format}
       </div>
+      {/* Updated at */}
       <span className="text-secondary col-span-2 text-sm opacity-50">
         {new Date(vacancy.updatedAt).toLocaleDateString('ru-RU')}
       </span>
+      {/* Apply button */}
       <button
         onClick={(e) => {
           e.stopPropagation();
@@ -54,6 +68,7 @@ export const VacancyItem = ({ vacancy }: { vacancy: IVacancy }) => {
           Откликнуться
         </span>
       </button>
+      {/* Expand icon */}
       <div className="my-auto size-5">
         <svg
           width="20"
