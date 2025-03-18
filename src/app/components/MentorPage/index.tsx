@@ -184,7 +184,7 @@ export default function MentorPage({ session }: { session: Session }) {
           </section>
 
           {/* Left sidebar - Mentor Profile */}
-          <section className="border-accent flex w-100 flex-1 flex-col border-r">
+          <section className="border-accent flex flex-col border-r w-100">
             {/* Profile container */}
             <div className="bg-background relative h-91 overflow-hidden">
               {/* Background grid effect */}
@@ -435,7 +435,7 @@ export default function MentorPage({ session }: { session: Session }) {
                           height={32}
                         />
                       </div>
-                      <span className="text-foreground text-lg">
+                      <span className="text-foreground text-base">
                         Текстовый формат
                       </span>
                     </div>
