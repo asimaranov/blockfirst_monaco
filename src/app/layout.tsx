@@ -3,7 +3,6 @@ import '~/styles/globals.css';
 import { type Metadata } from 'next';
 
 import { TRPCReactProvider } from '~/trpc/react';
-import { robotoFont } from './font';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale } from 'next-intl/server';
 
@@ -19,7 +18,7 @@ export default async function RootLayout({
   const locale = await getLocale();
 
   return (
-    <html lang={locale} className={`${robotoFont.variable}`}>
+    <html lang={locale}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
