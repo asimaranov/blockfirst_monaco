@@ -120,7 +120,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
 
               {/* Course List */}
               <div className="bg-dark-bg relative">
-                <div className="border-accent grid grid-cols-[24px_1fr_114px_150px] items-center gap-x-10 bg-[#14171C] px-8 py-2.75">
+                <div className="border-accent grid grid-cols-[24px_1fr_114px_150px] items-center gap-x-5 bg-[#14171C] px-8 py-2.75">
                   <span className="text-secondary text-xs opacity-50">#</span>
                   <span className="text-secondary text-xs uppercase opacity-50">
                     Название курса
@@ -250,9 +250,9 @@ export default function DiplomaPage({ session }: { session: Session }) {
                 ]}
               />
               <div className="bg-background text-secondary flex flex-row items-center justify-center gap-2 py-3 text-xs opacity-50">
-        <Image src={LockIcon} alt="Lock" className="h-4 w-4" />
-        Недоступен
-      </div>
+                <Image src={LockIcon} alt="Lock" className="h-4 w-4" />
+                Недоступен
+              </div>
             </div>
           </div>
         </Section>
