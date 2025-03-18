@@ -60,11 +60,7 @@ const ComingSoon = () => {
   );
 };
 
-export default function MentorPage({
-  session,
-}: {
-  session: Session;
-}) {
+export default function MentorPage({ session }: { session: Session }) {
   const [index, setIndex] = useState(0);
 
   const mentors = [
@@ -395,7 +391,7 @@ export default function MentorPage({
             </div>
 
             {/* Contact options */}
-            <div className="flex border-accent border-b ">
+            <div className="border-accent flex border-b">
               {/* Calls */}
               <div className="border-accent w-1/2 border-r">
                 <div className="bg-background relative h-16 overflow-hidden">
@@ -433,8 +429,8 @@ export default function MentorPage({
                 </div>
                 <div className="px-8 py-4">
                   <p className="text-foreground text-xs">
-                    Звонок согласовывается в чате. Пожалуйста, заранее
-                    подготовьте вопрос или опишите проблему.
+                    Обращайтесь с вопросами, возникшими в процессе курса.
+                    Куратор быстро поможет вам!
                   </p>
                 </div>
               </div>
