@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { Topbar } from './Topbar';
-import { COURSES } from '~/app/lib/constants/courses';
 import { Session } from '~/server/auth';
 import Footer from '~/app/components/Footer';
 import Image from 'next/image';
@@ -61,12 +60,10 @@ const ComingSoon = () => {
   );
 };
 
-export default function CoursePage({
+export default function MentorPage({
   session,
-  courseId,
 }: {
   session: Session;
-  courseId: string;
 }) {
   const [index, setIndex] = useState(0);
 
@@ -524,7 +521,6 @@ export default function CoursePage({
                   </div>
                 </div>
 
-                {/* Course input */}
                 <div className="border-accent h-12 border-b">
                   <div className="flex h-full items-center gap-3 px-4">
                     <div className="text-secondary/50">
