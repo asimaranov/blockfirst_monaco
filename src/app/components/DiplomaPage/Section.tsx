@@ -35,10 +35,10 @@ export function Section({
           </div>
           <div className="text-secondary flex items-center gap-2 text-xs opacity-50">
             {tags.map((tag, index) => (
-              <div key={`div-${index}`}>
+              <div key={`div-${index}`} className='flex flex-row items-center justify-center gap-2'>
                 {index > 0 && (
                   <div
-                    className="bg-secondary h-1 w-1 rounded-full opacity-50"
+                    className="bg-secondary h-1 w-1 rounded-full"
                   />
                 )}
                 <span>{tag}</span>
