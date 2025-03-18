@@ -81,7 +81,7 @@ const sidebarSections: SidebarSection[] = [
     items: [
       {
         title: 'Твой куратор',
-        href: '#',
+        href: '/mentor',
         icon: curatorImg,
         iconHover: curatorHoverImg,
         locked: true,
