@@ -4,7 +4,6 @@ import Image from 'next/image';
 export default function Footer() {
   return (
     <>
-      {' '}
       <div className="border-accent h-9.5"></div>
       <footer className="bg-background border-accent border-t pt-16">
         {/* Top section */}
@@ -14,13 +13,11 @@ export default function Footer() {
             <div className="flex flex-col gap-4">
               <h3 className="text-2xl">Новости. Скидки. Анонсы</h3>
               <p className="text-secondary text-sm text-nowrap">
-                Подписываясь на рассылку, вы можете быть 
+                Подписываясь на рассылку, вы можете быть
                 <p className="text-secondary text-sm text-nowrap">
-                уверены, что мы небудем спамить Вам :)
+                  уверены, что мы небудем спамить Вам :)
+                </p>
               </p>
-              </p>
-              
-
             </div>
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-4">
@@ -124,12 +121,12 @@ export default function Footer() {
         </div>
 
         {/* Bottom section */}
-        <div className="divide-accent relative grid h-25 grid-cols-1 gap-8 divide-x border-t border-b border-[#282F33] px-8 md:grid-cols-3">
-          <div className="relative flex flex-col gap-2 py-6">
+        <div className="divide-accent relative grid h-25 grid-cols-1 gap-8 divide-x border-t border-b border-[#282F33]  md:grid-cols-3">
+          <div className="relative flex flex-col gap-2 py-6 pl-8">
             <Image
               src={GridSvg}
               alt="Grid"
-              className="absolute bottom-[-1px] left-0 z-0 w-full"
+              className="absolute bottom-[-1px] right-0 z-0 w-full"
             />
 
             <span className="text-secondary relative z-10 text-xs">
@@ -163,7 +160,7 @@ export default function Footer() {
             <Image
               src={GridSvg}
               alt="Grid"
-              className="absolute bottom-[-1px] left-0 z-0 w-full"
+              className="absolute bottom-[-1px] right-0 z-0 w-full"
             />
 
             <span className="text-secondary text-xs">
@@ -193,11 +190,11 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-2 py-6 relative">
+          <div className="relative flex flex-col gap-2 py-6 pr-8">
             <Image
               src={GridSvg}
               alt="Grid"
-              className="absolute bottom-[-1px] left-0 z-0 w-full"
+              className="absolute bottom-[-1px] right-0 z-0 w-full"
             />
 
             <span className="text-secondary text-xs">
