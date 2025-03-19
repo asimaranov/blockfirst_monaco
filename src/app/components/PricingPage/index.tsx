@@ -17,6 +17,7 @@ import { Tariff, TARIFFS } from '~/app/lib/constants/tariff';
 import { cn } from '~/helpers';
 import PaymentMethodsModal from './PaymentMethodsModal';
 import { formatPrice } from '~/app/lib/utils';
+import GridSvg from './assets/grid.svg';
 
 const CheckIcon = () => (
   <svg
@@ -56,9 +57,9 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   return (
-    <div className="flex flex-col border-accent border-b">
-      <div className="bg-[#01050D] p-8">
-        <div className="relative">
+    <div className="border-accent flex flex-col border-b">
+      <div className="relative bg-[#01050D] p-8">
+        <div className="relative z-1">
           {tariff.sale && (
             <div className="absolute top-0 right-0">
               <span className="bg-error rounded-full px-2 py-1 text-xs uppercase">
@@ -73,7 +74,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
                 width={92}
                 height={92}
                 alt={`${tariff.name} plan`}
-                className="h-23 w-23 object-cover"
+                className="h-23 w-23 object-cover z-10"
               />
             </div>
             <div className="flex flex-col items-center gap-3 text-center">
@@ -82,6 +83,11 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
             </div>
           </div>
         </div>
+        <Image
+          src={GridSvg}
+          alt="Grid"
+          className="pointer-events-none absolute right-0 bottom-0 z-0 w-full"
+        />
       </div>
 
       <div className="flex flex-col">
@@ -136,7 +142,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
         <div className="mt-auto flex flex-col gap-6 pt-8 pb-0">
           <div className="flex justify-between px-8">
             <div className="flex flex-col gap-2">
-              <span className="text-2xll font-medium text-gray-50">
+              <span className="text-2xll font-medium leading-7 text-gray-50">
                 {formatPrice(tariff.price.monthly)}
                 <span className="text-base">/мес</span>
               </span>

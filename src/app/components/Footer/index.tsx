@@ -121,12 +121,12 @@ export default function Footer() {
         </div>
 
         {/* Bottom section */}
-        <div className="divide-accent relative grid h-25 grid-cols-1 gap-8 divide-x border-t border-b border-[#282F33]  md:grid-cols-3">
+        <div className="divide-accent relative grid h-25 grid-cols-1 gap-8 divide-x border-t border-b border-[#282F33] md:grid-cols-3">
           <div className="relative flex flex-col gap-2 py-6 pl-8">
             <Image
               src={GridSvg}
               alt="Grid"
-              className="absolute bottom-0 right-0 z-0 w-full"
+              className="absolute right-0 bottom-0 z-0 w-full"
             />
 
             <span className="text-secondary relative z-10 text-xs">
@@ -160,13 +160,13 @@ export default function Footer() {
             <Image
               src={GridSvg}
               alt="Grid"
-              className="absolute bottom-[-1px] right-0 z-0 w-full"
+              className="absolute right-0 bottom-0 z-0 w-full"
             />
 
-            <span className="text-secondary text-xs">
+            <span className="text-secondary z-10 text-xs">
               Для запросов от пользователей
             </span>
-            <div className="flex items-center gap-4">
+            <div className="z-10 flex items-center gap-4">
               <svg
                 width="16"
                 height="16"
@@ -194,13 +194,13 @@ export default function Footer() {
             <Image
               src={GridSvg}
               alt="Grid"
-              className="absolute bottom-[-1px] right-0 z-0 w-full"
+              className="absolute right-0 bottom-0 z-0 w-full"
             />
 
-            <span className="text-secondary text-xs">
+            <span className="text-secondary z-10 text-xs">
               Телеграм бот для быстрых ответов
             </span>
-            <div className="flex items-center justify-between">
+            <div className="z-10 flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <svg
                   width="16"
@@ -208,6 +208,7 @@ export default function Footer() {
                   viewBox="0 0 16 16"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
+                  className=""
                 >
                   <path
                     fillRule="evenodd"
@@ -221,20 +222,22 @@ export default function Footer() {
                   t.me/blockfirst_edu/app
                 </a>
               </div>
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M10.901 4.46943C11.1939 4.17653 11.6688 4.17653 11.9617 4.46942L16.9617 9.46937C17.1023 9.61003 17.1814 9.80079 17.1814 9.9997C17.1814 10.1986 17.1023 10.3894 16.9617 10.53L11.9617 15.53C11.6688 15.8229 11.1939 15.8229 10.901 15.53C10.6081 15.2371 10.6081 14.7623 10.901 14.4694L14.6207 10.7497H3.57422C3.16001 10.7497 2.82422 10.4139 2.82422 9.99971C2.82422 9.58549 3.16001 9.24971 3.57422 9.24971H14.6207L10.901 5.53009C10.6081 5.2372 10.6081 4.76232 10.901 4.46943Z"
-                  fill="#F2F2F2"
-                />
-              </svg>
+              <div className="cursor-pointer w-5 h-5 hover:opacity-50">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M10.901 4.46943C11.1939 4.17653 11.6688 4.17653 11.9617 4.46942L16.9617 9.46937C17.1023 9.61003 17.1814 9.80079 17.1814 9.9997C17.1814 10.1986 17.1023 10.3894 16.9617 10.53L11.9617 15.53C11.6688 15.8229 11.1939 15.8229 10.901 15.53C10.6081 15.2371 10.6081 14.7623 10.901 14.4694L14.6207 10.7497H3.57422C3.16001 10.7497 2.82422 10.4139 2.82422 9.99971C2.82422 9.58549 3.16001 9.24971 3.57422 9.24971H14.6207L10.901 5.53009C10.6081 5.2372 10.6081 4.76232 10.901 4.46943Z"
+                    fill="#F2F2F2"
+                  />
+                </svg>
+              </div>
             </div>
           </div>
         </div>
@@ -252,7 +255,7 @@ export default function Footer() {
               © 2025-2026 BlockFirst. Все права защищены.
             </span>
             <div
-              className="flex cursor-pointer items-center gap-1"
+              className="flex cursor-pointer items-center gap-1 hover:opacity-50"
               onClick={() => {
                 document
                   .getElementById('content-view')

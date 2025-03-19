@@ -10,6 +10,7 @@ import { Session } from '~/server/auth';
 import Footer from '~/app/components/Footer';
 import StarterBadge from './bages/starter_badge.png';
 import ProBadge from './bages/pro_badge.png';
+import GridSvg from './assets/grid.svg';
 import Image from 'next/image';
 
 const Tariffs = [
@@ -93,19 +94,16 @@ export default function CoursePage({
         <CourseInfoTopCard course={course} />
         <div className="border-accent flex flex-col border-l">
           {/* Top section with Starter and Pro blocks */}
-          <div className="border-accent flex flex-row border-b divide-accent divide-x">
+          <div className="border-accent divide-accent flex flex-row divide-x border-b">
             {Tariffs.map((tariff) => (
-              <div
-                className="flex-1"
-                key={tariff.name}
-              >
+              <div className="flex-1" key={tariff.name}>
                 <div className="flex flex-col">
                   {/* Dark header */}
-                  <div className="relative h-[81px] bg-[#01050D]">
-                    <div className="pointer-events-none absolute inset-0 opacity-50 mix-blend-soft-light">
+                  <div className="relative h-20 bg-[#01050D]">
+                    <div className="pointer-events-none absolute inset-0 z-[1] opacity-50 mix-blend-soft-light">
                       <div className="bg-gradient-radial h-full w-full from-gray-100 to-transparent" />
                     </div>
-                    <div className="px-8 py-5">
+                    <div className="relative z-[2] px-8 py-5">
                       <div className="flex flex-row items-center justify-between">
                         <div className="flex flex-row items-center gap-4">
                           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#01050D]">
@@ -129,22 +127,29 @@ export default function CoursePage({
                             </div>
                           </div>
                         </div>
-                        <svg
-                          width="24"
-                          height="25"
-                          viewBox="0 0 24 25"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            clipRule="evenodd"
-                            d="M12.901 6.96967C13.1939 6.67678 13.6688 6.67678 13.9617 6.96967L18.9617 11.9696C19.1023 12.1103 19.1814 12.301 19.1814 12.4999C19.1814 12.6989 19.1023 12.8896 18.9617 13.0303L13.9617 18.0303C13.6688 18.3232 13.1939 18.3232 12.901 18.0303C12.6081 17.7374 12.6081 17.2625 12.901 16.9696L16.6207 13.25H5.57422C5.16001 13.25 4.82422 12.9142 4.82422 12.5C4.82422 12.0857 5.16001 11.75 5.57422 11.75H16.6207L12.901 8.03033C12.6081 7.73744 12.6081 7.26257 12.901 6.96967Z"
-                            fill="#F2F2F2"
-                          />
-                        </svg>
+                        <div className="h-6 w-6 cursor-pointer hover:opacity-50">
+                          <svg
+                            width="24"
+                            height="25"
+                            viewBox="0 0 24 25"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              clipRule="evenodd"
+                              d="M12.901 6.96967C13.1939 6.67678 13.6688 6.67678 13.9617 6.96967L18.9617 11.9696C19.1023 12.1103 19.1814 12.301 19.1814 12.4999C19.1814 12.6989 19.1023 12.8896 18.9617 13.0303L13.9617 18.0303C13.6688 18.3232 13.1939 18.3232 12.901 18.0303C12.6081 17.7374 12.6081 17.2625 12.901 16.9696L16.6207 13.25H5.57422C5.16001 13.25 4.82422 12.9142 4.82422 12.5C4.82422 12.0857 5.16001 11.75 5.57422 11.75H16.6207L12.901 8.03033C12.6081 7.73744 12.6081 7.26257 12.901 6.96967Z"
+                              fill="#F2F2F2"
+                            />
+                          </svg>
+                        </div>
                       </div>
                     </div>
+                    <Image
+                      className="absolute inset-0 right-0 bottom-0 z-[0]"
+                      src={GridSvg}
+                      alt=""
+                    />
                   </div>
                   {/* Features list */}
                   <div className="flex flex-col">
@@ -186,7 +191,7 @@ export default function CoursePage({
           <div className="h-9.5 w-full"></div>
 
           {/* Bottom section with stats */}
-          <div className="border-accent flex flex-row border-t border-b divide-accent divide-x">
+          <div className="border-accent divide-accent flex flex-row divide-x border-t border-b">
             {/* Tasks stat */}
             <div className="flex-1 px-8 py-5">
               <div className="flex flex-col gap-3">

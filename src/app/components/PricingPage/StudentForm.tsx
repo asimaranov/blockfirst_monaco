@@ -119,12 +119,12 @@ export function StudentForm({ onClose }: StudentFormProps) {
   }
 
   return (
-    <div className="bg-dark-bg border-accent flex h-full w-105 flex-col border">
+    <div className="bg-dark-bg border-accent/40 flex h-full w-105 flex-col border-l">
       <div className="flex flex-1 flex-col gap-8 px-10 py-8">
         <div className="flex flex-1 flex-col gap-8">
           <div className="flex flex-col items-center gap-8">
             <Image src={LogoSvg} alt="Logo" width={152} height={44} />
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 items-center">
               <h2 className="text-foreground text-2xll">
                 Анкета для студентов
               </h2>
