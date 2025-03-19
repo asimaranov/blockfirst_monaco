@@ -13,10 +13,10 @@ export default function Footer() {
             <div className="flex flex-col gap-4">
               <h3 className="text-2xl">Новости. Скидки. Анонсы</h3>
               <p className="text-secondary text-sm text-nowrap">
-                Подписываясь на рассылку, вы можете быть
-                <p className="text-secondary text-sm text-nowrap">
-                  уверены, что мы небудем спамить Вам :)
-                </p>
+                Подписываясь на рассылку, вы можете быть <br />
+                <span className="text-secondary text-sm text-nowrap">
+                  уверены, что мы не будем спамить Вам :)
+                </span>
               </p>
             </div>
             <div className="flex flex-col gap-4">
