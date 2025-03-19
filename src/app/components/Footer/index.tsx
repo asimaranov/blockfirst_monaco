@@ -1,3 +1,6 @@
+import GridSvg from './assets/grid.svg';
+import Image from 'next/image';
+
 export default function Footer() {
   return (
     <>
@@ -10,10 +13,14 @@ export default function Footer() {
           <div className="flex max-w-77 flex-col gap-10">
             <div className="flex flex-col gap-4">
               <h3 className="text-2xl">Новости. Скидки. Анонсы</h3>
-              <p className="text-secondary text-sm">
-                Подписываясь на рассылку, вы можете быть уверены, что мы не
-                будем спамить Вам :)
+              <p className="text-secondary text-sm text-nowrap">
+                Подписываясь на рассылку, вы можете быть 
+                <p className="text-secondary text-sm text-nowrap">
+                уверены, что мы небудем спамить Вам :)
               </p>
+              </p>
+              
+
             </div>
             <div className="flex flex-col gap-4">
               <div className="flex items-center gap-4">
@@ -117,10 +124,18 @@ export default function Footer() {
         </div>
 
         {/* Bottom section */}
-        <div className="divide-accent grid grid-cols-1 gap-8 divide-x border-t border-b border-[#282F33] px-8 md:grid-cols-3">
-          <div className="flex flex-col gap-2 py-6">
-            <span className="text-secondary text-sm">Для бизнес запросов</span>
-            <div className="flex items-center gap-4">
+        <div className="divide-accent relative grid h-25 grid-cols-1 gap-8 divide-x border-t border-b border-[#282F33] px-8 md:grid-cols-3">
+          <div className="relative flex flex-col gap-2 py-6">
+            <Image
+              src={GridSvg}
+              alt="Grid"
+              className="absolute bottom-[-1px] left-0 z-0 w-full"
+            />
+
+            <span className="text-secondary relative z-10 text-xs">
+              Для бизнес запросов
+            </span>
+            <div className="relative z-10 flex items-center gap-4">
               <svg
                 width="16"
                 height="16"
@@ -138,14 +153,20 @@ export default function Footer() {
                 />
               </svg>
 
-              <a href="mailto:business@blockfirst.io" className="">
+              <a href="mailto:business@blockfirst.io" className="text-sm">
                 business@blockfirst.io
               </a>
             </div>
           </div>
 
-          <div className="flex flex-col gap-2 py-6">
-            <span className="text-secondary text-sm">
+          <div className="relative flex flex-col gap-2 py-6">
+            <Image
+              src={GridSvg}
+              alt="Grid"
+              className="absolute bottom-[-1px] left-0 z-0 w-full"
+            />
+
+            <span className="text-secondary text-xs">
               Для запросов от пользователей
             </span>
             <div className="flex items-center gap-4">
@@ -166,14 +187,20 @@ export default function Footer() {
                 />
               </svg>
 
-              <a href="mailto:hello@blockfirst.io" className="">
+              <a href="mailto:hello@blockfirst.io" className="text-sm">
                 hello@blockfirst.io
               </a>
             </div>
           </div>
 
-          <div className="flex flex-col gap-2 py-6">
-            <span className="text-secondary text-sm">
+          <div className="flex flex-col gap-2 py-6 relative">
+            <Image
+              src={GridSvg}
+              alt="Grid"
+              className="absolute bottom-[-1px] left-0 z-0 w-full"
+            />
+
+            <span className="text-secondary text-xs">
               Телеграм бот для быстрых ответов
             </span>
             <div className="flex items-center justify-between">
@@ -193,7 +220,7 @@ export default function Footer() {
                   />
                 </svg>
 
-                <a href="https://t.me/blockfirst_edu/app" className="">
+                <a href="https://t.me/blockfirst_edu/app" className="text-sm">
                   t.me/blockfirst_edu/app
                 </a>
               </div>
@@ -223,7 +250,7 @@ export default function Footer() {
             </a>
             <a href="#">Конфиденциальность</a>
           </div>
-          <div className="flex items-center justify-between gap-[383px]">
+          <div className="flex items-center justify-between gap-95">
             <span className="text-secondary">
               © 2025-2026 BlockFirst. Все права защищены.
             </span>
@@ -235,7 +262,7 @@ export default function Footer() {
                   ?.scrollTo({ top: 0, behavior: 'smooth' });
               }}
             >
-              <a className="text-sm">В начало</a>
+              <a className="text-sm text-nowrap">В начало</a>
               <svg
                 width="21"
                 height="20"

@@ -178,7 +178,7 @@ export default function MentorPage({ session }: { session: Session }) {
                   </div>
                 </div>
                 {mentor.soon && (
-                  <div className="bg-dark-bg absolute right-0 bottom-0 left-0 h-[77px] opacity-50"></div>
+                  <div className="bg-dark-bg absolute right-0 bottom-0 left-0 h-20 opacity-50"></div>
                 )}
               </div>
             ))}
@@ -195,7 +195,7 @@ export default function MentorPage({ session }: { session: Session }) {
                 className="absolute inset-0 h-64.5 w-100"
               />
               {/* Avatar container */}
-              <div className="absolute inset-x-0 flex h-[258px] items-center justify-center">
+              <div className="absolute inset-x-0 flex h-64 items-center justify-center">
                 <Image
                   src={mentors[index]!.bigImage ?? ''}
                   alt={mentors[index]!.name ?? ''}
@@ -253,7 +253,7 @@ export default function MentorPage({ session }: { session: Session }) {
 
                   <div className="flex gap-2">
                     {mentors[index]!.skills?.map((skill) => (
-                      <span className="text-secondary rounded-lg bg-[#14171C] px-3 py-2 text-xxs uppercase">
+                      <span className="text-secondary text-xxs rounded-lg bg-[#14171C] px-3 py-2 uppercase">
                         {skill}
                       </span>
                     ))}
@@ -554,7 +554,7 @@ export default function MentorPage({ session }: { session: Session }) {
 
                 {/* Submit button */}
                 <motion.button
-                  className="bg-primary text-foreground ml-auto flex h-12 w-12 items-center justify-center rounded-full disabled:opacity-30 cursor-pointer"
+                  className="bg-primary text-foreground ml-auto flex h-12 w-12 cursor-pointer items-center justify-center rounded-full disabled:opacity-30"
                   disabled={name === '' || telegram === '' || course === ''}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -577,7 +577,7 @@ export default function MentorPage({ session }: { session: Session }) {
               </div>
 
               {/* Privacy notice */}
-              <div className="mt-auto flex h-8 items-center justify-center bg-[#14171C] shrink-0">
+              <div className="mt-auto flex h-8 shrink-0 items-center justify-center bg-[#14171C]">
                 <div className="flex items-center gap-2">
                   <div className="text-secondary h-3.5 w-3.5">
                     <svg
@@ -594,7 +594,7 @@ export default function MentorPage({ session }: { session: Session }) {
                       />
                     </svg>
                   </div>
-                  <span className="text-secondary text-xs shrink-0">
+                  <span className="text-secondary shrink-0 text-xs">
                     Ваши данные полностью{' '}
                     <span className="cursor-pointer text-white underline">
                       Конфиденциальны

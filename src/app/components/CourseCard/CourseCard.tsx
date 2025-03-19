@@ -14,7 +14,7 @@ export function CourseCard({ course }: { course: ICourse }) {
 
   return (
     <div
-      className="group relative flex shrink-0 flex-col items-center hover:bg-[#14171C]"
+      className="group relative flex shrink-0 flex-col items-center hover:bg-[#14171C] nth-[3n]:border-r-0"
       onMouseEnter={() => {
         if (!course.soon) {
           controls.start({ rotate: -30, scale: 1.2 });
@@ -133,7 +133,7 @@ export function CourseCard({ course }: { course: ICourse }) {
             <h3 className="text-lg font-medium text-[#F2F2F2]">
               {course.title}
             </h3>
-            <p className="text-secondary text-sm leading-5">
+            <p className="text-secondary text-sm leading-5 line-clamp-2">
               {course.description}
             </p>
           </div>
