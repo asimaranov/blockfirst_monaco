@@ -56,7 +56,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col border-accent border-b">
       <div className="bg-[#01050D] p-8">
         <div className="relative">
           {tariff.sale && (
@@ -243,8 +243,6 @@ export default function PricingPage({ session }: { session: Session }) {
           ))}
         </div>
       </div>
-      <div className="border-accent h-9.5 border-t"></div>
-
       <Footer />
     </main>
   );

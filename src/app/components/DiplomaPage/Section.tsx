@@ -19,7 +19,10 @@ export function Section({
   children,
 }: SectionProps) {
   return (
-    <div className="border-accent flex w-full flex-col border-b" key={title}>
+    <div
+      className="border-accent flex w-full flex-col border-b last:border-b-0"
+      key={title}
+    >
       <div
         className="border-accent flex cursor-pointer items-center justify-between border-b px-8 py-5"
         onClick={onToggle}

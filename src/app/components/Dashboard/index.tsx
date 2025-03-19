@@ -47,7 +47,7 @@ export default function Dashboard({ session }: { session: Session }) {
             ) : (
               <Skeleton className="h-[354px] w-full" />
             )}
-            <section className="divide [&>*]:border-accent divide-accent border-accent mb-[37px] grid grid-cols-1 gap-y-9 divide-x-1 sm:grid-cols-2 lg:grid-cols-3 [&>*]:border-y">
+            <section className="divide [&>*]:border-accent divide-accent border-accent grid grid-cols-1 gap-y-9 divide-x-1 sm:grid-cols-2 lg:grid-cols-3 [&>*]:border-y">
               {COURSES.slice(1).map((course) => (
                 <CourseCard key={course.id} course={course} />
               ))}

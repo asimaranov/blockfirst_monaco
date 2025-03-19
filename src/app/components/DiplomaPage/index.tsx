@@ -275,7 +275,8 @@ export default function DiplomaPage({ session }: { session: Session }) {
                   >
                     <ExpandIcon />
                   </div>
-                  <div className="hover:bg-foreground group flex flex-row items-center justify-center py-3.5"
+                  <div
+                    className="hover:bg-foreground group flex flex-row items-center justify-center py-3.5"
                     onClick={() => {
                       setDiplomaStatus('locked');
                     }}
@@ -300,12 +301,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
         >
           <div>{/* Frontend Developer content will go here */}</div>
         </Section>
-
-        <div className="grid flex-1 grid-cols-3 divide-x divide-[#282D33]">
-          {/* Content will go here */}
-        </div>
       </div>
-      <div className="border-accent h-9.5 border-t"></div>
       <Footer />
     </main>
   );
