@@ -39,7 +39,7 @@ export default function Dashboard({ session }: { session: Session }) {
           },
         ]}
       />
-      <div className="grid grid-cols-1 gap-8">
+      <div className="grid grid-cols-1 gap-8">  
         {dashboardSection === 'courses' && (
           <>
             {COURSES?.[0] ? (

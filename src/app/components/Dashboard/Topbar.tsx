@@ -17,7 +17,7 @@ export function Topbar({
   return (
     <nav
       className={cn(
-        'flex w-full flex-row items-center justify-between border-b border-[#282D33] px-8 py-6'
+        'flex w-full flex-row items-center justify-between border-[#282D33] px-8 py-6'
       )}
     >
       <div className="flex flex-row rounded-[100px] bg-[#01050D]">

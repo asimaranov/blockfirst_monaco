@@ -126,7 +126,7 @@ export default function Footer() {
             <Image
               src={GridSvg}
               alt="Grid"
-              className="absolute bottom-[-1px] right-0 z-0 w-full"
+              className="absolute bottom-0 right-0 z-0 w-full"
             />
 
             <span className="text-secondary relative z-10 text-xs">
