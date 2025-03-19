@@ -253,7 +253,7 @@ export default function MentorPage({ session }: { session: Session }) {
 
                   <div className="flex gap-2">
                     {mentors[index]!.skills?.map((skill) => (
-                      <span className="text-secondary rounded-lg bg-[#14171C] px-3 py-2 text-xs uppercase">
+                      <span className="text-secondary rounded-lg bg-[#14171C] px-3 py-2 text-xxs uppercase">
                         {skill}
                       </span>
                     ))}
