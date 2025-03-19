@@ -7,7 +7,7 @@ export default function Footer() {
         {/* Top section */}
         <div className="mb-16 flex w-full px-8">
           {/* Newsletter signup */}
-          <div className="flex max-w-75 flex-col gap-10">
+          <div className="flex max-w-77 flex-col gap-10">
             <div className="flex flex-col gap-4">
               <h3 className="text-2xl">Новости. Скидки. Анонсы</h3>
               <p className="text-secondary text-sm">

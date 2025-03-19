@@ -577,7 +577,7 @@ export default function MentorPage({ session }: { session: Session }) {
               </div>
 
               {/* Privacy notice */}
-              <div className="mt-auto flex h-8 items-center justify-center bg-[#14171C]">
+              <div className="mt-auto flex h-8 items-center justify-center bg-[#14171C] shrink-0">
                 <div className="flex items-center gap-2">
                   <div className="text-secondary h-3.5 w-3.5">
                     <svg
