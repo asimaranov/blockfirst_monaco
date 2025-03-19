@@ -8,10 +8,11 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import CallIcon from './assets/calls.png';
 import TextIcon from './assets/text.png';
-
+import GridSvg from './assets/grid.svg';
 import UserIcon from './input-legends/user';
 import TelegramSvg from './input-legends/telegram';
 import BookIcon from './input-legends/book';
+
 
 const ComingSoon = () => {
   return (
@@ -188,10 +189,7 @@ export default function MentorPage({ session }: { session: Session }) {
             {/* Profile container */}
             <div className="bg-background relative h-91 overflow-hidden">
               {/* Background grid effect */}
-              <div className="absolute inset-0 -top-[25px] h-[283px] w-full">
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(40,45,51,1)_20%,rgba(40,45,51,0)_68%)]"></div>
-              </div>
-
+              <Image src={GridSvg} alt="background" className='absolute inset-0 w-full h-full ' />
               {/* Avatar container */}
               <div className="absolute inset-x-0 flex h-[258px] items-center justify-center">
                 <div className="relative h-[267px] w-[208px]">

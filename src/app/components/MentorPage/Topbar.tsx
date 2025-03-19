@@ -1,11 +1,4 @@
-import Link from 'next/link';
 import { cn } from '~/helpers';
-
-interface TopbarItem {
-  label: string;
-  active: boolean;
-  onClick: () => void;
-}
 
 export function Topbar({
   lastestUpdate,
