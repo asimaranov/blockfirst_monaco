@@ -11,7 +11,7 @@ export function Topbar({
         'flex w-full flex-row items-center justify-between border-b border-[#282D33] px-8 py-6'
       )}
     >
-      <div className="flex flex-row rounded-[100px] bg-[#01050D] text-xl">
+      <div className="flex flex-row text-xl">
         Кураторы BlockFirst
       </div>
       <div className="flex flex-col gap-2">

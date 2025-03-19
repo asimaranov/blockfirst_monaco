@@ -9,10 +9,10 @@ import { motion } from 'framer-motion';
 import CallIcon from './assets/calls.png';
 import TextIcon from './assets/text.png';
 import GridSvg from './assets/grid.svg';
+import TopGridSvg from './assets/top-grid.svg';
 import UserIcon from './input-legends/user';
 import TelegramSvg from './input-legends/telegram';
-import BookIcon from './input-legends/book';
-
+import TaskSquareSvg from './input-legends/task_square';
 
 const ComingSoon = () => {
   return (
@@ -112,13 +112,13 @@ export default function MentorPage({ session }: { session: Session }) {
 
   const [name, setName] = useState('');
   const [telegram, setTelegram] = useState('');
-  const [motivation, setMotivation] = useState('');
+  const [course, setCourse] = useState('');
 
   return (
     <main className="border-accent border-r border-l">
       <div className="flex h-screen flex-col">
         <Topbar lastestUpdate={'18 марта 2025'} />
-        <div className="flex h-full border-accent border-b">
+        <div className="border-accent flex h-full border-b">
           {/* Mentors sidebar */}
           <section className="border-accent w-[300px] border-r">
             {mentors.map((mentor) => (
@@ -185,22 +185,24 @@ export default function MentorPage({ session }: { session: Session }) {
           </section>
 
           {/* Left sidebar - Mentor Profile */}
-          <section className="border-accent flex flex-col border-r w-100">
+          <section className="border-accent flex w-100 flex-col border-r">
             {/* Profile container */}
             <div className="bg-background relative h-91 overflow-hidden">
               {/* Background grid effect */}
-              <Image src={GridSvg} alt="background" className='absolute inset-0 w-full h-full ' />
+              <Image
+                src={GridSvg}
+                alt="background"
+                className="absolute inset-0 h-64.5 w-100"
+              />
               {/* Avatar container */}
               <div className="absolute inset-x-0 flex h-[258px] items-center justify-center">
-                <div className="relative h-[267px] w-[208px]">
-                  <Image
-                    src={mentors[index]!.bigImage ?? ''}
-                    alt={mentors[index]!.name ?? ''}
-                    fill
-                    style={{ objectFit: 'contain' }}
-                    priority
-                  />
-                </div>
+                <Image
+                  src={mentors[index]!.bigImage ?? ''}
+                  alt={mentors[index]!.name ?? ''}
+                  fill
+                  style={{ objectFit: 'contain' }}
+                  priority
+                />
               </div>
 
               {/* Name and title */}
@@ -251,7 +253,7 @@ export default function MentorPage({ session }: { session: Session }) {
 
                   <div className="flex gap-2">
                     {mentors[index]!.skills?.map((skill) => (
-                      <span className="text-secondary rounded-lg bg-[#14171C] px-3 py-2 text-xs uppercase opacity-50">
+                      <span className="text-secondary rounded-lg bg-[#14171C] px-3 py-2 text-xs uppercase">
                         {skill}
                       </span>
                     ))}
@@ -274,11 +276,11 @@ export default function MentorPage({ session }: { session: Session }) {
                           <path d="M4.462 19.462c.42-.419.753-.89 1-1.394.453.213.902.434 1.347.661a6.743 6.743 0 01-1.286 1.794.75.75 0 11-1.06-1.06z" />
                         </svg>
                       </div>
-                      <span className="text-secondary text-sm">
+                      <span className="text-secondary text-xs">
                         Образование:
                       </span>
                     </div>
-                    <span className="text-foreground text-sm">
+                    <span className="text-foreground text-xs">
                       {mentors[index]!.education}
                     </span>
                   </div>
@@ -299,11 +301,11 @@ export default function MentorPage({ session }: { session: Session }) {
                           />
                         </svg>
                       </div>
-                      <span className="text-secondary text-sm">
+                      <span className="text-secondary text-xs">
                         Опыт работы:
                       </span>
                     </div>
-                    <span className="text-foreground text-sm">
+                    <span className="text-foreground text-xs">
                       {mentors[index]!.experience}
                     </span>
                   </div>
@@ -320,9 +322,9 @@ export default function MentorPage({ session }: { session: Session }) {
                           <path d="M21.721 12.752a9.711 9.711 0 00-.945-5.003 12.754 12.754 0 01-4.339 2.708 18.991 18.991 0 01-.214 4.772 17.165 17.165 0 005.498-2.477zM14.634 15.55a17.324 17.324 0 00.332-4.647c-.952.227-1.945.347-2.966.347-1.021 0-2.014-.12-2.966-.347a17.515 17.515 0 00.332 4.647 17.385 17.385 0 005.268 0zM9.772 17.119a18.963 18.963 0 004.456 0A17.182 17.182 0 0112 21.724a17.18 17.18 0 01-2.228-4.605zM7.777 15.23a18.87 18.87 0 01-.214-4.774 12.753 12.753 0 01-4.34-2.708 9.711 9.711 0 00-.944 5.004 17.165 17.165 0 005.498 2.477zM21.356 14.752a9.765 9.765 0 01-7.478 6.817 18.64 18.64 0 001.988-4.718 18.627 18.627 0 005.49-2.098zM2.644 14.752c1.682.971 3.53 1.688 5.49 2.099a18.64 18.64 0 001.988 4.718 9.765 9.765 0 01-7.478-6.816zM13.878 2.43a9.755 9.755 0 016.116 3.986 11.267 11.267 0 01-3.746 2.504 18.63 18.63 0 00-2.37-6.49zM12 2.276a17.152 17.152 0 012.805 7.121c-.897.23-1.837.353-2.805.353-.968 0-1.908-.122-2.805-.353A17.151 17.151 0 0112 2.276zM10.122 2.43a18.629 18.629 0 00-2.37 6.49 11.266 11.266 0 01-3.746-2.504 9.754 9.754 0 016.116-3.985z" />
                         </svg>
                       </div>
-                      <span className="text-secondary text-sm">Языки:</span>
+                      <span className="text-secondary text-xs">Языки:</span>
                     </div>
-                    <span className="text-foreground text-sm">
+                    <span className="text-foreground text-xs">
                       Typescript, Solidity, Rust, Python
                     </span>
                   </div>
@@ -360,10 +362,12 @@ export default function MentorPage({ session }: { session: Session }) {
                 </div>
               </div>
 
-              <div className="bg-[#14171C] flex h-8 items-center justify-center">
-                <p className="text-secondary text-sm">
+              <div className="flex h-8 items-center justify-center bg-[#14171C]">
+                <p className="text-secondary text-xs">
                   Не нравится куратор?{' '}
-                  <span className="text-white underline cursor-pointer">Сменить</span>
+                  <span className="cursor-pointer text-white underline">
+                    Сменить
+                  </span>
                 </p>
               </div>
             </div>
@@ -402,6 +406,13 @@ export default function MentorPage({ session }: { session: Session }) {
                 {/* Calls */}
                 <div className="border-accent w-1/2 border-r">
                   <div className="bg-background relative h-16 overflow-hidden">
+                    <Image
+                      src={TopGridSvg}
+                      alt="Grid"
+                      width={100}
+                      height={100}
+                      className="absolute h-full w-full"
+                    />
                     <div className="relative flex h-full items-center gap-4 px-8">
                       <div className="h-8 w-8 overflow-hidden rounded-full">
                         <Image
@@ -416,8 +427,11 @@ export default function MentorPage({ session }: { session: Session }) {
                   </div>
                   <div className="px-8 py-4">
                     <p className="text-foreground text-xs">
-                      Звонок согласовывается в чате. Пожалуйста, заранее
-                      подготовьте вопрос или опишите проблему.
+                      Звонок согласовывается в чате. <br />
+                      <span className="text-secondary">
+                        Пожалуйста, заранее подготовьте вопрос или опишите
+                        проблему.
+                      </span>
                     </p>
                   </div>
                 </div>
@@ -425,6 +439,13 @@ export default function MentorPage({ session }: { session: Session }) {
                 {/* Text */}
                 <div className="w-1/2">
                   <div className="bg-background relative h-16 overflow-hidden">
+                    <Image
+                      src={TopGridSvg}
+                      alt="Grid"
+                      width={100}
+                      height={100}
+                      className="absolute h-full w-full"
+                    />
                     <div className="relative flex h-full items-center gap-4 px-8">
                       <div className="flex h-8 w-8 items-center justify-center rounded-full">
                         <Image
@@ -442,7 +463,10 @@ export default function MentorPage({ session }: { session: Session }) {
                   <div className="px-8 py-4">
                     <p className="text-foreground text-xs">
                       Обращайтесь с вопросами, возникшими в процессе курса.
-                      Куратор быстро поможет вам!
+                      <br />
+                      <span className="text-secondary">
+                        Куратор быстро поможет вам!
+                      </span>
                     </p>
                   </div>
                 </div>
@@ -483,7 +507,7 @@ export default function MentorPage({ session }: { session: Session }) {
               </div>
 
               {/* Contact form */}
-              <div className="flex flex-col px-8">
+              <div className="flex h-full flex-col px-8">
                 <div className="flex flex-1 flex-col gap-8">
                   <div className="border-accent group focus-within:border-foreground flex h-12 items-center border-b px-4">
                     <div className="w-4">
@@ -512,17 +536,17 @@ export default function MentorPage({ session }: { session: Session }) {
                     />
                   </div>
 
-                  <div className="border-accent group focus-within:border-b-foreground flex w-full flex-1 flex-col p-4">
+                  <div className="border-accent group focus-within:border-b-foreground flex w-full flex-col border-b p-4">
                     <div className="flex flex-1 items-start gap-3">
                       <div className="w-4">
-                        <BookIcon active={motivation !== ''} />
+                        <TaskSquareSvg active={course !== ''} />
                       </div>
-                      <textarea
-                        value={motivation}
-                        onChange={(e) => setMotivation(e.target.value)}
-                        className="text-foreground placeholder:text-secondary/50 -mt-1 h-full w-full grow resize-none bg-transparent text-sm focus:outline-none"
-                        placeholder={`Расскажите о себе\n\nРасскажите куратору о своем опыте, проектах и целях`}
-                        rows={5}
+                      <input
+                        type="text"
+                        placeholder="Курс который вы проходите"
+                        value={course}
+                        onChange={(e) => setCourse(e.target.value)}
+                        className="text-foreground placeholder:text-secondary/50 ml-3 h-full w-full bg-transparent text-sm focus:outline-none"
                       />
                     </div>
                   </div>
@@ -530,7 +554,8 @@ export default function MentorPage({ session }: { session: Session }) {
 
                 {/* Submit button */}
                 <motion.button
-                  className="bg-primary text-foreground ml-auto flex h-12 w-12 items-center justify-center rounded-full"
+                  className="bg-primary text-foreground ml-auto flex h-12 w-12 items-center justify-center rounded-full disabled:opacity-30 cursor-pointer"
+                  disabled={name === '' || telegram === '' || course === ''}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -552,7 +577,7 @@ export default function MentorPage({ session }: { session: Session }) {
               </div>
 
               {/* Privacy notice */}
-              <div className="bg-[#14171C] mt-auto flex h-8 items-center justify-center">
+              <div className="mt-auto flex h-8 items-center justify-center bg-[#14171C]">
                 <div className="flex items-center gap-2">
                   <div className="text-secondary h-3.5 w-3.5">
                     <svg
@@ -569,9 +594,9 @@ export default function MentorPage({ session }: { session: Session }) {
                       />
                     </svg>
                   </div>
-                  <span className="text-secondary text-sm ">
+                  <span className="text-secondary text-xs shrink-0">
                     Ваши данные полностью{' '}
-                    <span className="text-white underline cursor-pointer">
+                    <span className="cursor-pointer text-white underline">
                       Конфиденциальны
                     </span>
                   </span>
