@@ -55,7 +55,7 @@ export function CourseCard({ course }: { course: ICourse }) {
         />
         <div className="pointer-events-none absolute top-0 left-0 z-30 flex h-full w-full items-center justify-center">
           {course.bage?.title && (
-            <span className="text-xxs bg-background/30 border-foreground/20 flex items-center justify-center gap-2 rounded-full border px-4 py-3 font-bold backdrop-blur-sm">
+            <span className="text-xxs bg-background/30 border-foreground/20 flex items-center justify-center gap-2 rounded-full border px-4 py-3 backdrop-blur-sm">
               {course.bage?.img && (
                 <Image
                   src={course.bage.img}
@@ -64,7 +64,7 @@ export function CourseCard({ course }: { course: ICourse }) {
                   height={16}
                 />
               )}
-              <span className="mt-0.5">{course.bage?.title}</span>
+              <span className="mt-0.5 font-delight z-30">{course.bage?.title}</span>
             </span>
           )}
         </div>

@@ -57,7 +57,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
         </motion.div>
         <div className="pointer-events-none absolute top-0 left-0 flex h-full w-full items-center justify-center">
           {course.bage?.title && (
-            <span className="bg-background/30 border-foreground/20 z-30 flex items-center justify-center gap-2 rounded-full border px-6 py-4 text-sm font-bold backdrop-blur-sm">
+            <span className="bg-background/30 border-foreground/20 z-30 flex items-center justify-center gap-2 rounded-full border px-6 py-4 text-sm backdrop-blur-sm">
               {course.bage?.img && (
                 <Image
                   src={course.bage.img}
@@ -66,7 +66,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
                   height={16}
                 />
               )}
-              <span className="mt-0.5">{course.bage.title}</span>
+              <span className="mt-0.5 font-delight">{course.bage.title}</span>
             </span>
           )}
         </div>

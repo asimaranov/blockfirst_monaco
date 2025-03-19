@@ -35,7 +35,7 @@ export default function CourseInfoTopCard({ course }: { course: ICourse }) {
         />
         <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center">
           {course.bage?.title && (
-            <span className="bg-background/30 border-foreground/20 z-30 flex items-center justify-center gap-2 rounded-full border px-6 py-4 text-sm font-bold backdrop-blur-sm">
+            <span className="bg-background/30 border-foreground/20 z-30 flex items-center justify-center gap-2 rounded-full border px-6 py-4 text-sm  backdrop-blur-sm font-delight">
               {course.bage?.img && (
                 <Image
                   src={course.bage.img}
@@ -44,7 +44,7 @@ export default function CourseInfoTopCard({ course }: { course: ICourse }) {
                   height={16}
                 />
               )}
-              <span className="mt-0.5">{course.bage.title}</span>
+              <span className="mt-0.5 font-delight">{course.bage.title}</span>
             </span>
           )}
         </div>
@@ -69,7 +69,7 @@ export default function CourseInfoTopCard({ course }: { course: ICourse }) {
         </div>
         <div className="mt-6 flex flex-col gap-4">
           <span className="text-2xll font-bold">{course.title}</span>
-          <span className="text-secondary text-sm">{course.aboutText || course.description}</span>
+          <span className="text-secondary text-sm line-clamp-4">{course.aboutText || course.description}</span>
           <div className="flex flex-row gap-2">
             <div className="flex items-center gap-1 rounded-lg border border-[#282C32] px-4 py-2">
               <Image src={VideoIcon} alt="" width={14} height={14} />

@@ -213,7 +213,7 @@ export default function CoursePage({
                   <span className="text-2xl text-gray-100">100+</span>
                 </div>
                 <span className="text-xs text-gray-400">
-                  Разной сложности задач
+                  Задач в курсе
                 </span>
               </div>
             </div>
@@ -307,7 +307,7 @@ export default function CoursePage({
                   </div>
                 </div>
                 {section.lessons && (
-                  <div className="flex flex-col gap-4 px-8 py-4">
+                  <div className="flex flex-col gap-4 px-8 pt-5">
                     {section.lessons.map((lesson, lessonIndex) => (
                       <div
                         key={lessonIndex}
