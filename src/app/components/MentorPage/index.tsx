@@ -117,7 +117,7 @@ export default function MentorPage({ session }: { session: Session }) {
     <main className="border-accent border-r border-l">
       <div className="flex h-screen flex-col">
         <Topbar lastestUpdate={'18 марта 2025'} items={[]} />
-        <div className="flex h-full">
+        <div className="flex h-full border-accent border-b">
           {/* Mentors sidebar */}
           <section className="border-accent w-[300px] border-r">
             {mentors.map((mentor) => (
