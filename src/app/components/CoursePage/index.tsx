@@ -93,9 +93,12 @@ export default function CoursePage({
         <CourseInfoTopCard course={course} />
         <div className="border-accent flex flex-col border-l">
           {/* Top section with Starter and Pro blocks */}
-          <div className="border-accent flex flex-row border-b">
+          <div className="border-accent flex flex-row border-b divide-accent divide-x">
             {Tariffs.map((tariff) => (
-              <div className="flex-1 border-r border-[#282D33]" key={tariff.name}>
+              <div
+                className="flex-1"
+                key={tariff.name}
+              >
                 <div className="flex flex-col">
                   {/* Dark header */}
                   <div className="relative h-[81px] bg-[#01050D]">
@@ -183,9 +186,9 @@ export default function CoursePage({
           <div className="h-9.5 w-full"></div>
 
           {/* Bottom section with stats */}
-          <div className="border-accent flex flex-row border-t border-b">
+          <div className="border-accent flex flex-row border-t border-b divide-accent divide-x">
             {/* Tasks stat */}
-            <div className="flex-1 border-r border-[#282D33] px-8 py-5">
+            <div className="flex-1 px-8 py-5">
               <div className="flex flex-col gap-3">
                 <div className="flex flex-row items-center gap-3">
                   <svg
@@ -211,7 +214,7 @@ export default function CoursePage({
             </div>
 
             {/* Tests stat */}
-            <div className="border-accent flex-1 border-r px-8 py-5">
+            <div className="border-accent flex-1 px-8 py-5">
               <div className="flex flex-col gap-3">
                 <div className="flex flex-row items-center gap-3">
                   <svg
@@ -237,7 +240,7 @@ export default function CoursePage({
             </div>
 
             {/* Lectures stat */}
-            <div className="flex-1 border-r border-[#282D33] px-8 py-5">
+            <div className="flex-1 px-8 py-5">
               <div className="flex flex-col gap-3">
                 <div className="flex flex-row items-center gap-3">
                   <svg
