@@ -60,11 +60,11 @@ export default function Dashboard({ session }: { session: Session }) {
           </>
         )}
         {dashboardSection === 'history' && (
-          <section className="divide [&>*]:border-accent divide-accent border-accent mb-[37px] grid grid-cols-1 gap-y-9 divide-x-1 sm:grid-cols-2 lg:grid-cols-3 [&>*]:border-y">
+          <section className="divide [&>*]:border-accent divide-accent border-accent grid grid-cols-1 gap-y-9 divide-x-1 sm:grid-cols-2 lg:grid-cols-3 [&>*]:border-y">
             {COURSES.map((course) => (
               <CourseCard key={course.id} course={course} />
             ))}
-            {Array.from({ length: 3 - (COURSES.length % 3) }).map(
+            {Array.from({ length: (3 - (COURSES.length % 3)) % 3 }).map(
               (_, index) => (
                 <div key={index}></div>
               )

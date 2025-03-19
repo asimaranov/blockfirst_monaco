@@ -129,7 +129,7 @@ export const COURSES: ICourse[] = [
   },
   {
     id: 'gas_advanced',
-    title: 'Усовершенствованная оптимизация газа',
+    title: 'Оптимизация газа',
     description:
       'Cэкономите деньги Алекса и его пользователей, изучив и используя передовые...',
     smallImg: '/courses/advanced_gas/small.png',
