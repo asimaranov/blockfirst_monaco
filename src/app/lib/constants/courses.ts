@@ -17,6 +17,7 @@ export interface ICourse {
   id: string;
   title: string;
   description: string;
+  aboutText?: string;
   smallImg: string;
   bigImg: string;
   soon: boolean;
@@ -28,8 +29,8 @@ export const COURSES: ICourse[] = [
   {
     id: 'solidity',
     title: 'Путешествие по Solidity & DeFi',
-    description:
-      'Помогите Алексу создать свой собственный токен, продать его инвесторам, внедрить стейкинг, наделение правами, мультисигму...',
+    description: 'Помогите Алексу создать свой собственный токен, продать его инвесторам, внедрить стейкинг, наделение правами, мультисигму...',
+    aboutText: 'После интерактивного курса ты научишься писать смарт-контракты и станешь востребованным разработчиком блокчейнов. Независимо от начального уровня, ты освоишь технологию будущего с помощью виртуального помощника. Главная особенность наших курсов — практика и мгновенная проверка кода прямо на сайте',
     smallImg: '/courses/solidity/small.png',
     bigImg: '/courses/solidity/big.png',
     soon: false,

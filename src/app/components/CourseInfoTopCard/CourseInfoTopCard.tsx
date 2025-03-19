@@ -69,19 +69,19 @@ export default function CourseInfoTopCard({ course }: { course: ICourse }) {
         </div>
         <div className="mt-6 flex flex-col gap-4">
           <span className="text-2xll font-bold">{course.title}</span>
-          <span className="text-secondary text-sm">{course.description}</span>
+          <span className="text-secondary text-sm">{course.aboutText || course.description}</span>
           <div className="flex flex-row gap-2">
             <div className="flex items-center gap-1 rounded-lg border border-[#282C32] px-4 py-2">
               <Image src={VideoIcon} alt="" width={14} height={14} />
-              <span className="text-foreground text-sm">Видеолекции</span>
+              <span className="text-foreground text-xs">Видеолекции</span>
             </div>
             <div className="flex items-center gap-1 rounded-lg border border-[#282C32] px-4 py-2">
               <Image src={PracticeIcon} alt="" width={14} height={14} />
-              <span className="text-foreground text-sm">Практика</span>
+              <span className="text-foreground text-xs">Практика</span>
             </div>
             <div className="flex items-center gap-1 rounded-lg border border-[#282C32] px-4 py-2">
               <Image src={TheoryIcon} alt="" width={14} height={14} />
-              <span className="text-foreground text-sm">Теория</span>
+              <span className="text-foreground text-xs">Теория</span>
             </div>
           </div>
         </div>
