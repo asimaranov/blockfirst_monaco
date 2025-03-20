@@ -15,6 +15,7 @@ import { DiplomaView } from './DiplomaView';
 import CopyIcon from './assets/copy';
 import ExpandIcon from './assets/expand';
 import DownloadIcon from './assets/download';
+import { Progress } from '../shared/Progress';
 
 const competencies = [
   'Изучите блокчейны Ethereum, BSC, Polygon и библиотеки',
@@ -135,6 +136,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
                   <span className="text-secondary text-xs uppercase opacity-50">
                     Уроки
                   </span>
+                  
                   <div className="text-secondary flex items-center justify-between text-xs uppercase">
                     <span className="opacity-50">Прогресс</span>
                     <svg
@@ -213,22 +215,12 @@ export default function DiplomaPage({ session }: { session: Session }) {
                         </span>
 
                         <div className="relative">
-                          <div className="bg-accent h-2 w-full rounded-full">
-                            <div
-                              className="h-full rounded-full bg-gradient-to-r from-[#FFf93f] to-[#FF973f]"
-                              style={{
-                                width: `${((userProgress[course.id] || 0) / (course.info?.lessonsCount || 1)) * 100}%`,
-                              }}
-                            />
-                          </div>
-                          {(userProgress[course.id] || 0) > 0 && (
-                            <div
-                              className="absolute top-1/2 left-0 h-1 w-1 -translate-y-1/2 rounded-full bg-[#01050D]"
-                              style={{
-                                left: `${((userProgress[course.id] || 0) / (course.info?.lessonsCount || 1)) * 100}%`,
-                              }}
-                            />
-                          )}
+                          <Progress
+                            inactive={!!course.soon}
+                            value={userProgress[course.id]}
+                            max={course.info?.lessonsCount || 0}
+                            className='h-2'
+                          />
                         </div>
                       </div>
                     ))}
@@ -292,7 +284,15 @@ export default function DiplomaPage({ session }: { session: Session }) {
             </div>
           </div>
         </Section>
-
+        <Section
+          title="Smart Contracts Auditor"
+          status="coming_soon"
+          tags={['Web3 безопасность', 'Белый хакинг', 'Аудиты']}
+          isExpanded={isFrontendExpanded}
+          onToggle={() => setIsFrontendExpanded(!isFrontendExpanded)}
+        >
+          <div>{/* Frontend Developer content will go here */}</div>
+        </Section>
         <Section
           title="Frontend Developer"
           status="coming_soon"
@@ -302,7 +302,35 @@ export default function DiplomaPage({ session }: { session: Session }) {
         >
           <div>{/* Frontend Developer content will go here */}</div>
         </Section>
-        
+
+        <Section
+          title="Product Design"
+          status="coming_soon"
+          tags={['Интерфейсы', 'UX/UI', 'Figma']}
+          isExpanded={isFrontendExpanded}
+          onToggle={() => setIsFrontendExpanded(!isFrontendExpanded)}
+        >
+          <div>{/* Frontend Developer content will go here */}</div>
+        </Section>
+
+        <Section
+          title="Community Manager"
+          status="coming_soon"
+          tags={['Twitter', 'Telegram', 'Discord']}
+          isExpanded={isFrontendExpanded}
+          onToggle={() => setIsFrontendExpanded(!isFrontendExpanded)}
+        >
+          <div>{/* Frontend Developer content will go here */}</div>
+        </Section>
+        <Section
+          title="Content Writer"
+          status="coming_soon"
+          tags={['Английский', 'Копирайтинг', 'Маркетинг']}
+          isExpanded={isFrontendExpanded}
+          onToggle={() => setIsFrontendExpanded(!isFrontendExpanded)}
+        >
+          <div>{/* Frontend Developer content will go here */}</div>
+        </Section>
       </div>
       <Footer />
     </main>

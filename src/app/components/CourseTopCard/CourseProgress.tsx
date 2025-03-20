@@ -22,7 +22,7 @@ export function CourseProgress({
           {progress}%
         </span>
       </div>
-      <Progress value={progress} />
+      <Progress value={progress} useFlag />
     </div>
   );
 }

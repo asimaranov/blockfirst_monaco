@@ -20,16 +20,22 @@ export function Section({
 }: SectionProps) {
   return (
     <div
-      className="border-accent flex w-full flex-col border-b last:border-b-0"
+      className={cn(
+        'border-accent flex w-full flex-col border-b last:border-b-0',
+        !isExpanded && 'border-b-0'
+      )}
       key={title}
     >
       <div
-        className="border-accent flex cursor-pointer items-center justify-between border-b px-8 py-5"
+        className={cn(
+          'border-accent flex  items-center justify-between border-b px-8 py-5',
+          status !== 'coming_soon' && 'cursor-pointer hover:bg-[#14171C]'
+        )}
         onClick={onToggle}
       >
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-3">
-            <h1 className="text-foreground text-xl">{title}</h1>
+            <h1 className="text-foreground text-xl font-delight">{title}</h1>
             {status === 'coming_soon' && (
               <svg
                 width="96"
@@ -79,7 +85,7 @@ export function Section({
               </svg>
             )}
             {status === 'in_progress' && (
-              <div className="rounded-full border-[0.5px] border-[#33CF8E]/50 px-3 py-1 text-xs text-[#33CF8E]">
+              <div className="rounded-full border-[0.5px] border-[#33CF8E]/50 px-3 py-1 text-xs text-[#33CF8E] font-delight">
                 In Progress
               </div>
             )}
@@ -103,48 +109,72 @@ export function Section({
             ))}
           </div>
         </div>
-        <button
-          className={cn(
-            'group flex h-10 w-10 cursor-pointer items-center justify-center'
-          )}
-          onClick={onToggle}
-        >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+
+        {status === 'coming_soon' ? (
+          <div className="flex h-10 w-10 items-center justify-center">
+            <svg
+              width="20"
+              height="21"
+              viewBox="0 0 20 21"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M10.001 14.4005C10.6575 14.4005 11.1896 13.8684 11.1896 13.212C11.1896 12.5556 10.6575 12.0234 10.001 12.0234C9.34463 12.0234 8.8125 12.5556 8.8125 13.212C8.8125 13.8684 9.34463 14.4005 10.001 14.4005Z"
+                fill="#9AA6B5"
+                fill-opacity="0.5"
+              />
+              <path
+                d="M14.574 8.69961V7.78815C14.574 5.8194 14.1 3.20898 9.99479 3.20898C5.88958 3.20898 5.41562 5.8194 5.41562 7.78815V8.69961C3.37396 8.95482 2.70312 9.99023 2.70312 12.535V13.8913C2.70312 16.8809 3.61458 17.7923 6.60417 17.7923H13.3854C16.375 17.7923 17.2865 16.8809 17.2865 13.8913V12.535C17.2865 9.99023 16.6156 8.95482 14.574 8.69961ZM9.99479 15.4152C8.77708 15.4152 7.79271 14.4236 7.79271 13.2132C7.79271 11.9954 8.78437 11.0111 9.99479 11.0111C11.2052 11.0111 12.1969 12.0027 12.1969 13.2132C12.1969 14.4309 11.2125 15.4152 9.99479 15.4152ZM6.60417 8.63398C6.54583 8.63398 6.49479 8.63398 6.43646 8.63398V7.78815C6.43646 5.65169 7.04167 4.22982 9.99479 4.22982C12.9479 4.22982 13.5531 5.65169 13.5531 7.78815V8.64128C13.4948 8.64128 13.4437 8.64128 13.3854 8.64128H6.60417V8.63398Z"
+                fill="#9AA6B5"
+                fill-opacity="0.5"
+              />
+            </svg>
+          </div>
+        ) : (
+          <button
             className={cn(
-              'transition-transform duration-300',
-              isExpanded ? 'text-foreground' : 'group-hover:text-foreground'
+              'group flex h-10 w-10 cursor-pointer items-center justify-center'
             )}
+            onClick={onToggle}
           >
-            <line
-              x1="5"
-              y1="10"
-              x2="15"
-              y2="10"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              className="transition-transform duration-300"
-            />
-            <line
-              x1="10"
-              y1="5"
-              x2="10"
-              y2="15"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
               className={cn(
-                'origin-center transition-transform duration-300',
-                isExpanded ? 'scale-0' : 'scale-100'
+                'transition-transform duration-300',
+                isExpanded ? 'text-secondary' : 'group-hover:text-foreground'
               )}
-            />
-          </svg>
-        </button>
+            >
+              <line
+                x1="5"
+                y1="10"
+                x2="15"
+                y2="10"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                className="transition-transform duration-300"
+              />
+              <line
+                x1="10"
+                y1="5"
+                x2="10"
+                y2="15"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                className={cn(
+                  'origin-center transition-transform duration-300',
+                  isExpanded ? 'scale-0' : 'scale-100'
+                )}
+              />
+            </svg>
+          </button>
+        )}
       </div>
       <AnimatePresence initial={false}>
         {isExpanded && (
