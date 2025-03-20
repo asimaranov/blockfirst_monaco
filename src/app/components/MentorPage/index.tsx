@@ -355,7 +355,7 @@ export default function MentorPage({ session }: { session: Session }) {
               <div className="flex h-8 items-center justify-center bg-[#14171C]">
                 <p className="text-secondary text-xs">
                   Не нравится куратор?{' '}
-                  <span className="cursor-pointer text-white underline">
+                  <span className="cursor-pointer text-white underline hover:opacity-50">
                     Сменить
                   </span>
                 </p>
@@ -643,7 +643,7 @@ export default function MentorPage({ session }: { session: Session }) {
                   </div>
                   <span className="text-secondary shrink-0 text-xs">
                     Ваши данные полностью{' '}
-                    <span className="cursor-pointer text-white underline">
+                    <span className="cursor-pointer text-white underline hover:opacity-50">
                       Конфиденциальны
                     </span>
                   </span>
