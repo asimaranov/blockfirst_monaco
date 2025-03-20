@@ -544,6 +544,7 @@ export default function MentorPage({ session }: { session: Session }) {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setSuccess(true)}
+                    
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -551,7 +552,7 @@ export default function MentorPage({ session }: { session: Session }) {
                       viewBox="0 0 24 24"
                       strokeWidth={1.5}
                       stroke="currentColor"
-                      className="h-5 w-5"
+                      className="h-5 w-5 cursor-pointer"
                     >
                       <path
                         strokeLinecap="round"
