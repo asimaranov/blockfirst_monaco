@@ -13,6 +13,7 @@ import TopGridSvg from './assets/top-grid.svg';
 import UserIcon from './input-legends/user';
 import TelegramSvg from './input-legends/telegram';
 import TaskSquareSvg from './input-legends/task_square';
+import { InfoPopover } from '~/app/components/shared/InfoPopover';
 
 const ComingSoon = () => {
   return (
@@ -381,23 +382,12 @@ export default function MentorPage({ session }: { session: Session }) {
               <div className="border-accent h-12 border-b">
                 <div className="flex h-full items-center justify-between px-8">
                   <span className="text-secondary text-xs uppercase opacity-50">
-                    связь с куратором
+                    Связь с куратором
                   </span>
-                  <div className="text-secondary h-4 w-4">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
-                      />
-                    </svg>
-                  </div>
+                  <InfoPopover
+                    title="Связь с куратором"
+                    content="Мы предоставляем вам личный аккаунт куратора в Telegram. Пожалуйста, заранее согласовывайте время звонков и не звоните без предварительной договоренности, так как у куратора тоже есть личная жизнь :)"
+                  />
                 </div>
               </div>
 
@@ -546,7 +536,7 @@ export default function MentorPage({ session }: { session: Session }) {
                         placeholder="Курс который вы проходите"
                         value={course}
                         onChange={(e) => setCourse(e.target.value)}
-                        className="text-foreground placeholder:text-secondary/50 ml-3 h-full w-full bg-transparent text-sm focus:outline-none"
+                        className="text-foreground placeholder:text-secondary/50 h-full w-full bg-transparent text-sm focus:outline-none"
                       />
                     </div>
                   </div>

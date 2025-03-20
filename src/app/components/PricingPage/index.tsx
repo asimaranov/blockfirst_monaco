@@ -18,6 +18,7 @@ import { cn } from '~/helpers';
 import PaymentMethodsModal from './PaymentMethodsModal';
 import { formatPrice } from '~/app/lib/utils';
 import GridSvg from './assets/grid.svg';
+import { InfoPopover } from '~/app/components/shared/InfoPopover';
 
 const CheckIcon = () => (
   <svg
@@ -34,21 +35,6 @@ const CheckIcon = () => (
       strokeLinecap="round"
       strokeLinejoin="round"
     />
-  </svg>
-);
-
-const InfoIcon = () => (
-  <svg
-    width="16"
-    height="16"
-    viewBox="0 0 16 16"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className="text-secondary transition delay-100 duration-300 ease-in-out group-hover:text-[#F2F2F2]"
-  >
-    <circle cx="8" cy="8" r="6.66667" stroke="currentColor" />
-    <path d="M8 7.33333V10.6667" stroke="currentColor" />
-    <circle cx="8" cy="5.33333" r="0.666667" fill="currentColor" />
   </svg>
 );
 
@@ -74,7 +60,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
                 width={92}
                 height={92}
                 alt={`${tariff.name} plan`}
-                className="h-23 w-23 object-cover z-10"
+                className="z-10 h-23 w-23 object-cover"
               />
             </div>
             <div className="flex flex-col items-center gap-3 text-center">
@@ -96,19 +82,10 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
             Что включено?
           </span>
           {tariff.price && (
-            <div className="group cursor-pointer">
-              <InfoIcon />
-              <div className="relative">
-                <div className="invisible absolute top-4 -right-8 flex w-112 flex-col gap-3 bg-[#1D2026] p-6 opacity-0 transition-all transition-discrete delay-100 duration-300 ease-in-out group-hover:visible group-hover:opacity-100">
-                  <div className="text-sm">Структура курса заблокирована?</div>
-                  <div className="text-secondary text-xs">
-                    Доступ к курсам по платному тарифу сохраняется на 6 месяцев.
-                    Вы сможете просматривать пройденные курсы, но функции
-                    проверок, AI и другие будут отключены.
-                  </div>
-                </div>
-              </div>
-            </div>
+            <InfoPopover
+              title="Структура курса заблокирована?"
+              content="Доступ к курсам по платному тарифу сохраняется на 6 месяцев. Вы сможете просматривать пройденные курсы, но функции проверок, AI и другие будут отключены."
+            />
           )}
         </div>
 
@@ -142,7 +119,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
         <div className="mt-auto flex flex-col gap-6 pt-8 pb-0">
           <div className="flex justify-between px-8">
             <div className="flex flex-col gap-2">
-              <span className="text-2xll font-medium leading-7 text-gray-50">
+              <span className="text-2xll leading-7 font-medium text-gray-50">
                 {formatPrice(tariff.price.monthly)}
                 <span className="text-base">/мес</span>
               </span>

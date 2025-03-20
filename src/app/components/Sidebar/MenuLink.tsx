@@ -9,6 +9,7 @@ export function MenuLink({
   locked,
   isCurrentPage,
   notificationCount,
+  onClick,
 }: {
   title: string;
   children: ReactNode;
@@ -16,6 +17,7 @@ export function MenuLink({
   locked?: boolean;
   isCurrentPage: boolean;
   notificationCount?: number;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }) {
   return (
     <Link
@@ -24,6 +26,7 @@ export function MenuLink({
         'group flex cursor-pointer flex-row items-center gap-4 border-b border-transparent px-4 py-[0.81vw] hover:border-[#282D33] data-[active=true]:border-[#F2F2F2]'
       }
       data-active={isCurrentPage}
+      onClick={onClick}
     >
       {children}
       <div className={'flex w-full flex-row items-center justify-between'}>
