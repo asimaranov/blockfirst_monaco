@@ -31,7 +31,7 @@ export function UserInfo({ user }: { user?: IUser }) {
             {user.name.split(' ')[0]}
           </span>
         ) : (
-          <Skeleton className="h-4 w-[5.21vw] rounded-full" />
+          <Skeleton className="h-5 w-[5.21vw] rounded-full" />
         )}
         {user?.startTimestamp ? (
           <span className="text-xs font-roboto text-[#9AA6B5]">

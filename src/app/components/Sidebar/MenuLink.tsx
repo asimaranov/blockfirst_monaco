@@ -23,7 +23,7 @@ export function MenuLink({
     <Link
       href={href}
       className={
-        'group flex cursor-pointer flex-row items-center gap-4 border-b border-transparent px-4 py-[0.81vw] hover:border-[#282D33] data-[active=true]:border-[#F2F2F2]'
+        'group flex cursor-pointer flex-row items-center gap-4 border-b border-transparent px-4 py-3.5 hover:border-[#282D33] data-[active=true]:border-[#F2F2F2]'
       }
       data-active={isCurrentPage}
       onClick={onClick}
@@ -32,7 +32,7 @@ export function MenuLink({
       <div className={'flex w-full flex-row items-center justify-between'}>
         <span
           className={
-            'font-roboto text-sm text-[#9AA6B5] group-hover:text-[#F2F2F2] group-data-[active=true]:text-[#F2F2F2]'
+            'leading-3 font-roboto text-sm text-[#9AA6B5] group-hover:text-[#F2F2F2] group-data-[active=true]:text-[#F2F2F2]'
           }
         >
           {title}

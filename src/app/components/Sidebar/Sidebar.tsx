@@ -34,7 +34,7 @@ import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { SubscriptionType } from '~/app/lib/constants/subsctiptions';
 import { NotificationsModal } from '../Notifications/NotificationsModal';
-
+import { LightningIcon } from './assets/section_icons/lightning';
 interface SidebarSection {
   title: string;
   isPro: boolean;
@@ -44,8 +44,7 @@ interface SidebarItem {
   title: string;
   href: string;
   otherHref?: string;
-  icon: string;
-  iconHover: string;
+  icon: () => JSX.Element;
   locked?: boolean;
   notificationCount?: number;
 }
@@ -58,21 +57,19 @@ const sidebarSections: SidebarSection[] = [
       {
         title: 'Мои Курсы',
         href: '/dashboard',
-        icon: courseImg,
-        iconHover: courseHoverImg,
+        icon: LightningIcon,
+
         otherHref: '/course',
       },
       {
         title: 'Тариф',
         href: '/pricing',
         icon: tariffImg,
-        iconHover: tariffHoverImg,
       },
       {
         title: 'Диплом',
         href: '/diploma',
         icon: certImg,
-        iconHover: certHoverImg,
       },
     ],
   },
@@ -84,21 +81,21 @@ const sidebarSections: SidebarSection[] = [
         title: 'Твой куратор',
         href: '/mentor',
         icon: curatorImg,
-        iconHover: curatorHoverImg,
+
         locked: true,
       },
       {
         title: 'Подготовка резюме',
         href: '#',
         icon: cvImg,
-        iconHover: cvHoverImg,
+
         locked: true,
       },
       {
         title: 'Трудоустройство',
         href: '/employment',
         icon: jobImg,
-        iconHover: jobHoverImg,
+
         locked: true,
       },
     ],
@@ -111,14 +108,14 @@ const sidebarSections: SidebarSection[] = [
         title: 'Реферальная программа',
         href: '#',
         icon: referralImg,
-        iconHover: referralHoverImg,
+
         locked: false,
       },
       {
         title: 'Уведомления',
         href: '#',
         icon: notificationImg,
-        iconHover: notificationHoverImg,
+
         notificationCount: 3,
         locked: false,
       },
@@ -153,7 +150,7 @@ export default function Sidebar() {
 
   return (
     <>
-      <section className="z-10 flex h-screen w-full max-w-86 flex-col relative">
+      <section className="relative z-10 flex h-screen w-full max-w-86 flex-col">
         <nav className={'flex w-full flex-col'}>
           <div className="mx-8 mt-8 flex flex-row items-center justify-between">
             <Link href="/dashboard" className="hover:opacity-80">
@@ -204,16 +201,17 @@ export default function Sidebar() {
                   notificationCount={item.notificationCount}
                   onClick={(e) => handleNotificationClick(e, item.href)}
                 >
-                  <Image
-                    src={item.icon}
-                    alt={item.title}
-                    className="h-4 w-4 group-hover:hidden group-data-[active=true]:hidden"
-                  />
-                  <Image
-                    src={item.iconHover}
-                    alt={item.title}
-                    className="hidden h-4 w-4 group-hover:inline-block group-data-[active=true]:block"
-                  />
+                  <div className="group-data-[active=true] h-4 w-4">
+                    {typeof item.icon === 'function' ? (
+                      <item.icon />
+                    ) : (
+                      <Image
+                        src={item.icon}
+                        alt={item.title}
+                        className="h-4 w-4"
+                      />
+                    )}
+                  </div>
                 </MenuLink>
               ))}
             </MenuItem>

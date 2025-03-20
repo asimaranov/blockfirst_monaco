@@ -17,11 +17,11 @@ export function MenuItem({
   // isBase?: boolean;
 }) {
   return (
-    <div className={'mx-4 mt-7 flex flex-col'}>
+    <div className={'mx-4 mt-8 flex flex-col'}>
       <div className={'flex flex-row items-center justify-between mb-3'}>
         <span
           className={
-            'ml-4 font-roboto text-xs uppercase text-secondary opacity-50 flex items-center justify-center'
+            'ml-4 font-roboto text-xs uppercase text-secondary opacity-50 flex items-center justify-center leading-5'
           }
         >
           {title}
