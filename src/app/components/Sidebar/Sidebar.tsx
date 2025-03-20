@@ -5,7 +5,6 @@ import LogoSvg from './assets/logo-dashboard.svg';
 import logoutImg from './assets/logout.svg';
 import logoutHoverImg from './assets/logout-hover.svg';
 import Link from 'next/link';
-import { NotificationCounter } from '../shared/NotificationCounter';
 import { MenuItem } from './MenuItem';
 import { MenuLink } from './MenuLink';
 import starterIMG from 'public/subscriptions/starter.svg';
@@ -13,28 +12,19 @@ import { UserInfo } from './UserInfo';
 import { IUser } from '~/app/lib/types/IUser';
 import { authClient } from '~/server/auth/client';
 import { Socials } from './Socials';
-import courseImg from './assets/links/course.svg';
-import courseHoverImg from './assets/links/course-hover.svg';
-import tariffImg from './assets/links/tariff.svg';
-import tariffHoverImg from './assets/links/tariff-hover.svg';
-import certImg from './assets/links/cert.svg';
-import certHoverImg from './assets/links/cert-hover.svg';
-import curatorImg from './assets/links/curator.svg';
-import curatorHoverImg from './assets/links/curator-hover.svg';
-import cvImg from './assets/links/cv.svg';
-import cvHoverImg from './assets/links/cv-hover.svg';
-import jobImg from './assets/links/job.svg';
-import jobHoverImg from './assets/links/job-hover.svg';
-import referralImg from './assets/links/referral.svg';
-import referralHoverImg from './assets/links/referral-hover.svg';
-import notificationImg from './assets/links/notification.svg';
-import notificationHoverImg from './assets/links/notification-hover.svg';
 import { cn } from '~/helpers';
 import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { SubscriptionType } from '~/app/lib/constants/subsctiptions';
 import { NotificationsModal } from '../Notifications/NotificationsModal';
-import { LightningIcon } from './assets/section_icons/lightning';
+import LightningIcon from './assets/section_icons/lightning';
+import TariffIcon from './assets/section_icons/tariff';
+import CertIcon from './assets/section_icons/cert';
+import MentorIcon from './assets/section_icons/mentor';
+import CvIcon from './assets/section_icons/cv';
+import JobIcon from './assets/section_icons/job';
+import ReferralIcon from './assets/section_icons/referral';
+import NotificationsIcon from './assets/section_icons/notifications';
 interface SidebarSection {
   title: string;
   isPro: boolean;
@@ -58,18 +48,17 @@ const sidebarSections: SidebarSection[] = [
         title: 'Мои Курсы',
         href: '/dashboard',
         icon: LightningIcon,
-
         otherHref: '/course',
       },
       {
         title: 'Тариф',
         href: '/pricing',
-        icon: tariffImg,
+        icon: TariffIcon,
       },
       {
         title: 'Диплом',
         href: '/diploma',
-        icon: certImg,
+        icon: CertIcon,
       },
     ],
   },
@@ -80,21 +69,20 @@ const sidebarSections: SidebarSection[] = [
       {
         title: 'Твой куратор',
         href: '/mentor',
-        icon: curatorImg,
+        icon: MentorIcon,
 
         locked: true,
       },
       {
         title: 'Подготовка резюме',
         href: '#',
-        icon: cvImg,
-
+        icon: CvIcon,
         locked: true,
       },
       {
         title: 'Трудоустройство',
         href: '/employment',
-        icon: jobImg,
+        icon: JobIcon,
 
         locked: true,
       },
@@ -107,14 +95,14 @@ const sidebarSections: SidebarSection[] = [
       {
         title: 'Реферальная программа',
         href: '#',
-        icon: referralImg,
+        icon: ReferralIcon,
 
         locked: false,
       },
       {
         title: 'Уведомления',
         href: '#',
-        icon: notificationImg,
+        icon: NotificationsIcon,
 
         notificationCount: 3,
         locked: false,
