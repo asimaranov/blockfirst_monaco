@@ -172,7 +172,7 @@ export function StudentForm({ onClose }: StudentFormProps) {
                   value={motivation}
                   onChange={(e) => setMotivation(e.target.value)}
                   className="text-foreground placeholder:text-secondary/50 -mt-1 h-full w-full grow resize-none bg-transparent text-sm focus:outline-none"
-                  placeholder={`Мотивационное письмо\n\nРасскажите о себе и почему вы хотите\n учиться у нас`}
+                  placeholder={`Мотивационное письмо\n\nРасскажите о себе и почему вы хотите\nучиться у нас`}
                   rows={5}
                 />
               </div>
