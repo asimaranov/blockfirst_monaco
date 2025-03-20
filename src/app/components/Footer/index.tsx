@@ -245,10 +245,12 @@ export default function Footer() {
         {/* Copyright section */}
         <div className="flex flex-col items-center px-8 pt-8 pb-8 text-xs md:flex-row md:justify-between">
           <div className="text-secondary flex gap-6 text-xs">
-            <a href="#" className="">
+            <a href="#" className="hover:opacity-50">
               Правила сервиса
             </a>
-            <a href="#">Конфиденциальность</a>
+            <a href="#" className="hover:opacity-50">
+              Конфиденциальность
+            </a>
           </div>
           <div className="flex items-center justify-between gap-95">
             <span className="text-secondary">
