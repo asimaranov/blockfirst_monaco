@@ -1,0 +1,175 @@
+'use client';
+
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import notificationImage from './assets/top_icon.png';
+import settings from './assets/settings.svg';
+import bgImage from './assets/bg.png';
+
+interface NotificationsProps {
+  onClose?: () => void;
+}
+
+const Notifications = ({ onClose }: NotificationsProps) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="flex h-screen w-full max-w-[420px] flex-col overflow-hidden border border-[#282d33]/40 bg-[#01050d]"
+    >
+      <div className="flex h-full flex-col">
+        {/* Header with title and archive button */}
+        <div className="flex flex-shrink-0 flex-col space-y-8">
+          <div className="flex justify-between px-8 pt-8">
+            <div className="flex items-center space-x-3">
+              <div className="relative h-9 w-9 overflow-hidden rounded-full">
+                <Image
+                  src={notificationImage}
+                  alt=""
+                  className="object-cover"
+                />
+              </div>
+              <span className="text-foreground text-xl">Уведомления</span>
+            </div>
+            <div className="flex space-x-4">
+              <button className="border-primary/50 flex h-7 items-center rounded-full border px-2 py-1">
+                <div className="flex items-center space-x-1">
+                  <div className="h-4 w-4">
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M4.35938 8.52039L6.43937 10.6004L11.6394 5.40039"
+                        stroke="#195AF4"
+                        stroke-width="1.2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </div>
+                  <span className="text-foreground text-xs">Все в архив</span>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          {/* Tabs */}
+          <div className="flex w-full flex-row bg-[#14171C]">
+            <div className="flex flex-row items-center justify-center gap-1 px-8 py-4 text-sm">
+              Входящие
+              <div className="bg-error flex h-5 w-5 items-center justify-center rounded-full text-xs">
+                1
+              </div>
+            </div>
+            <div className="flex flex-row items-center justify-center gap-1 px-8 py-4 text-sm">
+              Архив
+            </div>
+            <Image
+              src={settings}
+              alt="Settings"
+              className="mr-8 ml-auto hover:opacity-50"
+            />
+          </div>
+        </div>
+
+        {/* Scrollable content */}
+        <div className="flex-1 overflow-y-auto">
+          {/* Notification card with image */}
+          <div className="relative w-full">
+            <Image
+              src={bgImage}
+              alt="Notification"
+              fill
+              className="object-cover"
+            />
+            <div className="relative z-20 flex h-full flex-col justify-between p-8">
+              <div className="flex flex-col space-y-[46px]">
+                <div>
+                  <span className="border-secondary/50 text-secondary h-6 rounded-full border px-3 py-1 text-xs">
+                    Education
+                  </span>
+                </div>
+                <div className="flex flex-col space-y-3">
+                  <h3 className="text-foreground text-xl">
+                    Предложение для студентов
+                  </h3>
+                  <p className="text-secondary text-sm">
+                    Уникальный условия по оплате курса для студентов. Заполните
+                    форму в тарифах
+                  </p>
+                </div>
+              </div>
+              <div className="flex justify-center space-x-1">
+                <div className="bg-primary h-0.5 w-4"></div>
+                <div className="h-0.5 w-4 bg-[#282d33]"></div>
+                <div className="h-0.5 w-4 bg-[#282d33]"></div>
+              </div>
+            </div>
+          </div>
+
+          {/* System notification */}
+          <div className="flex flex-col">
+            <div className="px-8 py-8">
+              <div className="flex space-x-4">
+                <div className="bg-primary flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[7px]">
+                  <svg
+                    width="20"
+                    height="23"
+                    viewBox="0 0 20 23"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M15.553 13.324C15.553 13.324 12.009 6.75 8.438 6.75"
+                      stroke="#195af4"
+                      fill="#f2f2f2"
+                      strokeWidth="0.45"
+                    />
+                    <path
+                      d="M8.438 6.75C8.438 6.75 12.009 13.324 15.553 13.324"
+                      stroke="#195af4"
+                      fill="#f2f2f2"
+                      strokeWidth="0.45"
+                    />
+                  </svg>
+                </div>
+                <div className="flex flex-col space-y-2">
+                  <div className="flex w-full justify-between">
+                    <span className="text-foreground text-sm">
+                      BlockFirst приветствует Вас 🎉
+                    </span>
+                    <div className="bg-error h-1.5 w-1.5 rounded-full"></div>
+                  </div>
+                  <div className="flex items-center space-x-3 text-xs">
+                    <span className="text-secondary/50">24 мин. назад</span>
+                    <div className="bg-secondary/20 h-[14px] w-[1px]"></div>
+                    <span className="text-secondary/50">Система</span>
+                  </div>
+                </div>
+              </div>
+              <div className="mt-3">
+                <div className="relative ml-[58px]">
+                  <div className="bg-dark-bg relative rounded-sm p-2 pl-3.5">
+                    <div className="bg-primary absolute top-0 bottom-0 left-0 w-[1px]"></div>
+                    <p className="py-2 pr-0 pl-0 text-sm">
+                      Впервые зарегистрированным пользователям дарим скидку 16%
+                      на покупку «Про» тарифа
+                    </p>
+                  </div>
+                  <div className="absolute top-0 left-[18px] h-8 w-7 border border-[#282d33] bg-transparent"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+export default Notifications;

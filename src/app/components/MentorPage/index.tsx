@@ -114,6 +114,7 @@ export default function MentorPage({ session }: { session: Session }) {
   const [name, setName] = useState('');
   const [telegram, setTelegram] = useState('');
   const [course, setCourse] = useState('');
+  const [success, setSuccess] = useState(false);
 
   return (
     <main className="border-accent border-r border-l">
@@ -227,22 +228,10 @@ export default function MentorPage({ session }: { session: Session }) {
                     <p className="text-secondary text-xs uppercase opacity-50">
                       о кураторе
                     </p>
-                    <div className="text-secondary h-4 w-4">
-                      <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 16 16"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          clip-rule="evenodd"
-                          d="M8.0026 1.83398C4.59685 1.83398 1.83594 4.5949 1.83594 8.00065C1.83594 11.4064 4.59685 14.1673 8.0026 14.1673C11.4084 14.1673 14.1693 11.4064 14.1693 8.00065C14.1693 4.5949 11.4084 1.83398 8.0026 1.83398ZM0.835938 8.00065C0.835938 4.04261 4.04456 0.833984 8.0026 0.833984C11.9606 0.833984 15.1693 4.04261 15.1693 8.00065C15.1693 11.9587 11.9606 15.1673 8.0026 15.1673C4.04456 15.1673 0.835938 11.9587 0.835938 8.00065ZM8.0026 6.83398C8.27875 6.83398 8.5026 7.05784 8.5026 7.33398V10.6673C8.5026 10.9435 8.27875 11.1673 8.0026 11.1673C7.72646 11.1673 7.5026 10.9435 7.5026 10.6673V7.33398C7.5026 7.05784 7.72646 6.83398 8.0026 6.83398ZM8.0026 6.00065C8.37079 6.00065 8.66927 5.70217 8.66927 5.33398C8.66927 4.96579 8.37079 4.66732 8.0026 4.66732C7.63441 4.66732 7.33594 4.96579 7.33594 5.33398C7.33594 5.70217 7.63441 6.00065 8.0026 6.00065Z"
-                          fill="#9AA6B5"
-                        />
-                      </svg>
-                    </div>
+                    <InfoPopover
+                      title="Дополнительно"
+                      content="Разработчик, предприниматель. Интересуется блокчейном, абстракцией счетов, zk snarks, информационной безопасностью, машинным обучением и рутинными вещами автоматизации."
+                    />
                   </div>
                   <p className="text-sm">
                     Аудитор Solidity в Mixbytes auditor DAO. Co-Founder и
@@ -467,7 +456,10 @@ export default function MentorPage({ session }: { session: Session }) {
             <div className="flex flex-1 flex-col gap-6">
               {/* Header with instructions */}
               <div>
-                <div className="flex h-12 items-center bg-[#14171C]">
+                <div className="relative flex h-12 items-center bg-[#14171C]">
+                  {success && (
+                    <div className="bg-dark-bg absolute top-0 left-0 h-full w-full opacity-50"></div>
+                  )}
                   <div className="flex items-center gap-4 px-8">
                     <div className="h-6 w-6 overflow-hidden rounded-full">
                       <Image
@@ -488,83 +480,147 @@ export default function MentorPage({ session }: { session: Session }) {
                     </div>
                   </div>
                 </div>
-                <div className="px-8 py-5">
-                  <p className="text-secondary text-sm">
-                    Заполните все поля и наш куратор свяжется с вами в Telegram
-                    для согласования времени и даты звонка
-                  </p>
-                </div>
+                {!success && (
+                  <div className="px-8 py-5">
+                    <p className="text-secondary text-sm">
+                      Заполните все поля и наш куратор свяжется с вами в
+                      Telegram для согласования времени и даты звонка
+                    </p>
+                  </div>
+                )}
               </div>
 
               {/* Contact form */}
-              <div className="flex h-full flex-col px-8">
-                <div className="flex flex-1 flex-col gap-8">
-                  <div className="border-accent group focus-within:border-foreground flex h-12 items-center border-b px-4">
-                    <div className="w-4">
-                      <UserIcon active={name !== ''} />
-                    </div>
-                    <input
-                      type="text"
-                      placeholder="Ваше имя"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      className="text-foreground placeholder:text-secondary/50 ml-3 h-full w-full bg-transparent text-sm focus:outline-none"
-                    />
-                  </div>
-
-                  <div className="border-accent focus-within:border-foreground group flex h-12 items-center border-b px-4">
-                    <div className="w-4">
-                      <TelegramSvg active={telegram !== ''} />
-                    </div>
-
-                    <input
-                      type="text"
-                      placeholder="Ваш телеграм"
-                      value={telegram}
-                      onChange={(e) => setTelegram(e.target.value)}
-                      className="text-foreground placeholder:text-secondary/50 ml-3 h-full w-full bg-transparent text-sm focus:outline-none"
-                    />
-                  </div>
-
-                  <div className="border-accent group focus-within:border-b-foreground flex w-full flex-col border-b p-4">
-                    <div className="flex flex-1 items-start gap-3">
+              {!success && (
+                <div className="flex h-full flex-col px-8">
+                  <div className="flex flex-1 flex-col gap-8">
+                    <div className="border-accent group focus-within:border-foreground flex h-12 items-center border-b px-4">
                       <div className="w-4">
-                        <TaskSquareSvg active={course !== ''} />
+                        <UserIcon active={name !== ''} />
                       </div>
                       <input
                         type="text"
-                        placeholder="Курс который вы проходите"
-                        value={course}
-                        onChange={(e) => setCourse(e.target.value)}
-                        className="text-foreground placeholder:text-secondary/50 h-full w-full bg-transparent text-sm focus:outline-none"
+                        placeholder="Ваше имя"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="text-foreground placeholder:text-secondary/50 ml-3 h-full w-full bg-transparent text-sm focus:outline-none"
                       />
                     </div>
-                  </div>
-                </div>
 
-                {/* Submit button */}
-                <motion.button
-                  className="bg-primary text-foreground ml-auto flex h-12 w-12 cursor-pointer items-center justify-center rounded-full disabled:opacity-30"
-                  disabled={name === '' || telegram === '' || course === ''}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="h-5 w-5"
+                    <div className="border-accent focus-within:border-foreground group flex h-12 items-center border-b px-4">
+                      <div className="w-4">
+                        <TelegramSvg active={telegram !== ''} />
+                      </div>
+
+                      <input
+                        type="text"
+                        placeholder="Ваш телеграм"
+                        value={telegram}
+                        onChange={(e) => setTelegram(e.target.value)}
+                        className="text-foreground placeholder:text-secondary/50 ml-3 h-full w-full bg-transparent text-sm focus:outline-none"
+                      />
+                    </div>
+
+                    <div className="border-accent group focus-within:border-b-foreground flex w-full flex-col border-b p-4">
+                      <div className="flex flex-1 items-start gap-3">
+                        <div className="w-4">
+                          <TaskSquareSvg active={course !== ''} />
+                        </div>
+                        <input
+                          type="text"
+                          placeholder="Курс который вы проходите"
+                          value={course}
+                          onChange={(e) => setCourse(e.target.value)}
+                          className="text-foreground placeholder:text-secondary/50 h-full w-full bg-transparent text-sm focus:outline-none"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Submit button */}
+                  <motion.button
+                    className="bg-primary text-foreground ml-auto flex h-12 w-12 cursor-pointer items-center justify-center rounded-full disabled:opacity-30"
+                    disabled={name === '' || telegram === '' || course === ''}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setSuccess(true)}
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                    />
-                  </svg>
-                </motion.button>
-              </div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="h-5 w-5"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                      />
+                    </svg>
+                  </motion.button>
+                </div>
+              )}
+
+              {success && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="flex flex-1 flex-col items-center justify-center gap-8"
+                >
+                  <div className="relative h-25 w-25 flex items-center justify-center">
+                    <div className=" rounded-full" />
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: 0.3, duration: 0.5 }}
+                      className=""
+                    >
+                      <svg
+                        width="150"
+                        height="150"
+                        viewBox="0 0 150 150"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className='h-25 w-25'
+                      >
+                        <path
+                          d="M0 75C0 116.421 33.5786 150 75 150C116.421 150 150 116.421 150 75C150 33.5786 116.421 0 75 0C33.5786 0 0 33.5786 0 75ZM148.5 75C148.5 115.593 115.593 148.5 75 148.5C34.4071 148.5 1.5 115.593 1.5 75C1.5 34.4071 34.4071 1.5 75 1.5C115.593 1.5 148.5 34.4071 148.5 75Z"
+                          fill="#195AF4"
+                        />
+                        <path
+                          d="M61 77.5L68.5 85L88.5 65"
+                          stroke="#F2F2F2"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </motion.div>
+                  </div>
+
+                  <div className="flex flex-col items-center gap-4">
+                    <motion.h2
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
+                      className="text-foreground text-center text-base"
+                    >
+                      Запрос отправлен
+                    </motion.h2>
+                    <motion.p
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.6 }}
+                      className="text-secondary w-85 text-center text-sm"
+                    >
+                      Куратор ответит Вам в ближайшее время. Вся дальнейшая коммуникация будет в Telegram.
+                    </motion.p>
+                  </div>
+                </motion.div>
+              )}
 
               {/* Privacy notice */}
               <div className="mt-auto flex h-8 shrink-0 items-center justify-center bg-[#14171C]">
