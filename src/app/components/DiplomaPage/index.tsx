@@ -73,6 +73,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
         </DiplomaView>
         <Section
           title="Smart Contract Engineer"
+          status="in_progress"
           tags={['Solidity', 'Смарт-контракты', 'DeFi']}
           isExpanded={isSmartContractExpanded}
           onToggle={() => setIsSmartContractExpanded(!isSmartContractExpanded)}
@@ -301,6 +302,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
         >
           <div>{/* Frontend Developer content will go here */}</div>
         </Section>
+        
       </div>
       <Footer />
     </main>

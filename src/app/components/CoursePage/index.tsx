@@ -13,6 +13,7 @@ import ProBadge from './bages/pro_badge.png';
 import GridSvg from './assets/grid.svg';
 import Image from 'next/image';
 import { InfoPopover } from '../shared/InfoPopover';
+import Link from 'next/link';
 
 const Tariffs = [
   {
@@ -128,22 +129,24 @@ export default function CoursePage({
                             </div>
                           </div>
                         </div>
-                        <div className="h-6 w-6 cursor-pointer hover:opacity-50">
-                          <svg
-                            width="24"
-                            height="25"
-                            viewBox="0 0 24 25"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              clipRule="evenodd"
-                              d="M12.901 6.96967C13.1939 6.67678 13.6688 6.67678 13.9617 6.96967L18.9617 11.9696C19.1023 12.1103 19.1814 12.301 19.1814 12.4999C19.1814 12.6989 19.1023 12.8896 18.9617 13.0303L13.9617 18.0303C13.6688 18.3232 13.1939 18.3232 12.901 18.0303C12.6081 17.7374 12.6081 17.2625 12.901 16.9696L16.6207 13.25H5.57422C5.16001 13.25 4.82422 12.9142 4.82422 12.5C4.82422 12.0857 5.16001 11.75 5.57422 11.75H16.6207L12.901 8.03033C12.6081 7.73744 12.6081 7.26257 12.901 6.96967Z"
-                              fill="#F2F2F2"
-                            />
-                          </svg>
-                        </div>
+                        <Link href="/pricing">
+                          <div className="h-6 w-6 cursor-pointer hover:opacity-50">
+                            <svg
+                              width="24"
+                              height="25"
+                              viewBox="0 0 24 25"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                clipRule="evenodd"
+                                d="M12.901 6.96967C13.1939 6.67678 13.6688 6.67678 13.9617 6.96967L18.9617 11.9696C19.1023 12.1103 19.1814 12.301 19.1814 12.4999C19.1814 12.6989 19.1023 12.8896 18.9617 13.0303L13.9617 18.0303C13.6688 18.3232 13.1939 18.3232 12.901 18.0303C12.6081 17.7374 12.6081 17.2625 12.901 16.9696L16.6207 13.25H5.57422C5.16001 13.25 4.82422 12.9142 4.82422 12.5C4.82422 12.0857 5.16001 11.75 5.57422 11.75H16.6207L12.901 8.03033C12.6081 7.73744 12.6081 7.26257 12.901 6.96967Z"
+                                fill="#F2F2F2"
+                              />
+                            </svg>
+                          </div>
+                        </Link>
                       </div>
                     </div>
                     <Image
@@ -302,7 +305,10 @@ export default function CoursePage({
                     text: 'Завершенный курс',
                   },
                 ].map((item, index) => (
-                  <div key={index} className="flex items-center gap-3 font-delight">
+                  <div
+                    key={index}
+                    className="font-delight flex items-center gap-3"
+                  >
                     {item.type === 'available' && (
                       <div className="flex h-6 w-22 items-center gap-1 rounded-lg bg-[#33CF89]/10 px-2">
                         <div className="h-1 w-1 rounded-full bg-[#33CF89]" />
@@ -331,7 +337,9 @@ export default function CoursePage({
                     {item.type === 'completed' && (
                       <div className="flex h-6 w-22 items-center gap-1 rounded-lg bg-[#9AA6B5]/10 px-2 opacity-50">
                         <div className="h-1 w-1 rounded-full bg-[#9AA6B5]" />
-                        <span className="text-xs text-[#9AA6B5]">Completed</span>
+                        <span className="text-xs text-[#9AA6B5]">
+                          Completed
+                        </span>
                       </div>
                     )}
 
