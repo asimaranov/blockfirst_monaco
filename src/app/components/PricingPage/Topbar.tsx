@@ -32,7 +32,7 @@ export function Topbar() {
             </div>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="text-primary flex cursor-pointer flex-row text-xs"
+              className="text-primary flex cursor-pointer flex-row text-xs hover:opacity-50 items-center"
             >
               Заполни анкету
               <svg

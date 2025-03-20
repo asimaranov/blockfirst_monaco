@@ -257,7 +257,7 @@ const PaymentMethodsModal = ({
 
             <span className="text-xs">
               Не подходят методы оплаты?{' '}
-              <span className="text-foreground cursor-pointer underline">
+              <span className="text-foreground cursor-pointer underline hover:opacity-50">
                 Написать нам
               </span>
             </span>
