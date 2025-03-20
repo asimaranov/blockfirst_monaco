@@ -12,6 +12,7 @@ import StarterBadge from './bages/starter_badge.png';
 import ProBadge from './bages/pro_badge.png';
 import GridSvg from './assets/grid.svg';
 import Image from 'next/image';
+import { InfoPopover } from '../shared/InfoPopover';
 
 const Tariffs = [
   {
@@ -212,9 +213,7 @@ export default function CoursePage({
 
                   <span className="text-2xl text-gray-100">100+</span>
                 </div>
-                <span className="text-xs text-gray-400">
-                  Задач в курсе
-                </span>
+                <span className="text-xs text-gray-400">Задач в курсе</span>
               </div>
             </div>
 
@@ -276,8 +275,71 @@ export default function CoursePage({
               </div>
             </div>
           </div>
-          <div className="text-secondary/50 border-accent border-b px-8 py-4 text-xs uppercase">
-            Структура курса
+          <div className="border-accent flex flex-row justify-between border-b px-8 py-4">
+            <span className="text-secondary/50 text-xs uppercase">
+              Структура курса
+            </span>
+            <InfoPopover
+              title="Структура курса заблокирована?"
+              content="Первая глава доступна бесплатно, остальные — по платным тарифам. После оплаты, главы разблокируются по мере прохождения."
+            >
+              <div className="flex flex-col gap-4 pt-5">
+                {[
+                  {
+                    type: 'available',
+                    text: 'Доступно для прохождения',
+                  },
+                  {
+                    type: 'starter',
+                    text: 'Требуется оплата тарифа',
+                  },
+                  {
+                    type: 'upcoming',
+                    text: 'По мере прохождения разблокируется',
+                  },
+                  {
+                    type: 'completed',
+                    text: 'Завершенный курс',
+                  },
+                ].map((item, index) => (
+                  <div key={index} className="flex items-center gap-3 font-delight">
+                    {item.type === 'available' && (
+                      <div className="flex h-6 w-22 items-center gap-1 rounded-lg bg-[#33CF89]/10 px-2">
+                        <div className="h-1 w-1 rounded-full bg-[#33CF89]" />
+                        <span className="text-xs text-[#33CF89]">
+                          Available
+                        </span>
+                      </div>
+                    )}
+
+                    {item.type === 'starter' && (
+                      <div className="flex h-6 w-22 items-center gap-1 rounded-lg bg-gradient-to-r from-[#FF20A2]/10 to-[#FF2020]/10 px-2">
+                        <div className="h-1 w-1 rounded-full bg-[#FF20A2]" />
+                        <span className="bg-gradient-to-r from-[#FF20A2] to-[#FF2020] bg-clip-text text-xs text-transparent">
+                          STARTER
+                        </span>
+                      </div>
+                    )}
+
+                    {item.type === 'upcoming' && (
+                      <div className="flex h-6 w-22 items-center gap-1 rounded-lg bg-[#9AA6B5]/10 px-2">
+                        <div className="h-1 w-1 rounded-full bg-[#9AA6B5]" />
+                        <span className="text-xs text-[#9AA6B5]">Upcoming</span>
+                      </div>
+                    )}
+
+                    {item.type === 'completed' && (
+                      <div className="flex h-6 w-22 items-center gap-1 rounded-lg bg-[#9AA6B5]/10 px-2 opacity-50">
+                        <div className="h-1 w-1 rounded-full bg-[#9AA6B5]" />
+                        <span className="text-xs text-[#9AA6B5]">Completed</span>
+                      </div>
+                    )}
+
+                    <span className="text-xs text-white">{item.text}</span>
+                  </div>
+                ))}
+              </div>
+            </InfoPopover>
           </div>
           <div className="flex flex-col gap-8">
             {courseStructure.map((section, index) => (
