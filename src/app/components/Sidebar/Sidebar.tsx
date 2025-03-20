@@ -155,7 +155,7 @@ export default function Sidebar() {
     <>
       <section className="z-10 flex h-screen w-full max-w-86 flex-col relative">
         <nav className={'flex w-full flex-col'}>
-          <div className="mx-8 mt-[1.97vw] flex flex-row items-center justify-between">
+          <div className="mx-8 mt-8 flex flex-row items-center justify-between">
             <Link href="/dashboard" className="hover:opacity-80">
               <Image src={LogoSvg} alt="logo" className="w-[9.664vw]" />
             </Link>
@@ -220,7 +220,7 @@ export default function Sidebar() {
           ))}
         </nav>
         <div className={'mt-auto flex flex-col border-t border-[#282D33]'}>
-          <Link href="#" className={'flex flex-row items-center px-8 py-6'}>
+          <Link href="#" className={'flex flex-row items-center px-8 py-5'}>
             <svg
               width="0.93vw"
               height="0.93vw"

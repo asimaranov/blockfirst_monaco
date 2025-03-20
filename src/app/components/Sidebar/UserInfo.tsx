@@ -5,7 +5,7 @@ import { SubscriptionLabel } from './assets/SubscriptionLabel';
 
 export function UserInfo({ user }: { user?: IUser }) {
   return (
-    <div className={'flex flex-row border-t border-[#282D33] px-8 py-6'}>
+    <div className={'flex flex-row border-t border-[#282D33] px-8 py-5'}>
       {user?.name?.[0] ? (
         <div
           className={

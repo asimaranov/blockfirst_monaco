@@ -32,7 +32,7 @@ export function MenuLink({
       <div className={'flex w-full flex-row items-center justify-between'}>
         <span
           className={
-            'font-roboto text-[0.81vw] leading-3 text-[#9AA6B5] group-hover:text-[#F2F2F2] group-data-[active=true]:text-[#F2F2F2]'
+            'font-roboto text-sm text-[#9AA6B5] group-hover:text-[#F2F2F2] group-data-[active=true]:text-[#F2F2F2]'
           }
         >
           {title}
