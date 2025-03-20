@@ -275,13 +275,13 @@ export default function CoursePage({
               </div>
             </div>
           </div>
-          <div className="border-accent flex flex-row justify-between border-b px-8 py-4">
+          <div className="flex flex-row justify-between px-8 py-4">
             <span className="text-secondary/50 text-xs uppercase">
               Структура курса
             </span>
             <InfoPopover
               title="Структура курса заблокирована?"
-              content="Первая глава доступна бесплатно, остальные — по платным тарифам. После оплаты, главы разблокируются по мере прохождения."
+              content="Первая глава доступна бесплатно, остальные — по подписке. После оплаты главы будут разблокированы по мере прохождения."
             >
               <div className="flex flex-col gap-4 pt-5">
                 {[
