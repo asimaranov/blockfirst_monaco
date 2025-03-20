@@ -14,7 +14,7 @@ export function AuthorInfo({
 }: AuthorInfoProps) {
   return (
     <div className="flex flex-col items-end gap-2">
-      <div className="flex flex-row items-center justify-end gap-2 text-sm leading-4 pb-[1px]">
+      <div className="flex flex-row items-center justify-end gap-2 text-sm leading-4 pb-[2px]">
         <Image src={avatarUrl} alt={author} width={16} height={16} />
         {author}
       </div>
