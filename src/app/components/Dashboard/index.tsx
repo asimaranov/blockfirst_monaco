@@ -8,6 +8,7 @@ import { CourseTopCard } from '~/app/components/CourseTopCard';
 import { CourseCard } from '~/app/components/CourseCard/CourseCard';
 import { Session } from '~/server/auth';
 import Footer from '~/app/components/Footer';
+import { CourseHistoryCard } from '../CourseCard/CourseHistoryCard';
 
 export default function Dashboard({ session }: { session: Session }) {
   const lastUpdate = new Date(
@@ -39,7 +40,7 @@ export default function Dashboard({ session }: { session: Session }) {
           },
         ]}
       />
-      <div className="grid grid-cols-1 gap-8">  
+      <div className="grid grid-cols-1 gap-8">
         {dashboardSection === 'courses' && (
           <>
             {COURSES?.[0] ? (
@@ -61,8 +62,8 @@ export default function Dashboard({ session }: { session: Session }) {
         )}
         {dashboardSection === 'history' && (
           <section className="divide [&>*]:border-accent divide-accent border-accent grid grid-cols-1 gap-y-9 divide-x-1 sm:grid-cols-2 lg:grid-cols-3 [&>*]:border-y">
-            {COURSES.map((course) => (
-              <CourseCard key={course.id} course={course} />
+            {COURSES.filter((x) => !x.soon).map((course) => (
+              <CourseHistoryCard key={course.id} course={course} percent={57} courseStudyingFor={'1д 12ч 48м'} />
             ))}
             {Array.from({ length: (3 - (COURSES.length % 3)) % 3 }).map(
               (_, index) => (
