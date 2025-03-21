@@ -34,7 +34,7 @@ export default function AuthPageBase({
               ) : null}
             </button>
           )}
-          <Image src={LogoSvg} alt="logo" className="w-[124px] md:w-[152px]" />
+          <Image src={LogoSvg} alt="logo" className="w-38" />
         </div>
         <div className="flex h-full w-full flex-col">{children}</div>
       </div>

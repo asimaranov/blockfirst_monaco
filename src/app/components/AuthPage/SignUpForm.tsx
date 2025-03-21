@@ -92,7 +92,7 @@ export default function SignUpForm({
 
       {/* Form */}
       <form className="flex flex-1 flex-col" onSubmit={formik.handleSubmit}>
-        <div className="flex flex-1 flex-col gap-[24px]">
+        <div className="flex flex-1 flex-col gap-8">
           {/* Username field */}
           <div className="relative">
             <div
@@ -247,7 +247,6 @@ export default function SignUpForm({
               </div>
             ) : null}
           </div>
-          <div className="grow"></div>
         </div>
 
         {/* Login link */}
