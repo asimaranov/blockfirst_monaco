@@ -8,8 +8,9 @@ export default function BookIcon({ active }: { active?: boolean }) {
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      fillOpacity={50}
       className={cn(
-        'group-focus-within:stroke-foreground [&>*]:stroke-foreground [stroke-opacity:50%] group-focus-within:[stroke-opacity:100%]',
+        'group-focus-within:stroke-foreground [&>*]:stroke-[#9AA6B5] [stroke-opacity:50%] group-focus-within:[stroke-opacity:100%] group-focus-within:[&>*]:stroke-foreground',
         active && 'stroke-foreground [stroke-opacity:100%]'
       )}
     >
