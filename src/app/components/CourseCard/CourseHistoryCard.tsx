@@ -146,7 +146,7 @@ export function CourseHistoryCard({
             <Image src={LightSvg} alt={''} />
             {percent}%
           </div>
-          <Progress useFlag className="mt-3" />
+          <Progress useFlag className="mt-3" value={percent} />
         </div>
         <div className="mt-6 flex w-full justify-between gap-4 text-sm">
           <Link href={`/course/${course.id}`}>
