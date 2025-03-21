@@ -193,7 +193,7 @@ const PaymentMethodsModal = ({
       case 'installment':
         return formatPrice(tariff.price.monthly);
       case 'tether':
-        return `${formatPrice(tariff.price.total / 90)} USDT`;
+        return `${formatPrice(tariff.price.total / 90, '')} USDT`;
       default:
         return formatPrice(tariff.price.total);
     }

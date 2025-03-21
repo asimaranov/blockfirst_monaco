@@ -26,14 +26,78 @@ const competencies = [
   'Поймете разницу версий Solidity',
 ];
 
+type SectionStatus = 'in_progress' | 'coming_soon' | 'completed';
+
+interface SectionInfo {
+  id: string;
+  title: string;
+  status: SectionStatus;
+  tags: string[];
+}
+
+const SECTIONS: SectionInfo[] = [
+  {
+    id: 'smart-contract-engineer',
+    title: 'Smart Contract Engineer',
+    status: 'in_progress',
+    tags: ['Solidity', 'Смарт-контракты', 'DeFi'],
+  },
+  {
+    id: 'smart-contracts-auditor',
+    title: 'Smart Contracts Auditor',
+    status: 'coming_soon',
+    tags: ['Web3 безопасность', 'Белый хакинг', 'Аудиты'],
+  },
+  {
+    id: 'frontend-developer',
+    title: 'Frontend Developer',
+    status: 'coming_soon',
+    tags: ['Кошельки', 'Смарт-контракты', 'WAGMI'],
+  },
+  {
+    id: 'product-design',
+    title: 'Product Design',
+    status: 'coming_soon',
+    tags: ['Интерфейсы', 'UX/UI', 'Figma'],
+  },
+  {
+    id: 'community-manager',
+    title: 'Community Manager',
+    status: 'coming_soon',
+    tags: ['Twitter', 'Telegram', 'Discord'],
+  },
+  {
+    id: 'content-writer',
+    title: 'Content Writer',
+    status: 'coming_soon',
+    tags: ['Английский', 'Копирайтинг', 'Маркетинг'],
+  },
+];
+
 export default function DiplomaPage({ session }: { session: Session }) {
-  const [isSmartContractExpanded, setIsSmartContractExpanded] = useState(true);
-  const [isFrontendExpanded, setIsFrontendExpanded] = useState(true);
   const [isDiplomaExpanded, setIsDiplomaExpanded] = useState(false);
+  const [sectionExpanded, setSectionExpanded] = useState<
+    Record<string, boolean>
+  >(
+    SECTIONS.reduce(
+      (acc, section) => ({
+        ...acc,
+        [section.id]: section.id === 'smart-contract-engineer', // Only expand first section initially
+      }),
+      {} as Record<string, boolean>
+    )
+  );
   const [diplomaStatus, setDiplomaStatus] = useState<'locked' | 'available'>(
     'locked'
   );
   const t = useTranslations('UserSpace');
+
+  const toggleSection = (sectionId: string) => {
+    setSectionExpanded((prev) => ({
+      ...prev,
+      [sectionId]: !prev[sectionId],
+    }));
+  };
 
   const userProgress = {
     [COURSES[0]!.id]: 10,
@@ -73,11 +137,11 @@ export default function DiplomaPage({ session }: { session: Session }) {
           />
         </DiplomaView>
         <Section
-          title="Smart Contract Engineer"
-          status="in_progress"
-          tags={['Solidity', 'Смарт-контракты', 'DeFi']}
-          isExpanded={isSmartContractExpanded}
-          onToggle={() => setIsSmartContractExpanded(!isSmartContractExpanded)}
+          title={SECTIONS[0]!.title}
+          status={SECTIONS[0]!.status}
+          tags={SECTIONS[0]!.tags}
+          isExpanded={sectionExpanded[SECTIONS[0]!.id] || false}
+          onToggle={() => toggleSection(SECTIONS[0]!.id)}
         >
           <div className="flex flex-row">
             <div className="flex flex-col">
@@ -136,7 +200,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
                   <span className="text-secondary text-xs uppercase opacity-50">
                     Уроки
                   </span>
-                  
+
                   <div className="text-secondary flex items-center justify-between text-xs uppercase">
                     <span className="opacity-50">Прогресс</span>
                     <svg
@@ -219,7 +283,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
                             inactive={!!course.soon}
                             value={userProgress[course.id]}
                             max={course.info?.lessonsCount || 0}
-                            className='h-2'
+                            className="h-2"
                           />
                         </div>
                       </div>
@@ -284,53 +348,20 @@ export default function DiplomaPage({ session }: { session: Session }) {
             </div>
           </div>
         </Section>
-        <Section
-          title="Smart Contracts Auditor"
-          status="coming_soon"
-          tags={['Web3 безопасность', 'Белый хакинг', 'Аудиты']}
-          isExpanded={isFrontendExpanded}
-          onToggle={() => setIsFrontendExpanded(!isFrontendExpanded)}
-        >
-          <div>{/* Frontend Developer content will go here */}</div>
-        </Section>
-        <Section
-          title="Frontend Developer"
-          status="coming_soon"
-          tags={['Кошельки', 'Смарт-контракты', 'WAGMI']}
-          isExpanded={isFrontendExpanded}
-          onToggle={() => setIsFrontendExpanded(!isFrontendExpanded)}
-        >
-          <div>{/* Frontend Developer content will go here */}</div>
-        </Section>
-
-        <Section
-          title="Product Design"
-          status="coming_soon"
-          tags={['Интерфейсы', 'UX/UI', 'Figma']}
-          isExpanded={isFrontendExpanded}
-          onToggle={() => setIsFrontendExpanded(!isFrontendExpanded)}
-        >
-          <div>{/* Frontend Developer content will go here */}</div>
-        </Section>
-
-        <Section
-          title="Community Manager"
-          status="coming_soon"
-          tags={['Twitter', 'Telegram', 'Discord']}
-          isExpanded={isFrontendExpanded}
-          onToggle={() => setIsFrontendExpanded(!isFrontendExpanded)}
-        >
-          <div>{/* Frontend Developer content will go here */}</div>
-        </Section>
-        <Section
-          title="Content Writer"
-          status="coming_soon"
-          tags={['Английский', 'Копирайтинг', 'Маркетинг']}
-          isExpanded={isFrontendExpanded}
-          onToggle={() => setIsFrontendExpanded(!isFrontendExpanded)}
-        >
-          <div>{/* Frontend Developer content will go here */}</div>
-        </Section>
+        {SECTIONS.slice(1).map((section) => (
+          <Section
+            key={section.id}
+            title={section.title}
+            status={section.status}
+            tags={section.tags}
+            isExpanded={sectionExpanded[section.id] || false}
+            onToggle={() => {}}
+          >
+            <div>
+              {/* Content for the {section.title} section will go here */}
+            </div>
+          </Section>
+        ))}
       </div>
       <Footer />
     </main>
