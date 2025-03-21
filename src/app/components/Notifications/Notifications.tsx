@@ -5,6 +5,9 @@ import Image from 'next/image';
 import notificationImage from './assets/top_icon.png';
 import SettingIcon from './assets/settings';
 import bgImage from './assets/bg.png';
+import bgImage1 from './assets/bg1.png';
+import bgImage2 from './assets/bg2.png';
+
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { cn } from '~/helpers';
 import useEmblaCarousel from 'embla-carousel-react';
@@ -30,7 +33,7 @@ const carouselSlides = [
     title: 'Новые курсы доступны',
     description:
       'Изучите новые технологии блокчейн разработки с нашими обновленными материалами',
-    image: bgImage,
+    image: bgImage1,
   },
   {
     id: 3,
@@ -38,7 +41,7 @@ const carouselSlides = [
     title: 'Групповые занятия',
     description:
       'Присоединяйтесь к нашим групповым занятиям для более эффективного обучения',
-    image: bgImage,
+    image: bgImage2,
   },
 ];
 
