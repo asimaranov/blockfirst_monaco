@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import notificationImage from './assets/top_icon.png';
-import settings from './assets/settings.svg';
+import SettingIcon from './assets/settings';
 import bgImage from './assets/bg.png';
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { cn } from '~/helpers';
@@ -43,9 +43,12 @@ const carouselSlides = [
 ];
 
 const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
-  const [activeTab, setActive] = useState<'incoming' | 'archieve'>('incoming');
+  const [activeTab, setActive] = useState<'incoming' | 'archieve' | 'settings'>(
+    'incoming'
+  );
   const incomingTabRef = useRef<HTMLDivElement>(null);
   const archieveTabRef = useRef<HTMLDivElement>(null);
+  const settingsTabRef = useRef<HTMLDivElement>(null);
   const [underlineStyle, setUnderlineStyle] = useState({
     width: 0,
     left: 0,
@@ -75,9 +78,17 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
 
   useEffect(() => {
     const updateUnderline = () => {
-      const activeTabRef =
-        activeTab === 'incoming' ? incomingTabRef : archieveTabRef;
-      if (activeTabRef.current) {
+      let activeTabRef;
+
+      if (activeTab === 'incoming') {
+        activeTabRef = incomingTabRef;
+      } else if (activeTab === 'archieve') {
+        activeTabRef = archieveTabRef;
+      } else if (activeTab === 'settings') {
+        activeTabRef = settingsTabRef;
+      }
+
+      if (activeTabRef?.current) {
         const { width, left } = activeTabRef.current.getBoundingClientRect();
         const parentLeft =
           activeTabRef.current.parentElement?.getBoundingClientRect().left || 0;
@@ -115,7 +126,7 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
               <span className="text-foreground text-xl">Уведомления</span>
             </div>
             <div className="flex items-center">
-              <button className="border-primary/50 flex items-center gap-1 rounded-full border py-1.5 pr-3 pl-2 leading-4">
+              <button className="border-primary/50 flex cursor-pointer items-center gap-1 rounded-full border py-1.5 pr-3 pl-2 leading-4">
                 <div className="h-4 w-4">
                   <svg
                     width="16"
@@ -168,11 +179,19 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
             >
               Архив
             </div>
-            <Image
-              src={settings}
-              alt="Settings"
-              className="mr-8 ml-auto hover:opacity-50"
-            />
+            <div className="ml-auto" />
+            <div
+              ref={settingsTabRef}
+              className={cn(
+                'group opacity-50 hover:opacity-100',
+                activeTab == 'settings' && 'active',
+                'flex cursor-pointer flex-row items-center justify-center gap-1 px-8 py-4 text-sm',
+                activeTab == 'settings' && 'opacity-100'
+              )}
+              onClick={() => setActive('settings')}
+            >
+              <SettingIcon />
+            </div>
 
             {/* Animated underline */}
             <motion.div
