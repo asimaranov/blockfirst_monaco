@@ -5,18 +5,100 @@ import Image from 'next/image';
 import notificationImage from './assets/top_icon.png';
 import settings from './assets/settings.svg';
 import bgImage from './assets/bg.png';
+import { useEffect, useState, useRef, useCallback } from 'react';
+import { cn } from '~/helpers';
+import useEmblaCarousel from 'embla-carousel-react';
 
 interface NotificationsProps {
   onClose?: () => void;
+  notificationsNum: number;
 }
 
-const Notifications = ({ onClose }: NotificationsProps) => {
+// Dummy data for slider
+const carouselSlides = [
+  {
+    id: 1,
+    category: 'Education',
+    title: 'Предложение для студентов',
+    description:
+      'Уникальный условия по оплате курса для студентов. Заполните форму в тарифах',
+    image: bgImage,
+  },
+  {
+    id: 2,
+    category: 'Education',
+    title: 'Новые курсы доступны',
+    description:
+      'Изучите новые технологии блокчейн разработки с нашими обновленными материалами',
+    image: bgImage,
+  },
+  {
+    id: 3,
+    category: 'Education',
+    title: 'Групповые занятия',
+    description:
+      'Присоединяйтесь к нашим групповым занятиям для более эффективного обучения',
+    image: bgImage,
+  },
+];
+
+const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
+  const [activeTab, setActive] = useState<'incoming' | 'archieve'>('incoming');
+  const incomingTabRef = useRef<HTMLDivElement>(null);
+  const archieveTabRef = useRef<HTMLDivElement>(null);
+  const [underlineStyle, setUnderlineStyle] = useState({
+    width: 0,
+    left: 0,
+  });
+
+  // Embla carousel setup
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 5000 });
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [slideCount, setSlideCount] = useState(0);
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    setSlideCount(emblaApi.slideNodes().length);
+    onSelect();
+    emblaApi.on('select', onSelect);
+
+    return () => {
+      emblaApi.off('select', onSelect);
+    };
+  }, [emblaApi, onSelect]);
+
+  useEffect(() => {
+    const updateUnderline = () => {
+      const activeTabRef =
+        activeTab === 'incoming' ? incomingTabRef : archieveTabRef;
+      if (activeTabRef.current) {
+        const { width, left } = activeTabRef.current.getBoundingClientRect();
+        const parentLeft =
+          activeTabRef.current.parentElement?.getBoundingClientRect().left || 0;
+        setUnderlineStyle({
+          width,
+          left: left - parentLeft,
+        });
+      }
+    };
+
+    updateUnderline();
+    window.addEventListener('resize', updateUnderline);
+    return () => window.removeEventListener('resize', updateUnderline);
+  }, [activeTab]);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="flex h-screen w-full max-w-[420px] flex-col overflow-hidden border border-[#282d33]/40 bg-[#01050d]"
+      className="flex h-screen w-full max-w-105 flex-col overflow-hidden border border-[#282d33]/40 bg-[#01050d]"
     >
       <div className="flex h-full flex-col">
         {/* Header with title and archive button */}
@@ -32,41 +114,58 @@ const Notifications = ({ onClose }: NotificationsProps) => {
               </div>
               <span className="text-foreground text-xl">Уведомления</span>
             </div>
-            <div className="flex space-x-4">
-              <button className="border-primary/50 flex h-7 items-center rounded-full border px-2 py-1">
-                <div className="flex items-center space-x-1">
-                  <div className="h-4 w-4">
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M4.35938 8.52039L6.43937 10.6004L11.6394 5.40039"
-                        stroke="#195AF4"
-                        stroke-width="1.2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                  </div>
-                  <span className="text-foreground text-xs">Все в архив</span>
+            <div className="flex items-center">
+              <button className="border-primary/50 flex items-center gap-1 rounded-full border py-1.5 pr-3 pl-2 leading-4">
+                <div className="h-4 w-4">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4"
+                  >
+                    <path
+                      d="M4.35938 8.52039L6.43937 10.6004L11.6394 5.40039"
+                      stroke="#195AF4"
+                      stroke-width="1.2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
                 </div>
+                <span className="text-foreground text-xs">Все в архив</span>
               </button>
             </div>
           </div>
 
           {/* Tabs */}
-          <div className="flex w-full flex-row bg-[#14171C]">
-            <div className="flex flex-row items-center justify-center gap-1 px-8 py-4 text-sm">
+          <div className="relative flex w-full flex-row bg-[#14171C]">
+            <div
+              ref={incomingTabRef}
+              className={cn(
+                'opacity-50 hover:opacity-100',
+                'flex cursor-pointer flex-row items-center justify-center gap-1 px-8 py-4 text-sm',
+                activeTab == 'incoming' && 'opacity-100'
+              )}
+              onClick={() => setActive('incoming')}
+            >
               Входящие
-              <div className="bg-error flex h-5 w-5 items-center justify-center rounded-full text-xs">
-                1
-              </div>
+              {notificationsNum && (
+                <div className="bg-error flex h-5 w-5 items-center justify-center rounded-full text-xs">
+                  {notificationsNum}
+                </div>
+              )}
             </div>
-            <div className="flex flex-row items-center justify-center gap-1 px-8 py-4 text-sm">
+            <div
+              ref={archieveTabRef}
+              className={cn(
+                'opacity-50 hover:opacity-100',
+                'flex cursor-pointer flex-row items-center justify-center gap-1 px-8 py-4 text-sm',
+                activeTab == 'archieve' && 'opacity-100'
+              )}
+              onClick={() => setActive('archieve')}
+            >
               Архив
             </div>
             <Image
@@ -74,41 +173,71 @@ const Notifications = ({ onClose }: NotificationsProps) => {
               alt="Settings"
               className="mr-8 ml-auto hover:opacity-50"
             />
+
+            {/* Animated underline */}
+            <motion.div
+              className="bg-primary absolute bottom-0 h-[1px]"
+              initial={false}
+              animate={{
+                width: underlineStyle.width,
+                left: underlineStyle.left,
+              }}
+              transition={{
+                type: 'spring',
+                stiffness: 500,
+                damping: 30,
+              }}
+            />
           </div>
         </div>
 
         {/* Scrollable content */}
         <div className="flex-1 overflow-y-auto">
-          {/* Notification card with image */}
-          <div className="relative w-full">
-            <Image
-              src={bgImage}
-              alt="Notification"
-              fill
-              className="object-cover"
-            />
-            <div className="relative z-20 flex h-full flex-col justify-between p-8">
-              <div className="flex flex-col space-y-[46px]">
-                <div>
-                  <span className="border-secondary/50 text-secondary h-6 rounded-full border px-3 py-1 text-xs">
-                    Education
-                  </span>
+          {/* Embla Carousel for notification cards */}
+          <div className="overflow-hidden" ref={emblaRef}>
+            <div className="flex">
+              {carouselSlides.map((slide) => (
+                <div key={slide.id} className="relative min-w-full">
+                  <Image
+                    src={slide.image}
+                    alt="Notification"
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="relative z-20 flex h-55 flex-col justify-between p-8 pb-4">
+                    <div className="flex flex-col">
+                      <div>
+                        <span className="border-secondary/50 text-secondary h-6 rounded-full border px-3 py-1 text-xs">
+                          {slide.category}
+                        </span>
+                      </div>
+                    </div>
+                    <div>
+                      <div className="flex flex-col space-y-3 pb-8">
+                        <h3 className="text-foreground text-base">
+                          {slide.title}
+                        </h3>
+                        <p className="text-secondary text-sm">
+                          {slide.description}
+                        </p>
+                      </div>
+                      <div className="flex justify-center space-x-1">
+                        {Array.from({ length: slideCount }).map((_, index) => (
+                          <div
+                            key={index}
+                            className={cn(
+                              'h-0.5 w-4',
+                              index === selectedIndex
+                                ? 'bg-primary'
+                                : 'bg-[#282d33]'
+                            )}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex flex-col space-y-3">
-                  <h3 className="text-foreground text-xl">
-                    Предложение для студентов
-                  </h3>
-                  <p className="text-secondary text-sm">
-                    Уникальный условия по оплате курса для студентов. Заполните
-                    форму в тарифах
-                  </p>
-                </div>
-              </div>
-              <div className="flex justify-center space-x-1">
-                <div className="bg-primary h-0.5 w-4"></div>
-                <div className="h-0.5 w-4 bg-[#282d33]"></div>
-                <div className="h-0.5 w-4 bg-[#282d33]"></div>
-              </div>
+              ))}
             </div>
           </div>
 

@@ -42,7 +42,7 @@ export function NotificationsModal({
               boxShadow: '0 0 20px rgba(0, 0, 0, 0.3)',
             }}
           >
-            <Notifications onClose={onClose} />
+            <Notifications onClose={onClose} notificationsNum={5} />
           </motion.div>
         </div>
       )}
