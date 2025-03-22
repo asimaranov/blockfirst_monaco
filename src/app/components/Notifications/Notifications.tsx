@@ -820,7 +820,19 @@ const Notifications = ({ onClose }: NotificationsProps) => {
             <>
               {archivedNotifications.length === 0 ? (
                 <div className="flex h-full w-full items-center justify-center">
-                  <span className="text-secondary text-sm">Архив пуст</span>
+                  <div className="flex w-full justify-center ">
+                  <div className="flex flex-col items-center gap-5 text-center">
+                    <div className="bg-accent flex h-15 w-15 items-center justify-center rounded-full">
+                      <Image
+                        src={noNotificationsImage}
+                        alt="No notifications"
+                      />
+                    </div>
+                    <span className="text-sm text-[#9AA6B5]/50">
+                      Уведомлений в архиве нет :(
+                    </span>
+                  </div>
+                </div>
                 </div>
               ) : (
                 archivedNotifications.map((notification) => (
@@ -932,13 +944,13 @@ const Notifications = ({ onClose }: NotificationsProps) => {
                     )}
                   >
                     <div className="flex items-center justify-between py-[10px]">
-                      <div className="flex items-center gap-3">
+                      <div className="flex gap-3">
                         <div className="text-foreground">{setting.icon}</div>
-                        <div className="flex flex-col">
-                          <span className="text-foreground text-sm">
+                        <div className="flex flex-col gap-2">
+                          <span className="text-foreground text-sm leading-4">
                             {setting.title}
                           </span>
-                          <span className="text-secondary text-xs">
+                          <span className="text-secondary text-xs leading-3.5">
                             {setting.description}
                           </span>
                         </div>
