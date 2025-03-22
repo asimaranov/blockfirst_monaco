@@ -8,6 +8,7 @@ import bgImage from './assets/bg.png';
 import bgImage1 from './assets/bg1.png';
 import bgImage2 from './assets/bg2.png';
 import bfImage from './assets/bf-avatar.svg';
+import noNotificationsImage from './assets/no-notifications.png';
 
 import user1Image from './assets/user1-avatar.png';
 import user2Image from './assets/user2-avatar.png';
@@ -517,109 +518,127 @@ const Notifications = ({ onClose }: NotificationsProps) => {
               )}
 
               {/* Regular notifications */}
-              {incomingNotifications
-                .filter((notification) => notification.type !== 'promo')
-                .map((notification) => (
-                  <div
-                    key={notification.id}
-                    className="group relative flex flex-col hover:bg-[#282D33]/30"
-                  >
-                    <button
-                      className="absolute top-0 right-0 m-2 hidden h-4 w-4 cursor-pointer group-hover:block"
-                      onClick={() => dismissNotification(notification.id)}
+              {incomingNotifications.filter(
+                (notification) => notification.type !== 'promo'
+              ).length > 0 ? (
+                incomingNotifications
+                  .filter((notification) => notification.type !== 'promo')
+                  .map((notification) => (
+                    <div
+                      key={notification.id}
+                      className="group relative flex flex-col hover:bg-[#282D33]/30"
                     >
-                      <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 16 16"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
+                      <button
+                        className="absolute top-0 right-0 m-2 hidden h-4 w-4 cursor-pointer group-hover:block"
+                        onClick={() => dismissNotification(notification.id)}
                       >
-                        <path
-                          d="M4.73203 12.2007C4.4743 12.4584 4.05643 12.4584 3.7987 12.2007C3.54097 11.9429 3.54096 11.5251 3.7987 11.2673L7.06536 8.00065L3.7987 4.73399C3.54097 4.47625 3.54097 4.05838 3.7987 3.80065C4.05643 3.54292 4.4743 3.54292 4.73203 3.80065L7.9987 7.06732L11.2654 3.80065C11.5231 3.54292 11.941 3.54292 12.1987 3.80065C12.4564 4.05838 12.4564 4.47625 12.1987 4.73398L8.93203 8.00065L12.1987 11.2673C12.4564 11.5251 12.4564 11.9429 12.1987 12.2007C11.941 12.4584 11.5231 12.4584 11.2654 12.2007L7.9987 8.93398L4.73203 12.2007Z"
-                          fill="#9AA6B5"
-                          fill-opacity="0.5"
-                        />
-                      </svg>
-                    </button>
-                    <div className="px-8 py-5 first:pt-8">
-                      <div className="relative flex space-x-4">
-                        <div className="flex h-9 w-9 flex-shrink-0">
-                          <Image
-                            src={notification.avatar}
-                            alt=""
-                            className="object-cover"
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M4.73203 12.2007C4.4743 12.4584 4.05643 12.4584 3.7987 12.2007C3.54097 11.9429 3.54096 11.5251 3.7987 11.2673L7.06536 8.00065L3.7987 4.73399C3.54097 4.47625 3.54097 4.05838 3.7987 3.80065C4.05643 3.54292 4.4743 3.54292 4.73203 3.80065L7.9987 7.06732L11.2654 3.80065C11.5231 3.54292 11.941 3.54292 12.1987 3.80065C12.4564 4.05838 12.4564 4.47625 12.1987 4.73398L8.93203 8.00065L12.1987 11.2673C12.4564 11.5251 12.4564 11.9429 12.1987 12.2007C11.941 12.4584 11.5231 12.4584 11.2654 12.2007L7.9987 8.93398L4.73203 12.2007Z"
+                            fill="#9AA6B5"
+                            fill-opacity="0.5"
                           />
-                        </div>
-                        <div className="flex flex-col gap-2">
-                          <div className="flex w-full justify-between">
-                            {notification.type === 'system' && (
-                              <span className="text-foreground text-xs">
-                                {notification.title}
-                              </span>
-                            )}
-                            {notification.type === 'comment' && (
-                              <span className="text-secondary text-xs">
-                                <span className="text-foreground">
-                                  {notification.username}
-                                </span>{' '}
-                                ответил вам в
-                                <span className="text-foreground">
-                                  {' '}
-                                  {notification.course}
-                                </span>
-                              </span>
-                            )}
-                            {notification.type === 'like' && (
-                              <span className="text-secondary line-clamp-1 text-xs">
-                                <span className="text-foreground">
-                                  {notification.username}
-                                </span>{' '}
-                                лайкнул ваш пост в
-                                <span className="text-foreground">
-                                  {' '}
-                                  {notification.course}
-                                </span>
-                              </span>
-                            )}
+                        </svg>
+                      </button>
+                      <div className="px-8 py-5 first:pt-8">
+                        <div className="relative flex space-x-4">
+                          <div className="flex h-9 w-9 flex-shrink-0">
+                            <Image
+                              src={notification.avatar}
+                              alt=""
+                              className="object-cover"
+                            />
                           </div>
-                          <div className="flex items-center space-x-3 text-xs">
-                            <span className="text-secondary/50">
-                              {notification.timestamp}
-                            </span>
-                            <div className="bg-secondary/20 h-full w-[1px]"></div>
-                            <span className="text-secondary/50">
-                              {notification.category}
-                            </span>
-                          </div>
-                        </div>
-                        {!notification.isRead && (
-                          <div className="bg-error ml-auto h-1.5 w-1.5 shrink-0 rounded-full"></div>
-                        )}
-                      </div>
-                      {(notification.type === 'system' ||
-                        notification.type === 'comment') && (
-                        <div className="mt-4">
-                          <div className="relative ml-14.5">
-                            <div className="relative rounded-sm bg-[#14171C] p-2 px-3">
-                              <div
-                                className={cn(
-                                  'absolute top-0 bottom-0 left-0 w-[1px]',
-                                  notification.type === 'system' &&
-                                    notification.highlightedBorder &&
-                                    'bg-primary'
-                                )}
-                              ></div>
-                              <p className="text-secondary text-xs">
-                                {notification.message}
-                              </p>
+                          <div className="flex flex-col gap-2">
+                            <div className="flex w-full justify-between">
+                              {notification.type === 'system' && (
+                                <span className="text-foreground text-xs">
+                                  {notification.title}
+                                </span>
+                              )}
+                              {notification.type === 'comment' && (
+                                <span className="text-secondary text-xs">
+                                  <span className="text-foreground">
+                                    {notification.username}
+                                  </span>{' '}
+                                  ответил вам в
+                                  <span className="text-foreground">
+                                    {' '}
+                                    {notification.course}
+                                  </span>
+                                </span>
+                              )}
+                              {notification.type === 'like' && (
+                                <span className="text-secondary line-clamp-1 text-xs">
+                                  <span className="text-foreground">
+                                    {notification.username}
+                                  </span>{' '}
+                                  лайкнул ваш пост в
+                                  <span className="text-foreground">
+                                    {' '}
+                                    {notification.course}
+                                  </span>
+                                </span>
+                              )}
+                            </div>
+                            <div className="flex items-center space-x-3 text-xs">
+                              <span className="text-secondary/50">
+                                {notification.timestamp}
+                              </span>
+                              <div className="bg-secondary/20 h-full w-[1px]"></div>
+                              <span className="text-secondary/50">
+                                {notification.category}
+                              </span>
                             </div>
                           </div>
+                          {!notification.isRead && (
+                            <div className="bg-error ml-auto h-1.5 w-1.5 shrink-0 rounded-full"></div>
+                          )}
                         </div>
-                      )}
+                        {(notification.type === 'system' ||
+                          notification.type === 'comment') && (
+                          <div className="mt-4">
+                            <div className="relative ml-14.5">
+                              <div className="relative rounded-sm bg-[#14171C] p-2 px-3">
+                                <div
+                                  className={cn(
+                                    'absolute top-0 bottom-0 left-0 w-[1px]',
+                                    notification.type === 'system' &&
+                                      notification.highlightedBorder &&
+                                      'bg-primary'
+                                  )}
+                                ></div>
+                                <p className="text-secondary text-xs">
+                                  {notification.message}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
+                  ))
+              ) : (
+                <div className="flex w-full justify-center pt-56">
+                  <div className="flex flex-col items-center gap-5 text-center">
+                    <div className="bg-accent flex h-12 w-12 items-center justify-center rounded-full">
+                      <Image
+                        src={noNotificationsImage}
+                        alt="No notifications"
+                      />
+                    </div>
+                    <span className="text-[#9AA6B5]/50 text-sm">
+                    Нет новых уведомлений :(
+                    </span>
                   </div>
-                ))}
+                </div>
+              )}
             </>
           )}
 
