@@ -74,6 +74,8 @@ export default function MentorPage({ session }: { session: Session }) {
       name: 'Андрей Симаранов',
       bigImage: '/mentors/andrey_simaranov/big.png',
       smallImage: '/mentors/andrey_simaranov/small.png',
+      bigImageWidth: 416,
+      bigImageHeight: 514,
       description: 'CEO BlockFirst, Solidity Auditor',
       about:
         'Aудитор Solidity в Mixbytes auditor DAO. Co-Founder и разработчик проекта Xraise.io в экосистеме ZkSync. Founder проекта ZkNoid',
@@ -88,6 +90,8 @@ export default function MentorPage({ session }: { session: Session }) {
       name: 'Елена Виноградова',
       bigImage: '/mentors/elena_vinogradova/big.png',
       smallImage: '/mentors/elena_vinogradova/small.png',
+      bigImageWidth: 416,
+      bigImageHeight: 514,
       description: 'Middle Solidity Developer',
       about: 'Middle Solidity Developer',
       soon: true,
@@ -97,6 +101,8 @@ export default function MentorPage({ session }: { session: Session }) {
       name: 'Алина Филатова',
       bigImage: '/mentors/alina_filatova/big.png',
       smallImage: '/mentors/alina_filatova/small.png',
+      bigImageWidth: 416,
+      bigImageHeight: 514,
       description: 'DeFi Researcher',
       soon: true,
       current: false,
@@ -105,6 +111,8 @@ export default function MentorPage({ session }: { session: Session }) {
       name: 'Роман Азаренок',
       bigImage: '/mentors/roman_azarenok/big.png',
       smallImage: '/mentors/roman_azarenok/small.png',
+      bigImageWidth: 416,
+      bigImageHeight: 514,
       description: 'Fullstack Developer',
       soon: true,
       current: false,
@@ -197,12 +205,15 @@ export default function MentorPage({ session }: { session: Session }) {
                 className="absolute inset-0 h-64.5 w-100"
               />
               {/* Avatar container */}
-              <div className="absolute inset-x-0 flex h-64 items-center justify-center">
+              <div className="relative inset-x-0 flex h-64 items-center justify-center object-contain">
                 <Image
                   src={mentors[index]!.bigImage ?? ''}
                   alt={mentors[index]!.name ?? ''}
-                  fill
-                  style={{ objectFit: 'contain' }}
+                  height={mentors[index]!.bigImageHeight ?? 0}
+                  width={mentors[index]!.bigImageWidth ?? 0}
+                  // draggable ={false}
+                  // style={{ objectFit: 'contain' }}
+                  className="w-auto h-full"
                   priority
                 />
               </div>
@@ -210,10 +221,10 @@ export default function MentorPage({ session }: { session: Session }) {
               {/* Name and title */}
               <div className="absolute right-8 bottom-7 left-8 flex flex-col gap-3">
                 <h1 className="text-foreground text-center text-3xl">
-                  Андрей Симаранов
+                  {mentors[index]!.name}
                 </h1>
                 <p className="text-secondary text-center text-xs">
-                  CEO BlockFirst, Solidity Auditor
+                  {mentors[index]!.description}
                 </p>
               </div>
             </div>
