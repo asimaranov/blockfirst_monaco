@@ -627,7 +627,7 @@ const Notifications = ({ onClose }: NotificationsProps) => {
               ) : (
                 <div className="flex w-full justify-center pt-56">
                   <div className="flex flex-col items-center gap-5 text-center">
-                    <div className="bg-accent flex h-12 w-12 items-center justify-center rounded-full">
+                    <div className="bg-accent flex h-15 w-15 items-center justify-center rounded-full">
                       <Image
                         src={noNotificationsImage}
                         alt="No notifications"
