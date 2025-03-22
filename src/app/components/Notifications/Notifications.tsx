@@ -319,8 +319,22 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
             </div>
           </div>
 
-          {/* System notification */}
-          <div className="flex flex-col hover:bg-[#282D33]/30">
+          <div className="group relative flex flex-col hover:bg-[#282D33]/30">
+            <button className="absolute top-0 right-0 m-2 hidden h-4 w-4 cursor-pointer group-hover:block">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4.73203 12.2007C4.4743 12.4584 4.05643 12.4584 3.7987 12.2007C3.54097 11.9429 3.54096 11.5251 3.7987 11.2673L7.06536 8.00065L3.7987 4.73399C3.54097 4.47625 3.54097 4.05838 3.7987 3.80065C4.05643 3.54292 4.4743 3.54292 4.73203 3.80065L7.9987 7.06732L11.2654 3.80065C11.5231 3.54292 11.941 3.54292 12.1987 3.80065C12.4564 4.05838 12.4564 4.47625 12.1987 4.73398L8.93203 8.00065L12.1987 11.2673C12.4564 11.5251 12.4564 11.9429 12.1987 12.2007C11.941 12.4584 11.5231 12.4584 11.2654 12.2007L7.9987 8.93398L4.73203 12.2007Z"
+                  fill="#9AA6B5"
+                  fill-opacity="0.5"
+                />
+              </svg>
+            </button>
             <div className="px-8 py-5 first:pt-8">
               <div className="relative flex space-x-4">
                 <div className="flex h-9 w-9 flex-shrink-0">
@@ -356,8 +370,8 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
             </div>
           </div>
 
-          <div className="relative flex flex-col hover:bg-[#282D33]/30">
-            <button className="absolute top-0 right-0 m-2 h-4 w-4 cursor-pointer">
+          <div className="group relative flex flex-col hover:bg-[#282D33]/30">
+            <button className="absolute top-0 right-0 m-2 hidden h-4 w-4 cursor-pointer group-hover:block">
               <svg
                 width="16"
                 height="16"
@@ -410,8 +424,8 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
             </div>
           </div>
 
-          <div className="relative flex flex-col hover:bg-[#282D33]/30">
-            <button className="absolute top-0 right-0 m-2 h-4 w-4 cursor-pointer">
+          <div className="group relative flex flex-col hover:bg-[#282D33]/30">
+            <button className="absolute top-0 right-0 m-2 hidden h-4 w-4 cursor-pointer group-hover:block">
               <svg
                 width="16"
                 height="16"
@@ -453,7 +467,22 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
             </div>
           </div>
 
-          <div className="flex flex-col hover:bg-[#282D33]/30">
+          <div className="group relative flex flex-col hover:bg-[#282D33]/30">
+            <button className="absolute top-0 right-0 m-2 hidden h-4 w-4 cursor-pointer group-hover:block">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4.73203 12.2007C4.4743 12.4584 4.05643 12.4584 3.7987 12.2007C3.54097 11.9429 3.54096 11.5251 3.7987 11.2673L7.06536 8.00065L3.7987 4.73399C3.54097 4.47625 3.54097 4.05838 3.7987 3.80065C4.05643 3.54292 4.4743 3.54292 4.73203 3.80065L7.9987 7.06732L11.2654 3.80065C11.5231 3.54292 11.941 3.54292 12.1987 3.80065C12.4564 4.05838 12.4564 4.47625 12.1987 4.73398L8.93203 8.00065L12.1987 11.2673C12.4564 11.5251 12.4564 11.9429 12.1987 12.2007C11.941 12.4584 11.5231 12.4584 11.2654 12.2007L7.9987 8.93398L4.73203 12.2007Z"
+                  fill="#9AA6B5"
+                  fill-opacity="0.5"
+                />
+              </svg>
+            </button>
             <div className="px-8 py-5 first:pt-8">
               <div className="relative flex space-x-4">
                 <div className="flex h-9 w-9 flex-shrink-0">
@@ -486,7 +515,22 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
             </div>
           </div>
 
-          <div className="flex flex-col hover:bg-[#282D33]/30">
+          <div className="group relative flex flex-col hover:bg-[#282D33]/30">
+            <button className="absolute top-0 right-0 m-2 hidden h-4 w-4 cursor-pointer group-hover:block">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4.73203 12.2007C4.4743 12.4584 4.05643 12.4584 3.7987 12.2007C3.54097 11.9429 3.54096 11.5251 3.7987 11.2673L7.06536 8.00065L3.7987 4.73399C3.54097 4.47625 3.54097 4.05838 3.7987 3.80065C4.05643 3.54292 4.4743 3.54292 4.73203 3.80065L7.9987 7.06732L11.2654 3.80065C11.5231 3.54292 11.941 3.54292 12.1987 3.80065C12.4564 4.05838 12.4564 4.47625 12.1987 4.73398L8.93203 8.00065L12.1987 11.2673C12.4564 11.5251 12.4564 11.9429 12.1987 12.2007C11.941 12.4584 11.5231 12.4584 11.2654 12.2007L7.9987 8.93398L4.73203 12.2007Z"
+                  fill="#9AA6B5"
+                  fill-opacity="0.5"
+                />
+              </svg>
+            </button>
             <div className="px-8 py-5 first:pt-8">
               <div className="relative flex space-x-4">
                 <div className="flex h-9 w-9 flex-shrink-0">
