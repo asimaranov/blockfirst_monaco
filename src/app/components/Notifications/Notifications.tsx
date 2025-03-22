@@ -157,7 +157,7 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="flex h-screen w-full max-w-105 flex-col overflow-hidden border border-[#282d33]/40 bg-[#01050d]"
+      className="flex h-screen w-full max-w-105 flex-col overflow-hidden border border-[#282D33]/40 bg-[#0F1217]"
     >
       <div className="flex h-full flex-col">
         {/* Header with title and archive button */}
@@ -342,7 +342,7 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
               </div>
               <div className="mt-4">
                 <div className="relative ml-14.5">
-                  <div className="bg-dark-bg relative rounded-sm p-2 px-3">
+                  <div className="bg-[#14171C] relative rounded-sm p-2 px-3">
                     <div className="bg-primary absolute top-0 bottom-0 left-0 w-[1px]"></div>
                     <p className="text-secondary text-xs">
                       Впервые зарегистрированным пользователям дарим
@@ -398,7 +398,7 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
               </div>
               <div className="mt-4">
                 <div className="relative ml-14.5">
-                  <div className="bg-dark-bg relative rounded-sm p-2 px-3">
+                  <div className="bg-[#14171C] relative rounded-sm p-2 px-3">
                     <div className=" absolute top-0 bottom-0 left-0 w-[1px]"></div>
                     <p className="text-secondary text-xs">
                       Очень хороший пример разработки интуитивно понятного
