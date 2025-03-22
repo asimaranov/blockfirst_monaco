@@ -314,7 +314,9 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
         isRead: true,
       })),
     ]);
-    setIncomingNotifications([]);
+    setIncomingNotifications(
+      incomingNotifications.filter((n) => n.type === 'promo')
+    );
   };
 
   return (
