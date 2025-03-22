@@ -104,6 +104,7 @@ const Notifications = ({ onClose }: NotificationsProps) => {
   const [archivedNotifications, setArchivedNotifications] = useState<
     Notification[]
   >([]);
+  const [inArchived, setInArchived] = useState(false);
 
   const incomingTabRef = useRef<HTMLDivElement>(null);
   const archieveTabRef = useRef<HTMLDivElement>(null);
@@ -308,15 +309,18 @@ const Notifications = ({ onClose }: NotificationsProps) => {
   const archiveAll = () => {
     setArchivedNotifications((prev) => [
       ...prev,
-      ...incomingNotifications.filter((n) => n.type !== 'promo').map((n) => ({
-        ...n,
-        isArchived: true,
-        isRead: true,
-      })),
+      ...incomingNotifications
+        .filter((n) => n.type !== 'promo')
+        .map((n) => ({
+          ...n,
+          isArchived: true,
+          isRead: true,
+        })),
     ]);
     setIncomingNotifications(
       incomingNotifications.filter((n) => n.type === 'promo')
     );
+    setInArchived(true);
   };
 
   return (
@@ -342,7 +346,7 @@ const Notifications = ({ onClose }: NotificationsProps) => {
             </div>
             <div className="flex items-center">
               <button
-                className="border-primary/50 flex cursor-pointer items-center gap-1 rounded-full border py-1.5 pr-3 pl-2 leading-4"
+                className="border-primary/50 hover:border-primary flex cursor-pointer items-center gap-1 rounded-full border py-1.5 pr-3 pl-2 leading-4"
                 onClick={archiveAll}
               >
                 <div className="h-4 w-4">
@@ -363,7 +367,14 @@ const Notifications = ({ onClose }: NotificationsProps) => {
                     />
                   </svg>
                 </div>
-                <span className="text-foreground text-xs">Все в архив</span>
+                <span
+                  className={cn(
+                    'text-foreground text-xs',
+                    inArchived && 'text-primary'
+                  )}
+                >
+                  {inArchived ? 'В архиве' : 'Все в архив'}
+                </span>
               </button>
             </div>
           </div>
@@ -583,7 +594,7 @@ const Notifications = ({ onClose }: NotificationsProps) => {
                           </div>
                         </div>
                         {!notification.isRead && (
-                          <div className="bg-error ml-auto h-1.5 w-1.5 rounded-full shrink-0"></div>
+                          <div className="bg-error ml-auto h-1.5 w-1.5 shrink-0 rounded-full"></div>
                         )}
                       </div>
                       {(notification.type === 'system' ||
