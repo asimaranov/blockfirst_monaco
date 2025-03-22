@@ -23,7 +23,7 @@ export function NotificationsModal({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             onClick={onClose}
-            className="fixed inset-0 z-50 bg-black/50"
+            className="fixed inset-0 z-40 ml-86 bg-black/50"
           />
           <motion.div
             initial={{ x: -30, opacity: 0 }}
@@ -36,9 +36,8 @@ export function NotificationsModal({
               mass: 1,
               duration: 0.4,
             }}
-            className="fixed top-0 z-50 h-screen"
+            className="fixed top-0 left-86 z-50 h-screen max-w-105"
             style={{
-              maxWidth: '420px',
               boxShadow: '0 0 20px rgba(0, 0, 0, 0.3)',
             }}
           >
