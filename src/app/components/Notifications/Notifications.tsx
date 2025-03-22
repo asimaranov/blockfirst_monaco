@@ -581,7 +581,7 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
                           </div>
                         </div>
                         {!notification.isRead && (
-                          <div className="bg-error ml-auto h-1.5 w-1.5 rounded-full"></div>
+                          <div className="bg-error ml-auto h-1.5 w-1.5 rounded-full shrink-0"></div>
                         )}
                       </div>
                       {(notification.type === 'system' ||
