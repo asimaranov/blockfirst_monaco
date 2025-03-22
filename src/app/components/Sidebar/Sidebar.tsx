@@ -35,6 +35,7 @@ interface SidebarItem {
   href: string;
   otherHref?: string;
   icon: () => JSX.Element;
+  type?: 'notifications';
   locked?: boolean;
   notificationCount?: number;
 }
@@ -103,9 +104,9 @@ const sidebarSections: SidebarSection[] = [
         title: 'Уведомления',
         href: '#',
         icon: NotificationsIcon,
-
         notificationCount: 3,
         locked: false,
+        type: 'notifications',
       },
     ],
   },
@@ -122,18 +123,6 @@ export default function Sidebar() {
     startTimestamp: Date.now(),
     createdAt: new Date().toISOString(),
     subscriptionType: SubscriptionType.Starter,
-  };
-
-  // Handle notification click
-  const handleNotificationClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string
-  ) => {
-    // If it's the notifications menu item
-    if (href === '#' && sidebarSections[2]?.items[1]?.title === 'Уведомления') {
-      e.preventDefault();
-      setIsNotificationsOpen(!isNotificationsOpen);
-    }
   };
 
   return (
@@ -187,7 +176,12 @@ export default function Sidebar() {
                   }
                   locked={item.locked}
                   notificationCount={item.notificationCount}
-                  onClick={(e) => handleNotificationClick(e, item.href)}
+                  onClick={() => {
+                    console.log(item.type, 'item.type');
+                    if (item.type === 'notifications') {
+                      setIsNotificationsOpen(!isNotificationsOpen);
+                    }
+                  }}
                 >
                   <div className="group-data-[active=true] h-4 w-4">
                     {typeof item.icon === 'function' ? (
