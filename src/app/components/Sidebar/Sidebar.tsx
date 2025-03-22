@@ -132,7 +132,7 @@ export default function Sidebar() {
     // If it's the notifications menu item
     if (href === '#' && sidebarSections[2]?.items[1]?.title === 'Уведомления') {
       e.preventDefault();
-      setIsNotificationsOpen(true);
+      setIsNotificationsOpen(!isNotificationsOpen);
     }
   };
 
