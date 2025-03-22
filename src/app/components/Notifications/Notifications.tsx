@@ -23,6 +23,7 @@ interface BaseNotification {
   timestamp: string;
   category: string;
   isRead: boolean;
+  isArchived: boolean;
   avatar: any;
 }
 
@@ -215,6 +216,7 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
         image: slide.image,
         timestamp: 'Сегодня',
         isRead: false,
+        isArchived: false,
         avatar: bgImage,
       })
     );
@@ -229,7 +231,8 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
           'Впервые зарегистрированным пользователям дарим скидку 16% на покупку «Про» тарифа',
         timestamp: '24 мин. назад',
         category: 'Система',
-        isRead: false,
+        isRead: true,
+        isArchived: false,
         avatar: bfImage,
         highlightedBorder: true,
       },
@@ -242,7 +245,8 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
           'Очень хороший пример разработки интуитивно понятного интерфэйса, молодцы что тут ещ с...',
         timestamp: '1 ч. назад',
         category: 'Комментарий',
-        isRead: false,
+        isRead: true,
+        isArchived: false,
         avatar: user1Image,
       },
       {
@@ -253,6 +257,7 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
         timestamp: '1 ч. назад',
         category: 'Лайк',
         isRead: false,
+        isArchived: false,
         avatar: user2Image,
       },
       {
@@ -263,6 +268,7 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
         timestamp: '24 мин. назад',
         category: 'Система',
         isRead: false,
+        isArchived: false,
         avatar: bfImage,
         highlightedBorder: true,
       },
@@ -275,6 +281,7 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
         timestamp: '24 мин. назад',
         category: 'Система',
         isRead: false,
+        isArchived: false,
         avatar: bfImage,
         highlightedBorder: true,
       },
@@ -292,7 +299,7 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
       // Add to archived
       setArchivedNotifications((prev) => [
         ...prev,
-        { ...notification, isRead: true },
+        { ...notification, isArchived: true, isRead: true },
       ]);
     }
   };
@@ -301,7 +308,11 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
   const archiveAll = () => {
     setArchivedNotifications((prev) => [
       ...prev,
-      ...incomingNotifications.map((n) => ({ ...n, isRead: true })),
+      ...incomingNotifications.map((n) => ({
+        ...n,
+        isArchived: true,
+        isRead: true,
+      })),
     ]);
     setIncomingNotifications([]);
   };
@@ -311,7 +322,7 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="flex h-screen min-w-105 max-w-105 flex-col overflow-hidden border border-[#282D33]/40 bg-[#0F1217]"
+      className="flex h-screen max-w-105 min-w-105 flex-col overflow-hidden border border-[#282D33]/40 bg-[#0F1217]"
     >
       <div className="flex h-full flex-col">
         {/* Header with title and archive button */}
