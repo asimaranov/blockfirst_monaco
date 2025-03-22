@@ -718,57 +718,181 @@ const Notifications = ({ onClose }: NotificationsProps) => {
           {/* Settings tab content */}
           {activeTab === 'settings' && (
             <div className="flex flex-col p-8">
-              <h3 className="text-foreground mb-4 text-base font-medium">
-                Настройки уведомлений
-              </h3>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-secondary text-sm">
-                    Системные оповещения
-                  </span>
-                  <label className="relative inline-flex cursor-pointer items-center">
-                    <input
-                      type="checkbox"
-                      className="peer sr-only"
-                      defaultChecked
-                    />
-                    <div className="peer peer-checked:bg-primary h-5 w-9 rounded-full bg-[#282D33] after:absolute after:top-0.5 after:left-0.5 after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-full peer-checked:after:border-white"></div>
-                  </label>
+              <p className="text-foreground mb-3 text-base font-medium">
+                Уведомления от BlockFirst
+              </p>
+              <p className="mb-8 text-sm text-secondary">
+                Получайте актуальные обновления, информацию о скидках на курсы и
+                релизах продуктов
+              </p>
+
+              <p className="text-secondary/50 mb-6 text-xs uppercase">Настройки</p>
+              <div className="flex flex-col space-y-5">
+                {/* News & Updates item */}
+                <div className="border-accent flex flex-col border-b">
+                  <div className="flex items-center justify-between py-[10px]">
+                    <div className="flex items-center gap-3">
+                      <div className="text-foreground">
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M14.6477 12.9527C14.6477 13.0004 14.5927 13.0393 14.5245 13.0393H1.45609C1.38788 13.0393 1.33289 12.9943 1.33289 12.9344V3.38504C1.33289 3.3252 1.38788 3.2801 1.45609 3.2801H14.5306C14.5988 3.2801 14.6538 3.3252 14.6538 3.38504V12.9527H14.6477Z"
+                            stroke="#F2F2F2"
+                            strokeWidth="1"
+                          />
+                          <path
+                            d="M10.0331 1.66797H5.9455V3.28005H10.0331V1.66797Z"
+                            stroke="#F2F2F2"
+                            strokeWidth="1"
+                          />
+                          <path
+                            d="M6.3335 5.68628H9.56683"
+                            stroke="#F2F2F2"
+                            strokeWidth="1"
+                          />
+                          <path
+                            d="M7.77344 8.26709H9.70677"
+                            stroke="#F2F2F2"
+                            strokeWidth="1"
+                          />
+                        </svg>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-foreground text-sm">
+                          Новости и обновления
+                        </span>
+                        <span className="text-secondary text-xs">
+                          Новости BlockFirst, скидки, релизы
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex items-center">
+                      <label className="relative inline-flex cursor-pointer items-center">
+                        <input
+                          type="checkbox"
+                          className="peer sr-only"
+                          defaultChecked
+                        />
+                        <div className="peer bg-accent after:bg-foreground peer-checked:bg-primary h-5 w-9 rounded-full after:absolute after:top-0.5 after:left-0.5 after:h-4 after:w-4 after:rounded-full after:transition-all after:content-[''] peer-checked:after:translate-x-full"></div>
+                      </label>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-secondary text-sm">Комментарии</span>
-                  <label className="relative inline-flex cursor-pointer items-center">
-                    <input
-                      type="checkbox"
-                      className="peer sr-only"
-                      defaultChecked
-                    />
-                    <div className="peer peer-checked:bg-primary h-5 w-9 rounded-full bg-[#282D33] after:absolute after:top-0.5 after:left-0.5 after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-full peer-checked:after:border-white"></div>
-                  </label>
+
+                {/* Comments & Likes item */}
+                <div className="border-accent flex flex-col border-b">
+                  <div className="flex items-center justify-between py-[10px]">
+                    <div className="flex items-center gap-3">
+                      <div className="text-foreground">
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M14.6667 6.8666V10.2C14.6667 13.5333 13.5333 14.6666 10.2 14.6666H5.8C2.46667 14.6666 1.33334 13.5333 1.33334 10.2V5.79998C1.33334 2.46665 2.46667 1.33331 5.8 1.33331H9.13334"
+                            stroke="#F2F2F2"
+                            strokeWidth="1"
+                          />
+                          <path
+                            d="M10.6667 7.33331C9.33334 7.33331 8.00001 6.06665 8.00001 4.66665C8.00001 3.33331 9.33334 2.06665 10.6667 2.06665C12.0667 2.06665 13.3333 3.33331 13.3333 4.66665C13.3333 6.06665 12.0667 7.33331 10.6667 7.33331Z"
+                            stroke="#F2F2F2"
+                            strokeWidth="1"
+                          />
+                          <path
+                            d="M10.3333 4.66667H11.0001"
+                            stroke="#F2F2F2"
+                            strokeLinecap="round"
+                            strokeWidth="1.3"
+                          />
+                          <path
+                            d="M7.66667 7H5"
+                            stroke="#F2F2F2"
+                            strokeLinecap="round"
+                            strokeWidth="1.3"
+                          />
+                          <path
+                            d="M10 7H7.66666"
+                            stroke="#F2F2F2"
+                            strokeLinecap="round"
+                            strokeWidth="1.3"
+                          />
+                        </svg>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-foreground text-sm">
+                          Комментарии и лайки
+                        </span>
+                        <span className="text-secondary text-xs">
+                          Ответы на ваши сообщения и реакции
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex items-center">
+                      <label className="relative inline-flex cursor-pointer items-center">
+                        <input
+                          type="checkbox"
+                          className="peer sr-only"
+                          defaultChecked
+                        />
+                        <div className="peer bg-accent after:bg-foreground peer-checked:bg-primary h-5 w-9 rounded-full after:absolute after:top-0.5 after:left-0.5 after:h-4 after:w-4 after:rounded-full after:transition-all after:content-[''] peer-checked:after:translate-x-full"></div>
+                      </label>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-secondary text-sm">Лайки</span>
-                  <label className="relative inline-flex cursor-pointer items-center">
-                    <input
-                      type="checkbox"
-                      className="peer sr-only"
-                      defaultChecked
-                    />
-                    <div className="peer peer-checked:bg-primary h-5 w-9 rounded-full bg-[#282D33] after:absolute after:top-0.5 after:left-0.5 after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-full peer-checked:after:border-white"></div>
-                  </label>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-secondary text-sm">
-                    Промо-материалы
-                  </span>
-                  <label className="relative inline-flex cursor-pointer items-center">
-                    <input
-                      type="checkbox"
-                      className="peer sr-only"
-                      defaultChecked
-                    />
-                    <div className="peer peer-checked:bg-primary h-5 w-9 rounded-full bg-[#282D33] after:absolute after:top-0.5 after:left-0.5 after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-full peer-checked:after:border-white"></div>
-                  </label>
+
+                {/* Job Vacancies item */}
+                <div className="flex flex-col">
+                  <div className="flex items-center justify-between py-[10px]">
+                    <div className="flex items-center gap-3">
+                      <div className="text-foreground">
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 16 16"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M14.5 9.33V10.6667C14.5 13.3333 13.3333 14.6667 10.6667 14.6667H5.33333C2.66667 14.6667 1.5 13.3333 1.5 10.6667V5.33333C1.5 2.66667 2.66667 1.33333 5.33333 1.33333H6.66667"
+                            stroke="#F2F2F2"
+                            strokeWidth="1"
+                          />
+                          <path
+                            d="M10.6667 1.33333H14.5V5.33333"
+                            stroke="#F2F2F2"
+                            strokeWidth="1"
+                          />
+                          <path
+                            d="M14.5 1.33333L8.16667 7.66667"
+                            stroke="#F2F2F2"
+                            strokeWidth="1"
+                          />
+                        </svg>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-foreground text-sm">
+                          Вакансии
+                        </span>
+                        <span className="text-secondary text-xs">
+                          Уведомлять о новых вакансиях
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex items-center">
+                      <label className="relative inline-flex cursor-pointer items-center">
+                        <input type="checkbox" className="peer sr-only" />
+                        <div className="peer bg-accent after:bg-foreground peer-checked:bg-primary h-5 w-9 rounded-full after:absolute after:top-0.5 after:left-0.5 after:h-4 after:w-4 after:rounded-full after:transition-all after:content-[''] peer-checked:after:translate-x-full"></div>
+                      </label>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
