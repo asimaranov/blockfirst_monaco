@@ -94,7 +94,7 @@ const carouselSlides = [
   },
 ];
 
-const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
+const Notifications = ({ onClose }: NotificationsProps) => {
   const [activeTab, setActive] = useState<'incoming' | 'archieve' | 'settings'>(
     'incoming'
   );
@@ -380,9 +380,9 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
               onClick={() => setActive('incoming')}
             >
               Входящие
-              {notificationsNum && (
+              {incomingNotifications.length > 0 && (
                 <div className="bg-error flex h-5 w-5 items-center justify-center rounded-full text-xs">
-                  {notificationsNum}
+                  {incomingNotifications.length}
                 </div>
               )}
             </div>
