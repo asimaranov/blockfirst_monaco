@@ -699,7 +699,7 @@ const Notifications = ({ onClose }: NotificationsProps) => {
                   .map((notification) => (
                     <div
                       key={notification.id}
-                      className="group relative flex flex-col hover:bg-[#282D33]/30"
+                      className="group relative flex flex-col hover:bg-[#282D33]/30 px-8 py-5 first:pt-8 nth-[2]:pt-8"
                     >
                       <button
                         className="absolute top-0 right-0 m-2 hidden h-4 w-4 cursor-pointer group-hover:block"
@@ -719,7 +719,7 @@ const Notifications = ({ onClose }: NotificationsProps) => {
                           />
                         </svg>
                       </button>
-                      <div className="px-8 py-5 first:pt-8">
+                      <div className="">
                         <div className="relative flex space-x-4">
                           <div className="flex h-9 w-9 flex-shrink-0">
                             <Image
@@ -838,9 +838,9 @@ const Notifications = ({ onClose }: NotificationsProps) => {
                 archivedNotifications.map((notification) => (
                   <div
                     key={notification.id}
-                    className="group relative flex flex-col hover:bg-[#282D33]/30"
+                    className="group relative flex flex-col hover:bg-[#282D33]/30 first:pt-8 px-8 py-5"
                   >
-                    <div className="px-8 py-5 opacity-70 first:pt-8">
+                    <div className=" opacity-70">
                       <div className="relative flex space-x-4">
                         <div className="flex h-9 w-9 flex-shrink-0">
                           <Image
