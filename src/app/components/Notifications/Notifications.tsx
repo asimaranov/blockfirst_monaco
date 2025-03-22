@@ -10,7 +10,7 @@ import bgImage2 from './assets/bg2.png';
 import bfImage from './assets/bf-avatar.svg';
 
 import user1Image from './assets/user1-avatar.png';
-
+import user2Image from './assets/user2-avatar.png';
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { cn } from '~/helpers';
 import useEmblaCarousel from 'embla-carousel-react';
@@ -320,7 +320,7 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
           </div>
 
           {/* System notification */}
-          <div className="flex flex-col">
+          <div className="flex flex-col hover:bg-[#282D33]/30">
             <div className="px-8 py-5 first:pt-8">
               <div className="relative flex space-x-4">
                 <div className="flex h-9 w-9 flex-shrink-0">
@@ -342,7 +342,7 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
               </div>
               <div className="mt-4">
                 <div className="relative ml-14.5">
-                  <div className="bg-[#14171C] relative rounded-sm p-2 px-3">
+                  <div className="relative rounded-sm bg-[#14171C] p-2 px-3">
                     <div className="bg-primary absolute top-0 bottom-0 left-0 w-[1px]"></div>
                     <p className="text-secondary text-xs">
                       Впервые зарегистрированным пользователям дарим
@@ -356,7 +356,7 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
             </div>
           </div>
 
-          <div className="relative flex flex-col">
+          <div className="relative flex flex-col hover:bg-[#282D33]/30">
             <button className="absolute top-0 right-0 m-2 h-4 w-4 cursor-pointer">
               <svg
                 width="16"
@@ -398,11 +398,121 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
               </div>
               <div className="mt-4">
                 <div className="relative ml-14.5">
-                  <div className="bg-[#14171C] relative rounded-sm p-2 px-3">
-                    <div className=" absolute top-0 bottom-0 left-0 w-[1px]"></div>
+                  <div className="relative rounded-sm bg-[#14171C] p-2 px-3">
+                    <div className="absolute top-0 bottom-0 left-0 w-[1px]"></div>
                     <p className="text-secondary text-xs">
                       Очень хороший пример разработки интуитивно понятного
                       интерфэйса, молодцы что тут ещ с...
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="relative flex flex-col hover:bg-[#282D33]/30">
+            <button className="absolute top-0 right-0 m-2 h-4 w-4 cursor-pointer">
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M4.73203 12.2007C4.4743 12.4584 4.05643 12.4584 3.7987 12.2007C3.54097 11.9429 3.54096 11.5251 3.7987 11.2673L7.06536 8.00065L3.7987 4.73399C3.54097 4.47625 3.54097 4.05838 3.7987 3.80065C4.05643 3.54292 4.4743 3.54292 4.73203 3.80065L7.9987 7.06732L11.2654 3.80065C11.5231 3.54292 11.941 3.54292 12.1987 3.80065C12.4564 4.05838 12.4564 4.47625 12.1987 4.73398L8.93203 8.00065L12.1987 11.2673C12.4564 11.5251 12.4564 11.9429 12.1987 12.2007C11.941 12.4584 11.5231 12.4584 11.2654 12.2007L7.9987 8.93398L4.73203 12.2007Z"
+                  fill="#9AA6B5"
+                  fill-opacity="0.5"
+                />
+              </svg>
+            </button>
+            <div className="px-8 py-5 first:pt-8">
+              <div className="relative flex space-x-4">
+                <div className="h-9 w-9 flex-shrink-0">
+                  <Image src={user2Image} alt="" className="object-cover" />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <div className="flex w-full justify-between">
+                    <span className="text-secondary line-clamp-1 text-xs">
+                      <span className="text-foreground">Нагибатор 228</span>{' '}
+                      лайкнул ваш пост в
+                      <span className="text-foreground">
+                        {' '}
+                        Путешествие по Solidity...
+                      </span>
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-3 text-xs">
+                    <span className="text-secondary/50">1 ч. назад</span>
+                    <div className="bg-secondary/20 h-full w-[1px]"></div>
+                    <span className="text-secondary/50">Лайк</span>
+                  </div>
+                </div>
+                <div className="bg-error ml-auto h-1.5 w-1.5 rounded-full"></div>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col hover:bg-[#282D33]/30">
+            <div className="px-8 py-5 first:pt-8">
+              <div className="relative flex space-x-4">
+                <div className="flex h-9 w-9 flex-shrink-0">
+                  <Image src={bfImage} alt="" className="object-cover" />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <div className="flex w-full justify-between">
+                    <span className="text-foreground text-xs">
+                      BlockFirst поздравляет Вас! 🔥
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-3 text-xs">
+                    <span className="text-secondary/50">24 мин. назад</span>
+                    <div className="bg-secondary/20 h-full w-[1px]"></div>
+                    <span className="text-secondary/50">Система</span>
+                  </div>
+                </div>
+                <div className="bg-error ml-auto h-1.5 w-1.5 rounded-full"></div>
+              </div>
+              <div className="mt-4">
+                <div className="relative ml-14.5">
+                  <div className="relative rounded-sm bg-[#14171C] p-2 px-3">
+                    <div className="bg-primary absolute top-0 bottom-0 left-0 w-[1px]"></div>
+                    <p className="text-secondary text-xs">
+                      Поздравляем с окончанием курса! Вы большой молодец!
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col hover:bg-[#282D33]/30">
+            <div className="px-8 py-5 first:pt-8">
+              <div className="relative flex space-x-4">
+                <div className="flex h-9 w-9 flex-shrink-0">
+                  <Image src={bfImage} alt="" className="object-cover" />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <div className="flex w-full justify-between">
+                    <span className="text-foreground text-xs">
+                      Новые вакансии 🔥
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-3 text-xs">
+                    <span className="text-secondary/50">24 мин. назад</span>
+                    <div className="bg-secondary/20 h-full w-[1px]"></div>
+                    <span className="text-secondary/50">Система</span>
+                  </div>
+                </div>
+                <div className="bg-error ml-auto h-1.5 w-1.5 rounded-full"></div>
+              </div>
+              <div className="mt-4">
+                <div className="relative ml-14.5">
+                  <div className="relative rounded-sm bg-[#14171C] p-2 px-3">
+                    <div className="bg-primary absolute top-0 bottom-0 left-0 w-[1px]"></div>
+                    <p className="text-secondary text-xs">
+                      Мы обновили для вас список актуальных вакансий! Скорее
+                      заходи в раздел!
                     </p>
                   </div>
                 </div>
