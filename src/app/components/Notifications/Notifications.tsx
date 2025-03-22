@@ -502,14 +502,14 @@ const Notifications = ({ onClose }: NotificationsProps) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="flex h-screen max-w-105 min-w-105 flex-col overflow-hidden border border-[#282D33]/40 bg-[#0F1217]"
+      className="flex h-screen max-w-105 min-w-105 flex-col overflow-y-auto border border-[#282D33]/40 bg-[#0F1217]"
     >
       <div className="flex h-full flex-col">
-        {/* Header with title and archive button */}
-        <div className="flex flex-shrink-0 flex-col space-y-8">
-          <div className="flex justify-between px-8 pt-8">
+        {/* Header with title and archive button - this stays fixed */}
+        <div className="flex-shrink-0 px-8 pt-8 pb-8">
+          <div className="flex justify-between">
             <div className="flex items-center space-x-3">
-              <div className="relative h-9 w-9 overflow-hidden rounded-full">
+              <div className="relative h-9 w-9 rounded-full">
                 <Image
                   src={notificationImage}
                   alt=""
@@ -552,8 +552,10 @@ const Notifications = ({ onClose }: NotificationsProps) => {
               </button>
             </div>
           </div>
+        </div>
 
-          {/* Tabs */}
+        {/* Tabs - these will be sticky */}
+        <div className="sticky top-0 z-10 flex-shrink-0 bg-[#0F1217]">
           <div className="relative flex w-full flex-row bg-[#14171C]">
             <div
               ref={incomingTabRef}
@@ -614,7 +616,7 @@ const Notifications = ({ onClose }: NotificationsProps) => {
         </div>
 
         {/* Scrollable content */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1">
           {activeTab === 'incoming' && (
             <>
               {/* Embla Carousel for promo notifications */}
@@ -819,7 +821,7 @@ const Notifications = ({ onClose }: NotificationsProps) => {
           {activeTab === 'archieve' && (
             <>
               {archivedNotifications.length === 0 ? (
-                <div className="flex h-full w-full items-center justify-center">
+                <div className="flex h-full w-full items-center justify-center pt-56">
                   <div className="flex w-full justify-center ">
                   <div className="flex flex-col items-center gap-5 text-center">
                     <div className="bg-accent flex h-15 w-15 items-center justify-center rounded-full">
