@@ -37,6 +37,7 @@
     "better-auth": "=1.2.5-beta.4",
     "clsx": "^2.1.1",
     "embla-carousel": "^8.5.2",
+    "embla-carousel-autoplay": "^8.5.2",
     "embla-carousel-react": "^8.5.2",
     "formik": "^2.4.6",
     "framer-motion": "^12.4.11",
