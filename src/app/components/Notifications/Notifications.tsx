@@ -308,7 +308,7 @@ const Notifications = ({ onClose, notificationsNum }: NotificationsProps) => {
   const archiveAll = () => {
     setArchivedNotifications((prev) => [
       ...prev,
-      ...incomingNotifications.map((n) => ({
+      ...incomingNotifications.filter((n) => n.type !== 'promo').map((n) => ({
         ...n,
         isArchived: true,
         isRead: true,
