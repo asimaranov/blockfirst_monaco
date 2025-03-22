@@ -162,7 +162,7 @@ export default function ConfirmEmailForm({
           secondText={`Мы выслали на ваш электронный адрес ссылку для подтверждения.`}
         />
         <div className="relative">
-          <div className="relative flex flex-row gap-[16px]">
+          <div className="relative flex flex-row gap-4">
             {Array.from({ length: 5 }).map((_, index) => (
               <input
                 ref={(node: HTMLInputElement | null) => {

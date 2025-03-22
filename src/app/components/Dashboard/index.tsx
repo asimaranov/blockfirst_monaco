@@ -61,7 +61,7 @@ export default function Dashboard({ session }: { session: Session }) {
           </>
         )}
         {dashboardSection === 'history' && (
-          <section className="divide [&>*]:border-accent divide-accent border-accent grid grid-cols-1 gap-y-9 divide-x-1 sm:grid-cols-2 lg:grid-cols-3 [&>*]:border-y">
+            <section className="divide [&>*]:border-accent divide-accent border-accent grid grid-cols-1 gap-y-9 divide-x-1 sm:grid-cols-2 lg:grid-cols-3 [&>*]:border-y">
             {COURSES.filter((x) => !x.soon).map((course) => (
               <CourseHistoryCard key={course.id} course={course} percent={57} courseStudyingFor={'1д 12ч 48м'} />
             ))}
