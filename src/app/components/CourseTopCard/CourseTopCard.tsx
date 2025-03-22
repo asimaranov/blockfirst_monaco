@@ -62,6 +62,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
                 <Image
                   src={course.bage.img}
                   alt={course.bage.title}
+                  className="h-4 w-4"
                   width={16}
                   height={16}
                 />
@@ -111,6 +112,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
                 viewBox="0 0 21 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
               >
                 <path
                   fillRule="evenodd"

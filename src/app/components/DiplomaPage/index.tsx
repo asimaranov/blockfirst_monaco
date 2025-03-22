@@ -16,6 +16,7 @@ import CopyIcon from './assets/copy';
 import ExpandIcon from './assets/expand';
 import DownloadIcon from './assets/download';
 import { Progress } from '../shared/Progress';
+import { InfoPopover } from '../shared/InfoPopover';
 
 const competencies = [
   'Изучите блокчейны Ethereum, BSC, Polygon и библиотеки',
@@ -172,6 +173,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
                         viewBox="0 0 21 20"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
                       >
                         <path
                           d="M5.94922 10.65L8.54922 13.25L15.0492 6.75"
@@ -201,22 +203,12 @@ export default function DiplomaPage({ session }: { session: Session }) {
                     Уроки
                   </span>
 
-                  <div className="text-secondary flex items-center justify-between text-xs uppercase">
-                    <span className="opacity-50">Прогресс</span>
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M8.0026 1.83398C4.59685 1.83398 1.83594 4.59489 1.83594 8.00065C1.83594 11.4064 4.59685 14.1673 8.0026 14.1673C11.4084 14.1673 14.1693 11.4064 14.1693 8.00065C14.1693 4.59489 11.4084 1.83398 8.0026 1.83398ZM0.835938 8.00065C0.835938 4.04261 4.04456 0.833984 8.0026 0.833984C11.9606 0.833984 15.1693 4.04261 15.1693 8.00065C15.1693 11.9587 11.9606 15.1673 8.0026 15.1673C4.04456 15.1673 0.835938 11.9587 0.835938 8.00065ZM8.0026 6.83398C8.27875 6.83398 8.5026 7.05784 8.5026 7.33398V10.6673C8.5026 10.9435 8.27875 11.1673 8.0026 11.1673C7.72646 11.1673 7.5026 10.9435 7.5026 10.6673V7.33398C7.5026 7.05784 7.72646 6.83398 8.0026 6.83398ZM8.0026 6.00065C8.37079 6.00065 8.66927 5.70217 8.66927 5.33398C8.66927 4.96579 8.37079 4.66732 8.0026 4.66732C7.63441 4.66732 7.33594 4.96579 7.33594 5.33398C7.33594 5.70217 7.63441 6.00065 8.0026 6.00065Z"
-                        fill="#9AA6B5"
-                      />
-                    </svg>
+                  <div className="text-secondary flex items-center justify-between">
+                    <span className="opacity-50 text-xs uppercase">Прогресс</span>
+                    <InfoPopover
+                      title="Прогресс обучения"
+                      content="По завершении курса ваша новая компетенция будет отражена в интерактивном дипломе, который можно дополнить новыми компетенциями  в зависимости от пройденных курсов."
+                    />
                   </div>
                 </div>
 

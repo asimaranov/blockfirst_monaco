@@ -117,7 +117,7 @@ export default function CoursePage({
                           </div>
                           <div className="flex flex-col gap-2">
                             <div className="flex items-center gap-3">
-                              <span className="">{tariff.name}</span>
+                              <span className="text-base">{tariff.name}</span>
                               {!!tariff.sale && (
                                 <span className="bg-error rounded-full px-2 py-1 text-xs">
                                   Sale {tariff.sale}%
@@ -137,6 +137,7 @@ export default function CoursePage({
                               viewBox="0 0 24 25"
                               fill="none"
                               xmlns="http://www.w3.org/2000/svg"
+                              className='h-6 w-6'
                             >
                               <path
                                 fillRule="evenodd"
@@ -159,7 +160,7 @@ export default function CoursePage({
                   <div className="flex flex-col">
                     {tariff.features.map((feature) => (
                       <div
-                        className="flex h-[44px] items-center px-8 odd:bg-[#14171C]"
+                        className="flex h-11 items-center px-8 odd:bg-[#14171C]"
                         key={feature}
                       >
                         <div className="flex items-center gap-3">
@@ -206,6 +207,7 @@ export default function CoursePage({
                     viewBox="0 0 36 36"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    className='h-9 w-9'
                   >
                     <rect width="36" height="36" rx="18" fill="#01050D" />
                     <path
@@ -230,6 +232,7 @@ export default function CoursePage({
                     viewBox="0 0 36 36"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    className='h-9 w-9'
                   >
                     <rect width="36" height="36" rx="18" fill="#01050D" />
                     <path
@@ -256,6 +259,7 @@ export default function CoursePage({
                     viewBox="0 0 36 36"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    className='h-9 w-9'
                   >
                     <rect width="36" height="36" rx="18" fill="#01050D" />
                     <path

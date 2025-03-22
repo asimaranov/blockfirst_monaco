@@ -42,6 +42,7 @@ export default function CourseInfoTopCard({ course }: { course: ICourse }) {
                   alt={course.bage.title}
                   width={16}
                   height={16}
+                  className='h-4 w-4'
                 />
               )}
               <span className="mt-0.5 font-delight">{course.bage.title}</span>
@@ -72,15 +73,15 @@ export default function CourseInfoTopCard({ course }: { course: ICourse }) {
           <span className="text-secondary text-sm line-clamp-4">{course.aboutText || course.description}</span>
           <div className="flex flex-row gap-2">
             <div className="flex items-center gap-1 rounded-lg border border-[#282C32] px-4 py-2">
-              <Image src={VideoIcon} alt="" width={14} height={14} />
+              <Image src={VideoIcon} alt="" width={14} height={14} className='h-3.5 w-3.5'/>
               <span className="text-foreground text-xs">Видеолекции</span>
             </div>
             <div className="flex items-center gap-1 rounded-lg border border-[#282C32] px-4 py-2">
-              <Image src={PracticeIcon} alt="" width={14} height={14} />
+              <Image src={PracticeIcon} alt="" width={14} height={14} className='h-3.5 w-3.5'/>
               <span className="text-foreground text-xs">Практика</span>
             </div>
             <div className="flex items-center gap-1 rounded-lg border border-[#282C32] px-4 py-2">
-              <Image src={TheoryIcon} alt="" width={14} height={14} />
+              <Image src={TheoryIcon} alt="" width={14} height={14} className='h-3.5 w-3.5'/>
               <span className="text-foreground text-xs">Теория</span>
             </div>
           </div>
@@ -103,6 +104,7 @@ export default function CourseInfoTopCard({ course }: { course: ICourse }) {
                 viewBox="0 0 21 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
               >
                 <path
                   fillRule="evenodd"
@@ -124,7 +126,7 @@ export default function CourseInfoTopCard({ course }: { course: ICourse }) {
                 alt=""
                 width={16}
                 height={16}
-                className="mr-1.5"
+                className="mr-1.5 h-4 w-4"
               />
               <span className="text-foreground text-sm">10 дней</span>
             </div>

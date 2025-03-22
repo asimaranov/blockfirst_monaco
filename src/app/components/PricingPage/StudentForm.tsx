@@ -13,6 +13,24 @@ interface StudentFormProps {
   onClose: () => void;
 }
 
+const CheckIcon = () => (
+  <svg
+    width="21"
+    height="20"
+    viewBox="0 0 21 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="h-5 w-5"
+  >
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M14.7307 4.43254C15.0295 4.14571 15.5043 4.15545 15.7911 4.45429L20.4065 9.26303C20.685 9.55324 20.685 10.0115 20.4065 10.3017L15.7911 15.1104C15.5043 15.4093 15.0295 15.419 14.7307 15.1322C14.4318 14.8454 14.4221 14.3706 14.7089 14.0718L18.8258 9.78237L14.7089 5.49297C14.4221 5.19413 14.4318 4.71936 14.7307 4.43254Z"
+      fill="#F2F2F2"
+    />
+  </svg>
+);
+
 export function StudentForm({ onClose }: StudentFormProps) {
   const [name, setName] = useState('');
   const [telegram, setTelegram] = useState('');
@@ -29,7 +47,13 @@ export function StudentForm({ onClose }: StudentFormProps) {
         <div className="flex flex-1 flex-col gap-8 px-10 py-8">
           <div className="flex flex-1 flex-col gap-8">
             <div className="flex flex-col items-center gap-8">
-              <Image src={LogoSvg} alt="Logo" width={152} height={44} />
+              <Image
+                src={LogoSvg}
+                alt="Logo"
+                width={152}
+                height={44}
+                className="w-38"
+              />
             </div>
 
             <motion.div
@@ -39,7 +63,7 @@ export function StudentForm({ onClose }: StudentFormProps) {
               className="flex flex-1 flex-col items-center justify-center gap-10"
             >
               <div className="relative flex items-center justify-center">
-                <div className="h-[150px] w-[150px] rounded-full" />
+                <div className="h-37.5 w-37.5 rounded-full" />
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
@@ -52,6 +76,7 @@ export function StudentForm({ onClose }: StudentFormProps) {
                     viewBox="0 0 150 150"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    className="h-37.5 w-37.5"
                   >
                     <path
                       d="M0 75C0 116.421 33.5786 150 75 150C116.421 150 150 116.421 150 75C150 33.5786 116.421 0 75 0C33.5786 0 0 33.5786 0 75ZM148.5 75C148.5 115.593 115.593 148.5 75 148.5C34.4071 148.5 1.5 115.593 1.5 75C1.5 34.4071 34.4071 1.5 75 1.5C115.593 1.5 148.5 34.4071 148.5 75Z"
@@ -95,23 +120,10 @@ export function StudentForm({ onClose }: StudentFormProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7 }}
             onClick={onClose}
-            className="bg-primary text-foreground flex h-[52px] w-full cursor-pointer items-center justify-center gap-[14px] rounded-full text-sm transition-colors duration-300 hover:bg-[#1242B2]"
+            className="bg-primary text-foreground flex h-13 w-full cursor-pointer items-center justify-center rounded-full text-sm transition-colors duration-300 hover:bg-[#1242B2]"
           >
             <span>Спасибо</span>
-            <svg
-              width="7"
-              height="12"
-              viewBox="0 0 7 12"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M0.230661 0.432766C0.5295 0.145942 1.00427 0.155683 1.2911 0.454522L5.90648 5.26326C6.18502 5.55346 6.18502 6.01173 5.90648 6.30194L1.2911 11.1107C1.00427 11.4095 0.5295 11.4193 0.230661 11.1324C-0.0681787 10.8456 -0.0779195 10.3708 0.208904 10.072L4.32583 5.7826L0.208904 1.4932C-0.0779195 1.19436 -0.0681787 0.71959 0.230661 0.432766Z"
-                fill="#F2F2F2"
-              />
-            </svg>
+            <CheckIcon />
           </motion.button>
         </div>
       </div>
@@ -123,8 +135,14 @@ export function StudentForm({ onClose }: StudentFormProps) {
       <div className="flex flex-1 flex-col gap-8 px-10 py-8">
         <div className="flex flex-1 flex-col gap-8">
           <div className="flex flex-col items-center gap-8">
-            <Image src={LogoSvg} alt="Logo" width={152} height={44} />
-            <div className="flex flex-col gap-4 items-center">
+            <Image
+              src={LogoSvg}
+              alt="Logo"
+              width={152}
+              height={44}
+              className="w-38"
+            />
+            <div className="flex flex-col items-center gap-4">
               <h2 className="text-foreground text-2xll">
                 Анкета для студентов
               </h2>
@@ -184,25 +202,12 @@ export function StudentForm({ onClose }: StudentFormProps) {
           disabled={name === '' || telegram === '' || motivation === ''}
           onClick={handleSubmit}
           className={cn(
-            'bg-primary text-foreground flex h-[52px] w-full items-center justify-center gap-[14px] rounded-full text-sm transition-colors duration-300 hover:bg-[#1242B2]',
+            'bg-primary text-foreground flex h-13 w-full items-center justify-center rounded-full text-sm transition-colors duration-300 hover:bg-[#1242B2]',
             'disabled:hover:bg-primary cursor-pointer disabled:cursor-default disabled:opacity-50'
           )}
         >
           <span>Продолжить</span>
-          <svg
-            width="7"
-            height="12"
-            viewBox="0 0 7 12"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M0.230661 0.432766C0.5295 0.145942 1.00427 0.155683 1.2911 0.454522L5.90648 5.26326C6.18502 5.55346 6.18502 6.01173 5.90648 6.30194L1.2911 11.1107C1.00427 11.4095 0.5295 11.4193 0.230661 11.1324C-0.0681787 10.8456 -0.0779195 10.3708 0.208904 10.072L4.32583 5.7826L0.208904 1.4932C-0.0779195 1.19436 -0.0681787 0.71959 0.230661 0.432766Z"
-              fill="#F2F2F2"
-            />
-          </svg>
+          <CheckIcon />
         </button>
       </div>
     </div>

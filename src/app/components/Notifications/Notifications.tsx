@@ -349,6 +349,7 @@ const Notifications = ({ onClose }: NotificationsProps) => {
           viewBox="0 0 16 16"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          className="h-4 w-4"
         >
           <path
             d="M14.4388 6.96033L13.7855 9.747C13.2255 12.1537 12.1188 13.127 10.0388 12.927C9.70548 12.9003 9.34548 12.8403 8.95882 12.747L7.83882 12.4803C5.05882 11.8203 4.19882 10.447 4.85215 7.66033L5.50548 4.867C5.63882 4.30033 5.79882 3.807 5.99882 3.40033C6.77882 1.787 8.10548 1.35366 10.3322 1.88033L11.4455 2.14033C14.2388 2.79366 15.0922 4.17366 14.4388 6.96033Z"
@@ -389,6 +390,7 @@ const Notifications = ({ onClose }: NotificationsProps) => {
           viewBox="0 0 16 16"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          className="h-4 w-4"
         >
           <path
             d="M14.6654 5.33398V8.66732C14.6654 11.334 13.332 12.6673 10.6654 12.6673H10.332C10.1254 12.6673 9.92536 12.7673 9.7987 12.934L8.7987 14.2673C8.3587 14.854 7.6387 14.854 7.1987 14.2673L6.1987 12.934C6.09203 12.7873 5.84536 12.6673 5.66536 12.6673H5.33203C2.66536 12.6673 1.33203 12.0007 1.33203 8.66732V5.33398C1.33203 2.66732 2.66536 1.33398 5.33203 1.33398H7.9987"
@@ -439,6 +441,7 @@ const Notifications = ({ onClose }: NotificationsProps) => {
           viewBox="0 0 16 16"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          className="h-4 w-4"
         >
           <path
             d="M5.33387 14.6667H10.6672C13.3472 14.6667 13.8272 13.5933 13.9672 12.2867L14.4672 6.95333C14.6472 5.32667 14.1805 4 11.3339 4H4.6672C1.82054 4 1.35387 5.32667 1.53387 6.95333L2.03387 12.2867C2.17387 13.5933 2.65387 14.6667 5.33387 14.6667Z"
@@ -935,7 +938,7 @@ const Notifications = ({ onClose }: NotificationsProps) => {
               <p className="text-secondary/50 mb-6 text-xs uppercase">
                 Настройки
               </p>
-              <div className="flex flex-col space-y-5">
+              <div className="flex flex-col">
                 {notificationSettings.map((setting, index) => (
                   <div
                     key={setting.id}
@@ -945,7 +948,7 @@ const Notifications = ({ onClose }: NotificationsProps) => {
                         'border-accent border-b'
                     )}
                   >
-                    <div className="flex items-center justify-between py-[10px]">
+                    <div className="flex items-center justify-between py-5">
                       <div className="flex gap-3">
                         <div className="text-foreground">{setting.icon}</div>
                         <div className="flex flex-col gap-2">

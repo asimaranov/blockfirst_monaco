@@ -62,6 +62,7 @@ export function CourseCard({ course }: { course: ICourse }) {
                   alt={course.bage?.title}
                   width={16}
                   height={16}
+                  className="h-4 w-4"
                 />
               )}
               <span className="mt-0.5 font-delight z-30">{course.bage?.title}</span>

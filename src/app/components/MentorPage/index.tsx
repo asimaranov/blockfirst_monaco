@@ -23,6 +23,7 @@ const ComingSoon = () => {
       viewBox="0 0 103 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="h-6 w-25"
     >
       <rect
         x="0.25"
@@ -130,13 +131,13 @@ export default function MentorPage({ session }: { session: Session }) {
         <Topbar lastestUpdate={'18 марта 2025'} />
         <div className="border-accent flex h-full border-b">
           {/* Mentors sidebar */}
-          <section className="border-accent w-[300px] border-r">
+          <section className="border-accent w-75 border-r">
             {mentors.map((mentor) => (
               <div className="border-accent relative border-b p-5">
                 <div className="flex items-center justify-between">
                   {mentor.soon && <ComingSoon />}
                   {mentor.current && (
-                    <span className="text-success border-success/50 rounded-full border-[0.5px] px-3 py-1 text-xs">
+                    <span className="text-success border-success/50 rounded-full border-[0.0289vw] px-3 py-1 text-xs">
                       Ваш куратор
                     </span>
                   )}
@@ -148,6 +149,7 @@ export default function MentorPage({ session }: { session: Session }) {
                         viewBox="0 0 16 16"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4"
                       >
                         <path
                           d="M8.00161 11.1204C8.52675 11.1204 8.95245 10.6947 8.95245 10.1696C8.95245 9.64445 8.52675 9.21875 8.00161 9.21875C7.47648 9.21875 7.05078 9.64445 7.05078 10.1696C7.05078 10.6947 7.47648 11.1204 8.00161 11.1204Z"
@@ -165,7 +167,7 @@ export default function MentorPage({ session }: { session: Session }) {
                 </div>
                 <div className="mt-5 flex items-center gap-4">
                   <motion.div
-                    className="bg-background h-[38px] w-[38px] overflow-hidden rounded-full"
+                    className="bg-background h-9.5 w-9.5 overflow-hidden rounded-full"
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.2 }}
                   >
@@ -175,6 +177,7 @@ export default function MentorPage({ session }: { session: Session }) {
                         alt={mentor.name}
                         width={38}
                         height={38}
+                        className='h-9.5 w-9.5'
                       />
                     </div>
                   </motion.div>
@@ -266,11 +269,12 @@ export default function MentorPage({ session }: { session: Session }) {
                   {/* Education */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="text-secondary h-[14px] w-[14px]">
+                      <div className="text-secondary h-3.5 w-3.5">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
                           fill="currentColor"
+                          className="h-3.5 w-3.5"
                         >
                           <path d="M11.7 2.805a.75.75 0 01.6 0A60.65 60.65 0 0122.83 8.72a.75.75 0 01-.231 1.337 49.949 49.949 0 00-9.902 3.912l-.003.002-.34.18a.75.75 0 01-.707 0A50.009 50.009 0 007.5 12.174v-.224c0-.131.067-.248.172-.311a54.614 54.614 0 014.653-2.52.75.75 0 00-.65-1.352 56.129 56.129 0 00-4.78 2.589 1.858 1.858 0 00-.859 1.228 49.803 49.803 0 00-4.634-1.527.75.75 0 01-.231-1.337A60.653 60.653 0 0111.7 2.805z" />
                           <path d="M13.06 15.473a48.45 48.45 0 017.666-3.282c.134 1.414.22 2.843.255 4.285a.75.75 0 01-.46.71 47.878 47.878 0 00-8.105 4.342.75.75 0 01-.832 0 47.877 47.877 0 00-8.104-4.342.75.75 0 01-.461-.71c.035-1.442.121-2.87.255-4.286A48.4 48.4 0 016 13.18v1.27a1.5 1.5 0 00-.14 2.508c-.09.38-.222.753-.397 1.11.452.213.901.434 1.346.661a6.729 6.729 0 00.551-1.608 1.5 1.5 0 00.14-2.67v-.645a48.549 48.549 0 013.44 1.668 2.25 2.25 0 002.12 0z" />
@@ -289,11 +293,12 @@ export default function MentorPage({ session }: { session: Session }) {
                   {/* Experience */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="text-secondary h-[14px] w-[14px]">
+                      <div className="text-secondary h-3.5 w-3.5">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
                           fill="currentColor"
+                          className="h-3.5 w-3.5"
                         >
                           <path
                             fillRule="evenodd"
@@ -314,11 +319,12 @@ export default function MentorPage({ session }: { session: Session }) {
                   {/* Languages */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="text-secondary h-[14px] w-[14px]">
+                      <div className="text-secondary h-3.5 w-3.5">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
                           fill="currentColor"
+                          className="h-3.5 w-3.5"
                         >
                           <path d="M21.721 12.752a9.711 9.711 0 00-.945-5.003 12.754 12.754 0 01-4.339 2.708 18.991 18.991 0 01-.214 4.772 17.165 17.165 0 005.498-2.477zM14.634 15.55a17.324 17.324 0 00.332-4.647c-.952.227-1.945.347-2.966.347-1.021 0-2.014-.12-2.966-.347a17.515 17.515 0 00.332 4.647 17.385 17.385 0 005.268 0zM9.772 17.119a18.963 18.963 0 004.456 0A17.182 17.182 0 0112 21.724a17.18 17.18 0 01-2.228-4.605zM7.777 15.23a18.87 18.87 0 01-.214-4.774 12.753 12.753 0 01-4.34-2.708 9.711 9.711 0 00-.944 5.004 17.165 17.165 0 005.498 2.477zM21.356 14.752a9.765 9.765 0 01-7.478 6.817 18.64 18.64 0 001.988-4.718 18.627 18.627 0 005.49-2.098zM2.644 14.752c1.682.971 3.53 1.688 5.49 2.099a18.64 18.64 0 001.988 4.718 9.765 9.765 0 01-7.478-6.816zM13.878 2.43a9.755 9.755 0 016.116 3.986 11.267 11.267 0 01-3.746 2.504 18.63 18.63 0 00-2.37-6.49zM12 2.276a17.152 17.152 0 012.805 7.121c-.897.23-1.837.353-2.805.353-.968 0-1.908-.122-2.805-.353A17.151 17.151 0 0112 2.276zM10.122 2.43a18.629 18.629 0 00-2.37 6.49 11.266 11.266 0 01-3.746-2.504 9.754 9.754 0 016.116-3.985z" />
                         </svg>
@@ -410,6 +416,7 @@ export default function MentorPage({ session }: { session: Session }) {
                           alt="Calls"
                           width={32}
                           height={32}
+                          className="h-8 w-8"
                         />
                       </div>
                       <span className="text-foreground text-lg">Звонки</span>
@@ -443,6 +450,7 @@ export default function MentorPage({ session }: { session: Session }) {
                           alt="Text"
                           width={32}
                           height={32}
+                          className="h-8 w-8"
                         />
                       </div>
                       <span className="text-foreground text-base">

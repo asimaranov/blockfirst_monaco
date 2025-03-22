@@ -43,6 +43,7 @@ export function Section({
                 viewBox="0 0 96 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-24"
               >
                 <rect
                   x="0.25"
@@ -118,6 +119,7 @@ export function Section({
               viewBox="0 0 20 21"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
             >
               <path
                 d="M10.001 14.4005C10.6575 14.4005 11.1896 13.8684 11.1896 13.212C11.1896 12.5556 10.6575 12.0234 10.001 12.0234C9.34463 12.0234 8.8125 12.5556 8.8125 13.212C8.8125 13.8684 9.34463 14.4005 10.001 14.4005Z"
@@ -145,6 +147,7 @@ export function Section({
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
               className={cn(
+                'h-5 w-5',
                 'transition-transform duration-300',
                 isExpanded ? 'text-secondary' : 'group-hover:text-foreground'
               )}

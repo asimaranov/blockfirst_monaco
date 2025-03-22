@@ -9,6 +9,7 @@ export default function TaskSquareSvg({ active }: { active: boolean }) {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={cn(
+        'h-4 w-4',
         'group-focus-within:[&>*]:stroke-[#f2f2f2] group-focus-within:[&>*]:[stroke-opacity:100%]',
         active && '[&>*]:stroke-foreground [&>*]:[stroke-opacity:100%]'
       )}

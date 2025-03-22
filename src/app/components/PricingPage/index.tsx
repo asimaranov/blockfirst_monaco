@@ -100,6 +100,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
               viewBox="0 0 20 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              className='h-5 w-5'
             >
               <path
                 d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
@@ -149,6 +150,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
                     viewBox="0 0 20 20"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    className='h-5 w-5' 
                   >
                     <path
                       d="M14.75 4.97386L19.3654 9.58924L14.75 14.2046"
@@ -194,7 +196,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
 
       {tariff.isActive && (
         <div className="mt-auto flex flex-col gap-6 pt-8 pb-0">
-          <div className="mx-8 mt-auto flex h-[52px] cursor-pointer items-center justify-center gap-1 rounded-full bg-[#33CF8E]/10">
+          <div className="mx-8 mt-auto flex h-13 cursor-pointer items-center justify-center gap-1 rounded-full bg-[#33CF8E]/10">
             <div className="flex items-center gap-1">
               <CheckIcon />
               <span className="text-sm text-[#33CF8E]">Активный тариф</span>

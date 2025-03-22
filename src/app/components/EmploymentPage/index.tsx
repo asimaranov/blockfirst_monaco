@@ -116,7 +116,7 @@ export default function EmploymentPage({ session }: { session: Session }) {
         />
         {/* Sticky header */}
         <div className="relative flex w-[936px] flex-col">
-          <div className="bg-background sticky top-0 z-[2] grid h-[44px] grid-cols-11 items-center gap-10 px-8 py-3.5">
+          <div className="bg-background sticky top-0 z-[2] grid h-11 grid-cols-11 items-center gap-10 px-8 py-3.5">
             <span className="text-secondary col-span-2 text-xs uppercase opacity-50">
               Вакансия
             </span>

@@ -9,6 +9,7 @@ export default function Settings() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={cn(
+        'h-5 w-5',
         '[&>*]:[&:not(:first-child)]:fill-none',
         '[&>*]:[&:not(:first-child)]:group-hover:fill-[#F2F2F2] [&>*]:[&:not(:first-child)]:group-[.active]:fill-[#F2F2F2]',
         '[&>*]:first:group-hover:stroke-none [&>*]:first:group-[.active]:stroke-none',

@@ -70,6 +70,7 @@ export function CourseHistoryCard({
                   alt={course.bage?.title}
                   width={16}
                   height={16}
+                  className="h-4 w-4"
                 />
               )}
               <span className="font-delight z-30 mt-0.5">

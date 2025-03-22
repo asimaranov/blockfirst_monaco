@@ -36,7 +36,7 @@ export default function Footer() {
                   viewBox="0 0 21 20"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="text-secondary cursor-pointer"
+                  className="text-secondary cursor-pointer h-5 w-5"
                 >
                   <path
                     fillRule="evenodd"
@@ -139,6 +139,7 @@ export default function Footer() {
                 viewBox="0 0 16 16"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4"
               >
                 <path
                   d="M11.332 14.1666H4.66536C2.23203 14.1666 0.832031 12.7666 0.832031 10.3333V5.66659C0.832031 3.23325 2.23203 1.83325 4.66536 1.83325H11.332C13.7654 1.83325 15.1654 3.23325 15.1654 5.66659V10.3333C15.1654 12.7666 13.7654 14.1666 11.332 14.1666ZM4.66536 2.83325C2.7587 2.83325 1.83203 3.75992 1.83203 5.66659V10.3333C1.83203 12.2399 2.7587 13.1666 4.66536 13.1666H11.332C13.2387 13.1666 14.1654 12.2399 14.1654 10.3333V5.66659C14.1654 3.75992 13.2387 2.83325 11.332 2.83325H4.66536Z"
@@ -173,6 +174,7 @@ export default function Footer() {
                 viewBox="0 0 16 16"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4"
               >
                 <path
                   d="M11.332 14.1666H4.66536C2.23203 14.1666 0.832031 12.7666 0.832031 10.3333V5.66659C0.832031 3.23325 2.23203 1.83325 4.66536 1.83325H11.332C13.7654 1.83325 15.1654 3.23325 15.1654 5.66659V10.3333C15.1654 12.7666 13.7654 14.1666 11.332 14.1666ZM4.66536 2.83325C2.7587 2.83325 1.83203 3.75992 1.83203 5.66659V10.3333C1.83203 12.2399 2.7587 13.1666 4.66536 13.1666H11.332C13.2387 13.1666 14.1654 12.2399 14.1654 10.3333V5.66659C14.1654 3.75992 13.2387 2.83325 11.332 2.83325H4.66536Z"
@@ -208,7 +210,7 @@ export default function Footer() {
                   viewBox="0 0 16 16"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className=""
+                  className="h-4 w-4"
                 >
                   <path
                     fillRule="evenodd"
@@ -229,6 +231,7 @@ export default function Footer() {
                   viewBox="0 0 20 20"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
                 >
                   <path
                     fillRule="evenodd"
@@ -271,6 +274,7 @@ export default function Footer() {
                 viewBox="0 0 21 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
               >
                 <path
                   fillRule="evenodd"

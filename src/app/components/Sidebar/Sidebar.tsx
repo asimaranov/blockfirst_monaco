@@ -208,7 +208,8 @@ export default function Sidebar() {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
               className={cn(
-                'min-h-[16px] min-w-[16px]',
+                'h-4 w-4',
+                'min-h-4 min-w-4',
                 user.subscriptionType !== SubscriptionType.Pro
                   ? 'opacity-60'
                   : undefined
