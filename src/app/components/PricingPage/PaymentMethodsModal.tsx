@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { cn } from '~/helpers';
 import { api } from '~/trpc/react';
-import LogoSvg from './assets/logo.svg';
 import { formatPrice } from '~/app/lib/utils';
 import { InfoPopover } from '../shared/InfoPopover';
 
@@ -210,8 +209,7 @@ const PaymentMethodsModal = ({
         <div className="flex h-full flex-col">
           {/* Logo and title */}
           <div className="flex flex-col items-center gap-8 px-10 pt-8">
-            <Image src={LogoSvg} alt="Logo" width={152} height={44} className='w-38' />
-
+            <Image src={'/images/logo/form-logo.svg'} alt="Logo" width={152} height={44} className='w-38' />
             <div className="flex flex-col items-center gap-4 pb-8 text-center">
               <h3 className="text-2xll text-foreground">Выбор метода оплаты</h3>
               <p className="text-sm text-[#9AA6B5]">

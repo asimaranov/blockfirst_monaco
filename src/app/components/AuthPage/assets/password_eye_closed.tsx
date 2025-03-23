@@ -6,7 +6,7 @@ export default function PasswordEyeClosed() {
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="group"
+      className="group w-4 h-4"
     >
       <g opacity="0.5" className="group-hover:opacity-100">
         <path

@@ -2,7 +2,6 @@
 
 import RightFiller from './RightFiller';
 import Image from 'next/image';
-import LogoSvg from './assets/logo.svg';
 import AuthButton from './button';
 import BackIcon from './assets/back_icon';
 import CrossIcon from './assets/cross_icon';
@@ -18,13 +17,17 @@ export default function AuthPageBase({
   onTopButtonClick?: () => void;
 }) {
   return (
-    <div className="relative flex h-dvh flex-row overflow-hidden bg-background">
-      <div className="relative h-full z-10 flex md:min-w-[468px] md:max-w-[468px] min-w-full max-w-full flex-col md:p-[64px] p-[32px] outline outline-[1px] outline-accent">
-      <Image src={GridLeftSvg} alt="grid" className="absolute left-0 top-[-24px] md:top-0 w-full -z-10" />
-        <div className="relative md:mb-[64px] mb-10 flex w-full items-center justify-center z-10">
+    <div className="bg-background relative flex h-dvh flex-row overflow-hidden">
+      <div className="outline-accent relative z-10 flex h-full flex-col outline-[0.0579vw] max-w-117 min-w-117 p-16">
+        <Image
+          src={GridLeftSvg}
+          alt="grid"
+          className="absolute top-[-24px] left-0 -z-10 w-full md:top-0"
+        />
+        <div className="relative z-10 mb-10 flex w-full items-center justify-center md:mb-[64px]">
           {topButtonState && (
             <button
-              className="absolute left-0 top-0 pt-[10px]"
+              className="absolute top-0 left-0 pt-[10px]"
               onClick={onTopButtonClick}
             >
               {topButtonState === 'back' ? (
@@ -34,7 +37,13 @@ export default function AuthPageBase({
               ) : null}
             </button>
           )}
-          <Image src={LogoSvg} alt="logo" className="w-38" />
+          <Image
+            src={'/images/logo/form-logo.svg'}
+            alt="logo"
+            className="w-38"
+            width={152}
+            height={44}
+          />
         </div>
         <div className="flex h-full w-full flex-col">{children}</div>
       </div>

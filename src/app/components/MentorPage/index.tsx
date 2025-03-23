@@ -10,9 +10,9 @@ import CallIcon from './assets/calls.png';
 import TextIcon from './assets/text.png';
 import GridSvg from './assets/grid.svg';
 import TopGridSvg from './assets/top-grid.svg';
-import UserIcon from './input-legends/user';
-import TelegramSvg from './input-legends/telegram';
-import TaskSquareSvg from './input-legends/task_square';
+import UserIcon from '../input-legends/user';
+import TelegramSvg from '../input-legends/telegram';
+import TaskSquareSvg from '../input-legends/task_square';
 import { InfoPopover } from '~/app/components/shared/InfoPopover';
 
 const ComingSoon = () => {

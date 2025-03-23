@@ -3,8 +3,8 @@ import { authClient } from '~/server/auth/client';
 
 import Link from 'next/link';
 import ErrorDecorationSvg from './assets/error_decoration.svg';
-import EmailSvg from './assets/input-legends/email';
-import PasswordSvg from './assets/input-legends/password';
+import EmailSvg from '~/app/components/input-legends/email';
+import PasswordSvg from '~/app/components/input-legends/password';
 import { useFormik } from 'formik';
 import Image from 'next/image';
 import { cn } from '~/helpers';
@@ -174,7 +174,7 @@ BlockFirst. Мы рады видеть каждого!`}
         <ErrorBadge errors={getApiError()} />
 
         <div
-          className="text-primary absolute top-[52px] left-0 flex cursor-pointer gap-2 pt-[12px] pl-[16px] text-xs hover:text-[#1242B2]"
+          className="text-primary absolute top-13 left-0 flex cursor-pointer gap-2 pt-3 pl-4 text-xs hover:text-[#1242B2]"
           onClick={() => {
             setAuthStep(AuthStep.ForgotPassword);
           }}

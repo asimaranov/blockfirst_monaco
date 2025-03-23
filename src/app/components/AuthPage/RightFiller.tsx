@@ -161,7 +161,7 @@ export default function RightFiller() {
         }}
       />
 
-      <div className="absolute right-0 top-0 z-50 mr-[64px] mt-[64px] flex h-[32px] w-[133px] items-center justify-center rounded-[100px] border-[0.5px] border-foreground/20 text-xs uppercase text-secondary">
+      <div className="absolute right-0 top-0 z-50 mr-16 mt-16 flex h-8 w-33 items-center justify-center rounded-[5.787vw] border-[0.0289vw] border-foreground/20 text-xs uppercase text-secondary">
         Version 01.12.01
       </div>
       <div
@@ -175,34 +175,34 @@ export default function RightFiller() {
               y: codeSnippetY,
               transformStyle: 'preserve-3d',
             }}
-            className="mb-[33px] ml-[4.05vw]"
+            className="mb-8 ml-17.5"
           >
             <Image
               src={CodeSnippetSvg}
               alt={''}
-              className="relative mb-[33px] flex h-[128px] w-[417px] items-center justify-center rounded-[8px] border-[0.5px] border-foreground/10 bg-background/30 px-[28px] py-[24px] backdrop-blur-[10px]"
+              className="relative mb-8 flex h-32 w-104 items-center justify-center rounded-2 border-[0.0289vw] border-foreground/10 bg-background/30 px-7 py-6 backdrop-blur-[10px]"
             />
           </motion.div>
 
           <motion.div
-            className="relative mb-[36px] flex h-[107px] w-[383px] items-center justify-center rounded-[8px] border-[0.5px] border-foreground/10 bg-background/30 px-[22px] backdrop-blur-[10px]"
+            className="relative mb-9 flex h-26.5 w-95.5 items-center justify-center rounded-2 border-[0.0289vw] border-foreground/10 bg-background/30 px-5.5 backdrop-blur-[10px]"
             style={{
               x: statsBoxX,
               y: statsBoxY,
               transformStyle: 'preserve-3d',
             }}
           >
-            <div className="flex h-[53px] flex-col justify-center text-nowrap">
-              <span className="text-[26.4px] text-foreground">2310+</span>
-              <span className="text-[15.4px] text-secondary">
+            <div className="flex h-13 flex-col justify-center text-nowrap">
+              <span className="text-[1.5278vw] text-foreground">2310+</span>
+              <span className="text-[0.8912vw] text-secondary">
                 Прошедших курс
               </span>
             </div>
-            <div className="w-[70px]"></div>
+            <div className="w-17.5"></div>
             <Image
               src={AvatarsItems}
               alt={''}
-              className="h-[53px] w-[145px]"
+              className="h-13 w-36"
               width={145}
               height={53}
             />
@@ -215,18 +215,18 @@ export default function RightFiller() {
               y: reviewsY,
               transformStyle: 'preserve-3d',
             }}
-            className="relative mb-[36px] ml-[5.67vw] flex h-[74px] w-[244px] items-center justify-center rounded-[8px] border-[0.5px] border-foreground/10 bg-background/30 px-[22px] backdrop-blur-[10px]"
+            className="relative mb-9 ml-24.5 flex h-18.5 w-61 items-center justify-center rounded-2 border-[0.0289vw] border-foreground/10 bg-background/30 px-5.5 backdrop-blur-[10px]"
           >
-            <div className="flex h-[53px] flex-col justify-center text-nowrap">
-              <span className="text-[26.4px] text-foreground">4.9+</span>
+            <div className="flex h-13 flex-col justify-center text-nowrap">
+              <span className="text-[1.5278vw] text-foreground">4.9+</span>
             </div>
             <div className="grow"></div>
             <Image
               src={Reviews}
               alt={''}
-              className="h-[18px] w-[110px]"
-              width={145}
-              height={53}
+              className="h-4.5 w-27.5"
+              width={110}
+              height={18}
             />
           </motion.div>
         </div>

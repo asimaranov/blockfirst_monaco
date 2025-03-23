@@ -7,7 +7,7 @@ import { AuthStep, IAuthPageState, ITopButtonState } from '.';
 import { frontendSchema } from '~/app/lib/zod';
 import FormField from './components/FormField';
 import FormWrapper from './components/FormWrapper';
-import EmailSvg from './assets/input-legends/email';
+import EmailSvg from '~/app/components/input-legends/email';
 import ErrorBadge from './components/ErrorBadge';
 
 export default function ForgotPasswordForm({

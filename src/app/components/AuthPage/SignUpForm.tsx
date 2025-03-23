@@ -3,9 +3,9 @@
 import Link from 'next/link';
 import ErrorDecorationSvg from './assets/error_decoration.svg';
 
-import AccountSvg from './assets/input-legends/account';
-import EmailSvg from './assets/input-legends/email';
-import PasswordSvg from './assets/input-legends/password';
+import AccountSvg from '~/app/components/input-legends/account';
+import EmailSvg from '~/app/components/input-legends/email';
+import PasswordSvg from '~/app/components/input-legends/password';
 import { useFormik } from 'formik';
 import Image from 'next/image';
 import { cn } from '~/helpers';

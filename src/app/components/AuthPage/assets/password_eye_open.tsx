@@ -6,7 +6,7 @@ export default function PasswordEyeOpen() {
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="group"
+      className="group w-4 h-4"
     >
       <path
         d="M10.3866 7.99998C10.3866 9.31998 9.31995 10.3866 7.99995 10.3866C6.67995 10.3866 5.61328 9.31998 5.61328 7.99998C5.61328 6.67998 6.67995 5.61331 7.99995 5.61331C9.31995 5.61331 10.3866 6.67998 10.3866 7.99998Z"

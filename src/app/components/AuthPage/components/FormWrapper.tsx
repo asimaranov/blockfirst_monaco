@@ -42,7 +42,7 @@ export default function FormWrapper({
         <div className="flex flex-1 flex-col gap-8">{children}</div>
 
         {linkText && (linkAction || linkDestination) && (
-          <div className="text-foreground mb-[20px] h-auto text-center text-sm">
+          <div className="text-foreground mb-5 h-auto text-center text-sm">
             {linkLabel || 'Уже есть аккаунт?'}{' '}
             {linkDestination ? (
               <Link

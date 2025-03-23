@@ -7,7 +7,7 @@ import { authClient } from '~/server/auth/client';
 import { useRouter } from 'next/navigation';
 import { useFormik } from 'formik';
 import { frontendSchema } from '~/app/lib/zod';
-import PasswordSvg from './assets/input-legends/password';
+import PasswordSvg from '~/app/components/input-legends/password';
 import FormField from './components/FormField';
 import FormWrapper from './components/FormWrapper';
 import ErrorBadge from './components/ErrorBadge';

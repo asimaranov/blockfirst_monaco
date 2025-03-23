@@ -3,10 +3,9 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { cn } from '~/helpers';
-import LogoSvg from './assets/logo.svg';
-import UserIcon from './input-legends/user';
-import TelegramSvg from './input-legends/telegram';
-import BookIcon from './input-legends/book';
+import UserIcon from '~/app/components/input-legends/user';
+import TelegramSvg from '~/app/components/input-legends/telegram';
+import BookIcon from '~/app/components/input-legends/book';
 import { motion } from 'framer-motion';
 
 interface StudentFormProps {
@@ -48,7 +47,7 @@ export function StudentForm({ onClose }: StudentFormProps) {
           <div className="flex flex-1 flex-col gap-8">
             <div className="flex flex-col items-center gap-8">
               <Image
-                src={LogoSvg}
+                src={'/images/logo/form-logo.svg'}
                 alt="Logo"
                 width={152}
                 height={44}
