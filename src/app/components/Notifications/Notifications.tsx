@@ -505,7 +505,7 @@ const Notifications = ({ onClose }: NotificationsProps) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="flex h-screen max-w-105 min-w-105 flex-col overflow-y-auto scrollbar border border-[#282D33]/40 bg-[#0F1217]"
+      className="scrollbar flex h-screen max-w-105 min-w-105 flex-col overflow-y-auto border border-[#282D33]/40 bg-[#0F1217]"
     >
       <div className="flex h-full flex-col">
         {/* Header with title and archive button - this stays fixed */}
@@ -570,9 +570,14 @@ const Notifications = ({ onClose }: NotificationsProps) => {
               onClick={() => setActive('incoming')}
             >
               Входящие
-              {incomingNotifications.length > 0 && (
+              {incomingNotifications.filter((n) => n.type !== 'promo').length >
+                0 && (
                 <div className="bg-error flex h-5 w-5 items-center justify-center rounded-full text-xs">
-                  {incomingNotifications.length}
+                  {
+                    incomingNotifications.filter(
+                      (notification) => notification.type !== 'promo'
+                    ).length
+                  }
                 </div>
               )}
             </div>
@@ -704,7 +709,7 @@ const Notifications = ({ onClose }: NotificationsProps) => {
                   .map((notification) => (
                     <div
                       key={notification.id}
-                      className="group relative flex flex-col hover:bg-[#282D33]/30 px-8 py-5 first:pt-8 nth-[2]:pt-8"
+                      className="group relative flex flex-col px-8 py-5 first:pt-8 hover:bg-[#282D33]/30 nth-[2]:pt-8"
                     >
                       <button
                         className="absolute top-0 right-0 m-2 hidden h-4 w-4 cursor-pointer group-hover:block"
@@ -825,27 +830,27 @@ const Notifications = ({ onClose }: NotificationsProps) => {
             <>
               {archivedNotifications.length === 0 ? (
                 <div className="flex h-full w-full items-center justify-center pt-56">
-                  <div className="flex w-full justify-center ">
-                  <div className="flex flex-col items-center gap-5 text-center">
-                    <div className="bg-accent flex h-15 w-15 items-center justify-center rounded-full">
-                      <Image
-                        src={noNotificationsImage}
-                        alt="No notifications"
-                      />
+                  <div className="flex w-full justify-center">
+                    <div className="flex flex-col items-center gap-5 text-center">
+                      <div className="bg-accent flex h-15 w-15 items-center justify-center rounded-full">
+                        <Image
+                          src={noNotificationsImage}
+                          alt="No notifications"
+                        />
+                      </div>
+                      <span className="text-sm text-[#9AA6B5]/50">
+                        Уведомлений в архиве нет :(
+                      </span>
                     </div>
-                    <span className="text-sm text-[#9AA6B5]/50">
-                      Уведомлений в архиве нет :(
-                    </span>
                   </div>
-                </div>
                 </div>
               ) : (
                 archivedNotifications.map((notification) => (
                   <div
                     key={notification.id}
-                    className="group relative flex flex-col hover:bg-[#282D33]/30 first:pt-8 px-8 py-5"
+                    className="group relative flex flex-col px-8 py-5 first:pt-8 hover:bg-[#282D33]/30"
                   >
-                    <div className=" opacity-70">
+                    <div className="opacity-70">
                       <div className="relative flex space-x-4">
                         <div className="flex h-9 w-9 flex-shrink-0">
                           <Image

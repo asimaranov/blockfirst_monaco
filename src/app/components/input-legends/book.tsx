@@ -10,8 +10,9 @@ export default function BookIcon({ active }: { active?: boolean }) {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(
         'h-4 w-4',
-        'group-focus-within:stroke-foreground [&>*]:stroke-foreground [stroke-opacity:50%] group-focus-within:[stroke-opacity:100%]',
-        active && 'stroke-foreground [stroke-opacity:100%]'
+
+        'group-focus-within:stroke-foreground group-focus-within:[&>*]:stroke-foreground [stroke-opacity:50%] group-focus-within:[stroke-opacity:100%]',
+        active && '[&>*]:stroke-foreground [stroke-opacity:100%]'
       )}
     >
       <path

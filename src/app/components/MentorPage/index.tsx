@@ -14,7 +14,8 @@ import UserIcon from '../input-legends/user';
 import TelegramSvg from '../input-legends/telegram';
 import TaskSquareSvg from '../input-legends/task_square';
 import { InfoPopover } from '~/app/components/shared/InfoPopover';
-
+import { Modal } from '../shared/Modal';
+import ChangeCuratorForm from './ChangeCuratorForm';
 const ComingSoon = () => {
   return (
     <svg
@@ -125,6 +126,8 @@ export default function MentorPage({ session }: { session: Session }) {
   const [course, setCourse] = useState('');
   const [success, setSuccess] = useState(false);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <main className="border-accent border-r border-l">
       <div className="flex h-screen flex-col">
@@ -177,7 +180,7 @@ export default function MentorPage({ session }: { session: Session }) {
                         alt={mentor.name}
                         width={38}
                         height={38}
-                        className='h-9.5 w-9.5'
+                        className="h-9.5 w-9.5"
                       />
                     </div>
                   </motion.div>
@@ -216,7 +219,7 @@ export default function MentorPage({ session }: { session: Session }) {
                   width={mentors[index]!.bigImageWidth ?? 0}
                   // draggable ={false}
                   // style={{ objectFit: 'contain' }}
-                  className="w-auto h-full"
+                  className="h-full w-auto"
                   priority
                 />
               </div>
@@ -370,11 +373,21 @@ export default function MentorPage({ session }: { session: Session }) {
               </div>
 
               <div className="flex h-8 items-center justify-center bg-[#14171C]">
+                <Modal
+                  isOpen={isModalOpen}
+                  onClose={() => setIsModalOpen(false)}
+                >
+                  <ChangeCuratorForm onClose={() => setIsModalOpen(false)} />
+                </Modal>
+
                 <p className="text-secondary text-xs">
                   Не нравится куратор?{' '}
-                  <span className="cursor-pointer text-white underline hover:opacity-50">
+                  <button
+                    className="cursor-pointer text-white underline hover:opacity-50"
+                    onClick={() => setIsModalOpen(true)}
+                  >
                     Сменить
-                  </span>
+                  </button>
                 </p>
               </div>
             </div>
@@ -563,7 +576,6 @@ export default function MentorPage({ session }: { session: Session }) {
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setSuccess(true)}
-                    
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -590,8 +602,8 @@ export default function MentorPage({ session }: { session: Session }) {
                   transition={{ duration: 0.5 }}
                   className="flex flex-1 flex-col items-center justify-center gap-8"
                 >
-                  <div className="relative h-25 w-25 flex items-center justify-center">
-                    <div className=" rounded-full" />
+                  <div className="relative flex h-25 w-25 items-center justify-center">
+                    <div className="rounded-full" />
                     <motion.div
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
@@ -604,7 +616,7 @@ export default function MentorPage({ session }: { session: Session }) {
                         viewBox="0 0 150 150"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
-                        className='h-25 w-25'
+                        className="h-25 w-25"
                       >
                         <path
                           d="M0 75C0 116.421 33.5786 150 75 150C116.421 150 150 116.421 150 75C150 33.5786 116.421 0 75 0C33.5786 0 0 33.5786 0 75ZM148.5 75C148.5 115.593 115.593 148.5 75 148.5C34.4071 148.5 1.5 115.593 1.5 75C1.5 34.4071 34.4071 1.5 75 1.5C115.593 1.5 148.5 34.4071 148.5 75Z"
@@ -636,7 +648,8 @@ export default function MentorPage({ session }: { session: Session }) {
                       transition={{ delay: 0.6 }}
                       className="text-secondary w-85 text-center text-sm"
                     >
-                      Куратор ответит Вам в ближайшее время. Вся дальнейшая коммуникация будет в Telegram.
+                      Куратор ответит Вам в ближайшее время. Вся дальнейшая
+                      коммуникация будет в Telegram.
                     </motion.p>
                   </div>
                 </motion.div>
