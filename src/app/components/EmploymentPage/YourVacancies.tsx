@@ -82,7 +82,9 @@ export default function YourVacancies({
               Рекомендованные
             </span>
             <InfoPopover
-              className="-ml-68.25"
+              position="left"
+              offsetSide={68.25}
+              offsetTop={4}
               title="Рекомендованные"
               content="BlockFirst предлагает персонализированные вакансии и информацию о компаниях, с которыми сотрудничает. Это облегчит вам процесс получения стажировки или трудоустройства в выбранной компании."
             />

@@ -4,48 +4,46 @@ import { ReactNode, useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { cn } from '~/helpers';
 
+type PopoverPosition = 'left' | 'right';
+
 interface InfoPopoverProps {
   title: string;
   content: string;
   children?: ReactNode;
   className?: string;
+  offsetTop?: number;
+  offsetSide?: number;
+  position?: PopoverPosition;
 }
 
 export const InfoPopover = ({
   title,
   content,
   children,
-  className = '-right-8',
+  className,
+  offsetTop = 4,
+  offsetSide = -8,
+  position = 'right',
 }: InfoPopoverProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const infoRef = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState({ top: 0, left: 0 });
+  const [popoverPosition, setPopoverPosition] = useState({ top: 0, left: 0 });
 
-  // Extract positioning from className (if it contains positioning values)
   useEffect(() => {
     if (infoRef.current) {
       const rect = infoRef.current.getBoundingClientRect();
-      let offsetLeft = 0;
 
-      // Check if className contains positioning info like -ml-68.25
-      if (className && className.includes('-ml-')) {
-        const mlMatch = className.match(/-ml-(\d+(\.\d+)?)/);
-        if (mlMatch && mlMatch[1]) {
-          offsetLeft = -parseFloat(mlMatch[1]);
-        }
-      }
-
-      setPosition({
-        top: rect.bottom + 8,
-        left: rect.left + offsetLeft,
+      setPopoverPosition({
+        top: rect.bottom,
+        left: position === 'left' ? rect.left : rect.right,
       });
     }
-  }, [isHovered, className]);
+  }, [isHovered, position]);
 
   return (
     <div
       ref={infoRef}
-      className="relative inline-block"
+      className={cn('relative inline-block', className)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -69,12 +67,18 @@ export const InfoPopover = ({
         typeof document !== 'undefined' &&
         createPortal(
           <div
-            className="flex w-112 flex-col bg-[#1D2026] p-6"
+            className={cn('flex w-112 flex-col bg-[#1D2026] p-6')}
             style={{
               position: 'fixed',
               zIndex: 100000,
-              top: position.top,
-              left: position.left,
+              top: `calc(${popoverPosition.top}px + ${offsetTop || 0} * var(--spacing))`,
+              ...(position === 'left'
+                ? {
+                    left: `calc(${popoverPosition.left}px - ${offsetSide || 0} * var(--spacing))`,
+                  }
+                : {
+                    right: `calc(100vw - ${popoverPosition.left}px + ${offsetSide || 0} * var(--spacing))`,
+                  }),
             }}
           >
             <div className="text-foreground pb-3 text-sm">{title}</div>
