@@ -1,4 +1,4 @@
-import { cn } from "~/helpers";
+import { cn } from '~/helpers';
 
 export default function ProgressBg({ inActive }: { inActive: boolean }) {
   return (
@@ -8,10 +8,7 @@ export default function ProgressBg({ inActive }: { inActive: boolean }) {
       viewBox="0 0 576 12"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={cn(
-        inActive && '[&>*]:fill-[#9AA6B5]/20',
-      )}
-
+      className={cn(inActive && '[&>*]:fill-[#9AA6B5]/20', 'h-3 w-144')}
     >
       <path
         d="M580.954 8.6841L358.659 -213.612L359.366 -214.319L581.661 7.97701L580.954 8.6841Z"
