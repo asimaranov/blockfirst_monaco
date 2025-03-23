@@ -221,7 +221,7 @@ const PaymentMethodsModal = ({
       {isTetherPayment ? (
         <UsdtForm
           onClose={function (): void {
-            throw new Error('Function not implemented.');
+            setIsTetherPayment(false);
           }}
         />
       ) : (
