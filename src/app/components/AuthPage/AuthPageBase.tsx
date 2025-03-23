@@ -22,12 +22,12 @@ export default function AuthPageBase({
         <Image
           src={GridLeftSvg}
           alt="grid"
-          className="absolute top-[-24px] left-0 -z-10 w-full md:top-0"
+          className="absolute -top-6 left-0 -z-10 w-full md:top-0"
         />
-        <div className="relative z-10 mb-10 flex w-full items-center justify-center md:mb-[64px]">
+        <div className="relative z-10 mb-10 flex w-full items-center justify-center md:mb-16">
           {topButtonState && (
             <button
-              className="absolute top-0 left-0 pt-[10px]"
+              className="absolute top-0 left-0 pt-2.5"
               onClick={onTopButtonClick}
             >
               {topButtonState === 'back' ? (

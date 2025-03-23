@@ -170,7 +170,7 @@ export default function ConfirmEmailForm({
                 }}
                 key={index}
                 className={cn(
-                  'h-[58px] w-[58px] border-b bg-transparent text-center text-2xl text-foreground placeholder:text-center focus:outline-hidden',
+                  'h-14.5 w-14.5 border-b bg-transparent text-center text-2xl text-foreground placeholder:text-center focus:outline-hidden',
                   isError && 'border-error'
                 )}
                 placeholder={'-'}
@@ -223,18 +223,18 @@ export default function ConfirmEmailForm({
               <Image
                 src={ErrorNoticeSvg}
                 alt={''}
-                className="h-[14px] w-[14px]"
+                className="h-3.5 w-3.5"
               ></Image>
               Вы ввели неправильный код, попробуйте снова
             </div>
           )}
         </div>
-        <div className="flex w-full flex-col items-center gap-[16px] pt-[64px]">
+        <div className="flex w-full flex-col items-center gap-4 pt-16">
           <span className="text-lg text-foreground">
             {String(Math.floor(timer / 60)).padStart(2, '0')}:
             {String(timer % 60).padStart(2, '0')}
           </span>
-          <div className="flex flex-row gap-[4px]">
+          <div className="flex flex-row gap-1">
             <span className="text-sm text-foreground">
               Не получили код?
             </span>

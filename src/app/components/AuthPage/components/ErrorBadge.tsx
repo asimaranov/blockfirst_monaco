@@ -8,11 +8,11 @@ export default function ErrorBadge({ errors }: ErrorBadgeProps) {
   if (!errors || errors.length === 0) return null;
 
   return (
-    <div className="mt-[12px] flex flex-row flex-wrap gap-2">
+    <div className="mt-3 flex flex-row flex-wrap gap-2">
       {errors.map((error, index) => (
         <div
           key={index}
-          className="bg-error text-foreground my-[5px] flex gap-2 rounded-[4px] px-[8px] py-[5px] text-xs"
+          className="bg-error text-foreground my-1.25 flex gap-2 rounded-1 px-2 py-1.25 text-xs"
         >
           {error}
         </div>

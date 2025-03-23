@@ -11,7 +11,7 @@ export default function PasswordResetSuccessForm() {
         {/* Success Message */}
         <div className="flex flex-col items-center">
           {/* Success Icon Circle */}
-          <div className="relative mb-10 h-[150px] w-[150px]">
+          <div className="relative mb-10 h-37.5 w-37.5">
             <div className="h-full w-full rounded-full bg-primary"></div>
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
               <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
