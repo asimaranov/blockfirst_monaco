@@ -180,12 +180,12 @@ export default function RightFiller() {
             <Image
               src={CodeSnippetSvg}
               alt={''}
-              className="relative mb-8 flex h-32 w-104 items-center justify-center rounded-2 border-[0.0289vw] border-foreground/10 bg-background/30 px-7 py-6 backdrop-blur-[10px]"
+              className="relative mb-8 flex h-32 w-104 items-center justify-center rounded-[0.463vw] border-[0.0289vw] border-foreground/10 bg-background/30 px-7 py-6 backdrop-blur-[10px]"
             />
           </motion.div>
 
           <motion.div
-            className="relative mb-9 flex h-26.5 w-95.5 items-center justify-center rounded-2 border-[0.0289vw] border-foreground/10 bg-background/30 px-5.5 backdrop-blur-[10px]"
+            className="relative mb-9 flex h-26.5 w-95.5 items-center justify-center rounded-[0.463vw] border-[0.0289vw] border-foreground/10 bg-background/30 px-5.5 backdrop-blur-[10px]"
             style={{
               x: statsBoxX,
               y: statsBoxY,
@@ -215,7 +215,7 @@ export default function RightFiller() {
               y: reviewsY,
               transformStyle: 'preserve-3d',
             }}
-            className="relative mb-9 ml-24.5 flex h-18.5 w-61 items-center justify-center rounded-2 border-[0.0289vw] border-foreground/10 bg-background/30 px-5.5 backdrop-blur-[10px]"
+            className="relative mb-9 ml-24.5 flex h-18.5 w-61 items-center justify-center rounded-[0.463vw] border-[0.0289vw] border-foreground/10 bg-background/30 px-5.5 backdrop-blur-[10px]"
           >
             <div className="flex h-13 flex-col justify-center text-nowrap">
               <span className="text-[1.5278vw] text-foreground">4.9+</span>
