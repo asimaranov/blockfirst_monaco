@@ -65,11 +65,11 @@ export default function Dashboard({ session }: { session: Session }) {
             {COURSES.filter((x) => !x.soon).map((course) => (
               <CourseHistoryCard key={course.id} course={course} percent={57} courseStudyingFor={'1д 12ч 48м'} />
             ))}
-            {Array.from({ length: (3 - (COURSES.length % 3)) % 3 }).map(
-              (_, index) => (
-                <div key={index}></div>
-              )
-            )}
+            {Array.from({ length: 3 - ((COURSES.length - 1) % 3) }).map(
+                (_, index) => (
+                  <div key={index}></div>
+                )
+              )}
           </section>
         )}
       </div>
