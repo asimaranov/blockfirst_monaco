@@ -37,7 +37,12 @@ export default function YourVacancies({
     <section className="border-accent sticky top-0 left-0 flex h-screen w-80 flex-col border-r">
       {/* Header */}
       <div className="bg-background relative px-8 py-6">
-        <div className="flex w-full items-center justify-between">
+        <Image
+          src={GridBg}
+          alt="Grid Background"
+          className="absolute top-0 right-0 z-0 h-full w-full object-cover"
+        />
+        <div className="relative z-10 flex w-full items-center justify-between">
           <Image
             src={HeaderIcon}
             alt="Header Icon"
@@ -56,7 +61,7 @@ export default function YourVacancies({
           </div>
         </div>
         {/* Title */}
-        <div className="mt-8 flex flex-col gap-0.5">
+        <div className="relative z-10 mt-8 flex flex-col gap-0.5">
           <span className="text-2xll font-medium">Твои вакансии</span>
           <div className="flex flex-row gap-1 text-xs">
             <span className="text-secondary">Найдено -</span>
@@ -68,11 +73,6 @@ export default function YourVacancies({
             </span>
           </div>
         </div>
-        <Image
-          src={GridBg}
-          alt="Grid Background"
-          className="absolute right-0 bottom-0 z-[1] h-full w-full"
-        />
       </div>
       {/* Filters */}
       <div className="flex flex-col gap-7 pt-8">
