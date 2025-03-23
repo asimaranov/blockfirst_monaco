@@ -106,7 +106,7 @@ export default function EmploymentPage({ session }: { session: Session }) {
 
   return (
     <main className="border-accent flex min-h-screen w-full flex-col border-r border-l">
-      <div className="flex flex-1 flex-row border-accent border-b">
+      <div className="flex flex-1 flex-row border-accent">
         <YourVacancies
           lastestUpdate={lastUpdate}
           vacanciesCount={VACANCIES.length || 0}
