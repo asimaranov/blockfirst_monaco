@@ -151,6 +151,7 @@ export function Section({
                 'transition-transform duration-300',
                 isExpanded ? 'text-secondary' : 'group-hover:text-foreground'
               )}
+              onClick={onToggle}
             >
               <line
                 x1="5"
