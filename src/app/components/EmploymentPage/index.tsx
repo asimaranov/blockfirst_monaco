@@ -115,9 +115,9 @@ export default function EmploymentPage({ session }: { session: Session }) {
           setSortOption={setSortOption}
         />
         {/* Sticky header */}
-        <div className="relative flex w-[936px] flex-col">
-          <div className="bg-background sticky top-0 z-[2] grid h-11 grid-cols-11 items-center gap-10 px-8 py-3.5">
-            <span className="text-secondary col-span-2 text-xs uppercase opacity-50">
+        <div className=" relative flex flex-1 flex-col">
+          <div className="bg-background sticky top-0 z-[2] grid items-center gap-5 px-8 py-3.5 grid-cols-[calc(50*var(--spacing))_calc(35*var(--spacing))_calc(28*var(--spacing))_calc(20*var(--spacing))_1fr]">
+            <span className="text-secondary text-xs uppercase opacity-50">
               Вакансия
             </span>
             <button
@@ -128,7 +128,7 @@ export default function EmploymentPage({ session }: { session: Session }) {
                     : SalarySortOption.SALARY_UP
                 );
               }}
-              className="group col-span-2 flex cursor-pointer flex-row items-center gap-1"
+              className="group flex cursor-pointer flex-row items-center gap-1 @sm:mt-2"
             >
               <span className="text-secondary text-xs uppercase opacity-50 group-hover:opacity-100">
                 Зарплата
@@ -144,7 +144,7 @@ export default function EmploymentPage({ session }: { session: Session }) {
                 }
               />
             </button>
-            <span className="text-secondary col-span-2 text-xs uppercase opacity-50">
+            <span className="text-secondary text-xs uppercase opacity-50 @sm:mt-2">
               Формат
             </span>
             <button
@@ -155,7 +155,7 @@ export default function EmploymentPage({ session }: { session: Session }) {
                     : PublishedSortOption.PUBLISHED_UP
                 );
               }}
-              className="group col-span-2 flex cursor-pointer flex-row items-center gap-1"
+              className="group flex cursor-pointer flex-row items-center gap-1 @sm:mt-2"
             >
               <span className="text-secondary text-xs uppercase opacity-50 group-hover:opacity-100">
                 Публикация
@@ -171,14 +171,22 @@ export default function EmploymentPage({ session }: { session: Session }) {
                 }
               />
             </button>
+            <div className="@sm:hidden"></div>
           </div>
           {/* Vacancies list */}
-          {sortVacancies(VACANCIES).map(
-            // TODO: move VACANCIES to state
-            (vacancy) => (
-              <VacancyItem key={vacancy.id} vacancy={vacancy} />
-            )
-          )}
+          <div className="relative max-h-[calc(100vh-var(--header-height))] overflow-y-auto">
+            <div className="flex flex-col">
+              {sortVacancies(VACANCIES).map(
+                // TODO: move VACANCIES to state
+                (vacancy) => (
+                  <VacancyItem key={vacancy.id} vacancy={vacancy} />
+                )
+              )}
+            </div>
+
+            {/* Shadow overlay */}
+            <div className="pointer-events-none absolute right-0 bottom-0 left-0 h-[76px] bg-gradient-to-b from-transparent via-[#0F121780] to-[#0F1217]" />
+          </div>
         </div>
       </div>
     </main>
