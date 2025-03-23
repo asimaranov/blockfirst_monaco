@@ -125,7 +125,7 @@ export default function YourVacancies({
         </div>
       </div>
       {/* Sorting */}
-      <div className="flex flex-col gap-7 pt-7">
+      <div className= "flex flex-col gap-7 pt-7">
         <div className="flex w-full flex-col">
           <div className="flex w-full flex-row items-center justify-between">
             <span className="text-secondary mb-3 px-8 text-xs uppercase opacity-50">

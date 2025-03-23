@@ -184,13 +184,9 @@ export default function EmploymentPage({ session }: { session: Session }) {
                 )
               )}
             </div>
-
-            {/* Shadow overlay */}
-            <div className="pointer-events-none absolute right-0 bottom-0 left-0 h-[76px] bg-gradient-to-b from-transparent via-[#0F121780] to-[#0F1217]" />
           </div>
         </div>
       </div>
-      <Footer />
     </main>
   );
 }
