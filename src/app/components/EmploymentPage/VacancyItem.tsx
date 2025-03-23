@@ -61,7 +61,7 @@ export const VacancyItem = ({ vacancy }: { vacancy: IVacancy }) => {
             e.stopPropagation();
             console.log('Otklik');
           }}
-          className="hover:bg-primary group border-primary flex cursor-pointer flex-col items-center justify-center rounded-full border px-5 py-3"
+          className="hover:bg-primary group border-primary/50 flex cursor-pointer flex-col items-center justify-center rounded-full border px-5 py-3"
         >
           <span className="group-hover:text-foreground text-primary text-sm leading-4">
             Откликнуться
@@ -109,7 +109,7 @@ export const VacancyItem = ({ vacancy }: { vacancy: IVacancy }) => {
 
       {/* Apply button - placed at the bottom when expanded */}
       {isExpanded && (
-        <div className="col-span-full mt-5 flex items-center @sm:justify-center @md:justify-end"></div>
+        <div className="col-span-full mt-5 flex items-center"></div>
       )}
     </div>
   );

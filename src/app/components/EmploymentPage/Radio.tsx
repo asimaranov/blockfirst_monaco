@@ -18,7 +18,7 @@ export function Radio({
         isActive && 'bg-[#14171C]'
       )}
     >
-      <span className="text-base">{title}</span>
+      <span className="text-sm">{title}</span>
       <motion.div
         variants={{
           active: { border: '0.1736vw solid #195AF4' },
