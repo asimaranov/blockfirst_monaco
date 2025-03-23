@@ -14,6 +14,7 @@ import {
 } from '~/app/lib/constants/vacancies';
 import soonBageImg from './assets/soon-bage.svg';
 import { Radio } from './Radio';
+import { InfoPopover } from '../shared/InfoPopover';
 
 export default function YourVacancies({
   lastestUpdate,
@@ -44,12 +45,12 @@ export default function YourVacancies({
           />
           <div className="flex flex-col gap-1">
             <div className="flex flex-row items-center justify-end gap-2">
-              <div className="h-1.5 w-1.5 rounded-full bg-[#33CF8E]" />
-              <span className="font-roboto text-xs font-medium text-[#33CF8E] leading-3.5">
+              <div className="h-1 w-1 rounded-full bg-[#33CF8E]" />
+              <span className="font-roboto text-xs leading-3.5 font-medium text-[#33CF8E]">
                 {lastestUpdate}
               </span>
             </div>
-            <span className="font-roboto text-secondary text-xs opacity-50 text-xxs">
+            <span className="font-roboto text-secondary text-xxs text-xs opacity-50">
               Обновление базы
             </span>
           </div>
@@ -76,10 +77,15 @@ export default function YourVacancies({
       {/* Filters */}
       <div className="flex flex-col gap-7 pt-8">
         <div className="flex w-full flex-col">
-          <div className="flex w-full flex-row items-center justify-between">
-            <span className="text-secondary mb-3 px-8 text-xs uppercase opacity-50">
+          <div className="mb-3 flex w-full flex-row items-center justify-between px-8">
+            <span className="text-secondary text-xs uppercase opacity-50">
               Рекомендованные
             </span>
+            <InfoPopover
+              className="-ml-68.25"
+              title="Рекомендованные"
+              content="BlockFirst предлагает персонализированные вакансии и информацию о компаниях, с которыми сотрудничает. Это облегчит вам процесс получения стажировки или трудоустройства в выбранной компании."
+            />
           </div>
           <div className="flex w-full flex-row items-center justify-between gap-1 px-8">
             <span className="text-sm">Персональные вакансии</span>
