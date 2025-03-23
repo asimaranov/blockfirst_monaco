@@ -45,6 +45,7 @@
     "lenis": "^1.2.3",
     "next": "^15.2.2",
     "next-intl": "^4.0.2",
+    "qrcode.react": "^4.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "resend": "^4.1.2",

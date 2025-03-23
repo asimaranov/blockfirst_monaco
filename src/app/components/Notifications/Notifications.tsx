@@ -829,7 +829,7 @@ const Notifications = ({ onClose }: NotificationsProps) => {
           {activeTab === 'archieve' && (
             <>
               {archivedNotifications.length === 0 ? (
-                <div className="flex h-full w-full items-center justify-center pt-56">
+                <div className="flex h-full w-full items-center justify-center ">
                   <div className="flex w-full justify-center">
                     <div className="flex flex-col items-center gap-5 text-center">
                       <div className="bg-accent flex h-15 w-15 items-center justify-center rounded-full">
@@ -940,7 +940,7 @@ const Notifications = ({ onClose }: NotificationsProps) => {
                 релизах продуктов
               </p>
 
-              <p className="text-secondary/50 mb-6 text-xs uppercase">
+              <p className="text-secondary/50 mb-1 text-xs uppercase">
                 Настройки
               </p>
               <div className="flex flex-col">
