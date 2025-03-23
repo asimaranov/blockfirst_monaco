@@ -21,8 +21,8 @@ export function Radio({
       <span className="text-base">{title}</span>
       <motion.div
         variants={{
-          active: { border: '3px solid #195AF4' },
-          inactive: { border: '1px solid #9AA6B5' },
+          active: { border: '0.1736vw solid #195AF4' },
+          inactive: { border: '0.0579vw solid #9AA6B5' },
         }}
         initial={isActive ? 'active' : 'inactive'}
         animate={isActive ? 'active' : 'inactive'}

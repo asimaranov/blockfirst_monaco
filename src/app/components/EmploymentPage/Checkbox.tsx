@@ -20,8 +20,8 @@ export function Checkbox({
         isActive && 'bg-[#14171C]'
       )}
     >
-      <span className="text-base">{title}</span>
-      <span className="text-secondary">({itemCount})</span>
+      <span className="text-sm">{title}</span>
+      <span className="text-secondary text-sm">({itemCount})</span>
       <motion.div
         initial={isActive ? 'active' : 'inactive'}
         variants={{
@@ -29,7 +29,10 @@ export function Checkbox({
           inactive: { backgroundColor: 'transparent', borderColor: '#9aa6b5' },
         }}
         animate={isActive ? 'active' : 'inactive'}
-        className="ml-auto flex size-4 flex-col items-center justify-center rounded-sm border"
+        className={cn(
+          'ml-auto flex size-4 flex-col items-center justify-center rounded-[0.2315vw] border',
+          !isActive && 'hover:opacity-100 opacity-50'
+        )}
       >
         <motion.svg
           width="8"
@@ -37,6 +40,7 @@ export function Checkbox({
           viewBox="0 0 8 6"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          className={'w-2 h-1.5'}
           variants={{
             active: { opacity: 1 },
             inactive: { opacity: 0 },

@@ -63,7 +63,7 @@ export const VacancyItem = ({ vacancy }: { vacancy: IVacancy }) => {
           }}
           className="hover:bg-primary group border-primary flex cursor-pointer flex-col items-center justify-center rounded-full border px-5 py-3"
         >
-          <span className="group-hover:text-foreground text-primary text-sm">
+          <span className="group-hover:text-foreground text-primary text-sm leading-4">
             Откликнуться
           </span>
         </button>

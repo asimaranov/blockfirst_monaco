@@ -1,6 +1,6 @@
 'use client';
 
-import HeaderIcon from './assets/header-icon.svg';
+import HeaderIcon from './assets/header-icon.png';
 import GridBg from './assets/grid-bg.svg';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
@@ -35,7 +35,7 @@ export default function YourVacancies({
   return (
     <section className="border-accent sticky top-0 left-0 flex h-screen w-80 flex-col border-r">
       {/* Header */}
-      <div className="bg-background relative h-[175px] px-8 py-6">
+      <div className="bg-background relative px-8 py-6">
         <div className="flex w-full items-center justify-between">
           <Image
             src={HeaderIcon}
@@ -44,12 +44,12 @@ export default function YourVacancies({
           />
           <div className="flex flex-col gap-1">
             <div className="flex flex-row items-center justify-end gap-2">
-              <div className="h-[6px] w-[6px] rounded-full bg-[#33CF8E]" />
-              <span className="font-roboto text-sm font-medium text-[#33CF8E]">
+              <div className="h-1.5 w-1.5 rounded-full bg-[#33CF8E]" />
+              <span className="font-roboto text-xs font-medium text-[#33CF8E] leading-3.5">
                 {lastestUpdate}
               </span>
             </div>
-            <span className="font-roboto text-secondary text-xs opacity-50">
+            <span className="font-roboto text-secondary text-xs opacity-50 text-xxs">
               Обновление базы
             </span>
           </div>
@@ -58,7 +58,7 @@ export default function YourVacancies({
         <div className="mt-8 flex flex-col gap-0.5">
           <span className="text-2xll font-medium">Твои вакансии</span>
           <div className="flex flex-row gap-1 text-xs">
-            <span className="text-secondary opacity-50">Найдено -</span>
+            <span className="text-secondary">Найдено -</span>
             <span>
               {vacanciesCount}{' '}
               {t('vacanciesCount', {
@@ -87,7 +87,7 @@ export default function YourVacancies({
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-7 pt-8">
+      <div className="flex flex-col gap-7 pt-7">
         <div className="flex w-full flex-col">
           <div className="flex w-full flex-row items-center justify-between">
             <span className="text-secondary mb-3 px-8 text-xs uppercase opacity-50">
@@ -117,7 +117,7 @@ export default function YourVacancies({
         </div>
       </div>
       {/* Sorting */}
-      <div className="flex flex-col gap-7 pt-8">
+      <div className="flex flex-col gap-7 pt-7">
         <div className="flex w-full flex-col">
           <div className="flex w-full flex-row items-center justify-between">
             <span className="text-secondary mb-3 px-8 text-xs uppercase opacity-50">
