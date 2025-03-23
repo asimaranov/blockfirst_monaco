@@ -12,6 +12,7 @@ import { VacancyItem } from './VacancyItem';
 import { IVacancy } from '~/app/lib/constants/vacancies';
 import { SortIcon } from './assets/sort-icon';
 import { useViewedVacancyStore } from '~/store/viewedVacancy';
+import Footer from '../Footer';
 
 enum SalarySortOption {
   SALARY_UP,
@@ -105,7 +106,7 @@ export default function EmploymentPage({ session }: { session: Session }) {
 
   return (
     <main className="border-accent flex min-h-screen w-full flex-col border-r border-l">
-      <div className="flex flex-1 flex-row">
+      <div className="flex flex-1 flex-row border-accent border-b">
         <YourVacancies
           lastestUpdate={lastUpdate}
           vacanciesCount={VACANCIES.length || 0}
@@ -189,6 +190,7 @@ export default function EmploymentPage({ session }: { session: Session }) {
           </div>
         </div>
       </div>
+      <Footer />
     </main>
   );
 }

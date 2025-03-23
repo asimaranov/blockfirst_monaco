@@ -154,8 +154,8 @@ export default function UsdtForm({ onClose }: StudentFormProps) {
       >
         <BackIcon />
       </button>
-      <div className="flex flex-1 flex-col gap-8 px-10 py-8">
-        <div className="flex flex-1 flex-col gap-8">
+      <div className="flex flex-1 flex-col gap-8 pt-8 pb-6">
+        <div className="flex flex-1 flex-col gap-8 px-10">
           <div className="flex flex-col items-center gap-8">
             <Image
               src={'/images/logo/form-logo.svg'}
@@ -173,7 +173,7 @@ export default function UsdtForm({ onClose }: StudentFormProps) {
             </div>
           </div>
 
-          <div className="flex flex-1 flex-col gap-8">
+          <div className="flex flex-1 flex-col gap-6">
             <div className="relative flex h-82 w-85 flex-col items-center justify-center gap-4">
               <div className="bg-foreground flex items-center justify-center rounded-3xl p-5">
                 <QRCodeSVG
@@ -226,7 +226,7 @@ export default function UsdtForm({ onClose }: StudentFormProps) {
                   onClick={handleCopy}
                 >
                   {isCopied ? (
-                    <Image src={CopiedIcon} className='w-5 h-5' alt="Copied" />
+                    <Image src={CopiedIcon} className="h-5 w-5" alt="Copied" />
                   ) : (
                     <CopyIcon />
                   )}
@@ -265,12 +265,12 @@ export default function UsdtForm({ onClose }: StudentFormProps) {
           </div>
         </div>
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 px-10">
           <div className="text-2xll flex w-full flex-col items-center">
             1700 USDT
           </div>
           <div className="bg-accent h-px w-full"></div>
-          <div className="flex w-full flex-row items-center gap-1 pb-8 text-sm">
+          <div className="flex w-full flex-row items-center justify-center gap-1 pb-8 text-sm">
             <span className="text-secondary">Валюта –</span>
             <svg
               width="16"
@@ -330,6 +330,12 @@ export default function UsdtForm({ onClose }: StudentFormProps) {
             </svg>
           </button>
         </div>
+      </div>
+      <div className="flex h-8 w-full items-center justify-center bg-[#14171C] text-xs gap-1">
+        <span className="text-secondary">Не прошла оплата?</span>
+        <span className="text-foreground cursor-pointer underline hover:opacity-50">
+          Напишите нам
+        </span>
       </div>
     </div>
   );

@@ -89,7 +89,7 @@ export default function YourVacancies({
               content="BlockFirst предлагает персонализированные вакансии и информацию о компаниях, с которыми сотрудничает. Это облегчит вам процесс получения стажировки или трудоустройства в выбранной компании."
             />
           </div>
-          <div className="flex w-full flex-row items-center justify-between gap-1 px-8">
+          <div className="flex w-full flex-row items-center justify-between gap-1 px-8 py-2.5">
             <span className="text-sm">Персональные вакансии</span>
             <Image src={soonBageImg} alt="Soon" className="h-6 w-13" />
           </div>
