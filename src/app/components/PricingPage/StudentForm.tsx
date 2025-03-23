@@ -135,7 +135,7 @@ export function StudentForm({ onClose }: StudentFormProps) {
         <div className="flex flex-1 flex-col gap-8">
           <div className="flex flex-col items-center gap-8">
             <Image
-              src={LogoSvg}
+              src={'/images/logo/form-logo.svg'}
               alt="Logo"
               width={152}
               height={44}
