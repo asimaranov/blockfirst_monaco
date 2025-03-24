@@ -7,6 +7,9 @@ import {
 import HeaderIcon from './assets/header-icon.png';
 import Image from 'next/image';
 import CopyButton from '../shared/CopyButton/CopyButton';
+import { Modal } from '../shared/Modal';
+import BloggerForm from './BloggerForm';
+
 export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
   const [copied, setCopied] = useState(false);
   const referralLink = 'www.blockfirst.ru/ref2001';
@@ -17,10 +20,12 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const [isBloggersFormOpen, setIsBloggersFormOpen] = useState(false);
+
   return (
     <UnifiedTopbar
       showBorder={false}
-      className="relative  bg-[#01050d]"
+      className="relative bg-[#01050d]"
       leftContent={
         <div className="flex flex-row items-center space-x-5">
           <div className="relative h-15.25 w-15.25 overflow-hidden">
@@ -34,7 +39,7 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
             </div>
           </div>
           <div className="flex flex-col space-y-2">
-            <h1 className="text-foreground text-3xl font-medium leading-8.25">
+            <h1 className="text-foreground text-3xl leading-8.25 font-medium">
               Реферальная программа
             </h1>
             <p className="text-secondary text-xs leading-5">
@@ -73,16 +78,28 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
             </AnimatePresence>
           </div>
 
-          <div className="border-primary hover:bg-primary flex h-10 w-33 items-center justify-center rounded-full border bg-[#01050d] cursor-pointer">
+          <Modal
+            isOpen={isBloggersFormOpen}
+            onClose={() => setIsBloggersFormOpen(false)}
+          >
+            <BloggerForm onClose={() => setIsBloggersFormOpen(false)} />
+          </Modal>
+
+          <div className="border-primary hover:bg-primary flex h-10 w-33 cursor-pointer items-center justify-center rounded-full border bg-[#01050d]">
             <div className="flex items-center space-x-0">
-              <span className="text-foreground text-sm">Блогерам</span>
+              <span
+                className="text-foreground text-sm"
+                onClick={() => setIsBloggersFormOpen(true)}
+              >
+                Блогерам
+              </span>
               <svg
                 width="21"
                 height="20"
                 viewBox="0 0 21 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className='w-5 h-5'
+                className="h-5 w-5"
               >
                 <path
                   fill-rule="evenodd"

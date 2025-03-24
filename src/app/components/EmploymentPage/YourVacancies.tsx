@@ -34,7 +34,7 @@ export default function YourVacancies({
   const t = useTranslations('EmploymentPage');
 
   return (
-    <section className="border-accent sticky top-0 left-0 flex h-screen w-80 flex-col border-r">
+    <section className="border-accent sticky top-0 left-0 flex h-screen w-80 shrink-0 flex-col border-r">
       {/* Header */}
       <div className="bg-background relative px-8 py-6">
         <Image
