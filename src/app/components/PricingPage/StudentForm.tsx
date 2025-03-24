@@ -42,7 +42,7 @@ export function StudentForm({ onClose }: StudentFormProps) {
 
   if (success) {
     return (
-      <div className="bg-dark-bg border-accent flex h-full w-105 flex-col border">
+      <div className="bg-dark-bg border-accent/40 flex h-full w-105 flex-col border">
         <div className="flex flex-1 flex-col gap-8 px-10 py-8">
           <div className="flex flex-1 flex-col gap-8">
             <div className="flex flex-col items-center gap-8">
@@ -99,7 +99,7 @@ export function StudentForm({ onClose }: StudentFormProps) {
                   transition={{ delay: 0.5 }}
                   className="text-foreground text-2xll text-center"
                 >
-                  Письмо отправленно
+                  Письмо отправлено
                 </motion.h2>
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
