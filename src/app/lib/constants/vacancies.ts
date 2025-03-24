@@ -63,9 +63,9 @@ export const VACANCY_SORT_OPTIONS = [
 export const VACANCIES: IVacancy[] = [
   {
     id: '1',
-    title: 'Senior Solidity Developer',
+    title: 'Smart Contract Developer',
     speciality: VacancySpeciality.SOLIDITY_DEVELOPER,
-    description: 'Разработка смарт-контрактов для DeFi протокола',
+    description: 'Привет! Мы – международная IT-компания Crypton Studio, самая крупная команда blockchain-разработчиков в Европе. На данный момент у нас открыты несколько вакансий Smart-contract разработчиков с релокацией в Латвию, Францию, США, Канаду, а также варианты работы с проживанием в Таиланде.',
     salary: {
       amount: 9999,
       currency: VacancyCurrency.RUB,

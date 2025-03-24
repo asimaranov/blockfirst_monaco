@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react';
 import { IVacancy, VacancyCurrency } from '~/app/lib/constants/vacancies';
 import { cn } from '~/helpers';
 import { useViewedVacancyStore } from '~/store/viewedVacancy';
+import RequirementsIcon from './assets/requirements-icon.svg';
+import ResponsibilitiesIcon from './assets/responsibilities-icon.svg';
+import Image from 'next/image';
 export const VacancyItem = ({ vacancy }: { vacancy: IVacancy }) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
@@ -35,7 +38,7 @@ export const VacancyItem = ({ vacancy }: { vacancy: IVacancy }) => {
   return (
     <div
       onClick={() => setIsExpanded(!isExpanded)}
-      className="border-accent @container relative grid grid-cols-[calc(50*var(--spacing))_calc(35*var(--spacing))_calc(28*var(--spacing))_calc(20*var(--spacing))_1fr] items-center gap-5 px-8 py-6 not-last:border-b hover:bg-[#14171C] @sm:grid-cols-[1fr] @sm:gap-y-3 @md:grid-cols-[1fr_1fr_1fr_1fr_calc(2.5*var(--spacing))]"
+      className="border-accent relative grid grid-cols-[calc(50*var(--spacing))_calc(35*var(--spacing))_calc(28*var(--spacing))_calc(20*var(--spacing))_1fr] items-center gap-5 gap-y-8 px-8 py-6 not-last:border-b hover:bg-[#14171C]"
     >
       {/* Publisher name */}
       <div className="flex flex-col gap-1.5">
@@ -55,7 +58,7 @@ export const VacancyItem = ({ vacancy }: { vacancy: IVacancy }) => {
         {new Date(vacancy.updatedAt).toLocaleDateString('ru-RU')}
       </span>
       {/* Expand icon */}
-      <div className="flex items-center justify-center gap-9 ">
+      <div className="flex items-center justify-center gap-9">
         <button
           onClick={(e) => {
             e.stopPropagation();
@@ -75,7 +78,7 @@ export const VacancyItem = ({ vacancy }: { vacancy: IVacancy }) => {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             className={cn(
-              'w-5 h-5',
+              'h-5 w-5',
               'transition-transform duration-300',
               isExpanded ? 'text-foreground' : 'group-hover:text-foreground'
             )}
@@ -109,7 +112,78 @@ export const VacancyItem = ({ vacancy }: { vacancy: IVacancy }) => {
 
       {/* Apply button - placed at the bottom when expanded */}
       {isExpanded && (
-        <div className="col-span-full mt-5 flex items-center"></div>
+        <div className="col-span-full flex flex-col">
+          <div className="flex flex-col gap-3 pb-8">
+            <span className="text-secondary/50 text-xs uppercase">
+              Описание вакансии
+            </span>
+            <p className="text-secondary text-xs">{vacancy.description}</p>
+          </div>
+
+          <div className="flex flex-col gap-5 mb-8">
+            <div className="text-secondary/50 flex flex-row items-center gap-4 text-xs">
+              <Image src={ResponsibilitiesIcon} alt="Responsibilities icon" />
+              <span className="text-xl text-foreground">Твои обязанности</span>
+            </div>
+            <div className="flex flex-col gap-2">
+              {vacancy.responsibilities.map((responsibility) => (
+                <div className="flex flex-row items-center gap-1">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle
+                      cx="10"
+                      cy="10"
+                      r="2"
+                      fill="#9AA6B5"
+                      fill-opacity="0.5"
+                    />
+                  </svg>
+
+                  <p className="text-foreground text-sm whitespace-pre-line">
+                    {responsibility}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-5">
+            <div className="text-secondary/50 flex flex-row items-center gap-4 text-xs">
+              <Image src={RequirementsIcon} alt="Requirements icon" />
+              <span className="text-xl text-foreground">Требования</span>
+            </div>
+            <div className="flex flex-col gap-2">
+              {vacancy.requirements.map((requirement) => (
+                <div className="flex flex-row items-center gap-1">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle
+                      cx="10"
+                      cy="10"
+                      r="2"
+                      fill="#9AA6B5"
+                      fill-opacity="0.5"
+                    />
+                  </svg>
+
+                  <p className="text-foreground text-sm whitespace-pre-line">
+                    {requirement}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );
