@@ -38,7 +38,7 @@ export const VacancyItem = ({ vacancy }: { vacancy: IVacancy }) => {
   return (
     <div
       onClick={() => setIsExpanded(!isExpanded)}
-      className="border-accent relative grid grid-cols-[calc(50*var(--spacing))_calc(35*var(--spacing))_calc(28*var(--spacing))_calc(20*var(--spacing))_1fr] items-center gap-5 gap-y-8 px-8 py-6 not-last:border-b hover:bg-[#14171C]"
+      className="border-accent relative grid grid-cols-[calc(50*var(--spacing))_calc(35*var(--spacing))_calc(28*var(--spacing))_calc(20*var(--spacing))_1fr] items-center gap-10 gap-y-8 px-8 py-6 not-last:border-b hover:bg-[#14171C]"
     >
       {/* Publisher name */}
       <div className="flex flex-col gap-1.5">

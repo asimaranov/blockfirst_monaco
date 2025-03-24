@@ -10,10 +10,13 @@ import { motion } from 'framer-motion';
 // import TextIcon from './assets/text.png';
 // import GridSvg from './assets/grid.svg';
 // import TopGridSvg from './assets/top-grid.svg';
-import UserIcon from '../input-legends/user';
+// import UserIcon from '../input-legends/user';
 import TelegramSvg from '../input-legends/telegram';
 import StatsIcon from './assets/stats-icon.svg';
-import TaskSquareSvg from '../input-legends/task_square';
+import TaskSquareSvg from './assets/shop-icon.svg';
+import UserSvg from './assets/user-icon.svg';
+import PercentSvg from './assets/percent-icon.svg';
+
 import { InfoPopover } from '~/app/components/shared/InfoPopover';
 import { Modal } from '../shared/Modal';
 import { ArrowUpRight, ChevronDown, Wallet } from 'lucide-react';
@@ -28,7 +31,7 @@ const StatCard = ({
   subtitle,
   icon,
   badgeText,
-  badgeColor = 'bg-dark',
+  badgeColor = 'bg-[#14171C]',
 }: {
   title: string;
   value: string;
@@ -37,12 +40,12 @@ const StatCard = ({
   badgeText?: string;
   badgeColor?: string;
 }) => (
-  <div className="flex flex-col gap-6 p-8">
+  <div className="flex flex-col gap-6 py-6 px-8">
     <div
-      className={`${badgeColor} inline-flex h-[30px] w-fit items-center rounded-lg px-3 py-2`}
+      className={`${badgeColor} inline-flex w-fit items-center rounded-lg px-3 py-2`}
     >
       <span
-        className={`${badgeColor === 'bg-success/10' ? 'text-success' : 'text-secondary'} text-sm`}
+        className={`${badgeColor === 'bg-success/10' ? 'text-success' : 'text-secondary'} text-xs uppercase`}
       >
         {badgeText || title}
       </span>
@@ -52,7 +55,7 @@ const StatCard = ({
         <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#010514]">
           {icon}
         </div>
-        <span className="text-foreground text-2xl">{value}</span>
+        <span className="text-foreground text-3xl">{value}</span>
       </div>
       <span className="text-secondary text-sm opacity-50">{subtitle}</span>
     </div>
@@ -195,26 +198,23 @@ export default function ReferralPage({ session }: { session: Session }) {
           {/* Statistics Section */}
           <div className="border-accent flex flex-col border-b">
             {/* Header */}
-            <div className="border-accent flex h-[112px] flex-col justify-center border-b px-8">
+            <div className="border-accent flex h-[112px] flex-row justify-between items-center  border-b px-8">
               <div className="flex flex-col gap-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <div className="flex h-5 w-5 items-center justify-center">
-                      <Image src={StatsIcon} alt="stats" className='h-5 w-5' />
+                      <Image src={StatsIcon} alt="stats" className="h-5 w-5" />
                     </div>
                     <span className="text-foreground text-base">
                       Статистика
                     </span>
                   </div>
-                  <TimePeriodSelector
-                    value={timePeriod}
-                    onChange={setTimePeriod}
-                  />
                 </div>
                 <span className="text-secondary text-sm opacity-50">
                   Ниже предоставлена информация по вашим рефералам
                 </span>
               </div>
+              <TimePeriodSelector value={timePeriod} onChange={setTimePeriod} />
             </div>
 
             {/* Stats Grid */}
@@ -224,7 +224,7 @@ export default function ReferralPage({ session }: { session: Session }) {
                 title="рефералы"
                 value="24"
                 subtitle="Приглашенных пользователей"
-                icon={<UserIcon active={true} />}
+                icon={<Image src={UserSvg} alt={''}  />}
               />
 
               {/* Purchases Card */}
@@ -232,7 +232,7 @@ export default function ReferralPage({ session }: { session: Session }) {
                 title="Покупки"
                 value="12"
                 subtitle="Приобретённых тарифов"
-                icon={<TaskSquareSvg active={true} />}
+                icon={<Image src={TaskSquareSvg} alt={''}  />}
               />
 
               {/* Earnings Card */}
@@ -241,24 +241,7 @@ export default function ReferralPage({ session }: { session: Session }) {
                 value="56 012 ₽"
                 subtitle="Доход от рефералов"
                 icon={
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path
-                      d="M2 11.333V4.667c0-1.4 1-2.334 2.333-2.334h7.334c1.333 0 2.333.934 2.333 2.334v6.666c0 1.4-1 2.334-2.333 2.334H4.333C3 13.667 2 12.733 2 11.333z"
-                      stroke="#F2F2F2"
-                      strokeWidth="1.5"
-                      strokeMiterlimit="10"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M4.333 6h7.334M6 9h4"
-                      stroke="#F2F2F2"
-                      strokeWidth="1.5"
-                      strokeMiterlimit="10"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                  <Image src={PercentSvg} alt={''}  />
                 }
                 badgeText="Процент — 3%"
                 badgeColor="bg-success/10"
