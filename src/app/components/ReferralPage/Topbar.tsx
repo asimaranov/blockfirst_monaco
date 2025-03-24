@@ -14,12 +14,6 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
   const [copied, setCopied] = useState(false);
   const referralLink = 'www.blockfirst.ru/ref2001';
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(referralLink);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
   const [isBloggersFormOpen, setIsBloggersFormOpen] = useState(false);
 
   return (
@@ -85,14 +79,12 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
             <BloggerForm onClose={() => setIsBloggersFormOpen(false)} />
           </Modal>
 
-          <div className="border-primary hover:bg-primary flex h-10 w-33 cursor-pointer items-center justify-center rounded-full border bg-[#01050d]">
+          <button
+            className="border-primary hover:bg-primary flex h-10 w-33 cursor-pointer items-center justify-center rounded-full border bg-[#01050d]"
+            onClick={() => setIsBloggersFormOpen(true)}
+          >
             <div className="flex items-center space-x-0">
-              <span
-                className="text-foreground text-sm"
-                onClick={() => setIsBloggersFormOpen(true)}
-              >
-                Блогерам
-              </span>
+              <span className="text-foreground text-sm">Блогерам</span>
               <svg
                 width="21"
                 height="20"
@@ -109,7 +101,7 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
                 />
               </svg>
             </div>
-          </div>
+          </button>
         </div>
       }
     />
