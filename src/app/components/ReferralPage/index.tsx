@@ -102,15 +102,26 @@ const TimePeriodSelector = ({
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex h-8 items-center gap-2 cursor-pointer rounded-[5.787vw] bg-[#14171C] px-4 py-2.25 transition-colors hover:bg-[#1c2026]"
+        className="flex h-8 cursor-pointer items-center gap-2 rounded-[5.787vw] bg-[#14171C] px-4 py-2.25 transition-colors hover:bg-[#1c2026]"
       >
         <span className="text-foreground text-xs">
           {periods.find((p) => p.value === value)?.label}
         </span>
-        <ChevronDown
-          size={14}
-          className={`text-[#186EF2] transition-transform ${isOpen ? 'rotate-180' : ''}`}
-        />
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 14 14"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-3.5 w-3.5"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M2.67353 4.55205C2.92093 4.31134 3.31662 4.31676 3.55733 4.56415L7.00127 8.10376L10.4452 4.56415C10.6859 4.31676 11.0816 4.31134 11.329 4.55205C11.5764 4.79276 11.5818 5.18845 11.3411 5.43585L7.44922 9.43585C7.33156 9.55678 7.17 9.625 7.00127 9.625C6.83254 9.625 6.67098 9.55678 6.55331 9.43585L2.66142 5.43585C2.42071 5.18845 2.42613 4.79276 2.67353 4.55205Z"
+            fill="#195AF4"
+          />
+        </svg>
       </button>
 
       {isOpen && (
@@ -122,7 +133,7 @@ const TimePeriodSelector = ({
                 onChange(period.value);
                 setIsOpen(false);
               }}
-              className={`cursor-pointer flex w-45.5 flex-row items-center gap-2 px-4 py-2 text-left text-sm transition-colors hover:bg-[#1c2026] ${
+              className={`flex w-45.5 cursor-pointer flex-row items-center gap-2 px-4 py-2 text-left text-sm transition-colors hover:bg-[#1c2026] ${
                 value === period.value ? 'text-foreground' : 'text-secondary'
               } text-xs`}
             >
@@ -133,7 +144,7 @@ const TimePeriodSelector = ({
                   viewBox="0 0 14 14"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className='w-3.5 h-3.5'
+                  className="h-3.5 w-3.5"
                 >
                   <path
                     d="M2.44922 7.65L5.04922 10.25L11.5492 3.75"
@@ -143,7 +154,9 @@ const TimePeriodSelector = ({
                     stroke-linejoin="round"
                   />
                 </svg>
-              ) : <div className='w-3.5'></div>}
+              ) : (
+                <div className="w-3.5"></div>
+              )}
 
               {period.label}
             </button>
