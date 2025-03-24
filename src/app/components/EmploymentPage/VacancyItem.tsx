@@ -7,7 +7,13 @@ import { useViewedVacancyStore } from '~/store/viewedVacancy';
 import RequirementsIcon from './assets/requirements-icon.svg';
 import ResponsibilitiesIcon from './assets/responsibilities-icon.svg';
 import Image from 'next/image';
-export const VacancyItem = ({ vacancy }: { vacancy: IVacancy }) => {
+
+interface VacancyItemProps {
+  vacancy: IVacancy;
+  onApply: () => void;
+}
+
+export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(false);
 
   const { viewedVacancies, add: addViewedVacancy } = useViewedVacancyStore();
@@ -66,7 +72,10 @@ export const VacancyItem = ({ vacancy }: { vacancy: IVacancy }) => {
           }}
           className="hover:bg-primary group border-primary/50 flex cursor-pointer flex-col items-center justify-center rounded-full border px-5 py-3"
         >
-          <span className="group-hover:text-foreground text-primary text-sm leading-4">
+          <span
+            className="group-hover:text-foreground text-primary text-sm leading-4"
+            onClick={onApply}
+          >
             Откликнуться
           </span>
         </button>

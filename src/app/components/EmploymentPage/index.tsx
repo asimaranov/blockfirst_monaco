@@ -13,6 +13,8 @@ import { IVacancy } from '~/app/lib/constants/vacancies';
 import { SortIcon } from './assets/sort-icon';
 import { useViewedVacancyStore } from '~/store/viewedVacancy';
 import Footer from '../Footer';
+import { Modal } from '../shared/Modal';
+import { ApplyForm } from './ApplyForm';
 
 enum SalarySortOption {
   SALARY_UP,
@@ -43,6 +45,7 @@ export default function EmploymentPage({ session }: { session: Session }) {
   const [publishedSortOption, setPublishedSortOption] = useState<
     PublishedSortOption | undefined
   >(undefined);
+  const [isApplyFormOpen, setIsApplyFormOpen] = useState(false);
 
   const sortVacancies = (vacancies: IVacancy[]) => {
     if (vacancies.length === 0) return [];
@@ -106,6 +109,9 @@ export default function EmploymentPage({ session }: { session: Session }) {
 
   return (
     <main className="border-accent flex min-h-screen w-full flex-col border-r border-l">
+      <Modal isOpen={isApplyFormOpen} onClose={() => setIsApplyFormOpen(false)}>
+        <ApplyForm onClose={() => setIsApplyFormOpen(false)} />
+      </Modal>
       <div className="flex flex-1 flex-row border-accent">
         <YourVacancies
           lastestUpdate={lastUpdate}
@@ -180,7 +186,11 @@ export default function EmploymentPage({ session }: { session: Session }) {
               {sortVacancies(VACANCIES).map(
                 // TODO: move VACANCIES to state
                 (vacancy) => (
-                  <VacancyItem key={vacancy.id} vacancy={vacancy} />
+                  <VacancyItem
+                    key={vacancy.id}
+                    vacancy={vacancy}
+                    onApply={() => setIsApplyFormOpen(true)}
+                   />
                 )
               )}
             </div>

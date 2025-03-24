@@ -38,7 +38,7 @@ export default function CopyButton({
   return (
     <div className={className}>
       <button
-        className="button group relative cursor-pointer rounded-md p-2 transition-colors z-10"
+        className="button group relative cursor-pointer rounded-md transition-colors z-10"
         onClick={handleCopy}
         title={isCopied ? 'Copied!' : 'Copy to clipboard'}
       >
