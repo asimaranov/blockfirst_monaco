@@ -69,17 +69,47 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
       </span>
       {/* Expand icon */}
       <div className="flex items-center justify-center gap-9">
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onApply();
-          }}
-          className="hover:bg-primary group border-primary/50 flex cursor-pointer flex-col items-center justify-center rounded-full border px-5 py-3 transition-colors duration-200"
-        >
-          <span className="group-hover:text-foreground text-primary text-sm leading-4 transition-colors duration-200">
-            Откликнуться
-          </span>
-        </button>
+        {!vacancy.applied ? (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onApply();
+            }}
+            className="hover:bg-primary group border-primary/50 flex cursor-pointer flex-col items-center justify-center rounded-full border px-5 py-3 transition-colors duration-200 w-33"
+          >
+            <span className="group-hover:text-foreground text-primary text-sm leading-4 transition-colors duration-200">
+              Откликнуться
+            </span>
+          </button>
+        ) : (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onApply();
+            }}
+            className="group flex cursor-pointer flex-col items-center justify-center rounded-full  border-[#33CF8E]/10 bg-[#33CF8E]/10 px-7.5 py-2.5 transition-colors duration-200 border hover:border-[#33CF8E] w-33"
+          >
+            <span className="flex flex-row items-center justify-center gap-1 text-sm leading-4 text-[#33CF8E] transition-colors duration-200 ">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
+                  stroke="#33CF8E"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              Отклик
+            </span>
+          </button>
+        )}
+
         <div className="my-auto size-5">
           <ToggleMinus isExpanded={isExpanded} onToggle={() => {}} />
         </div>

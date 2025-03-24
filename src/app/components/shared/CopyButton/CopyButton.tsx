@@ -54,7 +54,7 @@ export default function CopyButton({
       </button>
       {isCopied && (
         <div className="relative">
-          <div className={cn(appearanceType === 'far' ? "absolute top-5.5 -right-5 z-50" : "absolute top-2 right-17.5 z-50")}>
+          <div className={cn(appearanceType === 'far' ? "absolute top-5.5 -right-5 z-50" : "absolute top-0 -right-5 z-50")}>
             <svg
               width="92"
               height="30"

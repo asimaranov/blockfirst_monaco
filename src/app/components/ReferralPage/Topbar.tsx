@@ -19,10 +19,11 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
 
   return (
     <UnifiedTopbar
+      showBorder={false}
       className="relative  bg-[#01050d]"
       leftContent={
         <div className="flex flex-row items-center space-x-5">
-          <div className="relative h-[61px] w-[61px] overflow-hidden">
+          <div className="relative h-15.25 w-15.25 overflow-hidden">
             {/* Logo/Icon container with images from Figma */}
             <div className="absolute inset-0 bg-[#01050d]">
               <Image
@@ -81,6 +82,7 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
                 viewBox="0 0 21 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className='w-5 h-5'
               >
                 <path
                   fill-rule="evenodd"

@@ -16,13 +16,14 @@ import StatsIcon from './assets/stats-icon.svg';
 import TaskSquareSvg from './assets/shop-icon.svg';
 import UserSvg from './assets/user-icon.svg';
 import PercentSvg from './assets/percent-icon.svg';
+import BankIcon from './assets/bank-icons.png';
 
 import { InfoPopover } from '~/app/components/shared/InfoPopover';
 import { Modal } from '../shared/Modal';
 import { ArrowUpRight, ChevronDown, Wallet } from 'lucide-react';
 
 // Add new types
-type TimePeriod = '7d' | '30d' | '90d' | 'all';
+type TimePeriod = any;
 
 // Add new components
 const StatCard = ({
@@ -40,7 +41,7 @@ const StatCard = ({
   badgeText?: string;
   badgeColor?: string;
 }) => (
-  <div className="flex flex-col gap-6 py-6 px-8">
+  <div className="flex flex-col gap-5 px-8 pt-6">
     <div
       className={`${badgeColor} inline-flex w-fit items-center rounded-lg px-3 py-2`}
     >
@@ -57,7 +58,7 @@ const StatCard = ({
         </div>
         <span className="text-foreground text-3xl">{value}</span>
       </div>
-      <span className="text-secondary text-sm opacity-50">{subtitle}</span>
+      <span className="text-secondary text-xs opacity-50">{subtitle}</span>
     </div>
   </div>
 );
@@ -73,10 +74,12 @@ const TimePeriodSelector = ({
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const periods: { label: string; value: TimePeriod }[] = [
-    { label: '7 дней', value: '7d' },
-    { label: '30 дней', value: '30d' },
-    { label: '90 дней', value: '90d' },
     { label: 'Все время', value: 'all' },
+    { label: 'Последнюю неделю', value: '7d' },
+    { label: 'Текущий месяц', value: '30d' },
+    { label: 'Прошлый месяц', value: '90d' },
+    { label: 'Позапрошлый месяц', value: 'lm' },
+    { label: 'Последний год', value: 'year' },
   ];
 
   useEffect(() => {
@@ -99,9 +102,9 @@ const TimePeriodSelector = ({
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex h-8 items-center gap-2 rounded-[100px] bg-[#14171C] px-4 py-[9px] transition-colors hover:bg-[#1c2026]"
+        className="flex h-8 items-center gap-2 cursor-pointer rounded-[5.787vw] bg-[#14171C] px-4 py-2.25 transition-colors hover:bg-[#1c2026]"
       >
-        <span className="text-foreground text-sm">
+        <span className="text-foreground text-xs">
           {periods.find((p) => p.value === value)?.label}
         </span>
         <ChevronDown
@@ -111,7 +114,7 @@ const TimePeriodSelector = ({
       </button>
 
       {isOpen && (
-        <div className="absolute top-full right-0 z-10 mt-2 w-full rounded-lg bg-[#14171C] py-2 shadow-lg">
+        <div className="absolute top-full right-0 z-10 mt-2 w-45.5 rounded-lg bg-[#14171C] py-2 shadow-lg">
           {periods.map((period) => (
             <button
               key={period.value}
@@ -119,68 +122,35 @@ const TimePeriodSelector = ({
                 onChange(period.value);
                 setIsOpen(false);
               }}
-              className={`w-full px-4 py-2 text-left text-sm transition-colors hover:bg-[#1c2026] ${
+              className={`cursor-pointer flex w-45.5 flex-row items-center gap-2 px-4 py-2 text-left text-sm transition-colors hover:bg-[#1c2026] ${
                 value === period.value ? 'text-foreground' : 'text-secondary'
-              }`}
+              } text-xs`}
             >
+              {period.value == value ? (
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className='w-3.5 h-3.5'
+                >
+                  <path
+                    d="M2.44922 7.65L5.04922 10.25L11.5492 3.75"
+                    stroke="#195AF4"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              ) : <div className='w-3.5'></div>}
+
               {period.label}
             </button>
           ))}
         </div>
       )}
     </div>
-  );
-};
-
-const ComingSoon = () => {
-  return (
-    <svg
-      width="103"
-      height="24"
-      viewBox="0 0 103 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="w-25"
-    >
-      <rect
-        x="0.25"
-        y="0.25"
-        width="102.5"
-        height="23.5"
-        rx="11.75"
-        stroke="url(#paint0_linear_1147_15805)"
-        stroke-opacity="0.5"
-        stroke-width="0.5"
-      />
-      <path
-        d="M12.36 11.716C12.36 8.992 13.956 7.276 16.356 7.276C18.396 7.276 19.848 8.464 20.244 10.456H19.14C18.792 9.052 17.772 8.236 16.344 8.236C14.604 8.236 13.44 9.568 13.44 11.716C13.44 13.852 14.604 15.184 16.356 15.184C17.844 15.184 18.888 14.272 19.188 12.748H20.292C19.968 14.872 18.492 16.144 16.356 16.144C13.956 16.144 12.36 14.44 12.36 11.716ZM22.0644 12.76C22.0644 14.224 22.8444 15.208 24.1524 15.208C25.4604 15.208 26.2284 14.224 26.2284 12.76C26.2284 11.308 25.4604 10.324 24.1524 10.324C22.8444 10.324 22.0644 11.308 22.0644 12.76ZM21.0084 12.76C21.0084 10.756 22.2564 9.388 24.1524 9.388C26.0484 9.388 27.2844 10.756 27.2844 12.76C27.2844 14.764 26.0484 16.144 24.1524 16.144C22.2564 16.144 21.0084 14.764 21.0084 12.76ZM29.0605 12.76C29.0605 14.224 29.8405 15.208 31.1485 15.208C32.4565 15.208 33.2245 14.224 33.2245 12.76C33.2245 11.308 32.4565 10.324 31.1485 10.324C29.8405 10.324 29.0605 11.308 29.0605 12.76ZM28.0045 12.76C28.0045 10.756 29.2525 9.388 31.1485 9.388C33.0445 9.388 34.2805 10.756 34.2805 12.76C34.2805 14.764 33.0445 16.144 31.1485 16.144C29.2525 16.144 28.0045 14.764 28.0045 12.76ZM35.1926 16V9.532H36.1286L36.1646 10.684C36.4766 9.868 37.2086 9.388 38.1686 9.388C39.1766 9.388 39.8966 9.904 40.2086 10.768C40.5086 9.904 41.2646 9.388 42.2846 9.388C43.6646 9.388 44.5286 10.324 44.5286 11.836V16H43.4966V12.22C43.4966 10.972 43.0286 10.324 42.0806 10.324C41.0606 10.324 40.3766 11.08 40.3766 12.22V16H39.3446V12.22C39.3446 10.972 38.8766 10.324 37.9286 10.324C36.9086 10.324 36.2246 11.08 36.2246 12.22V16H35.1926ZM45.6352 16V9.532H46.6432V16H45.6352ZM45.5872 8.584V7.264H46.6912V8.584H45.5872ZM47.8023 16V9.532H48.7383L48.7743 10.696C49.1103 9.868 49.8783 9.388 50.8983 9.388C52.3383 9.388 53.2263 10.324 53.2263 11.836V16H52.1943V12.22C52.1943 10.972 51.6903 10.324 50.6703 10.324C49.5663 10.324 48.8343 11.08 48.8343 12.22V16H47.8023ZM55.1465 12.592C55.1465 14.032 55.8425 14.848 57.0905 14.848C58.3625 14.848 59.1305 14.008 59.1305 12.592C59.1305 11.188 58.3625 10.324 57.0905 10.324C55.8425 10.324 55.1465 11.14 55.1465 12.592ZM54.3305 15.976H55.3865C55.4705 16.924 56.3105 17.38 57.2465 17.38C58.2665 17.38 59.1065 16.828 59.1065 15.328V14.608C58.7105 15.364 57.8825 15.784 56.9225 15.784C55.2305 15.784 54.0905 14.488 54.0905 12.58C54.0905 10.672 55.2305 9.388 56.9105 9.388C57.8825 9.388 58.7825 9.808 59.1665 10.636L59.2025 9.532H60.1385V15.328C60.1385 17.452 58.8665 18.316 57.2345 18.316C55.7345 18.316 54.4745 17.584 54.3305 15.976ZM63.204 13.036H64.272C64.416 14.392 65.328 15.184 66.816 15.184C68.088 15.184 68.868 14.608 68.868 13.684C68.868 12.58 67.8 12.352 66.432 12.076C64.968 11.788 63.408 11.44 63.408 9.724C63.408 8.248 64.548 7.276 66.408 7.276C68.46 7.276 69.66 8.536 69.792 10.18H68.712C68.592 9.088 67.776 8.236 66.384 8.236C65.256 8.236 64.488 8.836 64.488 9.688C64.488 10.708 65.616 10.936 66.852 11.188C68.436 11.5 69.948 11.848 69.948 13.612C69.948 15.208 68.628 16.144 66.792 16.144C64.62 16.144 63.288 14.848 63.204 13.036ZM71.6699 12.76C71.6699 14.224 72.4499 15.208 73.7579 15.208C75.0659 15.208 75.8339 14.224 75.8339 12.76C75.8339 11.308 75.0659 10.324 73.7579 10.324C72.4499 10.324 71.6699 11.308 71.6699 12.76ZM70.6139 12.76C70.6139 10.756 71.8619 9.388 73.7579 9.388C75.6539 9.388 76.8899 10.756 76.8899 12.76C76.8899 14.764 75.6539 16.144 73.7579 16.144C71.8619 16.144 70.6139 14.764 70.6139 12.76ZM78.666 12.76C78.666 14.224 79.446 15.208 80.754 15.208C82.062 15.208 82.83 14.224 82.83 12.76C82.83 11.308 82.062 10.324 80.754 10.324C79.446 10.324 78.666 11.308 78.666 12.76ZM77.61 12.76C77.61 10.756 78.858 9.388 80.754 9.388C82.65 9.388 83.886 10.756 83.886 12.76C83.886 14.764 82.65 16.144 80.754 16.144C78.858 16.144 77.61 14.764 77.61 12.76ZM84.8101 16V9.532H85.7461L85.7821 10.696C86.1181 9.868 86.8861 9.388 87.9061 9.388C89.3461 9.388 90.2341 10.324 90.2341 11.836V16H89.2021V12.22C89.2021 10.972 88.6981 10.324 87.6781 10.324C86.5741 10.324 85.8421 11.08 85.8421 12.22V16H84.8101Z"
-        fill="url(#paint1_linear_1147_15805)"
-      />
-      <defs>
-        <linearGradient
-          id="paint0_linear_1147_15805"
-          x1="8.20354"
-          y1="35.0769"
-          x2="106.26"
-          y2="-15.5989"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stop-color="#F46919" />
-          <stop offset="1" stop-color="#F419AB" />
-        </linearGradient>
-        <linearGradient
-          id="paint1_linear_1147_15805"
-          x1="18.292"
-          y1="25.9231"
-          x2="86.252"
-          y2="-17.178"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stop-color="#F46919" />
-          <stop offset="1" stop-color="#F419AB" />
-        </linearGradient>
-      </defs>
-    </svg>
   );
 };
 
@@ -191,14 +161,14 @@ export default function ReferralPage({ session }: { session: Session }) {
 
   return (
     <main className="border-accent flex h-screen flex-col border-x">
-      <div className="flex flex-1 flex-col">
+      <div className="mb-auto flex flex-col">
         <Topbar lastestUpdate={'18 марта 2025'} />
 
-        <div className="flex flex-row">
+        <div className="flex flex-1 flex-row">
           {/* Statistics Section */}
-          <div className="border-accent flex flex-col border-b">
+          <div className="border-accent flex flex-1 flex-col border-b">
             {/* Header */}
-            <div className="border-accent flex h-[112px] flex-row justify-between items-center  border-b px-8">
+            <div className="border-accent flex h-28 flex-row items-center justify-between border-b px-8">
               <div className="flex flex-col gap-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
@@ -218,13 +188,13 @@ export default function ReferralPage({ session }: { session: Session }) {
             </div>
 
             {/* Stats Grid */}
-            <div className="divide-accent grid grid-cols-3 divide-x">
+            <div className="divide-accent grid flex-1 grid-cols-3 divide-x">
               {/* Referrals Card */}
               <StatCard
                 title="рефералы"
                 value="24"
                 subtitle="Приглашенных пользователей"
-                icon={<Image src={UserSvg} alt={''}  />}
+                icon={<Image src={UserSvg} alt={''} className="h-9 w-9" />}
               />
 
               {/* Purchases Card */}
@@ -232,7 +202,9 @@ export default function ReferralPage({ session }: { session: Session }) {
                 title="Покупки"
                 value="12"
                 subtitle="Приобретённых тарифов"
-                icon={<Image src={TaskSquareSvg} alt={''}  />}
+                icon={
+                  <Image src={TaskSquareSvg} alt={''} className="h-9 w-9" />
+                }
               />
 
               {/* Earnings Card */}
@@ -240,9 +212,7 @@ export default function ReferralPage({ session }: { session: Session }) {
                 title="Процент"
                 value="56 012 ₽"
                 subtitle="Доход от рефералов"
-                icon={
-                  <Image src={PercentSvg} alt={''}  />
-                }
+                icon={<Image src={PercentSvg} alt={''} className="h-9 w-9" />}
                 badgeText="Процент — 3%"
                 badgeColor="bg-success/10"
               />
@@ -250,60 +220,75 @@ export default function ReferralPage({ session }: { session: Session }) {
           </div>
 
           {/* Balance Card */}
-          <div className="border-accent flex w-[401px] flex-col border-l bg-[#14171C]">
-            <div className="flex flex-col px-8 py-8">
+          <div className="border-accent flex w-100.25 flex-col border-b border-l bg-[#14171C]">
+            <div className="flex flex-col px-8 pt-8 pb-5">
               {/* Top section with avatars and info */}
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-[18px]">
-                  <div className="flex">
-                    <div className="border-dark relative h-5 w-5 rounded-full border-[1.67px]">
-                      <img
-                        src="/path/to/avatar1.jpg"
-                        className="h-full w-full rounded-full object-cover"
-                      />
-                    </div>
-                    <div className="border-dark relative -ml-[9px] h-5 w-5 rounded-full border-[1.67px]">
-                      <img
-                        src="/path/to/avatar2.jpg"
-                        className="h-full w-full rounded-full object-cover"
-                      />
-                    </div>
-                    <div className="border-dark relative -ml-[9px] h-5 w-5 rounded-full border-[1.67px] bg-[#FFDE2A]">
-                      <svg
-                        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                        width="10"
-                        height="9"
-                        viewBox="0 0 10 9"
-                        fill="none"
-                      >
-                        <path
-                          d="M5.154 5.625v3.125M7.217 4.375l-2.063 1.25-2.063-1.25M5.154 5.625L3.091 4.375M5.154 5.625l2.063-1.25M5.154 0v3.125"
-                          stroke="#0F1217"
-                          strokeWidth="0.807"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                  <InfoPopover
-                    title="Дополнительно"
-                    content="Информация о балансе и выплатах"
+                <div className="flex">
+                  <Image
+                    src={BankIcon}
+                    alt={''}
+                    className="h-5 w-14.25"
+                    quality={100}
                   />
                 </div>
+                <InfoPopover
+                  title="Баланс средств"
+                  content="Текущий баланс отражает все заработанные средства от всех ваших рефералов. После вывода средств ваш баланс будет обнулен."
+                  className="ml-auto"
+                />
               </div>
 
               {/* Balance section */}
-              <div className="mt-[26px] flex flex-col gap-3">
+              <div className="mt-6.5 flex flex-col gap-3">
                 <div className="flex justify-center">
-                  <div className="bg-gradient-to-r from-[#F46919] to-[#F419AB] bg-clip-text">
-                    <span className="inline-flex rounded-full bg-[#14171C]/10 px-3 py-1.5 text-sm text-transparent">
-                      Текущий баланс
-                    </span>
-                  </div>
+                  <svg
+                    width="119"
+                    height="24"
+                    viewBox="0 0 119 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6"
+                  >
+                    <rect
+                      width="119"
+                      height="24"
+                      rx="12"
+                      fill="url(#paint0_linear_1576_23626)"
+                      fill-opacity="0.1"
+                    />
+                    <path
+                      d="M15.876 16H14.796V8.38H12.12V7.432H18.54V8.38H15.876V16ZM21.3282 9.448C21.8802 9.448 22.3522 9.568 22.7442 9.808C23.1442 10.048 23.4482 10.388 23.6562 10.828C23.8722 11.26 23.9802 11.768 23.9802 12.352V12.988H19.5762C19.5922 13.716 19.7762 14.272 20.1282 14.656C20.4882 15.032 20.9882 15.22 21.6282 15.22C22.0362 15.22 22.3962 15.184 22.7082 15.112C23.0282 15.032 23.3562 14.92 23.6922 14.776V15.7C23.3642 15.844 23.0402 15.948 22.7202 16.012C22.4002 16.084 22.0202 16.12 21.5802 16.12C20.9722 16.12 20.4322 15.996 19.9602 15.748C19.4962 15.5 19.1322 15.132 18.8682 14.644C18.6122 14.148 18.4842 13.544 18.4842 12.832C18.4842 12.128 18.6002 11.524 18.8322 11.02C19.0722 10.516 19.4042 10.128 19.8282 9.856C20.2602 9.584 20.7602 9.448 21.3282 9.448ZM21.3162 10.312C20.8122 10.312 20.4122 10.476 20.1162 10.804C19.8282 11.124 19.6562 11.572 19.6002 12.148H22.8762C22.8762 11.78 22.8202 11.46 22.7082 11.188C22.5962 10.916 22.4242 10.704 22.1922 10.552C21.9682 10.392 21.6762 10.312 21.3162 10.312ZM29.4217 9.568H30.5737L27.8257 12.664L30.8017 16H29.5777L26.6737 12.736V16H25.6177V9.568H26.6737V12.688L29.4217 9.568ZM30.9612 9.568H32.0892L33.4812 13.228C33.5612 13.444 33.6332 13.652 33.6972 13.852C33.7692 14.052 33.8332 14.248 33.8892 14.44C33.9452 14.624 33.9892 14.804 34.0212 14.98H34.0692C34.1172 14.78 34.1932 14.52 34.2972 14.2C34.4012 13.872 34.5092 13.544 34.6212 13.216L35.9292 9.568H37.0692L34.2972 16.888C34.1452 17.288 33.9652 17.636 33.7572 17.932C33.5572 18.236 33.3092 18.468 33.0132 18.628C32.7252 18.796 32.3732 18.88 31.9572 18.88C31.7652 18.88 31.5972 18.868 31.4532 18.844C31.3092 18.828 31.1852 18.808 31.0812 18.784V17.944C31.1692 17.96 31.2732 17.976 31.3932 17.992C31.5212 18.008 31.6532 18.016 31.7892 18.016C32.0372 18.016 32.2492 17.968 32.4252 17.872C32.6092 17.784 32.7652 17.652 32.8932 17.476C33.0212 17.308 33.1292 17.108 33.2172 16.876L33.5532 16.024L30.9612 9.568ZM46.7984 9.568V15.124H47.7344V18.22H46.6784V16H38.0864V9.568H39.1424V15.112H41.9144V9.568H42.9704V15.112H45.7544V9.568H46.7984ZM49.9574 13.492C49.9574 13.564 49.9534 13.668 49.9454 13.804C49.9454 13.932 49.9414 14.072 49.9334 14.224C49.9254 14.368 49.9174 14.508 49.9094 14.644C49.9014 14.772 49.8934 14.876 49.8854 14.956L53.3294 9.568H54.6254V16H53.6414V12.208C53.6414 12.08 53.6414 11.912 53.6414 11.704C53.6494 11.496 53.6574 11.292 53.6654 11.092C53.6734 10.884 53.6814 10.728 53.6894 10.624L50.2694 16H48.9614V9.568H49.9574V13.492ZM61.8803 6.904C61.8483 7.304 61.7483 7.64 61.5803 7.912C61.4203 8.184 61.1803 8.388 60.8603 8.524C60.5403 8.66 60.1243 8.728 59.6123 8.728C59.0923 8.728 58.6723 8.66 58.3523 8.524C58.0403 8.388 57.8123 8.188 57.6683 7.924C57.5243 7.652 57.4363 7.312 57.4043 6.904H58.3883C58.4283 7.336 58.5403 7.628 58.7243 7.78C58.9163 7.924 59.2203 7.996 59.6363 7.996C60.0043 7.996 60.2923 7.92 60.5003 7.768C60.7163 7.608 60.8443 7.32 60.8843 6.904H61.8803ZM57.6683 13.492C57.6683 13.564 57.6643 13.668 57.6563 13.804C57.6563 13.932 57.6523 14.072 57.6443 14.224C57.6363 14.368 57.6283 14.508 57.6203 14.644C57.6123 14.772 57.6043 14.876 57.5963 14.956L61.0403 9.568H62.3363V16H61.3523V12.208C61.3523 12.08 61.3523 11.912 61.3523 11.704C61.3603 11.496 61.3683 11.292 61.3763 11.092C61.3843 10.884 61.3923 10.728 61.4003 10.624L57.9803 16H56.6723V9.568H57.6683V13.492ZM66.3559 12.136C66.3559 11.2 66.4479 10.404 66.6319 9.748C66.8239 9.084 67.1159 8.556 67.5079 8.164C67.9079 7.764 68.4199 7.496 69.0439 7.36C69.5639 7.248 70.0719 7.148 70.5679 7.06C71.0639 6.972 71.5279 6.892 71.9599 6.82L72.1399 7.744C71.9319 7.776 71.6999 7.816 71.4439 7.864C71.1879 7.904 70.9279 7.948 70.6639 7.996C70.3999 8.036 70.1439 8.08 69.8959 8.128C69.6559 8.168 69.4439 8.208 69.2599 8.248C68.9959 8.304 68.7599 8.4 68.5519 8.536C68.3439 8.664 68.1639 8.84 68.0119 9.064C67.8679 9.288 67.7519 9.564 67.6639 9.892C67.5759 10.22 67.5239 10.608 67.5079 11.056H67.5799C67.6919 10.904 67.8439 10.748 68.0359 10.588C68.2359 10.428 68.4719 10.292 68.7439 10.18C69.0239 10.068 69.3399 10.012 69.6919 10.012C70.2519 10.012 70.7159 10.136 71.0839 10.384C71.4599 10.624 71.7399 10.96 71.9239 11.392C72.1159 11.824 72.2119 12.328 72.2119 12.904C72.2119 13.616 72.0879 14.212 71.8399 14.692C71.5919 15.172 71.2479 15.532 70.8079 15.772C70.3679 16.004 69.8559 16.12 69.2719 16.12C68.8319 16.12 68.4319 16.036 68.0719 15.868C67.7119 15.692 67.4039 15.436 67.1479 15.1C66.8919 14.764 66.6959 14.348 66.5599 13.852C66.4239 13.356 66.3559 12.784 66.3559 12.136ZM69.3559 15.244C69.7079 15.244 70.0119 15.172 70.2679 15.028C70.5319 14.884 70.7359 14.648 70.8799 14.32C71.0239 13.992 71.0959 13.556 71.0959 13.012C71.0959 12.356 70.9719 11.84 70.7239 11.464C70.4839 11.08 70.0839 10.888 69.5239 10.888C69.1719 10.888 68.8519 10.968 68.5639 11.128C68.2759 11.28 68.0359 11.456 67.8439 11.656C67.6519 11.856 67.5159 12.024 67.4359 12.16C67.4359 12.552 67.4639 12.932 67.5199 13.3C67.5759 13.668 67.6719 14 67.8079 14.296C67.9519 14.584 68.1479 14.816 68.3959 14.992C68.6519 15.16 68.9719 15.244 69.3559 15.244ZM76.3115 9.46C77.0955 9.46 77.6755 9.632 78.0515 9.976C78.4275 10.32 78.6155 10.868 78.6155 11.62V16H77.8475L77.6435 15.088H77.5955C77.4115 15.32 77.2195 15.516 77.0195 15.676C76.8275 15.828 76.6035 15.94 76.3475 16.012C76.0995 16.084 75.7955 16.12 75.4355 16.12C75.0515 16.12 74.7035 16.052 74.3915 15.916C74.0875 15.78 73.8475 15.572 73.6715 15.292C73.4955 15.004 73.4075 14.644 73.4075 14.212C73.4075 13.572 73.6595 13.08 74.1635 12.736C74.6675 12.384 75.4435 12.192 76.4915 12.16L77.5835 12.124V11.74C77.5835 11.204 77.4675 10.832 77.2355 10.624C77.0035 10.416 76.6755 10.312 76.2515 10.312C75.9155 10.312 75.5955 10.364 75.2915 10.468C74.9875 10.564 74.7035 10.676 74.4395 10.804L74.1155 10.012C74.3955 9.86 74.7275 9.732 75.1115 9.628C75.4955 9.516 75.8955 9.46 76.3115 9.46ZM76.6235 12.892C75.8235 12.924 75.2675 13.052 74.9555 13.276C74.6515 13.5 74.4995 13.816 74.4995 14.224C74.4995 14.584 74.6075 14.848 74.8235 15.016C75.0475 15.184 75.3315 15.268 75.6755 15.268C76.2195 15.268 76.6715 15.12 77.0315 14.824C77.3915 14.52 77.5715 14.056 77.5715 13.432V12.856L76.6235 12.892ZM85.498 16H84.43V10.444H82.534C82.454 11.46 82.354 12.328 82.234 13.048C82.114 13.76 81.962 14.34 81.778 14.788C81.594 15.236 81.374 15.564 81.118 15.772C80.862 15.98 80.562 16.084 80.218 16.084C80.114 16.084 80.01 16.076 79.906 16.06C79.81 16.052 79.73 16.032 79.666 16V15.208C79.714 15.224 79.766 15.236 79.822 15.244C79.878 15.252 79.934 15.256 79.99 15.256C80.166 15.256 80.326 15.184 80.47 15.04C80.614 14.896 80.742 14.676 80.854 14.38C80.974 14.084 81.082 13.712 81.178 13.264C81.274 12.808 81.358 12.272 81.43 11.656C81.502 11.04 81.566 10.344 81.622 9.568H85.498V16ZM89.9755 9.46C90.7595 9.46 91.3395 9.632 91.7155 9.976C92.0915 10.32 92.2795 10.868 92.2795 11.62V16H91.5115L91.3075 15.088H91.2595C91.0755 15.32 90.8835 15.516 90.6835 15.676C90.4915 15.828 90.2675 15.94 90.0115 16.012C89.7635 16.084 89.4595 16.12 89.0995 16.12C88.7155 16.12 88.3675 16.052 88.0555 15.916C87.7515 15.78 87.5115 15.572 87.3355 15.292C87.1595 15.004 87.0715 14.644 87.0715 14.212C87.0715 13.572 87.3235 13.08 87.8275 12.736C88.3315 12.384 89.1075 12.192 90.1555 12.16L91.2475 12.124V11.74C91.2475 11.204 91.1315 10.832 90.8995 10.624C90.6675 10.416 90.3395 10.312 89.9155 10.312C89.5795 10.312 89.2595 10.364 88.9555 10.468C88.6515 10.564 88.3675 10.676 88.1035 10.804L87.7795 10.012C88.0595 9.86 88.3915 9.732 88.7755 9.628C89.1595 9.516 89.5595 9.46 89.9755 9.46ZM90.2875 12.892C89.4875 12.924 88.9315 13.052 88.6195 13.276C88.3155 13.5 88.1635 13.816 88.1635 14.224C88.1635 14.584 88.2715 14.848 88.4875 15.016C88.7115 15.184 88.9955 15.268 89.3395 15.268C89.8835 15.268 90.3355 15.12 90.6955 14.824C91.0555 14.52 91.2355 14.056 91.2355 13.432V12.856L90.2875 12.892ZM95.3221 9.568V12.244H98.8141V9.568H99.8701V16H98.8141V13.132H95.3221V16H94.2661V9.568H95.3221ZM104.487 16.12C103.919 16.12 103.411 16.004 102.963 15.772C102.523 15.54 102.175 15.18 101.919 14.692C101.671 14.204 101.547 13.58 101.547 12.82C101.547 12.028 101.679 11.384 101.943 10.888C102.207 10.392 102.563 10.028 103.011 9.796C103.467 9.564 103.983 9.448 104.559 9.448C104.887 9.448 105.203 9.484 105.507 9.556C105.811 9.62 106.059 9.7 106.251 9.796L105.927 10.672C105.735 10.6 105.511 10.532 105.255 10.468C104.999 10.404 104.759 10.372 104.535 10.372C104.103 10.372 103.747 10.464 103.467 10.648C103.187 10.832 102.979 11.104 102.843 11.464C102.707 11.824 102.639 12.272 102.639 12.808C102.639 13.32 102.707 13.756 102.843 14.116C102.979 14.476 103.183 14.748 103.455 14.932C103.727 15.116 104.067 15.208 104.475 15.208C104.827 15.208 105.135 15.172 105.399 15.1C105.671 15.028 105.919 14.94 106.143 14.836V15.772C105.927 15.884 105.687 15.968 105.423 16.024C105.167 16.088 104.855 16.12 104.487 16.12Z"
+                      fill="url(#paint1_linear_1576_23626)"
+                    />
+                    <defs>
+                      <linearGradient
+                        id="paint0_linear_1576_23626"
+                        x1="9.47788"
+                        y1="35.0769"
+                        x2="115.298"
+                        y2="-28.1066"
+                        gradientUnits="userSpaceOnUse"
+                      >
+                        <stop stop-color="#F46919" />
+                        <stop offset="1" stop-color="#F419AB" />
+                      </linearGradient>
+                      <linearGradient
+                        id="paint1_linear_1576_23626"
+                        x1="19.5664"
+                        y1="25.9231"
+                        x2="92.0195"
+                        y2="-29.3341"
+                        gradientUnits="userSpaceOnUse"
+                      >
+                        <stop stop-color="#F46919" />
+                        <stop offset="1" stop-color="#F419AB" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
                 </div>
                 <div className="text-center">
-                  <span className="text-foreground text-[42px] leading-[42px]">
+                  <span className="text-foreground text-[2.0833vw] leading-[2.4306vw]">
                     157 910 ₽
                   </span>
                 </div>
@@ -311,26 +296,63 @@ export default function ReferralPage({ session }: { session: Session }) {
             </div>
 
             {/* Withdrawal section */}
-            <div className="flex flex-col gap-6 px-8 pb-8">
+            <div className="flex flex-col gap-6 px-8 pb-6">
               <div className="flex items-center justify-between">
-                <span className="text-secondary text-base">
-                  Вывод от — 2 000 ₽
+                <span className="text-secondary/50 flex gap-1 text-sm">
+                  Вывод от —<span className="text-foreground">2 000 ₽</span>
                 </span>
-                <button className="bg-primary flex h-10 w-10 items-center justify-center rounded-full transition-transform hover:scale-105">
-                  <Wallet className="text-foreground h-5 w-5" />
+                <button
+                  className="bg-primary flex h-10 w-10 items-center justify-center rounded-full transition-transform not-disabled:cursor-pointer hover:scale-105 not-disabled:hover:bg-[#1242B2] disabled:opacity-30"
+                  // disabled={true}
+                >
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                  >
+                    <path
+                      d="M7.76562 5.41654L9.89896 3.2832L12.0323 5.41654"
+                      stroke="#F2F2F2"
+                      stroke-width="1.5"
+                      stroke-miterlimit="10"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M9.89844 11.8168V3.3418"
+                      stroke="#F2F2F2"
+                      stroke-width="1.5"
+                      stroke-miterlimit="10"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M3.33203 10C3.33203 13.6833 5.83203 16.6667 9.9987 16.6667C14.1654 16.6667 16.6654 13.6833 16.6654 10"
+                      stroke="#F2F2F2"
+                      stroke-width="1.5"
+                      stroke-miterlimit="10"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
                 </button>
               </div>
             </div>
 
             {/* Monthly payment notice */}
-            <div className="flex h-8 items-center justify-center bg-[#14171C]">
-              <span className="text-secondary text-sm">
-                Выплата производится 1 раз в месяц
+            <div className="flex h-8 w-full items-center justify-center bg-[#0F1217]">
+              <span className="text-secondary flex gap-1 bg-[#0F1217] text-xs">
+                Выплата производится
+                <span className="text-foreground">1 раз в месяц</span>
               </span>
             </div>
           </div>
         </div>
       </div>
+      <div> </div>
 
       <Footer />
     </main>

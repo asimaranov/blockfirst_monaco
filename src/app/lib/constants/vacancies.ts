@@ -21,6 +21,7 @@ export interface IVacancy {
   };
   responsibilities: string[];
   requirements: string[];
+  applied?: boolean;
 }
 
 export enum VacancyCurrency {
@@ -117,6 +118,7 @@ export const VACANCIES: IVacancy[] = [
       'TypeScript',
       'Опыт работы с Web3.js/Ethers.js',
     ],
+    applied: true,
   },
   {
     id: '3',
@@ -147,6 +149,7 @@ export const VACANCIES: IVacancy[] = [
       'Опыт работы с криптовалютами',
       'Знание blockchain технологий',
     ],
+    applied: true,
   },
   {
     id: '4',
