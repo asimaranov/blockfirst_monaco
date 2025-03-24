@@ -95,7 +95,7 @@ const sidebarSections: SidebarSection[] = [
     items: [
       {
         title: 'Реферальная программа',
-        href: '#',
+        href: '/referral',
         icon: ReferralIcon,
 
         locked: false,
