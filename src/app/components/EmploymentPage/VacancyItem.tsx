@@ -120,10 +120,14 @@ export const VacancyItem = ({ vacancy }: { vacancy: IVacancy }) => {
             <p className="text-secondary text-xs">{vacancy.description}</p>
           </div>
 
-          <div className="flex flex-col gap-5 mb-8">
+          <div className="mb-8 flex flex-col gap-5">
             <div className="text-secondary/50 flex flex-row items-center gap-4 text-xs">
-              <Image src={ResponsibilitiesIcon} alt="Responsibilities icon" />
-              <span className="text-xl text-foreground">Твои обязанности</span>
+              <Image
+                src={ResponsibilitiesIcon}
+                className="h-7 w-7"
+                alt="Responsibilities icon"
+              />
+              <span className="text-foreground text-xl">Твои обязанности</span>
             </div>
             <div className="flex flex-col gap-2">
               {vacancy.responsibilities.map((responsibility) => (
@@ -154,8 +158,12 @@ export const VacancyItem = ({ vacancy }: { vacancy: IVacancy }) => {
 
           <div className="flex flex-col gap-5">
             <div className="text-secondary/50 flex flex-row items-center gap-4 text-xs">
-              <Image src={RequirementsIcon} alt="Requirements icon" />
-              <span className="text-xl text-foreground">Требования</span>
+              <Image
+                src={RequirementsIcon}
+                className="h-7 w-7"
+                alt="Requirements icon"
+              />
+              <span className="text-foreground text-xl">Требования</span>
             </div>
             <div className="flex flex-col gap-2">
               {vacancy.requirements.map((requirement) => (
