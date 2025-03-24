@@ -19,29 +19,11 @@ interface ApplyFormProps {
   onClose: () => void;
 }
 
-const CheckIcon = () => (
-  <svg
-    width="21"
-    height="20"
-    viewBox="0 0 21 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className="h-5 w-5"
-  >
-    <path
-      fillRule="evenodd"
-      clipRule="evenodd"
-      d="M14.7307 4.43254C15.0295 4.14571 15.5043 4.15545 15.7911 4.45429L20.4065 9.26303C20.685 9.55324 20.685 10.0115 20.4065 10.3017L15.7911 15.1104C15.5043 15.4093 15.0295 15.419 14.7307 15.1322C14.4318 14.8454 14.4221 14.3706 14.7089 14.0718L18.8258 9.78237L14.7089 5.49297C14.4221 5.19413 14.4318 4.71936 14.7307 4.43254Z"
-      fill="#F2F2F2"
-    />
-  </svg>
-);
-
-const CopyArrowButton = ({ textToCopy }: { textToCopy: string }) => (
+const RedirectArrowButton = ({ hrefToOpen }: { hrefToOpen: string }) => (
   <div
     className="h-5 w-5 cursor-pointer hover:opacity-50"
     onClick={() => {
-      navigator.clipboard.writeText(textToCopy);
+      window.open(hrefToOpen, '_blank');
     }}
   >
     <svg
@@ -100,14 +82,16 @@ export function ApplyForm({ onClose }: ApplyFormProps) {
                 icon: TelegramIcon,
                 value: 'https://t.me/changeme',
                 button: (
-                  <CopyArrowButton textToCopy={'https://t.me/changeme'} />
+                  <RedirectArrowButton hrefToOpen={'https://t.me/changeme'} />
                 ),
               },
               {
                 name: 'Веб-сайт',
                 icon: WebsiteIcon,
                 value: 'https://example.com',
-                button: <CopyArrowButton textToCopy={'https://example.com'} />,
+                button: (
+                  <RedirectArrowButton hrefToOpen={'https://example.com'} />
+                ),
               },
               {
                 name: 'E-mail',
@@ -142,7 +126,7 @@ export function ApplyForm({ onClose }: ApplyFormProps) {
           </div>
         </div>
 
-        <div className="text-secondary flex flex-row gap-1 w-full justify-center text-xs">
+        <div className="text-secondary flex w-full flex-row justify-center gap-1 text-xs">
           <span className="flex flex-row gap-1">
             <Image src={InfoIcon} alt="Info" className="h-4 w-4" />
             Неверные контакты?

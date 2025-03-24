@@ -7,6 +7,7 @@ import { useViewedVacancyStore } from '~/store/viewedVacancy';
 import RequirementsIcon from './assets/requirements-icon.svg';
 import ResponsibilitiesIcon from './assets/responsibilities-icon.svg';
 import Image from 'next/image';
+import ToggleMinus from '../shared/ToggleMinus/ToggleMinus';
 
 interface VacancyItemProps {
   vacancy: IVacancy;
@@ -44,7 +45,10 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
   return (
     <div
       onClick={() => setIsExpanded(!isExpanded)}
-      className="border-accent relative grid grid-cols-[calc(50*var(--spacing))_calc(35*var(--spacing))_calc(28*var(--spacing))_calc(20*var(--spacing))_1fr] items-center gap-10 gap-y-8 px-8 py-6 not-last:border-b hover:bg-[#14171C]"
+      className={cn(
+        'border-accent relative grid grid-cols-[calc(50*var(--spacing))_calc(35*var(--spacing))_calc(28*var(--spacing))_calc(20*var(--spacing))_1fr] items-center gap-x-10 px-8 py-6 transition-colors duration-200 not-last:border-b hover:bg-[#14171C]',
+        isExpanded && 'bg-[#14171C]'
+      )}
     >
       {/* Publisher name */}
       <div className="flex flex-col gap-1.5">
@@ -68,140 +72,113 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
         <button
           onClick={(e) => {
             e.stopPropagation();
-            console.log('Otklik');
+            onApply();
           }}
-          className="hover:bg-primary group border-primary/50 flex cursor-pointer flex-col items-center justify-center rounded-full border px-5 py-3"
+          className="hover:bg-primary group border-primary/50 flex cursor-pointer flex-col items-center justify-center rounded-full border px-5 py-3 transition-colors duration-200"
         >
-          <span
-            className="group-hover:text-foreground text-primary text-sm leading-4"
-            onClick={onApply}
-          >
+          <span className="group-hover:text-foreground text-primary text-sm leading-4 transition-colors duration-200">
             Откликнуться
           </span>
         </button>
         <div className="my-auto size-5">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className={cn(
-              'h-5 w-5',
-              'transition-transform duration-300',
-              isExpanded ? 'text-foreground' : 'group-hover:text-foreground'
-            )}
-          >
-            <line
-              x1="5"
-              y1="10"
-              x2="15"
-              y2="10"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              className="transition-transform duration-300"
-            />
-            <line
-              x1="10"
-              y1="5"
-              x2="10"
-              y2="15"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              className={cn(
-                'origin-center transition-transform duration-300',
-                isExpanded ? 'scale-0' : 'scale-100'
-              )}
-            />
-          </svg>
+          <ToggleMinus isExpanded={isExpanded} onToggle={() => {}} />
         </div>
       </div>
 
-      {/* Apply button - placed at the bottom when expanded */}
-      {isExpanded && (
-        <div className="col-span-full flex flex-col">
-          <div className="flex flex-col gap-3 pb-8">
-            <span className="text-secondary/50 text-xs uppercase">
-              Описание вакансии
-            </span>
-            <p className="text-secondary text-xs">{vacancy.description}</p>
-          </div>
-
-          <div className="mb-8 flex flex-col gap-5">
-            <div className="text-secondary/50 flex flex-row items-center gap-4 text-xs">
-              <Image
-                src={ResponsibilitiesIcon}
-                className="h-7 w-7"
-                alt="Responsibilities icon"
-              />
-              <span className="text-foreground text-xl">Твои обязанности</span>
+      {/* Expandable content with animation */}
+      <div
+        className={cn(
+          'col-span-full grid transition-all duration-300 ease-in-out',
+          isExpanded
+            ? 'grid-rows-[1fr] opacity-100'
+            : 'grid-rows-[0fr] opacity-0'
+        )}
+      >
+        <div className="overflow-hidden">
+          <div className="flex flex-col pt-8">
+            <div className="flex flex-col gap-3 pb-8">
+              <span className="text-secondary/50 text-xs uppercase">
+                Описание вакансии
+              </span>
+              <p className="text-secondary text-xs">{vacancy.description}</p>
             </div>
-            <div className="flex flex-col gap-2">
-              {vacancy.responsibilities.map((responsibility) => (
-                <div className="flex flex-row items-center gap-1">
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <circle
-                      cx="10"
-                      cy="10"
-                      r="2"
-                      fill="#9AA6B5"
-                      fill-opacity="0.5"
-                    />
-                  </svg>
 
-                  <p className="text-foreground text-sm whitespace-pre-line">
-                    {responsibility}
-                  </p>
-                </div>
-              ))}
+            <div className="mb-8 flex flex-col gap-5">
+              <div className="text-secondary/50 flex flex-row items-center gap-4 text-xs">
+                <Image
+                  src={ResponsibilitiesIcon}
+                  className="h-7 w-7"
+                  alt="Responsibilities icon"
+                />
+                <span className="text-foreground text-xl">
+                  Твои обязанности
+                </span>
+              </div>
+              <div className="flex flex-col gap-2">
+                {vacancy.responsibilities.map((responsibility, index) => (
+                  <div key={index} className="flex flex-row items-center gap-1">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle
+                        cx="10"
+                        cy="10"
+                        r="2"
+                        fill="#9AA6B5"
+                        fillOpacity="0.5"
+                      />
+                    </svg>
+
+                    <p className="text-foreground text-sm whitespace-pre-line">
+                      {responsibility}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
 
-          <div className="flex flex-col gap-5">
-            <div className="text-secondary/50 flex flex-row items-center gap-4 text-xs">
-              <Image
-                src={RequirementsIcon}
-                className="h-7 w-7"
-                alt="Requirements icon"
-              />
-              <span className="text-foreground text-xl">Требования</span>
-            </div>
-            <div className="flex flex-col gap-2">
-              {vacancy.requirements.map((requirement) => (
-                <div className="flex flex-row items-center gap-1">
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <circle
-                      cx="10"
-                      cy="10"
-                      r="2"
-                      fill="#9AA6B5"
-                      fill-opacity="0.5"
-                    />
-                  </svg>
+            <div className="flex flex-col gap-5">
+              <div className="text-secondary/50 flex flex-row items-center gap-4 text-xs">
+                <Image
+                  src={RequirementsIcon}
+                  className="h-7 w-7"
+                  alt="Requirements icon"
+                />
+                <span className="text-foreground text-xl">Требования</span>
+              </div>
+              <div className="flex flex-col gap-2">
+                {vacancy.requirements.map((requirement, index) => (
+                  <div key={index} className="flex flex-row items-center gap-1">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle
+                        cx="10"
+                        cy="10"
+                        r="2"
+                        fill="#9AA6B5"
+                        fillOpacity="0.5"
+                      />
+                    </svg>
 
-                  <p className="text-foreground text-sm whitespace-pre-line">
-                    {requirement}
-                  </p>
-                </div>
-              ))}
+                    <p className="text-foreground text-sm whitespace-pre-line">
+                      {requirement}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };
