@@ -9,15 +9,26 @@ import SecondStepIcon from './assets/second-step.svg';
 import InfoIcon from './assets/info-icon.svg';
 
 import CopyButton from '../shared/CopyButton/CopyButton';
+import PromoCodeForm from './PromoCodeForm';
 interface ApplyFormProps {
   onClose: () => void;
 }
 
-const RedirectArrowButton = ({ hrefToOpen }: { hrefToOpen: string }) => (
+const RedirectArrowButton = ({
+  hrefToOpen,
+  onClick,
+}: {
+  hrefToOpen?: string;
+  onClick?: () => void;
+}) => (
   <div
     className="h-5 w-5 cursor-pointer hover:opacity-50"
     onClick={() => {
-      window.open(hrefToOpen, '_blank');
+      if (onClick) {
+        onClick();
+      } else {
+        window.open(hrefToOpen, '_blank');
+      }
     }}
   >
     <svg
@@ -39,104 +50,114 @@ const RedirectArrowButton = ({ hrefToOpen }: { hrefToOpen: string }) => (
 );
 
 export default function BloggerForm({ onClose }: ApplyFormProps) {
-  const [name, setName] = useState('');
-  const [telegram, setTelegram] = useState('');
-  const [motivation, setMotivation] = useState('');
-  const [success, setSuccess] = useState(false);
-  const [activeStep, setActiveStep] = useState(1);
-
-  const handleSubmit = () => {
-    setSuccess(true);
-  };
+  const [isPromoCodeFormOpen, setIsPromoCodeFormOpen] = useState(false);
 
   return (
-    <div className="bg-dark-bg border-accent/40 flex h-full w-105 flex-col border-l">
-      <div className="flex flex-1 flex-col gap-8 py-8">
-        <div className="flex flex-1 flex-col gap-8">
-          <div className="flex flex-col items-center gap-8 px-10">
-            <Image
-              src={'/images/logo/form-logo.svg'}
-              alt="Logo"
-              width={152}
-              height={44}
-              className="w-38"
-            />
-            <div className="flex flex-col items-center gap-4">
-              <h2 className="text-foreground text-2xll">Блогерам</h2>
-              <p className="text-secondary text-center text-sm">
-                Если вы являетесь блогером или владельцем Telegram-канала с
-                активной аудиторией, пожалуйста, свяжитесь с нами.
-              </p>
-            </div>
-          </div>
-          <div className="text-secondary/50 bg-[#14171C] px-8 py-3.5 text-xs uppercase">
-            Необходимые действия
-          </div>
-
-          <div className="flex flex-1 flex-col gap-8 px-10">
-            {[
-              {
-                name: 'Связь с менеджером (TG)',
-                icon: TelegramIcon,
-                value: 'Рассмотрим персональные условия',
-                stepText: 'Первый шаг',
-                button: (
-                  <RedirectArrowButton hrefToOpen={'https://t.me/changeme'} />
-                ),
-              },
-              {
-                name: 'Активация аккаунта',
-                icon: SecondStepIcon,
-                value: 'Промокод выдает менеджер',
-                stepText: 'Второй шаг',
-                button: (
-                  <RedirectArrowButton hrefToOpen={'https://example.com'} />
-                ),
-              },
-            ].map((item) => (
-              <div className="flex flex-col">
-                <div>
-                  <span className="rounded-full border-[0.0289vw] border-[#33CF8E]/50 px-3 py-1.25 text-xs text-[#33CF8E]">
-                    {item.stepText}
-                  </span>
-                </div>
-                <div className="border-accent flex flex-row items-center gap-4 border-b py-4 pt-6 pb-8">
-                  <Image
-                    src={item.icon}
-                    alt={'Telegram'}
-                    className="h-10 w-10"
-                  />
-                  <div className="flex flex-col gap-4">
-                    <div className="flex h-12 items-center">
-                      <div className="flex flex-col gap-2">
-                        <span className="text-foreground text-base">
-                          {item.name}
-                        </span>
-                        <div className="flex flex-row items-center gap-3">
-                          <span className="text-secondary text-xs">
-                            {item.value}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="ml-auto">{item.button}</div>
+    <>
+      {isPromoCodeFormOpen ? (
+        <PromoCodeForm
+          onClose={() => {
+            setIsPromoCodeFormOpen(false);
+          }}
+          onFullClose={() => {
+            setIsPromoCodeFormOpen(false);
+            onClose();
+          }}
+        />
+      ) : (
+        <div className="bg-dark-bg border-accent/40 flex h-full w-105 flex-col border-l">
+          <div className="flex flex-1 flex-col gap-8 py-8">
+            <div className="flex flex-1 flex-col gap-8">
+              <div className="flex flex-col items-center gap-8 px-10">
+                <Image
+                  src={'/images/logo/form-logo.svg'}
+                  alt="Logo"
+                  width={152}
+                  height={44}
+                  className="w-38"
+                />
+                <div className="flex flex-col items-center gap-4">
+                  <h2 className="text-foreground text-2xll">Блогерам</h2>
+                  <p className="text-secondary text-center text-sm">
+                    Если вы являетесь блогером или владельцем Telegram-канала с
+                    активной аудиторией, пожалуйста, свяжитесь с нами.
+                  </p>
                 </div>
               </div>
-            ))}
+              <div className="text-secondary/50 bg-[#14171C] px-8 py-3.5 text-xs uppercase">
+                Необходимые действия
+              </div>
+
+              <div className="flex flex-1 flex-col gap-8 px-10">
+                {[
+                  {
+                    name: 'Связь с менеджером (TG)',
+                    icon: TelegramIcon,
+                    value: 'Рассмотрим персональные условия',
+                    stepText: 'Первый шаг',
+                    button: (
+                      <RedirectArrowButton
+                        hrefToOpen={'https://t.me/changeme'}
+                      />
+                    ),
+                  },
+                  {
+                    name: 'Активация аккаунта',
+                    icon: SecondStepIcon,
+                    value: 'Промокод выдает менеджер',
+                    stepText: 'Второй шаг',
+                    button: (
+                      <RedirectArrowButton
+                        onClick={() => setIsPromoCodeFormOpen(true)}
+                      />
+                    ),
+                  },
+                ].map((item) => (
+                  <div className="flex flex-col">
+                    <div>
+                      <span className="rounded-full border-[0.0289vw] border-[#33CF8E]/50 px-3 py-1.25 text-xs text-[#33CF8E]">
+                        {item.stepText}
+                      </span>
+                    </div>
+                    <div className="border-accent flex flex-row items-center gap-4 border-b py-4 pt-6 pb-8">
+                      <Image
+                        src={item.icon}
+                        alt={'Telegram'}
+                        className="h-10 w-10"
+                      />
+                      <div className="flex flex-col gap-4">
+                        <div className="flex h-12 items-center">
+                          <div className="flex flex-col gap-2">
+                            <span className="text-foreground text-base">
+                              {item.name}
+                            </span>
+                            <div className="flex flex-row items-center gap-3">
+                              <span className="text-secondary text-xs">
+                                {item.value}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="ml-auto">{item.button}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="text-secondary flex w-full flex-row justify-center gap-1 text-xs">
+              <span className="flex flex-row gap-1">
+                <Image src={InfoIcon} alt="Info" className="h-4 w-4" />
+                Неверные контакты?
+              </span>
+              <span className="text-foreground cursor-pointer underline">
+                Написать нам
+              </span>
+            </div>
           </div>
         </div>
-
-        <div className="text-secondary flex w-full flex-row justify-center gap-1 text-xs">
-          <span className="flex flex-row gap-1">
-            <Image src={InfoIcon} alt="Info" className="h-4 w-4" />
-            Неверные контакты?
-          </span>
-          <span className="text-foreground cursor-pointer underline">
-            Написать нам
-          </span>
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
