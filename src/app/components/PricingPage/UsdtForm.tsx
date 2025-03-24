@@ -265,12 +265,12 @@ export default function UsdtForm({ onClose }: StudentFormProps) {
           </div>
         </div>
 
-        <div className="flex flex-col gap-4 px-10">
-          <div className="text-2xll flex w-full flex-col items-center">
+        <div className="flex flex-col gap-3 px-10">
+          <div className="text-2xll flex w-full flex-col items-center leading-8">
             1700 USDT
           </div>
           <div className="bg-accent h-px w-full"></div>
-          <div className="flex w-full flex-row items-center justify-center gap-1 pb-8 text-sm">
+          <div className="flex w-full flex-row items-center justify-center gap-1 pb-5 text-sm">
             <span className="text-secondary">Валюта –</span>
             <svg
               width="16"
