@@ -731,11 +731,11 @@ const Notifications = ({ onClose }: NotificationsProps) => {
                       </button>
                       <div className="">
                         <div className="relative flex space-x-4">
-                          <div className="flex h-9 w-9 flex-shrink-0">
+                          <div className="flex h-9 w-9 shrink-0">
                             <Image
                               src={notification.avatar}
                               alt=""
-                              className="object-cover"
+                              className="object-cover h-9 w-9"
                             />
                           </div>
                           <div className="flex flex-col gap-2">
@@ -852,11 +852,11 @@ const Notifications = ({ onClose }: NotificationsProps) => {
                   >
                     <div className="opacity-70">
                       <div className="relative flex space-x-4">
-                        <div className="flex h-9 w-9 flex-shrink-0">
+                        <div className="flex h-9 w-9 shrink-0">
                           <Image
                             src={notification.avatar}
                             alt=""
-                            className="object-cover"
+                            className="object-cover h-9 w-9"
                           />
                         </div>
                         <div className="flex flex-col gap-2">
