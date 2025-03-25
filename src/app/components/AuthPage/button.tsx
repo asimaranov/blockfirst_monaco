@@ -41,7 +41,7 @@ export default function AuthButton({
       disabled={state === 'disabled'}
       className={cn(
         'bg-primary text-foreground flex w-full items-center justify-center rounded-full py-3.5 text-sm',
-        'transition-colors duration-300',
+        'transition-colors duration-300 cursor-pointer',
         state != 'disabled' && 'hover:bg-[#1242B2]',
         state === 'loading' && 'bg-[#1242B2]',
         state === 'disabled' && 'bg-[#195AF4] opacity-30'

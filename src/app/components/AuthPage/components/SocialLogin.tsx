@@ -6,7 +6,7 @@ export default function SocialLogin() {
   return (
     <div className="mt-10 flex w-full items-center justify-center gap-3">
       <button
-        className="flex items-center justify-center"
+        className="flex items-center justify-center cursor-pointer"
         onClick={async () => {
           try {
             await authClient.signIn.social({
@@ -22,7 +22,7 @@ export default function SocialLogin() {
         <GoogleLoginIcon />
       </button>
       <button
-        className="flex items-center justify-center"
+        className="flex items-center justify-center cursor-pointer"
         onClick={async () => {
           await authClient.signIn.social({
             provider: 'vk',
