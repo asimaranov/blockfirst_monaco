@@ -5,7 +5,7 @@ import { Topbar } from './Topbar';
 import { Session } from '~/server/auth';
 import Footer from '~/app/components/Footer';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 // import CallIcon from './assets/calls.png';
 // import TextIcon from './assets/text.png';
 // import GridSvg from './assets/grid.svg';
@@ -15,9 +15,12 @@ import TelegramSvg from '../input-legends/telegram';
 import StatsIcon from './assets/stats-icon.svg';
 import TaskSquareSvg from './assets/shop-icon.svg';
 import UserSvg from './assets/user-icon.svg';
+
 import PercentSvg from './assets/percent-icon.svg';
 import BankIcon from './assets/bank-icons.png';
-import TelegramFlatIcon from './assets/telegram-flat-icon.svg';
+import InProgressFlag from './assets/in-progress-flag.svg';
+import CompletedFlag from './assets/completed-flag.svg';
+import LockedFlag from './assets/locked-flag.svg';
 
 import { InfoPopover } from '~/app/components/shared/InfoPopover';
 import { Modal } from '../shared/Modal';
@@ -207,34 +210,31 @@ const StageCard = ({
       </div>
 
       <div className="relative">
-        <Progress
-          value={progressValue}
-          className="h-4 rounded-full"
-          inactive={!completed && progressValue === 0}
-        />
-        {progressValue > 0 && (
-          <div className="bg-background absolute top-1/2 left-0.5 z-10 h-3 w-3 -translate-y-1/2 rounded-full"></div>
-        )}
-        <div className="absolute top-1/2 right-0 z-10 flex -translate-y-1/2 items-center">
-          <div className="bg-dark-bg flex h-7 w-7 items-center justify-center rounded-full">
-            {completed ? (
-              <div className="bg-primary rounded-full p-1.5">
-                <Check size={10} className="text-dark-bg" />
-              </div>
-            ) : progressValue === 0 ? (
-              <div className="border-secondary rounded-full border p-1.5">
-                <Lock size={10} className="text-secondary" />
-              </div>
-            ) : (
-              <div className="rounded-full border border-[#FF974C] p-1.5">
-                {/* Empty circle for in-progress */}
-              </div>
-            )}
-          </div>
+        <div className='flex flex-row relative'>
+          <Progress
+            value={progressValue}
+            className="h-4 rounded-full"
+            inactive={!completed && progressValue === 0}
+          />
+          
         </div>
-        {progressValue > 0 && (
-          <div className="absolute top-[-18px] right-[14px] h-[72px] w-px bg-[#FF974C]"></div>
-        )}
+        <div className="absolute right-0 bottom-0 z-10 flex translate-x-1/2 items-center">
+          {completed ? (
+            <Image
+              src={CompletedFlag}
+              alt="Completed"
+              className="h-21.5 w-7"
+            ></Image>
+          ) : progressValue === 0 ? (
+            <Image
+              src={LockedFlag}
+              alt="Locked"
+              className="h-21.5 w-7"
+            ></Image>
+          ) : (
+            <Image src={InProgressFlag} alt="InProgress" className="h-21.5 w-7"></Image>
+          )}
+        </div>
       </div>
     </div>
   </div>
@@ -323,7 +323,148 @@ const CourseSection = ({
   </div>
 );
 
+// FAQ Item Component with Animation
+const FAQItem = ({
+  question,
+  answer,
+  isOpen,
+  onClick,
+}: {
+  question: string;
+  answer: string;
+  isOpen: boolean;
+  onClick: () => void;
+}) => {
+  return (
+    <div className="border-accent border-b">
+      <div className="px-8 py-6">
+        <div className="flex items-center justify-between">
+          <h3 className="text-foreground text-base">{question}</h3>
+          <button
+            className="flex h-5 w-5 items-center justify-center"
+            onClick={onClick}
+            aria-expanded={isOpen}
+          >
+            {isOpen ? (
+              <svg
+                width="14"
+                height="2"
+                viewBox="0 0 14 2"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1 1H13"
+                  stroke="#9AA6B5"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            ) : (
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1 7H13"
+                  stroke="#F2F2F2"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M7 1V13"
+                  stroke="#F2F2F2"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            )}
+          </button>
+        </div>
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="overflow-hidden"
+            >
+              <div className="mt-4">
+                <p className="text-secondary text-sm">{answer}</p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+};
+
 export default function CVPage() {
+  // FAQ state
+  const [openFAQIndex, setOpenFAQIndex] = useState(0);
+
+  // FAQ data
+  const faqItems = [
+    {
+      question: 'Я прошел один курс, могу ли я запросить подготовку резюме?',
+      answer:
+        'Да, вы можете запросить подготовку резюме после прохождения одного курса. Обычно резюме составляется на основе приобретенных вами навыков и знаний, которые вы получили в процессе обучения. Это поможет вам выделиться на рынке труда и продемонстрировать работодателям, что вы уже начали развивать свои профессиональные компетенции.',
+    },
+    {
+      question: 'В каком формате происходит подготовка резюме?',
+      answer:
+        'Подготовка резюме происходит в формате онлайн-консультации с нашими экспертами. Они помогут структурировать ваш опыт, выделить ключевые навыки и создать профессиональное резюме в формате PDF и DOCX, которое будет привлекательно для работодателей в сфере блокчейн-разработки.',
+    },
+    {
+      question: 'Когда я закончу секцию вы заново подготовите резюме?',
+      answer:
+        'Да, после завершения каждой секции обучения мы обновляем ваше резюме, добавляя новые полученные навыки и компетенции. Это позволяет вашему резюме развиваться вместе с вашим профессиональным ростом и отражать актуальный уровень знаний.',
+    },
+    {
+      question: 'На сколько стэпы реально совпадают с знаниями на позиции?',
+      answer:
+        'Наши образовательные этапы тщательно разработаны в соответствии с актуальными требованиями рынка труда. Мы регулярно адаптируем программу на основе обратной связи от работодателей и изменений в индустрии, чтобы обеспечить высокое соответствие между получаемыми знаниями и реальными требованиями к специалистам.',
+    },
+    {
+      question: 'Такие высокие ЗП реальны?',
+      answer:
+        'Да, указанные зарплаты соответствуют реальному рынку блокчейн-разработки. Из-за высокого спроса на специалистов и относительно небольшого количества квалифицированных кадров, работодатели готовы предлагать конкурентные зарплаты. Однако конкретные суммы могут варьироваться в зависимости от компании, локации и вашего опыта.',
+    },
+    {
+      question: 'Кто помогает с подготовкой резюме?',
+      answer:
+        'С подготовкой резюме помогают опытные HR-специалисты и карьерные консультанты, специализирующиеся на технических позициях в блокчейн-индустрии. Они хорошо знают требования работодателей и могут эффективно представить ваши навыки и опыт.',
+    },
+    {
+      question: 'Вы поможете с трудоустройством?',
+      answer:
+        'Да, мы оказываем поддержку в трудоустройстве. Помимо подготовки резюме, мы предоставляем рекомендации по поиску работы, подготовке к собеседованиям, а также имеем партнерские отношения с компаниями, которые нанимают блокчейн-разработчиков. Однако окончательное решение о найме всегда остается за работодателем.',
+    },
+    {
+      question: 'Как быстро можно пройти все 3 стэпа?',
+      answer:
+        'Скорость прохождения всех трех этапов зависит от вашего начального уровня, количества времени, которое вы можете уделять обучению, и вашей способности усваивать материал. В среднем, полное прохождение программы занимает от 6 до 12 месяцев при регулярных занятиях.',
+    },
+    {
+      question: 'Куратор Андрей Симаранов?',
+      answer:
+        'Да, Андрей Симаранов является одним из кураторов нашей программы. Он имеет обширный опыт в блокчейн-разработке и преподавании, и помогает студентам освоить сложные концепции и практические навыки, необходимые для успешной карьеры в этой области.',
+    },
+  ];
+
+  // Toggle FAQ item
+  const toggleFAQ = (index: number) => {
+    setOpenFAQIndex(index === openFAQIndex ? -1 : index);
+  };
+
   return (
     <main className="border-accent bg-background border-r border-l">
       <div className="flex min-h-screen w-full flex-col">
@@ -424,6 +565,134 @@ export default function CVPage() {
               buttonText="Недоступно"
               isDisabled={true}
             />
+          </div>
+        </div>
+        <div className="border-accent border-accent h-8 shrink-0 border-y"></div>
+
+        {/* FAQ Section */}
+        <div className="flex flex-row">
+          {/* Left Column - FAQ Intro and Contact Info */}
+          <div className="border-accent flex-1 border-r">
+            <div className="flex flex-col py-8">
+              <div className="px-8">
+                <div className="mb-5 flex items-center justify-between">
+                  <h2 className="text-foreground text-2xl">Раздел FAQs</h2>
+                  <div className="border-gradient-to-r relative h-7 rounded-xl border p-[1px]">
+                    -
+                  </div>
+                </div>
+                <p className="text-secondary text-sm">
+                  Мы собрали для вас топ самых популярных и часто задаваемых
+                  вопросов, которые касаются раздела "Подготовка резюме". Не
+                  нашли ответа? Напишите нам
+                </p>
+              </div>
+
+              <div className="bg-dark-bg mt-8 py-6">
+                <div className="flex gap-20 px-8">
+                  <div className="flex gap-4">
+                    <div className="flex-shrink-0">
+                      <div className="bg-background flex h-[38px] w-[38px] items-center justify-center rounded-full">
+                        <div className="text-foreground">
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 16 16"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M0.833333 1.83333C0.833333 1.18695 1.35362 0.666667 2 0.666667H14C14.6464 0.666667 15.1667 1.18695 15.1667 1.83333V14.1667C15.1667 14.813 14.6464 15.3333 14 15.3333H2C1.35362 15.3333 0.833333 14.813 0.833333 14.1667V1.83333Z"
+                              stroke="#F2F2F2"
+                              strokeWidth="1.5"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M1.33333 5.33333H14.6667"
+                              stroke="#F2F2F2"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M5.33334 15.3333V5.33333"
+                              stroke="#F2F2F2"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <span className="text-secondary text-xs">
+                        Телеграм бот
+                      </span>
+                      <span className="text-foreground text-base">
+                        t.me/blockfirst_edu/app
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-4">
+                    <div className="flex-shrink-0">
+                      <div className="bg-background flex h-[38px] w-[38px] items-center justify-center rounded-full">
+                        <div className="text-foreground">
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 16 16"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M0.833333 1.83333C0.833333 1.18695 1.35362 0.666667 2 0.666667H14C14.6464 0.666667 15.1667 1.18695 15.1667 1.83333V14.1667C15.1667 14.813 14.6464 15.3333 14 15.3333H2C1.35362 15.3333 0.833333 14.813 0.833333 14.1667V1.83333Z"
+                              stroke="#F2F2F2"
+                              strokeWidth="1.5"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M1.33333 5.33333H14.6667"
+                              stroke="#F2F2F2"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                            <path
+                              d="M5.33334 15.3333V5.33333"
+                              stroke="#F2F2F2"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <span className="text-secondary text-xs">E-mail</span>
+                      <span className="text-foreground text-base">
+                        hello@blockfirst.io
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column - FAQ Items */}
+          <div className="flex-1">
+            {faqItems.map((item, index) => (
+              <FAQItem
+                key={index}
+                question={item.question}
+                answer={item.answer}
+                isOpen={index === openFAQIndex}
+                onClick={() => toggleFAQ(index)}
+              />
+            ))}
           </div>
         </div>
       </div>
