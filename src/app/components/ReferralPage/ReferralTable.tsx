@@ -12,7 +12,7 @@ import Image from 'next/image';
 type ReferralData = {
   id: number;
   name: string;
-  avatar: string;
+  avatar?: string;
   registrationDate: string;
   plan: string;
   earnings: string;
@@ -23,7 +23,7 @@ const referrals: ReferralData[] = [
   {
     id: 1,
     name: 'Андрей',
-    avatar: 'https://i.pravatar.cc/300',
+    // avatar: 'https://i.pravatar.cc/300',
     registrationDate: '23.05.2025',
     plan: 'Starter',
     earnings: '12 570 ₽',
@@ -32,7 +32,7 @@ const referrals: ReferralData[] = [
   {
     id: 2,
     name: 'Виталий',
-    avatar: 'https://i.pravatar.cc/301',
+    // avatar: 'https://i.pravatar.cc/301',
     registrationDate: '12.04.2025',
     plan: 'Pro',
     earnings: '5 720 ₽',
@@ -50,7 +50,7 @@ const referrals: ReferralData[] = [
   {
     id: 4,
     name: 'Никитос',
-    avatar: 'https://i.pravatar.cc/303',
+    // avatar: 'https://i.pravatar.cc/303',
     registrationDate: '18.12.2025',
     plan: 'Starter',
     earnings: '4 120 ₽',
@@ -83,7 +83,7 @@ export const ReferralTable = () => {
     <div className="border-accent flex flex-col gap-6 border-b pb-8">
       {/* Table Header */}
       <div className="flex h-9 items-center bg-[#14171C] px-8">
-        <div className="grid w-full grid-cols-[28px_1fr_1fr_1fr_1fr_1fr] gap-8">
+        <div className="grid w-full grid-cols-[calc(7*var(--spacing))_1fr_1fr_1fr_1fr_1fr] gap-8">
           <span className="text-secondary/50 text-xs uppercase">#</span>
           <span className="text-secondary/50 text-xs uppercase">имя</span>
           <span className="text-secondary/50 text-xs uppercase">
@@ -114,17 +114,25 @@ export const ReferralTable = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="grid w-full grid-cols-[28px_1fr_1fr_1fr_1fr_1fr] gap-8"
+            className="grid w-full grid-cols-[calc(7*var(--spacing))_1fr_1fr_1fr_1fr_1fr] gap-8"
           >
             <span className="text-secondary text-sm">{referral.id}.</span>
             <div className="flex items-center gap-3">
-              <Image
-                src={referral.avatar}
-                alt={referral.name}
-                width={20}
-                height={20}
-                className="rounded-full"
-              />
+              {referral.avatar ? (
+                <Image
+                  src={referral.avatar}
+                  alt={referral.name}
+                  width={20}
+                  height={20}
+                  className="rounded-full w-5 h-5"
+                />
+              ) : (
+                <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[#282d33]">
+                  <span className="text-foreground text-xs">
+                    {referral.name[0]}
+                  </span>
+                </div>
+              )}
               <span className="text-foreground text-sm">{referral.name}</span>
             </div>
             <span className="text-secondary text-sm">

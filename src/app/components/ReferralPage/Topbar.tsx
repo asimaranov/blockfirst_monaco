@@ -48,7 +48,7 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
           <div className="relative">
             <div className="flex items-center space-x-2">
               <span className="text-foreground text-sm">{referralLink}</span>
-              <CopyButton appearanceType="near" />
+              <CopyButton appearanceType="near" className='flex items-center' />
             </div>
 
             <AnimatePresence>

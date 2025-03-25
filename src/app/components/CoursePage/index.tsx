@@ -151,7 +151,7 @@ export default function CoursePage({
                       </div>
                     </div>
                     <Image
-                      className="absolute inset-0 right-0 bottom-0 z-[0]"
+                      className="absolute inset-0 right-0 bottom-0 z-[0] w-78.5 h-20.25"
                       src={GridSvg}
                       alt=""
                     />

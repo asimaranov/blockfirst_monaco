@@ -48,7 +48,7 @@ export default function PromoCodeForm({
 
   if (success) {
     return (
-      <div className="bg-dark-bg border-accent/40 flex h-full w-105 flex-col border">
+      <div className="bg-dark-bg border-accent/40 flex h-full w-105 flex-col border-l">
         <div className="flex flex-1 flex-col gap-8 px-10 py-8">
           <div className="flex flex-1 flex-col gap-8">
             <div className="flex flex-col items-center gap-8">

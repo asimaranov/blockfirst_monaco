@@ -24,7 +24,7 @@ const ComingSoon = () => {
       viewBox="0 0 103 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="w-25"
+      className="w-25.75 h-6 "
     >
       <rect
         x="0.25"
@@ -499,6 +499,7 @@ export default function MentorPage({ session }: { session: Session }) {
                         alt={mentors[index]!.name ?? ''}
                         width={24}
                         height={24}
+                        className='w-6 h-6'
                       />
                     </div>
                     <span className="text-foreground text-base">

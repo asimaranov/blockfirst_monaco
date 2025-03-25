@@ -274,7 +274,7 @@ export default function ReferralPage({ session }: { session: Session }) {
                     viewBox="0 0 119 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-6"
+                    className="h-6 w-29.75"
                   >
                     <rect
                       width="119"
