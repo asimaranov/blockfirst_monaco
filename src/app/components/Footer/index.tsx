@@ -36,7 +36,7 @@ export default function Footer() {
                   viewBox="0 0 21 20"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="text-secondary cursor-pointer h-5 w-5"
+                  className="text-secondary h-5 w-5 cursor-pointer"
                 >
                   <path
                     fillRule="evenodd"
@@ -224,7 +224,7 @@ export default function Footer() {
                   t.me/blockfirst_edu/app
                 </a>
               </div>
-              <div className="cursor-pointer w-5 h-5 hover:opacity-50">
+              <div className="h-5 w-5 cursor-pointer hover:opacity-50">
                 <svg
                   width="20"
                   height="20"

@@ -21,6 +21,7 @@ import BankIcon from './assets/bank-icons.png';
 import { InfoPopover } from '~/app/components/shared/InfoPopover';
 import { Modal } from '../shared/Modal';
 import { ArrowUpRight, ChevronDown, Wallet } from 'lucide-react';
+import { ReferralTable } from './ReferralTable';
 
 // Add new types
 type TimePeriod = any;
@@ -365,7 +366,9 @@ export default function ReferralPage({ session }: { session: Session }) {
           </div>
         </div>
       </div>
-      <div> </div>
+      <div className="border-accent h-16 w-full shrink-0 "></div>
+
+      <ReferralTable></ReferralTable>
 
       <Footer />
     </main>
