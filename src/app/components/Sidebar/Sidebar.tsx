@@ -76,7 +76,7 @@ const sidebarSections: SidebarSection[] = [
       },
       {
         title: 'Подготовка резюме',
-        href: '#',
+        href: '/cv',
         icon: CvIcon,
         locked: true,
       },

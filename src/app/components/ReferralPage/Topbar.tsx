@@ -19,7 +19,7 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
   return (
     <UnifiedTopbar
       showBorder={false}
-      className="relative bg-[#01050d]"
+      className="relative bg-[#01050d] bg-[url('/images/misc/header-bg.png')] bg-cover bg-center"
       leftContent={
         <div className="flex flex-row items-center space-x-5">
           <div className="relative h-15.25 w-15.25 overflow-hidden">
