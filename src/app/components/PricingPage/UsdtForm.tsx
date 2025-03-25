@@ -273,7 +273,7 @@ export default function UsdtForm({ onClose }: StudentFormProps) {
               viewBox="0 0 20 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className={cn('ml-2', 'animate-spin')}
+              className={cn('ml-2', 'animate-spin', 'w-5 h-5')}
             >
               <path
                 opacity="0.4"

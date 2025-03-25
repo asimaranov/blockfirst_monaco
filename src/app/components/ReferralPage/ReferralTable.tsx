@@ -8,6 +8,8 @@ import {
   subscriptionTypeIcons,
 } from '~/app/lib/constants/subsctiptions';
 import Image from 'next/image';
+import { useState } from 'react';
+import { SortIcon } from '../EmploymentPage/assets/sort-icon';
 
 type ReferralData = {
   id: number;
@@ -18,6 +20,13 @@ type ReferralData = {
   earnings: string;
   learningTime: string;
 };
+
+enum SortOption {
+  EARNINGS_UP,
+  EARNINGS_DOWN,
+  REGISTRATION_UP,
+  REGISTRATION_DOWN,
+}
 
 const referrals: ReferralData[] = [
   {
@@ -79,6 +88,43 @@ const LearningTime = ({ time }: { time: string }) => (
 );
 
 export const ReferralTable = () => {
+  const [sortOption, setSortOption] = useState<SortOption | undefined>(
+    undefined
+  );
+
+  const sortReferrals = (referralsToSort: ReferralData[]) => {
+    if (referralsToSort.length === 0) return [];
+
+    const getEarningsValue = (earnings: string) => {
+      return parseFloat(earnings.replace(/[^0-9.-]+/g, '')) || 0;
+    };
+
+    const getRegistrationDateValue = (date: string) => {
+      return new Date(date.split('.').reverse().join('-')).getTime();
+    };
+
+    return [...referralsToSort].sort((a, b) => {
+      switch (sortOption) {
+        case SortOption.EARNINGS_UP:
+          return getEarningsValue(a.earnings) - getEarningsValue(b.earnings);
+        case SortOption.EARNINGS_DOWN:
+          return getEarningsValue(b.earnings) - getEarningsValue(a.earnings);
+        case SortOption.REGISTRATION_UP:
+          return (
+            getRegistrationDateValue(a.registrationDate) -
+            getRegistrationDateValue(b.registrationDate)
+          );
+        case SortOption.REGISTRATION_DOWN:
+          return (
+            getRegistrationDateValue(b.registrationDate) -
+            getRegistrationDateValue(a.registrationDate)
+          );
+        default:
+          return 0;
+      }
+    });
+  };
+
   return (
     <div className="border-accent flex flex-col gap-6 border-b pb-8">
       {/* Table Header */}
@@ -86,14 +132,55 @@ export const ReferralTable = () => {
         <div className="grid w-full grid-cols-[calc(7*var(--spacing))_1fr_1fr_1fr_1fr_1fr] gap-8">
           <span className="text-secondary/50 text-xs uppercase">#</span>
           <span className="text-secondary/50 text-xs uppercase">имя</span>
-          <span className="text-secondary/50 text-xs uppercase">
-            регистрация
-          </span>
+          <button
+            onClick={() => {
+              setSortOption(
+                sortOption === SortOption.REGISTRATION_UP
+                  ? SortOption.REGISTRATION_DOWN
+                  : SortOption.REGISTRATION_UP
+              );
+            }}
+            className="group flex cursor-pointer flex-row items-center gap-1"
+          >
+            <span className="text-secondary/50 text-xs uppercase group-hover:opacity-100">
+              регистрация
+            </span>
+            <SortIcon
+              className="mb-0.5 size-3"
+              arrow={
+                sortOption === SortOption.REGISTRATION_UP
+                  ? 'up'
+                  : sortOption === SortOption.REGISTRATION_DOWN
+                    ? 'down'
+                    : 'none'
+              }
+            />
+          </button>
           <span className="text-secondary/50 text-xs uppercase">тариф</span>
-          <div className="flex items-center gap-1">
-            <span className="text-secondary/50 text-xs uppercase">Доход</span>
-            <ArrowUpRight className="text-secondary h-3.5 w-3.5" />
-          </div>
+          <button
+            onClick={() => {
+              setSortOption(
+                sortOption === SortOption.EARNINGS_UP
+                  ? SortOption.EARNINGS_DOWN
+                  : SortOption.EARNINGS_UP
+              );
+            }}
+            className="group flex cursor-pointer flex-row items-center gap-1"
+          >
+            <span className="text-secondary/50 text-xs uppercase group-hover:opacity-100">
+              Доход
+            </span>
+            <SortIcon
+              className="mb-0.5 size-3"
+              arrow={
+                sortOption === SortOption.EARNINGS_UP
+                  ? 'up'
+                  : sortOption === SortOption.EARNINGS_DOWN
+                    ? 'down'
+                    : 'none'
+              }
+            />
+          </button>
           <div className="flex items-center justify-between">
             <span className="text-secondary/50 text-xs uppercase">
               Обучается
@@ -108,7 +195,7 @@ export const ReferralTable = () => {
 
       {/* Table Body */}
       <div className="flex flex-col gap-8 px-8">
-        {referrals.map((referral) => (
+        {sortReferrals(referrals).map((referral) => (
           <motion.div
             key={referral.id}
             initial={{ opacity: 0, y: 20 }}
@@ -124,7 +211,7 @@ export const ReferralTable = () => {
                   alt={referral.name}
                   width={20}
                   height={20}
-                  className="rounded-full w-5 h-5"
+                  className="h-5 w-5 rounded-full"
                 />
               ) : (
                 <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[#282d33]">
