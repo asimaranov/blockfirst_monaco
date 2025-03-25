@@ -10,6 +10,7 @@ import {
 import Image from 'next/image';
 import { useState } from 'react';
 import { SortIcon } from '../EmploymentPage/assets/sort-icon';
+import AvatarsIcon from './assets/avatars-icon.png';
 
 type ReferralData = {
   id: number;
@@ -56,15 +57,15 @@ const referrals: ReferralData[] = [
     earnings: '0.00 ₽',
     learningTime: '1д 3ч',
   },
-  {
-    id: 4,
-    name: 'Никитос',
-    // avatar: 'https://i.pravatar.cc/303',
-    registrationDate: '18.12.2025',
-    plan: 'Starter',
-    earnings: '4 120 ₽',
-    learningTime: '5м',
-  },
+  // {
+  //   id: 4,
+  //   name: 'Никитос',
+  //   // avatar: 'https://i.pravatar.cc/303',
+  //   registrationDate: '18.12.2025',
+  //   plan: 'Starter',
+  //   earnings: '4 120 ₽',
+  //   learningTime: '5м',
+  // },
 ];
 
 const PlanBadge = ({ plan }: { plan: string }) => (
@@ -126,111 +127,130 @@ export const ReferralTable = () => {
   };
 
   return (
-    <div className="border-accent flex flex-col gap-6 border-b pb-8">
-      {/* Table Header */}
-      <div className="flex h-9 items-center bg-[#14171C] px-8">
-        <div className="grid w-full grid-cols-[calc(7*var(--spacing))_1fr_1fr_1fr_1fr_1fr] gap-8">
-          <span className="text-secondary/50 text-xs uppercase">#</span>
-          <span className="text-secondary/50 text-xs uppercase">имя</span>
-          <button
-            onClick={() => {
-              setSortOption(
-                sortOption === SortOption.REGISTRATION_UP
-                  ? SortOption.REGISTRATION_DOWN
-                  : SortOption.REGISTRATION_UP
-              );
-            }}
-            className="group flex cursor-pointer flex-row items-center gap-1"
-          >
-            <span className="text-secondary/50 text-xs uppercase group-hover:opacity-100">
-              регистрация
-            </span>
-            <SortIcon
-              className="mb-0.5 size-3"
-              arrow={
-                sortOption === SortOption.REGISTRATION_UP
-                  ? 'up'
-                  : sortOption === SortOption.REGISTRATION_DOWN
-                    ? 'down'
-                    : 'none'
-              }
-            />
-          </button>
-          <span className="text-secondary/50 text-xs uppercase">тариф</span>
-          <button
-            onClick={() => {
-              setSortOption(
-                sortOption === SortOption.EARNINGS_UP
-                  ? SortOption.EARNINGS_DOWN
-                  : SortOption.EARNINGS_UP
-              );
-            }}
-            className="group flex cursor-pointer flex-row items-center gap-1"
-          >
-            <span className="text-secondary/50 text-xs uppercase group-hover:opacity-100">
-              Доход
-            </span>
-            <SortIcon
-              className="mb-0.5 size-3"
-              arrow={
-                sortOption === SortOption.EARNINGS_UP
-                  ? 'up'
-                  : sortOption === SortOption.EARNINGS_DOWN
-                    ? 'down'
-                    : 'none'
-              }
-            />
-          </button>
-          <div className="flex items-center justify-between">
-            <span className="text-secondary/50 text-xs uppercase">
-              Обучается
-            </span>
-            <InfoPopover
-              title="Таблица рефералов"
-              content="Следите за активностью ваших рефералов, приобретенными тарифами и процентом дохода, который генерирует каждый реферал."
-            />
-          </div>
+    <div className="border-accent flex flex-col gap-6 border-b pb-8 grow">
+      {referrals.length === 0 ? (
+        <div className="flex h-full w-full flex-col items-center justify-center gap-5">
+          <Image
+            src={AvatarsIcon}
+            alt="Ничего не найдено"
+            className="h-8 w-22.75"
+          />
+          <span className="text-secondary/50 text-sm">
+            Нет зарегистрированных рефералов :(
+          </span>
         </div>
-      </div>
-
-      {/* Table Body */}
-      <div className="flex flex-col gap-8 px-8">
-        {sortReferrals(referrals).map((referral) => (
-          <motion.div
-            key={referral.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="grid w-full grid-cols-[calc(7*var(--spacing))_1fr_1fr_1fr_1fr_1fr] gap-8"
-          >
-            <span className="text-secondary text-sm">{referral.id}.</span>
-            <div className="flex items-center gap-3">
-              {referral.avatar ? (
-                <Image
-                  src={referral.avatar}
-                  alt={referral.name}
-                  width={20}
-                  height={20}
-                  className="h-5 w-5 rounded-full"
+      ) : (
+        <>
+          {/* Table Header */}
+          <div className="flex h-9 items-center bg-[#14171C] px-8">
+            <div className="grid w-full grid-cols-[calc(7*var(--spacing))_1fr_1fr_1fr_1fr_1fr] gap-8">
+              <span className="text-secondary/50 text-xs uppercase">#</span>
+              <span className="text-secondary/50 text-xs uppercase">имя</span>
+              <button
+                onClick={() => {
+                  setSortOption(
+                    sortOption === SortOption.REGISTRATION_UP
+                      ? SortOption.REGISTRATION_DOWN
+                      : SortOption.REGISTRATION_UP
+                  );
+                }}
+                className="group flex cursor-pointer flex-row items-center gap-1"
+              >
+                <span className="text-secondary/50 text-xs uppercase group-hover:opacity-100">
+                  регистрация
+                </span>
+                <SortIcon
+                  className="mb-0.5 size-3"
+                  arrow={
+                    sortOption === SortOption.REGISTRATION_UP
+                      ? 'up'
+                      : sortOption === SortOption.REGISTRATION_DOWN
+                        ? 'down'
+                        : 'none'
+                  }
                 />
-              ) : (
-                <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[#282d33]">
-                  <span className="text-foreground text-xs">
-                    {referral.name[0]}
+              </button>
+              <span className="text-secondary/50 text-xs uppercase">тариф</span>
+              <button
+                onClick={() => {
+                  setSortOption(
+                    sortOption === SortOption.EARNINGS_UP
+                      ? SortOption.EARNINGS_DOWN
+                      : SortOption.EARNINGS_UP
+                  );
+                }}
+                className="group flex cursor-pointer flex-row items-center gap-1"
+              >
+                <span className="text-secondary/50 text-xs uppercase group-hover:opacity-100">
+                  Доход
+                </span>
+                <SortIcon
+                  className="mb-0.5 size-3"
+                  arrow={
+                    sortOption === SortOption.EARNINGS_UP
+                      ? 'up'
+                      : sortOption === SortOption.EARNINGS_DOWN
+                        ? 'down'
+                        : 'none'
+                  }
+                />
+              </button>
+              <div className="flex items-center justify-between">
+                <span className="text-secondary/50 text-xs uppercase">
+                  Обучается
+                </span>
+                <InfoPopover
+                  title="Таблица рефералов"
+                  content="Следите за активностью ваших рефералов, приобретенными тарифами и процентом дохода, который генерирует каждый реферал."
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Table Body */}
+          <div className="flex flex-col gap-8 px-8">
+            {sortReferrals(referrals).map((referral) => (
+              <motion.div
+                key={referral.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="grid w-full grid-cols-[calc(7*var(--spacing))_1fr_1fr_1fr_1fr_1fr] gap-8"
+              >
+                <span className="text-secondary text-sm">{referral.id}.</span>
+                <div className="flex items-center gap-3">
+                  {referral.avatar ? (
+                    <Image
+                      src={referral.avatar}
+                      alt={referral.name}
+                      width={20}
+                      height={20}
+                      className="h-5 w-5 rounded-full"
+                    />
+                  ) : (
+                    <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[#282d33]">
+                      <span className="text-foreground text-xs">
+                        {referral.name[0]}
+                      </span>
+                    </div>
+                  )}
+                  <span className="text-foreground text-sm">
+                    {referral.name}
                   </span>
                 </div>
-              )}
-              <span className="text-foreground text-sm">{referral.name}</span>
-            </div>
-            <span className="text-secondary text-sm">
-              {referral.registrationDate}
-            </span>
-            <PlanBadge plan={referral.plan} />
-            <span className="text-foreground text-sm">{referral.earnings}</span>
-            <LearningTime time={referral.learningTime} />
-          </motion.div>
-        ))}
-      </div>
+                <span className="text-secondary text-sm">
+                  {referral.registrationDate}
+                </span>
+                <PlanBadge plan={referral.plan} />
+                <span className="text-foreground text-sm">
+                  {referral.earnings}
+                </span>
+                <LearningTime time={referral.learningTime} />
+              </motion.div>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 };
