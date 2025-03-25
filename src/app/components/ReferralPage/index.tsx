@@ -17,11 +17,13 @@ import TaskSquareSvg from './assets/shop-icon.svg';
 import UserSvg from './assets/user-icon.svg';
 import PercentSvg from './assets/percent-icon.svg';
 import BankIcon from './assets/bank-icons.png';
+import TelegramFlatIcon from './assets/telegram-flat-icon.svg';
 
 import { InfoPopover } from '~/app/components/shared/InfoPopover';
 import { Modal } from '../shared/Modal';
 import { ArrowUpRight, ChevronDown, Wallet } from 'lucide-react';
 import { ReferralTable } from './ReferralTable';
+import { WithdrawForm } from './WithdrawForm';
 
 // Add new types
 type TimePeriod = any;
@@ -73,6 +75,7 @@ const TimePeriodSelector = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [isWithdrawOpen, setIsWithdrawOpen] = useState(false);
 
   const periods: { label: string; value: TimePeriod }[] = [
     { label: 'Все время', value: 'all' },
@@ -172,9 +175,18 @@ export default function ReferralPage({ session }: { session: Session }) {
   const [index, setIndex] = useState(0);
   const [timePeriod, setTimePeriod] = useState<TimePeriod>('7d');
   const [isOpen, setIsOpen] = useState(false);
+  const [isWithdrawOpen, setIsWithdrawOpen] = useState(false);
 
   return (
     <main className="border-accent flex h-screen flex-col border-x">
+      <Modal
+        isOpen={isWithdrawOpen}
+        onClose={() => {
+          setIsWithdrawOpen(false);
+        }}
+      >
+        <WithdrawForm onClose={function (): void {}} />
+      </Modal>
       <div className="mb-auto flex flex-col">
         <Topbar lastestUpdate={'18 марта 2025'} />
 
@@ -317,6 +329,9 @@ export default function ReferralPage({ session }: { session: Session }) {
                 </span>
                 <button
                   className="bg-primary flex h-10 w-10 items-center justify-center rounded-full transition-transform not-disabled:cursor-pointer hover:scale-105 not-disabled:hover:bg-[#1242B2] disabled:opacity-30"
+                  onClick={() => {
+                    setIsWithdrawOpen(true);
+                  }}
                   // disabled={true}
                 >
                   <svg
@@ -366,7 +381,7 @@ export default function ReferralPage({ session }: { session: Session }) {
           </div>
         </div>
       </div>
-      <div className="border-accent h-16 w-full shrink-0 "></div>
+      <div className="border-accent h-16 w-full shrink-0"></div>
 
       <ReferralTable></ReferralTable>
 
