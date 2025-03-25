@@ -407,7 +407,7 @@ const FAQItem = ({
   );
 };
 
-export default function CVPage() {
+export default function CVPage({ session }: { session: Session }) {
   // FAQ state
   const [openFAQIndex, setOpenFAQIndex] = useState(0);
 
