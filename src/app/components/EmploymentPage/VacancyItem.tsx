@@ -46,7 +46,7 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
     <div
       onClick={() => setIsExpanded(!isExpanded)}
       className={cn(
-        'border-accent relative grid grid-cols-[calc(50*var(--spacing))_calc(35*var(--spacing))_calc(28*var(--spacing))_calc(20*var(--spacing))_1fr] items-center gap-x-10 px-8 py-6 transition-colors duration-200 not-last:border-b hover:bg-[#14171C]',
+        'border-accent relative grid grid-cols-[calc(50*var(--spacing))_calc(35*var(--spacing))_calc(28*var(--spacing))_calc(20*var(--spacing))_1fr] items-center gap-x-9 px-8 py-6 transition-colors duration-200 not-last:border-b hover:bg-[#14171C]',
         isExpanded && 'bg-[#14171C]'
       )}
     >
