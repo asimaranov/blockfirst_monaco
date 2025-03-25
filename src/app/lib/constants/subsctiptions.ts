@@ -3,9 +3,9 @@ import starterSubImg from 'public/subscriptions/bage/coin-base.svg';
 import proSubImg from 'public/subscriptions/bage/coin-pro.svg';
 
 export enum SubscriptionType {
-  Free,
-  Starter,
-  Pro,
+  Free = 'Free',
+  Starter = 'Starter',
+  Pro = 'Pro',
 }
 
 export const subscriptionTypeLabels = {

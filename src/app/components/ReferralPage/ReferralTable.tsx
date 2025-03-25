@@ -1,6 +1,13 @@
 import { motion } from 'framer-motion';
 import { InfoPopover } from '~/app/components/shared/InfoPopover';
 import { ArrowUpRight } from 'lucide-react';
+import { TARIFFS } from '~/app/lib/constants/tariff';
+import {
+  subscriptionTypeLabels,
+  SubscriptionType,
+  subscriptionTypeIcons,
+} from '~/app/lib/constants/subsctiptions';
+import Image from 'next/image';
 
 type ReferralData = {
   id: number;
@@ -16,7 +23,7 @@ const referrals: ReferralData[] = [
     id: 1,
     name: 'Андрей',
     registrationDate: '23.05.2025',
-    plan: 'STARTER',
+    plan: 'Starter',
     earnings: '12 570 ₽',
     learningTime: '2д 16ч',
   },
@@ -24,7 +31,7 @@ const referrals: ReferralData[] = [
     id: 2,
     name: 'Виталий',
     registrationDate: '12.04.2025',
-    plan: 'PRO',
+    plan: 'Pro',
     earnings: '5 720 ₽',
     learningTime: '12ч',
   },
@@ -32,7 +39,7 @@ const referrals: ReferralData[] = [
     id: 3,
     name: 'Valve_Gaben',
     registrationDate: '02.03.2025',
-    plan: 'FREE',
+    plan: 'Free',
     earnings: '0.00 ₽',
     learningTime: '1д 3ч',
   },
@@ -40,7 +47,7 @@ const referrals: ReferralData[] = [
     id: 4,
     name: 'Никитос',
     registrationDate: '18.12.2025',
-    plan: 'STARTER',
+    plan: 'Starter',
     earnings: '4 120 ₽',
     learningTime: '5м',
   },
@@ -55,28 +62,13 @@ const UserAvatar = ({ name }: { name: string }) => (
 const PlanBadge = ({ plan }: { plan: string }) => (
   <div className="flex items-center gap-2">
     <div className="h-3.5 w-3.5">
-      <svg
-        width="14"
-        height="14"
-        viewBox="0 0 14 14"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M7 13.6667C10.6819 13.6667 13.6667 10.6819 13.6667 7C13.6667 3.3181 10.6819 0.333333 7 0.333333C3.3181 0.333333 0.333333 3.3181 0.333333 7C0.333333 10.6819 3.3181 13.6667 7 13.6667Z"
-          stroke="#9AA6B5"
-          strokeWidth="1.5"
-        />
-        <path
-          d="M4.66667 7L6.33333 8.66667L9.33333 5.33333"
-          stroke="#9AA6B5"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+      <Image
+        src={subscriptionTypeIcons[plan as SubscriptionType]}
+        alt={subscriptionTypeLabels[plan as SubscriptionType]}
+        className="h-3.5 w-3.5"
+      />
     </div>
-    <span className="text-foreground text-xs">{plan}</span>
+    <span className="text-foreground text-xs uppercase">{plan}</span>
   </div>
 );
 
@@ -89,20 +81,24 @@ const LearningTime = ({ time }: { time: string }) => (
 
 export const ReferralTable = () => {
   return (
-    <div className="flex flex-col gap-6 pb-8 border-b border-accent">
+    <div className="border-accent flex flex-col gap-6 border-b pb-8">
       {/* Table Header */}
-      <div className="flex h-9 items-center px-8 bg-[#14171C]">
+      <div className="flex h-9 items-center bg-[#14171C] px-8">
         <div className="grid w-full grid-cols-[28px_1fr_1fr_1fr_1fr_1fr] gap-8">
           <span className="text-secondary/50 text-xs uppercase">#</span>
           <span className="text-secondary/50 text-xs uppercase">имя</span>
-          <span className="text-secondary/50 text-xs uppercase">регистрация</span>
+          <span className="text-secondary/50 text-xs uppercase">
+            регистрация
+          </span>
           <span className="text-secondary/50 text-xs uppercase">тариф</span>
           <div className="flex items-center gap-1">
             <span className="text-secondary/50 text-xs uppercase">Доход</span>
             <ArrowUpRight className="text-secondary h-3.5 w-3.5" />
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-secondary/50 text-xs uppercase">Обучается</span>
+            <span className="text-secondary/50 text-xs uppercase">
+              Обучается
+            </span>
             <InfoPopover
               title="Таблица рефералов"
               content="Следите за активностью ваших рефералов, приобретенными тарифами и процентом дохода, который генерирует каждый реферал."
