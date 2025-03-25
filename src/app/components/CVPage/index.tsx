@@ -196,14 +196,14 @@ const StageCard = ({
   position: string;
   progressValue: number;
 }) => (
-  <div className="flex flex-col gap-5 p-8">
+  <div className="flex flex-col gap-5 p-8 pr-0">
     <div
       className={`inline-flex w-fit items-center rounded-full border-[0.5px] px-3 py-1.5 ${completed ? 'border-success text-success' : 'border-secondary/50 text-secondary'}`}
     >
       <span className="text-xs">{title}</span>
     </div>
 
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8 group-last:pr-8">
       <div className="flex flex-col gap-2">
         <h3 className="text-foreground text-2xl font-normal">{salaryRange}</h3>
         <p className="text-secondary text-xs">{position}</p>
@@ -290,7 +290,7 @@ const CourseSection = ({
   buttonText: string;
   isDisabled?: boolean;
 }) => (
-  <div className="flex flex-1 flex-col">
+  <div className="flex flex-1 flex-col border-accent not-group-last:border-r">
     <div className="bg-dark-bg border-accent border-b px-8 py-4">
       <h4 className="text-secondary text-sm">{title}</h4>
     </div>
@@ -473,7 +473,7 @@ export default function CVPage({ session }: { session: Session }) {
         {/* CV Progress Grid */}
         <div className="mt-4 grid grid-cols-1 gap-0 md:grid-cols-3">
           {/* First Column - Junior */}
-          <div className="border-accent flex flex-col border-r">
+          <div className="border-accent flex flex-col group">
             <StageCard
               title="Этап завершен"
               completed={true}
@@ -504,7 +504,7 @@ export default function CVPage({ session }: { session: Session }) {
           </div>
 
           {/* Second Column - Middle */}
-          <div className="border-accent flex flex-col border-r">
+          <div className="border-accent flex flex-col group">
             <StageCard
               title="Этап в процессе"
               completed={false}
@@ -542,7 +542,7 @@ export default function CVPage({ session }: { session: Session }) {
           </div>
 
           {/* Third Column - Senior */}
-          <div className="flex flex-col">
+          <div className="flex flex-col group">
             <StageCard
               title="Этап недоступен"
               completed={false}
