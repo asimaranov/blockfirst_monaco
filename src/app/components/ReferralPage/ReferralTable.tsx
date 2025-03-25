@@ -12,6 +12,7 @@ import Image from 'next/image';
 type ReferralData = {
   id: number;
   name: string;
+  avatar: string;
   registrationDate: string;
   plan: string;
   earnings: string;
@@ -22,6 +23,7 @@ const referrals: ReferralData[] = [
   {
     id: 1,
     name: 'Андрей',
+    avatar: 'https://i.pravatar.cc/300',
     registrationDate: '23.05.2025',
     plan: 'Starter',
     earnings: '12 570 ₽',
@@ -30,6 +32,7 @@ const referrals: ReferralData[] = [
   {
     id: 2,
     name: 'Виталий',
+    avatar: 'https://i.pravatar.cc/301',
     registrationDate: '12.04.2025',
     plan: 'Pro',
     earnings: '5 720 ₽',
@@ -38,6 +41,7 @@ const referrals: ReferralData[] = [
   {
     id: 3,
     name: 'Valve_Gaben',
+    avatar: 'https://i.pravatar.cc/302',
     registrationDate: '02.03.2025',
     plan: 'Free',
     earnings: '0.00 ₽',
@@ -46,18 +50,13 @@ const referrals: ReferralData[] = [
   {
     id: 4,
     name: 'Никитос',
+    avatar: 'https://i.pravatar.cc/303',
     registrationDate: '18.12.2025',
     plan: 'Starter',
     earnings: '4 120 ₽',
     learningTime: '5м',
   },
 ];
-
-const UserAvatar = ({ name }: { name: string }) => (
-  <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[#282d33]">
-    <span className="text-foreground text-xs">{name[0]}</span>
-  </div>
-);
 
 const PlanBadge = ({ plan }: { plan: string }) => (
   <div className="flex items-center gap-2">
@@ -119,7 +118,13 @@ export const ReferralTable = () => {
           >
             <span className="text-secondary text-sm">{referral.id}.</span>
             <div className="flex items-center gap-3">
-              <UserAvatar name={referral.name} />
+              <Image
+                src={referral.avatar}
+                alt={referral.name}
+                width={20}
+                height={20}
+                className="rounded-full"
+              />
               <span className="text-foreground text-sm">{referral.name}</span>
             </div>
             <span className="text-secondary text-sm">
