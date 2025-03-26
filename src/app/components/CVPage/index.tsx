@@ -39,7 +39,7 @@ import { ReferralTable } from './ReferralTable';
 import { WithdrawForm } from './WithdrawForm';
 import { Progress } from '../shared/Progress';
 import ToggleMinus from '../shared/ToggleMinus/ToggleMinus';
-
+import CVApplyForm from './CVApplyForm';
 // Add new types
 type TimePeriod = any;
 
@@ -280,7 +280,7 @@ const CourseItem = ({
       </svg>
     ) : (
       <div
-        className={`mt-1 flex h-5 w-5 items-center justify-center rounded-full ${opened ? 'border border-primary' : 'border-secondary/50 border'}`}
+        className={`mt-1 flex h-5 w-5 items-center justify-center rounded-full ${opened ? 'border-primary border' : 'border-secondary/50 border'}`}
       ></div>
     )}
     <div className="flex flex-col gap-2">
@@ -299,14 +299,14 @@ const CourseItem = ({
 );
 
 const CourseSection = ({
-  title,
+  position,
   opened,
   courses,
   footerText,
   buttonText,
   isDisabled = false,
 }: {
-  title: string;
+  position: string;
   opened: boolean;
   courses: {
     title: string;
@@ -317,40 +317,48 @@ const CourseSection = ({
   footerText: string;
   buttonText: string;
   isDisabled?: boolean;
-}) => (
-  <div className="border-accent flex flex-1 flex-col not-group-last:border-r">
-    <div className="bg-[#14171C] border-accent border-b px-8 py-4">
-      <h4 className="text-secondary/50 text-xs uppercase">{title}</h4>
-    </div>
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
 
-    <div className="flex flex-col gap-4 px-8 py-7">
-      {courses.map((course, index) => (
-        <CourseItem
-          key={index}
-          title={course.title}
-          lessons={course.lessons}
-          duration={course.duration}
-          opened={opened}
-          completed={course.completed}
-        />
-      ))}
-    </div>
+  return (
+    <div className="border-accent flex flex-1 flex-col not-group-last:border-r">
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <CVApplyForm onClose={() => setIsOpen(false)} jobTitle={position} />
+      </Modal>
+      <div className="border-accent border-b bg-[#14171C] px-8 py-4">
+        <h4 className="text-secondary/50 text-xs uppercase">Этапы курса</h4>
+      </div>
 
-    <div className="mt-auto flex flex-col gap-6">
-      <button
-        className={`mx-8 flex items-center justify-center rounded-full py-3 ${isDisabled ? 'bg-secondary/10 text-secondary' : 'bg-primary text-foreground'}`}
-        disabled={isDisabled}
-      >
-        <span className="text-sm">{buttonText}</span>
-        <ChevronRight size={16} className="ml-2" />
-      </button>
+      <div className="flex flex-col gap-4 px-8 py-7">
+        {courses.map((course, index) => (
+          <CourseItem
+            key={index}
+            title={course.title}
+            lessons={course.lessons}
+            duration={course.duration}
+            opened={opened}
+            completed={course.completed}
+          />
+        ))}
+      </div>
 
-      <div className="bg-dark-bg border-accent border-t py-2">
-        <p className="text-secondary text-center text-xs">{footerText}</p>
+      <div className="mt-auto flex flex-col gap-6">
+        <button
+          className={`mx-8 flex cursor-pointer items-center justify-center rounded-full py-3 hover:bg-[#1242B2] ${isDisabled ? 'bg-secondary/10 text-secondary' : 'bg-primary text-foreground'}`}
+          disabled={isDisabled}
+          onClick={() => setIsOpen(true)}
+        >
+          <span className="cursor-pointer text-sm">{buttonText}</span>
+          <ChevronRight size={16} className="ml-2" />
+        </button>
+
+        <div className="bg-dark-bg border-accent border-t py-2">
+          <p className="text-secondary text-center text-xs">{footerText}</p>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 // FAQ Item Component with Animation
 const FAQItem = ({
@@ -464,7 +472,7 @@ export default function CVPage({ session }: { session: Session }) {
         {/* CV Progress Grid */}
         <div className="mt-4 grid grid-cols-1 gap-0 md:grid-cols-3">
           {/* First Column - Junior */}
-          <div className="border-accent group flex flex-col">
+          <div className="border-accent flex flex-col">
             <StageCard
               title="Этап завершен"
               completed={true}
@@ -474,7 +482,7 @@ export default function CVPage({ session }: { session: Session }) {
             />
 
             <CourseSection
-              title="курсы этапа"
+              position="Junior"
               opened={true}
               courses={[
                 {
@@ -496,7 +504,7 @@ export default function CVPage({ session }: { session: Session }) {
           </div>
 
           {/* Second Column - Middle */}
-          <div className="border-accent group flex flex-col">
+          <div className="border-accent flex flex-col">
             <StageCard
               title="Этап в процессе"
               completed={false}
@@ -506,7 +514,7 @@ export default function CVPage({ session }: { session: Session }) {
             />
 
             <CourseSection
-              title="курсы этапа"
+              position="Middle"
               opened={true}
               courses={[
                 {
@@ -545,7 +553,7 @@ export default function CVPage({ session }: { session: Session }) {
             />
 
             <CourseSection
-              title="курсы этапа"
+              position="Senior"
               opened={false}
               courses={[
                 {
