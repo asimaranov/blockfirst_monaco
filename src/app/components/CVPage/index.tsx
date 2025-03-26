@@ -222,6 +222,7 @@ const StageCard = ({
             value={progressValue}
             className="rounded-full"
             inactive={!completed && progressValue === 0}
+            locked={progressValue === 0}
           />
         </div>
         <div className="absolute right-[1px] bottom-0 z-10 flex translate-x-1/2 items-center">

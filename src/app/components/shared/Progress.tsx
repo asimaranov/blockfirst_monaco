@@ -10,8 +10,9 @@ const Progress = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root> & {
     useFlag?: boolean;
     inactive?: boolean;
+    locked?: boolean;
   }
->(({ className, value, useFlag, inactive, ...props }, ref) => (
+>(({ className, value, useFlag, locked, inactive, ...props }, ref) => (
   <ProgressPrimitive.Root
     ref={ref}
     className={cn(
@@ -21,7 +22,10 @@ const Progress = React.forwardRef<
     )}
     {...props}
   >
-    <div className="absolute top-0.5 bottom-0.5 left-0.5 z-1 aspect-square w-auto rounded-full bg-[#01050D]" />
+
+    {!locked && (
+      <div className="absolute top-0.5 bottom-0.5 left-0.5 z-1 aspect-square w-auto rounded-full bg-[#01050D]" />
+    )}
 
     <div
       className={cn(
@@ -40,7 +44,7 @@ const Progress = React.forwardRef<
           }}
         />
       )}
-      {inactive && (
+      {inactive && !locked && (
         <ProgressPrimitive.Indicator
           className={cn(
             'h-full w-full flex-1 rounded-full bg-[#9AA6B5] transition-all',
