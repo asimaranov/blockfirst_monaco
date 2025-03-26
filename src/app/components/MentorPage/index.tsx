@@ -203,13 +203,13 @@ export default function MentorPage({ session }: { session: Session }) {
           {/* Left sidebar - Mentor Profile */}
           <section className="border-accent flex w-100 flex-col border-r">
             {/* Profile container */}
-            <div className="bg-background relative h-91 overflow-hidden">
+            <div className="bg-background relative h-91 overflow-hidden bg-[url(/images/misc/mentor-grid.svg)] bg-contain bg-no-repeat">
               {/* Background grid effect */}
-              <Image
+              {/* <Image
                 src={GridSvg}
                 alt="background"
                 className="absolute inset-0 h-64.5 w-100"
-              />
+              /> */}
               {/* Avatar container */}
               <div className="relative inset-x-0 flex h-64 items-center justify-center object-contain">
                 <Image
@@ -414,14 +414,7 @@ export default function MentorPage({ session }: { session: Session }) {
               <div className="border-accent flex border-b">
                 {/* Calls */}
                 <div className="border-accent w-1/2 border-r">
-                  <div className="bg-background relative h-16 overflow-hidden">
-                    <Image
-                      src={TopGridSvg}
-                      alt="Grid"
-                      width={100}
-                      height={100}
-                      className="absolute h-full w-full"
-                    />
+                  <div className="bg-background relative h-16 overflow-hidden bg-[url(/images/misc/top-tab-grid.svg)] bg-no-repeat bg-contain bg-blend-screen">
                     <div className="relative flex h-full items-center gap-4 px-8">
                       <div className="h-8 w-8 overflow-hidden rounded-full">
                         <Image
@@ -448,14 +441,7 @@ export default function MentorPage({ session }: { session: Session }) {
 
                 {/* Text */}
                 <div className="w-1/2">
-                  <div className="bg-background relative h-16 overflow-hidden">
-                    <Image
-                      src={TopGridSvg}
-                      alt="Grid"
-                      width={100}
-                      height={100}
-                      className="absolute h-full w-full"
-                    />
+                <div className="bg-background relative h-16 overflow-hidden bg-[url(/images/misc/top-tab-grid.svg)] bg-no-repeat bg-cover bg-blend-screen">
                     <div className="relative flex h-full items-center gap-4 px-8">
                       <div className="flex h-8 w-8 items-center justify-center rounded-full">
                         <Image

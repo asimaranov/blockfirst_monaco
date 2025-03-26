@@ -46,7 +46,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
   return (
     <div className="border-accent flex flex-col border-b">
       <div className="relative bg-[#01050D] p-8">
-        <div className="relative z-1">
+        <div className="relative z-1 bg-[url(/images/misc/tariff-grid.svg)] bg-cover bg-no-repeat bg-blend-screen">
           {tariff.sale && (
             <div className="absolute top-0 right-0">
               <span className="bg-error rounded-full px-2 py-1 text-xs uppercase">
@@ -70,11 +70,6 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
             </div>
           </div>
         </div>
-        <Image
-          src={GridSvg}
-          alt="Grid"
-          className="pointer-events-none absolute right-0 bottom-0 z-0 w-full"
-        />
       </div>
 
       <div className="flex flex-col">
@@ -101,7 +96,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
               viewBox="0 0 20 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className='h-5 w-5'
+              className="h-5 w-5"
             >
               <path
                 d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
@@ -151,7 +146,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
                     viewBox="0 0 20 20"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    className='h-5 w-5' 
+                    className="h-5 w-5"
                   >
                     <path
                       d="M14.75 4.97386L19.3654 9.58924L14.75 14.2046"

@@ -88,7 +88,6 @@ export function CourseCard({ course }: { course: ICourse }) {
                         alt="star"
                         width={16}
                         height={16}
-                        className="w-4 h-4"
                       />
                       <Image
                         src={'/avatars/user1.png'}
