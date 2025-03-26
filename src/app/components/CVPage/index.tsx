@@ -21,6 +21,9 @@ import BankIcon from './assets/bank-icons.png';
 import InProgressFlag from './assets/in-progress-flag.svg';
 import CompletedFlag from './assets/completed-flag.svg';
 import LockedFlag from './assets/locked-flag.svg';
+import FaqItems from './assets/faq-items-icons.png';
+import TelegramIcon from './assets/telegram-cv-icon.svg';
+import EmailIcon from './assets/email-cv-icon.svg';
 
 import { InfoPopover } from '~/app/components/shared/InfoPopover';
 import { Modal } from '../shared/Modal';
@@ -35,6 +38,7 @@ import {
 import { ReferralTable } from './ReferralTable';
 import { WithdrawForm } from './WithdrawForm';
 import { Progress } from '../shared/Progress';
+import ToggleMinus from '../shared/ToggleMinus/ToggleMinus';
 
 // Add new types
 type TimePeriod = any;
@@ -196,29 +200,28 @@ const StageCard = ({
   position: string;
   progressValue: number;
 }) => (
-  <div className="flex flex-col gap-5 p-8 pr-0">
+  <div className="flex flex-col gap-5 p-8 pr-0 pb-0">
     <div
       className={`inline-flex w-fit items-center rounded-full border-[0.5px] px-3 py-1.5 ${completed ? 'border-success text-success' : 'border-secondary/50 text-secondary'}`}
     >
       <span className="text-xs">{title}</span>
     </div>
 
-    <div className="flex flex-col gap-8 group-last:pr-8">
-      <div className="flex flex-col gap-2">
+    <div className="flex flex-col group-last:pr-8">
+      <div className="flex flex-col gap-2 pb-8">
         <h3 className="text-foreground text-2xl font-normal">{salaryRange}</h3>
         <p className="text-secondary text-xs">{position}</p>
       </div>
 
       <div className="relative">
-        <div className='flex flex-row relative'>
+        <div className="relative flex flex-row">
           <Progress
             value={progressValue}
             className="h-4 rounded-full"
             inactive={!completed && progressValue === 0}
           />
-          
         </div>
-        <div className="absolute right-0 bottom-0 z-10 flex translate-x-1/2 items-center">
+        <div className="absolute right-[1px] bottom-0 z-10 flex translate-x-1/2 items-center">
           {completed ? (
             <Image
               src={CompletedFlag}
@@ -226,16 +229,17 @@ const StageCard = ({
               className="h-21.5 w-7"
             ></Image>
           ) : progressValue === 0 ? (
+            <Image src={LockedFlag} alt="Locked" className="h-21.5 w-7"></Image>
+          ) : (
             <Image
-              src={LockedFlag}
-              alt="Locked"
+              src={InProgressFlag}
+              alt="InProgress"
               className="h-21.5 w-7"
             ></Image>
-          ) : (
-            <Image src={InProgressFlag} alt="InProgress" className="h-21.5 w-7"></Image>
           )}
         </div>
       </div>
+      <div className="border-accent h-8 not-group-last:border-r"></div>
     </div>
   </div>
 );
@@ -245,18 +249,40 @@ const CourseItem = ({
   lessons,
   duration,
   completed,
+  opened,
 }: {
   title: string;
   lessons: string;
   duration: string;
   completed: boolean;
+  opened: boolean;
 }) => (
   <div className="flex items-start gap-4">
-    <div
-      className={`mt-1 flex h-5 w-5 items-center justify-center rounded-full ${completed ? 'bg-primary' : 'border-secondary/50 border'}`}
-    >
-      {completed && <Check size={12} className="text-background" />}
-    </div>
+    {completed ? (
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="h-5 w-5"
+      >
+        <path
+          d="M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z"
+          fill="#195AF4"
+        />
+        <path
+          d="M6.625 10.2124L8.73396 12.3214L13.3737 7.68164"
+          stroke="#F2F2F2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    ) : (
+      <div
+        className={`mt-1 flex h-5 w-5 items-center justify-center rounded-full ${opened ? 'border border-primary' : 'border-secondary/50 border'}`}
+      ></div>
+    )}
     <div className="flex flex-col gap-2">
       <p className="text-foreground text-sm">{title}</p>
       <div className="text-secondary flex items-center gap-3 text-xs">
@@ -274,12 +300,14 @@ const CourseItem = ({
 
 const CourseSection = ({
   title,
+  opened,
   courses,
   footerText,
   buttonText,
   isDisabled = false,
 }: {
   title: string;
+  opened: boolean;
   courses: {
     title: string;
     lessons: string;
@@ -290,9 +318,9 @@ const CourseSection = ({
   buttonText: string;
   isDisabled?: boolean;
 }) => (
-  <div className="flex flex-1 flex-col border-accent not-group-last:border-r">
-    <div className="bg-dark-bg border-accent border-b px-8 py-4">
-      <h4 className="text-secondary text-sm">{title}</h4>
+  <div className="border-accent flex flex-1 flex-col not-group-last:border-r">
+    <div className="bg-[#14171C] border-accent border-b px-8 py-4">
+      <h4 className="text-secondary/50 text-xs uppercase">{title}</h4>
     </div>
 
     <div className="flex flex-col gap-4 px-8 py-7">
@@ -302,6 +330,7 @@ const CourseSection = ({
           title={course.title}
           lessons={course.lessons}
           duration={course.duration}
+          opened={opened}
           completed={course.completed}
         />
       ))}
@@ -338,54 +367,16 @@ const FAQItem = ({
   return (
     <div className="border-accent border-b">
       <div className="px-8 py-6">
-        <div className="flex items-center justify-between">
+        <div
+          className="flex cursor-pointer items-center justify-between"
+          onClick={onClick}
+        >
           <h3 className="text-foreground text-base">{question}</h3>
-          <button
-            className="flex h-5 w-5 items-center justify-center"
-            onClick={onClick}
-            aria-expanded={isOpen}
-          >
-            {isOpen ? (
-              <svg
-                width="14"
-                height="2"
-                viewBox="0 0 14 2"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M1 1H13"
-                  stroke="#9AA6B5"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            ) : (
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M1 7H13"
-                  stroke="#F2F2F2"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M7 1V13"
-                  stroke="#F2F2F2"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            )}
-          </button>
+          <ToggleMinus
+            isExpanded={isOpen}
+            onToggle={onClick}
+            className="h-5 w-5"
+          ></ToggleMinus>
         </div>
         <AnimatePresence>
           {isOpen && (
@@ -466,14 +457,14 @@ export default function CVPage({ session }: { session: Session }) {
   };
 
   return (
-    <main className="border-accent bg-background border-r border-l">
+    <main className="border-accent border-r border-l">
       <div className="flex min-h-screen w-full flex-col">
         <Topbar lastestUpdate={'18 марта 2025'} />
 
         {/* CV Progress Grid */}
         <div className="mt-4 grid grid-cols-1 gap-0 md:grid-cols-3">
           {/* First Column - Junior */}
-          <div className="border-accent flex flex-col group">
+          <div className="border-accent group flex flex-col">
             <StageCard
               title="Этап завершен"
               completed={true}
@@ -484,6 +475,7 @@ export default function CVPage({ session }: { session: Session }) {
 
             <CourseSection
               title="курсы этапа"
+              opened={true}
               courses={[
                 {
                   title: 'Путешествие по Solidity & DeFi',
@@ -495,7 +487,7 @@ export default function CVPage({ session }: { session: Session }) {
                   title: 'Продвинутый Uniswap курс',
                   lessons: '16 урока',
                   duration: '2 месяца',
-                  completed: true,
+                  completed: false,
                 },
               ]}
               footerText="Закончены 2 курса"
@@ -504,7 +496,7 @@ export default function CVPage({ session }: { session: Session }) {
           </div>
 
           {/* Second Column - Middle */}
-          <div className="border-accent flex flex-col group">
+          <div className="border-accent group flex flex-col">
             <StageCard
               title="Этап в процессе"
               completed={false}
@@ -515,6 +507,7 @@ export default function CVPage({ session }: { session: Session }) {
 
             <CourseSection
               title="курсы этапа"
+              opened={true}
               courses={[
                 {
                   title: 'EVM assembler & YUL',
@@ -542,7 +535,7 @@ export default function CVPage({ session }: { session: Session }) {
           </div>
 
           {/* Third Column - Senior */}
-          <div className="flex flex-col group">
+          <div className="group flex flex-col">
             <StageCard
               title="Этап недоступен"
               completed={false}
@@ -553,6 +546,7 @@ export default function CVPage({ session }: { session: Session }) {
 
             <CourseSection
               title="курсы этапа"
+              opened={false}
               courses={[
                 {
                   title: 'Изучение другого блокчейна (Solana, Sui)',
@@ -577,9 +571,7 @@ export default function CVPage({ session }: { session: Session }) {
               <div className="px-8">
                 <div className="mb-5 flex items-center justify-between">
                   <h2 className="text-foreground text-2xl">Раздел FAQs</h2>
-                  <div className="border-gradient-to-r relative h-7 rounded-xl border p-[1px]">
-                    -
-                  </div>
+                  <Image src={FaqItems} alt="Close" className="h-7 w-19.5" />
                 </div>
                 <p className="text-secondary text-sm">
                   Мы собрали для вас топ самых популярных и часто задаваемых
@@ -592,36 +584,13 @@ export default function CVPage({ session }: { session: Session }) {
                 <div className="flex gap-20 px-8">
                   <div className="flex gap-4">
                     <div className="flex-shrink-0">
-                      <div className="bg-background flex h-[38px] w-[38px] items-center justify-center rounded-full">
+                      <div className="bg-background flex h-9.5 w-9.5 items-center justify-center rounded-full">
                         <div className="text-foreground">
-                          <svg
-                            width="16"
-                            height="16"
-                            viewBox="0 0 16 16"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M0.833333 1.83333C0.833333 1.18695 1.35362 0.666667 2 0.666667H14C14.6464 0.666667 15.1667 1.18695 15.1667 1.83333V14.1667C15.1667 14.813 14.6464 15.3333 14 15.3333H2C1.35362 15.3333 0.833333 14.813 0.833333 14.1667V1.83333Z"
-                              stroke="#F2F2F2"
-                              strokeWidth="1.5"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M1.33333 5.33333H14.6667"
-                              stroke="#F2F2F2"
-                              strokeWidth="1.5"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M5.33334 15.3333V5.33333"
-                              stroke="#F2F2F2"
-                              strokeWidth="1.5"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
+                          <Image
+                            src={TelegramIcon}
+                            alt="Telegram"
+                            className="h-9.5 w-9.5"
+                          />
                         </div>
                       </div>
                     </div>
@@ -637,36 +606,13 @@ export default function CVPage({ session }: { session: Session }) {
 
                   <div className="flex gap-4">
                     <div className="flex-shrink-0">
-                      <div className="bg-background flex h-[38px] w-[38px] items-center justify-center rounded-full">
+                      <div className="bg-background flex h-9.5 w-9.5 items-center justify-center rounded-full">
                         <div className="text-foreground">
-                          <svg
-                            width="16"
-                            height="16"
-                            viewBox="0 0 16 16"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M0.833333 1.83333C0.833333 1.18695 1.35362 0.666667 2 0.666667H14C14.6464 0.666667 15.1667 1.18695 15.1667 1.83333V14.1667C15.1667 14.813 14.6464 15.3333 14 15.3333H2C1.35362 15.3333 0.833333 14.813 0.833333 14.1667V1.83333Z"
-                              stroke="#F2F2F2"
-                              strokeWidth="1.5"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M1.33333 5.33333H14.6667"
-                              stroke="#F2F2F2"
-                              strokeWidth="1.5"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                            <path
-                              d="M5.33334 15.3333V5.33333"
-                              stroke="#F2F2F2"
-                              strokeWidth="1.5"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
+                          <Image
+                            src={EmailIcon}
+                            alt="Email"
+                            className="h-9.5 w-9.5"
+                          />
                         </div>
                       </div>
                     </div>
