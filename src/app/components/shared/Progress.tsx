@@ -15,8 +15,8 @@ const Progress = React.forwardRef<
   <ProgressPrimitive.Root
     ref={ref}
     className={cn(
-      'relative h-3 w-full rounded-full bg-[url(/misc/progress-bg.svg)] bg-no-repeat',
-      inactive && 'bg-[url(/misc/progress-bg-inactive.svg)]',
+      'relative h-3 w-full rounded-full bg-[url(/misc/progress-bg.svg)] bg-contain bg-no-repeat',
+      inactive && 'bg-[url(/misc/progress-bg-inactive.svg)] bg-contain',
       className
     )}
     {...props}
