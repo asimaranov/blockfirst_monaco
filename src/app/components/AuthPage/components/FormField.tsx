@@ -67,7 +67,7 @@ export default function FormField({
       </div>
       {showInlineError && error && (
         <div className="text-error absolute top-15 left-0 flex gap-2 text-xs">
-          <Image src={ErrorDecorationSvg} alt={''} width={14} height={14} />
+          <Image src={ErrorDecorationSvg} alt={''} width={14} height={14} className='w-3.5 h-3.5' />
           {error}
         </div>
       )}

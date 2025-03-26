@@ -109,6 +109,7 @@ export default function RightFiller() {
         style={{
           backgroundImage: 'url(/bg/planet_background_light.svg)',
           backgroundPosition: 'center',
+          backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
           transform: 'translateZ(-300px)',
           x: lightLayerX,
@@ -120,6 +121,7 @@ export default function RightFiller() {
           willChange: 'transform',
           scale: 1.2,
           opacity: 0.2,
+          
         }}
       />
 
@@ -128,6 +130,7 @@ export default function RightFiller() {
         className="absolute inset-0 -z-20"
         style={{
           backgroundImage: 'url(/bg/planet_grid.svg)',
+          backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           transform: 'translateZ(-150px)',
@@ -138,7 +141,7 @@ export default function RightFiller() {
           transformStyle: 'preserve-3d',
           transformOrigin: 'center center',
           willChange: 'transform',
-          scale: 1.25,
+          scale: 1,
         }}
       />
 
@@ -148,6 +151,8 @@ export default function RightFiller() {
         style={{
           backgroundImage: 'url(/bg/planet_base.svg)',
           backgroundPosition: 'center',
+          backgroundSize: 'cover',
+
           backgroundRepeat: 'no-repeat',
           transform: 'translateZ(0px)',
           x: baseLayerX,
