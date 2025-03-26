@@ -108,8 +108,7 @@ export default function CVApplyForm({ onClose, jobTitle }: CVApplyFormProps) {
                   transition={{ delay: 0.6 }}
                   className="text-secondary text-center text-sm"
                 >
-                  В ближайшее время с вами свяжется менеджер для обсуждения
-                  персональных условий
+                  В ближайшее время с вами свяжется куратор и поможет составить качественное резюме
                 </motion.p>
               </div>
             </motion.div>
