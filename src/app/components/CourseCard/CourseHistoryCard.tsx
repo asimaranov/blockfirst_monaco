@@ -98,13 +98,14 @@ export function CourseHistoryCard({
                         alt="star"
                         width={16}
                         height={16}
+                        className="h-4 w-4"
                       />
                       <Image
                         src={'/avatars/user1.png'}
                         alt="star"
                         width={16}
                         height={16}
-                        className="-ml-1"
+                        className="-ml-1 h-4 w-4"
                       />
                     </>
                   )}
@@ -127,6 +128,7 @@ export function CourseHistoryCard({
                 viewBox="0 0 4 4"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className="w-1 h-1"
               >
                 <circle cx="2" cy="2" r="2" fill="#33CF8E" />
               </svg>
@@ -143,8 +145,8 @@ export function CourseHistoryCard({
           </div>
         </div>
         <div className="mt-5">
-          <div className="font-sem flex flex-row items-center gap-3 text-base">
-            <Image src={LightSvg} alt={''} />
+          <div className="font-semibold flex flex-row items-center gap-3 text-base">
+            <Image src={LightSvg} alt={''} className='w-5 h-5' />
             {percent}%
           </div>
           <Progress useFlag className="mt-3" value={percent} />
