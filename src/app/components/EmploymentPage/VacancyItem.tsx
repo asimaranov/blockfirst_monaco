@@ -154,6 +154,7 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
                       viewBox="0 0 20 20"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
                     >
                       <circle
                         cx="10"
@@ -190,6 +191,7 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
                       viewBox="0 0 20 20"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
                     >
                       <circle
                         cx="10"
