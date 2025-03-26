@@ -5,8 +5,6 @@ import { useEffect, useState } from 'react';
 import { cn } from '~/helpers';
 import { motion } from 'framer-motion';
 import { QRCodeSVG } from 'qrcode.react';
-import CopyIcon from './assets/copy_icon';
-import CopiedIcon from './assets/copied_icon.svg';
 import BackIcon from '../AuthPage/assets/back_icon';
 import CopyButton from '../shared/CopyButton/CopyButton';
 interface StudentFormProps {

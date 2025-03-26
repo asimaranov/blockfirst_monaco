@@ -70,7 +70,7 @@ export function PricingTopbar() {
 
             <PricingSection className="flex flex-col items-end gap-2 pr-8 ">
               <div className="flex flex-row items-center justify-end gap-2 text-sm">
-                <Image src={AvatarsIcon} alt={''} className='h-6' />
+                <Image src={AvatarsIcon} alt={''} className='h-6 w-16.5' />
               </div>
               <span className="font-roboto text-secondary text-xs opacity-50 leading-3.5">
                 Сервисы для оплаты
