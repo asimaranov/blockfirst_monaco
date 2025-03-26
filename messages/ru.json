@@ -1,7 +1,8 @@
 {
   "UserSpace": {
     "month": "{count, plural, zero {месяцев} one {месяц} few {месяца} other {месяцев}}",
-    "lesson": "{count, plural, zero {уроков} one {урок} few {урока} other {уроков}}"
+    "lesson": "{count, plural, zero {уроков} one {урок} few {урока} other {уроков}}",
+    "course": "{count, plural, zero {курсов} one {курс} few {курса} other {курсов}}"
   },
   "EmploymentPage": {
     "vacanciesCount": "{count, plural, zero {вакансий} one {вакансия} few {вакансии} other {вакансий}}"

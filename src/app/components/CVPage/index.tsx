@@ -40,6 +40,7 @@ import { WithdrawForm } from './WithdrawForm';
 import { Progress } from '../shared/Progress';
 import ToggleMinus from '../shared/ToggleMinus/ToggleMinus';
 import CVApplyForm from './CVApplyForm';
+import { useTranslations } from 'next-intl';
 // Add new types
 type TimePeriod = any;
 
@@ -219,7 +220,7 @@ const StageCard = ({
         <div className="relative flex flex-row">
           <Progress
             value={progressValue}
-            className="h-4 rounded-full"
+            className="rounded-full"
             inactive={!completed && progressValue === 0}
           />
         </div>
@@ -287,6 +288,7 @@ const CourseItem = ({
         viewBox="0 0 20 20"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        className="h-5 w-5"
       >
         <path
           d="M18.5 10C18.5 14.6944 14.6944 18.5 10 18.5C5.30558 18.5 1.5 14.6944 1.5 10C1.5 5.30558 5.30558 1.5 10 1.5C14.6944 1.5 18.5 5.30558 18.5 10Z"
@@ -301,6 +303,7 @@ const CourseItem = ({
         viewBox="0 0 20 20"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        className="h-5 w-5"
       >
         <path
           d="M18.5 10C18.5 14.6944 14.6944 18.5 10 18.5C5.30558 18.5 1.5 14.6944 1.5 10C1.5 5.30558 5.30558 1.5 10 1.5C14.6944 1.5 18.5 5.30558 18.5 10Z"
@@ -329,7 +332,6 @@ const CourseSection = ({
   position,
   opened,
   courses,
-  footerText,
   buttonText,
   isDisabled = false,
 }: {
@@ -341,11 +343,11 @@ const CourseSection = ({
     duration: string;
     completed: boolean;
   }[];
-  footerText: string;
   buttonText: string;
   isDisabled?: boolean;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const t = useTranslations('UserSpace');
 
   return (
     <div className="border-accent flex flex-1 flex-col not-group-last:border-r">
@@ -373,16 +375,37 @@ const CourseSection = ({
 
       <div className="mt-auto flex flex-col gap-6">
         <button
-          className={`mx-8 flex cursor-pointer items-center justify-center rounded-full py-3.5 hover:bg-[#1242B2] ${isDisabled ? 'bg-secondary/10 text-secondary' : 'bg-primary text-foreground'}`}
+          className={`mx-8 flex items-center justify-center rounded-full py-3.5 ${isDisabled ? 'bg-secondary/10 text-secondary' : 'bg-primary text-foreground cursor-pointer hover:bg-[#1242B2]'}`}
           disabled={isDisabled}
           onClick={() => setIsOpen(true)}
         >
-          <span className="cursor-pointer text-sm">{buttonText}</span>
-          <ChevronRight size={16} className="ml-2" />
+          <span className="text-sm">{buttonText}</span>
+          <svg
+            width="21"
+            height="20"
+            viewBox="0 0 21 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M14.2307 4.43351C14.5295 4.14669 15.0043 4.15643 15.2911 4.45527L19.9065 9.26401C20.185 9.55421 20.185 10.0125 19.9065 10.3027L15.2911 15.1114C15.0043 15.4103 14.5295 15.42 14.2307 15.1332C13.9318 14.8464 13.9221 14.3716 14.2089 14.0727L18.3258 9.78335L14.2089 5.49395C13.9221 5.19511 13.9318 4.72034 14.2307 4.43351Z"
+              fill="#F2F2F2"
+            />
+          </svg>
         </button>
 
         <div className="border-accent bg-[#14171C] py-2">
-          <p className="text-secondary text-center text-xs">{footerText}</p>
+          <p className="text-secondary text-center text-xs">
+            Закончите{' '}
+            <span className="text-foreground">
+              {courses.filter((x) => !x.completed).length} {t('course', {
+                count: courses.filter((x) => !x.completed).length,
+              })}
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -402,13 +425,13 @@ const FAQItem = ({
   onClick: () => void;
 }) => {
   return (
-    <div className="border-accent border-b">
+    <div className="border-accent border-b last:border-b-0">
       <div className="px-8 py-6">
         <div
           className="flex cursor-pointer items-center justify-between"
           onClick={onClick}
         >
-          <h3 className="text-foreground text-sm ">{question}</h3>
+          <h3 className="text-foreground text-sm">{question}</h3>
           <ToggleMinus
             isExpanded={isOpen}
             onToggle={onClick}
@@ -495,7 +518,7 @@ export default function CVPage({ session }: { session: Session }) {
 
   return (
     <main className="border-accent border-r border-l">
-      <div className="flex min-h-screen w-full flex-col">
+      <div className="border-accent flex min-h-screen w-full flex-col border-b">
         <Topbar lastestUpdate={'18 марта 2025'} />
 
         {/* CV Progress Grid */}
@@ -527,7 +550,6 @@ export default function CVPage({ session }: { session: Session }) {
                   completed: false,
                 },
               ]}
-              footerText="Закончены 2 курса"
               buttonText="Подготовить резюме"
             />
           </div>
@@ -565,7 +587,6 @@ export default function CVPage({ session }: { session: Session }) {
                   completed: false,
                 },
               ]}
-              footerText="Закончите 3 курса"
               buttonText="Недоступно"
               isDisabled={true}
             />
@@ -592,7 +613,6 @@ export default function CVPage({ session }: { session: Session }) {
                   completed: false,
                 },
               ]}
-              footerText="Закончите 1 курс"
               buttonText="Недоступно"
               isDisabled={true}
             />
@@ -617,7 +637,7 @@ export default function CVPage({ session }: { session: Session }) {
                 </p>
               </div>
 
-              <div className="bg-dark-bg mt-8 py-6">
+              <div className="mt-8 bg-[#14171C] py-6">
                 <div className="flex gap-20 px-8">
                   <div className="flex gap-4">
                     <div className="flex-shrink-0">
