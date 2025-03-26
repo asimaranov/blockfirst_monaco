@@ -202,15 +202,17 @@ const StageCard = ({
 }) => (
   <div className="flex flex-col gap-5 p-8 pr-0 pb-0">
     <div
-      className={`inline-flex w-fit items-center rounded-full border-[0.5px] px-3 py-1.5 ${completed ? 'border-success text-success' : 'border-secondary/50 text-secondary'}`}
+      className={`inline-flex w-fit items-center rounded-full border-[0.5px] px-3 py-1.25 ${completed ? 'border-success/50 text-success' : 'border-secondary/50 text-secondary'}`}
     >
-      <span className="text-xs">{title}</span>
+      <span className="text-xs leading-3.5">{title}</span>
     </div>
 
     <div className="flex flex-col group-last:pr-8">
-      <div className="flex flex-col gap-2 pb-8">
+      <div className="flex flex-col gap-2 pb-5">
         <h3 className="text-foreground text-2xl font-normal">{salaryRange}</h3>
-        <p className="text-secondary text-xs">{position}</p>
+        <p className="text-secondary text-xs leading-3.5 uppercase">
+          {position}
+        </p>
       </div>
 
       <div className="relative">
@@ -278,19 +280,44 @@ const CourseItem = ({
           stroke-linejoin="round"
         />
       </svg>
+    ) : opened ? (
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M18.5 10C18.5 14.6944 14.6944 18.5 10 18.5C5.30558 18.5 1.5 14.6944 1.5 10C1.5 5.30558 5.30558 1.5 10 1.5C14.6944 1.5 18.5 5.30558 18.5 10Z"
+          stroke="#195AF4"
+          stroke-linecap="round"
+        />
+      </svg>
     ) : (
-      <div
-        className={`mt-1 flex h-5 w-5 items-center justify-center rounded-full ${opened ? 'border-primary border' : 'border-secondary/50 border'}`}
-      ></div>
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M18.5 10C18.5 14.6944 14.6944 18.5 10 18.5C5.30558 18.5 1.5 14.6944 1.5 10C1.5 5.30558 5.30558 1.5 10 1.5C14.6944 1.5 18.5 5.30558 18.5 10Z"
+          stroke="#9AA6B5"
+          stroke-opacity="0.5"
+          stroke-linecap="round"
+        />
+      </svg>
     )}
     <div className="flex flex-col gap-2">
       <p className="text-foreground text-sm">{title}</p>
       <div className="text-secondary flex items-center gap-3 text-xs">
-        <span>{lessons}</span>
+        <span className="text-xxs uppercase">{lessons}</span>
         {duration && (
           <>
             <div className="bg-secondary/20 h-3 w-px"></div>
-            <span>{duration}</span>
+            <span className="text-xxs uppercase">{duration}</span>
           </>
         )}
       </div>
@@ -325,11 +352,13 @@ const CourseSection = ({
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <CVApplyForm onClose={() => setIsOpen(false)} jobTitle={position} />
       </Modal>
-      <div className="border-accent border-b bg-[#14171C] px-8 py-4">
-        <h4 className="text-secondary/50 text-xs uppercase">Этапы курса</h4>
+      <div className="border-accent bg-[#14171C] px-8 py-4">
+        <h4 className="text-secondary/50 text-xs leading-4 uppercase">
+          Курсы этапа
+        </h4>
       </div>
 
-      <div className="flex flex-col gap-4 px-8 py-7">
+      <div className="flex flex-col gap-4 px-8 pt-7 pb-10">
         {courses.map((course, index) => (
           <CourseItem
             key={index}
@@ -344,7 +373,7 @@ const CourseSection = ({
 
       <div className="mt-auto flex flex-col gap-6">
         <button
-          className={`mx-8 flex cursor-pointer items-center justify-center rounded-full py-3 hover:bg-[#1242B2] ${isDisabled ? 'bg-secondary/10 text-secondary' : 'bg-primary text-foreground'}`}
+          className={`mx-8 flex cursor-pointer items-center justify-center rounded-full py-3.5 hover:bg-[#1242B2] ${isDisabled ? 'bg-secondary/10 text-secondary' : 'bg-primary text-foreground'}`}
           disabled={isDisabled}
           onClick={() => setIsOpen(true)}
         >
@@ -352,7 +381,7 @@ const CourseSection = ({
           <ChevronRight size={16} className="ml-2" />
         </button>
 
-        <div className="bg-dark-bg border-accent border-t py-2">
+        <div className="border-accent bg-[#14171C] py-2">
           <p className="text-secondary text-center text-xs">{footerText}</p>
         </div>
       </div>
@@ -379,7 +408,7 @@ const FAQItem = ({
           className="flex cursor-pointer items-center justify-between"
           onClick={onClick}
         >
-          <h3 className="text-foreground text-base">{question}</h3>
+          <h3 className="text-foreground text-sm ">{question}</h3>
           <ToggleMinus
             isExpanded={isOpen}
             onToggle={onClick}
@@ -470,7 +499,7 @@ export default function CVPage({ session }: { session: Session }) {
         <Topbar lastestUpdate={'18 марта 2025'} />
 
         {/* CV Progress Grid */}
-        <div className="mt-4 grid grid-cols-1 gap-0 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-0 md:grid-cols-3">
           {/* First Column - Junior */}
           <div className="border-accent flex flex-col">
             <StageCard
@@ -569,7 +598,7 @@ export default function CVPage({ session }: { session: Session }) {
             />
           </div>
         </div>
-        <div className="border-accent border-accent h-8 shrink-0 border-y"></div>
+        <div className="border-accent h-16 shrink-0 border-y"></div>
 
         {/* FAQ Section */}
         <div className="flex flex-row">
