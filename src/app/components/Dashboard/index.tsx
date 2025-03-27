@@ -24,7 +24,7 @@ export default function Dashboard({ session }: { session: Session }) {
   >('courses');
 
   return (
-    <main className="border-accent border-r border-l">
+    <main className="border-accent border-0 sm:border-r sm:border-l">
       <Topbar
         lastestUpdate={lastUpdate}
         items={[
@@ -43,12 +43,14 @@ export default function Dashboard({ session }: { session: Session }) {
       <div className="grid grid-cols-1 gap-8">
         {dashboardSection === 'courses' && (
           <>
-            {COURSES?.[0] ? (
-              <CourseTopCard course={COURSES[0]} />
-            ) : (
-              <Skeleton className="h-[354px] w-full" />
-            )}
-            <section className="divide [&>*]:border-accent divide-accent border-accent grid grid-cols-1 gap-y-9 divide-x-1 sm:grid-cols-2 lg:grid-cols-3 [&>*]:border-y">
+            <div className="hidden sm:block">
+              {COURSES?.[0] ? (
+                <CourseTopCard course={COURSES[0]} />
+              ) : (
+                <Skeleton className="h-88.5 w-full" />
+              )}
+            </div>
+            <section className="divide [&>*]:border-t sm:[&>*]:border-y  [&>*]:border-accent divide-accent border-accent grid grid-cols-1 gap-y-0 sm:gap-y-9 divide-x-1 sm:grid-cols-2 lg:grid-cols-3">
               {COURSES.slice(1).map((course) => (
                 <CourseCard key={course.id} course={course} />
               ))}
@@ -61,15 +63,20 @@ export default function Dashboard({ session }: { session: Session }) {
           </>
         )}
         {dashboardSection === 'history' && (
-            <section className="divide [&>*]:border-accent divide-accent border-accent grid grid-cols-1 gap-y-9 divide-x-1 sm:grid-cols-2 lg:grid-cols-3 [&>*]:border-y">
+          <section className="divide [&>*]:border-accent divide-accent border-accent grid grid-cols-1 gap-y-0 sm:gap-y-9 divide-x-1 sm:grid-cols-2 lg:grid-cols-3 [&>*]:border-y">
             {COURSES.filter((x) => !x.soon).map((course) => (
-              <CourseHistoryCard key={course.id} course={course} percent={57} courseStudyingFor={'1д 12ч 48м'} />
+              <CourseHistoryCard
+                key={course.id}
+                course={course}
+                percent={57}
+                courseStudyingFor={'1д 12ч 48м'}
+              />
             ))}
             {Array.from({ length: 3 - ((COURSES.length - 1) % 3) }).map(
-                (_, index) => (
-                  <div key={index}></div>
-                )
-              )}
+              (_, index) => (
+                <div key={index}></div>
+              )
+            )}
           </section>
         )}
       </div>

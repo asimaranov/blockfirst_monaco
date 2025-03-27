@@ -127,7 +127,7 @@ export default function Sidebar() {
 
   return (
     <>
-      <section className="relative z-10 flex h-screen w-full max-w-86 flex-col">
+      <section className="relative z-10 h-screen w-full max-w-86 flex-col hidden sm:flex">
         <nav className={'flex w-full flex-col'}>
           <div className="mx-8 mt-8 flex flex-row items-center justify-between">
             <Link href="/dashboard" className="hover:opacity-80">

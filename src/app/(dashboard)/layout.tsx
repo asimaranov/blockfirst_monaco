@@ -8,7 +8,7 @@ export default function AuthPageBase({
   return (
     <div className="relative flex max-h-screen flex-row bg-background">
       <Sidebar />
-      <div className="w-full bg-dark-bg px-[3.704vw] overflow-scroll" id='content-view'>{children}</div>
+      <div className="w-full bg-dark-bg px-0 sm:px-8 overflow-scroll" id='content-view'>{children}</div>
     </div>
   );
 }

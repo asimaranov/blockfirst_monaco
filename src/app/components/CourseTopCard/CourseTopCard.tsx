@@ -16,7 +16,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
 
   return (
     <section
-      className="border-accent group relative flex flex-row gap-10 border-b hover:bg-[#14171C] border-t"
+      className="border-accent group relative sm:flex flex-row gap-10 border-b hover:bg-[#14171C] border-t"
       onMouseEnter={() => {
         if (!course.soon) {
           controls.start({ rotate: -5, scale: 1.2 });
