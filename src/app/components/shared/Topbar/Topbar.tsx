@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { cn } from '~/helpers';
+import MobileHeader from '../../MobileHeader';
 
 export interface TopbarProps {
   /**
@@ -31,6 +32,8 @@ export function Topbar({
   className,
 }: TopbarProps) {
   return (
+    <>
+    <MobileHeader hasNotifications={true} />
     <nav
       className={cn(
         'flex w-full flex-row items-center justify-between px-8 py-6',
@@ -41,5 +44,7 @@ export function Topbar({
       {leftContent}
       {rightContent}
     </nav>
+    
+    </>
   );
 }
