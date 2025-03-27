@@ -2,36 +2,45 @@ import { ICourse } from '~/app/lib/constants/courses';
 import Image from 'next/image';
 import { Star, StarGrey } from '../icons/Star';
 import { useTranslations } from 'next-intl';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ChevronRight } from '../icons/ChevronRight';
 import { Info } from '../icons/Info';
 import GridSvg from './assets/grid.svg';
 import LightSvg from './assets/light.svg';
 import ClockSvg from './assets/clock.svg';
-
 import { motion, useAnimation } from 'framer-motion';
 import { Progress } from '../shared/Progress';
 import Link from 'next/link';
 
-export function CourseHistoryCard({
-  course,
-  percent,
-  courseStudyingFor,
-}: {
+type UnifiedCourseCardProps = {
   course: ICourse;
-  percent: number;
-  courseStudyingFor: string;
-}) {
+  variant?: 'default' | 'history';
+  percent?: number;
+  courseStudyingFor?: string;
+};
+
+export function UnifiedCourseCard({
+  course,
+  variant = 'default',
+  percent = 0,
+  courseStudyingFor = '',
+}: UnifiedCourseCardProps) {
+  const t = useTranslations('UserSpace');
   const controls = useAnimation();
+  const isHistory = variant === 'history';
 
   return (
     <div
       className="group relative flex shrink-0 flex-col items-center hover:bg-[#14171C] nth-[3n]:border-r-0"
       onMouseEnter={() => {
-        controls.start({ rotate: -30, scale: 1.2 });
+        if (!course.soon || isHistory) {
+          controls.start({ rotate: -30, scale: 1.2 });
+        }
       }}
       onMouseLeave={() => {
-        controls.start({ rotate: 0, scale: 1 });
+        if (!course.soon || isHistory) {
+          controls.start({ rotate: 0, scale: 1 });
+        }
       }}
     >
       <div className="bg-background relative w-full overflow-hidden">
@@ -121,19 +130,41 @@ export function CourseHistoryCard({
                 </span>
               </div>
             </div>
-            <div className="flex items-center gap-1 text-xs text-[#33CF8E]">
-              <svg
-                width="4"
-                height="4"
-                viewBox="0 0 4 4"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-1 h-1"
-              >
-                <circle cx="2" cy="2" r="2" fill="#33CF8E" />
-              </svg>
-              In Progress
-            </div>
+            {isHistory ? (
+              <div className="flex items-center gap-1 text-xs text-[#33CF8E]">
+                <svg
+                  width="4"
+                  height="4"
+                  viewBox="0 0 4 4"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-1 w-1"
+                >
+                  <circle cx="2" cy="2" r="2" fill="#33CF8E" />
+                </svg>
+                In Progress
+              </div>
+            ) : (
+              <div className="text-secondary text-xxs flex items-center gap-3">
+                {!course.soon ? (
+                  <span>
+                    {course.info?.lessonsCount || 0}{' '}
+                    {t('lesson', { count: course.info?.lessonsCount || 0 })}
+                  </span>
+                ) : (
+                  <>–</>
+                )}
+                <div className="bg-secondary text-xxs h-6 w-px opacity-20"></div>
+                {!course.soon ? (
+                  <span>
+                    {course.info?.duration || 0}{' '}
+                    {t('month', { count: course.info?.duration || 0 })}
+                  </span>
+                ) : (
+                  <>–</>
+                )}
+              </div>
+            )}
           </div>
           <div className="flex flex-col gap-4">
             <h3 className="text-lg font-medium text-[#F2F2F2]">
@@ -144,27 +175,55 @@ export function CourseHistoryCard({
             </p>
           </div>
         </div>
-        <div className="mt-5">
-          <div className="font-semibold flex flex-row items-center gap-3 text-base">
-            <Image src={LightSvg} alt={''} className='w-5 h-5' />
-            {percent}%
+
+        {isHistory && (
+          <div className="mt-5">
+            <div className="flex flex-row items-center gap-3 text-base font-semibold">
+              <Image src={LightSvg} alt={''} className="h-5 w-5" />
+              {percent}%
+            </div>
+            <Progress useFlag className="mt-3" value={percent} />
           </div>
-          <Progress useFlag className="mt-3" value={percent} />
-        </div>
-        <div className="mt-6 flex w-full justify-between gap-4 text-sm">
-          <Link href={`/course/${course.id}`}>
+        )}
+
+        {isHistory ? (
+          <div className="mt-6 flex w-full justify-between gap-4 text-sm">
+            <Link href={`/course/${course.id}`}>
+              <button
+                className={`border-primary hover:bg-primary flex h-11 cursor-pointer items-center justify-center gap-1.5 rounded-full border px-10 duration-300`}
+              >
+                <Info /> Подробнее
+              </button>
+            </Link>
+            <div className="mr-9 flex flex-row items-center justify-center gap-1.5">
+              <Image src={ClockSvg} className="h-4 w-4" alt={''} />{' '}
+              {courseStudyingFor}
+            </div>
+          </div>
+        ) : !course?.soon ? (
+          <div className="mt-6 flex w-full gap-4 text-sm">
             <button
-              className={`border-primary hover:bg-primary flex h-11 cursor-pointer items-center justify-center gap-1.5 rounded-full border px-10 duration-300`}
+              className={`border-primary hover:bg-primary flex h-11 flex-1 cursor-pointer items-center justify-center gap-2 rounded-full border duration-300`}
+            >
+              Начать <ChevronRight />
+            </button>
+            <button
+              className={`hover:border-secondary flex h-11 flex-1 cursor-pointer items-center justify-center gap-2 rounded-full border border-transparent duration-300`}
             >
               <Info /> Подробнее
             </button>
-          </Link>
-          <div className="mr-9 flex flex-row items-center justify-center gap-1.5">
-            <Image src={ClockSvg} className="h-4 w-4" alt={''} />{' '}
-            {courseStudyingFor}
           </div>
-        </div>
+        ) : (
+          <button
+            className={`bg-background z-100 mt-6 flex h-11 w-full items-center justify-center gap-2 rounded-full text-sm`}
+          >
+            🔥Скоро🔥
+          </button>
+        )}
       </div>
+      {course.soon && !isHistory && (
+        <div className="bg-dark-bg absolute top-0 left-0 z-30 h-full w-full opacity-50"></div>
+      )}
     </div>
   );
 }

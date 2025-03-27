@@ -4,8 +4,8 @@ import Image from 'next/image';
 export default function Footer() {
   return (
     <>
-      <div className="border-accent h-9.5 shrink-0"></div>
-      <footer className="bg-background border-accent border-t pt-16">
+      <div className="border-accent h-9.5 shrink-0 hidden sm:block"></div>
+      <footer className="bg-background border-accent border-t pt-16 hidden sm:block">
         {/* Top section */}
         <div className="mb-16 flex w-full px-8">
           {/* Newsletter signup */}

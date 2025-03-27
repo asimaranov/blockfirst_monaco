@@ -5,10 +5,9 @@ import { Topbar } from '~/app/components/Dashboard/Topbar';
 import { COURSES, ICourse } from '~/app/lib/constants/courses';
 import { Skeleton } from '~/app/components/shared/Skeleton';
 import { CourseTopCard } from '~/app/components/CourseTopCard';
-import { CourseCard } from '~/app/components/CourseCard/CourseCard';
 import { Session } from '~/server/auth';
 import Footer from '~/app/components/Footer';
-import { CourseHistoryCard } from '../CourseCard/CourseHistoryCard';
+import { UnifiedCourseCard } from '../CourseCard/UnifiedCourseCard';
 
 export default function Dashboard({ session }: { session: Session }) {
   const lastUpdate = new Date(
@@ -22,6 +21,11 @@ export default function Dashboard({ session }: { session: Session }) {
   const [dashboardSection, setDashboardSection] = useState<
     'courses' | 'history'
   >('courses');
+
+  const cousesList =
+    dashboardSection === 'courses'
+      ? COURSES.slice(1)
+      : COURSES.filter((x) => !x.soon);
 
   return (
     <main className="border-accent border-0 sm:border-r sm:border-l">
@@ -42,43 +46,38 @@ export default function Dashboard({ session }: { session: Session }) {
       />
       <div className="grid grid-cols-1 gap-8">
         {dashboardSection === 'courses' && (
-          <>
-            <div className="hidden sm:block">
-              {COURSES?.[0] ? (
-                <CourseTopCard course={COURSES[0]} />
-              ) : (
-                <Skeleton className="h-88.5 w-full" />
-              )}
-            </div>
-            <section className="divide [&>*]:border-t sm:[&>*]:border-y  [&>*]:border-accent divide-accent border-accent grid grid-cols-1 gap-y-0 sm:gap-y-9 divide-x-1 sm:grid-cols-2 lg:grid-cols-3">
-              {COURSES.slice(1).map((course) => (
-                <CourseCard key={course.id} course={course} />
-              ))}
-              {Array.from({ length: 3 - ((COURSES.length - 1) % 3) }).map(
-                (_, index) => (
-                  <div key={index}></div>
-                )
-              )}
-            </section>
-          </>
-        )}
-        {dashboardSection === 'history' && (
-          <section className="divide [&>*]:border-accent divide-accent border-accent grid grid-cols-1 gap-y-0 sm:gap-y-9 divide-x-1 sm:grid-cols-2 lg:grid-cols-3 [&>*]:border-y">
-            {COURSES.filter((x) => !x.soon).map((course) => (
-              <CourseHistoryCard
-                key={course.id}
-                course={course}
-                percent={57}
-                courseStudyingFor={'1д 12ч 48м'}
-              />
-            ))}
-            {Array.from({ length: 3 - ((COURSES.length - 1) % 3) }).map(
-              (_, index) => (
-                <div key={index}></div>
-              )
+          <div className="hidden sm:block">
+            {COURSES?.[0] ? (
+              <CourseTopCard course={COURSES[0]} />
+            ) : (
+              <Skeleton className="h-88.5 w-full" />
             )}
-          </section>
+          </div>
         )}
+        <section className="divide [&>*]:border-accent divide-accent border-accent grid grid-cols-1 gap-y-0 divide-x-1 sm:grid-cols-2 sm:gap-y-9 lg:grid-cols-3 [&>*]:border-t sm:[&>*]:border-y">
+          {dashboardSection === 'courses'
+            ? cousesList.map((course) => (
+                <UnifiedCourseCard
+                  key={course.id}
+                  course={course}
+                  variant="default"
+                />
+              ))
+            : cousesList.map((course) => (
+                <UnifiedCourseCard
+                  key={course.id}
+                  course={course}
+                  variant="history"
+                  percent={57}
+                  courseStudyingFor={'1д 12ч 48м'}
+                />
+              ))}
+          {Array.from({
+            length: 3 - (cousesList.length % 3),
+          }).map((_, index) => (
+            <div key={index}></div>
+          ))}
+        </section>
       </div>
 
       <Footer />

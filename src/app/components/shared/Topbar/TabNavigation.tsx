@@ -13,7 +13,7 @@ interface TabNavigationProps {
 
 export function TabNavigation({ items }: TabNavigationProps) {
   return (
-    <div className="flex flex-row rounded-[100px] bg-[#01050D]">
+    <div className="flex flex-row rounded-[100px] bg-[#01050D] w-full sm:w-auto">
       {items.map((item) => (
         <div
           onClick={item.onClick}
@@ -22,6 +22,7 @@ export function TabNavigation({ items }: TabNavigationProps) {
             'font-roboto flex items-center justify-center px-8 py-3 text-sm font-medium',
             'shrink-0 cursor-pointer',
             'leading-4',
+            'w-1/2 sm:w-auto',
             item.active
               ? 'rounded-[100px] bg-[#F2F2F2] text-[#01050D]'
               : 'bg-transparent text-[#F2F2F2] hover:opacity-80'
