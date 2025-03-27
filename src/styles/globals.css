@@ -102,7 +102,6 @@
 
   --text-6xl: 60px;
 
-
   /* --text-xxs--line-height: 14px;
   --text-xs--line-height: 14px;
   --text-sm--line-height: 14px; */
@@ -137,6 +136,58 @@
 }
 
 @layer theme {
+  :root {
+    /* This is a disabled section that enables mobile scaling */
+    @media (width >= 999999px) {
+      --spacing: 1.0667vw;
+
+      --text-xxs: 2.6667vw;
+      --text-xs: 3.2vw;
+      --text-sm: 3.7333vw;
+      --text-base: 4.2667vw;
+      --text-lg: 4.8vw;
+      --text-xl: 5.3333vw;
+      --text-2xl: 6.4vw;
+      --text-2xll: 7.4667vw;
+      --text-3xl: 7.4667vw;
+
+      --text-4xl: 10.6667vw;
+
+      --text-6xl: 16vw;
+
+      /* --text-xxs--line-height: 14px;
+      --text-xs--line-height: 14px;
+      --text-sm--line-height: 14px; */
+      --text-base--line-height: 5.3333vw;
+      /* --text-lg--line-height: 18px;
+      --text-xl--line-height: 20px;
+      --text-2xl--line-height: 24px;
+      --text-2xll--line-height: 24px;
+    
+      --text-3xl--line-height: 32px; */
+
+      --color-white: #fff;
+      --color-black: #000;
+
+      --color-background: #01050d;
+      --color-foreground: #f2f2f2;
+      --color-primary: #195af4;
+      --color-secondary: #9aa6b5;
+      --color-accent: #282d33;
+      --color-success: #48cc9e;
+      --color-error: #cf3336;
+      --color-dark-bg: #0f1217;
+
+      /* --font-weight-extrablack: 900;
+      --font-weight-black: 800;
+      --font-weight-bold: 600;
+      --font-weight-semibold: 500;
+      --font-weight-medium: 400;
+      --font-weight-regular: 300;
+      --font-weight-light: 200;
+      --font-weight-extralight: 100; */
+    }
+  }
   :root {
     @media (width >= theme(--breakpoint-lg)) {
       --spacing: 0.2315vw;
@@ -224,23 +275,23 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #14171C;
+    background: #14171c;
     border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #282D33;
+    background: #282d33;
     border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #3A3F45;
+    background: #3a3f45;
   }
 
   /* Firefox scrollbar */
   * {
     scrollbar-width: thin;
-    scrollbar-color: #282D33 #14171C;
+    scrollbar-color: #282d33 #14171c;
   }
 }
 
