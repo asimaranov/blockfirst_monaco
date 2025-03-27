@@ -54,7 +54,7 @@ export default function Dashboard({ session }: { session: Session }) {
             )}
           </div>
         )}
-        <section className="divide [&>*]:border-accent divide-accent border-accent grid grid-cols-1 gap-y-0 divide-x-1 sm:grid-cols-2 sm:gap-y-9 lg:grid-cols-3 [&>*]:border-t sm:[&>*]:border-y">
+        <section className="divide [&>*]:border-accent divide-accent border-accent grid grid-cols-1 gap-y-0 divide-x-0 sm:divide-x-1 sm:gap-y-9 sm:grid-cols-3 [&>*]:border-t sm:[&>*]:border-y">
           {dashboardSection === 'courses'
             ? cousesList.map((course) => (
                 <UnifiedCourseCard
