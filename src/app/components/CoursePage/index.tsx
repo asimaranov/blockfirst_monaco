@@ -1,11 +1,8 @@
 'use client';
 
-import { useState } from 'react';
 import { Topbar } from './Topbar';
-import { COURSES, ICourse } from '~/app/lib/constants/courses';
-import { Skeleton } from '~/app/components/shared/Skeleton';
+import { COURSES } from '~/app/lib/constants/courses';
 import { CourseInfoTopCard } from '~/app/components/CourseInfoTopCard';
-import { CourseCard } from '~/app/components/CourseCard/CourseCard';
 import { Session } from '~/server/auth';
 import Footer from '~/app/components/Footer';
 import StarterBadge from './bages/starter_badge.png';

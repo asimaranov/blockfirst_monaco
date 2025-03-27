@@ -5,9 +5,9 @@ export default function Footer() {
   return (
     <>
       <div className="border-accent h-9.5 shrink-0 hidden sm:block"></div>
-      <footer className="bg-background border-accent border-t pt-16 hidden sm:block">
+      <footer className="bg-background border-accent border-t pt-16 ">
         {/* Top section */}
-        <div className="mb-16 flex w-full px-8">
+        <div className="mb-16 flex w-full px-8 flex-col sm:flex-row">
           {/* Newsletter signup */}
           <div className="flex max-w-77 flex-col gap-10">
             <div className="flex flex-col gap-4">
@@ -68,7 +68,7 @@ export default function Footer() {
           <div className="flex-grow"></div>
 
           {/* Links section */}
-          <div className="ml-auto flex gap-16 lg:justify-end">
+          <div className="ml-auto flex gap-16 justify-end">
             <div className="flex flex-col gap-8">
               <span className="text-secondary text-xs uppercase opacity-50">
                 Медиа

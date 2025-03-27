@@ -1,23 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import { Topbar } from './Topbar';
-import { COURSES, ICourse } from '~/app/lib/constants/courses';
-import { Skeleton } from '~/app/components/shared/Skeleton';
-import { CourseTopCard } from '~/app/components/CourseTopCard';
-import { CourseCard } from '~/app/components/CourseCard/CourseCard';
 import { Session } from '~/server/auth';
 import Footer from '~/app/components/Footer';
-import FreePlan from './assets/pricing/free.png';
-import ProPlan from './assets/pricing/pro.png';
-import StarterPlan from './assets/pricing/starter.png';
 import Image from 'next/image';
-import { api } from '~/trpc/react';
 import { Tariff, TARIFFS } from '~/app/lib/constants/tariff';
 import { cn } from '~/helpers';
 import PaymentMethodsModal from './PaymentMethodsModal';
 import { formatPrice } from '~/app/lib/utils';
-import GridSvg from './assets/grid.svg';
 import { InfoPopover } from '~/app/components/shared/InfoPopover';
 
 const CheckIcon = () => (
