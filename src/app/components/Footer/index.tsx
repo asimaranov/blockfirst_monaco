@@ -14,7 +14,7 @@ export default function Footer() {
       ],
     },
     {
-      title: 'Медиа',
+      title: 'Сообщество',
       links: [
         { label: 'Youtube', href: '#' },
         { label: 'Twitter', href: '#' },
@@ -121,9 +121,9 @@ export default function Footer() {
       <div className="border-accent hidden h-9.5 shrink-0 sm:block"></div>
       <footer className="bg-background border-accent border-t pt-16">
         {/* Top section */}
-        <div className="mb-16 flex w-full flex-col gap-10 px-8 sm:flex-row sm:gap-0">
+        <div className="mb-16 flex w-full flex-col gap-10 px-5 sm:px-8 sm:flex-row sm:gap-0">
           {/* Newsletter signup */}
-          <div className="flex max-w-77 flex-col gap-10">
+          <div className="flex max-w-auto sm:max-w-77 flex-col gap-10">
             <div className="flex flex-col gap-4">
               <h3 className="text-2xl">Новости. Скидки. Анонсы</h3>
               <p className="text-secondary text-sm text-nowrap">
@@ -163,7 +163,7 @@ export default function Footer() {
               <div className="h-[1px] w-full bg-[#282F33]"></div>
             </div>
           </div>
-          <div className="flex-grow"></div>
+          {/* <div className="flex-grow"></div> */}
 
           {/* Mobile links section */}
           <div className="ml-0 flex md:hidden gap-16 sm:ml-auto sm:justify-end">
@@ -263,12 +263,12 @@ export default function Footer() {
         </div>
 
         {/* Copyright section */}
-        <div className="flex flex-col items-center px-8 pt-8 pb-8 text-xs md:flex-row md:justify-between">
-          <div className="text-secondary flex gap-6 text-xs">
-            <a href="#" className="hover:opacity-50">
+        <div className="flex flex-col items-center px-8 pt-8 pb-8 text-xs md:flex-row md:justify-between gap-5 sm:gap-0">
+          <div className="text-foreground sm:text-secondary flex gap-6 text-xs">
+            <a href="#" className="hover:opacity-50 text-sm sm:text-xs">
               Правила сервиса
             </a>
-            <a href="#" className="hover:opacity-50">
+            <a href="#" className="hover:opacity-50 text-sm sm:text-xs">
               Конфиденциальность
             </a>
           </div>

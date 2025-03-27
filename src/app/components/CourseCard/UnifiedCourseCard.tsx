@@ -89,7 +89,7 @@ export function UnifiedCourseCard({
           )}
         </div>
       </div>
-      <div className="flex w-full flex-col p-8 pt-7">
+      <div className="flex w-full flex-col p-8 px-5 sm:px-8 pt-7">
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div className="flex gap-2">
