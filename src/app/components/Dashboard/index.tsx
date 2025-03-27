@@ -8,6 +8,7 @@ import { CourseTopCard } from '~/app/components/CourseTopCard';
 import { Session } from '~/server/auth';
 import Footer from '~/app/components/Footer';
 import { UnifiedCourseCard } from '../CourseCard/UnifiedCourseCard';
+import { cn } from '~/helpers';
 
 export default function Dashboard({ session }: { session: Session }) {
   const lastUpdate = new Date(
@@ -54,20 +55,39 @@ export default function Dashboard({ session }: { session: Session }) {
             )}
           </div>
         )}
-        <section className="divide [&>*]:border-accent divide-accent border-accent grid grid-cols-1 gap-y-0 divide-x-0 sm:divide-x-1 sm:gap-y-9 sm:grid-cols-3 [&>*]:border-t sm:[&>*]:border-y">
+        <section className="divide [&>*]:border-accent divide-accent border-accent grid grid-cols-1 gap-y-0 divide-x-0 sm:grid-cols-3 sm:gap-y-9 sm:divide-x-1">
+          {dashboardSection === 'courses' && (
+            <div className='block sm:hidden'>
+              <UnifiedCourseCard
+                key={COURSES[0]!.id}
+                course={COURSES[0]!}
+                variant="default"
+                showProgress={true}
+                className='not-first:border-t sm:border-y'
+              />
+              <div className="flex flex-row gap-3 p-5 pt-10 text-base">
+                <div>Другие курсы</div>
+                <div className='w-7.5 h-5 bg-foreground text-sm text-background flex items-center justify-center rounded-[100px] font-medium'>8</div>
+              </div>
+            </div>
+          )}
+
           {dashboardSection === 'courses'
-            ? cousesList.map((course) => (
+            ? cousesList.map((course, index) => (
                 <UnifiedCourseCard
                   key={course.id}
                   course={course}
                   variant="default"
+                  showProgress={false}
+                  className={cn('sm:border-y', index !== 0 && 'border-t')}
                 />
               ))
-            : cousesList.map((course) => (
+            : cousesList.map((course, index) => (
                 <UnifiedCourseCard
                   key={course.id}
                   course={course}
                   variant="history"
+                  className={cn('sm:border-y', index !== 0 && 'border-t')}
                   percent={57}
                   courseStudyingFor={'1д 12ч 48м'}
                 />

@@ -17,13 +17,17 @@ type UnifiedCourseCardProps = {
   variant?: 'default' | 'history';
   percent?: number;
   courseStudyingFor?: string;
+  showProgress?: boolean;
+  className?: string;
 };
 
 export function UnifiedCourseCard({
   course,
   variant = 'default',
+  showProgress = true,
   percent = 0,
   courseStudyingFor = '',
+  className,
 }: UnifiedCourseCardProps) {
   const t = useTranslations('UserSpace');
   const controls = useAnimation();
@@ -31,7 +35,7 @@ export function UnifiedCourseCard({
 
   return (
     <div
-      className="group relative flex shrink-0 flex-col items-center hover:bg-[#14171C] nth-[3n]:border-r-0"
+      className={`group relative flex shrink-0 flex-col items-center hover:bg-[#14171C] nth-[3n]:border-r-0 ${className}`}
       onMouseEnter={() => {
         if (!course.soon || isHistory) {
           controls.start({ rotate: -30, scale: 1.2 });
@@ -176,7 +180,7 @@ export function UnifiedCourseCard({
           </div>
         </div>
 
-        {isHistory && (
+        {(showProgress || isHistory) && (
           <div className="mt-5">
             <div className="flex flex-row items-center gap-3 text-base font-semibold">
               <Image src={LightSvg} alt={''} className="h-5 w-5" />

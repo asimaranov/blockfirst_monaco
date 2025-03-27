@@ -1,6 +1,9 @@
 import React, { ReactNode } from 'react';
 import { cn } from '~/helpers';
 import MobileHeader from '../../MobileHeader';
+import { IUser } from '~/app/lib/types/IUser';
+import { authClient } from '~/server/auth/client';
+import { SubscriptionType } from '~/app/lib/constants/subsctiptions';
 
 export interface TopbarProps {
   /**
@@ -31,20 +34,35 @@ export function Topbar({
   showBorder = true,
   className,
 }: TopbarProps) {
+  const session = authClient.useSession();
+
+  const user: IUser = {
+    name: session.data?.user?.name ?? '',
+    startTimestamp: Date.now(),
+    createdAt: new Date().toISOString(),
+    subscriptionType: SubscriptionType.Starter,
+  };
   return (
     <>
-    <MobileHeader hasNotifications={true} />
-    <nav
-      className={cn(
-        'flex w-full flex-row items-center justify-between px-8 py-6',
-        showBorder && 'border-b border-[#282D33]',
-        className
-      )}
-    >
-      {leftContent}
-      {rightContent}
-    </nav>
-    
+      <MobileHeader
+        hasNotifications={true}
+        username={user.name}
+        startDate={new Date(user?.startTimestamp).toLocaleDateString('ru-RU', {
+          day: '2-digit',
+          month: '2-digit',
+          year: '2-digit',
+        })}
+      />
+      <nav
+        className={cn(
+          'flex w-full flex-row items-center justify-between px-8 py-6',
+          showBorder && 'border-b border-[#282D33]',
+          className
+        )}
+      >
+        {leftContent}
+        {rightContent}
+      </nav>
     </>
   );
 }
