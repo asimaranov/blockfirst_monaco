@@ -183,7 +183,7 @@ export default function Sidebar() {
                     }
                   }}
                 >
-                  <div className="group-data-[active=true] h-4 w-4">
+                  <div className="h-4 w-4">
                     {typeof item.icon === 'function' ? (
                       <item.icon />
                     ) : (

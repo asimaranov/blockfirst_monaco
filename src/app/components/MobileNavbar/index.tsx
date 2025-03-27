@@ -39,7 +39,7 @@ const NavItem: React.FC<NavItemProps> = ({
       }}
     >
       <div
-        className={`mb-2 flex justify-center ${isActive ? 'text-foreground' : 'text-secondary'}`}
+        className={`group mb-2 flex justify-center ${isActive ? 'text-foreground' : 'text-secondary'}`}
         data-active={isActive}
       >
         {icon}
