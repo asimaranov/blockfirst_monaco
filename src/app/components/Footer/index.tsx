@@ -12,6 +12,7 @@ export default function Footer() {
         { label: 'Блог', href: '#' },
         { label: 'Статьи', href: '#' },
       ],
+      className: '',
     },
     {
       title: 'Сообщество',
