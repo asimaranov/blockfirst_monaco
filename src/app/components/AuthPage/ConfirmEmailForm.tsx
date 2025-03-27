@@ -162,7 +162,7 @@ export default function ConfirmEmailForm({
           secondText={`Мы выслали на ваш электронный адрес ссылку для подтверждения.`}
         />
         <div className="relative">
-          <div className="relative flex flex-row gap-4">
+          <div className="relative flex flex-row gap-2.75 sm:gap-4">
             {Array.from({ length: 5 }).map((_, index) => (
               <input
                 ref={(node: HTMLInputElement | null) => {
@@ -229,7 +229,7 @@ export default function ConfirmEmailForm({
             </div>
           )}
         </div>
-        <div className="flex w-full flex-col items-center gap-4 pt-16">
+        <div className="flex w-full flex-col items-center gap-4 pt-6 sm:pt-16">
           <span className="text-lg text-foreground">
             {String(Math.floor(timer / 60)).padStart(2, '0')}:
             {String(timer % 60).padStart(2, '0')}

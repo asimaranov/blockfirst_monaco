@@ -95,7 +95,7 @@ export default function CourseInfoTopCard({ course }: { course: ICourse }) {
             }
           >
             <div className="flex flex-row items-center">
-              <span className="text-[0.81vw] leading-[1.157vw] text-[#F2F2F2]">
+              <span className="text-sm leading-[1.157vw] text-[#F2F2F2]">
                 Продолжить
               </span>
               <svg

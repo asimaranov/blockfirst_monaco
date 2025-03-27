@@ -6,11 +6,11 @@ export default function MainHeading({
   secondText: string;
 }) {
   return (
-    <div className="mb-10">
-      <p className="text-foreground text-center text-[2.3148vw] leading-[2.7199vw] font-medium tracking-tight uppercase whitespace-pre-line">
+    <div className="mb-8 sm:mb-10">
+      <p className="text-foreground text-center text-3xl sm:text-4xl sm:leading-[2.7199vw] font-medium tracking-tight uppercase sm:whitespace-pre-line">
         {mainText}
       </p>
-      <p className="text-secondary mt-6 text-center text-sm leading-[1.1574vw]">
+      <p className="text-secondary mt-6 text-center text-sm sm:leading-[1.1574vw]">
         {secondText}
       </p>
     </div>

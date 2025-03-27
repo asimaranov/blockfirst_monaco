@@ -198,8 +198,8 @@ export default function RightFiller() {
             }}
           >
             <div className="flex h-13 flex-col justify-center text-nowrap">
-              <span className="text-[1.5278vw] text-foreground">2310+</span>
-              <span className="text-[0.8912vw] text-secondary">
+              <span className="text-2xl text-foreground">2310+</span>
+              <span className="text-base text-secondary">
                 Прошедших курс
               </span>
             </div>

@@ -98,6 +98,11 @@
   --text-2xll: 28px;
   --text-3xl: 28px;
 
+  --text-4xl: 40px;
+
+  --text-6xl: 60px;
+
+
   /* --text-xxs--line-height: 14px;
   --text-xs--line-height: 14px;
   --text-sm--line-height: 14px; */
@@ -145,6 +150,10 @@
       --text-2xll: 1.6204vw;
 
       --text-3xl: 1.6204vw;
+
+      --text-4xl: 2.3148vw;
+
+      --text-6xl: 3.4722vw;
 
       /* --text-xs--line-height: 0.81vw;
       --text-sm--line-height: 0.81vw; */

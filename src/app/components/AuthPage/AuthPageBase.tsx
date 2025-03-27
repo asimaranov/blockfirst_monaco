@@ -18,7 +18,7 @@ export default function AuthPageBase({
 }) {
   return (
     <div className="bg-background relative flex h-dvh flex-row overflow-hidden">
-      <div className="outline-accent relative z-10 flex h-full flex-col outline-[0.0579vw] max-w-117 min-w-117 p-16">
+      <div className="outline-accent relative z-10 flex h-full flex-col outline-[0.0579vw] sm:max-w-117 sm:min-w-117 px-5 py-8 sm:p-16">
         <Image
           src={GridLeftSvg}
           alt="grid"
@@ -40,7 +40,7 @@ export default function AuthPageBase({
           <Image
             src={'/images/logo/form-logo.svg'}
             alt="logo"
-            className="w-38"
+            className="w-31 sm:w-38"
             width={152}
             height={44}
           />
