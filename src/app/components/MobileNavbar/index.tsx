@@ -11,7 +11,7 @@ import CertIcon from '../Sidebar/assets/section_icons/cert';
 import ReferralIcon from '../Sidebar/assets/section_icons/referral';
 import NotificationsIcon from '../Sidebar/assets/section_icons/notifications';
 import { NotificationsModal } from '../Notifications/NotificationsModal';
-
+import PremiumIcon from './assets/premium-icon.png';
 interface NavItemProps {
   href: string;
   icon: React.ReactNode;
@@ -80,9 +80,9 @@ const MobileNavbar: React.FC = () => {
     { href: '/pricing', icon: <TariffIcon />, label: 'Тариф' },
     {
       href: '#',
-      icon: <NotificationsIcon />,
-      label: 'Уведомления',
-      type: 'notifications',
+      icon: <Image src={PremiumIcon} alt="Notifications" className='w-5 h-5' />,
+      label: 'Премиум',
+      type: 'premium',
     },
   ];
 
