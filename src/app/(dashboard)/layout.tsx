@@ -1,14 +1,20 @@
 import Sidebar from '~/app/components/Sidebar/Sidebar';
-
+import MobileNavbar from '~/app/components/MobileNavbar';
 export default function AuthPageBase({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <div className="relative flex max-h-screen flex-col sm:flex-row bg-background">
+    <div className="bg-background relative flex max-h-screen flex-col sm:flex-row">
+      <MobileNavbar />
       <Sidebar />
-      <div className="w-full bg-dark-bg px-0 sm:px-8 overflow-scroll" id='content-view'>{children}</div>
+      <div
+        className="bg-dark-bg w-full overflow-scroll px-0 sm:px-8"
+        id="content-view"
+      >
+        {children}
+      </div>
     </div>
   );
 }
