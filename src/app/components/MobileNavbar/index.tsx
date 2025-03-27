@@ -4,29 +4,43 @@ import React, { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { CoursesIcon } from './assets/courses-icon';
-import DiplomaIcon from './assets/diploma-icon';
-import ReferralsIcon from './assets/referrals-icon';
-import TariffsIcon from './assets/tariffs-icon';
-import PremiumIcon from './assets/premium-icon.png';
 import Image from 'next/image';
-
+import LightningIcon from '../Sidebar/assets/section_icons/lightning';
+import TariffIcon from '../Sidebar/assets/section_icons/tariff';
+import CertIcon from '../Sidebar/assets/section_icons/cert';
+import ReferralIcon from '../Sidebar/assets/section_icons/referral';
+import NotificationsIcon from '../Sidebar/assets/section_icons/notifications';
+import { NotificationsModal } from '../Notifications/NotificationsModal';
 
 interface NavItemProps {
   href: string;
   icon: React.ReactNode;
   label: string;
   isActive: boolean;
+  onClick?: () => void;
 }
 
-const NavItem: React.FC<NavItemProps> = ({ href, icon, label, isActive }) => {
+const NavItem: React.FC<NavItemProps> = ({
+  href,
+  icon,
+  label,
+  isActive,
+  onClick,
+}) => {
   return (
     <Link
-      href={href}
+      href={href !== '#' ? href : ''}
       className="relative flex flex-1 flex-col items-center justify-center py-4"
+      onClick={(e) => {
+        if (href === '#' && onClick) {
+          e.preventDefault();
+          onClick();
+        }
+      }}
     >
       <div
         className={`mb-2 flex justify-center ${isActive ? 'text-foreground' : 'text-secondary'}`}
+        data-active={isActive}
       >
         {icon}
       </div>
@@ -52,13 +66,24 @@ const MobileNavbar: React.FC = () => {
   const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
 
   const navItems = [
-    { href: '/courses', icon: <CoursesIcon />, label: 'Курсы' },
-    { href: '/diploma', icon: <DiplomaIcon />, label: 'Диплом' },
-    { href: '/referrals', icon: <ReferralsIcon />, label: 'Рефералы' },
-    { href: '/tariff', icon: <TariffsIcon />, label: 'Тариф' },
-    { href: '/premium', icon: <Image src={PremiumIcon} alt="Premium" width={20} height={20} />, label: 'Премиум' },
+    {
+      href: '/dashboard',
+      icon: <LightningIcon />,
+      label: 'Курсы',
+      otherHref: '/course',
+    },
+    { href: '/diploma', icon: <CertIcon />, label: 'Диплом' },
+    { href: '/referral', icon: <ReferralIcon />, label: 'Рефералы' },
+    { href: '/pricing', icon: <TariffIcon />, label: 'Тариф' },
+    {
+      href: '#',
+      icon: <NotificationsIcon />,
+      label: 'Уведомления',
+      type: 'notifications',
+    },
   ];
 
   useEffect(() => {
@@ -101,28 +126,50 @@ const MobileNavbar: React.FC = () => {
     };
   }, [lastScrollY]);
 
+  // Determine if a route is active, checking both exact match and otherHref
+  const isRouteActive = (item: any) => {
+    return (
+      pathname === item.href ||
+      (item.otherHref && pathname.startsWith(item.otherHref)) ||
+      (item.href !== '#' && pathname.startsWith(item.href))
+    );
+  };
+
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.nav
-          className="bg-background fixed right-0 bottom-0 left-0 z-[999999] flex h-[70px] shadow-lg"
-          initial={{ y: 100 }}
-          animate={{ y: 0 }}
-          exit={{ y: 100 }}
-          transition={{ duration: 0.3 }}
-        >
-          {navItems.map((item) => (
-            <NavItem
-              key={item.href}
-              href={item.href}
-              icon={item.icon}
-              label={item.label}
-              isActive={pathname === item.href}
-            />
-          ))}
-        </motion.nav>
-      )}
-    </AnimatePresence>
+    <>
+      <AnimatePresence>
+        {isVisible && (
+          <motion.nav
+            className="bg-background fixed right-0 bottom-0 left-0 z-[999999] flex h-[70px] shadow-lg"
+            initial={{ y: 100 }}
+            animate={{ y: 0 }}
+            exit={{ y: 100 }}
+            transition={{ duration: 0.3 }}
+          >
+            {navItems.map((item) => (
+              <NavItem
+                key={item.href}
+                href={item.href}
+                icon={item.icon}
+                label={item.label}
+                isActive={isRouteActive(item)}
+                onClick={
+                  item.type === 'notifications'
+                    ? () => setIsNotificationsOpen(true)
+                    : undefined
+                }
+              />
+            ))}
+          </motion.nav>
+        )}
+      </AnimatePresence>
+
+      {/* Use the NotificationsModal component */}
+      <NotificationsModal
+        isOpen={isNotificationsOpen}
+        onClose={() => setIsNotificationsOpen(false)}
+      />
+    </>
   );
 };
 
