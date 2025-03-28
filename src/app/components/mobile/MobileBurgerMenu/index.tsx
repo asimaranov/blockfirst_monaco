@@ -14,8 +14,8 @@ const MobileBurgerMenu = ({ isOpen, onClose }: MobileBurgerMenuProps) => {
       y: '-100%',
       display: 'none',
       transition: {
-        // type: 'linear',
-        duration: 0.3
+        type: 'easeInOut',
+        duration: 0.5,
       },
     },
     open: {
@@ -36,7 +36,7 @@ const MobileBurgerMenu = ({ isOpen, onClose }: MobileBurgerMenuProps) => {
       variants={menuVariants}
     >
       {/* Menu Content */}
-      <div className="flex h-[calc(100vh-69px)] flex-col overflow-y-auto px-5">
+      <div className="flex h-[calc(100svh-69px)] flex-col overflow-y-auto px-5">
         <div className="flex flex-col space-y-10">
           {/* Menu sections with links */}
           <div className="flex flex-row justify-between">
