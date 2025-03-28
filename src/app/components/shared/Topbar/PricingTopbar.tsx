@@ -29,10 +29,10 @@ export function PricingTopbar() {
               isRightBordered
               className="flex flex-row items-center gap-2 text-base sm:text-xl"
             >
-              <div className="pl-8 ">Тарифы BlockFirst</div>
+              <div className="pl-5 sm:pl-8">Тарифы BlockFirst</div>
             </PricingSection>
-            <PricingSection>
-              <div className="flex flex-row sm:flex-col justify-between gap-2 px-5 sm:pl-8">
+            <PricingSection className="py-4.5 pt-10 pb-4 sm:py-5.25 border-t sm:border-t-0 border-accent">
+              <div className="flex flex-row justify-between gap-2 px-5 sm:flex-col sm:pl-8">
                 <div className="flex flex-row items-center gap-2 text-sm leading-4">
                   <Image
                     src={StudentIcon}
@@ -45,7 +45,7 @@ export function PricingTopbar() {
                 </div>
                 <button
                   onClick={() => setIsModalOpen(true)}
-                  className="text-primary flex cursor-pointer flex-row items-center text-xs hover:opacity-50 leading-3.5"
+                  className="text-primary flex cursor-pointer flex-row items-center text-xs leading-3.5 hover:opacity-50"
                 >
                   Заполни анкету
                   <svg
@@ -54,7 +54,7 @@ export function PricingTopbar() {
                     viewBox="0 0 14 14"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    className='h-3.5 w-3.5'
+                    className="h-3.5 w-3.5"
                   >
                     <path
                       fillRule="evenodd"
@@ -67,11 +67,11 @@ export function PricingTopbar() {
               </div>
             </PricingSection>
 
-            <PricingSection className="flex-col items-end gap-2 pr-8 hidden sm:flex">
+            <PricingSection className="hidden flex-col items-end gap-2 pr-8 sm:flex">
               <div className="flex flex-row items-center justify-end gap-2 text-sm">
-                <Image src={AvatarsIcon} alt={''} className='h-6 w-16.5' />
+                <Image src={AvatarsIcon} alt={''} className="h-6 w-16.5" />
               </div>
-              <span className="font-roboto text-secondary text-xs opacity-50 leading-3.5">
+              <span className="font-roboto text-secondary text-xs leading-3.5 opacity-50">
                 Сервисы для оплаты
               </span>
             </PricingSection>

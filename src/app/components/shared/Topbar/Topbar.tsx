@@ -82,7 +82,7 @@ export function Topbar({
       <nav
         className={cn(
           'flex w-full flex-row items-center justify-between px-5 sm:px-8 py-6',
-          showBorder && 'border-b border-[#282D33]',
+          showBorder && 'border-b-0 sm:border-b border-[#282D33]',
           className
         )}
       >
