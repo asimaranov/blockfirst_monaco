@@ -69,6 +69,7 @@ export function Topbar({
             }
           )}
           onMenuClick={handleMenuToggle}
+          isMenuOpen={isMenuOpen}
         />
         <MobileBurgerMenu isOpen={isMenuOpen} onClose={handleCloseMenu} />
       </div>
