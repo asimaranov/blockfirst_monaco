@@ -24,7 +24,7 @@ export function PricingTopbar() {
     <>
       <UnifiedTopbar
         leftContent={
-          <div className={cn('grid w-full grid-cols-3')}>
+          <div className={cn('grid w-full grid-cols-1 sm:grid-cols-3')}>
             <PricingSection
               isRightBordered
               className="flex flex-row items-center gap-2 text-xl"

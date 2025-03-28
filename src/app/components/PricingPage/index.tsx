@@ -207,9 +207,9 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
 export default function PricingPage({ session }: { session: Session }) {
   return (
     <main className="border-accent border-r border-l">
-      <div className="flex h-screen w-full flex-col">
+      <div className="flex h-auto sm:h-screen w-full flex-col">
         <Topbar />
-        <div className="grid w-full grow grid-cols-3 divide-x divide-[#282D33]">
+        <div className="grid w-full grow grid-cols-1 sm:grid-cols-3 divide-x divide-[#282D33]">
           {TARIFFS.map((tariff, index) => (
             <TariffCard key={index} tariff={tariff} />
           ))}
