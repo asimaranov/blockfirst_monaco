@@ -5,12 +5,12 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
-import LightningIcon from '../Sidebar/assets/section_icons/lightning';
-import TariffIcon from '../Sidebar/assets/section_icons/tariff';
-import CertIcon from '../Sidebar/assets/section_icons/cert';
-import ReferralIcon from '../Sidebar/assets/section_icons/referral';
-import NotificationsIcon from '../Sidebar/assets/section_icons/notifications';
-import { NotificationsModal } from '../Notifications/NotificationsModal';
+import LightningIcon from '../../Sidebar/assets/section_icons/lightning';
+import TariffIcon from '../../Sidebar/assets/section_icons/tariff';
+import CertIcon from '../../Sidebar/assets/section_icons/cert';
+import ReferralIcon from '../../Sidebar/assets/section_icons/referral';
+import NotificationsIcon from '../../Sidebar/assets/section_icons/notifications';
+import { NotificationsModal } from '../../Notifications/NotificationsModal';
 import PremiumIcon from './assets/premium-icon.png';
 interface NavItemProps {
   href: string;
@@ -80,7 +80,7 @@ const MobileNavbar: React.FC = () => {
     { href: '/pricing', icon: <TariffIcon />, label: 'Тариф' },
     {
       href: '#',
-      icon: <Image src={PremiumIcon} alt="Notifications" className='w-5 h-5' />,
+      icon: <Image src={PremiumIcon} alt="Notifications" className="h-5 w-5" />,
       label: 'Премиум',
       type: 'premium',
     },
@@ -140,7 +140,7 @@ const MobileNavbar: React.FC = () => {
       <AnimatePresence>
         {isVisible && (
           <motion.nav
-            className="bg-background fixed right-0 bottom-0 left-0 z-[999999] flex h-[70px] shadow-lg"
+            className="bg-background fixed right-0 bottom-0 left-0 z-[999999] h-[70px] shadow-lg flex sm:hidden"
             initial={{ y: 100 }}
             animate={{ y: 0 }}
             exit={{ y: 100 }}

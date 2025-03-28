@@ -1,5 +1,5 @@
 import Sidebar from '~/app/components/Sidebar/Sidebar';
-import MobileNavbar from '~/app/components/MobileNavbar';
+import MobileNavbar from '~/app/components/mobile/MobileNavbar';
 export default function AuthPageBase({
   children,
 }: {

@@ -70,7 +70,12 @@ export const MobileHeader = ({
                 stroke-linecap="round"
                 stroke-linejoin="round"
               />
-              <circle cx="17" cy="3" r="3" fill={hasNotifications ? "#CF3336" : "#9AA6B5"} />
+              <circle
+                cx="17"
+                cy="3"
+                r="3"
+                fill={hasNotifications ? '#CF3336' : '#9AA6B5'}
+              />
             </svg>
 
             {hasNotifications && (
@@ -83,7 +88,7 @@ export const MobileHeader = ({
           </button>
 
           <button
-            className="flex h-[41px] w-[41px] flex-col items-center justify-center gap-[5px] rounded-full border border-accent"
+            className="border-accent flex h-[41px] w-[41px] flex-col items-center justify-center gap-[5px] rounded-full border"
             onClick={onMenuClick}
           >
             <div className="bg-foreground h-[1.5px] w-[19px] rounded-full" />
