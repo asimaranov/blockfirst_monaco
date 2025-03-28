@@ -144,10 +144,10 @@ export default function DiplomaPage({ session }: { session: Session }) {
           isExpanded={sectionExpanded[SECTIONS[0]!.id] || false}
           onToggle={() => toggleSection(SECTIONS[0]!.id)}
         >
-          <div className="flex flex-row">
+          <div className="flex flex-col sm:flex-row">
             <div className="flex flex-col">
               {/* NFT Diploma Section */}
-              <div className="bg-background flex items-start gap-5 px-8 py-6">
+              <div className="bg-background flex items-start gap-5 px-5 sm:px-8 py-6">
                 <Image
                   src={DiplomaIcon}
                   alt="NFT Diploma"
@@ -163,7 +163,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
               </div>
 
               {/* Competencies Grid */}
-              <div className="bg-dark-bg grid grid-cols-2 gap-x-16 gap-y-5 p-8">
+              <div className="bg-dark-bg grid grid-cols-1 sm:grid-cols-2 gap-x-16 gap-y-5 p-5 sm:p-8">
                 {competencies.map((competency, index) => (
                   <div key={index} className="flex items-start gap-4">
                     <div className="h-5 w-5">

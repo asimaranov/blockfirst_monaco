@@ -29,14 +29,14 @@ export function Section({
     >
       <div
         className={cn(
-          'border-accent flex  items-center justify-between border-b px-8 py-5',
+          'border-accent flex  items-center justify-between border-b px-5 sm:px-8 py-5',
           status !== 'coming_soon' && 'cursor-pointer hover:bg-[#14171C]'
         )}
         onClick={onToggle}
       >
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-3">
-            <h1 className="text-foreground text-xl font-delight">{title}</h1>
+            <h1 className="text-foreground font-base sm:text-xl font-delight">{title}</h1>
             {status === 'coming_soon' && (
               <svg
                 width="96"
@@ -87,7 +87,7 @@ export function Section({
               </svg>
             )}
             {status === 'in_progress' && (
-              <div className="rounded-full border-[0.5px] border-[#33CF8E]/50 px-3 py-1 text-xs text-[#33CF8E] font-delight">
+              <div className="rounded-full border-[0.5px] border-[#33CF8E]/50 px-3 py-1 text-xs text-[#33CF8E] font-delight whitespace-nowrap">
                 In Progress
               </div>
             )}
