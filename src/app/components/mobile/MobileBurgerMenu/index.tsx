@@ -51,7 +51,7 @@ const contactSections = [
         />
       </svg>
     ),
-    showCopyButton: false,
+    type: 'link',
   },
   {
     title: 'Для бизнес запросов',
@@ -74,7 +74,7 @@ const contactSections = [
         />
       </svg>
     ),
-    showCopyButton: true,
+    type: 'copy',
   },
   {
     title: 'Для запросов от пользователей',
@@ -97,7 +97,7 @@ const contactSections = [
         />
       </svg>
     ),
-    showCopyButton: true,
+    type: 'copy',
   },
 ];
 
@@ -131,7 +131,7 @@ const MobileBurgerMenu = ({ isOpen, onClose }: MobileBurgerMenuProps) => {
       <div className="flex h-[calc(100svh-69px)] flex-col overflow-y-auto px-5 pt-10 pb-5">
         <div className="flex flex-col space-y-10">
           {/* Menu sections */}
-          <div className="flex flex-row justify-between">
+          <div className="grid grid-cols-2 gap-x-4">
             {menuSections.map((section) => (
               <div key={section.title} className="flex flex-col">
                 <span className="mb-5 text-xs text-[#9AA6B5]/50 uppercase">
@@ -174,12 +174,17 @@ const MobileBurgerMenu = ({ isOpen, onClose }: MobileBurgerMenuProps) => {
                   <div className="flex flex-row items-center gap-3">
                     {section.icon}
                     <div>{section.content}</div>
-                    {section.showCopyButton && (
+                    {section.type === 'copy' && (
                       <CopyButton
                         textToCopy={section.content}
                         className="ml-auto"
                         appearanceType="near"
                       />
+                    )}
+                    {section.type === 'link' && (
+                      <Link href={section.href} className="ml-auto">
+                        {section.content}
+                      </Link>
                     )}
                   </div>
                 </div>

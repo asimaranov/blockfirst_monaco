@@ -34,7 +34,7 @@ export const MobileHeader = ({
               <span className="text-base font-medium">{userInitial}</span>
             </div>
 
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-2">
               <h2 className="text-foreground text-base">{username}</h2>
               <div className="flex items-center gap-[3px]">
                 <span className="text-secondary text-xs">Старт —</span>
