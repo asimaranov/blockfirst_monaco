@@ -24,7 +24,7 @@ export const MobileHeader = ({
 
   return (
     <header
-      className={`${isMenuOpen ? 'fixed border-b border-accent' : 'absolute'} z-[100000000] block h-auto w-full bg-[#01050d] py-4 sm:hidden`}
+      className={`${isMenuOpen ? 'border-accent fixed border-b' : 'absolute'} z-[100000000] block h-auto w-full bg-[#01050d] py-4 sm:hidden`}
     >
       <div className="flex w-full items-center justify-between px-5">
         <div className="flex items-center gap-4">
@@ -92,12 +92,34 @@ export const MobileHeader = ({
           </button>
 
           <button
-            className="border-accent flex h-[41px] w-[41px] flex-col items-center justify-center gap-[5px] rounded-full border"
+            className="border-accent flex h-[41px] w-[41px] items-center justify-center rounded-full border"
             onClick={onMenuClick}
           >
-            <div className="bg-foreground h-[1.5px] w-[19px] rounded-full" />
-            <div className="bg-foreground h-[1.5px] w-[19px] rounded-full" />
-            <div className="bg-foreground h-[1.5px] w-[19px] rounded-full" />
+            <div className="relative flex h-[14px] w-[19px] flex-col justify-between">
+              <motion.div
+                className="bg-foreground h-[1.5px] w-[19px] rounded-full"
+                animate={{
+                  rotate: isMenuOpen ? 45 : 0,
+                  y: isMenuOpen ? 6.25 : 0,
+                }}
+                transition={{ duration: 0.2 }}
+              />
+              <motion.div
+                className="bg-foreground h-[1.5px] w-[19px] rounded-full"
+                animate={{
+                  opacity: isMenuOpen ? 0 : 1,
+                }}
+                transition={{ duration: 0.2 }}
+              />
+              <motion.div
+                className="bg-foreground h-[1.5px] w-[19px] rounded-full"
+                animate={{
+                  rotate: isMenuOpen ? -45 : 0,
+                  y: isMenuOpen ? -6.25 : 0,
+                }}
+                transition={{ duration: 0.2 }}
+              />
+            </div>
           </button>
         </div>
       </div>
