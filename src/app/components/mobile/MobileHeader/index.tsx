@@ -21,7 +21,7 @@ export const MobileHeader = ({
   const userInitial = username.charAt(0).toUpperCase();
 
   return (
-    <header className="block h-auto w-full bg-[#01050d] py-4 sm:hidden">
+    <header className="absolute block h-auto w-full bg-[#01050d] py-4 sm:hidden z-[100000000]">
       <div className="flex w-full items-center justify-between px-5">
         <div className="flex items-center gap-4">
           <div className="bg-primary text-foreground relative flex h-10 w-10 items-center justify-center rounded-full">

@@ -22,7 +22,7 @@ const MobileBurgerMenu = ({ isOpen, onClose }: MobileBurgerMenuProps) => {
       y: 0,
       display: 'flex',
       transition: {
-        type: 'easeIn',
+        type: 'easeInOut',
         duration: 0.5,
       },
     },
@@ -30,7 +30,7 @@ const MobileBurgerMenu = ({ isOpen, onClose }: MobileBurgerMenuProps) => {
 
   return (
     <motion.div
-      className="text-foreground absolute top-[69px] right-0 left-0 z-[1000000000] flex flex-col bg-[#01050d] sm:hidden"
+      className="text-foreground absolute top-[69px] right-0 left-0 z-[10000000] flex flex-col bg-[#01050d] sm:hidden"
       initial="closed"
       animate={isOpen ? 'open' : 'closed'}
       variants={menuVariants}
