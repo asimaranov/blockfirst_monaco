@@ -27,13 +27,12 @@ export function PricingTopbar() {
           <div className={cn('grid w-full grid-cols-1 sm:grid-cols-3')}>
             <PricingSection
               isRightBordered
-              className="flex flex-row items-center gap-2 text-xl"
+              className="flex flex-row items-center gap-2 text-base sm:text-xl"
             >
               <div className="pl-8 ">Тарифы BlockFirst</div>
             </PricingSection>
-
             <PricingSection>
-              <div className="flex flex-col gap-2 pl-8">
+              <div className="flex flex-row sm:flex-col justify-between gap-2 px-5 sm:pl-8">
                 <div className="flex flex-row items-center gap-2 text-sm leading-4">
                   <Image
                     src={StudentIcon}
@@ -68,7 +67,7 @@ export function PricingTopbar() {
               </div>
             </PricingSection>
 
-            <PricingSection className="flex flex-col items-end gap-2 pr-8 ">
+            <PricingSection className="flex-col items-end gap-2 pr-8 hidden sm:flex">
               <div className="flex flex-row items-center justify-end gap-2 text-sm">
                 <Image src={AvatarsIcon} alt={''} className='h-6 w-16.5' />
               </div>

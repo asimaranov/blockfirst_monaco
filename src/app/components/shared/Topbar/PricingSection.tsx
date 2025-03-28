@@ -15,7 +15,7 @@ export function PricingSection({
   return (
     <div
       className={cn(
-        'py-5.25',
+        'pt-10 pb-4 sm:py-5.25',
         isRightBordered && 'border-accent border-r',
         className
       )}
