@@ -17,6 +17,7 @@ export function Topbar({
       leftContent={<TabNavigation items={items} />}
       rightContent={<LastUpdateInfo lastUpdate={lastestUpdate} />}
       showBorder={false}
+      mobileNav={true}
     />
   );
 }

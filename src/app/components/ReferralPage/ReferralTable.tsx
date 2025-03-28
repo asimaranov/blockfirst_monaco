@@ -127,7 +127,7 @@ export const ReferralTable = () => {
   };
 
   return (
-    <div className="border-accent flex flex-col gap-6 border-b pb-8 grow">
+    <div className="border-accent flex flex-col gap-6 border-0 sm:border-b pb-8 grow pt-10 sm:pt-0">
       {referrals.length === 0 ? (
         <div className="flex h-full w-full flex-col items-center justify-center gap-5">
           <Image

@@ -22,7 +22,7 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
       className="relative bg-[#01050d] bg-[url('/images/misc/header-bg.png')] bg-cover bg-center"
       leftContent={
         <div className="flex flex-row items-center space-x-5">
-          <div className="relative h-15.25 w-15.25 overflow-hidden">
+          <div className="relative h-10 w-10 sm:h-15.25 sm:w-15.25 overflow-hidden">
             {/* Logo/Icon container with images from Figma */}
             <div className="absolute inset-0 bg-[#01050d]">
               <Image

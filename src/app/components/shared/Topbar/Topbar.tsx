@@ -27,6 +27,8 @@ export interface TopbarProps {
    * Additional className to apply to the nav element
    */
   className?: string;
+
+  mobileNav?: boolean;
 }
 
 export function Topbar({
@@ -34,6 +36,7 @@ export function Topbar({
   rightContent,
   showBorder = true,
   className,
+  mobileNav = false,
 }: TopbarProps) {
   const session = authClient.useSession();
 
@@ -56,6 +59,7 @@ export function Topbar({
 
   return (
     <>
+      {mobileNav && (
       <div className="relative sm:hidden">
         <MobileHeader
           hasNotifications={true}
@@ -71,12 +75,13 @@ export function Topbar({
           onMenuClick={handleMenuToggle}
           isMenuOpen={isMenuOpen}
         />
-        <MobileBurgerMenu isOpen={isMenuOpen} onClose={handleCloseMenu} />
-      </div>
+          <MobileBurgerMenu isOpen={isMenuOpen} onClose={handleCloseMenu} />
+        </div>
+      )}
 
       <nav
         className={cn(
-          'flex w-full flex-row items-center justify-between px-8 py-6',
+          'flex w-full flex-row items-center justify-between px-5 sm:px-8 py-6',
           showBorder && 'border-b border-[#282D33]',
           className
         )}

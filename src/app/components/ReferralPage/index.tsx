@@ -44,7 +44,7 @@ const StatCard = ({
   badgeText?: string;
   badgeColor?: string;
 }) => (
-  <div className="flex flex-col gap-5 px-8 pt-6">
+  <div className="flex flex-col gap-5 px-5 sm:px-8 pt-6 pb-6 sm:pb-0">
     <div
       className={`${badgeColor} inline-flex w-fit items-center rounded-lg px-3 py-2`}
     >
@@ -106,9 +106,9 @@ const TimePeriodSelector = ({
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex h-8 cursor-pointer items-center gap-2 rounded-[5.787vw] bg-[#14171C] px-4 py-2.25 transition-colors hover:bg-[#1c2026]"
+        className="flex h-8 cursor-pointer items-center gap-2 rounded-[5.787vw] bg-transparent sm:bg-[#14171C] px-4 py-2.25 transition-colors hover:bg-[#1c2026]"
       >
-        <span className="text-foreground text-xs">
+        <span className="text-foreground hidden text-xs sm:block">
           {periods.find((p) => p.value === value)?.label}
         </span>
         <svg
@@ -117,13 +117,64 @@ const TimePeriodSelector = ({
           viewBox="0 0 14 14"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="h-3.5 w-3.5"
+          className="hidden h-3.5 w-3.5 sm:block"
         >
           <path
             fill-rule="evenodd"
             clip-rule="evenodd"
             d="M2.67353 4.55205C2.92093 4.31134 3.31662 4.31676 3.55733 4.56415L7.00127 8.10376L10.4452 4.56415C10.6859 4.31676 11.0816 4.31134 11.329 4.55205C11.5764 4.79276 11.5818 5.18845 11.3411 5.43585L7.44922 9.43585C7.33156 9.55678 7.17 9.625 7.00127 9.625C6.83254 9.625 6.67098 9.55678 6.55331 9.43585L2.66142 5.43585C2.42071 5.18845 2.42613 4.79276 2.67353 4.55205Z"
             fill="#195AF4"
+          />
+        </svg>
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="block h-5 w-5 sm:hidden"
+        >
+          <path
+            d="M18.3255 14.582H12.4922"
+            stroke="#9AA6B5"
+            stroke-miterlimit="10"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M4.16406 14.582H1.66406"
+            stroke="#9AA6B5"
+            stroke-miterlimit="10"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M18.3359 5.41797H15.8359"
+            stroke="#9AA6B5"
+            stroke-miterlimit="10"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M7.4974 5.41797H1.66406"
+            stroke="#9AA6B5"
+            stroke-miterlimit="10"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M5.83073 12.082H10.8307C11.7474 12.082 12.4974 12.4987 12.4974 13.7487V15.4154C12.4974 16.6654 11.7474 17.082 10.8307 17.082H5.83073C4.91406 17.082 4.16406 16.6654 4.16406 15.4154V13.7487C4.16406 12.4987 4.91406 12.082 5.83073 12.082Z"
+            stroke="#9AA6B5"
+            stroke-miterlimit="10"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <path
+            d="M9.15885 2.91797H14.1589C15.0755 2.91797 15.8255 3.33464 15.8255 4.58464V6.2513C15.8255 7.5013 15.0755 7.91797 14.1589 7.91797H9.15885C8.24219 7.91797 7.49219 7.5013 7.49219 6.2513V4.58464C7.49219 3.33464 8.24219 2.91797 9.15885 2.91797Z"
+            stroke="#9AA6B5"
+            stroke-miterlimit="10"
+            stroke-linecap="round"
+            stroke-linejoin="round"
           />
         </svg>
       </button>
@@ -179,7 +230,7 @@ export default function ReferralPage({ session }: { session: Session }) {
 
   return (
     <main className="border-accent border-r border-l">
-      <div className="flex h-screen w-full flex-col">
+      <div className="flex h-auto sm:h-screen w-full flex-col">
         <Topbar lastestUpdate={'18 марта 2025'} />
 
         <Modal
@@ -191,11 +242,11 @@ export default function ReferralPage({ session }: { session: Session }) {
           <WithdrawForm onClose={function (): void {}} />
         </Modal>
         <div className="mb-auto flex flex-col">
-          <div className="flex flex-1 flex-row">
+          <div className="flex flex-1 flex-col-reverse gap-16 sm:flex-row sm:gap-0">
             {/* Statistics Section */}
-            <div className="border-accent flex flex-1 flex-col border-b">
+            <div className="border-accent flex flex-1 flex-col border-0 sm:border-b">
               {/* Header */}
-              <div className="border-accent flex h-28 flex-row items-center justify-between border-b px-8">
+              <div className="border-accent flex h-auto sm:h-28 pb-6 sm:pb-0 flex-row items-start sm:items-center justify-between border-b px-5 sm:px-8">
                 <div className="flex flex-col gap-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -222,7 +273,7 @@ export default function ReferralPage({ session }: { session: Session }) {
               </div>
 
               {/* Stats Grid */}
-              <div className="divide-accent grid flex-1 grid-cols-3 divide-x">
+              <div className="divide-accent flex-1 grid grid-cols-1 sm:grid-cols-3 divide-y divide-x-0 sm:divide-y-0 sm:divide-x">
                 {/* Referrals Card */}
                 <StatCard
                   title="рефералы"
@@ -254,8 +305,8 @@ export default function ReferralPage({ session }: { session: Session }) {
             </div>
 
             {/* Balance Card */}
-            <div className="border-accent flex w-100.25 flex-col border-b border-l bg-[#14171C]">
-              <div className="flex flex-col px-8 pt-8 pb-5">
+            <div className="border-accent flex w-auto flex-col border-b border-l bg-[#14171C] sm:w-100.25">
+              <div className="flex flex-col px-8 pt-10 sm:pt-8 pb-5">
                 {/* Top section with avatars and info */}
                 <div className="flex items-center justify-between">
                   <div className="flex">
@@ -322,7 +373,7 @@ export default function ReferralPage({ session }: { session: Session }) {
                     </svg>
                   </div>
                   <div className="text-center">
-                    <span className="text-foreground text-[2.0833vw] leading-[2.4306vw]">
+                    <span className="text-foreground text-4xl leading-10.5">
                       157 910 ₽
                     </span>
                   </div>

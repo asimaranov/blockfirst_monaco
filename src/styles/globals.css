@@ -98,7 +98,8 @@
   --text-2xll: 28px;
   --text-3xl: 28px;
 
-  --text-4xl: 40px;
+  --text-4xl: 36px;
+  --text-5xl: 40px;
 
   --text-6xl: 60px;
 
@@ -152,6 +153,7 @@
       --text-3xl: 7.4667vw;
 
       --text-4xl: 10.6667vw;
+      --text-5xl: 11.7333vw;
 
       --text-6xl: 16vw;
 
@@ -202,7 +204,9 @@
 
       --text-3xl: 1.6204vw;
 
-      --text-4xl: 2.3148vw;
+      --text-4xl: 2.0833vw;
+      --text-5xl: 2.3148vw;
+
 
       --text-6xl: 3.4722vw;
 
