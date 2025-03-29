@@ -44,6 +44,7 @@ export default function UsdtForm({ onClose }: StudentFormProps) {
       title="Оплата курса"
       description="Мы создали для вас уникальный QR-код и адрес для осуществления оплаты курса"
       submitButtonText="Ищем транзакцию"
+      submitLoading={true}
       submitDisabled={false}
       onSubmit={handleSubmit}
       formState={formState}

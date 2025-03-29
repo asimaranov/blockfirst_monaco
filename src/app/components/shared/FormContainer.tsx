@@ -24,6 +24,33 @@ const CheckIcon = () => (
   </svg>
 );
 
+const LoadingIcon = () => {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn('ml-2', 'animate-spin', 'h-5 w-5')}
+    >
+      <path
+        opacity="0.4"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M9.25 3.33398C9.25 2.91977 9.58579 2.58398 10 2.58398C14.0961 2.58398 17.4167 5.90454 17.4167 10.0007C17.4167 10.4149 17.0809 10.7507 16.6667 10.7507C16.2525 10.7507 15.9167 10.4149 15.9167 10.0007C15.9167 6.73297 13.2677 4.08398 10 4.08398C9.58579 4.08398 9.25 3.7482 9.25 3.33398Z"
+        fill="#F2F2F2"
+      />
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M4.36269 6.36564C4.73362 6.54998 4.88489 7.00012 4.70055 7.37105C4.30737 8.16222 4.08594 9.0543 4.08594 10.0002C4.08594 13.2679 6.73492 15.9169 10.0026 15.9169C13.2703 15.9169 15.9193 13.2679 15.9193 10.0002C15.9193 9.58602 16.2551 9.25024 16.6693 9.25024C17.0835 9.25024 17.4193 9.58602 17.4193 10.0002C17.4193 14.0964 14.0987 17.4169 10.0026 17.4169C5.90649 17.4169 2.58594 14.0964 2.58594 10.0002C2.58594 8.81753 2.86333 7.69745 3.35728 6.7035C3.54162 6.33257 3.99176 6.1813 4.36269 6.36564Z"
+        fill="#F2F2F2"
+      />
+    </svg>
+  );
+};
+
 interface FormContainerProps {
   onClose: () => void;
   title: string;
@@ -32,6 +59,7 @@ interface FormContainerProps {
   children: ReactNode;
   submitButtonText?: string;
   submitDisabled?: boolean;
+  submitLoading?: boolean;
   onSubmit: () => void;
   formState: FormState;
   successTitle?: string;
@@ -55,6 +83,7 @@ export default function FormContainer({
   children,
   submitButtonText = 'Продолжить',
   submitDisabled = false,
+  submitLoading = false,
   onSubmit,
   formState,
   successTitle = 'Письмо отправлено',
@@ -65,16 +94,16 @@ export default function FormContainer({
 }: FormContainerProps) {
   if (formState === 'success') {
     return (
-      <div className="bg-dark-bg border-accent/40 flex h-full w-auto sm:w-105 flex-col border-l z-[10000000000000000] sm:z-0">
-        <div className="flex flex-1 flex-col gap-8 px-5 md:px-10 py-8">
+      <div className="bg-dark-bg border-accent/40 z-[10000000000000000] flex h-full w-auto flex-col border-l sm:z-0 sm:w-105">
+        <div className="flex flex-1 flex-col gap-8 px-5 py-8 md:px-10">
           <div className="flex flex-1 flex-col gap-8">
-            <div className="flex-col items-center gap-8 hidden sm:flex">
+            <div className="hidden flex-col items-center gap-8 sm:flex">
               <Image
                 src={'/images/logo/form-logo.svg'}
                 alt="Logo"
                 width={152}
                 height={44}
-                className="w-38 "
+                className="w-38"
               />
             </div>
 
@@ -152,10 +181,10 @@ export default function FormContainer({
   }
 
   return (
-    <div className="bg-dark-bg border-accent/40 relative flex h-full w-auto sm:w-105 flex-col border-l">
+    <div className="bg-dark-bg border-accent/40 relative flex h-full w-auto flex-col border-l sm:w-105">
       {showBackButton && (
         <button
-          className="hidden sm:block absolute top-0 left-0 cursor-pointer px-10 py-11"
+          className="absolute top-0 left-0 hidden cursor-pointer px-10 py-11 sm:block"
           onClick={onBackClick}
         >
           <svg
@@ -175,18 +204,18 @@ export default function FormContainer({
           </svg>
         </button>
       )}
-      <div className="flex flex-1 flex-col gap-8 px-5 md:px-10 py-8 z-[10000000000000000] sm:z-0">
+      <div className="z-[10000000000000000] flex flex-1 flex-col gap-8 px-5 py-8 sm:z-0 md:px-10">
         <div className="flex flex-1 flex-col gap-6 sm:gap-8">
-          <div className="flex-col items-center gap-8 hidden sm:flex">
+          <div className="hidden flex-col items-center gap-8 sm:flex">
             <Image
               src={'/images/logo/form-logo.svg'}
               alt="Logo"
               width={152}
               height={44}
-              className="w-38 "
+              className="w-38"
             />
             <div className="flex flex-col items-center gap-4">
-              <h2 className="text-foreground text-xl sm:text-2xll">{title}</h2>
+              <h2 className="text-foreground sm:text-2xll text-xl">{title}</h2>
               {description && (
                 <p className="text-secondary text-center text-sm">
                   {description}
@@ -203,17 +232,21 @@ export default function FormContainer({
           onClick={onSubmit}
           className={cn(
             'bg-primary text-foreground flex h-13 w-full items-center justify-center rounded-full text-sm transition-colors duration-300 hover:bg-[#1242B2]',
-            'disabled:hover:bg-primary cursor-pointer disabled:cursor-default disabled:opacity-50'
+            'disabled:hover:bg-primary cursor-pointer disabled:cursor-default disabled:opacity-50',
+            submitLoading && 'bg-[#1242B2] cursor-wait'
           )}
         >
           <span>{submitButtonText}</span>
-          <CheckIcon />
+          {submitLoading ? <LoadingIcon /> : <CheckIcon />}
         </button>
       </div>
       {bottomText && (
         <div className="flex h-8 w-full items-center justify-center gap-1 bg-[#14171C] text-xs">
           <span className="text-secondary">{bottomText.main}</span>
-          <Link href={bottomText.link} className="text-foreground cursor-pointer underline hover:opacity-50">
+          <Link
+            href={bottomText.link}
+            className="text-foreground cursor-pointer underline hover:opacity-50"
+          >
             {bottomText.secondary}
           </Link>
         </div>
