@@ -13,7 +13,7 @@ import { IUser } from '~/app/lib/types/IUser';
 import { authClient } from '~/server/auth/client';
 import { Socials } from './Socials';
 import { cn } from '~/helpers';
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { SubscriptionType } from '~/app/lib/constants/subsctiptions';
 import { NotificationsModal } from '../Notifications/NotificationsModal';
@@ -34,7 +34,7 @@ interface SidebarItem {
   title: string;
   href: string;
   otherHref?: string;
-  icon: () => JSX.Element;
+  icon: ReactNode;
   type?: 'notifications';
   locked?: boolean;
   notificationCount?: number;
@@ -48,18 +48,18 @@ const sidebarSections: SidebarSection[] = [
       {
         title: 'Мои Курсы',
         href: '/dashboard',
-        icon: LightningIcon,
+        icon: <LightningIcon />,
         otherHref: '/course',
       },
       {
         title: 'Тариф',
         href: '/pricing',
-        icon: TariffIcon,
+        icon: <TariffIcon />,
       },
       {
         title: 'Диплом',
         href: '/diploma',
-        icon: CertIcon,
+        icon: <CertIcon />,
       },
     ],
   },
@@ -70,20 +70,20 @@ const sidebarSections: SidebarSection[] = [
       {
         title: 'Твой куратор',
         href: '/mentor',
-        icon: MentorIcon,
+        icon: <MentorIcon />,
 
         locked: true,
       },
       {
         title: 'Подготовка резюме',
         href: '/cv',
-        icon: CvIcon,
+        icon: <CvIcon />,
         locked: true,
       },
       {
         title: 'Трудоустройство',
         href: '/employment',
-        icon: JobIcon,
+        icon: <JobIcon />,
 
         locked: true,
       },
@@ -96,14 +96,14 @@ const sidebarSections: SidebarSection[] = [
       {
         title: 'Реферальная программа',
         href: '/referral',
-        icon: ReferralIcon,
+        icon: <ReferralIcon />,
 
         locked: false,
       },
       {
         title: 'Уведомления',
         href: '#',
-        icon: NotificationsIcon,
+        icon: <NotificationsIcon />,
         notificationCount: 3,
         locked: false,
         type: 'notifications',
@@ -127,7 +127,7 @@ export default function Sidebar() {
 
   return (
     <>
-      <section className="relative z-10 h-screen w-full max-w-86 flex-col hidden sm:flex">
+      <section className="relative z-10 hidden h-screen w-full max-w-86 flex-col sm:flex">
         <nav className={'flex w-full flex-col'}>
           <div className="mx-8 mt-8 flex flex-row items-center justify-between">
             <Link href="/dashboard" className="hover:opacity-80">
@@ -184,11 +184,12 @@ export default function Sidebar() {
                   }}
                 >
                   <div className="h-4 w-4">
-                    {typeof item.icon === 'function' ? (
-                      <item.icon />
+                    {/* Check if the icon is a react node */}
+                    {typeof item.icon === 'object' ? (
+                      item.icon
                     ) : (
                       <Image
-                        src={item.icon}
+                        src={item.icon as any}
                         alt={item.title}
                         className="h-4 w-4"
                       />

@@ -27,7 +27,7 @@ export function MenuItem({
           {title}
         </span>
         {isPro && (
-          <Image src={proIMG} alt="Pro" className="h-[1.157vw] w-[1.91vw] mr-4" />
+          <Image src={proIMG} alt="Pro" className="h-5 w-8.25 mr-4" />
         )}
         {/* {isBase && <Image src={baseIMG} alt="Base" />} */}
       </div>

@@ -15,6 +15,13 @@ import CVImage from './assets/cv.png';
 import JobsImage from './assets/jobs.png';
 import LockImage from './assets/lock.svg';
 import ClubImage from './assets/club.png';
+import proIMG from 'public/subscriptions/pro.svg';
+import starterIMG from 'public/subscriptions/starter.svg';
+
+import MentorIcon from '../Sidebar/assets/section_icons/mentor';
+import CvIcon from '../Sidebar/assets/section_icons/cv';
+import JobIcon from '../Sidebar/assets/section_icons/job';
+import ClubIcon from './assets/club-icon.svg';
 
 export default function PremiumPage({ session }: { session: Session }) {
   const [selectedTariff, setSelectedTariff] = useState<Tariff>(TARIFFS[1]!); // Default to PRO
@@ -25,7 +32,7 @@ export default function PremiumPage({ session }: { session: Session }) {
         {/* <Topbar /> */}
 
         {/* Hero Section */}
-        <section className=" relative px-5 pt-5 pb-10">
+        <section className="relative px-5 pt-5 pb-10">
           <div className="from-background via-background/90 to-background/0 absolute inset-0 bg-gradient-to-b"></div>
 
           {/* Main Content */}
@@ -53,7 +60,7 @@ export default function PremiumPage({ session }: { session: Session }) {
         </section>
 
         {/* Premium Cards */}
-        <section className="space-y-3 px-2 py-3">
+        <section className="space-y-3 px-2 py-3 pb-10">
           {/* PRO Tariff Card */}
           <motion.div
             className="bg-primary rounded-xl p-5"
@@ -173,7 +180,7 @@ export default function PremiumPage({ session }: { session: Session }) {
 
           {/* Community Card */}
           <motion.div
-            className="bg-[#30BF69] rounded-xl p-5"
+            className="rounded-xl bg-[#30BF69] p-5"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.2 }}
           >
@@ -215,121 +222,93 @@ export default function PremiumPage({ session }: { session: Session }) {
 
         {/* Account Info */}
         <section className="mt-auto mb-10">
-          <div className="bg-background rounded-lg p-5">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <div className="h-13 w-13 overflow-hidden rounded-full">
-                  <Image
-                    src={TARIFFS[0]?.bigIcon!}
-                    alt="User"
-                    width={52}
-                    height={52}
-                  />
-                </div>
-                <div className="ml-4">
-                  <div className="text-foreground font-medium text-2xl">Free</div>
-                  <div className="text-secondary mt-2 text-sm">
-                    Стартовый тариф
-                  </div>
-                </div>
+          <div className="bg-background flex items-center justify-between p-5">
+            <div className="flex items-center">
+              <div className="h-13 w-13 overflow-hidden rounded-full">
+                <Image
+                  src={TARIFFS[0]?.bigIcon!}
+                  alt="User"
+                  width={52}
+                  height={52}
+                />
               </div>
-              <div className="border-success/50 rounded-full border px-3 py-1">
-                <span className="text-success text-xs whitespace-nowrap">Активный тариф</span>
+              <div className="ml-4">
+                <div className="text-foreground text-2xl font-medium">Free</div>
+                <div className="text-secondary mt-2 text-sm">
+                  Стартовый тариф
+                </div>
               </div>
             </div>
-
+            <div className="border-success/50 rounded-full border px-3 py-1">
+              <span className="text-success text-xs whitespace-nowrap">
+                Активный тариф
+              </span>
+            </div>
+          </div>
+          <div className="rounded-lg p-5">
             <div className="mt-10">
               <div className="text-secondary mb-8 flex justify-between text-xs">
-                <span>персонально</span>
+                <span className="text-secondary/50 text-sm uppercase">
+                  персонально
+                </span>
                 <div className="flex items-center">
-                  <div className="mr-2 h-1 w-1 rounded-full bg-pink-500"></div>
-                  <span className="text-gradient-pink-orange text-xs">PRO</span>
+                  <Image src={proIMG} alt="Pro" className="h-5 w-8.25" />
                 </div>
               </div>
 
-              <div className="space-y-7">
-                <div className="border-accent flex items-center justify-between border-t py-5">
+              <div className="">
+                <div className="border-accent flex items-center justify-between border-t pt-7 pb-5">
                   <div className="flex items-center">
-                    <Image
-                      src="/images/user.svg"
-                      alt="User"
-                      width={20}
-                      height={20}
-                      className="text-secondary"
-                    />
-                    <span className="text-secondary ml-3">Твой куратор</span>
+                    <MentorIcon className="h-5 w-5" />
+                    <span className="text-secondary ml-3 text-base">
+                      Твой куратор
+                    </span>
                   </div>
-                  <Image
-                    src="/images/lock.svg"
-                    alt="Lock"
-                    width={20}
-                    height={20}
-                  />
+                  <Image src={LockImage} alt="Lock" width={20} height={20} />
                 </div>
 
-                <div className="border-accent flex items-center justify-between border-t py-5">
+                <div className="border-accent flex items-center justify-between border-t pt-7 pb-5">
                   <div className="flex items-center">
-                    <Image
-                      src="/images/clipboard.svg"
-                      alt="Clipboard"
-                      width={20}
-                      height={20}
-                      className="text-secondary"
-                    />
-                    <span className="text-secondary ml-3">
+                    <CvIcon className="h-5 w-5" />
+                    <span className="text-secondary ml-3 text-base">
                       Подготовка резюме
                     </span>
                   </div>
-                  <Image
-                    src="/images/lock.svg"
-                    alt="Lock"
-                    width={20}
-                    height={20}
-                  />
+                  <Image src={LockImage} alt="Lock" width={20} height={20} />
                 </div>
 
-                <div className="border-accent flex items-center justify-between border-t py-5">
+                <div className="border-accent flex items-center justify-between border-t pt-7 pb-5">
                   <div className="flex items-center">
-                    <Image
-                      src="/images/cup.svg"
-                      alt="Cup"
-                      width={20}
-                      height={20}
-                      className="text-secondary"
-                    />
-                    <span className="text-secondary ml-3">Трудоустройство</span>
+                    <JobIcon className="h-5 w-5" />
+                    <span className="text-secondary ml-3 text-base">
+                      Трудоустройство
+                    </span>
                   </div>
-                  <Image
-                    src="/images/lock.svg"
-                    alt="Lock"
-                    width={20}
-                    height={20}
-                  />
+                  <Image src={LockImage} alt="Lock" width={20} height={20} />
                 </div>
               </div>
 
               <div className="text-secondary mt-10 text-xs">
                 <div className="flex justify-between">
-                  <span>Телеграм чат</span>
-                  <div className="flex items-center">
-                    <div className="mr-2 h-1 w-1 rounded-full bg-pink-500"></div>
-                    <span className="text-gradient-pink-orange text-xs">
-                      STARTER
-                    </span>
-                  </div>
+                  <span className="text-secondary/50 text-sm uppercase">
+                    Телеграм чат
+                  </span>
+                  <Image
+                    src={starterIMG}
+                    alt="Starter"
+                    className="h-5 w-14.75"
+                  />
                 </div>
 
-                <div className="border-accent mt-8 flex items-center justify-between border-t py-5">
+                <div className="border-accent mt-3 flex items-center justify-between pt-5 pb-5">
                   <div className="flex items-center">
-                    <div className="bg-secondary text-background flex h-5 w-5 items-center justify-center rounded">
-                      <span className="text-xs">BF</span>
-                    </div>
-                    <span className="text-secondary ml-3">
+                    <Image src={ClubIcon} alt="Club" className="h-5 w-5" />
+                    <span className="text-secondary ml-3 text-base">
                       Закрытый клуб BlockFirst
                     </span>
                   </div>
                   <Image
-                    src="/images/lock.svg"
+                    src={LockImage}
                     alt="Lock"
                     width={20}
                     height={20}

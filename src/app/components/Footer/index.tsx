@@ -120,7 +120,7 @@ export default function Footer() {
   return (
     <>
       <div className="border-accent hidden h-9.5 shrink-0 sm:block"></div>
-      <footer className="bg-background border-accent border-t pt-16">
+      <footer className="bg-background border-accent border-t-0 sm:border-t pt-16">
         {/* Top section */}
         <div className="mb-16 flex w-full flex-col gap-10 px-5 sm:px-8 sm:flex-row sm:gap-0">
           {/* Newsletter signup */}

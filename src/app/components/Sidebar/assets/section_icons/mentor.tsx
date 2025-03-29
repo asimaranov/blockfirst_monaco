@@ -1,6 +1,10 @@
 import { cn } from "~/helpers";
 
-export default function MentorIcon() {
+export default function MentorIcon({
+  className,
+}: {
+  className?: string;
+}) {
   return (
     <svg
       width="16"
@@ -12,7 +16,8 @@ export default function MentorIcon() {
         '[&>*]:[&:not(:first-child)]:fill-none',
         '[&>*]:[&:not(:first-child)]:group-hover:fill-[#F2F2F2] [&>*]:[&:not(:first-child)]:group-data-[active=true]:fill-[#F2F2F2]',
         '[&>*]:first:group-hover:stroke-none [&>*]:first:group-data-[active=true]:stroke-none',
-        'h-4 w-4'
+        'h-4 w-4',
+        className
       )}
     >
       <path

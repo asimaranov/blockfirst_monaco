@@ -1,6 +1,10 @@
 import { cn } from '~/helpers';
 
-export default function CvIcon() {
+export default function CvIcon({
+  className,
+}: {
+  className?: string;
+}) {
   return (
     <svg
       width="16"
@@ -12,7 +16,8 @@ export default function CvIcon() {
         'h-4 w-4',
         '[&>*]:[&:not(:first-child)]:fill-none',
         '[&>*]:[&:not(:first-child)]:group-hover:fill-[#F2F2F2] [&>*]:[&:not(:first-child)]:group-data-[active=true]:fill-[#F2F2F2]',
-        '[&>*]:first:group-hover:stroke-none [&>*]:first:group-data-[active=true]:stroke-none'
+        '[&>*]:first:group-hover:stroke-none [&>*]:first:group-data-[active=true]:stroke-none',
+        className
       )}
     >
       <path
