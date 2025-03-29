@@ -35,8 +35,8 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   return (
-    <div className="border-accent flex flex-col border-b">
-      <div className="relative bg-[#01050D] p-8">
+    <div className="border-accent flex flex-col last:border-b-0 sm:last:border-b border-b">
+      <div className="relative bg-[#01050D] p-5 sm:p-8">
         <div className="relative z-1 bg-[url(/images/misc/tariff-grid.svg)] bg-cover bg-no-repeat bg-blend-screen">
           {tariff.sale && (
             <div className="absolute top-0 right-0">
@@ -64,8 +64,8 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
       </div>
 
       <div className="flex flex-col">
-        <div className="flex items-center justify-between px-8 py-4">
-          <span className="text-secondary text-xs uppercase opacity-50">
+        <div className="flex items-center justify-between px-5 sm:px-8 py-4">
+          <span className="text-secondary text-sm sm:text-xs uppercase opacity-50">
             Что включено?
           </span>
           {tariff.price && (
@@ -79,7 +79,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
         {tariff.features.map((feature, index) => (
           <div
             key={index}
-            className={`flex items-center gap-4 px-8 py-3 ${feature.bg ? 'bg-[#14171C]' : ''}`}
+            className={`flex items-center gap-4 px-5 sm:px-8 py-3 ${feature.bg ? 'bg-[#14171C]' : ''}`}
           >
             <svg
               width="20"
@@ -105,7 +105,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
 
       {tariff.price && (
         <div className="mt-auto flex flex-col gap-6 pt-8 pb-0">
-          <div className="flex justify-between px-8">
+          <div className="flex justify-between px-5 sm:px-8">
             <div className="flex flex-col gap-2">
               <span className="text-2xll leading-7 font-medium text-gray-50">
                 {formatPrice(tariff.price.monthly)}

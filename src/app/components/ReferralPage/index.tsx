@@ -61,7 +61,7 @@ const StatCard = ({
         </div>
         <span className="text-foreground text-3xl">{value}</span>
       </div>
-      <span className="text-secondary text-xs opacity-50">{subtitle}</span>
+      <span className="text-secondary text-sm sm:text-xs opacity-50">{subtitle}</span>
     </div>
   </div>
 );
@@ -106,7 +106,7 @@ const TimePeriodSelector = ({
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex h-8 cursor-pointer items-center gap-2 rounded-[5.787vw] bg-transparent sm:bg-[#14171C] px-4 py-2.25 transition-colors hover:bg-[#1c2026]"
+        className="flex h-auto sm:h-8 cursor-pointer items-center justify-end gap-2 rounded-[5.787vw] bg-transparent sm:bg-[#14171C] px-0 sm:px-4 py-0 sm:py-2.25 transition-colors hover:bg-[#1c2026]"
       >
         <span className="text-foreground hidden text-xs sm:block">
           {periods.find((p) => p.value === value)?.label}
@@ -306,7 +306,7 @@ export default function ReferralPage({ session }: { session: Session }) {
 
             {/* Balance Card */}
             <div className="border-accent flex w-auto flex-col border-b border-l bg-[#14171C] sm:w-100.25">
-              <div className="flex flex-col px-8 pt-10 sm:pt-8 pb-5">
+              <div className="flex flex-col px-5 sm:px-8 pt-10 sm:pt-8 pb-5">
                 {/* Top section with avatars and info */}
                 <div className="flex items-center justify-between">
                   <div className="flex">
@@ -381,7 +381,7 @@ export default function ReferralPage({ session }: { session: Session }) {
               </div>
 
               {/* Withdrawal section */}
-              <div className="flex flex-col gap-6 px-8 pb-6">
+              <div className="flex flex-col gap-6 px-5 sm:px-8 pb-6">
                 <div className="flex items-center justify-between">
                   <span className="text-secondary/50 flex gap-1 text-sm">
                     Вывод от —<span className="text-foreground">2 000 ₽</span>

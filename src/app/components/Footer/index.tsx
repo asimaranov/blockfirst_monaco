@@ -222,7 +222,7 @@ export default function Footer() {
           {contactSections.map((section, index) => (
             <div
               key={index}
-              className={`relative flex flex-row px-8 py-6 ${section.className || ''} items-center bg-[url('/images/misc/footer-tab-grid.svg')] bg-cover bg-center`}
+              className={`relative flex flex-row px-5 sm:px-8 py-6 ${section.className || ''} items-center bg-[url('/images/misc/footer-tab-grid.svg')] bg-cover bg-center`}
             >
               <div className="flex flex-col gap-2">
                 <span className="text-secondary z-10 text-xs">
@@ -264,7 +264,7 @@ export default function Footer() {
         </div>
 
         {/* Copyright section */}
-        <div className="flex flex-col items-center px-8 pt-8 pb-8 text-xs md:flex-row md:justify-between gap-5 sm:gap-0">
+        <div className="flex flex-col items-center px-5 sm:px-8 pt-8 pb-8 text-xs md:flex-row md:justify-between gap-5 sm:gap-0">
           <div className="text-foreground sm:text-secondary flex gap-6 text-xs">
             <a href="#" className="hover:opacity-50 text-sm sm:text-xs">
               Правила сервиса

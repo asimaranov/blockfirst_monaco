@@ -27,13 +27,16 @@ export function PricingTopbar() {
           <div className={cn('grid w-full grid-cols-1 sm:grid-cols-3')}>
             <PricingSection
               isRightBordered
-              className="flex flex-row items-center gap-2 text-base sm:text-xl"
+              className="flex flex-row items-center gap-2 text-base sm:text-xl justify-between pr-5 sm:pr-0"
             >
               <div className="pl-5 sm:pl-8">Тарифы BlockFirst</div>
+              <div className="flex flex-row items-center justify-end gap-2 text-sm">
+                <Image src={AvatarsIcon} alt={''} className="h-6 w-16.5" />
+              </div>
             </PricingSection>
             <PricingSection className="py-4.5 pt-10 pb-4 sm:py-5.25 border-t sm:border-t-0 border-accent">
               <div className="flex flex-row justify-between gap-2 px-5 sm:flex-col sm:pl-8">
-                <div className="flex flex-row items-center gap-2 text-sm leading-4">
+                <div className="flex flex-row items-center gap-2 text-sm leading-4 font-medium sm:font-normal">
                   <Image
                     src={StudentIcon}
                     alt="Student"
@@ -45,7 +48,7 @@ export function PricingTopbar() {
                 </div>
                 <button
                   onClick={() => setIsModalOpen(true)}
-                  className="text-primary flex cursor-pointer flex-row items-center text-xs leading-3.5 hover:opacity-50"
+                  className="text-primary flex cursor-pointer flex-row items-center text-sm sm:text-xs leading-3.5 hover:opacity-50"
                 >
                   Заполни анкету
                   <svg
@@ -71,7 +74,7 @@ export function PricingTopbar() {
               <div className="flex flex-row items-center justify-end gap-2 text-sm">
                 <Image src={AvatarsIcon} alt={''} className="h-6 w-16.5" />
               </div>
-              <span className="font-roboto text-secondary text-xs leading-3.5 opacity-50">
+              <span className="font-roboto text-secondary text-sm sm:text-xs leading-3.5 opacity-50">
                 Сервисы для оплаты
               </span>
             </PricingSection>
