@@ -5,6 +5,7 @@ import { IUser } from '~/app/lib/types/IUser';
 import { authClient } from '~/server/auth/client';
 import { SubscriptionType } from '~/app/lib/constants/subsctiptions';
 import MobileBurgerMenu from '../../mobile/MobileBurgerMenu';
+import { NotificationsModal, NotificationsModalMobile } from '../../Notifications/NotificationsModal';
 
 export interface TopbarProps {
   /**
@@ -48,6 +49,7 @@ export function Topbar({
   };
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
 
   const handleMenuToggle = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -59,30 +61,36 @@ export function Topbar({
 
   return (
     <>
+    <NotificationsModalMobile
+            isOpen={isNotificationsOpen}
+            onClose={() => setIsNotificationsOpen(false)}
+          />
       {mobileNav && (
-      <div className="relative sm:hidden">
-        <MobileHeader
-          hasNotifications={true}
-          username={user.name}
-          startDate={new Date(user?.startTimestamp).toLocaleDateString(
-            'ru-RU',
-            {
-              day: '2-digit',
-              month: '2-digit',
-              year: '2-digit',
-            }
-          )}
-          onMenuClick={handleMenuToggle}
-          isMenuOpen={isMenuOpen}
-        />
+        <div className="relative sm:hidden">
+          <MobileHeader
+            hasNotifications={true}
+            onNotificationClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
+            username={user.name}
+            startDate={new Date(user?.startTimestamp).toLocaleDateString(
+              'ru-RU',
+              {
+                day: '2-digit',
+                month: '2-digit',
+                year: '2-digit',
+              }
+            )}
+            onMenuClick={handleMenuToggle}
+            isMenuOpen={isMenuOpen}
+          />
+          
           <MobileBurgerMenu isOpen={isMenuOpen} onClose={handleCloseMenu} />
         </div>
       )}
 
       <nav
         className={cn(
-          'flex w-full flex-row items-center justify-between px-5 sm:px-8 py-6',
-          showBorder && 'border-b-0 sm:border-b border-[#282D33]',
+          'flex w-full flex-row items-center justify-between px-5 py-6 sm:px-8',
+          showBorder && 'border-b-0 border-[#282D33] sm:border-b',
           className
         )}
       >

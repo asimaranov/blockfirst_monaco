@@ -10,7 +10,7 @@ import TariffIcon from '../../Sidebar/assets/section_icons/tariff';
 import CertIcon from '../../Sidebar/assets/section_icons/cert';
 import ReferralIcon from '../../Sidebar/assets/section_icons/referral';
 import NotificationsIcon from '../../Sidebar/assets/section_icons/notifications';
-import { NotificationsModal } from '../../Notifications/NotificationsModal';
+import { NotificationsModal, NotificationsModalMobile } from '../../Notifications/NotificationsModal';
 import PremiumIcon from './assets/premium-icon.png';
 interface NavItemProps {
   href: string;
@@ -165,7 +165,7 @@ const MobileNavbar: React.FC = () => {
       </AnimatePresence>
 
       {/* Use the NotificationsModal component */}
-      <NotificationsModal
+      <NotificationsModalMobile
         isOpen={isNotificationsOpen}
         onClose={() => setIsNotificationsOpen(false)}
       />
