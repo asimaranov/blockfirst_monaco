@@ -24,7 +24,7 @@ const ComingSoon = () => {
       viewBox="0 0 103 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="w-25.75 h-6 "
+      className="h-6 w-25.75"
     >
       <rect
         x="0.25"
@@ -130,11 +130,11 @@ export default function MentorPage({ session }: { session: Session }) {
 
   return (
     <main className="border-accent border-r border-l">
-      <div className="flex h-screen flex-col">
+      <div className="flex h-auto flex-col sm:h-screen">
         <Topbar lastestUpdate={'18 марта 2025'} />
-        <div className="border-accent flex h-full border-b">
+        <div className="border-accent flex h-full flex-col border-b sm:flex-row">
           {/* Mentors sidebar */}
-          <section className="border-accent w-75 border-r">
+          <section className="border-accent hidden w-75 border-r sm:block">
             {mentors.map((mentor) => (
               <div className="border-accent relative border-b p-5">
                 <div className="flex items-center justify-between">
@@ -201,7 +201,7 @@ export default function MentorPage({ session }: { session: Session }) {
           </section>
 
           {/* Left sidebar - Mentor Profile */}
-          <section className="border-accent flex w-100 flex-col border-r">
+          <section className="border-accent flex w-auto flex-col border-r sm:w-100">
             {/* Profile container */}
             <div className="bg-background relative h-91 overflow-hidden bg-[url(/images/misc/mentor-grid.svg)] bg-contain bg-no-repeat">
               {/* Background grid effect */}
@@ -238,7 +238,7 @@ export default function MentorPage({ session }: { session: Session }) {
             {/* Mentor info */}
             <div className="flex flex-col pt-8">
               {/* About and skills */}
-              <div className="flex flex-col gap-8 px-8">
+              <div className="flex flex-col gap-8 px-5 sm:px-8">
                 {/* About section */}
                 <div className="flex flex-col gap-4">
                   <div className="flex w-full items-center justify-between">
@@ -411,10 +411,10 @@ export default function MentorPage({ session }: { session: Session }) {
               </div>
 
               {/* Contact options */}
-              <div className="border-accent flex border-b">
+              <div className="border-accent flex flex-col border-b sm:flex-row">
                 {/* Calls */}
-                <div className="border-accent w-1/2 border-r">
-                  <div className="bg-background relative h-16 overflow-hidden bg-[url(/images/misc/top-tab-grid.svg)] bg-no-repeat bg-contain bg-blend-screen">
+                <div className="border-accent w-auto border-r sm:w-1/2">
+                  <div className="bg-background relative h-16 overflow-hidden bg-[url(/images/misc/top-tab-grid.svg)] bg-contain bg-no-repeat bg-blend-screen">
                     <div className="relative flex h-full items-center gap-4 px-8">
                       <div className="h-8 w-8 overflow-hidden rounded-full">
                         <Image
@@ -440,8 +440,8 @@ export default function MentorPage({ session }: { session: Session }) {
                 </div>
 
                 {/* Text */}
-                <div className="w-1/2">
-                <div className="bg-background relative h-16 overflow-hidden bg-[url(/images/misc/top-tab-grid.svg)] bg-no-repeat bg-cover bg-blend-screen">
+                <div className="w-auto sm:w-1/2">
+                  <div className="bg-background relative h-16 overflow-hidden bg-[url(/images/misc/top-tab-grid.svg)] bg-cover bg-no-repeat bg-blend-screen">
                     <div className="relative flex h-full items-center gap-4 px-8">
                       <div className="flex h-8 w-8 items-center justify-center rounded-full">
                         <Image
@@ -485,7 +485,7 @@ export default function MentorPage({ session }: { session: Session }) {
                         alt={mentors[index]!.name ?? ''}
                         width={24}
                         height={24}
-                        className='w-6 h-6'
+                        className="h-6 w-6"
                       />
                     </div>
                     <span className="text-foreground text-base">
