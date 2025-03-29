@@ -214,13 +214,13 @@ export default function FormContainer({
         )}
       >
         <div className="flex flex-1 flex-col gap-6 sm:gap-8">
-          <div className="hidden flex-col items-center gap-8 sm:flex">
+          <div className="flex flex-col items-center gap-8">
             <Image
               src={'/images/logo/form-logo.svg'}
               alt="Logo"
               width={152}
               height={44}
-              className="w-38"
+              className="w-38 hidden sm:flex"
             />
             <div className="flex flex-col items-center gap-4">
               <h2 className="text-foreground sm:text-2xll text-xl">{title}</h2>
