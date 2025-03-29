@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import { cn } from '~/helpers';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import InfoIcon from 'public/misc/info-icon.svg';
 
 type FormState = 'input' | 'success';
 
@@ -52,10 +53,11 @@ const LoadingIcon = () => {
 };
 
 interface FormContainerProps {
+  kind?: 'form' | 'info';
   onClose: () => void;
   title: string;
   description?: string;
-  bottomText: BottomTextProps;
+  bottomText?: BottomTextProps;
   children: ReactNode;
   submitButtonText?: string;
   submitDisabled?: boolean;
@@ -76,6 +78,7 @@ interface BottomTextProps {
 }
 
 export default function FormContainer({
+  kind = 'form',
   onClose,
   title,
   description,
@@ -184,7 +187,7 @@ export default function FormContainer({
     <div className="bg-dark-bg border-accent/40 relative flex h-full w-auto flex-col border-l sm:w-105">
       {showBackButton && (
         <button
-          className="absolute top-0 left-0 hidden cursor-pointer px-10 py-11 sm:block"
+          className="absolute top-0 left-0 hidden cursor-pointer px-10 py-11 sm:block z-[10000000000000001]"
           onClick={onBackClick}
         >
           <svg
@@ -204,7 +207,12 @@ export default function FormContainer({
           </svg>
         </button>
       )}
-      <div className="z-[10000000000000000] flex flex-1 flex-col gap-8 px-5 py-8 sm:z-0 md:px-10">
+      <div
+        className={cn(
+          'z-[10000000000000000] flex flex-1 flex-col px-5 py-8 sm:z-0 md:px-10',
+          bottomText && 'pb-6'
+        )}
+      >
         <div className="flex flex-1 flex-col gap-6 sm:gap-8">
           <div className="hidden flex-col items-center gap-8 sm:flex">
             <Image
@@ -227,25 +235,41 @@ export default function FormContainer({
           <div className="flex flex-1 flex-col gap-8">{children}</div>
         </div>
 
-        <button
-          disabled={submitDisabled}
-          onClick={onSubmit}
-          className={cn(
-            'bg-primary text-foreground flex h-13 w-full items-center justify-center rounded-full text-sm transition-colors duration-300 hover:bg-[#1242B2]',
-            'disabled:hover:bg-primary cursor-pointer disabled:cursor-default disabled:opacity-50',
-            submitLoading && 'bg-[#1242B2] cursor-wait'
-          )}
-        >
-          <span>{submitButtonText}</span>
-          {submitLoading ? <LoadingIcon /> : <CheckIcon />}
-        </button>
+        {(kind || 'form') == 'form' && (
+          <button
+            disabled={submitDisabled}
+            onClick={onSubmit}
+            className={cn(
+              'bg-primary text-foreground flex h-13 w-full items-center justify-center rounded-full text-sm transition-colors duration-300 hover:bg-[#1242B2]',
+              'disabled:hover:bg-primary cursor-pointer disabled:cursor-default disabled:opacity-50',
+              submitLoading && 'cursor-wait bg-[#1242B2]'
+            )}
+          >
+            <span>{submitButtonText}</span>
+            {submitLoading ? <LoadingIcon /> : <CheckIcon />}
+          </button>
+        )}
       </div>
-      {bottomText && (
+      {bottomText && kind !== 'info' && (
         <div className="flex h-8 w-full items-center justify-center gap-1 bg-[#14171C] text-xs">
           <span className="text-secondary">{bottomText.main}</span>
           <Link
             href={bottomText.link}
             className="text-foreground cursor-pointer underline hover:opacity-50"
+          >
+            {bottomText.secondary}
+          </Link>
+        </div>
+      )}
+      {bottomText && kind == 'info' && (
+        <div className="text-secondary mt-auto flex w-full flex-row justify-center gap-1 pb-8 text-xs">
+          <span className="flex flex-row gap-1">
+            <Image src={InfoIcon} alt="Info" className="h-4 w-4" />
+            {bottomText.main}
+          </span>
+          <Link
+            href={bottomText.link}
+            className="text-foreground cursor-pointer hover:opacity-50"
           >
             {bottomText.secondary}
           </Link>

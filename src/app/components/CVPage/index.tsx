@@ -27,16 +27,6 @@ import EmailIcon from './assets/email-cv-icon.svg';
 
 import { InfoPopover } from '~/app/components/shared/InfoPopover';
 import { Modal } from '../shared/Modal';
-import {
-  ArrowUpRight,
-  Check,
-  ChevronDown,
-  ChevronRight,
-  Lock,
-  Wallet,
-} from 'lucide-react';
-import { ReferralTable } from './ReferralTable';
-import { WithdrawForm } from './WithdrawForm';
 import { Progress } from '../shared/Progress';
 import ToggleMinus from '../shared/ToggleMinus/ToggleMinus';
 import CVApplyForm from './CVApplyForm';

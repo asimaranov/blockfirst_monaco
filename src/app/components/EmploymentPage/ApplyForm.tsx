@@ -40,12 +40,18 @@ export function ApplyForm({ onClose }: ApplyFormProps) {
 
   return (
     <FormContainer
+      kind='info'
       onClose={onClose}
       title="Отклик на вакансию"
       description="Мы предоставляем контакты и дополнительную информацию работодателя"
       formState={formState}
       onSubmit={() => {}}
       submitButtonText=""
+      bottomText={{
+        main: 'Неверные контакты?',
+        secondary: 'Написать нам',
+        link: '#',
+      }}
     >
       {contactItems.map((item, index) => (
         <ContactItem
@@ -54,18 +60,9 @@ export function ApplyForm({ onClose }: ApplyFormProps) {
           icon={item.icon}
           value={item.value}
           actionButton={item.button}
+          
         />
       ))}
-
-      <div className="text-secondary flex w-full flex-row justify-center gap-1 text-xs">
-        <span className="flex flex-row gap-1">
-          <Image src={InfoIcon} alt="Info" className="h-4 w-4" />
-          Неверные контакты?
-        </span>
-        <span className="text-foreground cursor-pointer underline">
-          Написать нам
-        </span>
-      </div>
     </FormContainer>
   );
 }

@@ -80,7 +80,7 @@ export function FormTextArea({
             name={name}
             onChange={onChange}
             onBlur={onBlur}
-            className="text-foreground placeholder:text-secondary/50 -mt-1 h-full w-full grow resize-none bg-transparent text-sm focus:outline-none"
+            className="text-foreground placeholder:text-secondary/50 -mt-1 h-full w-full grow bg-transparent text-sm focus:outline-none"
             placeholder={placeholder}
             rows={rows}
             {...rest}

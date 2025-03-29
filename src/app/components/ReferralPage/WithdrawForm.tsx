@@ -25,12 +25,18 @@ export function WithdrawForm({ onClose }: ApplyFormProps) {
 
   return (
     <FormContainer
+      kind='info'
       onClose={onClose}
       title="Вывод средств"
       description="Вывод осуществляется в ручном режиме, необходимо написать менеджеру в Telegram. Выплата производится 1 раз в месяц"
       formState={formState}
       onSubmit={() => {}}
       submitButtonText=""
+      bottomText={{
+        main: 'Электронный адрес',
+        secondary: 'hello@blockfirst.io',
+        link: 'mailto:hello@blockfirst.io',
+      }}
     >
       {contactItems.map((item, index) => (
         <ContactItem
@@ -41,14 +47,6 @@ export function WithdrawForm({ onClose }: ApplyFormProps) {
           actionButton={item.button}
         />
       ))}
-
-      <div className="text-secondary flex w-full flex-row justify-center gap-1 text-xs">
-        <span className="flex flex-row gap-1">
-          <Image src={InfoIcon} alt="Info" className="h-4 w-4" />
-          Электронный адрес
-        </span>
-        <span className="text-foreground">hello@blockfirst.io</span>
-      </div>
     </FormContainer>
   );
 }
