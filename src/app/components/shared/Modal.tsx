@@ -49,7 +49,7 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
             exit="exit"
             variants={variants}
             transition={{ type: 'tween', duration: 0.3 }}
-            className={`fixed z-50 overflow-y-auto ${
+            className={`fixed z-[10000000000000000] sm:z-50 overflow-y-auto ${
               isMobile
                 ? 'right-0 bottom-0 left-0 max-h-[90vh] w-full'
                 : 'top-0 right-0 h-screen w-auto'

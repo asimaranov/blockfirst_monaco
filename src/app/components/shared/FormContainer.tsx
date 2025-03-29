@@ -56,7 +56,7 @@ export default function FormContainer({
 }: FormContainerProps) {
   if (formState === 'success') {
     return (
-      <div className="bg-dark-bg border-accent/40 flex h-full w-auto sm:w-105 flex-col border-l">
+      <div className="bg-dark-bg border-accent/40 flex h-full w-auto sm:w-105 flex-col border-l z-[10000000000000000] sm:z-0">
         <div className="flex flex-1 flex-col gap-8 px-5 md:px-10 py-8">
           <div className="flex flex-1 flex-col gap-8">
             <div className="flex-col items-center gap-8">
@@ -166,7 +166,7 @@ export default function FormContainer({
           </svg>
         </button>
       )}
-      <div className="flex flex-1 flex-col gap-8 px-5 md:px-10 py-8">
+      <div className="flex flex-1 flex-col gap-8 px-5 md:px-10 py-8 z-[10000000000000000] sm:z-0">
         <div className="flex flex-1 flex-col gap-8">
           <div className="flex-col items-center gap-8">
             <Image
