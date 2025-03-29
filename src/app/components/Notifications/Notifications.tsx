@@ -505,7 +505,7 @@ const Notifications = ({ onClose }: NotificationsProps) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="scrollbar flex h-screen min-w-auto max-w-105 sm:min-w-105 flex-col overflow-y-auto border border-[#282D33]/40 bg-[#0F1217]"
+      className="scrollbar flex h-screen min-w-auto max-w-auto sm:max-w-105 sm:min-w-105 flex-col overflow-y-auto border border-[#282D33]/40 bg-[#0F1217]"
     >
       <div className="flex h-full flex-col">
         {/* Header with title and archive button - this stays fixed */}
