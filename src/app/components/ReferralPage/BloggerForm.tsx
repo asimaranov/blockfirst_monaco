@@ -69,7 +69,7 @@ export default function BloggerForm({ onClose }: ApplyFormProps) {
             link: '#',
           }}
         >
-          <div className="text-secondary/50 -mx-10 bg-[#14171C] px-8 py-3.5 text-xs uppercase">
+          <div className="text-secondary/50 -mx-5 sm:-mx-10 bg-[#14171C] px-6 sm:px-8 py-3.5 text-xs uppercase">
             Необходимые действия
           </div>
 
