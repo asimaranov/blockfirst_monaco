@@ -23,6 +23,66 @@ import CvIcon from '../Sidebar/assets/section_icons/cv';
 import JobIcon from '../Sidebar/assets/section_icons/job';
 import ClubIcon from './assets/club-icon.svg';
 
+// Premium feature data
+const premiumFeatures = [
+  {
+    id: 'mentor',
+    title: 'Персональный куратор ✌️',
+    description:
+      'Куратор окажет помощь в решении сложных задач и ответит на все ваши вопросы до завершения курса.',
+    image: MentorImage,
+    bgColor: 'bg-primary',
+    tariff: 'PRO TARIF',
+    tariffIcon: TARIFFS[2]?.bigIcon,
+    icon: <MentorIcon className="h-5 w-5" />,
+    label: 'Твой куратор',
+  },
+  {
+    id: 'cv',
+    title: 'Подготовка резюме 💣',
+    description:
+      'После прохождения каждого этапа, вы разблокируете возможность улучшить свое резюме с куратором для работадателей.',
+    image: CVImage,
+    bgColor: 'bg-[#E57A2E]',
+    tariff: 'PRO TARIF',
+    tariffIcon: TARIFFS[2]?.bigIcon,
+    icon: <CvIcon className="h-5 w-5" />,
+    label: 'Подготовка резюме',
+  },
+  {
+    id: 'jobs',
+    title: 'Трудоустройство 👑',
+    description:
+      'Мы агрегируем актуальные вакансии для наших учеников. Доступны персонализированные предложения от наших партнеров.',
+    image: JobsImage,
+    bgColor: 'bg-[#7417E5]',
+    tariff: 'PRO TARIF',
+    tariffIcon: TARIFFS[2]?.bigIcon,
+    icon: <JobIcon className="h-5 w-5" />,
+    label: 'Трудоустройство',
+  },
+  {
+    id: 'club',
+    title: 'Закрытый клуб BlockFirst 😎',
+    description:
+      'Доступ к закрытому комьюнити энтузиастов. Cможете найти сокомандников и построить будущее в блокчейн индустрии.',
+    image: ClubImage,
+    bgColor: 'bg-[#30BF69]',
+    tariff: 'STARTER TARIF',
+    tariffIcon: TARIFFS[1]?.bigIcon,
+    icon: <Image src={ClubIcon} alt="Club" className="h-5 w-5" />,
+    label: 'Закрытый клуб BlockFirst',
+  },
+];
+
+// Group features by tariff type
+const proFeatures = premiumFeatures.filter(
+  (feature) => feature.tariff === 'PRO TARIF'
+);
+const starterFeatures = premiumFeatures.filter(
+  (feature) => feature.tariff === 'STARTER TARIF'
+);
+
 export default function PremiumPage({ session }: { session: Session }) {
   const [selectedTariff, setSelectedTariff] = useState<Tariff>(TARIFFS[1]!); // Default to PRO
 
@@ -61,163 +121,45 @@ export default function PremiumPage({ session }: { session: Session }) {
 
         {/* Premium Cards */}
         <section className="space-y-3 px-2 py-3 pb-10">
-          {/* PRO Tariff Card */}
-          <motion.div
-            className="bg-primary rounded-xl p-5"
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
-          >
-            <div className="mb-5 flex items-center justify-between">
-              <div className="flex items-center">
-                <div className="bg-foreground flex items-center justify-center rounded-full p-1.5 pr-4">
-                  <Image
-                    src={TARIFFS[2]?.bigIcon!}
-                    alt="Pro"
-                    width={20}
-                    height={20}
-                    className="h-5 w-5"
-                  />
-                  <span className="text-background ml-2 text-sm font-medium">
-                    PRO TARIF
-                  </span>
+          {premiumFeatures.map((feature) => (
+            <motion.div
+              key={feature.id}
+              className={`${feature.bgColor} rounded-xl p-5`}
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.2 }}
+            >
+              <div className="mb-5 flex items-center justify-between">
+                <div className="flex items-center">
+                  <div className="bg-foreground flex items-center justify-center rounded-full p-1.5 pr-4">
+                    <Image
+                      src={feature.tariffIcon!}
+                      alt={feature.tariff}
+                      width={20}
+                      height={20}
+                      className="h-5 w-5"
+                    />
+                    <span className="text-background ml-2 text-sm font-medium">
+                      {feature.tariff}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex items-center">
+                  <Image src={LockImage} alt="Lock" width={20} height={20} />
                 </div>
               </div>
-              <div className="flex items-center">
-                <Image src={LockImage} alt="Lock" width={20} height={20} />
-              </div>
-            </div>
 
-            <div className="flex flex-col gap-5">
-              <Image src={MentorImage} alt="Mentor" />
+              <div className="flex flex-col gap-5">
+                <Image src={feature.image} alt={feature.title} />
 
-              <div className="text-foreground">
-                <h3 className="text-lg font-medium">Персональный куратор ✌️</h3>
-                <p className="text-foreground/90 mt-4 text-sm">
-                  Куратор окажет помощь в решении сложных задач и ответит на все
-                  ваши вопросы до завершения курса.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Courses Card */}
-          <motion.div
-            className="rounded-xl bg-[#E57A2E] p-5"
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
-          >
-            <div className="mb-5 flex items-center justify-between">
-              <div className="flex items-center">
-                <div className="bg-foreground flex items-center justify-center rounded-full p-1.5 pr-4">
-                  <Image
-                    src={TARIFFS[2]?.bigIcon!}
-                    alt="Pro"
-                    width={20}
-                    height={20}
-                    className="h-5 w-5"
-                  />
-                  <span className="text-background ml-2 text-sm font-medium">
-                    PRO TARIF
-                  </span>
+                <div className="text-foreground">
+                  <h3 className="text-lg font-medium">{feature.title}</h3>
+                  <p className="text-foreground/90 mt-4 text-sm">
+                    {feature.description}
+                  </p>
                 </div>
               </div>
-              <div className="flex items-center">
-                <Image src={LockImage} alt="Lock" width={20} height={20} />
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-5">
-              <Image src={CVImage} alt="CV" />
-
-              <div className="text-foreground">
-                <h3 className="text-lg font-medium">Подготовка резюме 💣</h3>
-                <p className="text-foreground/90 mt-4 text-sm">
-                  После прохождения каждого этапа, вы разблокируете возможность
-                  улучшить свое резюме с куратором для работадателей.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Jobs Card */}
-          <motion.div
-            className="rounded-xl bg-[#7417E5] p-5"
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
-          >
-            <div className="mb-5 flex items-center justify-between">
-              <div className="flex items-center">
-                <div className="bg-foreground flex items-center justify-center rounded-full p-1.5 pr-4">
-                  <Image
-                    src={TARIFFS[2]?.bigIcon!}
-                    alt="Pro"
-                    width={20}
-                    height={20}
-                    className="h-5 w-5"
-                  />
-                  <span className="text-background ml-2 text-sm font-medium">
-                    PRO TARIF
-                  </span>
-                </div>
-              </div>
-              <div className="flex items-center">
-                <Image src={LockImage} alt="Lock" width={20} height={20} />
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-5">
-              <Image src={JobsImage} alt="Jobs" />
-
-              <div className="text-foreground">
-                <h3 className="text-lg font-medium">Трудоустройство 👑</h3>
-                <p className="text-foreground/90 mt-4 text-sm">
-                  Мы агрегируем актуальные вакансии для наших учеников. Доступны
-                  персонализированные предложения от наших партнеров.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Community Card */}
-          <motion.div
-            className="rounded-xl bg-[#30BF69] p-5"
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.2 }}
-          >
-            <div className="mb-5 flex items-center justify-between">
-              <div className="flex items-center">
-                <div className="bg-foreground flex items-center justify-center rounded-full p-1.5 pr-4">
-                  <Image
-                    src={TARIFFS[1]?.bigIcon!}
-                    alt="Pro"
-                    width={20}
-                    height={20}
-                    className="h-5 w-5"
-                  />
-                  <span className="text-background ml-2 text-sm font-medium">
-                    STARTER TARIF
-                  </span>
-                </div>
-              </div>
-              <div className="flex items-center">
-                <Image src={LockImage} alt="Lock" width={20} height={20} />
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-5">
-              <Image src={ClubImage} alt="Club" />
-
-              <div className="text-foreground">
-                <h3 className="text-lg font-medium">
-                  Закрытый клуб BlockFirst 😎
-                </h3>
-                <p className="text-foreground/90 mt-4 text-sm">
-                  Доступ к закрытому комьюнити энтузиастов. Cможете найти
-                  сокомандников и построить будущее в блокчейн индустрии.
-                </p>
-              </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          ))}
         </section>
 
         {/* Account Info */}
@@ -257,35 +199,20 @@ export default function PremiumPage({ session }: { session: Session }) {
               </div>
 
               <div className="">
-                <div className="border-accent flex items-center justify-between border-t pt-7 pb-5">
-                  <div className="flex items-center">
-                    <MentorIcon className="h-5 w-5" />
-                    <span className="text-secondary ml-3 text-base">
-                      Твой куратор
-                    </span>
+                {proFeatures.map((feature) => (
+                  <div
+                    key={feature.id}
+                    className="border-accent flex items-center justify-between border-t pt-7 pb-5"
+                  >
+                    <div className="flex items-center">
+                      {feature.icon}
+                      <span className="text-secondary ml-3 text-base">
+                        {feature.label}
+                      </span>
+                    </div>
+                    <Image src={LockImage} alt="Lock" width={20} height={20} />
                   </div>
-                  <Image src={LockImage} alt="Lock" width={20} height={20} />
-                </div>
-
-                <div className="border-accent flex items-center justify-between border-t pt-7 pb-5">
-                  <div className="flex items-center">
-                    <CvIcon className="h-5 w-5" />
-                    <span className="text-secondary ml-3 text-base">
-                      Подготовка резюме
-                    </span>
-                  </div>
-                  <Image src={LockImage} alt="Lock" width={20} height={20} />
-                </div>
-
-                <div className="border-accent flex items-center justify-between border-t pt-7 pb-5">
-                  <div className="flex items-center">
-                    <JobIcon className="h-5 w-5" />
-                    <span className="text-secondary ml-3 text-base">
-                      Трудоустройство
-                    </span>
-                  </div>
-                  <Image src={LockImage} alt="Lock" width={20} height={20} />
-                </div>
+                ))}
               </div>
 
               <div className="text-secondary mt-10 text-xs">
@@ -300,20 +227,20 @@ export default function PremiumPage({ session }: { session: Session }) {
                   />
                 </div>
 
-                <div className="border-accent mt-3 flex items-center justify-between pt-5 pb-5">
-                  <div className="flex items-center">
-                    <Image src={ClubIcon} alt="Club" className="h-5 w-5" />
-                    <span className="text-secondary ml-3 text-base">
-                      Закрытый клуб BlockFirst
-                    </span>
+                {starterFeatures.map((feature) => (
+                  <div
+                    key={feature.id}
+                    className="border-accent mt-3 flex items-center justify-between pt-5 pb-5"
+                  >
+                    <div className="flex items-center">
+                      {feature.icon}
+                      <span className="text-secondary ml-3 text-base">
+                        {feature.label}
+                      </span>
+                    </div>
+                    <Image src={LockImage} alt="Lock" width={20} height={20} />
                   </div>
-                  <Image
-                    src={LockImage}
-                    alt="Lock"
-                    width={20}
-                    height={20}
-                  />
-                </div>
+                ))}
               </div>
             </div>
           </div>
