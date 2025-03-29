@@ -79,7 +79,7 @@ const MobileNavbar: React.FC = () => {
     { href: '/referral', icon: <ReferralIcon />, label: 'Рефералы' },
     { href: '/pricing', icon: <TariffIcon />, label: 'Тариф' },
     {
-      href: '#',
+      href: '/premium',
       icon: <Image src={PremiumIcon} alt="Notifications" className="h-5 w-5" />,
       label: 'Премиум',
       type: 'premium',
