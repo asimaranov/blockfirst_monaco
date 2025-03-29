@@ -58,7 +58,7 @@ export default function UsdtForm({ onClose }: StudentFormProps) {
       onBackClick={onClose}
     >
       <div className="flex flex-1 flex-col gap-6">
-        <div className="relative flex h-63.75 w-87.5 flex-col items-center justify-center gap-4 sm:h-82 sm:w-85">
+        <div className="relative flex h-63.75 w-auto flex-col items-center justify-center gap-4 sm:h-82 sm:w-85">
           <div className="bg-foreground flex h-45 w-45 items-center justify-center rounded-3xl p-4 sm:h-50 sm:w-50 sm:p-5">
             <QRCodeSVG
               value={paymentUri}
