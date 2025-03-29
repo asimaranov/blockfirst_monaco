@@ -2,20 +2,11 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Topbar as UnifiedTopbar,
-  LastUpdateInfo,
 } from '~/app/components/shared/Topbar';
 import HeaderIcon from './assets/header-icon.png';
 import Image from 'next/image';
-import CopyButton from '../shared/CopyButton/CopyButton';
-import { Modal } from '../shared/Modal';
-import BloggerForm from './BloggerForm';
 
 export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
-  const [copied, setCopied] = useState(false);
-  const referralLink = 'www.blockfirst.ru/ref2001';
-
-  const [isBloggersFormOpen, setIsBloggersFormOpen] = useState(false);
-
   return (
     <UnifiedTopbar
       showBorder={false}

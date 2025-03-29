@@ -346,7 +346,7 @@ export default function MentorPage({ session }: { session: Session }) {
               {/* Selected mentor indicator */}
             </div>
 
-            <div className="flex flex-1 flex-col gap-6">
+            <div className="flex flex-1 flex-col gap-5 sm:gap-6 pt-10 sm:pt-0">
               <div className="mx-8 mt-auto">
                 <div className="bg-success/10 flex items-center justify-center gap-1 rounded-full py-3">
                   <div className="flex h-5 w-5 items-center justify-center rounded-full">
@@ -396,10 +396,10 @@ export default function MentorPage({ session }: { session: Session }) {
           {/* Right side - Interaction area */}
           <section className="flex flex-1 flex-col gap-9.5">
             {/* Contact methods */}
-            <div className="flex flex-col">
+            <div className="flex flex-col pt-8 sm:pt-0">
               {/* Header */}
               <div className="border-accent h-12 border-b">
-                <div className="flex h-full items-center justify-between px-8">
+                <div className="flex h-full items-center justify-between px-5 sm:px-8">
                   <span className="text-secondary text-xs uppercase opacity-50">
                     Связь с куратором
                   </span>
@@ -415,7 +415,7 @@ export default function MentorPage({ session }: { session: Session }) {
                 {/* Calls */}
                 <div className="border-accent w-auto border-r sm:w-1/2">
                   <div className="bg-background relative h-16 overflow-hidden bg-[url(/images/misc/top-tab-grid.svg)] bg-contain bg-no-repeat bg-blend-screen">
-                    <div className="relative flex h-full items-center gap-4 px-8">
+                    <div className="relative flex h-full items-center gap-4 px-5 sm:px-8">
                       <div className="h-8 w-8 overflow-hidden rounded-full">
                         <Image
                           src={CallIcon}
@@ -428,8 +428,8 @@ export default function MentorPage({ session }: { session: Session }) {
                       <span className="text-foreground text-lg">Звонки</span>
                     </div>
                   </div>
-                  <div className="px-8 py-4">
-                    <p className="text-foreground text-xs">
+                  <div className="px-5 sm:px-8 pt-6 pb-10 sm:py-4">
+                    <p className="text-foreground text-sm sm:text-xs">
                       Звонок согласовывается в чате. <br />
                       <span className="text-secondary">
                         Пожалуйста, заранее подготовьте вопрос или опишите
@@ -442,7 +442,7 @@ export default function MentorPage({ session }: { session: Session }) {
                 {/* Text */}
                 <div className="w-auto sm:w-1/2">
                   <div className="bg-background relative h-16 overflow-hidden bg-[url(/images/misc/top-tab-grid.svg)] bg-cover bg-no-repeat bg-blend-screen">
-                    <div className="relative flex h-full items-center gap-4 px-8">
+                    <div className="relative flex h-full items-center gap-4 px-5 sm:px-8">
                       <div className="flex h-8 w-8 items-center justify-center rounded-full">
                         <Image
                           src={TextIcon}
@@ -457,8 +457,8 @@ export default function MentorPage({ session }: { session: Session }) {
                       </span>
                     </div>
                   </div>
-                  <div className="px-8 py-4">
-                    <p className="text-foreground text-xs">
+                  <div className="px-5 sm:px-8 pt-6 pb-10 sm:py-4">
+                    <p className="text-foreground text-sm sm:text-xs">
                       Обращайтесь с вопросами, возникшими в процессе курса.
                       <br />
                       <span className="text-secondary">
@@ -478,7 +478,7 @@ export default function MentorPage({ session }: { session: Session }) {
                   {success && (
                     <div className="bg-dark-bg absolute top-0 left-0 h-full w-full opacity-50"></div>
                   )}
-                  <div className="flex items-center gap-4 px-8">
+                  <div className="flex items-center gap-4 px-5 sm:px-8">
                     <div className="h-6 w-6 overflow-hidden rounded-full">
                       <Image
                         src={mentors[index]!.smallImage ?? ''}
@@ -500,7 +500,7 @@ export default function MentorPage({ session }: { session: Session }) {
                   </div>
                 </div>
                 {!success && (
-                  <div className="px-8 py-5">
+                  <div className="px-5 sm:px-8 py-5">
                     <p className="text-secondary text-sm">
                       Заполните все поля и наш куратор свяжется с вами в
                       Telegram для согласования времени и даты звонка
@@ -511,7 +511,7 @@ export default function MentorPage({ session }: { session: Session }) {
 
               {/* Contact form */}
               {!success && (
-                <div className="flex h-full flex-col px-8">
+                <div className="flex h-full flex-col px-5 sm:px-8">
                   <div className="flex flex-1 flex-col gap-8">
                     <div className="border-accent group focus-within:border-foreground flex h-12 items-center border-b px-4">
                       <div className="w-4">

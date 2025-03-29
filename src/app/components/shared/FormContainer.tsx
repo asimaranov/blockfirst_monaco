@@ -56,16 +56,16 @@ export default function FormContainer({
 }: FormContainerProps) {
   if (formState === 'success') {
     return (
-      <div className="bg-dark-bg border-accent/40 flex h-full w-105 flex-col border-l">
-        <div className="flex flex-1 flex-col gap-8 px-10 py-8">
+      <div className="bg-dark-bg border-accent/40 flex h-full w-auto sm:w-105 flex-col border-l">
+        <div className="flex flex-1 flex-col gap-8 px-5 md:px-10 py-8">
           <div className="flex flex-1 flex-col gap-8">
-            <div className="flex flex-col items-center gap-8">
+            <div className="flex-col items-center gap-8">
               <Image
                 src={'/images/logo/form-logo.svg'}
                 alt="Logo"
                 width={152}
                 height={44}
-                className="w-38"
+                className="w-38 hidden sm:flex"
               />
             </div>
 
@@ -143,7 +143,7 @@ export default function FormContainer({
   }
 
   return (
-    <div className="bg-dark-bg border-accent/40 relative flex h-full w-105 flex-col border-l">
+    <div className="bg-dark-bg border-accent/40 relative flex h-full w-auto sm:w-105 flex-col border-l">
       {showBackButton && (
         <button
           className="absolute top-0 left-0 cursor-pointer px-10 py-11"
@@ -166,15 +166,15 @@ export default function FormContainer({
           </svg>
         </button>
       )}
-      <div className="flex flex-1 flex-col gap-8 px-10 py-8">
+      <div className="flex flex-1 flex-col gap-8 px-5 md:px-10 py-8">
         <div className="flex flex-1 flex-col gap-8">
-          <div className="flex flex-col items-center gap-8">
+          <div className="flex-col items-center gap-8">
             <Image
               src={'/images/logo/form-logo.svg'}
               alt="Logo"
               width={152}
               height={44}
-              className="w-38"
+              className="w-38 hidden sm:flex"
             />
             <div className="flex flex-col items-center gap-4">
               <h2 className="text-foreground text-2xll">{title}</h2>
