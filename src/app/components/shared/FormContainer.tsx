@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { ReactNode } from 'react';
 import { cn } from '~/helpers';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 type FormState = 'input' | 'success';
 
@@ -27,6 +28,7 @@ interface FormContainerProps {
   onClose: () => void;
   title: string;
   description?: string;
+  bottomText: BottomTextProps;
   children: ReactNode;
   submitButtonText?: string;
   submitDisabled?: boolean;
@@ -39,10 +41,17 @@ interface FormContainerProps {
   onBackClick?: () => void;
 }
 
+interface BottomTextProps {
+  main: string;
+  secondary: string;
+  link: string;
+}
+
 export default function FormContainer({
   onClose,
   title,
   description,
+  bottomText,
   children,
   submitButtonText = 'Продолжить',
   submitDisabled = false,
@@ -59,13 +68,13 @@ export default function FormContainer({
       <div className="bg-dark-bg border-accent/40 flex h-full w-auto sm:w-105 flex-col border-l z-[10000000000000000] sm:z-0">
         <div className="flex flex-1 flex-col gap-8 px-5 md:px-10 py-8">
           <div className="flex flex-1 flex-col gap-8">
-            <div className="flex-col items-center gap-8">
+            <div className="flex-col items-center gap-8 hidden sm:flex">
               <Image
                 src={'/images/logo/form-logo.svg'}
                 alt="Logo"
                 width={152}
                 height={44}
-                className="w-38 hidden sm:flex"
+                className="w-38 "
               />
             </div>
 
@@ -146,7 +155,7 @@ export default function FormContainer({
     <div className="bg-dark-bg border-accent/40 relative flex h-full w-auto sm:w-105 flex-col border-l">
       {showBackButton && (
         <button
-          className="absolute top-0 left-0 cursor-pointer px-10 py-11"
+          className="hidden sm:block absolute top-0 left-0 cursor-pointer px-10 py-11"
           onClick={onBackClick}
         >
           <svg
@@ -167,17 +176,17 @@ export default function FormContainer({
         </button>
       )}
       <div className="flex flex-1 flex-col gap-8 px-5 md:px-10 py-8 z-[10000000000000000] sm:z-0">
-        <div className="flex flex-1 flex-col gap-8">
-          <div className="flex-col items-center gap-8">
+        <div className="flex flex-1 flex-col gap-6 sm:gap-8">
+          <div className="flex-col items-center gap-8 hidden sm:flex">
             <Image
               src={'/images/logo/form-logo.svg'}
               alt="Logo"
               width={152}
               height={44}
-              className="w-38 hidden sm:flex"
+              className="w-38 "
             />
             <div className="flex flex-col items-center gap-4">
-              <h2 className="text-foreground text-2xll">{title}</h2>
+              <h2 className="text-foreground text-xl sm:text-2xll">{title}</h2>
               {description && (
                 <p className="text-secondary text-center text-sm">
                   {description}
@@ -201,6 +210,14 @@ export default function FormContainer({
           <CheckIcon />
         </button>
       </div>
+      {bottomText && (
+        <div className="flex h-8 w-full items-center justify-center gap-1 bg-[#14171C] text-xs">
+          <span className="text-secondary">{bottomText.main}</span>
+          <Link href={bottomText.link} className="text-foreground cursor-pointer underline hover:opacity-50">
+            {bottomText.secondary}
+          </Link>
+        </div>
+      )}
     </div>
   );
 }

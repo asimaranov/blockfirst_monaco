@@ -71,7 +71,7 @@ const PaymentMethod = ({
     : 'text-[#9AA6B5] opacity-50';
 
   return (
-    <div className="mx-10 py-8">
+    <div className="mx-5 sm:mx-10 py-8">
       <div className="flex items-start justify-between">
         <div className="flex gap-4">
           <Image
@@ -227,21 +227,21 @@ const PaymentMethodsModal = ({
       ) : (
         <div
           className={cn(
-            'h-screen w-105 border-l border-[#282D33]/50 bg-[#0F1115]'
+            'h-auto sm:h-screen w-full sm:w-105 border-l border-[#282D33]/50 bg-[#0F1115]'
           )}
         >
           <div className="flex h-full flex-col">
             {/* Logo and title */}
-            <div className="flex flex-col items-center gap-8 px-10 pt-8">
+            <div className="flex flex-col items-center gap-8 px-5 sm:px-10 pt-8">
               <Image
                 src={'/images/logo/form-logo.svg'}
                 alt="Logo"
                 width={152}
                 height={44}
-                className="w-38"
+                className="w-38 hidden sm:block"
               />
               <div className="flex flex-col items-center gap-4 pb-8 text-center">
-                <h3 className="text-2xll text-foreground">
+                <h3 className="text-xl sm:text-2xll text-foreground">
                   Выбор метода оплаты
                 </h3>
                 <p className="text-sm text-[#9AA6B5]">
@@ -251,7 +251,7 @@ const PaymentMethodsModal = ({
               </div>
             </div>
 
-            <div className="text-secondary/50 w-full bg-[#14171C] py-3.5 pl-8 text-xs uppercase">
+            <div className="text-secondary/50 w-full bg-[#14171C] py-3.5 pl-5 sm:pl-8 text-xs uppercase hidden sm:block">
               способы оплаты
             </div>
 
