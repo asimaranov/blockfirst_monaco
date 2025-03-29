@@ -22,6 +22,7 @@ import MentorIcon from '../Sidebar/assets/section_icons/mentor';
 import CvIcon from '../Sidebar/assets/section_icons/cv';
 import JobIcon from '../Sidebar/assets/section_icons/job';
 import ClubIcon from './assets/club-icon.svg';
+import Link from 'next/link';
 
 // Premium feature data
 const premiumFeatures = [
@@ -36,6 +37,7 @@ const premiumFeatures = [
     tariffIcon: TARIFFS[2]?.bigIcon,
     icon: <MentorIcon className="h-5 w-5" />,
     label: 'Твой куратор',
+    href: '/mentor',
   },
   {
     id: 'cv',
@@ -48,6 +50,7 @@ const premiumFeatures = [
     tariffIcon: TARIFFS[2]?.bigIcon,
     icon: <CvIcon className="h-5 w-5" />,
     label: 'Подготовка резюме',
+    href: '/cv',
   },
   {
     id: 'jobs',
@@ -60,6 +63,7 @@ const premiumFeatures = [
     tariffIcon: TARIFFS[2]?.bigIcon,
     icon: <JobIcon className="h-5 w-5" />,
     label: 'Трудоустройство',
+    href: '/employment',
   },
   {
     id: 'club',
@@ -72,6 +76,7 @@ const premiumFeatures = [
     tariffIcon: TARIFFS[1]?.bigIcon,
     icon: <Image src={ClubIcon} alt="Club" className="h-5 w-5" />,
     label: 'Закрытый клуб BlockFirst',
+    href: '#',
   },
 ];
 
@@ -200,8 +205,9 @@ export default function PremiumPage({ session }: { session: Session }) {
 
               <div className="">
                 {proFeatures.map((feature) => (
-                  <div
+                  <Link
                     key={feature.id}
+                    href={feature.href ?? '#'}
                     className="border-accent flex items-center justify-between border-t pt-7 pb-5"
                   >
                     <div className="flex items-center">
@@ -211,7 +217,7 @@ export default function PremiumPage({ session }: { session: Session }) {
                       </span>
                     </div>
                     <Image src={LockImage} alt="Lock" width={20} height={20} />
-                  </div>
+                  </Link>
                 ))}
               </div>
 
