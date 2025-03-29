@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 
 interface ModalProps {
   isOpen: boolean;
@@ -10,6 +10,27 @@ interface ModalProps {
 }
 
 export function Modal({ isOpen, onClose, children }: ModalProps) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+
+    return () => {
+      window.removeEventListener('resize', checkIsMobile);
+    };
+  }, []);
+
+  const variants = {
+    initial: isMobile ? { x: 0, y: '100%' } : { x: '100%', y: 0 },
+    animate: { x: 0, y: 0 },
+    exit: isMobile ? { x: 0, y: '100%' } : { x: '100%', y: 0 },
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -23,11 +44,16 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
             className="fixed inset-0 z-50 bg-black/50"
           />
           <motion.div
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={variants}
             transition={{ type: 'tween', duration: 0.3 }}
-            className="fixed top-0 right-0 z-50 h-screen"
+            className={`fixed z-50 overflow-y-auto ${
+              isMobile
+                ? 'right-0 bottom-0 left-0 max-h-[90vh] w-full'
+                : 'top-0 right-0 h-screen w-auto'
+            }`}
           >
             {children}
           </motion.div>
