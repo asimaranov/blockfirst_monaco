@@ -45,7 +45,7 @@ export default function Dashboard({ session }: { session: Session }) {
           },
         ]}
       />
-      <div className="grid grid-cols-1 gap-8">
+      <div className="grid grid-cols-1 gap-0 sm:gap-8">
         {dashboardSection === 'courses' && (
           <div className="hidden sm:block">
             {COURSES?.[0] ? (
@@ -55,23 +55,24 @@ export default function Dashboard({ session }: { session: Session }) {
             )}
           </div>
         )}
-        <section className="divide [&>*]:border-accent divide-accent border-accent grid grid-cols-1 gap-y-0 divide-x-0 sm:grid-cols-3 sm:gap-y-9 sm:divide-x-1">
-          {dashboardSection === 'courses' && (
-            <div className='block sm:hidden'>
-              <UnifiedCourseCard
-                key={COURSES[0]!.id}
-                course={COURSES[0]!}
-                variant="default"
-                showProgress={true}
-                className='not-first:border-t sm:border-y'
-              />
-              <div className="flex flex-row gap-3 p-5 pt-10 text-base">
-                <div>Другие курсы</div>
-                <div className='w-7.5 h-5 bg-foreground text-sm text-background flex items-center justify-center rounded-[100px] font-medium'>8</div>
+        {dashboardSection === 'courses' && (
+          <div className="block sm:hidden">
+            <UnifiedCourseCard
+              key={COURSES[0]!.id}
+              course={COURSES[0]!}
+              variant="default"
+              showProgress={true}
+              className="not-first:border-t sm:border-y"
+            />
+            <div className="flex flex-row gap-3 p-5 pt-10 text-base">
+              <div>Другие курсы</div>
+              <div className="bg-foreground text-background flex h-5 w-7.5 items-center justify-center rounded-[100px] text-sm font-medium">
+                8
               </div>
             </div>
-          )}
-
+          </div>
+        )}
+        <section className="divide [&>*]:border-accent divide-accent border-accent grid grid-cols-1 gap-y-0 divide-x-0 sm:grid-cols-3 sm:gap-y-9 sm:divide-x-1">
           {dashboardSection === 'courses'
             ? cousesList.map((course, index) => (
                 <UnifiedCourseCard
