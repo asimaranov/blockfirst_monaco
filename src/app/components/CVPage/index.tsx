@@ -50,7 +50,7 @@ const StatCard = ({
   badgeText?: string;
   badgeColor?: string;
 }) => (
-  <div className="flex flex-col gap-5 px-8 pt-6">
+  <div className="flex flex-col gap-5 px-5 pt-6 sm:px-8">
     <div
       className={`${badgeColor} inline-flex w-fit items-center rounded-lg px-3 py-2`}
     >
@@ -191,14 +191,14 @@ const StageCard = ({
   position: string;
   progressValue: number;
 }) => (
-  <div className="flex flex-col gap-5 p-8 pr-0 pb-0">
+  <div className="flex flex-col gap-5 p-5 sm:p-8 sm:pr-0 sm:pb-0 r-0 pb-0">
     <div
       className={`inline-flex w-fit items-center rounded-full border-[0.5px] px-3 py-1.25 ${completed ? 'border-success/50 text-success' : 'border-secondary/50 text-secondary'}`}
     >
       <span className="text-xs leading-3.5">{title}</span>
     </div>
 
-    <div className="flex flex-col group-last:pr-8">
+    <div className="flex flex-col group-last:pr-0 sm:group-last:pr-8">
       <div className="flex flex-col gap-2 pb-5">
         <h3 className="text-foreground text-2xl font-normal">{salaryRange}</h3>
         <p className="text-secondary text-xs leading-3.5 uppercase">
@@ -206,7 +206,7 @@ const StageCard = ({
         </p>
       </div>
 
-      <div className="relative">
+      <div className="relative mr-5 sm:mr-0">
         <div className="relative flex flex-row">
           <Progress
             value={progressValue}
@@ -233,7 +233,7 @@ const StageCard = ({
           )}
         </div>
       </div>
-      <div className="border-accent h-8 not-group-last:border-r"></div>
+      <div className="border-accent h-8 not-group-last:border-r-0 sm:not-group-last:border-r"></div>
     </div>
   </div>
 );
@@ -345,13 +345,13 @@ const CourseSection = ({
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <CVApplyForm onClose={() => setIsOpen(false)} jobTitle={position} />
       </Modal>
-      <div className="border-accent bg-[#14171C] px-8 py-4">
+      <div className="border-accent hidden bg-[#14171C] px-5 py-4 sm:block sm:px-8">
         <h4 className="text-secondary/50 text-xs leading-4 uppercase">
           Курсы этапа
         </h4>
       </div>
 
-      <div className="flex flex-col gap-4 px-8 pt-7 pb-10">
+      <div className="flex flex-col gap-4 px-5 pt-7 pb-10 sm:px-8">
         {courses.map((course, index) => (
           <CourseItem
             key={index}
@@ -366,7 +366,7 @@ const CourseSection = ({
 
       <div className="mt-auto flex flex-col gap-6">
         <button
-          className={`mx-8 flex items-center justify-center rounded-full py-3.5 ${isDisabled ? 'bg-secondary/10 text-secondary' : 'bg-primary text-foreground cursor-pointer hover:bg-[#1242B2]'}`}
+          className={`mx-5 flex items-center justify-center rounded-full py-3.5 sm:mx-8 ${isDisabled ? 'bg-secondary/10 text-secondary' : 'bg-primary text-foreground cursor-pointer hover:bg-[#1242B2]'}`}
           disabled={isDisabled}
           onClick={() => setIsOpen(true)}
         >
@@ -392,7 +392,8 @@ const CourseSection = ({
           <p className="text-secondary text-center text-xs">
             Закончите{' '}
             <span className="text-foreground">
-              {courses.filter((x) => !x.completed).length} {t('course', {
+              {courses.filter((x) => !x.completed).length}{' '}
+              {t('course', {
                 count: courses.filter((x) => !x.completed).length,
               })}
             </span>
@@ -417,7 +418,7 @@ const FAQItem = ({
 }) => {
   return (
     <div className="border-accent border-b last:border-b-0">
-      <div className="px-8 py-6">
+      <div className="px-5 py-6 sm:px-8">
         <div
           className="flex cursor-pointer items-center justify-between"
           onClick={onClick}
@@ -609,13 +610,13 @@ export default function CVPage({ session }: { session: Session }) {
             />
           </div>
         </div>
-        <div className="border-accent h-16 shrink-0 border-y"></div>
+        <div className="border-accent h-16 shrink-0 border-y border-b-0 sm:border-b"></div>
 
         {/* FAQ Section */}
-        <div className="flex flex-row">
+        <div className="flex flex-col sm:flex-row">
           {/* Left Column - FAQ Intro and Contact Info */}
           <div className="border-accent flex-1 border-r">
-            <div className="flex flex-col py-8">
+            <div className="flex flex-col py-8 pb-0 sm:pb-8">
               <div className="px-8">
                 <div className="mb-5 flex items-center justify-between">
                   <h2 className="text-foreground text-2xl">Раздел FAQs</h2>
@@ -629,7 +630,7 @@ export default function CVPage({ session }: { session: Session }) {
               </div>
 
               <div className="mt-8 bg-[#14171C] py-6">
-                <div className="flex gap-20 px-8">
+                <div className="flex flex-col gap-20 px-8 sm:flex-row">
                   <div className="flex gap-4">
                     <div className="flex-shrink-0">
                       <div className="bg-background flex h-9.5 w-9.5 items-center justify-center rounded-full">
@@ -652,7 +653,7 @@ export default function CVPage({ session }: { session: Session }) {
                     </div>
                   </div>
 
-                  <div className="flex gap-4">
+                  <div className="flex hidden gap-4 sm:flex">
                     <div className="flex-shrink-0">
                       <div className="bg-background flex h-9.5 w-9.5 items-center justify-center rounded-full">
                         <div className="text-foreground">
