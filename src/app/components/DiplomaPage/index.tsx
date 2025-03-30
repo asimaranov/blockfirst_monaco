@@ -224,7 +224,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
                   </div>
                 </div>
 
-                <div className="max-h-76.5 overflow-y-auto">
+                <div className="max-h-85 overflow-y-auto">
                   {/* Desktop view */}
                   <div className="hidden px-8 sm:flex sm:flex-col">
                     {COURSES.map((course, index) => (

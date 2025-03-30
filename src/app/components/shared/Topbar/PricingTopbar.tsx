@@ -30,7 +30,7 @@ export function PricingTopbar() {
               className="flex flex-row items-center gap-2 text-base sm:text-xl justify-between pr-5 sm:pr-0"
             >
               <div className="pl-5 sm:pl-8">Тарифы BlockFirst</div>
-              <div className="flex flex-row items-center justify-end gap-2 text-sm">
+              <div className="flex sm:hidden flex-row items-center justify-end gap-2 text-sm">
                 <Image src={AvatarsIcon} alt={''} className="h-6 w-16.5" />
               </div>
             </PricingSection>
