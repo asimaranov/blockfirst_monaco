@@ -96,7 +96,10 @@ export default function Dashboard({ session }: { session: Session }) {
           {Array.from({
             length: 3 - (cousesList.length % 3),
           }).map((_, index) => (
-            <div key={index}></div>
+            <div
+              key={index}
+              className={cn('sm:border-y', index !== 0 && 'border-t', 'nth-[3n]:border-r-0')}
+            ></div>
           ))}
         </section>
       </div>
