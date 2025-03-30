@@ -440,7 +440,7 @@ export default function ReferralPage({ session }: { session: Session }) {
             </div>
           </div>
         </div>
-        <div className="border-accent h-16 w-full shrink-0"></div>
+        <div className="border-accent hidden sm:block h-16 w-full shrink-0"></div>
 
         <ReferralTable></ReferralTable>
       </div>

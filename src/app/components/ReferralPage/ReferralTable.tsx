@@ -88,6 +88,56 @@ const LearningTime = ({ time }: { time: string }) => (
   </div>
 );
 
+// Mobile card component for referrals
+const ReferralCard = ({ referral }: { referral: ReferralData }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.3 }}
+    className="flex w-full gap-4"
+  >
+    <div className="text-secondary pt-2 text-sm">{referral.id}.</div>
+    <div className="flex w-full flex-col gap-6">
+      <div className="flex items-start justify-between">
+        <div className="flex items-center gap-3">
+          {referral.avatar ? (
+            <Image
+              src={referral.avatar}
+              alt={referral.name}
+              width={20}
+              height={20}
+              className="h-5 w-5 rounded-full"
+            />
+          ) : (
+            <div className="flex h-5 w-5 items-center justify-center rounded-full bg-[#282d33]">
+              <span className="text-foreground text-xs">
+                {referral.name[0]}
+              </span>
+            </div>
+          )}
+          <span className="text-foreground text-sm">{referral.name}</span>
+        </div>
+        <PlanBadge plan={referral.plan} />
+      </div>
+      <div className="flex items-center justify-between">
+        <span className="text-foreground text-lg">{referral.earnings}</span>
+        <div className="flex gap-2">
+          <div className="flex h-7 items-center justify-center rounded-lg bg-[#14171C] px-2">
+            <span className="text-secondary text-xs">
+              {referral.registrationDate}
+            </span>
+          </div>
+          <div className="flex h-7 items-center justify-center rounded-lg bg-[#14171C] px-2">
+            <span className="text-secondary text-xs">
+              {referral.learningTime}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </motion.div>
+);
+
 export const ReferralTable = () => {
   const [sortOption, setSortOption] = useState<SortOption | undefined>(
     undefined
@@ -127,7 +177,7 @@ export const ReferralTable = () => {
   };
 
   return (
-    <div className="border-accent flex flex-col gap-6 border-0 sm:border-b pb-8 grow pt-10 sm:pt-0">
+    <div className="border-accent flex grow flex-col gap-6 border-0 pt-10 pb-8 sm:border-b sm:pt-0">
       {referrals.length === 0 ? (
         <div className="flex h-full w-full flex-col items-center justify-center gap-5">
           <Image
@@ -141,8 +191,8 @@ export const ReferralTable = () => {
         </div>
       ) : (
         <>
-          {/* Table Header */}
-          <div className="flex h-9 items-center bg-[#14171C] px-8">
+          {/* Table Header - visible only on desktop */}
+          <div className="hidden h-9 items-center bg-[#14171C] px-8 sm:flex">
             <div className="grid w-full grid-cols-[calc(7*var(--spacing))_1fr_1fr_1fr_1fr_1fr] gap-8">
               <span className="text-secondary/50 text-xs uppercase">#</span>
               <span className="text-secondary/50 text-xs uppercase">имя</span>
@@ -207,8 +257,15 @@ export const ReferralTable = () => {
             </div>
           </div>
 
-          {/* Table Body */}
-          <div className="flex flex-col gap-8 px-8">
+          {/* Mobile Cards - visible only on mobile */}
+          <div className="flex flex-col gap-8 px-4 sm:hidden">
+            {sortReferrals(referrals).map((referral) => (
+              <ReferralCard key={`mobile-${referral.id}`} referral={referral} />
+            ))}
+          </div>
+
+          {/* Table Body - visible only on desktop */}
+          <div className="hidden flex-col gap-8 px-8 sm:flex">
             {sortReferrals(referrals).map((referral) => (
               <motion.div
                 key={referral.id}

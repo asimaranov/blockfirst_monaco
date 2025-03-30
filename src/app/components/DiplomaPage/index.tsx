@@ -147,7 +147,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
           <div className="flex flex-col sm:flex-row">
             <div className="flex flex-col">
               {/* NFT Diploma Section */}
-              <div className="bg-background flex items-start gap-5 px-5 sm:px-8 py-6">
+              <div className="bg-background flex items-start gap-5 px-5 py-6 sm:px-8">
                 <Image
                   src={DiplomaIcon}
                   alt="NFT Diploma"
@@ -163,7 +163,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
               </div>
 
               {/* Competencies Grid */}
-              <div className="bg-dark-bg grid grid-cols-1 sm:grid-cols-2 gap-x-16 gap-y-5 p-5 sm:p-8">
+              <div className="bg-dark-bg grid grid-cols-1 gap-x-16 gap-y-5 p-5 sm:grid-cols-2 sm:p-8">
                 {competencies.map((competency, index) => (
                   <div key={index} className="flex items-start gap-4">
                     <div className="h-5 w-5">
@@ -192,9 +192,19 @@ export default function DiplomaPage({ session }: { session: Session }) {
                 ))}
               </div>
 
+              <div className="text-secondary/50 flex w-full shrink-0 gap-7.75 bg-[#14171C] px-5 py-4 mb-2 mt-5 sm:hidden">
+                <span className="text-sm uppercase">#</span>
+                <span className="text-sm uppercase">Название курса</span>
+                <InfoPopover
+                  title="Прогресс обучения"
+                  content="По завершении курса ваша новая компетенция будет отражена в интерактивном дипломе, который можно дополнить новыми компетенциями  в зависимости от пройденных курсов."
+                  className='ml-auto'
+                />
+              </div>
+
               {/* Course List */}
               <div className="bg-dark-bg relative">
-                <div className="border-accent grid grid-cols-[calc(6*var(--spacing))_1fr_calc(28.5*var(--spacing))_calc(37.5*var(--spacing))] items-center gap-x-5 bg-[#14171C] px-8 py-2.75">
+                <div className="border-accent hidden grid-cols-[calc(6*var(--spacing))_1fr_calc(28.5*var(--spacing))_calc(37.5*var(--spacing))] items-center gap-x-5 bg-[#14171C] px-8 py-2.75 sm:grid">
                   <span className="text-secondary text-xs opacity-50">#</span>
                   <span className="text-secondary text-xs uppercase opacity-50">
                     Название курса
@@ -204,7 +214,9 @@ export default function DiplomaPage({ session }: { session: Session }) {
                   </span>
 
                   <div className="text-secondary flex items-center justify-between">
-                    <span className="opacity-50 text-xs uppercase">Прогресс</span>
+                    <span className="text-xs uppercase opacity-50">
+                      Прогресс
+                    </span>
                     <InfoPopover
                       title="Прогресс обучения"
                       content="По завершении курса ваша новая компетенция будет отражена в интерактивном дипломе, который можно дополнить новыми компетенциями  в зависимости от пройденных курсов."
@@ -213,7 +225,8 @@ export default function DiplomaPage({ session }: { session: Session }) {
                 </div>
 
                 <div className="max-h-76.5 overflow-y-auto">
-                  <div className="flex flex-col px-8">
+                  {/* Desktop view */}
+                  <div className="hidden px-8 sm:flex sm:flex-col">
                     {COURSES.map((course, index) => (
                       <div
                         key={course.id}
@@ -277,6 +290,69 @@ export default function DiplomaPage({ session }: { session: Session }) {
                             max={course.info?.lessonsCount || 0}
                             className="h-2"
                           />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Mobile view */}
+                  <div className="flex flex-col sm:hidden">
+                    {COURSES.map((course, index) => (
+                      <div key={course.id} className="flex flex-col">
+                        <div className="flex px-4 py-6">
+                          <div className="mt-2.5 mr-4 flex h-6 w-6 items-center justify-center self-start">
+                            <span className="text-secondary text-sm">
+                              {index + 1}.
+                            </span>
+                          </div>
+                          <div className="flex gap-4">
+                            <div className="mt-1.5 h-10 w-10 self-start overflow-hidden rounded-lg bg-[#01050D]">
+                              <img
+                                src={course.smallImg}
+                                alt={course.title}
+                                className="h-full w-full object-cover mix-blend-lighten"
+                              />
+                            </div>
+                            <div className="flex flex-col gap-3">
+                              <span className="text-foreground text-sm">
+                                {course.title}
+                              </span>
+                              {(course.info?.lessonsCount || 0) > 0 ? (
+                                <div className="flex items-center gap-3 text-xs">
+                                  <span className="text-secondary text-xxs uppercase">
+                                    {course.info?.lessonsCount || 0}{' '}
+                                    {t('lesson', {
+                                      count: course.info?.lessonsCount || 0,
+                                    })}
+                                  </span>
+                                  <div className="bg-secondary/20 h-0.5 w-0.5 rounded-full" />
+                                  <span className="text-secondary text-xxs uppercase">
+                                    {course.info?.duration || 0}{' '}
+                                    {t('month', {
+                                      count: course.info?.duration || 0,
+                                    })}
+                                  </span>
+                                </div>
+                              ) : (
+                                <div className="flex items-center gap-3 text-xs">
+                                  <span className="text-secondary">—</span>
+                                  <div className="bg-secondary/20 h-0.5 w-0.5 rounded-full" />
+                                  <span className="text-secondary">—</span>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex w-full px-10">
+                          <div className="w-10"></div>
+                          <div className="relative h-2 flex-1">
+                            <Progress
+                              inactive={!!course.soon}
+                              value={userProgress[course.id]}
+                              max={course.info?.lessonsCount || 0}
+                              className="h-2 rounded-full"
+                            />
+                          </div>
                         </div>
                       </div>
                     ))}
