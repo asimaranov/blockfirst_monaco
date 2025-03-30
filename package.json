@@ -34,7 +34,7 @@
     "@trpc/react-query": "^11.0.0-rc.446",
     "@trpc/server": "^11.0.0-rc.446",
     "bcryptjs": "^3.0.2",
-    "better-auth": "=1.2.5-beta.4",
+    "better-auth": "=v1.2.6-beta.3",
     "clsx": "^2.1.1",
     "embla-carousel": "^8.5.2",
     "embla-carousel-autoplay": "^8.5.2",

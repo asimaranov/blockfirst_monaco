@@ -10,7 +10,7 @@ export function BackButton({ href, label }: BackButtonProps) {
   return (
     <Link
       href={href}
-      className="flex flex-row items-center justify-center gap-2 text-sm hover:opacity-50"
+      className="flex flex-row items-center justify-center gap-2 text-base sm:text-sm hover:opacity-50"
     >
       <svg
         width="24"

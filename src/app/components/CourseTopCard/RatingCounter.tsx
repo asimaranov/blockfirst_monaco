@@ -2,7 +2,7 @@ export function RatingCounter({ rating }: { rating: number }) {
   return (
     <div
       className={
-        'flex flex-row items-center gap-[0.231vw] rounded-full bg-[#01050D] px-3 py-[0.289vw]'
+        'flex flex-row items-center gap-1 rounded-full bg-[#01050D] px-3 py-1.25'
       }
     >
       <svg
@@ -11,7 +11,7 @@ export function RatingCounter({ rating }: { rating: number }) {
         viewBox="0 0 14 14"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="h-[0.81vw] w-[0.81vw]"
+        className="h-3.5 w-3.5"
       >
         <path
           fillRule="evenodd"

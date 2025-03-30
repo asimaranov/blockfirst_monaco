@@ -95,7 +95,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
           <span className="text-secondary text-sm">{course.description}</span>
         </div>
         <CourseProgress progress={4} className="mt-6" />
-        <div className="mt-[1.852vw] flex flex-row items-center justify-between gap-4">
+        <div className="mt-8 flex flex-row items-center justify-between gap-4">
           <Link
             href={`#`}
             className={

@@ -15,7 +15,7 @@ export function Topbar({
     <UnifiedTopbar
       leftContent={<BackButton href="/dashboard" label="Подробности курса" />}
       rightContent={
-        <AuthorInfo author={courseAuthor} avatarUrl={courseAuthorAvatar} />
+        <AuthorInfo author={courseAuthor} avatarUrl={courseAuthorAvatar} className='hidden sm:flex' />
       }
     />
   );
