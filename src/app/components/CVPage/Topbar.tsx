@@ -12,19 +12,19 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
       showBorder={false}
       className="relative bg-[#01050d] bg-[url('/images/misc/header-bg.png')] bg-cover bg-center"
       leftContent={
-        <div className="flex flex-row items-center space-x-5">
-          <div className="relative h-10 w-10 sm:h-15.25 sm:w-15.25 overflow-hidden">
+        <div className="flex flex-row items-center space-x-4 sm:space-x-5">
+          <div className="relative h-10 w-10 sm:h-15.25 sm:w-15.25 overflow-hidden shrink-0">
             {/* Logo/Icon container with images from Figma */}
             <div className="absolute inset-0 bg-[#01050d]">
               <Image
                 src={HeaderIcon}
                 alt="Header Icon"
-                className="h-15 w-15 object-cover"
+                className="h-10 w-10 sm:h-15.25 sm:w-15.25 object-cover"
               />
             </div>
           </div>
           <div className="flex flex-col space-y-2">
-            <h1 className="text-foreground text-3xl leading-8.25 font-medium">
+            <h1 className="text-foreground text-xl sm:text-3xl leading-8.25 font-medium">
               Персональное резюме
             </h1>
             <p className="text-secondary text-xs leading-5">
