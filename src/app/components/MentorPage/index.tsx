@@ -16,6 +16,10 @@ import TaskSquareSvg from '../input-legends/task_square';
 import { InfoPopover } from '~/app/components/shared/InfoPopover';
 import { Modal } from '../shared/Modal';
 import ChangeCuratorForm from './ChangeCuratorForm';
+import MentorSelectedIcon from './assets/mentor-selected-icon.svg';
+import MentorLockedIcon from './assets/mentor-locked-icon.svg';
+
+import { cn } from '~/helpers';
 const ComingSoon = () => {
   return (
     <svg
@@ -132,6 +136,37 @@ export default function MentorPage({ session }: { session: Session }) {
     <main className="border-accent border-r border-l">
       <div className="flex h-auto flex-col sm:h-screen">
         <Topbar lastestUpdate={'18 марта 2025'} />
+        <div className="border-accent flex sm:hidden flex-row gap-3 overflow-x-auto border-t pt-10 pb-8 pl-4 whitespace-nowrap">
+          {mentors.map((mentor) => (
+            <div
+              className={cn(
+                'flex shrink-0 flex-row items-center justify-center gap-2 rounded-full border px-4 py-2.5 text-xs',
+                mentor.current && 'border-success',
+                mentor.soon && 'border-secondary opacity-50',
+                'relative'
+              )}
+            >
+              {mentor.current && (
+                <div className="absolute top-0 right-0 translate-x-1/3 -translate-y-1/3">
+                  <Image src={MentorSelectedIcon} alt="Mentor selected" />
+                </div>
+              )}
+              {mentor.soon && (
+                <div className="absolute top-0 right-0 translate-x-1/3 -translate-y-1/3">
+                  <Image src={MentorLockedIcon} alt="Mentor locked" />
+                </div>
+              )}
+              <Image
+                src={mentor.smallImage}
+                alt={mentor.name}
+                width={38}
+                height={38}
+                className="h-4 w-4"
+              />
+              {mentor.name}
+            </div>
+          ))}
+        </div>
         <div className="border-accent flex h-full flex-col border-b sm:flex-row">
           {/* Mentors sidebar */}
           <section className="border-accent hidden w-75 border-r sm:block">
@@ -346,7 +381,7 @@ export default function MentorPage({ session }: { session: Session }) {
               {/* Selected mentor indicator */}
             </div>
 
-            <div className="flex flex-1 flex-col gap-5 sm:gap-6 pt-10 sm:pt-0">
+            <div className="flex flex-1 flex-col gap-5 pt-10 sm:gap-6 sm:pt-0">
               <div className="mx-8 mt-auto">
                 <div className="bg-success/10 flex items-center justify-center gap-1 rounded-full py-3">
                   <div className="flex h-5 w-5 items-center justify-center rounded-full">
@@ -428,7 +463,7 @@ export default function MentorPage({ session }: { session: Session }) {
                       <span className="text-foreground text-lg">Звонки</span>
                     </div>
                   </div>
-                  <div className="px-5 sm:px-8 pt-6 pb-10 sm:py-4">
+                  <div className="px-5 pt-6 pb-10 sm:px-8 sm:py-4">
                     <p className="text-foreground text-sm sm:text-xs">
                       Звонок согласовывается в чате. <br />
                       <span className="text-secondary">
@@ -457,7 +492,7 @@ export default function MentorPage({ session }: { session: Session }) {
                       </span>
                     </div>
                   </div>
-                  <div className="px-5 sm:px-8 pt-6 pb-10 sm:py-4">
+                  <div className="px-5 pt-6 pb-10 sm:px-8 sm:py-4">
                     <p className="text-foreground text-sm sm:text-xs">
                       Обращайтесь с вопросами, возникшими в процессе курса.
                       <br />
@@ -500,7 +535,7 @@ export default function MentorPage({ session }: { session: Session }) {
                   </div>
                 </div>
                 {!success && (
-                  <div className="px-5 sm:px-8 py-5">
+                  <div className="px-5 py-5 sm:px-8">
                     <p className="text-secondary text-sm">
                       Заполните все поля и наш куратор свяжется с вами в
                       Telegram для согласования времени и даты звонка

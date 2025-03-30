@@ -186,11 +186,10 @@ export default function PremiumPage({ session }: { session: Session }) {
                 </div>
               </div>
             </div>
-            <div className="border-success/50 rounded-full border px-3 py-1">
-              <span className="text-success text-xs whitespace-nowrap">
+            <span className="text-success text-xs whitespace-nowrap border-success/50 rounded-full border px-3 py-1 self-start">
                 Активный тариф
               </span>
-            </div>
+
           </div>
           <div className="rounded-lg p-5">
             <div className="mt-10">
