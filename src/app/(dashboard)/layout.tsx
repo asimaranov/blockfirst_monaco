@@ -10,7 +10,7 @@ export default function AuthPageBase({
       <MobileNavbar />
       <Sidebar />
       <div
-        className="bg-dark-bg w-full overflow-scroll px-0 sm:px-8"
+        className="bg-dark-bg w-full overflow-scroll px-0 sm:px-16"
         id="content-view"
       >
         {children}
