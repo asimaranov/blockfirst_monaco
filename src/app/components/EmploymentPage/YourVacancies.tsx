@@ -34,7 +34,7 @@ export default function YourVacancies({
   const t = useTranslations('EmploymentPage');
 
   return (
-    <section className="border-accent sticky top-0 left-0 flex h-screen w-80 shrink-0 flex-col border-r">
+    <section className="border-accent static sm:sticky top-0 left-0 flex h-auto sm:h-screen w-auto sm:w-80 shrink-0 flex-col border-r">
       {/* Header */}
       <div className="bg-background relative px-8 py-6">
         <Image
@@ -75,7 +75,7 @@ export default function YourVacancies({
         </div>
       </div>
       {/* Filters */}
-      <div className="flex flex-col gap-7 pt-8">
+      <div className="hidden sm:flex flex-col gap-7 pt-8">
         <div className="flex w-full flex-col">
           <div className="mb-3 flex w-full flex-row items-center justify-between px-8">
             <span className="text-secondary text-xs uppercase opacity-50">
@@ -95,7 +95,8 @@ export default function YourVacancies({
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-7 pt-7">
+
+      <div className="hidden sm:flex flex-col gap-7 pt-7">
         <div className="flex w-full flex-col">
           <div className="flex w-full flex-row items-center justify-between">
             <span className="text-secondary mb-3 px-8 text-xs uppercase opacity-50">
@@ -125,7 +126,7 @@ export default function YourVacancies({
         </div>
       </div>
       {/* Sorting */}
-      <div className= "flex flex-col gap-7 pt-7">
+      <div className= "hidden sm:flex flex-col gap-7 pt-7">
         <div className="flex w-full flex-col">
           <div className="flex w-full flex-row items-center justify-between">
             <span className="text-secondary mb-3 px-8 text-xs uppercase opacity-50">

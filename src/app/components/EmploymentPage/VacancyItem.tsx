@@ -46,36 +46,36 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
     <div
       onClick={() => setIsExpanded(!isExpanded)}
       className={cn(
-        'border-accent relative grid grid-cols-[calc(50*var(--spacing))_calc(35*var(--spacing))_calc(28*var(--spacing))_calc(20*var(--spacing))_1fr] items-center gap-x-9 px-8 py-6 transition-colors duration-200 not-last:border-b hover:bg-[#14171C]',
-        isExpanded && 'bg-[#14171C]'
+        'border-accent relative transition-colors duration-200 not-last:border-b hover:bg-[#14171C]',
+        isExpanded && 'bg-[#14171C]',
+        'lg:grid lg:grid-cols-[calc(50*var(--spacing))_calc(35*var(--spacing))_calc(28*var(--spacing))_calc(20*var(--spacing))_1fr] lg:items-center lg:gap-x-9 lg:px-8 lg:py-6',
+        'flex flex-col px-5 py-8'
       )}
     >
-      {/* Publisher name */}
-      <div className="flex flex-col gap-1.5">
+      {/* Desktop Layout */}
+      <div className="hidden lg:flex lg:flex-col lg:gap-1.5">
         <span className="text-sm font-medium">{vacancy.title}</span>
         <span className="text-secondary text-xs">{vacancy.publisher.name}</span>
       </div>
-      {/* Salary */}
-      <span className="text-sm">{renderSalary(vacancy.salary)}</span>
-      {/* Format */}
-      <div className="text-secondary flex flex-row gap-1 text-xs">
+      <span className="hidden text-sm lg:block">
+        {renderSalary(vacancy.salary)}
+      </span>
+      <div className="text-secondary hidden flex-row gap-1 text-xs lg:flex">
         {Array.isArray(vacancy.format)
           ? vacancy.format.map((format) => format).join(' / ')
           : vacancy.format}
       </div>
-      {/* Updated at */}
-      <span className="text-secondary text-xs">
+      <span className="text-secondary hidden text-xs lg:block">
         {new Date(vacancy.updatedAt).toLocaleDateString('ru-RU')}
       </span>
-      {/* Expand icon */}
-      <div className="flex items-center justify-center gap-9">
+      <div className="hidden items-center justify-center gap-9 lg:flex">
         {!vacancy.applied ? (
           <button
             onClick={(e) => {
               e.stopPropagation();
               onApply();
             }}
-            className="hover:bg-primary group border-primary/50 flex cursor-pointer flex-col items-center justify-center rounded-full border px-5 py-3 transition-colors duration-200 w-33"
+            className="hover:bg-primary group border-primary/50 flex w-33 cursor-pointer flex-col items-center justify-center rounded-full border px-5 py-3 transition-colors duration-200"
           >
             <span className="group-hover:text-foreground text-primary text-sm leading-4 transition-colors duration-200">
               Откликнуться
@@ -87,9 +87,9 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
               e.stopPropagation();
               onApply();
             }}
-            className="group flex cursor-pointer flex-col items-center justify-center rounded-full  border-[#33CF8E]/10 bg-[#33CF8E]/10 px-7.5 py-2.5 transition-colors duration-200 border hover:border-[#33CF8E] w-33"
+            className="group flex w-33 cursor-pointer flex-col items-center justify-center rounded-full border border-[#33CF8E]/10 bg-[#33CF8E]/10 px-7.5 py-2.5 transition-colors duration-200 hover:border-[#33CF8E]"
           >
-            <span className="flex flex-row items-center justify-center gap-1 text-sm leading-4 text-[#33CF8E] transition-colors duration-200 ">
+            <span className="flex flex-row items-center justify-center gap-1 text-sm leading-4 text-[#33CF8E] transition-colors duration-200">
               <svg
                 width="20"
                 height="20"
@@ -114,6 +114,84 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
         <div className="my-auto size-5">
           <ToggleMinus isExpanded={isExpanded} onToggle={() => {}} />
         </div>
+      </div>
+
+      {/* Mobile Layout */}
+      <div className="mb-6 flex w-full flex-row justify-between lg:hidden">
+        <div className="flex max-w-[306px] flex-col gap-2">
+          <h3 className="text-foreground text-[16px] font-medium">
+            {vacancy.title}
+          </h3>
+          <span className="text-secondary text-xs">
+            {vacancy.publisher.name}
+          </span>
+        </div>
+        <div className="my-auto size-5">
+          <ToggleMinus isExpanded={isExpanded} onToggle={() => {}} />
+        </div>
+      </div>
+
+      <div className="flex w-full flex-row justify-between lg:hidden">
+        <span className="text-foreground text-[16px]">
+          {renderSalary(vacancy.salary)}
+        </span>
+        <div className="flex flex-row gap-2">
+          <div className="rounded-lg bg-[#14171C] px-2 py-1.5">
+            <span className="text-secondary text-xs">
+              {Array.isArray(vacancy.format)
+                ? vacancy.format[0]
+                : vacancy.format}
+            </span>
+          </div>
+          <div className="rounded-lg bg-[#14171C] px-2 py-1.5">
+            <span className="text-secondary text-xs">
+              {new Date(vacancy.updatedAt).toLocaleDateString('ru-RU')}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Apply Button - visible only on mobile and outside of expanded section */}
+      <div className="mt-10 w-full lg:hidden">
+        {!vacancy.applied ? (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onApply();
+            }}
+            className="border-primary/50 flex w-full cursor-pointer items-center justify-center rounded-full border py-4 transition-colors duration-200"
+          >
+            <span className="text-primary text-sm">Откликнуться</span>
+          </button>
+        ) : (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onApply();
+            }}
+            className="flex w-full cursor-pointer items-center justify-center rounded-full border border-[#33CF8E]/10 bg-[#33CF8E]/10 py-4 transition-colors duration-200 hover:border-[#33CF8E]"
+          >
+            <span className="flex flex-row items-center justify-center gap-1 text-sm leading-4 text-[#33CF8E] transition-colors duration-200">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+              >
+                <path
+                  d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
+                  stroke="#33CF8E"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              Отклик
+            </span>
+          </button>
+        )}
       </div>
 
       {/* Expandable content with animation */}

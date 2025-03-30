@@ -112,7 +112,7 @@ export default function EmploymentPage({ session }: { session: Session }) {
       <Modal isOpen={isApplyFormOpen} onClose={() => setIsApplyFormOpen(false)}>
         <ApplyForm onClose={() => setIsApplyFormOpen(false)} />
       </Modal>
-      <div className="flex flex-1 flex-row border-accent">
+      <div className="flex flex-1 flex-col sm:flex-row border-accent">
         <YourVacancies
           lastestUpdate={lastUpdate}
           vacanciesCount={VACANCIES.length || 0}
@@ -123,7 +123,7 @@ export default function EmploymentPage({ session }: { session: Session }) {
         />
         {/* Sticky header */}
         <div className=" relative flex flex-1 flex-col">
-          <div className="bg-background sticky top-0 z-[2] grid items-center gap-9 px-8 py-3.5 grid-cols-[calc(50*var(--spacing))_calc(35*var(--spacing))_calc(28*var(--spacing))_calc(20*var(--spacing))_1fr]">
+          <div className="hidden sm:grid bg-background sticky top-0 z-[2] items-center gap-9 px-8 py-3.5 grid-cols-[calc(50*var(--spacing))_calc(35*var(--spacing))_calc(28*var(--spacing))_calc(20*var(--spacing))_1fr]">
             <span className="text-secondary text-xs uppercase opacity-50">
               Вакансия
             </span>
