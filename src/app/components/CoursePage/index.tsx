@@ -335,7 +335,7 @@ const CourseStatItem = ({ stat }: { stat: (typeof courseStats)[0] }) => {
       <div className="flex flex-row sm:flex-col gap-3 items-center sm:items-start">
         <div className="flex flex-row items-center gap-3">
           {stat.icon}
-          <span className="text-3xl sm:text-2xl text-gray-100">{stat.value}</span>
+          <span className="text-3xl sm:text-2xl text-gray-100 font-medium">{stat.value}</span>
         </div>
         <span className="text-secondary text-xs ml-auto sm:ml-0">{stat.label}</span>
       </div>
