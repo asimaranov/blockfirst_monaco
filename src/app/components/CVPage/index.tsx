@@ -207,7 +207,7 @@ const StageCard = ({
         </p>
       </div>
 
-      <div className="relative mr-5 sm:mr-0">
+      <div className="relative mr-3 sm:mr-0">
         <div className="relative flex flex-row">
           <Progress
             value={progressValue}
