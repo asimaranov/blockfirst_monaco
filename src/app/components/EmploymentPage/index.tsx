@@ -197,7 +197,7 @@ export default function EmploymentPage({ session }: { session: Session }) {
           </div>
         </div>
       </div>
-      <Footer />
+      <Footer className="block sm:hidden border-accent border-t" />
     </main>
   );
 }

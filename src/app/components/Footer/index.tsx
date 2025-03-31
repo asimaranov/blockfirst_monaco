@@ -1,7 +1,7 @@
 import GridSvg from './assets/grid.svg';
 import Image from 'next/image';
 
-export default function Footer() {
+export default function Footer({ className }: { className?: string }) {
   const mobileLinkSections = [
     {
       title: 'Компания',
@@ -118,13 +118,13 @@ export default function Footer() {
   };
 
   return (
-    <>
+    <div className={className}>
       <div className="border-accent hidden h-9.5 shrink-0 sm:block"></div>
-      <footer className="bg-background border-accent border-t-0 sm:border-t pt-16">
+      <footer className="bg-background border-accent border-t-0 pt-16 sm:border-t">
         {/* Top section */}
-        <div className="mb-16 flex w-full flex-col gap-10 px-5 sm:px-8 sm:flex-row sm:gap-0">
+        <div className="mb-16 flex w-full flex-col gap-10 px-5 sm:flex-row sm:gap-0 sm:px-8">
           {/* Newsletter signup */}
-          <div className="flex max-w-auto sm:max-w-77 flex-col gap-10">
+          <div className="max-w-auto flex flex-col gap-10 sm:max-w-77">
             <div className="flex flex-col gap-4">
               <h3 className="text-2xl">Новости. Скидки. Анонсы</h3>
               <p className="text-secondary text-sm text-nowrap">
@@ -167,7 +167,7 @@ export default function Footer() {
           {/* <div className="flex-grow"></div> */}
 
           {/* Mobile links section */}
-          <div className="ml-0 flex md:hidden gap-16 sm:ml-auto sm:justify-end">
+          <div className="ml-0 flex gap-16 sm:ml-auto sm:justify-end md:hidden">
             {mobileLinkSections.map((section, index) => (
               <div
                 key={index}
@@ -192,7 +192,7 @@ export default function Footer() {
           </div>
 
           {/* Links section */}
-          <div className="ml-0 hidden md:flex gap-16 sm:ml-auto sm:justify-end">
+          <div className="ml-0 hidden gap-16 sm:ml-auto sm:justify-end md:flex">
             {linkSections.map((section, index) => (
               <div
                 key={index}
@@ -222,7 +222,7 @@ export default function Footer() {
           {contactSections.map((section, index) => (
             <div
               key={index}
-              className={`relative flex flex-row px-5 sm:px-8 py-6 ${section.className || ''} items-center bg-[url('/images/misc/footer-tab-grid.svg')] bg-cover bg-center`}
+              className={`relative flex flex-row px-5 py-6 sm:px-8 ${section.className || ''} items-center bg-[url('/images/misc/footer-tab-grid.svg')] bg-cover bg-center`}
             >
               <div className="flex flex-col gap-2">
                 <span className="text-secondary z-10 text-xs">
@@ -264,12 +264,12 @@ export default function Footer() {
         </div>
 
         {/* Copyright section */}
-        <div className="flex flex-col items-center px-5 sm:px-8 pt-8 pb-8 text-xs md:flex-row md:justify-between gap-5 sm:gap-0">
+        <div className="flex flex-col items-center gap-5 px-5 pt-8 pb-8 text-xs sm:gap-0 sm:px-8 md:flex-row md:justify-between">
           <div className="text-foreground sm:text-secondary flex gap-6 text-xs">
-            <a href="#" className="hover:opacity-50 text-sm sm:text-xs">
+            <a href="#" className="text-sm hover:opacity-50 sm:text-xs">
               Правила сервиса
             </a>
-            <a href="#" className="hover:opacity-50 text-sm sm:text-xs">
+            <a href="#" className="text-sm hover:opacity-50 sm:text-xs">
               Конфиденциальность
             </a>
           </div>
@@ -305,6 +305,6 @@ export default function Footer() {
           </div>
         </div>
       </footer>
-    </>
+    </div>
   );
 }
