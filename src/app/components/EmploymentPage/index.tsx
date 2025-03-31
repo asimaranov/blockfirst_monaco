@@ -197,6 +197,7 @@ export default function EmploymentPage({ session }: { session: Session }) {
           </div>
         </div>
       </div>
+      <Footer />
     </main>
   );
 }

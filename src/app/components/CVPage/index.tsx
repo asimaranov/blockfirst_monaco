@@ -428,7 +428,7 @@ const FAQItem = ({
           <ToggleMinus
             isExpanded={isOpen}
             onToggle={onClick}
-            className="h-5 w-5"
+            className="h-5 w-5 ml-6 shrink-0"
           ></ToggleMinus>
         </div>
         <AnimatePresence>
