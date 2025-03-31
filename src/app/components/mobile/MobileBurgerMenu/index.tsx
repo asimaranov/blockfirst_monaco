@@ -133,7 +133,7 @@ const MobileBurgerMenu = ({ isOpen, onClose }: MobileBurgerMenuProps) => {
       animate={isOpen ? 'open' : 'closed'}
       variants={menuVariants}
     >
-      <div className="flex h-[calc(100svh-69px)] flex-col overflow-y-auto px-5 pt-10 pb-5">
+      <div className="flex h-[calc(100dvh-69px)] flex-col overflow-y-auto px-5 pt-10 pb-5">
         <div className="flex flex-col space-y-10">
           {/* Menu sections */}
           <div className="grid grid-cols-2 gap-x-4">
