@@ -6,7 +6,7 @@ export default function MobilePremiumTopbar({
   text: string;
 }) {
   return (
-    <div className="flex w-full flex-row items-center gap-2 px-5 py-6 text-base sm:hidden sm:text-xl">
+    <div className="flex w-full flex-row items-center gap-2 px-5 py-6 text-base sm:hidden sm:text-xl border-accent border-b">
       <Link href="/premium">
         <svg
           width="20"

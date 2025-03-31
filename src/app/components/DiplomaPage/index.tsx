@@ -17,7 +17,6 @@ import ExpandIcon from './assets/expand';
 import DownloadIcon from './assets/download';
 import { Progress } from '../shared/Progress';
 import { InfoPopover } from '../shared/InfoPopover';
-import HeaderBg from './assets/header-bg.png';
 
 const competencies = [
   'Изучите блокчейны Ethereum, BSC, Polygon и библиотеки',
@@ -148,7 +147,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
           <div className="flex flex-col sm:flex-row">
             <div className="flex flex-col">
               {/* NFT Diploma Section */}
-              <div className="flex items-start gap-5 px-5 py-6 sm:px-8 bg-[url(/images/misc/diploma-header-bg1.png)] bg-contain bg-no-repeat">
+              <div className="flex items-start gap-5 px-5 py-6 sm:px-8 bg-[url(/images/misc/diploma-header-bg-mobile.png)] bg-center sm:bg-[url(/images/misc/diploma-header-bg.png)] bg-contain bg-no-repeat">
                 <Image
                   src={DiplomaIcon}
                   alt="NFT Diploma"

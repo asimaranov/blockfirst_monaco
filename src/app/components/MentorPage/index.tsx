@@ -20,6 +20,18 @@ import MentorSelectedIcon from './assets/mentor-selected-icon.svg';
 import MentorLockedIcon from './assets/mentor-locked-icon.svg';
 
 import { cn } from '~/helpers';
+
+// Safari-specific styles
+const safariStyles = `
+  @supports (-webkit-hyphens:none) {
+    .safari-blend-screen {
+      -webkit-backdrop-filter: screen;
+      backdrop-filter: screen;
+      background-blend-mode: screen;
+    }
+  }
+`;
+
 const ComingSoon = () => {
   return (
     <svg
@@ -134,9 +146,12 @@ export default function MentorPage({ session }: { session: Session }) {
 
   return (
     <main className="border-accent border-r border-l">
+      <style jsx global>
+        {safariStyles}
+      </style>
       <div className="flex h-auto flex-col sm:h-screen">
         <Topbar lastestUpdate={'18 марта 2025'} />
-        <div className="border-accent flex sm:hidden flex-row gap-3 overflow-x-auto border-t pt-10 pb-8 px-5 whitespace-nowrap">
+        <div className="border-accent flex flex-row gap-3 overflow-x-auto border-t px-5 pt-10 pb-8 whitespace-nowrap sm:hidden">
           {mentors.map((mentor) => (
             <div
               className={cn(
@@ -449,7 +464,7 @@ export default function MentorPage({ session }: { session: Session }) {
               <div className="border-accent flex flex-col border-b sm:flex-row">
                 {/* Calls */}
                 <div className="border-accent w-auto border-r sm:w-1/2">
-                  <div className="bg-background relative h-16 overflow-hidden bg-[url(/images/misc/top-tab-grid.svg)] bg-contain bg-no-repeat bg-blend-screen">
+                  <div className="bg-background safari-blend-screen relative h-16 overflow-hidden bg-[url(/images/misc/top-tab-grid-mobile.svg)] bg-contain bg-no-repeat sm:bg-[url(/images/misc/top-tab-grid.svg)]">
                     <div className="relative flex h-full items-center gap-4 px-5 sm:px-8">
                       <div className="h-8 w-8 overflow-hidden rounded-full">
                         <Image
@@ -476,7 +491,7 @@ export default function MentorPage({ session }: { session: Session }) {
 
                 {/* Text */}
                 <div className="w-auto sm:w-1/2">
-                  <div className="bg-background relative h-16 overflow-hidden bg-[url(/images/misc/top-tab-grid.svg)] bg-cover bg-no-repeat bg-blend-screen">
+                  <div className="bg-background safari-blend-screen relative h-16 overflow-hidden bg-[url(/images/misc/top-tab-grid-mobile.svg)] bg-cover bg-no-repeat sm:bg-[url(/images/misc/top-tab-grid.svg)]">
                     <div className="relative flex h-full items-center gap-4 px-5 sm:px-8">
                       <div className="flex h-8 w-8 items-center justify-center rounded-full">
                         <Image
@@ -593,7 +608,7 @@ export default function MentorPage({ session }: { session: Session }) {
 
                   {/* Submit button */}
                   <motion.button
-                    className="bg-primary text-foreground ml-auto flex h-12 w-12 cursor-pointer items-center justify-center rounded-full disabled:opacity-30 mt-10 sm:mt-0"
+                    className="bg-primary text-foreground mt-10 ml-auto flex h-12 w-12 cursor-pointer items-center justify-center rounded-full disabled:opacity-30 sm:mt-0"
                     disabled={name === '' || telegram === '' || course === ''}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}

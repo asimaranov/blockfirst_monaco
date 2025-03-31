@@ -19,7 +19,7 @@ export function DiplomaView({ isOpen, onClose, children }: ModalProps) {
         >
           <div className="fixed inset-0 z-50 bg-black/50" />
           <motion.div
-            className="@container fixed z-50 h-[calc(2301px/3)] w-[calc(1626px/3)]"
+            className="@container fixed z-50 h-[calc(2301px/5)] w-[calc(1626px/5)] sm:h-[calc(2301px/3)] sm:w-[calc(1626px/3)]"
             initial={{ scale: 0.9 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0.95}}
