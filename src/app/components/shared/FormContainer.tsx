@@ -286,7 +286,7 @@ export default function FormContainer({
           </span>
           <Link
             href={bottomText.link}
-            className="text-foreground cursor-pointer hover:opacity-50"
+            className="text-foreground cursor-pointer underline hover:opacity-50"
           >
             {bottomText.secondary}
           </Link>
