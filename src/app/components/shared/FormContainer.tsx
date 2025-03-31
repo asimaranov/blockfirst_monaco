@@ -187,22 +187,21 @@ export default function FormContainer({
     <div className="bg-dark-bg border-accent/40 relative flex h-full w-auto flex-col border-l sm:w-105">
       {showBackButton && (
         <button
-          className="absolute top-0 left-0 hidden cursor-pointer px-10 py-11 sm:block z-[10000000000000001]"
+          className="absolute top-0 left-0 z-[10000000000000001] hidden cursor-pointer px-10 py-11 sm:block"
           onClick={onBackClick}
         >
           <svg
-            width="10"
-            height="18"
-            viewBox="0 0 10 18"
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M9 1L1 9L9 17"
-              stroke="#F2F2F2"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M9.09897 4.46967C8.80608 4.17678 8.33121 4.17678 8.03831 4.46967L3.03831 9.46962C2.89766 9.61027 2.81864 9.80104 2.81864 9.99995C2.81864 10.1989 2.89766 10.3896 3.03831 10.5303L8.03831 15.5303C8.3312 15.8232 8.80608 15.8232 9.09897 15.5303C9.39186 15.2374 9.39186 14.7625 9.09897 14.4696L5.3793 10.75H16.4258C16.84 10.75 17.1758 10.4142 17.1758 9.99995C17.1758 9.58574 16.84 9.24995 16.4258 9.24995H5.37931L9.09897 5.53033C9.39186 5.23744 9.39186 4.76257 9.09897 4.46967Z"
+              fill="#F2F2F2"
             />
           </svg>
         </button>
@@ -220,7 +219,7 @@ export default function FormContainer({
               alt="Logo"
               width={152}
               height={44}
-              className="w-38 hidden sm:flex"
+              className="hidden w-38 sm:flex"
             />
             <div className="flex flex-col items-center gap-4">
               <h2 className="text-foreground sm:text-2xll text-xl">{title}</h2>

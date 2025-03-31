@@ -5,6 +5,8 @@ import React, {
   FocusEvent,
 } from 'react';
 import { cn } from '~/helpers';
+import Image from 'next/image';
+import ErrorDecorationSvg from 'public/misc/error_decoration.svg';
 
 interface FormFieldProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'className'> {
@@ -43,7 +45,12 @@ export default function FormField({
           {...rest}
         />
       </div>
-      {error && <span className="pl-4 text-xs text-red-500">{error}</span>}
+      {error && (
+        <div className="flex items-center gap-2 pt-2">
+          <Image src={ErrorDecorationSvg} alt={''} width={14} height={14} className='w-3.5 h-3.5' />
+          <span className="text-xs text-red-500">{error}</span>
+        </div>
+      )}
     </div>
   );
 }

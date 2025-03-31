@@ -3,7 +3,8 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import CopyButton from '../../shared/CopyButton/CopyButton';
-
+import { authClient } from '~/server/auth/client';
+import { useRouter } from 'next/navigation';
 interface MobileBurgerMenuProps {
   isOpen: boolean;
   onClose: () => void;
@@ -103,6 +104,7 @@ const contactSections = [
 ];
 
 const MobileBurgerMenu = ({ isOpen, onClose }: MobileBurgerMenuProps) => {
+  const router = useRouter();
   const menuVariants = {
     closed: {
       y: '-100%',
@@ -121,6 +123,8 @@ const MobileBurgerMenu = ({ isOpen, onClose }: MobileBurgerMenuProps) => {
       },
     },
   };
+
+
 
   return (
     <motion.div
@@ -211,7 +215,15 @@ const MobileBurgerMenu = ({ isOpen, onClose }: MobileBurgerMenuProps) => {
         <div className="mt-auto">
           <button
             className="flex w-full items-center justify-center rounded-full border border-[#195AF4] py-3"
-            onClick={onClose}
+            onClick={async () => {
+              try {
+                await authClient.signOut();
+              } catch (error) {
+                console.error('Sign out error', error);
+              } finally {
+                router.push('/signin');
+              }
+          }}
           >
             <div className="flex items-center space-x-2">
               <span className="text-base text-[#f2f2f2]">Выход</span>

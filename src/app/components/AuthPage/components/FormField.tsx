@@ -1,6 +1,6 @@
 import { cn } from '~/helpers';
 import Image from 'next/image';
-import ErrorDecorationSvg from '../assets/error_decoration.svg';
+import ErrorDecorationSvg from 'public/misc/error_decoration.svg';
 import { ReactNode } from 'react';
 import PasswordEyeOpen from '../assets/password_eye_open';
 import PasswordEyeClosed from '../assets/password_eye_closed';

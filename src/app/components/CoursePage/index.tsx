@@ -150,73 +150,21 @@ const courseStatusTypes = [
   {
     type: 'available',
     text: 'Доступно для прохождения',
-    color: '#33CF89',
-    label: 'Available',
   },
   {
     type: 'starter',
     text: 'Требуется оплата тарифа',
-    gradient: true,
-    gradientFrom: '#FF20A2',
-    gradientTo: '#FF2020',
-    label: 'STARTER',
   },
   {
     type: 'upcoming',
     text: 'По мере прохождения разблокируется',
-    color: '#9AA6B5',
-    label: 'Upcoming',
   },
   {
     type: 'completed',
     text: 'Завершенный курс',
-    color: '#9AA6B5',
-    label: 'Completed',
-    opacity: 'opacity-50',
   },
 ];
 
-// Component for rendering status badges
-const StatusBadge = ({ status }: { status: string }) => {
-  const statusInfo = courseStatusTypes.find((item) => item.type === status);
-
-  if (!statusInfo) return null;
-
-  return (
-    <div
-      className={`flex items-center gap-1 ${
-        statusInfo.gradient
-          ? 'from-[ bg-gradient-to-r' +
-            statusInfo.gradientFrom +
-            ']/10 to-[' +
-            statusInfo.gradientTo +
-            ']/10'
-          : 'bg-[' + statusInfo.color + ']/10'
-      } h-6 w-22 rounded-lg px-2 ${statusInfo.opacity || ''}`}
-    >
-      <div
-        className={`h-1 w-1 rounded-full ${
-          statusInfo.gradient
-            ? 'bg-[' + statusInfo.gradientFrom + ']'
-            : 'bg-[' + statusInfo.color + ']'
-        }`}
-      />
-      <span
-        className={
-          statusInfo.gradient
-            ? 'from-[ bg-gradient-to-r' +
-              statusInfo.gradientFrom +
-              '] to-[' +
-              statusInfo.gradientTo +
-              '] bg-clip-text text-xs text-transparent'
-            : 'text-[ text-xs' + statusInfo.color + ']'
-        }
-      >
-        {statusInfo.label}
-      </span>
-    </div>
-  );
-};
 
 // Component for the mobile author info section
 const MobileAuthorInfo = () => {
@@ -445,7 +393,40 @@ export default function CoursePage({
                     key={index}
                     className="font-delight flex items-center gap-3"
                   >
-                    <StatusBadge status={item.type} />
+                    {item.type === 'available' && (
+                      <div className="flex h-6 w-22 items-center gap-1 rounded-lg bg-[#33CF89]/10 px-2">
+                        <div className="h-1 w-1 rounded-full bg-[#33CF89]" />
+                        <span className="text-xs text-[#33CF89]">
+                          Available
+                        </span>
+                      </div>
+                    )}
+
+                    {item.type === 'starter' && (
+                      <div className="flex h-6 w-22 items-center gap-1 rounded-lg bg-gradient-to-r from-[#FF20A2]/10 to-[#FF2020]/10 px-2">
+                        <div className="h-1 w-1 rounded-full bg-[#FF20A2]" />
+                        <span className="bg-gradient-to-r from-[#FF20A2] to-[#FF2020] bg-clip-text text-xs text-transparent">
+                          STARTER
+                        </span>
+                      </div>
+                    )}
+
+                    {item.type === 'upcoming' && (
+                      <div className="flex h-6 w-22 items-center gap-1 rounded-lg bg-[#9AA6B5]/10 px-2">
+                        <div className="h-1 w-1 rounded-full bg-[#9AA6B5]" />
+                        <span className="text-xs text-[#9AA6B5]">Upcoming</span>
+                      </div>
+                    )}
+
+                    {item.type === 'completed' && (
+                      <div className="flex h-6 w-22 items-center gap-1 rounded-lg bg-[#9AA6B5]/10 px-2 opacity-50">
+                        <div className="h-1 w-1 rounded-full bg-[#9AA6B5]" />
+                        <span className="text-xs text-[#9AA6B5]">
+                          Completed
+                        </span>
+                      </div>
+                    )}
+
                     <span className="text-xs text-white">{item.text}</span>
                   </div>
                 ))}
