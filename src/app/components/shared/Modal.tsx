@@ -51,7 +51,7 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
             transition={{ type: 'tween', duration: 0.3 }}
             className={`fixed z-[10000000000000000] overflow-hidden sm:z-50 ${
               isMobile
-                ? 'right-0 bottom-0 left-0 h-[calc(100dvh-64px)] max-h-[calc(100dvh-64px)] w-full'
+                ? 'right-0 bottom-0 left-0 h-[calc(100dvh-64px)] max-h-[calc(100dvh-64px)] w-full transition-[height,max-height] duration-300 ease-in-out'
                 : 'top-0 right-0 h-screen w-auto'
             }`}
           >
