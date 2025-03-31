@@ -5,7 +5,12 @@ import { IUser } from '~/app/lib/types/IUser';
 import { authClient } from '~/server/auth/client';
 import { SubscriptionType } from '~/app/lib/constants/subsctiptions';
 import MobileBurgerMenu from '../../mobile/MobileBurgerMenu';
-import { NotificationsModal, NotificationsModalMobile } from '../../Notifications/NotificationsModal';
+import {
+  NotificationsModal,
+  NotificationsModalMobile,
+} from '../../Notifications/NotificationsModal';
+import Link from 'next/link';
+import MobilePremiumTopbar from './MobilePremiumTopbar';
 
 export interface TopbarProps {
   /**
@@ -30,6 +35,7 @@ export interface TopbarProps {
   className?: string;
 
   mobileNav?: boolean;
+  mobilePremiumText?: string;
 }
 
 export function Topbar({
@@ -38,6 +44,7 @@ export function Topbar({
   showBorder = true,
   className,
   mobileNav = false,
+  mobilePremiumText,
 }: TopbarProps) {
   const session = authClient.useSession();
 
@@ -61,15 +68,21 @@ export function Topbar({
 
   return (
     <>
-    <NotificationsModalMobile
-            isOpen={isNotificationsOpen}
-            onClose={() => setIsNotificationsOpen(false)}
-          />
+      {mobilePremiumText && (
+        <MobilePremiumTopbar text={mobilePremiumText} />
+      )}
+
+      <NotificationsModalMobile
+        isOpen={isNotificationsOpen}
+        onClose={() => setIsNotificationsOpen(false)}
+      />
       {mobileNav && (
         <div className="relative sm:hidden">
           <MobileHeader
             hasNotifications={true}
-            onNotificationClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
+            onNotificationClick={() =>
+              setIsNotificationsOpen(!isNotificationsOpen)
+            }
             username={user.name}
             startDate={new Date(user?.startTimestamp).toLocaleDateString(
               'ru-RU',
@@ -82,7 +95,7 @@ export function Topbar({
             onMenuClick={handleMenuToggle}
             isMenuOpen={isMenuOpen}
           />
-          
+
           <MobileBurgerMenu isOpen={isMenuOpen} onClose={handleCloseMenu} />
         </div>
       )}

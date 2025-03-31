@@ -15,6 +15,7 @@ import {
 import soonBageImg from './assets/soon-bage.svg';
 import { Radio } from './Radio';
 import { InfoPopover } from '../shared/InfoPopover';
+import MobilePremiumTopbar from '../shared/Topbar/MobilePremiumTopbar';
 
 export default function YourVacancies({
   lastestUpdate,
@@ -35,6 +36,7 @@ export default function YourVacancies({
 
   return (
     <section className="border-accent static sm:sticky top-0 left-0 flex h-auto sm:h-screen w-auto sm:w-80 shrink-0 flex-col border-r">
+      <MobilePremiumTopbar text={'Твои вакансии'} />
       {/* Header */}
       <div className="bg-background relative px-8 py-6">
         <Image

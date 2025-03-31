@@ -136,7 +136,7 @@ export default function MentorPage({ session }: { session: Session }) {
     <main className="border-accent border-r border-l">
       <div className="flex h-auto flex-col sm:h-screen">
         <Topbar lastestUpdate={'18 марта 2025'} />
-        <div className="border-accent flex sm:hidden flex-row gap-3 overflow-x-auto border-t pt-10 pb-8 pl-4 whitespace-nowrap">
+        <div className="border-accent flex sm:hidden flex-row gap-3 overflow-x-auto border-t pt-10 pb-8 px-5 whitespace-nowrap">
           {mentors.map((mentor) => (
             <div
               className={cn(
@@ -593,7 +593,7 @@ export default function MentorPage({ session }: { session: Session }) {
 
                   {/* Submit button */}
                   <motion.button
-                    className="bg-primary text-foreground ml-auto flex h-12 w-12 cursor-pointer items-center justify-center rounded-full disabled:opacity-30"
+                    className="bg-primary text-foreground ml-auto flex h-12 w-12 cursor-pointer items-center justify-center rounded-full disabled:opacity-30 mt-10 sm:mt-0"
                     disabled={name === '' || telegram === '' || course === ''}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}

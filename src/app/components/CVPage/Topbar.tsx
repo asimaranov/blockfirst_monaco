@@ -34,7 +34,7 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
           </div>
         </div>
       }
-      
+      mobilePremiumText="Подготовка резюме"
     />
   );
 }
