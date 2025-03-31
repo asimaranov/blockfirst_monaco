@@ -10,9 +10,10 @@ import CopyButton from '../shared/CopyButton/CopyButton';
 
 interface StudentFormProps {
   onClose: () => void;
+  onFullClose: () => void;
 }
 
-export default function UsdtForm({ onClose }: StudentFormProps) {
+export default function UsdtForm({ onClose, onFullClose }: StudentFormProps) {
   const [formState, setFormState] = useState<'input' | 'success'>('input');
 
   const trc20Address = 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t'; // Recipient's TRON address
@@ -40,7 +41,7 @@ export default function UsdtForm({ onClose }: StudentFormProps) {
 
   return (
     <FormContainer
-      onClose={onClose}
+      onClose={onFullClose}
       title="Оплата курса"
       description="Мы создали для вас уникальный QR-код и адрес для осуществления оплаты курса"
       submitButtonText="Ищем транзакцию"

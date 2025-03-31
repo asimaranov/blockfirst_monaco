@@ -238,6 +238,10 @@ const PaymentMethodsModal = ({
     <Modal isOpen={isOpen} onClose={onClose}>
       {isTetherPayment ? (
         <UsdtForm
+          onFullClose={() => {
+            setIsTetherPayment(false);
+            onClose();
+          }}
           onClose={function (): void {
             setIsTetherPayment(false);
           }}
