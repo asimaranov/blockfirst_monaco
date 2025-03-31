@@ -31,6 +31,7 @@ import { Progress } from '../shared/Progress';
 import ToggleMinus from '../shared/ToggleMinus/ToggleMinus';
 import CVApplyForm from './CVApplyForm';
 import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 // Add new types
 type TimePeriod = any;
 
@@ -191,7 +192,7 @@ const StageCard = ({
   position: string;
   progressValue: number;
 }) => (
-  <div className="flex flex-col gap-5 p-5 sm:p-8 sm:pr-0 sm:pb-0 r-0 pb-0">
+  <div className="r-0 flex flex-col gap-5 p-5 pt-10 pb-0 sm:p-8 sm:pt-8 sm:pr-0 sm:pb-0">
     <div
       className={`inline-flex w-fit items-center rounded-full border-[0.5px] px-3 py-1.25 ${completed ? 'border-success/50 text-success' : 'border-secondary/50 text-secondary'}`}
     >
@@ -233,7 +234,7 @@ const StageCard = ({
           )}
         </div>
       </div>
-      <div className="border-accent h-8 not-group-last:border-r-0 sm:not-group-last:border-r"></div>
+      <div className="border-accent hidden h-8 not-group-last:border-r-0 sm:block sm:not-group-last:border-r"></div>
     </div>
   </div>
 );
@@ -351,7 +352,7 @@ const CourseSection = ({
         </h4>
       </div>
 
-      <div className="flex flex-col gap-4 px-5 pt-7 pb-10 sm:px-8">
+      <div className="flex flex-col gap-4 px-5 pt-10 pb-10 sm:px-8 sm:pt-7">
         {courses.map((course, index) => (
           <CourseItem
             key={index}
@@ -514,7 +515,7 @@ export default function CVPage({ session }: { session: Session }) {
         <Topbar lastestUpdate={'18 марта 2025'} />
 
         {/* CV Progress Grid */}
-        <div className="grid grid-cols-1 gap-0 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 sm:gap-0 md:grid-cols-3">
           {/* First Column - Junior */}
           <div className="border-accent flex flex-col">
             <StageCard
@@ -610,16 +611,18 @@ export default function CVPage({ session }: { session: Session }) {
             />
           </div>
         </div>
-        <div className="border-accent h-16 shrink-0 border-y border-b-0 sm:border-b"></div>
+        <div className="border-accent hidden h-16 shrink-0 border-y border-b-0 sm:block sm:border-b"></div>
 
         {/* FAQ Section */}
         <div className="flex flex-col sm:flex-row">
           {/* Left Column - FAQ Intro and Contact Info */}
-          <div className="border-accent flex-1 border-r">
-            <div className="flex flex-col py-8 pb-0 sm:pb-8">
+          <div className="border-accent flex-1 border-t border-r sm:border-t-0">
+            <div className="flex flex-col py-8 pt-16 pb-0 sm:pt-8 sm:pb-8">
               <div className="px-8">
                 <div className="mb-5 flex items-center justify-between">
-                  <h2 className="text-foreground text-2xl">Раздел FAQs</h2>
+                  <h2 className="text-foreground text-xl sm:text-2xl">
+                    Раздел FAQs
+                  </h2>
                   <Image src={FaqItems} alt="Close" className="h-7 w-19.5" />
                 </div>
                 <p className="text-secondary text-sm">
@@ -629,7 +632,7 @@ export default function CVPage({ session }: { session: Session }) {
                 </p>
               </div>
 
-              <div className="mt-8 bg-[#14171C] py-6">
+              <div className="mt-8 bg-[#14171C] py-6 border-accent border-b sm:border-b-0">
                 <div className="flex flex-col gap-20 px-8 sm:flex-row">
                   <div className="flex gap-4">
                     <div className="flex-shrink-0">
@@ -643,17 +646,42 @@ export default function CVPage({ session }: { session: Session }) {
                         </div>
                       </div>
                     </div>
-                    <div className="flex flex-col gap-1">
-                      <span className="text-secondary text-xs">
-                        Телеграм бот
-                      </span>
-                      <span className="text-foreground text-base">
-                        t.me/blockfirst_edu/app
-                      </span>
-                    </div>
+                    <Link
+                      href="https://t.me/blockfirst_edu/app"
+                      className="flex w-full flex-row items-center justify-between"
+                    >
+                      <div className="flex flex-col gap-1">
+                        <span className="text-secondary text-xs">
+                          Телеграм бот
+                        </span>
+                        <span className="text-foreground text-base">
+                          t.me/blockfirst_edu/app
+                        </span>
+                      </div>
+                      <div className="flex sm:hidden">
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="ml-auto self-end"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M10.901 4.46967C11.1939 4.17678 11.6688 4.17678 11.9617 4.46967L16.9617 9.46962C17.1023 9.61027 17.1814 9.80104 17.1814 9.99995C17.1814 10.1989 17.1023 10.3896 16.9617 10.5303L11.9617 15.5303C11.6688 15.8232 11.1939 15.8232 10.901 15.5303C10.6081 15.2374 10.6081 14.7625 10.901 14.4696L14.6207 10.75H3.57422C3.16001 10.75 2.82422 10.4142 2.82422 9.99995C2.82422 9.58574 3.16001 9.24995 3.57422 9.24995H14.6207L10.901 5.53033C10.6081 5.23744 10.6081 4.76257 10.901 4.46967Z"
+                            fill="#F2F2F2"
+                          />
+                        </svg>
+                      </div>
+                    </Link>
                   </div>
 
-                  <div className="flex hidden gap-4 sm:flex">
+                  <Link
+                    href="mailto:hello@blockfirst.io"
+                    className="hidden gap-4 sm:flex"
+                  >
                     <div className="flex-shrink-0">
                       <div className="bg-background flex h-9.5 w-9.5 items-center justify-center rounded-full">
                         <div className="text-foreground">
@@ -671,7 +699,7 @@ export default function CVPage({ session }: { session: Session }) {
                         hello@blockfirst.io
                       </span>
                     </div>
-                  </div>
+                  </Link>
                 </div>
               </div>
             </div>

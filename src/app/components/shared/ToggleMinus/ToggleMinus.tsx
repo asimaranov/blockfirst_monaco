@@ -12,7 +12,7 @@ export default function ToggleMinus({
   return (
     <button
       className={cn(
-        'group flex cursor-pointer items-center justify-center',
+        'group flex cursor-pointer items-center justify-center ml-6 shrink-0',
         className
       )}
       onClick={onToggle}

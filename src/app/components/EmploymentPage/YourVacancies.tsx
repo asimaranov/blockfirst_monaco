@@ -53,18 +53,18 @@ export default function YourVacancies({
           <div className="flex flex-col gap-1">
             <div className="flex flex-row items-center justify-end gap-2">
               <div className="h-1 w-1 rounded-full bg-[#33CF8E]" />
-              <span className="font-roboto text-xs leading-3.5 font-medium text-[#33CF8E]">
+              <span className="font-roboto text-sm sm:text-xs leading-3.5 font-medium">
                 {lastestUpdate}
               </span>
             </div>
-            <span className="font-roboto text-secondary text-xxs text-xs opacity-50">
+            <span className="font-roboto text-secondary text-xs sm:text-xxs opacity-50">
               Обновление базы
             </span>
           </div>
         </div>
         {/* Title */}
         <div className="relative z-10 mt-8 flex flex-col gap-0.5">
-          <span className="text-2xll font-medium">Твои вакансии</span>
+          <span className="text-2xl sm:text-2xll font-medium">Твои вакансии</span>
           <div className="flex flex-row gap-1 text-xs">
             <span className="text-secondary">Найдено -</span>
             <span>

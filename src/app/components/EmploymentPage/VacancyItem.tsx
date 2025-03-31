@@ -119,7 +119,7 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
       {/* Mobile Layout */}
       <div className="mb-6 flex w-full flex-row justify-between lg:hidden">
         <div className="flex max-w-[306px] flex-col gap-2">
-          <h3 className="text-foreground text-[16px] font-medium">
+          <h3 className="text-foreground text-xl sm:text-base font-medium">
             {vacancy.title}
           </h3>
           <span className="text-secondary text-xs">
@@ -131,7 +131,7 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
         </div>
       </div>
 
-      <div className="flex w-full flex-row justify-between lg:hidden">
+      <div className="flex w-full flex-row justify-between lg:hidden items-center">
         <span className="text-foreground text-[16px]">
           {renderSalary(vacancy.salary)}
         </span>
@@ -161,7 +161,7 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
             }}
             className="border-primary/50 flex w-full cursor-pointer items-center justify-center rounded-full border py-4 transition-colors duration-200"
           >
-            <span className="text-primary text-sm">Откликнуться</span>
+            <span className="text-primary text-sm leading-4">Откликнуться</span>
           </button>
         ) : (
           <button
@@ -206,10 +206,12 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
         <div className="overflow-hidden">
           <div className="flex flex-col pt-8">
             <div className="flex flex-col gap-3 pb-8">
-              <span className="text-secondary/50 text-xs uppercase">
+              <span className="text-secondary/50 text-sm uppercase sm:text-xs">
                 Описание вакансии
               </span>
-              <p className="text-secondary text-xs">{vacancy.description}</p>
+              <p className="text-secondary text-sm sm:text-xs">
+                {vacancy.description}
+              </p>
             </div>
 
             <div className="mb-8 flex flex-col gap-5">
