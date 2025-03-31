@@ -306,7 +306,7 @@ const CourseItem = ({
       </svg>
     )}
     <div className="flex flex-col gap-2">
-      <p className="text-foreground text-sm">{title}</p>
+      <p className="text-foreground font-base sm:text-sm leading-5">{title}</p>
       <div className="text-secondary flex items-center gap-3 text-xs">
         <span className="text-xxs uppercase">{lessons}</span>
         {duration && (
