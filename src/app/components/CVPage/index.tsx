@@ -618,7 +618,7 @@ export default function CVPage({ session }: { session: Session }) {
           {/* Left Column - FAQ Intro and Contact Info */}
           <div className="border-accent flex-1 border-t border-r sm:border-t-0">
             <div className="flex flex-col py-8 pt-16 pb-0 sm:pt-8 sm:pb-8">
-              <div className="px-8">
+              <div className="px-5 sm:px-8">
                 <div className="mb-5 flex items-center justify-between">
                   <h2 className="text-foreground text-xl sm:text-2xl">
                     Раздел FAQs
@@ -633,7 +633,7 @@ export default function CVPage({ session }: { session: Session }) {
               </div>
 
               <div className="mt-8 bg-[#14171C] py-6 border-accent border-b sm:border-b-0">
-                <div className="flex flex-col gap-20 px-8 sm:flex-row">
+                <div className="flex flex-col gap-20 px-5 sm:px-8 sm:flex-row">
                   <div className="flex gap-4">
                     <div className="flex-shrink-0">
                       <div className="bg-background flex h-9.5 w-9.5 items-center justify-center rounded-full">
