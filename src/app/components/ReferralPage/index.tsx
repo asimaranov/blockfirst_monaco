@@ -44,7 +44,7 @@ const StatCard = ({
   badgeText?: string;
   badgeColor?: string;
 }) => (
-  <div className="flex flex-col gap-5 px-5 sm:px-8 pt-6 pb-6 sm:pb-0">
+  <div className="flex flex-col gap-5 px-5 py-6 sm:px-8 sm:pb-0">
     <div
       className={`${badgeColor} inline-flex w-fit items-center rounded-lg px-3 py-2`}
     >
@@ -61,7 +61,9 @@ const StatCard = ({
         </div>
         <span className="text-foreground text-3xl">{value}</span>
       </div>
-      <span className="text-secondary text-sm sm:text-xs opacity-50">{subtitle}</span>
+      <span className="text-secondary text-sm opacity-50 sm:text-xs">
+        {subtitle}
+      </span>
     </div>
   </div>
 );
@@ -106,7 +108,7 @@ const TimePeriodSelector = ({
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex h-auto sm:h-8 cursor-pointer items-center justify-end gap-2 rounded-[5.787vw] bg-transparent sm:bg-[#14171C] px-0 sm:px-4 py-0 sm:py-2.25 transition-colors hover:bg-[#1c2026]"
+        className="flex h-auto cursor-pointer items-center justify-end gap-2 rounded-[5.787vw] bg-transparent px-0 py-0 transition-colors hover:bg-[#1c2026] sm:h-8 sm:bg-[#14171C] sm:px-4 sm:py-2.25"
       >
         <span className="text-foreground hidden text-xs sm:block">
           {periods.find((p) => p.value === value)?.label}
@@ -230,7 +232,7 @@ export default function ReferralPage({ session }: { session: Session }) {
 
   return (
     <main className="border-accent border-r border-l">
-      <div className="flex h-auto sm:h-screen w-full flex-col">
+      <div className="flex h-auto w-full flex-col sm:h-screen">
         <Topbar lastestUpdate={'18 марта 2025'} />
 
         <Modal
@@ -246,7 +248,7 @@ export default function ReferralPage({ session }: { session: Session }) {
             {/* Statistics Section */}
             <div className="border-accent flex flex-1 flex-col border-0 sm:border-b">
               {/* Header */}
-              <div className="border-accent flex h-auto sm:h-28 pb-6 sm:pb-0 flex-row items-start sm:items-center justify-between border-b px-5 sm:px-8">
+              <div className="border-accent flex h-auto flex-row items-start justify-between border-b px-5 pb-6 sm:h-28 sm:items-center sm:px-8 sm:pb-0">
                 <div className="flex flex-col gap-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -273,7 +275,7 @@ export default function ReferralPage({ session }: { session: Session }) {
               </div>
 
               {/* Stats Grid */}
-              <div className="divide-accent flex-1 grid grid-cols-1 sm:grid-cols-3 divide-y divide-x-0 sm:divide-y-0 sm:divide-x">
+              <div className="divide-accent grid flex-1 grid-cols-1 divide-x-0 divide-y sm:grid-cols-3 sm:divide-x sm:divide-y-0">
                 {/* Referrals Card */}
                 <StatCard
                   title="рефералы"
@@ -306,7 +308,7 @@ export default function ReferralPage({ session }: { session: Session }) {
 
             {/* Balance Card */}
             <div className="border-accent flex w-auto flex-col border-b border-l bg-[#14171C] sm:w-100.25">
-              <div className="flex flex-col px-5 sm:px-8 pt-10 sm:pt-8 pb-5">
+              <div className="flex flex-col px-5 pt-10 pb-5 sm:px-8 sm:pt-8">
                 {/* Top section with avatars and info */}
                 <div className="flex items-center justify-between">
                   <div className="flex">
@@ -381,7 +383,7 @@ export default function ReferralPage({ session }: { session: Session }) {
               </div>
 
               {/* Withdrawal section */}
-              <div className="flex flex-col gap-6 px-5 sm:px-8 pb-6">
+              <div className="flex flex-col gap-6 px-5 pb-6 sm:px-8">
                 <div className="flex items-center justify-between">
                   <span className="text-secondary/50 flex gap-1 text-sm">
                     Вывод от —<span className="text-foreground">2 000 ₽</span>
@@ -440,11 +442,19 @@ export default function ReferralPage({ session }: { session: Session }) {
             </div>
           </div>
         </div>
-        <div className="border-accent hidden sm:block h-16 w-full shrink-0"></div>
-
+        <div className="border-accent hidden h-16 w-full shrink-0 sm:block"></div>
+        <div className="text-secondary/50 flex w-full shrink-0 gap-7.75 bg-[#14171C] px-5 py-4 sm:hidden mt-10">
+          <span className="text-sm uppercase">#</span>
+          <span className="text-sm uppercase">Список рефералов</span>
+          <InfoPopover
+            title="Таблица рефералов"
+            content="Следите за активностью ваших рефералов, приобретенными тарифами и процентом дохода, который генерирует каждый реферал."
+            className="ml-auto"
+          />
+        </div>
         <ReferralTable></ReferralTable>
       </div>
-      <Footer />
+      <Footer className='border-accent border-t sm:border-t-0' />
     </main>
   );
 }

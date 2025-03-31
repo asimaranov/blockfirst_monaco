@@ -77,7 +77,7 @@ const PlanBadge = ({ plan }: { plan: string }) => (
         className="h-3.5 w-3.5"
       />
     </div>
-    <span className="text-foreground text-xs uppercase">{plan}</span>
+    <span className="text-foreground text-sm sm:text-xs uppercase">{plan}</span>
   </div>
 );
 
@@ -94,9 +94,9 @@ const ReferralCard = ({ referral }: { referral: ReferralData }) => (
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.3 }}
-    className="flex w-full gap-4"
+    className="flex w-full gap-7"
   >
-    <div className="text-secondary pt-2 text-sm">{referral.id}.</div>
+    <div className="text-secondary text-sm">{referral.id}.</div>
     <div className="flex w-full flex-col gap-6">
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-3">
@@ -115,12 +115,12 @@ const ReferralCard = ({ referral }: { referral: ReferralData }) => (
               </span>
             </div>
           )}
-          <span className="text-foreground text-sm">{referral.name}</span>
+          <span className="text-foreground text-base">{referral.name}</span>
         </div>
         <PlanBadge plan={referral.plan} />
       </div>
       <div className="flex items-center justify-between">
-        <span className="text-foreground text-lg">{referral.earnings}</span>
+        <span className="text-foreground text-base">{referral.earnings}</span>
         <div className="flex gap-2">
           <div className="flex h-7 items-center justify-center rounded-lg bg-[#14171C] px-2">
             <span className="text-secondary text-xs">
@@ -177,7 +177,7 @@ export const ReferralTable = () => {
   };
 
   return (
-    <div className="border-accent flex grow flex-col gap-6 border-0 pt-10 pb-8 sm:border-b sm:pt-0">
+    <div className="border-accent flex grow flex-col gap-6 border-0 pt-8 pb-10 sm:pb-8 sm:border-b sm:pt-0">
       {referrals.length === 0 ? (
         <div className="flex h-full w-full flex-col items-center justify-center gap-5">
           <Image

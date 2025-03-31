@@ -92,25 +92,47 @@ export const InfoPopover = ({
         <circle cx="8" cy="5.33333" r="0.666667" fill="currentColor" />
       </svg>
 
-      {isHovered &&
-        typeof document !== 'undefined' &&
+      {typeof document !== 'undefined' &&
         createPortal(
           <AnimatePresence>
-            {isMobile ? (
+            {isHovered && isMobile && (
               // Mobile popover that slides from bottom
               <motion.div
-                className="fixed inset-x-0 bottom-0 z-[100000000000000] flex w-full flex-col bg-[#1D2026] p-6"
+                className="fixed inset-x-0 bottom-0 z-[100000000000000] flex w-full flex-col bg-[#1D2026] p-5"
                 initial="hidden"
                 animate="visible"
                 exit="hidden"
                 variants={mobileVariants}
                 transition={{ duration: 0.3, ease: 'easeOut' }}
               >
-                <div className="text-foreground pb-3 text-sm">{title}</div>
-                <div className="text-secondary text-xs">{content}</div>
+                <button
+                  className="cursor-pointer self-end pb-5"
+                  onClick={() => setIsHovered(false)}
+                >
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M5.91406 15.2513C5.5919 15.5735 5.06956 15.5735 4.7474 15.2513C4.42523 14.9291 4.42523 14.4068 4.7474 14.0846L8.83073 10.0013L4.7474 5.91797C4.42523 5.5958 4.42523 5.07347 4.7474 4.7513C5.06956 4.42914 5.5919 4.42914 5.91406 4.7513L9.9974 8.83464L14.0807 4.7513C14.4029 4.42914 14.9252 4.42914 15.2474 4.7513C15.5696 5.07347 15.5696 5.5958 15.2474 5.91797L11.1641 10.0013L15.2474 14.0846C15.5696 14.4068 15.5696 14.9291 15.2474 15.2513C14.9252 15.5735 14.4029 15.5735 14.0807 15.2513L9.9974 11.168L5.91406 15.2513Z"
+                      fill="#F2F2F2"
+                    />
+                  </svg>
+                </button>
+                <div className="text-foreground pb-3 text-center text-xl">
+                  {title}
+                </div>
+                <div className="text-secondary text-center text-sm">
+                  {content}
+                </div>
                 {children}
               </motion.div>
-            ) : (
+            )}
+
+            {isHovered && !isMobile && (
               // Desktop popover with original positioning
               <motion.div
                 className={cn('flex w-112 flex-col bg-[#1D2026] p-6')}
