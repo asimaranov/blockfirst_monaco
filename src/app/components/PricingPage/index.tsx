@@ -36,7 +36,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
 
   return (
     <div className="border-accent flex flex-col last:border-b-0 sm:last:border-b border-b">
-      <div className="relative bg-[#01050D] p-5 sm:p-8">
+      <div className="relative bg-[#01050D] p-5 py-8 sm:p-8 ">
         <div className="relative z-1 bg-[url(/images/misc/tariff-grid.svg)] bg-cover bg-no-repeat bg-blend-screen">
           {tariff.sale && (
             <div className="absolute top-0 right-0">
