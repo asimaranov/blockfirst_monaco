@@ -26,9 +26,9 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
   }, []);
 
   const variants = {
-    initial: isMobile ? { x: 0, y: '100%' } : { x: '100%', y: 0 },
+    initial: isMobile ? { x: 0, y: 'calc(100% + 64px)' } : { x: '100%', y: 0 },
     animate: { x: 0, y: 0 },
-    exit: isMobile ? { x: 0, y: '100%' } : { x: '100%', y: 0 },
+    exit: isMobile ? { x: 0, y: 'calc(100% + 64px)' } : { x: '100%', y: 0 },
   };
 
   return (
@@ -49,9 +49,9 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
             exit="exit"
             variants={variants}
             transition={{ type: 'tween', duration: 0.3 }}
-            className={`fixed z-[10000000000000000] sm:z-50 overflow-y-auto ${
+            className={`fixed z-[10000000000000000] overflow-y-auto sm:z-50 ${
               isMobile
-                ? 'right-0 bottom-0 left-0 max-h-[90vh] w-full'
+                ? 'top-[64px] right-0 left-0 h-[calc(100vh-64px)] w-full'
                 : 'top-0 right-0 h-screen w-auto'
             }`}
           >

@@ -345,7 +345,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
                           </div>
                         </div>
                         <div className="flex w-full px-10">
-                          <div className="w-10"></div>
+                          <div className="w-4 sm:w-10"></div>
                           <div className="relative h-2 flex-1">
                             <Progress
                               inactive={!!course.soon}
