@@ -152,7 +152,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
                     viewBox="0 0 20 20"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    className={cn('ml-2', isLoading && 'animate-spin')}
+                    className={cn('ml-2 h-5 w-5', isLoading && 'animate-spin')}
                   >
                     <path
                       opacity="0.4"

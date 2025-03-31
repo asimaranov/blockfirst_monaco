@@ -93,11 +93,11 @@ export default function PremiumPage({ session }: { session: Session }) {
 
   return (
     <main className="border-accent border-r border-l">
-      <div className="flex min-h-screen w-full flex-col">
+      <div className="flex min-h-screen w-full flex-col bg-cover bg-center">
         {/* <Topbar /> */}
 
         {/* Hero Section */}
-        <section className="relative px-5 pt-5 pb-10">
+        <section className="relative px-5 pt-5 pb-10 bg-[url('/images/misc/premium-grid.svg')]">
           <div className="from-background via-background/90 to-background/0 absolute inset-0 bg-gradient-to-b"></div>
 
           {/* Main Content */}
