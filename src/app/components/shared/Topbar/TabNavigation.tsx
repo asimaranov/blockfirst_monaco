@@ -19,7 +19,7 @@ export function TabNavigation({ items }: TabNavigationProps) {
           onClick={item.onClick}
           key={item.label}
           className={cn(
-            'font-roboto flex items-center justify-center px-8 py-3 text-sm font-medium',
+            'font-roboto flex items-center justify-center px-8 py-3.5 sm:py-3 text-sm font-medium',
             'shrink-0 cursor-pointer',
             'leading-4',
             'w-1/2 sm:w-auto',

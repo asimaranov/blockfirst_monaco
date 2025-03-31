@@ -51,7 +51,7 @@ export default function CourseInfoTopCard({ course }: { course: ICourse }) {
         </div>
       </div>
 
-      <div className="flex w-full flex-col p-5 sm:p-8 sm:pt-0">
+      <div className="flex w-full flex-col p-5 sm:p-8 pt-0 sm:pt-0">
         <div className="flex flex-row items-center justify-between">
           <div className="flex flex-row items-center gap-1">
             <AlumniCounter count={course.info!.alumniCount} />
@@ -117,7 +117,7 @@ export default function CourseInfoTopCard({ course }: { course: ICourse }) {
           </Link>
           <div className="flex w-full flex-col items-center justify-center rounded-full">
             <div className="flex flex-row items-center">
-              <span className="text-secondary mr-2.5 text-sm opacity-50">
+              <span className="text-secondary mr-2 sm:mr-2.5 text-xs sm:text-sm opacity-50">
                 Обучаешься:{' '}
               </span>
 
@@ -126,9 +126,9 @@ export default function CourseInfoTopCard({ course }: { course: ICourse }) {
                 alt=""
                 width={16}
                 height={16}
-                className="mr-1.5 h-4 w-4"
+                className="mr-1 sm:mr-1.5 h-4 w-4"
               />
-              <span className="text-foreground text-sm">10 дней</span>
+              <span className="text-foreground text-xs sm:text-sm">10 дней</span>
             </div>
           </div>
         </div>

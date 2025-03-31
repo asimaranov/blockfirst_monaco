@@ -64,7 +64,7 @@ export default function Dashboard({ session }: { session: Session }) {
               showProgress={true}
               className="not-first:border-t sm:border-y"
             />
-            <div className="flex flex-row gap-3 p-5 pt-10 text-base">
+            <div className="flex flex-row gap-3 p-5 pt-10 text-base border-accent border-t">
               <div>Другие курсы</div>
               <div className="bg-foreground text-background flex h-5 w-7.5 items-center justify-center rounded-[100px] text-sm font-medium">
                 8
