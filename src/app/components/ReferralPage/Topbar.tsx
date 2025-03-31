@@ -54,7 +54,7 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
                 />
               </div>
               <button
-                className="flex flex-1 flex-row justify-center rounded-full border border-[#195AF4] py-2 text-sm"
+                className="flex flex-1 flex-row justify-center rounded-full border border-[#195AF4] py-2 text-sm bg-dark-bg"
                 onClick={() => {
                   console.log('clicked');
                   setIsBloggersFormOpen(true);

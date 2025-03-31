@@ -49,13 +49,15 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
             exit="exit"
             variants={variants}
             transition={{ type: 'tween', duration: 0.3 }}
-            className={`fixed z-[10000000000000000] overflow-y-auto sm:z-50 ${
+            className={`fixed z-[10000000000000000] overflow-hidden sm:z-50 ${
               isMobile
-                ? 'top-[64px] right-0 left-0 h-[calc(100svh-64px)] w-full'
+                ? 'right-0 bottom-0 left-0 h-[calc(100dvh-64px)] max-h-[calc(100dvh-64px)] w-full'
                 : 'top-0 right-0 h-screen w-auto'
             }`}
           >
-            {children}
+            <div className="flex h-full w-full flex-col overflow-y-auto bg-[#0F1115]">
+              {children}
+            </div>
           </motion.div>
         </>
       )}
