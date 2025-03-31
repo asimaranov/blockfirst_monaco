@@ -83,7 +83,7 @@ export const InfoPopover = ({
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className={cn(
-          'text-secondary h-4 w-4 cursor-pointer transition delay-100 duration-300 ease-in-out hover:text-[#F2F2F2]',
+          'text-secondary h-5 w-5 sm:h-4 sm:w-4 cursor-pointer transition delay-100 duration-300 ease-in-out hover:text-[#F2F2F2]',
           !title && !content && 'hover:text-secondary cursor-default'
         )}
       >
