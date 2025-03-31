@@ -215,7 +215,7 @@ export default function PricingPage({ session }: { session: Session }) {
           ))}
         </div>
       </div>
-      <Footer />
+      <Footer className='border-accent border-t sm:border-t-0' />
     </main>
   );
 }

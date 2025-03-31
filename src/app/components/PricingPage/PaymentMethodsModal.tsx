@@ -6,6 +6,7 @@ import { api } from '~/trpc/react';
 import { formatPrice } from '~/app/lib/utils';
 import { InfoPopover } from '../shared/InfoPopover';
 import UsdtForm from './UsdtForm';
+import FormMobileControls from '../shared/FormMobileControls';
 
 interface PaymentMethodsModalProps {
   isOpen: boolean;
@@ -71,7 +72,7 @@ const PaymentMethod = ({
     : 'text-[#9AA6B5] opacity-50';
 
   return (
-    <div className="mx-5 sm:mx-10 py-8">
+    <div className="mx-5 py-6 sm:py-8 sm:mx-10">
       <div className="flex items-start justify-between">
         <div className="flex gap-4">
           <Image
@@ -227,21 +228,26 @@ const PaymentMethodsModal = ({
       ) : (
         <div
           className={cn(
-            'h-auto sm:h-screen w-full sm:w-105 border-l border-[#282D33]/50 bg-[#0F1115]'
+            'flex h-full w-full flex-col border-l border-[#282D33]/50 bg-[#0F1115] sm:w-105'
           )}
         >
+          <FormMobileControls
+            showBackButton={false}
+            // onBackClick={onBackClick}
+            onClose={onClose}
+          />
           <div className="flex h-full flex-col">
             {/* Logo and title */}
-            <div className="flex flex-col items-center gap-8 px-5 sm:px-10 pt-8">
+            <div className="flex flex-col items-center gap-8 px-5 pt-0 sm:px-10 sm:pt-8">
               <Image
                 src={'/images/logo/form-logo.svg'}
                 alt="Logo"
                 width={152}
                 height={44}
-                className="w-38 hidden sm:block"
+                className="hidden w-38 sm:block"
               />
-              <div className="flex flex-col items-center gap-4 pb-8 text-center">
-                <h3 className="text-xl sm:text-2xll text-foreground">
+              <div className="flex flex-col items-center gap-4 pb-2 sm:pb-8 text-center">
+                <h3 className="sm:text-2xll text-foreground text-xl">
                   Выбор метода оплаты
                 </h3>
                 <p className="text-sm text-[#9AA6B5]">
@@ -251,12 +257,12 @@ const PaymentMethodsModal = ({
               </div>
             </div>
 
-            <div className="text-secondary/50 w-full bg-[#14171C] py-3.5 pl-5 sm:pl-8 text-xs uppercase hidden sm:block">
+            <div className="text-secondary/50 hidden w-full bg-[#14171C] py-3.5 pl-5 text-xs uppercase sm:block sm:pl-8">
               способы оплаты
             </div>
 
             {/* Payment methods */}
-            <div className="flex flex-col divide-y divide-[#282D33]">
+            <div className="flex flex-1 flex-col divide-y divide-[#282D33]">
               {paymentMethods.map((method) => (
                 <PaymentMethod
                   key={method.type}
@@ -270,7 +276,7 @@ const PaymentMethodsModal = ({
             </div>
 
             {/* Footer */}
-            <div className="mt-auto flex items-center justify-center gap-2 pb-8 text-sm text-[#9AA6B5]">
+            <div className="mt-auto flex items-center justify-center gap-2 py-4 text-sm text-[#9AA6B5] sm:py-8">
               <InfoPopover title={''} content={''} />
 
               <span className="text-xs">
