@@ -72,7 +72,7 @@ const PaymentMethod = ({
     : 'text-[#9AA6B5] opacity-50';
 
   return (
-    <div className="mx-5 py-6 sm:py-8 sm:mx-10">
+    <div className="mx-5 py-6 sm:mx-10 sm:py-8">
       <div className="flex items-start justify-between">
         <div className="flex gap-4">
           <Image
@@ -185,8 +185,25 @@ const PaymentMethodsModal = ({
 
   useEffect(() => {
     if (data) {
-      const newWindow = window.open(data, '_blank');
-      newWindow?.focus();
+      try {
+        const newWindow = window.open(data, '_blank');
+        if (
+          !newWindow ||
+          newWindow.closed ||
+          typeof newWindow.closed === 'undefined'
+        ) {
+          // Safari might block the popup or return null
+          console.error('Popup blocked or failed to open');
+          // Fallback - redirect in the same window
+          window.location.href = data;
+        } else {
+          newWindow.focus();
+        }
+      } catch (error) {
+        console.error('Error opening payment window:', error);
+        // Fallback - redirect in the same window
+        window.location.href = data;
+      }
     }
   }, [data]);
 
@@ -246,7 +263,7 @@ const PaymentMethodsModal = ({
                 height={44}
                 className="hidden w-38 sm:block"
               />
-              <div className="flex flex-col items-center gap-4 pb-2 sm:pb-8 text-center">
+              <div className="flex flex-col items-center gap-4 pb-2 text-center sm:pb-8">
                 <h3 className="sm:text-2xll text-foreground text-xl">
                   Выбор метода оплаты
                 </h3>
@@ -277,7 +294,13 @@ const PaymentMethodsModal = ({
 
             {/* Footer */}
             <div className="mt-auto flex items-center justify-center gap-2 py-4 text-sm text-[#9AA6B5] sm:py-8">
-              <Image src={'/images/misc/info-icon.svg'} alt="Info" width={15} height={14} className='w-3.5 h-3.5' />
+              <Image
+                src={'/images/misc/info-icon.svg'}
+                alt="Info"
+                width={15}
+                height={14}
+                className="h-3.5 w-3.5"
+              />
               <span className="text-xs">
                 Не подходят методы оплаты?{' '}
                 <span className="text-foreground cursor-pointer underline hover:opacity-50">
