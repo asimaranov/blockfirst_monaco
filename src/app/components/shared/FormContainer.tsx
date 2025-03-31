@@ -274,7 +274,13 @@ export default function FormContainer({
       {bottomText && kind == 'info' && (
         <div className="text-secondary mt-auto flex w-full flex-row justify-center gap-1 pb-8 text-xs">
           <span className="flex flex-row gap-1">
-            <Image src={InfoIcon} alt="Info" className="h-4 w-4" />
+            <Image
+              src={'/images/misc/info-icon.svg'}
+              alt="Info"
+              width={15}
+              height={14}
+              className="h-3.5 w-3.5"
+            />
             {bottomText.main}
           </span>
           <Link

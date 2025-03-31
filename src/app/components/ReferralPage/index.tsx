@@ -241,7 +241,11 @@ export default function ReferralPage({ session }: { session: Session }) {
             setIsWithdrawOpen(false);
           }}
         >
-          <WithdrawForm onClose={function (): void {}} />
+          <WithdrawForm
+            onClose={function (): void {
+              setIsWithdrawOpen(false);
+            }}
+          />
         </Modal>
         <div className="mb-auto flex flex-col">
           <div className="flex flex-1 flex-col-reverse gap-16 sm:flex-row sm:gap-0">
@@ -443,7 +447,7 @@ export default function ReferralPage({ session }: { session: Session }) {
           </div>
         </div>
         <div className="border-accent hidden h-16 w-full shrink-0 sm:block"></div>
-        <div className="text-secondary/50 flex w-full shrink-0 gap-7.75 bg-[#14171C] px-5 py-4 sm:hidden mt-10">
+        <div className="text-secondary/50 mt-10 flex w-full shrink-0 gap-7.75 bg-[#14171C] px-5 py-4 sm:hidden">
           <span className="text-sm uppercase">#</span>
           <span className="text-sm uppercase">Список рефералов</span>
           <InfoPopover
@@ -454,7 +458,7 @@ export default function ReferralPage({ session }: { session: Session }) {
         </div>
         <ReferralTable></ReferralTable>
       </div>
-      <Footer className='border-accent border-t sm:border-t-0' />
+      <Footer className="border-accent border-t sm:border-t-0" />
     </main>
   );
 }

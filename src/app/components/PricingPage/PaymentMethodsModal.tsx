@@ -277,8 +277,7 @@ const PaymentMethodsModal = ({
 
             {/* Footer */}
             <div className="mt-auto flex items-center justify-center gap-2 py-4 text-sm text-[#9AA6B5] sm:py-8">
-              <InfoPopover title={''} content={''} />
-
+              <Image src={'/images/misc/info-icon.svg'} alt="Info" width={15} height={14} className='w-3.5 h-3.5' />
               <span className="text-xs">
                 Не подходят методы оплаты?{' '}
                 <span className="text-foreground cursor-pointer underline hover:opacity-50">

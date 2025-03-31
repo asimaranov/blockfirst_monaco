@@ -30,7 +30,10 @@ export default function FormMobileControls(
         </button>
       )}
 
-      <button onClick={onClose} className="ml-auto p-5">
+      <button onClick={() => {
+        console.log('close')
+        onClose()
+      }} className="ml-auto p-5">
         <svg
           width="20"
           height="20"
