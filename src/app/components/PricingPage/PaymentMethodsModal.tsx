@@ -132,7 +132,7 @@ const PaymentMethod = ({
               viewBox="0 0 20 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className={cn('ml-2', isLoading && 'animate-spin')}
+              className={cn('ml-2', isLoading && 'animate-spin', 'h-5 w-5')}
             >
               <path
                 opacity="0.4"

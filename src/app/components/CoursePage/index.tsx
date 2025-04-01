@@ -362,7 +362,7 @@ export default function CoursePage({
         courseAuthorAvatar={course?.info?.author.image ?? ''}
       />
       <MobileAuthorInfo />
-      <div className="border-accent mb-0 sm:mb-9.5 grid grid-cols-1 border-b sm:grid-cols-2">
+      <div className="border-accent grid grid-cols-1 border-b sm:grid-cols-2">
         <CourseInfoTopCard course={course} />
         <div className="border-accent flex flex-col border-l">
           {/* Top section with Starter and Pro blocks */}
