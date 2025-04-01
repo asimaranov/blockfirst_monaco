@@ -39,6 +39,8 @@ export default function UsdtForm({ onClose, onFullClose }: StudentFormProps) {
     setFormState('success');
   };
 
+  const paymentAddress = '0x9702230a8ea536...3d4df4a8c7';
+
   return (
     <FormContainer
       onClose={onFullClose}
@@ -138,8 +140,8 @@ export default function UsdtForm({ onClose, onFullClose }: StudentFormProps) {
           </svg>
         </div>
         <div className="text-secondary opacity flex h-12 w-full items-center justify-between rounded-[0.463vw] bg-[#14171C] px-5 text-center text-sm">
-          0x9702230a8ea536...3d4df4a8c7
-          <CopyButton />
+          {paymentAddress}
+          <CopyButton textToCopy={paymentAddress} />
         </div>
       </div>
 
