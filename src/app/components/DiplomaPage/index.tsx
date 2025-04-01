@@ -111,7 +111,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
   };
 
   return (
-    <main className="border-accent flex min-h-screen w-full flex-col border-r border-l">
+    <main className="border-accent flex min-h-screen w-full flex-col border-r-0 border-l-0 sm:border-r sm:border-l">
       <div className="flex flex-1 flex-col">
         <DiplomaView
           isOpen={isDiplomaExpanded}

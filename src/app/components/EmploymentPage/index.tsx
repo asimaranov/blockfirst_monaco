@@ -108,7 +108,7 @@ export default function EmploymentPage({ session }: { session: Session }) {
   };
 
   return (
-    <main className="border-accent flex min-h-screen w-full flex-col border-r border-l">
+    <main className="border-accent flex min-h-screen w-full flex-col border-r-0 border-l-0 sm:border-r sm:border-l">
       <Modal isOpen={isApplyFormOpen} onClose={() => setIsApplyFormOpen(false)}>
         <ApplyForm onClose={() => setIsApplyFormOpen(false)} />
       </Modal>
