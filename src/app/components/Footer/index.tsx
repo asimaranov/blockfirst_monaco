@@ -7,10 +7,10 @@ export default function Footer({ className }: { className?: string }) {
       title: 'Компания',
       links: [
         { label: 'Стоимость', href: '#' },
-        { label: 'F.A.Q', href: '#' },
+        { label: 'F.A.Q', href: 'https://blockfirst.io/faqs' },
         { label: 'Курс Solidity', href: '#' },
         { label: 'Блог', href: '#' },
-        { label: 'Статьи', href: '#' },
+        // { label: 'Статьи', href: '#' },
       ],
       className: '',
     },
@@ -20,7 +20,7 @@ export default function Footer({ className }: { className?: string }) {
         { label: 'Youtube', href: '#' },
         { label: 'Twitter', href: '#' },
         { label: 'Medium', href: '#' },
-        { label: 'Telegram', href: '#' },
+        { label: 'Telegram', href: 'https://t.me/blockfirst_edu' },
       ],
     },
   ];
@@ -31,23 +31,23 @@ export default function Footer({ className }: { className?: string }) {
         { label: 'Youtube', href: '#' },
         { label: 'Twitter', href: '#' },
         { label: 'Medium', href: '#' },
-        { label: 'Telegram', href: '#' },
+        { label: 'Telegram', href: 'https://t.me/blockfirst_edu' },
       ],
     },
     {
       title: 'Сообщество',
       links: [
         { label: 'Блог', href: '#' },
-        { label: 'Статьи', href: '#' },
+        // { label: 'Статьи', href: '#' },
       ],
       className: 'hidden sm:flex',
     },
     {
       title: 'Компания',
       links: [
-        { label: 'Стоимость', href: '#' },
-        { label: 'F.A.Q', href: '#' },
-        { label: 'Курс Solidity', href: '#' },
+        { label: 'Стоимость', href: 'https://app.blockfirst.io/pricing' },
+        { label: 'F.A.Q', href: 'https://app.blockfirst.io/course/solidity' },
+        { label: 'Курс Solidity', href: 'https://app.blockfirst.io/course/solidity' },
       ],
     },
   ];
@@ -266,10 +266,10 @@ export default function Footer({ className }: { className?: string }) {
         {/* Copyright section */}
         <div className="flex flex-col items-center gap-5 px-5 pt-8 pb-8 text-xs sm:gap-0 sm:px-8 md:flex-row md:justify-between">
           <div className="text-foreground sm:text-secondary flex gap-6 text-xs">
-            <a href="#" className="text-sm hover:opacity-50 sm:text-xs">
+            <a href="https://blockfirst.io/user-agreement" className="text-sm hover:opacity-50 sm:text-xs">
               Правила сервиса
             </a>
-            <a href="#" className="text-sm hover:opacity-50 sm:text-xs">
+            <a href="https://blockfirst.io/privacy-policy" className="text-sm hover:opacity-50 sm:text-xs">
               Конфиденциальность
             </a>
           </div>

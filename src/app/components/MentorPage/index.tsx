@@ -20,6 +20,7 @@ import MentorSelectedIcon from './assets/mentor-selected-icon.svg';
 import MentorLockedIcon from './assets/mentor-locked-icon.svg';
 
 import { cn } from '~/helpers';
+import Link from 'next/link';
 
 // Safari-specific styles
 const safariStyles = `
@@ -713,9 +714,9 @@ export default function MentorPage({ session }: { session: Session }) {
                   </div>
                   <span className="text-secondary shrink-0 text-xs">
                     Ваши данные полностью{' '}
-                    <span className="cursor-pointer text-white underline hover:opacity-50">
+                    <Link href={"https://blockfirst.io/privacy-policy"} className="cursor-pointer text-white underline hover:opacity-50">
                       Конфиденциальны
-                    </span>
+                    </Link>
                   </span>
                 </div>
               </div>
