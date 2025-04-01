@@ -50,7 +50,7 @@ export default function CVApplyForm({ onClose, jobTitle }: CVApplyFormProps) {
 
       <FormTextArea
         icon={<BookIcon active={motivation !== ''} />}
-        placeholder="Дополнительная информация\n(Образование, опыт работы, GitHub, знание английского)"
+        placeholder={`Дополнительная информация\n(Образование, опыт работы, GitHub, знание английского)`}
         value={motivation}
         onChange={(e) => setMotivation(e.target.value)}
       />
