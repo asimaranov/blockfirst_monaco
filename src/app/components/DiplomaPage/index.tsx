@@ -111,7 +111,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
   };
 
   return (
-    <main className="border-accent flex min-h-screen w-full flex-col border-r-0 border-l-0 sm:border-r sm:border-l">
+    <main className="border-accent flex min-h-screen w-full flex-col">
       <div className="flex flex-1 flex-col">
         <DiplomaView
           isOpen={isDiplomaExpanded}
@@ -147,14 +147,16 @@ export default function DiplomaPage({ session }: { session: Session }) {
           <div className="flex flex-col sm:flex-row">
             <div className="flex flex-col">
               {/* NFT Diploma Section */}
-              <div className="flex items-start gap-5 px-5 py-6 sm:px-8 bg-[url(/images/misc/diploma-header-bg-mobile.png)] bg-center sm:bg-[url(/images/misc/diploma-header-bg.png)] bg-contain bg-no-repeat">
+              <div className="flex items-start gap-5 bg-[url(/images/misc/diploma-header-bg-mobile.png)] bg-cover bg-no-repeat px-5 py-6 sm:bg-[url(/images/misc/diploma-header-bg.png)] sm:px-8">
                 <Image
                   src={DiplomaIcon}
                   alt="NFT Diploma"
                   className="w-15 object-cover"
                 />
                 <div className="flex flex-col gap-2">
-                  <h2 className="text-foreground text-2xll leading-8.25">NFT диплом</h2>
+                  <h2 className="text-foreground text-2xll leading-8.25">
+                    NFT диплом
+                  </h2>
                   <p className="text-secondary text-xs">
                     Диплом интерактивный, после каждого курса добавится новая
                     запись о ваших новых компетенциях
@@ -192,13 +194,13 @@ export default function DiplomaPage({ session }: { session: Session }) {
                 ))}
               </div>
 
-              <div className="text-secondary/50 flex w-full shrink-0 gap-7.75 bg-[#14171C] px-5 py-4 mb-2 mt-5 sm:hidden">
+              <div className="text-secondary/50 mt-5 mb-2 flex w-full shrink-0 gap-7.75 bg-[#14171C] px-5 py-4 sm:hidden">
                 <span className="text-sm uppercase">#</span>
                 <span className="text-sm uppercase">Название курса</span>
                 <InfoPopover
                   title="Прогресс обучения"
                   content="По завершении курса ваша новая компетенция будет отражена в интерактивном дипломе, который можно дополнить новыми компетенциями  в зависимости от пройденных курсов."
-                  className='ml-auto'
+                  className="ml-auto"
                 />
               </div>
 

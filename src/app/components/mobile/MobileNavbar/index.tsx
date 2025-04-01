@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -70,7 +70,17 @@ const MobileNavbar: React.FC = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
-  const [touchStart, setTouchStart] = useState(0);
+
+  // Debounce the visibility updates to prevent flickering
+  const setVisibilityDebounced = useCallback(
+    (value: boolean) => {
+      // Only update if the value is changing
+      if (value !== isVisible) {
+        setIsVisible(value);
+      }
+    },
+    [isVisible]
+  );
 
   const navItems = [
     {
@@ -91,81 +101,96 @@ const MobileNavbar: React.FC = () => {
   ];
 
   useEffect(() => {
-    // Track touch events for iOS
-    const handleTouchStart = (e: TouchEvent) => {
-      const touchY = e.touches[0]?.clientY;
-      if (touchY !== undefined) {
-        setTouchStart(touchY);
-      }
-    };
-
-    const handleTouchMove = (e: TouchEvent) => {
-      if (!touchStart) return;
-
-      const touchEnd = e.touches[0]?.clientY;
-      if (touchEnd === undefined) return;
-
-      const diff = touchStart - touchEnd;
-
-      // If scrolling down (positive diff), hide the navbar
-      // If scrolling up (negative diff), show the navbar
-      if (Math.abs(diff) > 5) {
-        // Small threshold to avoid jitter
-        setIsVisible(diff < 0);
-        setTouchStart(touchEnd);
-      }
-    };
-
-    // Function to handle scroll events
-    const handleScroll = () => {
-      // Try to get the content view, but fallback to window if not available
+    // Function to find and set up the content view element
+    const setupScrollListener = () => {
       const contentView = document.getElementById('content-view');
-      const currentScrollY = contentView
-        ? contentView.scrollTop
-        : window.scrollY;
 
-      // Show navbar at the top of the content regardless of scroll direction
-      if (currentScrollY < 20) {
-        setIsVisible(true);
-      } else {
-        // Hide when scrolling down, show when scrolling up
-        setIsVisible(currentScrollY < lastScrollY);
+      if (!contentView) {
+        // If content-view isn't ready yet, try again after a short delay
+        const timeoutId = setTimeout(setupScrollListener, 100);
+        return () => clearTimeout(timeoutId);
       }
 
-      setLastScrollY(currentScrollY);
+      let debounceTimer: NodeJS.Timeout | null = null;
+
+      // Shared handler logic for both scroll and touch events
+      const handleScrollOrTouch = () => {
+        // Clear any pending debounce
+        if (debounceTimer) {
+          clearTimeout(debounceTimer);
+        }
+
+        const currentScrollY = contentView.scrollTop;
+        const scrollHeight = contentView.scrollHeight;
+        const clientHeight = contentView.clientHeight;
+
+        // Calculate if we're near the bottom (within 20px)
+        const isNearBottom =
+          scrollHeight - (currentScrollY + clientHeight) < 20;
+
+        let newVisibility = isVisible;
+
+        // Show navbar at the top of the content
+        if (currentScrollY < 20) {
+          newVisibility = true;
+        }
+        // Always hide navbar when at the bottom (for footer visibility)
+        else if (isNearBottom) {
+          newVisibility = false;
+        }
+        // Otherwise use standard scroll direction logic
+        else {
+          // Hide when scrolling down, show when scrolling up
+          newVisibility = currentScrollY < lastScrollY;
+        }
+
+        // Debounce the visibility change to prevent flickering
+        debounceTimer = setTimeout(() => {
+          setVisibilityDebounced(newVisibility);
+        }, 50);
+
+        setLastScrollY(currentScrollY);
+      };
+
+      // For standard scrolling
+      contentView.addEventListener('scroll', handleScrollOrTouch, {
+        passive: true,
+      });
+
+      // For iOS momentum scrolling
+      contentView.addEventListener('touchmove', handleScrollOrTouch, {
+        passive: true,
+      });
+
+      // For iOS momentum scrolling with timeout
+      const handleTouchEnd = () => {
+        // Small delay to catch final position after momentum scrolling
+        // Use a longer delay for touchend to account for iOS momentum scrolling
+        setTimeout(() => {
+          handleScrollOrTouch();
+
+          // Check again after momentum scrolling completes
+          setTimeout(handleScrollOrTouch, 300);
+        }, 100);
+      };
+      contentView.addEventListener('touchend', handleTouchEnd, {
+        passive: true,
+      });
+
+      return () => {
+        contentView.removeEventListener('scroll', handleScrollOrTouch);
+        contentView.removeEventListener('touchmove', handleScrollOrTouch);
+        contentView.removeEventListener('touchend', handleTouchEnd);
+      };
     };
 
-    // Set up scroll and touch event listeners
-    const contentView = document.getElementById('content-view');
-
-    // Add event listeners to both window and content-view (if it exists)
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('touchstart', handleTouchStart, { passive: true });
-    window.addEventListener('touchmove', handleTouchMove, { passive: true });
-
-    if (contentView) {
-      contentView.addEventListener('scroll', handleScroll, { passive: true });
-      contentView.addEventListener('touchstart', handleTouchStart, {
-        passive: true,
-      });
-      contentView.addEventListener('touchmove', handleTouchMove, {
-        passive: true,
-      });
-    }
+    // Start the setup process
+    const cleanup = setupScrollListener();
 
     return () => {
-      // Clean up event listeners
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchmove', handleTouchMove);
-
-      if (contentView) {
-        contentView.removeEventListener('scroll', handleScroll);
-        contentView.removeEventListener('touchstart', handleTouchStart);
-        contentView.removeEventListener('touchmove', handleTouchMove);
-      }
+      if (cleanup) cleanup();
     };
-  }, []); // Empty dependency array to prevent recreating listeners
+  }, [lastScrollY, setVisibilityDebounced]);
 
   // Determine if a route is active, checking both exact match and otherHref
   const isRouteActive = (item: any) => {
