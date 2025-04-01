@@ -92,7 +92,7 @@ export default function PremiumPage({ session }: { session: Session }) {
   const [selectedTariff, setSelectedTariff] = useState<Tariff>(TARIFFS[1]!); // Default to PRO
 
   return (
-    <main className="border-accent border-r border-l">
+    <main className="border-accent border-r-0 border-l-0 sm:border-r sm:border-l">
       <div className="flex min-h-screen w-full flex-col bg-cover bg-center">
         {/* <Topbar /> */}
 

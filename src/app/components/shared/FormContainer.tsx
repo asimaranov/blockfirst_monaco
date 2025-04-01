@@ -98,7 +98,7 @@ export default function FormContainer({
 }: FormContainerProps) {
   if (formState === 'success') {
     return (
-      <div className="bg-dark-bg border-accent/40 z-[10000000000000000] flex h-full w-auto flex-col border-l sm:z-0 sm:w-105">
+      <div className="bg-dark-bg border-accent/40 z-[10000000000000000] flex h-full w-auto flex-col border-l-0 sm:border-l sm:z-0 sm:w-105">
         <FormMobileControls
           showBackButton={showBackButton}
           onBackClick={onBackClick}
@@ -190,7 +190,7 @@ export default function FormContainer({
   }
 
   return (
-    <div className="bg-dark-bg border-accent/40 relative flex h-full w-auto flex-col border-l sm:w-105">
+    <div className="bg-dark-bg border-accent/40 relative flex h-full w-auto flex-col border-l-0 sm:border-l sm:w-105">
       <FormMobileControls
         showBackButton={showBackButton}
         onBackClick={onBackClick}

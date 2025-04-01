@@ -231,7 +231,7 @@ export default function ReferralPage({ session }: { session: Session }) {
   const [isWithdrawOpen, setIsWithdrawOpen] = useState(false);
 
   return (
-    <main className="border-accent border-r border-l">
+    <main className="border-accent border-r-0 border-l-0 sm:border-r sm:border-l">
       <div className="flex h-auto w-full flex-col sm:h-screen">
         <Topbar lastestUpdate={'18 марта 2025'} />
 
@@ -311,7 +311,7 @@ export default function ReferralPage({ session }: { session: Session }) {
             </div>
 
             {/* Balance Card */}
-            <div className="border-accent flex w-auto flex-col border-b border-l bg-[#14171C] sm:w-100.25">
+            <div className="border-accent flex w-auto flex-col border-b border-l-0 sm:border-l bg-[#14171C] sm:w-100.25">
               <div className="flex flex-col px-5 pt-10 pb-5 sm:px-8 sm:pt-8">
                 {/* Top section with avatars and info */}
                 <div className="flex items-center justify-between">

@@ -145,7 +145,7 @@ export default function MentorPage({ session }: { session: Session }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <main className="border-accent border-r border-l">
+    <main className="border-accent border-r-0 border-l-0 sm:border-r sm:border-l">
       <style jsx global>
         {safariStyles}
       </style>

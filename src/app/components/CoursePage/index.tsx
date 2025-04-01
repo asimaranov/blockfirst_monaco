@@ -356,7 +356,7 @@ export default function CoursePage({
   const course = COURSES.find((x) => x.id === courseId)!;
 
   return (
-    <main className="border-accent border-r border-l">
+    <main className="border-accent border-r-0 border-l-0 sm:border-r sm:border-l">
       <Topbar
         courseAuthor={course?.info?.author.name ?? ''}
         courseAuthorAvatar={course?.info?.author.image ?? ''}

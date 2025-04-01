@@ -206,7 +206,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
 
 export default function PricingPage({ session }: { session: Session }) {
   return (
-    <main className="border-accent border-r border-l">
+    <main className="border-accent border-r-0 border-l-0 sm:border-r sm:border-l">
       <div className="flex h-auto sm:h-screen w-full flex-col">
         <Topbar />
         <div className="grid w-full grow grid-cols-1 sm:grid-cols-3 divide-x divide-[#282D33]">

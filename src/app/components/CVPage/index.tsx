@@ -510,7 +510,7 @@ export default function CVPage({ session }: { session: Session }) {
   };
 
   return (
-    <main className="border-accent border-r border-l">
+    <main className="border-accent border-r-0 border-l-0 sm:border-r sm:border-l">
       <div className="border-accent flex min-h-screen w-full flex-col border-b">
         <Topbar lastestUpdate={'18 марта 2025'} />
 
