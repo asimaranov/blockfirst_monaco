@@ -10,7 +10,10 @@ import TariffIcon from '../../Sidebar/assets/section_icons/tariff';
 import CertIcon from '../../Sidebar/assets/section_icons/cert';
 import ReferralIcon from '../../Sidebar/assets/section_icons/referral';
 import NotificationsIcon from '../../Sidebar/assets/section_icons/notifications';
-import { NotificationsModal, NotificationsModalMobile } from '../../Notifications/NotificationsModal';
+import {
+  NotificationsModal,
+  NotificationsModalMobile,
+} from '../../Notifications/NotificationsModal';
 import PremiumIcon from './assets/premium-icon.png';
 interface NavItemProps {
   href: string;
@@ -67,6 +70,7 @@ const MobileNavbar: React.FC = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [touchStart, setTouchStart] = useState(0);
 
   const navItems = [
     {
@@ -87,44 +91,81 @@ const MobileNavbar: React.FC = () => {
   ];
 
   useEffect(() => {
-    // Function to find and set up the content view element
-    const setupScrollListener = () => {
-      const contentView = document.getElementById('content-view');
+    // Track touch events for iOS
+    const handleTouchStart = (e: TouchEvent) => {
+      const touchY = e.touches[0]?.clientY;
+      if (touchY !== undefined) {
+        setTouchStart(touchY);
+      }
+    };
 
-      if (!contentView) {
-        // If content-view isn't ready yet, try again after a short delay
-        const timeoutId = setTimeout(setupScrollListener, 100);
-        return () => clearTimeout(timeoutId);
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!touchStart) return;
+
+      const touchEnd = e.touches[0]?.clientY;
+      if (touchEnd === undefined) return;
+
+      const diff = touchStart - touchEnd;
+
+      // If scrolling down (positive diff), hide the navbar
+      // If scrolling up (negative diff), show the navbar
+      if (Math.abs(diff) > 5) {
+        // Small threshold to avoid jitter
+        setIsVisible(diff < 0);
+        setTouchStart(touchEnd);
+      }
+    };
+
+    // Function to handle scroll events
+    const handleScroll = () => {
+      // Try to get the content view, but fallback to window if not available
+      const contentView = document.getElementById('content-view');
+      const currentScrollY = contentView
+        ? contentView.scrollTop
+        : window.scrollY;
+
+      // Show navbar at the top of the content regardless of scroll direction
+      if (currentScrollY < 20) {
+        setIsVisible(true);
+      } else {
+        // Hide when scrolling down, show when scrolling up
+        setIsVisible(currentScrollY < lastScrollY);
       }
 
-      const handleScroll = () => {
-        const currentScrollY = contentView.scrollTop;
-
-        // Show navbar at the top of the content regardless of scroll direction
-        if (currentScrollY < 20) {
-          setIsVisible(true);
-        } else {
-          // Hide when scrolling down, show when scrolling up
-          setIsVisible(currentScrollY < lastScrollY);
-        }
-
-        setLastScrollY(currentScrollY);
-      };
-
-      contentView.addEventListener('scroll', handleScroll, { passive: true });
-
-      return () => {
-        contentView.removeEventListener('scroll', handleScroll);
-      };
+      setLastScrollY(currentScrollY);
     };
 
-    // Start the setup process
-    const cleanup = setupScrollListener();
+    // Set up scroll and touch event listeners
+    const contentView = document.getElementById('content-view');
+
+    // Add event listeners to both window and content-view (if it exists)
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+
+    if (contentView) {
+      contentView.addEventListener('scroll', handleScroll, { passive: true });
+      contentView.addEventListener('touchstart', handleTouchStart, {
+        passive: true,
+      });
+      contentView.addEventListener('touchmove', handleTouchMove, {
+        passive: true,
+      });
+    }
 
     return () => {
-      if (cleanup) cleanup();
+      // Clean up event listeners
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+
+      if (contentView) {
+        contentView.removeEventListener('scroll', handleScroll);
+        contentView.removeEventListener('touchstart', handleTouchStart);
+        contentView.removeEventListener('touchmove', handleTouchMove);
+      }
     };
-  }, [lastScrollY]);
+  }, []); // Empty dependency array to prevent recreating listeners
 
   // Determine if a route is active, checking both exact match and otherHref
   const isRouteActive = (item: any) => {
@@ -140,7 +181,7 @@ const MobileNavbar: React.FC = () => {
       <AnimatePresence>
         {isVisible && (
           <motion.nav
-            className="bg-background fixed right-0 bottom-0 left-0 z-[999999] h-[70px] shadow-lg flex sm:hidden"
+            className="bg-background fixed right-0 bottom-0 left-0 z-[999999] flex h-[70px] shadow-lg sm:hidden"
             initial={{ y: 100 }}
             animate={{ y: 0 }}
             exit={{ y: 100 }}

@@ -251,7 +251,7 @@ export default function MentorPage({ session }: { session: Session }) {
           </section>
 
           {/* Left sidebar - Mentor Profile */}
-          <section className="border-accent flex w-auto flex-col border-r sm:w-100">
+          <section className="border-accent flex w-auto flex-col border-r-0 sm:border-r sm:w-100">
             {/* Profile container */}
             <div className="bg-background relative h-91 overflow-hidden bg-[url(/images/misc/mentor-grid.svg)] bg-contain bg-no-repeat">
               {/* Background grid effect */}
@@ -464,7 +464,7 @@ export default function MentorPage({ session }: { session: Session }) {
               {/* Contact options */}
               <div className="border-accent flex flex-col border-b sm:flex-row">
                 {/* Calls */}
-                <div className="border-accent w-auto border-r sm:w-1/2">
+                <div className="border-accent w-auto border-r-0 sm:border-r sm:w-1/2">
                   <div className="bg-background safari-blend-screen relative h-16 overflow-hidden bg-[url(/images/misc/top-tab-grid-mobile.svg)] bg-contain bg-no-repeat sm:bg-[url(/images/misc/top-tab-grid.svg)]">
                     <div className="relative flex h-full items-center gap-4 px-5 sm:px-8">
                       <div className="h-8 w-8 overflow-hidden rounded-full">
