@@ -466,7 +466,7 @@ export default function MentorPage({ session }: { session: Session }) {
               <div className="border-accent flex flex-col border-b sm:flex-row">
                 {/* Calls */}
                 <div className="border-accent w-auto border-r-0 sm:border-r sm:w-1/2">
-                  <div className="bg-background safari-blend-screen relative h-16 overflow-hidden bg-[url(/images/misc/top-tab-grid-mobile.svg)] bg-contain bg-no-repeat sm:bg-[url(/images/misc/top-tab-grid.svg)]">
+                  <div className="bg-background safari-blend-screen relative h-16 overflow-hidden bg-[url(/images/misc/top-tab-grid-mobile.svg)] bg-cover bg-no-repeat sm:bg-[url(/images/misc/top-tab-grid.svg)]">
                     <div className="relative flex h-full items-center gap-4 px-5 sm:px-8">
                       <div className="h-8 w-8 overflow-hidden rounded-full">
                         <Image
