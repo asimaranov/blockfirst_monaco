@@ -406,6 +406,7 @@ export default function MentorPage({ session }: { session: Session }) {
                       viewBox="0 0 20 20"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
+                      className='h-5 w-5'
                     >
                       <path
                         d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
