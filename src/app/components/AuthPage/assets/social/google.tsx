@@ -6,7 +6,7 @@ export default function GoogleLoginIcon() {
       viewBox="0 0 53 53"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="group hover:fill-[#01050D] w-11"
+      className="group h-11 w-11 sm:h-13 sm:w-13 hover:fill-[#01050D]"
     >
       <rect x="0.75" y="1" width="51" height="51" rx="25.5" stroke="#282D33" />
       <rect
