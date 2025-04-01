@@ -300,8 +300,8 @@ export default function DiplomaPage({ session }: { session: Session }) {
                   {/* Mobile view */}
                   <div className="flex flex-col sm:hidden">
                     {COURSES.map((course, index) => (
-                      <div key={course.id} className="flex flex-col">
-                        <div className="flex px-4 py-6">
+                      <div key={course.id} className="flex flex-col last:mb-8">
+                        <div className="flex px-4 py-6 ">
                           <div className="mt-2.5 mr-4 flex h-6 w-6 items-center justify-center self-start">
                             <span className="text-secondary text-sm">
                               {index + 1}.
@@ -362,7 +362,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
                 </div>
 
                 {/* Shadow overlay */}
-                <div className="pointer-events-none absolute right-0 bottom-0 left-0 h-[76px] bg-gradient-to-b from-transparent via-[#0F121780] to-[#0F1217]" />
+                <div className="pointer-events-none absolute right-0 bottom-[-1px] left-0 h-14 bg-gradient-to-b from-transparent via-[#0F121780] to-[#0F1217]" />
               </div>
             </div>
             <div className="bg-background @container flex h-full w-full flex-col pb-0">
