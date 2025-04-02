@@ -32,7 +32,7 @@ export default function FormWrapper({
   showSocialLogin = false,
 }: FormWrapperProps) {
   return (
-    <>
+    <div className="flex h-full max-h-[100dvh] min-h-145 sm:min-h-160 w-full flex-col">
       <MainHeading mainText={mainText} secondText={secondText} />
 
       <form
@@ -71,6 +71,6 @@ export default function FormWrapper({
       </form>
 
       {showSocialLogin && <SocialLogin />}
-    </>
+    </div>
   );
 }

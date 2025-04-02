@@ -191,7 +191,7 @@
     }
   }
   :root {
-    @media (width >= theme(--breakpoint-lg)) {
+    @media (width >= theme(--breakpoint-sm)) {
       --spacing: 0.2315vw;
       --text-xxs: 0.58vw;
       --text-xs: 0.69vw;
@@ -206,7 +206,6 @@
 
       --text-4xl: 2.0833vw;
       --text-5xl: 2.3148vw;
-
 
       --text-6xl: 3.4722vw;
 
