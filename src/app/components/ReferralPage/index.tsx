@@ -137,14 +137,29 @@ const TimePeriodSelector = ({
             isOpen={isOpen}
             className="hidden h-3.5 w-3.5 sm:block"
           />
+          <div className="flex items-center justify-center gap-2 sm:hidden">
+            {value !== 'all' && (
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-3 w-3 shrink-0"
+              >
+                <circle cx="6" cy="6" r="6" fill="#14171C" />
+                <circle cx="6" cy="6" r="4" fill="#CF3336" />
+              </svg>
+            )}
 
-          <Image
-            src={'/images/icons/tool-icon.svg'}
-            alt="tool-icon"
-            width={20}
-            height={20}
-            className="block h-5 w-5 sm:hidden"
-          />
+            <Image
+              src={'/images/icons/tool-icon.svg'}
+              alt="tool-icon"
+              width={20}
+              height={20}
+              className="h-5 w-5"
+            />
+          </div>
         </button>
 
         {isOpen && (
