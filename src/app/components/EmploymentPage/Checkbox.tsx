@@ -16,7 +16,7 @@ export function Checkbox({
     <button
       onClick={onChange}
       className={cn(
-        'flex w-full cursor-pointer flex-row items-center gap-1 px-8 py-3 hover:bg-[#14171C]',
+        'flex w-full cursor-pointer flex-row items-center gap-1 px-5 sm:px-8 py-3 hover:bg-[#14171C]',
         isActive && 'bg-[#14171C]'
       )}
     >
@@ -30,7 +30,7 @@ export function Checkbox({
         }}
         animate={isActive ? 'active' : 'inactive'}
         className={cn(
-          'ml-auto flex size-4 flex-col items-center justify-center rounded-[0.2315vw] border',
+          'ml-auto flex size-4 flex-col items-center justify-center rounded-[4px] sm:rounded-[0.2315vw] border',
           !isActive && 'hover:opacity-100 opacity-50'
         )}
       >

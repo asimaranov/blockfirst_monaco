@@ -152,7 +152,7 @@ export default function MentorPage({ session }: { session: Session }) {
       </style>
       <div className="flex h-auto flex-col sm:h-screen">
         <Topbar lastestUpdate={'18 марта 2025'} />
-        <div className="border-accent flex flex-row gap-3 overflow-x-auto border-t px-5 pt-10 pb-8 whitespace-nowrap sm:hidden">
+        <div className="flex flex-row gap-3 overflow-x-auto px-5 pt-10 pb-8 whitespace-nowrap sm:hidden">
           {mentors.map((mentor) => (
             <div
               className={cn(

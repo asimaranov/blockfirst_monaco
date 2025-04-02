@@ -342,7 +342,7 @@ const CourseSection = ({
   const t = useTranslations('UserSpace');
 
   return (
-    <div className="border-accent flex flex-1 flex-col not-group-last:border-r">
+    <div className="border-accent flex flex-1 flex-col not-group-last:border-r-0 sm:not-group-last:border-r">
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <CVApplyForm onClose={() => setIsOpen(false)} jobTitle={position} />
       </Modal>
@@ -602,7 +602,7 @@ export default function CVPage({ session }: { session: Session }) {
         {/* FAQ Section */}
         <div className="flex flex-col sm:flex-row">
           {/* Left Column - FAQ Intro and Contact Info */}
-          <div className="border-accent flex-1 border-t border-r sm:border-t-0">
+          <div className="border-accent flex-1 border-t border-r-0 sm:border-r sm:border-t-0">
             <div className="flex flex-col py-8 pt-16 pb-0 sm:pt-8 sm:pb-8">
               <div className="px-5 sm:px-8">
                 <div className="mb-5 flex items-center justify-between">

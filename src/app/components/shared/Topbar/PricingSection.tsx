@@ -18,7 +18,7 @@ export function PricingSection({
     <div
       className={cn(
         'py-5.25',
-        isRightBordered && 'border-accent border-r',
+        isRightBordered && 'border-accent border-r-0 sm:border-r',
         mobileBottomBorder && 'border-accent border-b sm:border-b-0',
         className
       )}

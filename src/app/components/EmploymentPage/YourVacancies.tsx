@@ -16,6 +16,8 @@ import soonBageImg from './assets/soon-bage.svg';
 import { Radio } from './Radio';
 import { InfoPopover } from '../shared/InfoPopover';
 import MobilePremiumTopbar from '../shared/Topbar/MobilePremiumTopbar';
+import { useState } from 'react';
+import { FilterModal } from './FilterModal';
 
 export default function YourVacancies({
   lastestUpdate,
@@ -34,8 +36,10 @@ export default function YourVacancies({
 }) {
   const t = useTranslations('EmploymentPage');
 
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+
   return (
-    <section className="border-accent static sm:sticky top-0 left-0 flex h-auto sm:h-screen w-auto sm:w-80 shrink-0 flex-col border-r">
+    <section className="border-accent static top-0 left-0 flex h-auto w-auto shrink-0 flex-col border-r-0 sm:border-r sm:sticky sm:h-screen sm:w-80">
       <MobilePremiumTopbar text={'Твои вакансии'} />
       {/* Header */}
       <div className="bg-background relative px-8 py-6">
@@ -53,18 +57,20 @@ export default function YourVacancies({
           <div className="flex flex-col gap-1">
             <div className="flex flex-row items-center justify-end gap-2">
               <div className="h-1 w-1 rounded-full bg-[#33CF8E]" />
-              <span className="font-roboto text-sm sm:text-xs leading-3.5 font-medium">
+              <span className="font-roboto text-sm leading-3.5 font-medium sm:text-xs">
                 {lastestUpdate}
               </span>
             </div>
-            <span className="font-roboto text-secondary text-xs sm:text-xxs opacity-50">
+            <span className="font-roboto text-secondary sm:text-xxs text-xs opacity-50">
               Обновление базы
             </span>
           </div>
         </div>
         {/* Title */}
         <div className="relative z-10 mt-8 flex flex-col gap-0.5">
-          <span className="text-2xl sm:text-2xll font-medium">Твои вакансии</span>
+          <span className="sm:text-2xll text-2xl font-medium">
+            Твои вакансии
+          </span>
           <div className="flex flex-row gap-1 text-xs">
             <span className="text-secondary">Найдено -</span>
             <span>
@@ -76,8 +82,21 @@ export default function YourVacancies({
           </div>
         </div>
       </div>
+      <div className="flex w-full shrink-0 flex-row items-center justify-between bg-[#14171C] p-5 sm:hidden">
+        <span className="text-sm">Фильтр профессий</span>
+
+        <button onClick={() => setIsFilterModalOpen(true)}>
+          <Image
+            src={'/images/icons/tool-icon.svg'}
+            alt="tool-icon"
+            width={20}
+            height={20}
+            className="h-5 w-5"
+          />
+        </button>
+      </div>
       {/* Filters */}
-      <div className="hidden sm:flex flex-col gap-7 pt-8">
+      <div className="hidden flex-col gap-7 pt-8 sm:flex">
         <div className="flex w-full flex-col">
           <div className="mb-3 flex w-full flex-row items-center justify-between px-8">
             <span className="text-secondary text-xs uppercase opacity-50">
@@ -93,12 +112,12 @@ export default function YourVacancies({
           </div>
           <div className="flex w-full flex-row items-center justify-between gap-1 px-8 py-2.5">
             <span className="text-sm">Персональные вакансии</span>
-            <Image src={soonBageImg} alt="Soon" className="h-6 w-13" />
+            <Image src={soonBageImg} alt="Soon" className="h-6 w-13.25" />
           </div>
         </div>
       </div>
 
-      <div className="hidden sm:flex flex-col gap-7 pt-7">
+      <div className="hidden flex-col gap-7 pt-7 sm:flex">
         <div className="flex w-full flex-col">
           <div className="flex w-full flex-row items-center justify-between">
             <span className="text-secondary mb-3 px-8 text-xs uppercase opacity-50">
@@ -128,7 +147,7 @@ export default function YourVacancies({
         </div>
       </div>
       {/* Sorting */}
-      <div className= "hidden sm:flex flex-col gap-7 pt-7">
+      <div className="hidden flex-col gap-7 pt-7 sm:flex">
         <div className="flex w-full flex-col">
           <div className="flex w-full flex-row items-center justify-between">
             <span className="text-secondary mb-3 px-8 text-xs uppercase opacity-50">
@@ -145,6 +164,16 @@ export default function YourVacancies({
           ))}
         </div>
       </div>
+
+      {/* Filter Modal */}
+      <FilterModal
+        isOpen={isFilterModalOpen}
+        onClose={() => setIsFilterModalOpen(false)}
+        specialityFilters={specialityFilters}
+        setSpecialityFilters={setSpecialityFilters}
+        sortOption={sortOption}
+        setSortOption={setSortOption}
+      />
     </section>
   );
 }

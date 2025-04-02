@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import { Modal } from '../shared/Modal';
 import { motion } from 'framer-motion';
-import { X } from 'lucide-react';
 import Image from 'next/image';
+import { RotatingIcon } from '../shared/RotatingIcon';
+
 type TimePeriod = 'all' | '7d' | '30d' | '90d' | 'lm' | 'year';
 
 type FilterModalProps = {
@@ -55,10 +56,16 @@ export const FilterModal = ({
         <div className="flex flex-col gap-5 px-5 py-5 pb-8">
           <div className="flex justify-end">
             <button onClick={onClose} className="text-foreground">
-              <X size={20} />
+              <Image
+                src={'/images/icons/mobile-close-cross.svg'}
+                alt="close"
+                width={20}
+                height={20}
+                className="h-5 w-5"
+              />
             </button>
           </div>
-          <h2 className="text-foreground text-lg">Промежуток времени</h2>
+          <h2 className="text-foreground text-lg text-center">Промежуток времени</h2>
         </div>
 
         {/* Options List */}
@@ -118,34 +125,7 @@ export const FilterModal = ({
               className="text-primary flex items-center gap-1 text-xs"
               onClick={handleResetFilter}
             >
-              <motion.svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                animate={{ rotate: rotationAngle }}
-                transition={{ duration: 0.5, ease: 'easeInOut' }}
-              >
-                <path
-                  d="M9.92542 3.38823C9.34542 3.2149 8.70542 3.10156 7.99875 3.10156C4.80542 3.10156 2.21875 5.68823 2.21875 8.88156C2.21875 12.0816 4.80542 14.6682 7.99875 14.6682C11.1921 14.6682 13.7788 12.0816 13.7788 8.88823C13.7788 7.70156 13.4187 6.5949 12.8054 5.6749"
-                  stroke="#1962FF"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M10.7548 3.54536L8.82812 1.33203"
-                  stroke="#1962FF"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M10.7545 3.54688L8.50781 5.18687"
-                  stroke="#1962FF"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </motion.svg>
+              <RotatingIcon rotationAngle={rotationAngle} />
               Сбросить сортировку
             </button>
           </div>

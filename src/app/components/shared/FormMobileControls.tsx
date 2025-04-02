@@ -1,3 +1,4 @@
+import Image from 'next/image';
 export default function FormMobileControls(
   {
     showBackButton = false,
@@ -34,25 +35,7 @@ export default function FormMobileControls(
         console.log('close')
         onClose()
       }} className="ml-auto p-5">
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g clip-path="url(#clip0_2130_22553)">
-            <path
-              d="M5.91406 15.2513C5.5919 15.5735 5.06956 15.5735 4.7474 15.2513C4.42523 14.9291 4.42523 14.4068 4.7474 14.0846L8.83073 10.0013L4.7474 5.91797C4.42523 5.5958 4.42523 5.07347 4.7474 4.7513C5.06956 4.42914 5.5919 4.42914 5.91406 4.7513L9.9974 8.83464L14.0807 4.7513C14.4029 4.42914 14.9252 4.42914 15.2474 4.7513C15.5696 5.07347 15.5696 5.5958 15.2474 5.91797L11.1641 10.0013L15.2474 14.0846C15.5696 14.4068 15.5696 14.9291 15.2474 15.2513C14.9252 15.5735 14.4029 15.5735 14.0807 15.2513L9.9974 11.168L5.91406 15.2513Z"
-              fill="#F2F2F2"
-            />
-          </g>
-          <defs>
-            <clipPath id="clip0_2130_22553">
-              <rect width="20" height="20" fill="white" />
-            </clipPath>
-          </defs>
-        </svg>
+        <Image src={'/images/icons/mobile-close-cross.svg'} alt="close" width={20} height={20} className='w-5 h-5' />
       </button>
     </div>
   );

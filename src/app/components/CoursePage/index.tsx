@@ -364,7 +364,7 @@ export default function CoursePage({
       <MobileAuthorInfo />
       <div className="border-accent grid grid-cols-1 border-b sm:grid-cols-2">
         <CourseInfoTopCard course={course} />
-        <div className="border-accent flex flex-col border-l">
+        <div className="border-accent flex flex-col border-l-0 sm:border-l">
           {/* Top section with Starter and Pro blocks */}
           <div className="border-accent divide-accent hidden flex-row divide-x border-b sm:flex">
             {Tariffs.map((tariff) => (
