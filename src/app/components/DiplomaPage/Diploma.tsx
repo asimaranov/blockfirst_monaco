@@ -28,12 +28,12 @@ export function Diploma({
   locked = false,
 }: DiplomaProps) {
   return (
-    <div className="font-lato relative h-full">
+    <div className="font-lato relative h-fit">
       {locked && (
         <div className="absolute top-0 left-0 h-full w-full bg-[#0F1217]/80 z-100" />
       )}
 
-      <div className="bg-dark-bg flex h-full w-full flex-col p-[calc(100*100cqw/1626)] pb-0">
+      <div className="bg-dark-bg flex h-full w-full flex-col p-[calc(100*100cqw/1626)]">
         {/* Header with logo and unique code */}
         <div className="border-accent flex flex-row items-start gap-[calc(20*100cqw/1626)] border-[calc(0.25*100cqw/1626)]">
           <Image
