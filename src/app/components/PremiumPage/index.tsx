@@ -97,8 +97,8 @@ export default function PremiumPage({ session }: { session: Session }) {
         {/* <Topbar /> */}
 
         {/* Hero Section */}
-        <section className="relative px-5 pt-5 pb-10 bg-[url('/images/misc/premium-grid.svg')]">
-          <div className="from-background via-background/90 to-background/0 absolute inset-0 bg-gradient-to-b"></div>
+        <section className="relative px-5 pt-5 pb-10 ">
+          <div className="absolute inset-0 bg-gradient-to-b bg-[url('/images/misc/premium-grid.svg')] bg-top"></div>
 
           {/* Main Content */}
           <div className="relative z-10 flex flex-col gap-7">

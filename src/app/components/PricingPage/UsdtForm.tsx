@@ -139,7 +139,7 @@ export default function UsdtForm({ onClose, onFullClose }: StudentFormProps) {
             </defs>
           </svg>
         </div>
-        <div className="text-secondary opacity flex h-12 w-full items-center justify-between rounded-[0.463vw] bg-[#14171C] px-5 text-center text-sm">
+        <div className="text-secondary opacity flex h-12 w-full items-center justify-between rounded-[8px] sm:rounded-[0.463vw] bg-[#14171C] px-5 text-center text-sm">
           {paymentAddress}
           <CopyButton textToCopy={paymentAddress} />
         </div>
