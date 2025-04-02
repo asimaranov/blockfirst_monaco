@@ -98,21 +98,8 @@ export default function CourseInfoTopCard({ course }: { course: ICourse }) {
               <span className="text-sm leading-[1.157vw] text-[#F2F2F2]">
                 Продолжить
               </span>
-              <svg
-                width="21"
-                height="20"
-                viewBox="0 0 21 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-              >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M14.2307 4.43278C14.5295 4.14596 15.0043 4.1557 15.2911 4.45454L19.9065 9.26327C20.185 9.55348 20.185 10.0117 19.9065 10.302L15.2911 15.1107C15.0043 15.4095 14.5295 15.4193 14.2307 15.1324C13.9318 14.8456 13.9221 14.3708 14.2089 14.072L18.3258 9.78261L14.2089 5.49322C13.9221 5.19438 13.9318 4.7196 14.2307 4.43278Z"
-                  fill="#F2F2F2"
-                />
-              </svg>
+              <Image src={'/images/icons/forward-arrow.svg'} alt="forward-arrow" width={21} height={20} className="h-5 w-5" />
+
             </div>
           </Link>
           <div className="flex w-full flex-col items-center justify-center rounded-full">

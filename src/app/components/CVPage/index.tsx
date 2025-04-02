@@ -372,21 +372,7 @@ const CourseSection = ({
           onClick={() => setIsOpen(true)}
         >
           <span className="text-sm">{buttonText}</span>
-          <svg
-            width="21"
-            height="20"
-            viewBox="0 0 21 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M14.2307 4.43351C14.5295 4.14669 15.0043 4.15643 15.2911 4.45527L19.9065 9.26401C20.185 9.55421 20.185 10.0125 19.9065 10.3027L15.2911 15.1114C15.0043 15.4103 14.5295 15.42 14.2307 15.1332C13.9318 14.8464 13.9221 14.3716 14.2089 14.0727L18.3258 9.78335L14.2089 5.49395C13.9221 5.19511 13.9318 4.72034 14.2307 4.43351Z"
-              fill="#F2F2F2"
-            />
-          </svg>
+          <Image src={'/images/icons/forward-arrow.svg'} alt="forward-arrow" width={21} height={20} className="h-5 w-5" />
         </button>
 
         <div className="border-accent bg-[#14171C] py-2">

@@ -17,16 +17,16 @@ import TaskSquareSvg from './assets/shop-icon.svg';
 import UserSvg from './assets/user-icon.svg';
 import PercentSvg from './assets/percent-icon.svg';
 import BankIcon from './assets/bank-icons.png';
-import TelegramFlatIcon from './assets/telegram-flat-icon.svg';
+import AnimatedToggleCheck from '../shared/AnimatedToggleCheck';
 
 import { InfoPopover } from '~/app/components/shared/InfoPopover';
 import { Modal } from '../shared/Modal';
-import { ArrowUpRight, ChevronDown, Wallet } from 'lucide-react';
 import { ReferralTable } from './ReferralTable';
 import { WithdrawForm } from './WithdrawForm';
+import { FilterModal } from './FilterModal';
 
 // Add new types
-type TimePeriod = any;
+type TimePeriod = 'all' | '7d' | '30d' | '90d' | 'lm' | 'year';
 
 // Add new components
 const StatCard = ({
@@ -77,6 +77,7 @@ const TimePeriodSelector = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [isWithdrawOpen, setIsWithdrawOpen] = useState(false);
 
   const periods: { label: string; value: TimePeriod }[] = [
@@ -104,123 +105,88 @@ const TimePeriodSelector = ({
     };
   }, []);
 
+  const handleOpenMobileFilter = () => {
+    setIsFilterModalOpen(true);
+  };
+
   return (
-    <div className="relative" ref={dropdownRef}>
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex h-auto cursor-pointer items-center justify-end gap-2 rounded-[5.787vw] bg-transparent px-0 py-0 transition-colors hover:bg-[#1c2026] sm:h-8 sm:bg-[#14171C] sm:px-4 sm:py-2.25"
-      >
-        <span className="text-foreground hidden text-xs sm:block">
-          {periods.find((p) => p.value === value)?.label}
-        </span>
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 14 14"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="hidden h-3.5 w-3.5 sm:block"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M2.67353 4.55205C2.92093 4.31134 3.31662 4.31676 3.55733 4.56415L7.00127 8.10376L10.4452 4.56415C10.6859 4.31676 11.0816 4.31134 11.329 4.55205C11.5764 4.79276 11.5818 5.18845 11.3411 5.43585L7.44922 9.43585C7.33156 9.55678 7.17 9.625 7.00127 9.625C6.83254 9.625 6.67098 9.55678 6.55331 9.43585L2.66142 5.43585C2.42071 5.18845 2.42613 4.79276 2.67353 4.55205Z"
-            fill="#195AF4"
-          />
-        </svg>
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="block h-5 w-5 sm:hidden"
-        >
-          <path
-            d="M18.3255 14.582H12.4922"
-            stroke="#9AA6B5"
-            stroke-miterlimit="10"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M4.16406 14.582H1.66406"
-            stroke="#9AA6B5"
-            stroke-miterlimit="10"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M18.3359 5.41797H15.8359"
-            stroke="#9AA6B5"
-            stroke-miterlimit="10"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M7.4974 5.41797H1.66406"
-            stroke="#9AA6B5"
-            stroke-miterlimit="10"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M5.83073 12.082H10.8307C11.7474 12.082 12.4974 12.4987 12.4974 13.7487V15.4154C12.4974 16.6654 11.7474 17.082 10.8307 17.082H5.83073C4.91406 17.082 4.16406 16.6654 4.16406 15.4154V13.7487C4.16406 12.4987 4.91406 12.082 5.83073 12.082Z"
-            stroke="#9AA6B5"
-            stroke-miterlimit="10"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M9.15885 2.91797H14.1589C15.0755 2.91797 15.8255 3.33464 15.8255 4.58464V6.2513C15.8255 7.5013 15.0755 7.91797 14.1589 7.91797H9.15885C8.24219 7.91797 7.49219 7.5013 7.49219 6.2513V4.58464C7.49219 3.33464 8.24219 2.91797 9.15885 2.91797Z"
-            stroke="#9AA6B5"
-            stroke-miterlimit="10"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
-      </button>
+    <>
+      <FilterModal
+        isOpen={isFilterModalOpen}
+        onClose={() => setIsFilterModalOpen(false)}
+        selectedPeriod={value}
+        onSelectPeriod={onChange}
+      />
 
-      {isOpen && (
-        <div className="absolute top-full right-0 z-10 mt-2 w-45.5 rounded-lg bg-[#14171C] py-2 shadow-lg">
-          {periods.map((period) => (
-            <button
-              key={period.value}
-              onClick={() => {
-                onChange(period.value);
-                setIsOpen(false);
-              }}
-              className={`flex w-45.5 cursor-pointer flex-row items-center gap-2 px-4 py-2 text-left text-sm transition-colors hover:bg-[#1c2026] ${
-                value === period.value ? 'text-foreground' : 'text-secondary'
-              } text-xs`}
-            >
-              {period.value == value ? (
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-3.5 w-3.5"
-                >
-                  <path
-                    d="M2.44922 7.65L5.04922 10.25L11.5492 3.75"
-                    stroke="#195AF4"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              ) : (
-                <div className="w-3.5"></div>
-              )}
+      <div className="relative" ref={dropdownRef}>
+        <button
+          onClick={() => {
+            if (window.innerWidth < 640) {
+              handleOpenMobileFilter();
+            } else {
+              setIsOpen(!isOpen);
+            }
+          }}
+          className="flex h-auto cursor-pointer items-center justify-end gap-2 rounded-[5.787vw] bg-transparent px-0 py-0 transition-colors hover:bg-[#1c2026] sm:h-8 sm:bg-[#14171C] sm:px-4 sm:py-2.25"
+        >
+          <span className="text-foreground hidden text-xs sm:block">
+            {periods.find((p) => p.value === value)?.label}
+          </span>
 
-              {period.label}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
+          <AnimatedToggleCheck
+            isOpen={isOpen}
+            className="hidden h-3.5 w-3.5 sm:block"
+          />
+
+          <Image
+            src={'/images/icons/tool-icon.svg'}
+            alt="tool-icon"
+            width={20}
+            height={20}
+            className="block h-5 w-5 sm:hidden"
+          />
+        </button>
+
+        {isOpen && (
+          <div className="absolute top-full right-0 z-10 mt-2 w-45.5 rounded-lg bg-[#14171C] py-2 shadow-lg">
+            {periods.map((period) => (
+              <button
+                key={period.value}
+                onClick={() => {
+                  onChange(period.value);
+                  setIsOpen(false);
+                }}
+                className={`flex w-45.5 cursor-pointer flex-row items-center gap-2 px-4 py-2 text-left text-sm transition-colors hover:bg-[#1c2026] ${
+                  value === period.value ? 'text-foreground' : 'text-secondary'
+                } text-xs`}
+              >
+                {period.value == value ? (
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-3.5 w-3.5"
+                  >
+                    <path
+                      d="M2.44922 7.65L5.04922 10.25L11.5492 3.75"
+                      stroke="#195AF4"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                ) : (
+                  <div className="w-3.5"></div>
+                )}
+                {period.label}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 
@@ -311,7 +277,7 @@ export default function ReferralPage({ session }: { session: Session }) {
             </div>
 
             {/* Balance Card */}
-            <div className="border-accent flex w-auto flex-col border-b border-l-0 sm:border-l bg-[#14171C] sm:w-100.25">
+            <div className="border-accent flex w-auto flex-col border-b border-l-0 bg-[#14171C] sm:w-100.25 sm:border-l">
               <div className="flex flex-col px-5 pt-10 pb-5 sm:px-8 sm:pt-8">
                 {/* Top section with avatars and info */}
                 <div className="flex items-center justify-between">
