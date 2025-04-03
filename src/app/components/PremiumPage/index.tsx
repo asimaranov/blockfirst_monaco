@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import * as motion from 'motion/react-client';
 import { Session } from '~/server/auth';
 import Footer from '~/app/components/Footer';
 import Image from 'next/image';
