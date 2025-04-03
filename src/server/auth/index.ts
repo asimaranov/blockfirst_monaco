@@ -3,7 +3,7 @@ import { auth } from "./config";
 
 export const getServerSession = async () => {
   "use server";
-  await auth.api.getSession({
+  return await auth.api.getSession({
     headers: await headers(),
   });
 }
