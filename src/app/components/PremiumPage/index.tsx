@@ -1,15 +1,8 @@
-'use client';
-
-import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Topbar } from './Topbar';
 import { Session } from '~/server/auth';
 import Footer from '~/app/components/Footer';
 import Image from 'next/image';
-import { Tariff, TARIFFS } from '~/app/lib/constants/tariff';
-import { cn } from '~/helpers';
-import { formatPrice } from '~/app/lib/utils';
-import { InfoPopover } from '~/app/components/shared/InfoPopover';
+import { TARIFFS } from '~/app/lib/constants/tariff';
 import MentorImage from './assets/mentor.png';
 import CVImage from './assets/cv.png';
 import JobsImage from './assets/jobs.png';
@@ -89,8 +82,6 @@ const starterFeatures = premiumFeatures.filter(
 );
 
 export default function PremiumPage({ session }: { session: Session }) {
-  const [selectedTariff, setSelectedTariff] = useState<Tariff>(TARIFFS[1]!); // Default to PRO
-
   return (
     <main className="border-accent border-r-0 border-l-0 sm:border-r sm:border-l">
       <div className="flex min-h-screen w-full flex-col bg-cover bg-center">

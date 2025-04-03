@@ -6,18 +6,6 @@ import { Session } from '~/server/auth';
 import Footer from '~/app/components/Footer';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-// import CallIcon from './assets/calls.png';
-// import TextIcon from './assets/text.png';
-// import GridSvg from './assets/grid.svg';
-// import TopGridSvg from './assets/top-grid.svg';
-// import UserIcon from '../input-legends/user';
-import TelegramSvg from '../input-legends/telegram';
-import StatsIcon from './assets/stats-icon.svg';
-import TaskSquareSvg from './assets/shop-icon.svg';
-import UserSvg from './assets/user-icon.svg';
-
-import PercentSvg from './assets/percent-icon.svg';
-import BankIcon from './assets/bank-icons.png';
 import InProgressFlag from './assets/in-progress-flag.svg';
 import CompletedFlag from './assets/completed-flag.svg';
 import LockedFlag from './assets/locked-flag.svg';
@@ -25,158 +13,12 @@ import FaqItems from './assets/faq-items-icons.png';
 import TelegramIcon from './assets/telegram-cv-icon.svg';
 import EmailIcon from './assets/email-cv-icon.svg';
 
-import { InfoPopover } from '~/app/components/shared/InfoPopover';
 import { Modal } from '../shared/Modal';
 import { Progress } from '../shared/Progress';
 import ToggleMinus from '../shared/ToggleMinus/ToggleMinus';
 import CVApplyForm from './CVApplyForm';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
-// Add new types
-type TimePeriod = any;
-
-// Add new components
-const StatCard = ({
-  title,
-  value,
-  subtitle,
-  icon,
-  badgeText,
-  badgeColor = 'bg-[#14171C]',
-}: {
-  title: string;
-  value: string;
-  subtitle: string;
-  icon: React.ReactNode;
-  badgeText?: string;
-  badgeColor?: string;
-}) => (
-  <div className="flex flex-col gap-5 px-5 pt-6 sm:px-8">
-    <div
-      className={`${badgeColor} inline-flex w-fit items-center rounded-lg px-3 py-2`}
-    >
-      <span
-        className={`${badgeColor === 'bg-success/10' ? 'text-success' : 'text-secondary'} text-xs uppercase`}
-      >
-        {badgeText || title}
-      </span>
-    </div>
-    <div className="flex flex-col gap-3">
-      <div className="flex items-center gap-3">
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#010514]">
-          {icon}
-        </div>
-        <span className="text-foreground text-3xl">{value}</span>
-      </div>
-      <span className="text-secondary text-xs opacity-50">{subtitle}</span>
-    </div>
-  </div>
-);
-
-const TimePeriodSelector = ({
-  value,
-  onChange,
-}: {
-  value: TimePeriod;
-  onChange: (period: TimePeriod) => void;
-}) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const [isWithdrawOpen, setIsWithdrawOpen] = useState(false);
-
-  const periods: { label: string; value: TimePeriod }[] = [
-    { label: 'Все время', value: 'all' },
-    { label: 'Последнюю неделю', value: '7d' },
-    { label: 'Текущий месяц', value: '30d' },
-    { label: 'Прошлый месяц', value: '90d' },
-    { label: 'Позапрошлый месяц', value: 'lm' },
-    { label: 'Последний год', value: 'year' },
-  ];
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  return (
-    <div className="relative" ref={dropdownRef}>
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex h-8 cursor-pointer items-center gap-2 rounded-[5.787vw] bg-[#14171C] px-4 py-2.25 transition-colors hover:bg-[#1c2026]"
-      >
-        <span className="text-foreground text-xs">
-          {periods.find((p) => p.value === value)?.label}
-        </span>
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 14 14"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-3.5 w-3.5"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M2.67353 4.55205C2.92093 4.31134 3.31662 4.31676 3.55733 4.56415L7.00127 8.10376L10.4452 4.56415C10.6859 4.31676 11.0816 4.31134 11.329 4.55205C11.5764 4.79276 11.5818 5.18845 11.3411 5.43585L7.44922 9.43585C7.33156 9.55678 7.17 9.625 7.00127 9.625C6.83254 9.625 6.67098 9.55678 6.55331 9.43585L2.66142 5.43585C2.42071 5.18845 2.42613 4.79276 2.67353 4.55205Z"
-            fill="#195AF4"
-          />
-        </svg>
-      </button>
-
-      {isOpen && (
-        <div className="absolute top-full right-0 z-10 mt-2 w-45.5 rounded-lg bg-[#14171C] py-2 shadow-lg">
-          {periods.map((period) => (
-            <button
-              key={period.value}
-              onClick={() => {
-                onChange(period.value);
-                setIsOpen(false);
-              }}
-              className={`flex w-45.5 cursor-pointer flex-row items-center gap-2 px-4 py-2 text-left text-sm transition-colors hover:bg-[#1c2026] ${
-                value === period.value ? 'text-foreground' : 'text-secondary'
-              } text-xs`}
-            >
-              {period.value == value ? (
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-3.5 w-3.5"
-                >
-                  <path
-                    d="M2.44922 7.65L5.04922 10.25L11.5492 3.75"
-                    stroke="#195AF4"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              ) : (
-                <div className="w-3.5"></div>
-              )}
-
-              {period.label}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-};
 
 // Components for CV Page
 const StageCard = ({

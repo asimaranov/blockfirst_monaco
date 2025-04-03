@@ -1,8 +1,5 @@
-'use client';
-
 import RightFiller from './RightFiller';
 import Image from 'next/image';
-import AuthButton from './button';
 import BackIcon from './assets/back_icon';
 import CrossIcon from './assets/cross_icon';
 import GridLeftSvg from './assets/grid_left.svg';
@@ -45,9 +42,8 @@ export default function AuthPageBase({
             height={44}
           />
         </div>
-        <div className="flex min-h-fit h-full w-full flex-col">{children}</div>
+        <div className="flex h-full min-h-fit w-full flex-col">{children}</div>
       </div>
-
       <RightFiller />
     </div>
   );

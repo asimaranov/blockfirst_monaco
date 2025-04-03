@@ -1,12 +1,8 @@
-'use client';
-
 import { useRouter } from 'next/navigation';
-import { usePathname } from 'next/navigation';
 import { cn } from '~/helpers';
 
 export const Topbar = () => {
   const router = useRouter();
-  const pathname = usePathname();
 
   return (
     <div className="border-accent flex h-14 items-center justify-between border-b px-5">

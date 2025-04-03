@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import {
   VACANCY_SPECIALITIES,
   VACANCY_SORT_OPTIONS,

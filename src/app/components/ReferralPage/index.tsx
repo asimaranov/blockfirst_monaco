@@ -5,13 +5,7 @@ import { Topbar } from './Topbar';
 import { Session } from '~/server/auth';
 import Footer from '~/app/components/Footer';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
-// import CallIcon from './assets/calls.png';
-// import TextIcon from './assets/text.png';
-// import GridSvg from './assets/grid.svg';
-// import TopGridSvg from './assets/top-grid.svg';
-// import UserIcon from '../input-legends/user';
-import TelegramSvg from '../input-legends/telegram';
+
 import StatsIcon from './assets/stats-icon.svg';
 import TaskSquareSvg from './assets/shop-icon.svg';
 import UserSvg from './assets/user-icon.svg';

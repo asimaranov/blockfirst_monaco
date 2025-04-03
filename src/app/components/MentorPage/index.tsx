@@ -8,8 +8,6 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import CallIcon from './assets/calls.png';
 import TextIcon from './assets/text.png';
-import GridSvg from './assets/grid.svg';
-import TopGridSvg from './assets/top-grid.svg';
 import UserIcon from '../input-legends/user';
 import TelegramSvg from '../input-legends/telegram';
 import TaskSquareSvg from '../input-legends/task_square';

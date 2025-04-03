@@ -1,5 +1,3 @@
-'use client';
-
 import { Topbar } from './Topbar';
 import { COURSES } from '~/app/lib/constants/courses';
 import { CourseInfoTopCard } from '~/app/components/CourseInfoTopCard';
