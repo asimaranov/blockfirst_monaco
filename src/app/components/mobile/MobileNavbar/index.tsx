@@ -101,16 +101,8 @@ const MobileNavbar: React.FC = () => {
   ];
 
   useEffect(() => {
-    // Function to find and set up the content view element
+    // Function to handle document scrolling instead of content-view
     const setupScrollListener = () => {
-      const contentView = document.getElementById('content-view');
-
-      if (!contentView) {
-        // If content-view isn't ready yet, try again after a short delay
-        const timeoutId = setTimeout(setupScrollListener, 100);
-        return () => clearTimeout(timeoutId);
-      }
-
       let debounceTimer: NodeJS.Timeout | null = null;
 
       // Shared handler logic for both scroll and touch events
@@ -120,9 +112,9 @@ const MobileNavbar: React.FC = () => {
           clearTimeout(debounceTimer);
         }
 
-        const currentScrollY = contentView.scrollTop;
-        const scrollHeight = contentView.scrollHeight;
-        const clientHeight = contentView.clientHeight;
+        const currentScrollY = window.scrollY;
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = document.documentElement.clientHeight;
 
         // Calculate if we're near the bottom (within 20px)
         const isNearBottom =
@@ -130,7 +122,7 @@ const MobileNavbar: React.FC = () => {
 
         let newVisibility = isVisible;
 
-        // Show navbar at the top of the content
+        // Show navbar at the top of the document
         if (currentScrollY < 20) {
           newVisibility = true;
         }
@@ -141,7 +133,16 @@ const MobileNavbar: React.FC = () => {
         // Otherwise use standard scroll direction logic
         else {
           // Hide when scrolling down, show when scrolling up
-          newVisibility = currentScrollY < lastScrollY;
+          // Only show when scrolling up significantly (at least 10px)
+          const scrollingUp = currentScrollY < lastScrollY;
+          const scrollingDown = currentScrollY > lastScrollY;
+
+          if (scrollingDown) {
+            newVisibility = false;
+          } else if (scrollingUp && lastScrollY - currentScrollY > 10) {
+            newVisibility = true;
+          }
+          // Otherwise keep current visibility state
         }
 
         // Debounce the visibility change to prevent flickering
@@ -153,12 +154,12 @@ const MobileNavbar: React.FC = () => {
       };
 
       // For standard scrolling
-      contentView.addEventListener('scroll', handleScrollOrTouch, {
+      window.addEventListener('scroll', handleScrollOrTouch, {
         passive: true,
       });
 
       // For iOS momentum scrolling
-      contentView.addEventListener('touchmove', handleScrollOrTouch, {
+      document.addEventListener('touchmove', handleScrollOrTouch, {
         passive: true,
       });
 
@@ -173,14 +174,14 @@ const MobileNavbar: React.FC = () => {
           setTimeout(handleScrollOrTouch, 300);
         }, 100);
       };
-      contentView.addEventListener('touchend', handleTouchEnd, {
+      document.addEventListener('touchend', handleTouchEnd, {
         passive: true,
       });
 
       return () => {
-        contentView.removeEventListener('scroll', handleScrollOrTouch);
-        contentView.removeEventListener('touchmove', handleScrollOrTouch);
-        contentView.removeEventListener('touchend', handleTouchEnd);
+        window.removeEventListener('scroll', handleScrollOrTouch);
+        document.removeEventListener('touchmove', handleScrollOrTouch);
+        document.removeEventListener('touchend', handleTouchEnd);
       };
     };
 
@@ -190,7 +191,7 @@ const MobileNavbar: React.FC = () => {
     return () => {
       if (cleanup) cleanup();
     };
-  }, [lastScrollY, setVisibilityDebounced]);
+  }, [lastScrollY, setVisibilityDebounced, isVisible]);
 
   // Determine if a route is active, checking both exact match and otherHref
   const isRouteActive = (item: any) => {
