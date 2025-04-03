@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import {
   Topbar as UnifiedTopbar,
   LastUpdateInfo,
@@ -26,7 +26,7 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
       </Modal>
       <UnifiedTopbar
         showBorder={false}
-        className="relative bg-[#01050d] bg-[url('/images/misc/referral-header-bg-mobile.png')] sm:bg-[url('/images/misc/header-bg.png')] bg-cover bg-center"
+        className="relative bg-[#01050d] bg-[url('/images/misc/referral-header-bg-mobile.png')] bg-cover bg-center sm:bg-[url('/images/misc/header-bg.png')]"
         leftContent={
           <div className="flex flex-col">
             <div className="flex flex-row space-x-5">
@@ -54,7 +54,7 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
                 />
               </div>
               <button
-                className="flex flex-1 flex-row justify-center rounded-full border border-[#195AF4] py-2 text-sm bg-dark-bg"
+                className="bg-dark-bg flex flex-1 flex-row justify-center rounded-full border border-[#195AF4] py-2 text-sm"
                 onClick={() => {
                   console.log('clicked');
                   setIsBloggersFormOpen(true);
@@ -117,7 +117,13 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
             >
               <div className="flex items-center space-x-0">
                 <span className="text-foreground text-sm">Блогерам</span>
-                <Image src={'/images/icons/forward-arrow.svg'} alt="forward-arrow" width={21} height={20} className="h-5 w-5" />
+                <Image
+                  src={'/images/icons/forward-arrow.svg'}
+                  alt="forward-arrow"
+                  width={21}
+                  height={20}
+                  className="h-5 w-5"
+                />
               </div>
             </button>
           </div>

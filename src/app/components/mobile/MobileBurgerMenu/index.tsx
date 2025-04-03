@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import Link from 'next/link';
 import CopyButton from '../../shared/CopyButton/CopyButton';
 import { authClient } from '~/server/auth/client';
@@ -122,8 +122,6 @@ const MobileBurgerMenu = ({ isOpen, onClose }: MobileBurgerMenuProps) => {
     },
   };
 
-
-
   return (
     <motion.div
       className="text-foreground fixed top-[69px] right-0 left-0 z-[10000000] flex flex-col bg-[#01050d] sm:hidden"
@@ -221,7 +219,7 @@ const MobileBurgerMenu = ({ isOpen, onClose }: MobileBurgerMenuProps) => {
               } finally {
                 router.push('/signin');
               }
-          }}
+            }}
           >
             <div className="flex items-center space-x-2">
               <span className="text-base text-[#f2f2f2]">Выход</span>

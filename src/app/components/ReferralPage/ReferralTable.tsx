@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { InfoPopover } from '~/app/components/shared/InfoPopover';
 import { ArrowUpRight } from 'lucide-react';
 import { TARIFFS } from '~/app/lib/constants/tariff';
@@ -77,7 +77,7 @@ const PlanBadge = ({ plan }: { plan: string }) => (
         className="h-3.5 w-3.5"
       />
     </div>
-    <span className="text-foreground text-sm sm:text-xs uppercase">{plan}</span>
+    <span className="text-foreground text-sm uppercase sm:text-xs">{plan}</span>
   </div>
 );
 
@@ -177,7 +177,7 @@ export const ReferralTable = () => {
   };
 
   return (
-    <div className="border-accent flex grow flex-col gap-6 border-0 pt-8 pb-10 sm:pb-8 sm:border-b sm:pt-0">
+    <div className="border-accent flex grow flex-col gap-6 border-0 pt-8 pb-10 sm:border-b sm:pt-0 sm:pb-8">
       {referrals.length === 0 ? (
         <div className="flex h-full w-full flex-col items-center justify-center gap-5">
           <Image

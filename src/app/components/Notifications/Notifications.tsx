@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useMotionValue, PanInfo, useTransform } from 'framer-motion';
+import { motion, useMotionValue, PanInfo, useTransform } from 'motion/react';
 import Image from 'next/image';
 import notificationImage from './assets/top_icon.png';
 import SettingIcon from './assets/settings';

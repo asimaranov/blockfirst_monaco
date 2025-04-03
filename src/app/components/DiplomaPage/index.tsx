@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Section } from './Section';
 import { Session } from '~/server/auth';
 import Footer from '~/app/components/Footer';

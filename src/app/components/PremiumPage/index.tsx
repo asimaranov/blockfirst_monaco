@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { Session } from '~/server/auth';
 import Footer from '~/app/components/Footer';
 import Image from 'next/image';
@@ -90,7 +90,7 @@ export default function PremiumPage({ session }: { session: Session }) {
         {/* <Topbar /> */}
 
         {/* Hero Section */}
-        <section className="relative px-5 pt-5 pb-10 ">
+        <section className="relative px-5 pt-5 pb-10">
           <div className="absolute inset-0 bg-gradient-to-b bg-[url('/images/misc/premium-grid.svg')] bg-top"></div>
 
           {/* Main Content */}
@@ -179,10 +179,9 @@ export default function PremiumPage({ session }: { session: Session }) {
                 </div>
               </div>
             </div>
-            <span className="text-success text-xs whitespace-nowrap border-success/50 rounded-full border px-3 py-1 self-start">
-                Активный тариф
-              </span>
-
+            <span className="text-success border-success/50 self-start rounded-full border px-3 py-1 text-xs whitespace-nowrap">
+              Активный тариф
+            </span>
           </div>
           <div className="rounded-lg p-5">
             <div className="mt-10">

@@ -2,7 +2,7 @@ import Image from 'next/image';
 import CodeSnippetSvg from './assets/right-section/code_snippet.svg';
 import AvatarsItems from './assets/right-section/avatars_items.png';
 import Reviews from './assets/right-section/reviews.svg';
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import { motion, useMotionValue, useTransform, useSpring } from 'motion/react';
 
 export default function RightFiller() {
   const mouseX = useMotionValue(0);

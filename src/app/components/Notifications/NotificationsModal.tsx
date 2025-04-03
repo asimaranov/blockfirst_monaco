@@ -1,5 +1,4 @@
-
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import Notifications from './Notifications';
 
 interface NotificationsModalProps {
@@ -79,7 +78,10 @@ export function NotificationsModalMobile({
               boxShadow: '0 0 20px rgba(0, 0, 0, 0.3)',
             }}
           >
-            <div className="bg-dark-bg flex h-15 flex-row items-center p-5 text-base gap-2" onClick={onClose}>
+            <div
+              className="bg-dark-bg flex h-15 flex-row items-center gap-2 p-5 text-base"
+              onClick={onClose}
+            >
               <svg
                 width="20"
                 height="20"

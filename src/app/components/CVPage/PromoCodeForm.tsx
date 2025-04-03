@@ -6,7 +6,7 @@ import { cn } from '~/helpers';
 import UserIcon from '~/app/components/input-legends/user';
 import TelegramSvg from '~/app/components/input-legends/telegram';
 import PromoCodeIcon from '~/app/components/input-legends/promo-code';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import FormField from '../AuthPage/components/FormField';
 import BackIcon from '../AuthPage/assets/back_icon';
 

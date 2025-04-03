@@ -8,7 +8,7 @@ import { Info } from '../icons/Info';
 import GridSvg from './assets/grid.svg';
 import LightSvg from './assets/light.svg';
 import ClockSvg from './assets/clock.svg';
-import { motion, useAnimation } from 'framer-motion';
+import { motion, useAnimation } from 'motion/react';
 import { Progress } from '../shared/Progress';
 import Link from 'next/link';
 

@@ -8,7 +8,7 @@ import { CourseProgress } from './CourseProgress';
 import { Progress } from '../shared/Progress';
 import { useTranslations } from 'next-intl';
 import GridSvg from './assets/grid.svg';
-import { motion, useAnimation } from 'framer-motion';
+import { motion, useAnimation } from 'motion/react';
 
 export function CourseTopCard({ course }: { course: ICourse }) {
   const t = useTranslations('UserSpace');
@@ -16,7 +16,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
 
   return (
     <section
-      className="border-accent group relative sm:flex flex-row gap-10 border-b hover:bg-[#14171C] border-t"
+      className="border-accent group relative flex-row gap-10 border-t border-b hover:bg-[#14171C] sm:flex"
       onMouseEnter={() => {
         if (!course.soon) {
           controls.start({ rotate: -5, scale: 1.2 });
@@ -67,7 +67,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
                   height={16}
                 />
               )}
-              <span className="mt-0.5 font-delight">{course.bage.title}</span>
+              <span className="font-delight mt-0.5">{course.bage.title}</span>
             </span>
           )}
         </div>
@@ -106,7 +106,13 @@ export function CourseTopCard({ course }: { course: ICourse }) {
               <span className="text-sm leading-[1.157vw] text-[#F2F2F2]">
                 Продолжить
               </span>
-              <Image src={'/images/icons/forward-arrow.svg'} alt="forward-arrow" width={21} height={20} className="h-5 w-5" />
+              <Image
+                src={'/images/icons/forward-arrow.svg'}
+                alt="forward-arrow"
+                width={21}
+                height={20}
+                className="h-5 w-5"
+              />
             </div>
           </Link>
           <Link

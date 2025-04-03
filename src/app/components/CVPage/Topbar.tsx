@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
   Topbar as UnifiedTopbar,
 } from '~/app/components/shared/Topbar';

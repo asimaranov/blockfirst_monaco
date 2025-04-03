@@ -5,7 +5,7 @@ import { Topbar } from './Topbar';
 import { Session } from '~/server/auth';
 import Footer from '~/app/components/Footer';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import CallIcon from './assets/calls.png';
 import TextIcon from './assets/text.png';
 import UserIcon from '../input-legends/user';
@@ -250,7 +250,7 @@ export default function MentorPage({ session }: { session: Session }) {
           </section>
 
           {/* Left sidebar - Mentor Profile */}
-          <section className="border-accent flex w-auto flex-col border-r-0 sm:border-r sm:w-100">
+          <section className="border-accent flex w-auto flex-col border-r-0 sm:w-100 sm:border-r">
             {/* Profile container */}
             <div className="bg-background relative h-91 overflow-hidden bg-[url(/images/misc/mentor-grid.svg)] bg-contain bg-no-repeat">
               {/* Background grid effect */}
@@ -405,7 +405,7 @@ export default function MentorPage({ session }: { session: Session }) {
                       viewBox="0 0 20 20"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                      className='h-5 w-5'
+                      className="h-5 w-5"
                     >
                       <path
                         d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
@@ -463,7 +463,7 @@ export default function MentorPage({ session }: { session: Session }) {
               {/* Contact options */}
               <div className="border-accent flex flex-col border-b sm:flex-row">
                 {/* Calls */}
-                <div className="border-accent w-auto border-r-0 sm:border-r sm:w-1/2">
+                <div className="border-accent w-auto border-r-0 sm:w-1/2 sm:border-r">
                   <div className="bg-background safari-blend-screen relative h-16 overflow-hidden bg-[url(/images/misc/top-tab-grid-mobile.svg)] bg-cover bg-no-repeat sm:bg-[url(/images/misc/top-tab-grid.svg)]">
                     <div className="relative flex h-full items-center gap-4 px-5 sm:px-8">
                       <div className="h-8 w-8 overflow-hidden rounded-full">
@@ -712,7 +712,10 @@ export default function MentorPage({ session }: { session: Session }) {
                   </div>
                   <span className="text-secondary shrink-0 text-xs">
                     Ваши данные полностью{' '}
-                    <Link href={"https://blockfirst.io/privacy-policy"} className="cursor-pointer text-white underline hover:opacity-50">
+                    <Link
+                      href={'https://blockfirst.io/privacy-policy'}
+                      className="cursor-pointer text-white underline hover:opacity-50"
+                    >
                       Конфиденциальны
                     </Link>
                   </span>

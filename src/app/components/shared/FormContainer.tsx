@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { ReactNode } from 'react';
 import { cn } from '~/helpers';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import Link from 'next/link';
 import InfoIcon from 'public/misc/info-icon.svg';
 import FormMobileControls from './FormMobileControls';
@@ -98,7 +98,7 @@ export default function FormContainer({
 }: FormContainerProps) {
   if (formState === 'success') {
     return (
-      <div className="bg-dark-bg border-accent/40 z-[10000000000000000] flex h-full w-auto flex-col border-l-0 sm:border-l sm:z-0 sm:w-105">
+      <div className="bg-dark-bg border-accent/40 z-[10000000000000000] flex h-full w-auto flex-col border-l-0 sm:z-0 sm:w-105 sm:border-l">
         <FormMobileControls
           showBackButton={showBackButton}
           onBackClick={onBackClick}
@@ -190,7 +190,7 @@ export default function FormContainer({
   }
 
   return (
-    <div className="bg-dark-bg border-accent/40 relative flex h-full w-auto flex-col border-l-0 sm:border-l sm:w-105">
+    <div className="bg-dark-bg border-accent/40 relative flex h-full w-auto flex-col border-l-0 sm:w-105 sm:border-l">
       <FormMobileControls
         showBackButton={showBackButton}
         onBackClick={onBackClick}

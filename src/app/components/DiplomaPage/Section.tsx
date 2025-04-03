@@ -1,5 +1,5 @@
 import { cn } from '~/helpers';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import ToggleMinus from '../shared/ToggleMinus/ToggleMinus';
 
 interface SectionProps {

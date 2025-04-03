@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 interface MobileHeaderProps {
   username?: string;
@@ -24,7 +24,7 @@ export const MobileHeader = ({
     <div className="group" data-is-menu-open={isMenuOpen}>
       <div className="h-[75px] w-full"></div>
       <header
-        className={`${isMenuOpen ? 'border-accent fixed border-b' : 'absolute '} top-0 z-[100000000] block h-auto w-full bg-[#01050d] py-4 sm:hidden`}
+        className={`${isMenuOpen ? 'border-accent fixed border-b' : 'absolute'} top-0 z-[100000000] block h-auto w-full bg-[#01050d] py-4 sm:hidden`}
       >
         <div className="flex w-full items-center justify-between px-5">
           <div className="flex items-center gap-4">

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Modal } from '../shared/Modal';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import Image from 'next/image';
 import { RotatingIcon } from '../shared/RotatingIcon';
 
@@ -65,7 +65,9 @@ export const FilterModal = ({
               />
             </button>
           </div>
-          <h2 className="text-foreground text-lg text-center">Промежуток времени</h2>
+          <h2 className="text-foreground text-center text-lg">
+            Промежуток времени
+          </h2>
         </div>
 
         {/* Options List */}

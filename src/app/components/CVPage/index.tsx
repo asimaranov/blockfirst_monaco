@@ -5,7 +5,7 @@ import { Topbar } from './Topbar';
 import { Session } from '~/server/auth';
 import Footer from '~/app/components/Footer';
 import Image from 'next/image';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
 import InProgressFlag from './assets/in-progress-flag.svg';
 import CompletedFlag from './assets/completed-flag.svg';
 import LockedFlag from './assets/locked-flag.svg';
