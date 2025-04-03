@@ -6,11 +6,11 @@ type Params = Promise<{ courseId: string }>;
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
 export default async function DashboardPage(props: { params: Params }) {
-  const session = await getServerSession();
+  // const session = await getServerSession();
   const params = await props.params;
-  if (!session) {
-    redirect('/signin');
-  }
+  // if (!session) {
+  //   redirect('/signin');
+  // }
 
-  return <MentorPage session={session} />;
+  return <MentorPage session={undefined as any} />;
 }
