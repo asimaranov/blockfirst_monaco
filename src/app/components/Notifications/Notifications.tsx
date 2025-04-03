@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, PanInfo, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import notificationImage from './assets/top_icon.png';
 import SettingIcon from './assets/settings';
@@ -125,6 +125,22 @@ const Notifications = ({ onClose }: NotificationsProps) => {
     width: 0,
     left: 0,
   });
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if device is mobile
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+
+    return () => {
+      window.removeEventListener('resize', checkIfMobile);
+    };
+  }, []);
 
   // Embla carousel options
   const options: EmblaOptionsType = {
@@ -500,12 +516,105 @@ const Notifications = ({ onClose }: NotificationsProps) => {
     }));
   };
 
+  // Add swipe functionality for mobile
+  const handleSwipeComplete = (id: string, info: PanInfo) => {
+    if (info.offset.x < -100) {
+      dismissNotification(id);
+    }
+  };
+
+  const SwipeableNotification = ({
+    notification,
+    children,
+    isArchived = false,
+  }: {
+    notification: Notification;
+    children: React.ReactNode;
+    isArchived?: boolean;
+  }) => {
+    const x = useMotionValue(0);
+    const background = useTransform(
+      x,
+      [-150, 0],
+      ['rgb(25, 90, 244, 0.3)', 'rgba(20, 23, 28, 0)']
+    );
+
+    const checkIconOpacity = useTransform(x, [-120, -40], [1, 0]);
+
+    const [isRemoving, setIsRemoving] = useState(false);
+
+    // Handle swipe dismissal with animation
+    const handleSwipe = async (
+      _: MouseEvent | TouchEvent | PointerEvent,
+      info: PanInfo
+    ) => {
+      // Only process swipe for non-archived notifications
+      if (info.offset.x < -100 && !isArchived) {
+        setIsRemoving(true);
+        // Wait for animation to complete before actually removing
+        await new Promise((resolve) => setTimeout(resolve, 300));
+        dismissNotification(notification.id);
+      }
+    };
+
+    // Don't use swipe on desktop
+    if (!isMobile) {
+      return <>{children}</>;
+    }
+
+    return (
+      <motion.div
+        style={{ background }}
+        className="relative overflow-hidden"
+        animate={{
+          height: isRemoving ? 0 : 'auto',
+          opacity: isRemoving ? 0 : 1,
+        }}
+        transition={{ duration: 0.3, ease: 'easeInOut' }}
+      >
+        {!isArchived && (
+          <motion.div
+            className="absolute top-1/2 right-5 z-0 flex -translate-y-1/2 items-center justify-center"
+            style={{ opacity: checkIconOpacity }}
+          >
+            <svg
+              width="40"
+              height="40"
+              viewBox="0 0 40 40"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="20" cy="20" r="20" fill="#195AF4" />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M18.9467 11.0431L18.8561 11.0431C18.4289 11.0424 18.054 11.0419 17.7199 11.1732C17.4278 11.2881 17.1692 11.4745 16.9678 11.7153C16.7375 11.9907 16.6195 12.3466 16.485 12.752L16.4564 12.838L16.2214 13.5431H13.3385H11.6719C11.3267 13.5431 11.0469 13.823 11.0469 14.1681C11.0469 14.5133 11.3267 14.7931 11.6719 14.7931H12.7492L13.2527 23.3514L13.2542 23.3779L13.2542 23.3779L13.2542 23.378C13.3049 24.2389 13.345 24.9222 13.4216 25.4725C13.5 26.0359 13.6224 26.5109 13.8649 26.942C14.2591 27.6429 14.8575 28.2071 15.5803 28.5595C16.0249 28.7763 16.5063 28.8705 17.0733 28.9157C17.6272 28.9598 18.3116 28.9598 19.1741 28.9598H19.2007H20.8097H20.8363C21.6988 28.9598 22.3833 28.9598 22.9371 28.9157C23.5042 28.8705 23.9855 28.7763 24.4301 28.5595C25.153 28.2071 25.7513 27.6429 26.1456 26.942C26.3881 26.5109 26.5104 26.0359 26.5888 25.4725C26.6654 24.9222 26.7056 24.2389 26.7562 23.3779L26.7578 23.3514L27.2612 14.7931H28.3385C28.6837 14.7931 28.9635 14.5133 28.9635 14.1681C28.9635 13.823 28.6837 13.5431 28.3385 13.5431H26.6719H23.789L23.554 12.838L23.5254 12.752C23.3909 12.3466 23.2729 11.9907 23.0426 11.7153C22.8412 11.4745 22.5826 11.2881 22.2905 11.1732C21.9564 11.0419 21.5815 11.0424 21.1544 11.0431L21.0637 11.0431H18.9467ZM22.4714 13.5431L22.3681 13.2333C22.1873 12.691 22.1413 12.5861 22.0837 12.5172C22.0166 12.4369 21.9304 12.3748 21.833 12.3365C21.7495 12.3037 21.6354 12.2931 21.0637 12.2931H18.9467C18.375 12.2931 18.261 12.3037 18.1774 12.3365C18.08 12.3748 17.9938 12.4369 17.9267 12.5172C17.8691 12.5861 17.8231 12.691 17.6423 13.2333L17.539 13.5431H22.4714ZM18.3359 17.7092C18.6811 17.7092 18.9609 17.989 18.9609 18.3342V24.1675C18.9609 24.5127 18.6811 24.7925 18.3359 24.7925C17.9908 24.7925 17.7109 24.5127 17.7109 24.1675V18.3342C17.7109 17.989 17.9908 17.7092 18.3359 17.7092ZM22.2943 18.3342C22.2943 17.989 22.0144 17.7092 21.6693 17.7092C21.3241 17.7092 21.0443 17.989 21.0443 18.3342V21.6675C21.0443 22.0127 21.3241 22.2925 21.6693 22.2925C22.0144 22.2925 22.2943 22.0127 22.2943 21.6675V18.3342Z"
+                fill="#F2F2F2"
+              />
+            </svg>
+          </motion.div>
+        )}
+        <motion.div
+          className="relative z-10 touch-pan-y bg-[#0F1217]"
+          drag="x"
+          style={{ x }}
+          dragConstraints={{ left: 0, right: 0 }}
+          onDragEnd={handleSwipe}
+          animate={{ x: isRemoving ? -300 : 0 }}
+          transition={{ type: 'spring', damping: 20 }}
+        >
+          {children}
+        </motion.div>
+      </motion.div>
+    );
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="scrollbar flex h-screen min-w-auto max-w-auto sm:max-w-105 sm:min-w-105 flex-col overflow-y-auto border border-[#282D33]/40 bg-[#0F1217]"
+      className="scrollbar max-w-auto flex h-screen min-w-auto flex-col overflow-y-auto border border-[#282D33]/40 bg-[#0F1217] sm:max-w-105 sm:min-w-105"
     >
       <div className="flex h-full flex-col">
         {/* Header with title and archive button - this stays fixed */}
@@ -707,36 +816,165 @@ const Notifications = ({ onClose }: NotificationsProps) => {
                 incomingNotifications
                   .filter((notification) => notification.type !== 'promo')
                   .map((notification) => (
-                    <div
+                    <SwipeableNotification
                       key={notification.id}
-                      className="group relative flex flex-col px-8 py-5 first:pt-8 hover:bg-[#282D33]/30 nth-[2]:pt-8"
+                      notification={notification}
+                      isArchived={false}
                     >
-                      <button
-                        className="absolute top-0 right-0 m-2 hidden h-4 w-4 cursor-pointer group-hover:block"
-                        onClick={() => dismissNotification(notification.id)}
-                      >
-                        <svg
-                          width="16"
-                          height="16"
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-4 w-4"
+                      <div className="group relative flex flex-col px-8 py-5 first:pt-8 hover:bg-[#282D33]/30 nth-[2]:pt-8">
+                        <button
+                          className="absolute top-0 right-0 m-2 hidden h-4 w-4 cursor-pointer group-hover:block"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            dismissNotification(notification.id);
+                          }}
                         >
-                          <path
-                            d="M4.73203 12.2007C4.4743 12.4584 4.05643 12.4584 3.7987 12.2007C3.54097 11.9429 3.54096 11.5251 3.7987 11.2673L7.06536 8.00065L3.7987 4.73399C3.54097 4.47625 3.54097 4.05838 3.7987 3.80065C4.05643 3.54292 4.4743 3.54292 4.73203 3.80065L7.9987 7.06732L11.2654 3.80065C11.5231 3.54292 11.941 3.54292 12.1987 3.80065C12.4564 4.05838 12.4564 4.47625 12.1987 4.73398L8.93203 8.00065L12.1987 11.2673C12.4564 11.5251 12.4564 11.9429 12.1987 12.2007C11.941 12.4584 11.5231 12.4584 11.2654 12.2007L7.9987 8.93398L4.73203 12.2007Z"
-                            fill="#9AA6B5"
-                            fill-opacity="0.5"
-                          />
-                        </svg>
-                      </button>
-                      <div className="">
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 16 16"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-4 w-4"
+                          >
+                            <path
+                              d="M4.73203 12.2007C4.4743 12.4584 4.05643 12.4584 3.7987 12.2007C3.54097 11.9429 3.54096 11.5251 3.7987 11.2673L7.06536 8.00065L3.7987 4.73399C3.54097 4.47625 3.54097 4.05838 3.7987 3.80065C4.05643 3.54292 4.4743 3.54292 4.73203 3.80065L7.9987 7.06732L11.2654 3.80065C11.5231 3.54292 11.941 3.54292 12.1987 3.80065C12.4564 4.05838 12.4564 4.47625 12.1987 4.73398L8.93203 8.00065L12.1987 11.2673C12.4564 11.5251 12.4564 11.9429 12.1987 12.2007C11.941 12.4584 11.5231 12.4584 11.2654 12.2007L7.9987 8.93398L4.73203 12.2007Z"
+                              fill="#9AA6B5"
+                              fillOpacity="0.5"
+                            />
+                          </svg>
+                        </button>
+                        <div className="">
+                          <div className="relative flex space-x-4">
+                            <div className="flex h-9 w-9 shrink-0">
+                              <Image
+                                src={notification.avatar}
+                                alt=""
+                                className="h-9 w-9 object-cover"
+                              />
+                            </div>
+                            <div className="flex flex-col gap-2">
+                              <div className="flex w-full justify-between">
+                                {notification.type === 'system' && (
+                                  <span className="text-foreground text-xs">
+                                    {notification.title}
+                                  </span>
+                                )}
+                                {notification.type === 'comment' && (
+                                  <span className="text-secondary text-xs">
+                                    <span className="text-foreground">
+                                      {notification.username}
+                                    </span>{' '}
+                                    ответил вам в
+                                    <span className="text-foreground">
+                                      {' '}
+                                      {notification.course}
+                                    </span>
+                                  </span>
+                                )}
+                                {notification.type === 'like' && (
+                                  <span className="text-secondary line-clamp-1 text-xs">
+                                    <span className="text-foreground">
+                                      {notification.username}
+                                    </span>{' '}
+                                    лайкнул ваш пост в
+                                    <span className="text-foreground">
+                                      {' '}
+                                      {notification.course}
+                                    </span>
+                                  </span>
+                                )}
+                              </div>
+                              <div className="flex items-center space-x-3 text-xs">
+                                <span className="text-secondary/50">
+                                  {notification.timestamp}
+                                </span>
+                                <div className="bg-secondary/20 h-full w-[1px]"></div>
+                                <span className="text-secondary/50">
+                                  {notification.category}
+                                </span>
+                              </div>
+                            </div>
+                            {!notification.isRead && (
+                              <div className="bg-error ml-auto h-1.5 w-1.5 shrink-0 rounded-full"></div>
+                            )}
+                          </div>
+                          {(notification.type === 'system' ||
+                            notification.type === 'comment') && (
+                            <div className="mt-4">
+                              <div className="relative ml-14.5">
+                                <div className="relative rounded-sm bg-[#14171C] p-2 px-3">
+                                  <div
+                                    className={cn(
+                                      'absolute top-0 bottom-0 left-0 w-[1px]',
+                                      notification.type === 'system' &&
+                                        notification.highlightedBorder &&
+                                        'bg-primary'
+                                    )}
+                                  ></div>
+                                  <p className="text-secondary text-xs">
+                                    {notification.message}
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </SwipeableNotification>
+                  ))
+              ) : (
+                <div className="flex w-full justify-center pt-56">
+                  <div className="flex flex-col items-center gap-5 text-center">
+                    <div className="bg-accent flex h-15 w-15 items-center justify-center rounded-full">
+                      <Image
+                        src={noNotificationsImage}
+                        alt="No notifications"
+                      />
+                    </div>
+                    <span className="text-sm text-[#9AA6B5]/50">
+                      Нет новых уведомлений :(
+                    </span>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+
+          {/* Archived notifications */}
+          {activeTab === 'archieve' && (
+            <>
+              {archivedNotifications.length === 0 ? (
+                <div className="flex h-full w-full items-center justify-center">
+                  <div className="flex w-full justify-center">
+                    <div className="flex flex-col items-center gap-5 text-center">
+                      <div className="bg-accent flex h-15 w-15 items-center justify-center rounded-full">
+                        <Image
+                          src={noNotificationsImage}
+                          alt="No notifications"
+                        />
+                      </div>
+                      <span className="text-sm text-[#9AA6B5]/50">
+                        Уведомлений в архиве нет :(
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                archivedNotifications.map((notification) => (
+                  <SwipeableNotification
+                    key={notification.id}
+                    notification={notification}
+                    isArchived={true}
+                  >
+                    <div className="group relative flex flex-col px-8 py-5 first:pt-8 hover:bg-[#282D33]/30">
+                      <div className="opacity-70">
                         <div className="relative flex space-x-4">
                           <div className="flex h-9 w-9 shrink-0">
                             <Image
                               src={notification.avatar}
                               alt=""
-                              className="object-cover h-9 w-9"
+                              className="h-9 w-9 object-cover"
                             />
                           </div>
                           <div className="flex flex-col gap-2">
@@ -781,9 +1019,6 @@ const Notifications = ({ onClose }: NotificationsProps) => {
                               </span>
                             </div>
                           </div>
-                          {!notification.isRead && (
-                            <div className="bg-error ml-auto h-1.5 w-1.5 shrink-0 rounded-full"></div>
-                          )}
                         </div>
                         {(notification.type === 'system' ||
                           notification.type === 'comment') && (
@@ -807,124 +1042,7 @@ const Notifications = ({ onClose }: NotificationsProps) => {
                         )}
                       </div>
                     </div>
-                  ))
-              ) : (
-                <div className="flex w-full justify-center pt-56">
-                  <div className="flex flex-col items-center gap-5 text-center">
-                    <div className="bg-accent flex h-15 w-15 items-center justify-center rounded-full">
-                      <Image
-                        src={noNotificationsImage}
-                        alt="No notifications"
-                      />
-                    </div>
-                    <span className="text-sm text-[#9AA6B5]/50">
-                      Нет новых уведомлений :(
-                    </span>
-                  </div>
-                </div>
-              )}
-            </>
-          )}
-
-          {/* Archived notifications */}
-          {activeTab === 'archieve' && (
-            <>
-              {archivedNotifications.length === 0 ? (
-                <div className="flex h-full w-full items-center justify-center ">
-                  <div className="flex w-full justify-center">
-                    <div className="flex flex-col items-center gap-5 text-center">
-                      <div className="bg-accent flex h-15 w-15 items-center justify-center rounded-full">
-                        <Image
-                          src={noNotificationsImage}
-                          alt="No notifications"
-                        />
-                      </div>
-                      <span className="text-sm text-[#9AA6B5]/50">
-                        Уведомлений в архиве нет :(
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                archivedNotifications.map((notification) => (
-                  <div
-                    key={notification.id}
-                    className="group relative flex flex-col px-8 py-5 first:pt-8 hover:bg-[#282D33]/30"
-                  >
-                    <div className="opacity-70">
-                      <div className="relative flex space-x-4">
-                        <div className="flex h-9 w-9 shrink-0">
-                          <Image
-                            src={notification.avatar}
-                            alt=""
-                            className="object-cover h-9 w-9"
-                          />
-                        </div>
-                        <div className="flex flex-col gap-2">
-                          <div className="flex w-full justify-between">
-                            {notification.type === 'system' && (
-                              <span className="text-foreground text-xs">
-                                {notification.title}
-                              </span>
-                            )}
-                            {notification.type === 'comment' && (
-                              <span className="text-secondary text-xs">
-                                <span className="text-foreground">
-                                  {notification.username}
-                                </span>{' '}
-                                ответил вам в
-                                <span className="text-foreground">
-                                  {' '}
-                                  {notification.course}
-                                </span>
-                              </span>
-                            )}
-                            {notification.type === 'like' && (
-                              <span className="text-secondary line-clamp-1 text-xs">
-                                <span className="text-foreground">
-                                  {notification.username}
-                                </span>{' '}
-                                лайкнул ваш пост в
-                                <span className="text-foreground">
-                                  {' '}
-                                  {notification.course}
-                                </span>
-                              </span>
-                            )}
-                          </div>
-                          <div className="flex items-center space-x-3 text-xs">
-                            <span className="text-secondary/50">
-                              {notification.timestamp}
-                            </span>
-                            <div className="bg-secondary/20 h-full w-[1px]"></div>
-                            <span className="text-secondary/50">
-                              {notification.category}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                      {(notification.type === 'system' ||
-                        notification.type === 'comment') && (
-                        <div className="mt-4">
-                          <div className="relative ml-14.5">
-                            <div className="relative rounded-sm bg-[#14171C] p-2 px-3">
-                              <div
-                                className={cn(
-                                  'absolute top-0 bottom-0 left-0 w-[1px]',
-                                  notification.type === 'system' &&
-                                    notification.highlightedBorder &&
-                                    'bg-primary'
-                                )}
-                              ></div>
-                              <p className="text-secondary text-xs">
-                                {notification.message}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
+                  </SwipeableNotification>
                 ))
               )}
             </>
