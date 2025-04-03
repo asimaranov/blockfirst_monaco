@@ -1,3 +1,5 @@
+'use client';
+
 import { motion } from 'framer-motion';
 import { Session } from '~/server/auth';
 import Footer from '~/app/components/Footer';
