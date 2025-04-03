@@ -1,5 +1,4 @@
-import GridSvg from './assets/grid.svg';
-import Image from 'next/image';
+import { BackToTopButton } from '../shared/BackToTopButton';
 
 export default function Footer({ className }: { className?: string }) {
   const mobileLinkSections = [
@@ -47,7 +46,10 @@ export default function Footer({ className }: { className?: string }) {
       links: [
         { label: 'Стоимость', href: 'https://app.blockfirst.io/pricing' },
         { label: 'F.A.Q', href: 'https://app.blockfirst.io/course/solidity' },
-        { label: 'Курс Solidity', href: 'https://app.blockfirst.io/course/solidity' },
+        {
+          label: 'Курс Solidity',
+          href: 'https://app.blockfirst.io/course/solidity',
+        },
       ],
     },
   ];
@@ -266,10 +268,16 @@ export default function Footer({ className }: { className?: string }) {
         {/* Copyright section */}
         <div className="flex flex-col items-center gap-5 px-5 pt-8 pb-8 text-xs sm:gap-0 sm:px-8 md:flex-row md:justify-between">
           <div className="text-foreground sm:text-secondary flex gap-6 text-xs">
-            <a href="https://blockfirst.io/user-agreement" className="text-sm hover:opacity-50 sm:text-xs">
+            <a
+              href="https://blockfirst.io/user-agreement"
+              className="text-sm hover:opacity-50 sm:text-xs"
+            >
               Правила сервиса
             </a>
-            <a href="https://blockfirst.io/privacy-policy" className="text-sm hover:opacity-50 sm:text-xs">
+            <a
+              href="https://blockfirst.io/privacy-policy"
+              className="text-sm hover:opacity-50 sm:text-xs"
+            >
               Конфиденциальность
             </a>
           </div>
@@ -277,31 +285,7 @@ export default function Footer({ className }: { className?: string }) {
             <span className="text-secondary">
               © 2025-2026 BlockFirst. Все права защищены.
             </span>
-            <div
-              className="hidden cursor-pointer items-center gap-1 hover:opacity-50 sm:flex"
-              onClick={() => {
-                document
-                  .getElementById('content-view')
-                  ?.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
-            >
-              <a className="text-sm text-nowrap">В начало</a>
-              <svg
-                width="21"
-                height="20"
-                viewBox="0 0 21 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-              >
-                <path
-                  fillRule="evenodd"
-                  clipRule="evenodd"
-                  d="M5.15031 12.8267C4.86349 12.5279 4.87323 12.0531 5.17207 11.7663L9.9808 7.15089C10.271 6.87235 10.7293 6.87235 11.0195 7.15089L15.8282 11.7663C16.1271 12.0531 16.1368 12.5279 15.85 12.8267C15.5632 13.1256 15.0884 13.1353 14.7895 12.8485L10.5001 8.73154L6.21075 12.8485C5.91191 13.1353 5.43713 13.1256 5.15031 12.8267Z"
-                  fill="#F2F2F2"
-                />
-              </svg>
-            </div>
+            <BackToTopButton className="hidden sm:flex" />
           </div>
         </div>
       </footer>

@@ -1,5 +1,3 @@
-'use client';
-
 import { motion } from 'motion/react';
 import { Session } from '~/server/auth';
 import Footer from '~/app/components/Footer';

@@ -344,7 +344,7 @@ const CourseSection = ({
   );
 };
 
-export default function CoursePage({
+export default async function CoursePage({
   session,
   courseId,
 }: {
