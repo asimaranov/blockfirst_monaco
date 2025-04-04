@@ -307,7 +307,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
                             </span>
                           </div>
                           <div className="flex gap-4">
-                            <div className="mt-1.5 h-10 w-10 self-start overflow-hidden rounded-lg bg-[#01050D]">
+                            <div className="h-10 w-10 self-start overflow-hidden rounded-lg bg-[#01050D]">
                               <img
                                 src={course.smallImg}
                                 alt={course.title}
@@ -315,11 +315,11 @@ export default function DiplomaPage({ session }: { session: Session }) {
                               />
                             </div>
                             <div className="flex flex-col gap-3">
-                              <span className="text-foreground text-sm">
+                              <span className="text-foreground text-sm leading-4">
                                 {course.title}
                               </span>
                               {(course.info?.lessonsCount || 0) > 0 ? (
-                                <div className="flex items-center gap-3 text-xs">
+                                <div className="flex items-center gap-3 text-xs leading-3">
                                   <span className="text-secondary text-xxs uppercase">
                                     {course.info?.lessonsCount || 0}{' '}
                                     {t('lesson', {
