@@ -58,7 +58,7 @@ export const initialNotifications: Notification[] = [
     highlightedBorder: true,
   },
   {
-    id: 'jobs',
+    id: 'jobs-1',
     type: 'system',
     title: 'Новые вакансии 🔥',
     message:
@@ -71,7 +71,7 @@ export const initialNotifications: Notification[] = [
     highlightedBorder: true,
   },
   {
-    id: 'jobs',
+    id: 'jobs-2',
     type: 'system',
     title: 'Новые вакансии 🔥',
     message:
@@ -84,7 +84,7 @@ export const initialNotifications: Notification[] = [
     highlightedBorder: true,
   },
   {
-    id: 'jobs',
+    id: 'jobs-3',
     type: 'system',
     title: 'Новые вакансии 🔥',
     message:

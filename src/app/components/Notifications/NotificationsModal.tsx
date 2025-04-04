@@ -75,7 +75,7 @@ export function NotificationsModalMobile({
               mass: 1,
               duration: 0.4,
             }}
-            className="absolute top-0 z-[100000000000] h-screen max-w-screen min-w-screen overflow-y-scroll"
+            className="fixed top-0 z-[100000000000] h-screen max-w-screen min-w-screen overflow-y-scroll"
             style={{
               boxShadow: '0 0 20px rgba(0, 0, 0, 0.3)',
             }}
