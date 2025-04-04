@@ -131,7 +131,7 @@ const Notifications = ({ onClose }: NotificationsProps) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="scrollbar max-w-auto flex h-[calc(100vh-60px)] sm:h-screen min-w-auto flex-col overflow-y-auto border border-[#282D33]/40 bg-[#0F1217] sm:max-w-105 sm:min-w-105 overscroll-none"
+      className="scrollbar max-w-auto flex  sm:h-screen min-w-auto flex-col overflow-y-auto border border-[#282D33]/40 bg-[#0F1217] sm:max-w-105 sm:min-w-105 overscroll-none"
     >
       <div className="flex h-fit flex-col">
         <NotificationsTopbar archiveAll={archiveAll} inArchived={inArchived} />
