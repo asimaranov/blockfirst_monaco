@@ -39,7 +39,7 @@ export default function YourVacancies({
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
 
   return (
-    <section className="border-accent static top-0 left-0 flex h-auto w-auto shrink-0 flex-col border-r-0 sm:border-r sm:sticky sm:h-screen sm:w-80">
+    <section className="border-accent static top-0 left-0 flex h-auto w-auto shrink-0 flex-col border-r-0 sm:sticky sm:h-screen sm:w-80 sm:border-r">
       <MobilePremiumTopbar text={'Твои вакансии'} />
       {/* Header */}
       <div className="bg-background relative px-8 py-6">
@@ -86,13 +86,28 @@ export default function YourVacancies({
         <span className="text-sm">Фильтр профессий</span>
 
         <button onClick={() => setIsFilterModalOpen(true)}>
-          <Image
-            src={'/images/icons/tool-icon.svg'}
-            alt="tool-icon"
-            width={20}
-            height={20}
-            className="h-5 w-5"
-          />
+          <div className="flex items-center justify-center gap-2 sm:hidden">
+            {(specialityFilters.length > 0 || sortOption !== VacancySort.ALL) && (
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-3 w-3 shrink-0"
+              >
+                <circle cx="6" cy="6" r="6" fill="#14171C" />
+                <circle cx="6" cy="6" r="4" fill="#CF3336" />
+              </svg>
+            )}
+            <Image
+              src={'/images/icons/tool-icon.svg'}
+              alt="tool-icon"
+              width={20}
+              height={20}
+              className="h-5 w-5"
+            />
+          </div>
         </button>
       </div>
       {/* Filters */}

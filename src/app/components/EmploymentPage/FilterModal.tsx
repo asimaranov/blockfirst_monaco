@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   VACANCY_SPECIALITIES,
   VACANCY_SORT_OPTIONS,
@@ -32,37 +32,30 @@ export const FilterModal = ({
   sortOption,
   setSortOption,
 }: FilterModalProps) => {
-  const [localSpecialityFilters, setLocalSpecialityFilters] =
-    useState<VacancySpeciality[]>(specialityFilters);
   const [localSortOption, setLocalSortOption] =
     useState<VacancySort>(sortOption);
   const [rotationAngle, setRotationAngle] = useState(0);
 
   const handleReset = () => {
-    setLocalSpecialityFilters([]);
+    setSpecialityFilters([]);
     setLocalSortOption(VACANCY_SORT_OPTIONS[0] as VacancySort);
     setRotationAngle((prevAngle) => prevAngle + 360);
   };
 
   const handleApply = () => {
-    setSpecialityFilters(localSpecialityFilters);
+    setSpecialityFilters(specialityFilters);
     setSortOption(localSortOption);
     onClose();
   };
 
-  const toggleSpeciality = (speciality: VacancySpeciality) => {
-    if (localSpecialityFilters.includes(speciality)) {
-      setLocalSpecialityFilters(
-        localSpecialityFilters.filter((filter) => filter !== speciality)
-      );
-    } else {
-      setLocalSpecialityFilters([...localSpecialityFilters, speciality]);
-    }
-  };
+  
+  useEffect(() => {
+    console.log('Speciality filters changed', specialityFilters);
+  }, [specialityFilters]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="flex h-[780px] w-full max-w-[390px] flex-col bg-[#0f1217]">
+      <div className="flex h-[780px] w-full  flex-col bg-[#0f1217]">
         <div className="flex flex-col py-5 h-full">
           <div className="flex flex-col gap-8">
             {/* Header */}
