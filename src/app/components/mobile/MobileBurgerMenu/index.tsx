@@ -3,6 +3,8 @@ import Link from 'next/link';
 import CopyButton from '../../shared/CopyButton/CopyButton';
 import { authClient } from '~/server/auth/client';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+
 interface MobileBurgerMenuProps {
   isOpen: boolean;
   onClose: () => void;
@@ -122,9 +124,36 @@ const MobileBurgerMenu = ({ isOpen, onClose }: MobileBurgerMenuProps) => {
     },
   };
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if device is mobile
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+
+    return () => {
+      window.removeEventListener('resize', checkIfMobile);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isOpen && isMobile) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
+
   return (
     <motion.div
-      className="text-foreground fixed top-[69px] right-0 left-0 z-[10000000] flex flex-col bg-[#01050d] sm:hidden"
+      className="text-foreground absolute top-[69px] right-0 left-0 z-[10000000] flex flex-col bg-[#01050d] sm:hidden"
       initial="closed"
       animate={isOpen ? 'open' : 'closed'}
       variants={menuVariants}

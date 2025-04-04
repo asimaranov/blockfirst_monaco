@@ -1,5 +1,7 @@
 import { motion, AnimatePresence } from 'motion/react';
 import Notifications from './Notifications';
+import Image from 'next/image';
+import noNotificationsImage from './assets/no-notifications.png';
 
 interface NotificationsModalProps {
   isOpen: boolean;
@@ -73,7 +75,7 @@ export function NotificationsModalMobile({
               mass: 1,
               duration: 0.4,
             }}
-            className="absolute top-0 z-[100000000000] h-screen max-w-screen min-w-screen"
+            className="absolute top-0 z-[100000000000] h-screen max-w-screen min-w-screen overflow-y-scroll"
             style={{
               boxShadow: '0 0 20px rgba(0, 0, 0, 0.3)',
             }}
@@ -105,3 +107,35 @@ export function NotificationsModalMobile({
     </AnimatePresence>
   );
 }
+
+export const NoNewNotifications = () => {
+  return (
+    <div className="flex w-full justify-center pt-56">
+      <div className="flex flex-col items-center gap-5 text-center">
+        <div className="bg-accent flex h-15 w-15 items-center justify-center rounded-full">
+          <Image src={noNotificationsImage} alt="No notifications" />
+        </div>
+        <span className="text-sm text-[#9AA6B5]/50">
+          Нет новых уведомлений :(
+        </span>
+      </div>
+    </div>
+  );
+};
+
+export const NoArchievedNotifications = () => {
+  return (
+    <div className="flex h-full w-full items-center justify-center">
+      <div className="flex w-full justify-center">
+        <div className="flex flex-col items-center gap-5 text-center">
+          <div className="bg-accent flex h-15 w-15 items-center justify-center rounded-full">
+            <Image src={noNotificationsImage} alt="No notifications" />
+          </div>
+          <span className="text-sm text-[#9AA6B5]/50">
+            Уведомлений в архиве нет :(
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+};
