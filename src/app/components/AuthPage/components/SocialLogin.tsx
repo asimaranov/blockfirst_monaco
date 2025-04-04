@@ -4,6 +4,7 @@ import GoogleLoginIcon from '../assets/social/google';
 import { useEffect, useState } from 'react';
 import LoadingIcon from '../assets/social/loading.svg';
 import Image from 'next/image';
+import TelegramLoginIcon from '../assets/social/telegram';
 
 const SocialIcon = ({
   icon,
@@ -42,21 +43,11 @@ const SocialIcon = ({
 };
 
 export default function SocialLogin() {
-  const [isLoading, setIsLoading] = useState(false);
-
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   setTimeout(() => {
-  //     setIsLoading(false);
-  //   }, 5000);
-  // }, []);
-
   return (
     <div className="mt-10 flex w-full items-center justify-center gap-3">
       <SocialIcon
         icon={<GoogleLoginIcon />}
         onClick={async () => {
-          setIsLoading(true);
           try {
             await authClient.signIn.social({
               provider: 'google',
@@ -70,9 +61,15 @@ export default function SocialLogin() {
       />
 
       <SocialIcon
+        icon={<TelegramLoginIcon />}
+        onClick={async () => {
+          await new Promise((resolve, reject) => setTimeout(reject, 1000));
+        }}
+      />
+
+      <SocialIcon
         icon={<VkLoginIcon />}
         onClick={async () => {
-          setIsLoading(true);
           try {
             await authClient.signIn.social({
               provider: 'vk',
