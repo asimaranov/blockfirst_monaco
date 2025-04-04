@@ -103,7 +103,7 @@ export default function PromoCodeForm({
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 }}
-                  className="text-foreground text-2xll text-center"
+                  className="text-foreground text-xl sm:text-2xl text-center"
                 >
                   Промокод активирован
                 </motion.h2>
