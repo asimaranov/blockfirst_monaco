@@ -3,6 +3,7 @@ import LockIcon from './assets/lock.svg';
 import LogoBig from './assets/logo_big.svg';
 import SignatureSvg from './assets/signature.svg';
 import QrSvg from './assets/qr.svg';
+import StyledQR from './QrCode';
 
 interface DiplomaProps {
   name: string;
@@ -139,12 +140,13 @@ export function Diploma({
             </span>
           </div>
 
-          <div className="mb-[calc(100*100cqw/1626)] flex flex-col justify-end">
-            <Image
+          <div className="mb-[calc(25*100cqw/1626)] flex flex-col justify-end">
+            <StyledQR data={uniqueCode} />
+            {/* <Image
               src={QrSvg}
               alt="Logo"
               className="w-[calc(100*100cqw/1626)]"
-            />
+            /> */}
           </div>
           <div>
             <Image
