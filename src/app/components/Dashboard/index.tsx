@@ -66,8 +66,8 @@ export default function Dashboard({ session }: { session: Session }) {
             />
             <div className="border-accent flex flex-row gap-3 border-t p-5 pt-10 text-base">
               <div>Другие курсы</div>
-              <div className="bg-foreground text-background flex h-5 w-7.5 items-center justify-center rounded-[100px] text-sm font-medium">
-                8
+              <div className="bg-foreground text-background flex h-5 w-7.5 items-center justify-center rounded-[100px] text-sm font-medium text-center">
+                <span className="leading-4 mt-[1px]">8</span>
               </div>
             </div>
           </div>
