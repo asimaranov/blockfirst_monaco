@@ -53,14 +53,15 @@ export default function NotificationsTabs({
   }, [activeTab]);
 
   return (
-    <div className="sticky top-0 z-[1000000] flex-shrink-0 bg-[#0F1217]">
+    <div className="sticky top-[-1px] z-[1000000] flex-shrink-0 bg-[#0F1217]">
       <div className="relative flex w-full flex-row bg-[#14171C]">
         <div
           ref={incomingTabRef}
           className={cn(
             'opacity-50 hover:opacity-100',
             'flex cursor-pointer flex-row items-center justify-center gap-1 px-8 py-4 text-sm',
-            activeTab == 'incoming' && 'opacity-100'
+            activeTab == 'incoming' && 'opacity-100',
+            'w-38.75'
           )}
           onClick={() => setActive('incoming')}
         >

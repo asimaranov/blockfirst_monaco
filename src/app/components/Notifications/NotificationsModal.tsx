@@ -75,7 +75,7 @@ export function NotificationsModalMobile({
               mass: 1,
               duration: 0.4,
             }}
-            className="fixed top-0 z-[100000000000] h-screen max-w-screen min-w-screen overflow-y-scroll"
+            className="flex flex-col fixed top-0 z-[100000000000] h-[100dvh] max-w-screen min-w-screen overflow-y-scroll"
             style={{
               boxShadow: '0 0 20px rgba(0, 0, 0, 0.3)',
             }}
@@ -110,7 +110,7 @@ export function NotificationsModalMobile({
 
 export const NoNewNotifications = () => {
   return (
-    <div className="flex w-full justify-center pt-56">
+    <div className="flex w-full justify-center flex-grow items-center">
       <div className="flex flex-col items-center gap-5 text-center">
         <div className="bg-accent flex h-15 w-15 items-center justify-center rounded-full">
           <Image src={noNotificationsImage} alt="No notifications" />

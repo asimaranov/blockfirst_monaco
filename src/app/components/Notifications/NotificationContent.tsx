@@ -233,7 +233,7 @@ export function ArchievedNotificationContent({
 
 export const NoNotifications = () => {
   return (
-    <div className="flex w-full justify-center pt-56">
+    <div className="flex w-full justify-center h-full pt-56">
       <div className="flex flex-col items-center gap-5 text-center">
         <div className="bg-accent flex h-15 w-15 items-center justify-center rounded-full">
           <Image src={noNotificationsImage} alt="No notifications" />
@@ -249,7 +249,7 @@ export const NoNotifications = () => {
 
 export const NoArchievedNotifications = () => {
   return (
-    <div className="flex w-full justify-center pt-56">
+    <div className="flex w-full justify-center flex-grow items-center">
       <div className="flex flex-col items-center gap-5 text-center">
         <div className="bg-accent flex h-15 w-15 items-center justify-center rounded-full">
           <Image src={noNotificationsImage} alt="No notifications" />

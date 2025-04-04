@@ -47,7 +47,7 @@ const Notifications = ({ onClose }: NotificationsProps) => {
   const [settings, setSettings] = useState<Record<string, boolean>>({});
 
   const [isMobile, setIsMobile] = useState(false);
-  
+
   useEffect(() => {
     if (isMobile) {
       document.body.style.overflow = 'hidden';
@@ -58,7 +58,6 @@ const Notifications = ({ onClose }: NotificationsProps) => {
       document.body.style.overflow = '';
     };
   }, [isMobile]);
-
 
   // Check if device is mobile
   useEffect(() => {
@@ -124,16 +123,14 @@ const Notifications = ({ onClose }: NotificationsProps) => {
     }));
   };
 
-
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="scrollbar max-w-auto flex h-[calc(100dvh-60px)] sm:h-screen min-w-auto flex-col overflow-y-auto border border-[#282D33]/40 bg-[#0F1217] sm:max-w-105 sm:min-w-105 overscroll-none"
+      className="scrollbar max-w-auto flex min-w-auto flex-grow flex-col overflow-y-auto overscroll-none border-0 border-[#282D33]/40 bg-[#0F1217] sm:h-screen sm:max-w-105 sm:min-w-105 sm:border"
     >
-      <div className="flex h-fit flex-col">
+      <div className="flex flex-grow flex-col">
         <NotificationsTopbar archiveAll={archiveAll} inArchived={inArchived} />
 
         <NotificationsTabs
@@ -143,7 +140,7 @@ const Notifications = ({ onClose }: NotificationsProps) => {
         />
 
         {/* Scrollable content */}
-        <div className="flex-1">
+        <div className="flex flex-1 flex-col">
           {activeTab === 'incoming' && (
             <>
               {/* Embla Carousel for promo notifications */}
