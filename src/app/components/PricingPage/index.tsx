@@ -35,7 +35,7 @@ const TariffCard = ({ tariff }: { tariff: Tariff }) => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
 
   return (
-    <div className="border-accent flex flex-col border-b last:border-b-0 sm:last:border-b">
+    <div className="border-accent flex flex-col border-b-0 last:border-b-0 sm:border-b sm:last:border-b">
       <div className="relative bg-[#01050D] p-5 py-8 sm:p-8">
         <div className="relative z-1 bg-[url(/images/misc/tariff-grid.svg)] bg-cover bg-no-repeat bg-blend-screen">
           {tariff.sale && (
@@ -209,7 +209,7 @@ export default function PricingPage({ session }: { session: Session }) {
     <main className="border-accent border-r-0 border-l-0 sm:border-r sm:border-l">
       <div className="flex h-auto w-full flex-col sm:h-screen">
         <Topbar />
-        <div className="grid w-full grow grid-cols-1 divide-x-0 divide-[#282D33] sm:grid-cols-3 sm:divide-x">
+        <div className="grid w-full grow grid-cols-1 gap-10 divide-x-0 divide-[#282D33] sm:grid-cols-3 sm:gap-0 sm:divide-x">
           {TARIFFS.map((tariff, index) => (
             <TariffCard key={index} tariff={tariff} />
           ))}
