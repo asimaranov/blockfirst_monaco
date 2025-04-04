@@ -12,7 +12,7 @@ export default function ErrorBadge({ errors }: ErrorBadgeProps) {
       {errors.map((error, index) => (
         <div
           key={index}
-          className="bg-error text-foreground my-1.25 flex gap-2 rounded-[0.2315vw] px-2 py-1.25 text-xs z-10"
+          className="bg-error text-foreground my-1.25 flex gap-2 rounded-[4px] sm:rounded-[0.2315vw] px-2 py-1.25 text-xs z-10"
         >
           {error}
         </div>
