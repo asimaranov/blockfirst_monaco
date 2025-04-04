@@ -197,7 +197,7 @@ export default function PremiumPage({ session }: { session: Session }) {
                   <Link
                     key={feature.id}
                     href={feature.href ?? '#'}
-                    className="border-accent flex items-center justify-between border-t pt-7 pb-5"
+                    className="border-accent flex items-center justify-between border-b pt-7 pb-5"
                   >
                     <div className="flex items-center">
                       {feature.icon}
