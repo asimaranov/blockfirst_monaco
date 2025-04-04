@@ -148,7 +148,7 @@ const CourseItem = ({
       </svg>
     )}
     <div className="flex flex-col gap-2">
-      <p className="text-foreground font-base sm:text-sm leading-5">{title}</p>
+      <p className="text-foreground font-base leading-5 sm:text-sm">{title}</p>
       <div className="text-secondary flex items-center gap-3 text-xs">
         <span className="text-xxs uppercase">{lessons}</span>
         {duration && (
@@ -214,7 +214,13 @@ const CourseSection = ({
           onClick={() => setIsOpen(true)}
         >
           <span className="text-sm">{buttonText}</span>
-          <Image src={'/images/icons/forward-arrow.svg'} alt="forward-arrow" width={21} height={20} className="h-5 w-5" />
+          <Image
+            src={'/images/icons/forward-arrow.svg'}
+            alt="forward-arrow"
+            width={21}
+            height={20}
+            className="h-5 w-5"
+          />
         </button>
 
         <div className="border-accent bg-[#14171C] py-2">
@@ -256,7 +262,7 @@ const FAQItem = ({
           <ToggleMinus
             isExpanded={isOpen}
             onToggle={onClick}
-            className="h-5 w-5 ml-6 shrink-0"
+            className="ml-6 h-5 w-5 shrink-0"
           ></ToggleMinus>
         </div>
         <AnimatePresence>
@@ -444,7 +450,7 @@ export default function CVPage({ session }: { session: Session }) {
         {/* FAQ Section */}
         <div className="flex flex-col sm:flex-row">
           {/* Left Column - FAQ Intro and Contact Info */}
-          <div className="border-accent flex-1 border-t border-r-0 sm:border-r sm:border-t-0">
+          <div className="border-accent flex-1 border-t border-r-0 sm:border-t-0 sm:border-r">
             <div className="flex flex-col py-8 pt-16 pb-0 sm:pt-8 sm:pb-8">
               <div className="px-5 sm:px-8">
                 <div className="mb-5 flex items-center justify-between">
@@ -455,13 +461,16 @@ export default function CVPage({ session }: { session: Session }) {
                 </div>
                 <p className="text-secondary text-sm">
                   Мы собрали для вас топ самых популярных и часто задаваемых
-                  вопросов, которые касаются раздела "Подготовка резюме". Не
-                  нашли ответа? Напишите нам
+                  вопросов, которые касаются раздела "Подготовка резюме".
+                  <span className="text-foreground">
+                    {' '}
+                    Не нашли ответа? Напишите нам
+                  </span>
                 </p>
               </div>
 
-              <div className="mt-8 bg-[#14171C] py-6 border-accent border-b sm:border-b-0">
-                <div className="flex flex-col gap-20 px-5 sm:px-8 sm:flex-row">
+              <div className="border-accent mt-8 border-b bg-[#14171C] py-6 sm:border-b-0">
+                <div className="flex flex-col gap-20 px-5 sm:flex-row sm:px-8">
                   <div className="flex gap-4">
                     <div className="flex-shrink-0">
                       <div className="bg-background flex h-9.5 w-9.5 items-center justify-center rounded-full">
