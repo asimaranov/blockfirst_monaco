@@ -160,7 +160,7 @@ export default function PremiumPage({ session }: { session: Session }) {
 
         {/* Account Info */}
         <section className="mt-auto mb-10">
-          <div className="bg-background flex items-center justify-between p-5">
+          <div className="bg-background bg-[url(/images/misc/tariff-section-grid.svg)] bg-cover bg-right-bottom bg-no-repeat flex items-center justify-between p-5">
             <div className="flex items-center">
               <div className="h-13 w-13 overflow-hidden rounded-full">
                 <Image

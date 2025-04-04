@@ -262,7 +262,7 @@ export default function FormContainer({
         )}
       </div>
       {bottomText && kind !== 'info' && (
-        <div className="flex h-8 w-full items-center justify-center gap-1 bg-[#14171C] text-xs">
+        <div className="flex h-8 w-full items-center justify-center gap-1 bg-[#14171C] text-xs shrink-0">
           <span className="text-secondary">{bottomText.main}</span>
           <Link
             href={bottomText.link}
