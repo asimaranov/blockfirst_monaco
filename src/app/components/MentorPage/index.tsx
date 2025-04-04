@@ -20,16 +20,6 @@ import MentorLockedIcon from './assets/mentor-locked-icon.svg';
 import { cn } from '~/helpers';
 import Link from 'next/link';
 
-// Safari-specific styles
-const safariStyles = `
-  @supports (-webkit-hyphens:none) {
-    .safari-blend-screen {
-      -webkit-backdrop-filter: screen;
-      backdrop-filter: screen;
-      background-blend-mode: screen;
-    }
-  }
-`;
 
 const ComingSoon = () => {
   return (
@@ -145,9 +135,6 @@ export default function MentorPage({ session }: { session: Session }) {
 
   return (
     <main className="border-accent border-r-0 border-l-0 sm:border-r sm:border-l">
-      <style jsx global>
-        {safariStyles}
-      </style>
       <div className="flex h-auto flex-col sm:h-screen">
         <Topbar lastestUpdate={'18 марта 2025'} />
         <div className="flex flex-row gap-3 overflow-x-auto px-5 pt-10 pb-8 whitespace-nowrap sm:hidden">
