@@ -150,13 +150,13 @@ export default function DiplomaPage({ session }: { session: Session }) {
                 <Image
                   src={DiplomaIcon}
                   alt="NFT Diploma"
-                  className="w-15 object-cover"
+                  className="w-10 h-10 object-cover"
                 />
                 <div className="flex flex-col gap-2">
                   <h2 className="text-foreground text-2xll leading-8.25">
                     NFT диплом
                   </h2>
-                  <p className="text-secondary text-xs">
+                  <p className="text-secondary text-sm sm:text-xs">
                     Диплом интерактивный, после каждого курса добавится новая
                     запись о ваших новых компетенциях
                   </p>
@@ -300,7 +300,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
                   <div className="flex flex-col sm:hidden">
                     {COURSES.map((course, index) => (
                       <div key={course.id} className="flex flex-col last:mb-8">
-                        <div className="flex px-4 py-6 ">
+                        <div className="flex px-4 py-6">
                           <div className="mt-2.5 mr-4 flex h-6 w-6 items-center justify-center self-start">
                             <span className="text-secondary text-sm">
                               {index + 1}.

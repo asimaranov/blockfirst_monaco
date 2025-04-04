@@ -431,7 +431,7 @@ export default function MentorPage({ session }: { session: Session }) {
           </section>
 
           {/* Right side - Interaction area */}
-          <section className="flex flex-1 flex-col gap-9.5">
+          <section className="flex flex-1 flex-col gap-0 sm:gap-9.5">
             {/* Contact methods */}
             <div className="flex flex-col pt-8 sm:pt-0">
               {/* Header */}
@@ -448,7 +448,7 @@ export default function MentorPage({ session }: { session: Session }) {
               </div>
 
               {/* Contact options */}
-              <div className="border-accent flex flex-col border-b sm:flex-row">
+              <div className="border-accent flex flex-col border-b-0 sm:border-b sm:flex-row divide-y divide-accent sm:divide-y-0">
                 {/* Calls */}
                 <div className="border-accent w-auto border-r-0 sm:w-1/2 sm:border-r">
                   <div className="bg-background safari-blend-screen relative h-16 overflow-hidden bg-[url(/images/misc/top-tab-grid-mobile.svg)] bg-cover bg-no-repeat sm:bg-[url(/images/misc/top-tab-grid.svg)]">
