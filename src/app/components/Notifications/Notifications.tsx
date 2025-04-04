@@ -48,16 +48,16 @@ const Notifications = ({ onClose }: NotificationsProps) => {
 
   const [isMobile, setIsMobile] = useState(false);
   
-  useEffect(() => {
-    if (isMobile) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isMobile]);
+  // useEffect(() => {
+  //   if (isMobile) {
+  //     document.body.style.overflow = 'hidden';
+  //   } else {
+  //     document.body.style.overflow = '';
+  //   }
+  //   return () => {
+  //     document.body.style.overflow = '';
+  //   };
+  // }, [isMobile]);
 
 
   // Check if device is mobile
