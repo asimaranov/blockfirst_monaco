@@ -39,7 +39,7 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
                 <h1 className="text-foreground text-xl leading-8.25 font-medium sm:text-3xl">
                   Реферальная программа
                 </h1>
-                <p className="text-secondary text-xs leading-5">
+                <p className="text-secondary text-sm sm:text-xs leading-5">
                   Приглашайте друзей и коллег для обучения в BlockFirst и
                   увеличивайте свой доход!
                 </p>

@@ -25,7 +25,7 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
             <h1 className="text-foreground text-xl sm:text-3xl leading-8.25 font-medium">
               Персональное резюме
             </h1>
-            <p className="text-secondary text-xs leading-5">
+            <p className="text-secondary text-sm sm:text-xs leading-5">
               После прохождения каждого этапа, вы разблокируете возможность
               улучшить свое резюме с куратором для работадателей
             </p>
