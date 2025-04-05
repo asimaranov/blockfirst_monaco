@@ -150,7 +150,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
                 <Image
                   src={DiplomaIcon}
                   alt="NFT Diploma"
-                  className="w-10 h-10 object-cover"
+                  className="w-10 h-10 sm:w-15 sm:h-15 object-cover"
                 />
                 <div className="flex flex-col gap-2">
                   <h2 className="text-foreground text-2xll leading-8.25">
