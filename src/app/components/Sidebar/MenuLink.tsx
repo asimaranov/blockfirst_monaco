@@ -32,12 +32,14 @@ export function MenuLink({
       <div className={'flex w-full flex-row items-center justify-between'}>
         <span
           className={
-            'leading-3 font-roboto text-sm text-[#9AA6B5] group-hover:text-[#F2F2F2] group-data-[active=true]:text-[#F2F2F2]'
+            'font-roboto text-sm leading-3 text-[#9AA6B5] group-hover:text-[#F2F2F2] group-data-[active=true]:text-[#F2F2F2]'
           }
         >
           {title}
         </span>
-        {notificationCount && <NotificationCounter count={notificationCount} />}
+        {notificationCount != undefined && (
+          <NotificationCounter count={notificationCount} />
+        )}
         {locked && (
           <svg
             width="0.926vw"
