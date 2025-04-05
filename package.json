@@ -30,6 +30,7 @@
     "@react-email/render": "^1.0.5",
     "@studio-freight/lenis": "^1.0.42",
     "@studio-freight/react-lenis": "^0.0.47",
+    "@supabase/supabase-js": "^2.49.4",
     "@t3-oss/env-nextjs": "^0.10.1",
     "@tanstack/react-query": "^5.50.0",
     "@trpc/client": "^11.0.0-rc.446",
@@ -75,7 +76,7 @@
     "postcss": "^8.4.39",
     "prettier": "^3.3.2",
     "prettier-plugin-tailwindcss": "^0.6.11",
-    "prisma": "^5.14.0",
+    "prisma": "^6.5.0",
     "tailwindcss": "^4.0.14",
     "typescript": "^5.8.2"
   },

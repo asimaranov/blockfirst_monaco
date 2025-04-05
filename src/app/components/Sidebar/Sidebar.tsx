@@ -25,11 +25,14 @@ import CvIcon from './assets/section_icons/cv';
 import JobIcon from './assets/section_icons/job';
 import ReferralIcon from './assets/section_icons/referral';
 import NotificationsIcon from './assets/section_icons/notifications';
+import { api } from '~/trpc/react';
+
 interface SidebarSection {
   title: string;
   isPro: boolean;
   items: SidebarItem[];
 }
+
 interface SidebarItem {
   title: string;
   href: string;
@@ -118,12 +121,29 @@ export default function Sidebar() {
   const session = authClient.useSession();
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
 
+  // Get unread notification count
+  const { data: unreadCount } = api.notifications.getUnreadCount.useQuery();
+
   const user: IUser = {
     name: session.data?.user?.name ?? '',
     startTimestamp: Date.now(),
     createdAt: new Date().toISOString(),
     subscriptionType: SubscriptionType.Starter,
   };
+
+  // Create a copy of the sidebar sections with the updated notification count
+  const updatedSidebarSections = [...sidebarSections].map((section) => ({
+    ...section,
+    items: section.items.map((item) => {
+      if (item.type === 'notifications') {
+        return {
+          ...item,
+          notificationCount: unreadCount || 0,
+        };
+      }
+      return item;
+    }),
+  }));
 
   return (
     <>
@@ -159,7 +179,7 @@ export default function Sidebar() {
               />
             </div>
           </div>
-          {sidebarSections.map((section) => (
+          {updatedSidebarSections.map((section) => (
             <MenuItem
               key={section.title}
               title={section.title}

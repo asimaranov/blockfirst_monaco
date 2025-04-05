@@ -9,6 +9,10 @@ import {
   defaultNotificationSettings,
   Notification,
   PromoNotification,
+  NotificationSetting as UINotificationSetting,
+  SystemNotification,
+  CommentNotification,
+  LikeNotification,
 } from './types';
 import { SwipeableNotification } from './SwipeableNotification';
 import { promoNotifications, initialNotifications } from './constants';
@@ -20,31 +24,153 @@ import {
 } from './NotificationContent';
 import { NoNewNotifications } from './NotificationsModal';
 import NotificationsSettings from './NotificationsSettings';
-import { NotificationSetting } from './types';
 import { NotificationsTopbar } from './NotificationsTopbar';
 import NotificationsTabs from './NotificationsTabs';
 import PromoCarousel from './PromoCarousel';
+import { api } from '~/trpc/react';
+
 interface NotificationsProps {
   onClose?: () => void;
   notificationsNum: number;
 }
 
-// Settings type definition
+// Define DB notification type
+interface DBNotification {
+  id: string;
+  userId: string;
+  type: string;
+  title: string | null;
+  message: string | null;
+  username: string | null;
+  course: string | null;
+  timestamp?: Date;
+  category: string;
+  isRead: boolean;
+  isArchived: boolean;
+  avatar: string | null;
+  highlightedBorder?: boolean | null;
+  description: string | null;
+  imageUrl: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// Define DB notification setting type
+interface DBNotificationSetting {
+  id: string;
+  userId: string;
+  settingType: string;
+  enabled: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// Adapter function to convert DB notification to frontend Notification type
+const adaptNotification = (dbNotification: DBNotification): Notification => {
+  const baseNotification = {
+    id: dbNotification.id,
+    timestamp:
+      dbNotification.timestamp?.toISOString() ||
+      dbNotification.createdAt.toISOString(),
+    category: dbNotification.category,
+    isRead: dbNotification.isRead,
+    isArchived: dbNotification.isArchived,
+    avatar: dbNotification.avatar,
+  };
+
+  switch (dbNotification.type) {
+    case 'promo':
+      return {
+        ...baseNotification,
+        type: 'promo' as const,
+        title: dbNotification.title || '',
+        description: dbNotification.description || '',
+        image: dbNotification.imageUrl,
+      } as PromoNotification;
+    case 'system':
+      return {
+        ...baseNotification,
+        type: 'system' as const,
+        title: dbNotification.title || '',
+        message: dbNotification.message || '',
+        highlightedBorder: dbNotification.highlightedBorder || false,
+      } as SystemNotification;
+    case 'comment':
+      return {
+        ...baseNotification,
+        type: 'comment' as const,
+        username: dbNotification.username || '',
+        course: dbNotification.course || '',
+        message: dbNotification.message || '',
+      } as CommentNotification;
+    case 'like':
+      return {
+        ...baseNotification,
+        type: 'like' as const,
+        username: dbNotification.username || '',
+        course: dbNotification.course || '',
+      } as LikeNotification;
+    default:
+      // Default to system notification
+      return {
+        ...baseNotification,
+        type: 'system' as const,
+        title: dbNotification.title || 'System Notification',
+        message: dbNotification.message || '',
+      } as SystemNotification;
+  }
+};
 
 const Notifications = ({ onClose }: NotificationsProps) => {
   const [activeTab, setActive] = useState<'incoming' | 'archieve' | 'settings'>(
     'incoming'
   );
-  const [incomingNotifications, setIncomingNotifications] = useState<
-    Notification[]
-  >([...promoNotifications, ...initialNotifications]);
 
-  const [archivedNotifications, setArchivedNotifications] = useState<
-    Notification[]
-  >([]);
+  // Fetch notifications using tRPC
+  const { data: allNotifications, refetch: refetchNotifications } =
+    api.notifications.getAll.useQuery();
+  const markAsRead = api.notifications.markAsRead.useMutation({
+    onSuccess: () => refetchNotifications(),
+  });
+  const markAsArchived = api.notifications.markAsArchived.useMutation({
+    onSuccess: () => refetchNotifications(),
+  });
+  const archiveAllMutation = api.notifications.archiveAll.useMutation({
+    onSuccess: () => refetchNotifications(),
+  });
+  const { data: notificationSettings } =
+    api.notifications.getSettings.useQuery();
+  const updateSetting = api.notifications.updateSetting.useMutation({
+    onSuccess: () => refetchNotifications(),
+  });
+
+  // Derived states from fetched data
+  const incomingNotifications =
+    allNotifications?.map(adaptNotification).filter((n) => !n.isArchived) || [];
+  const archivedNotifications =
+    allNotifications?.map(adaptNotification).filter((n) => n.isArchived) || [];
   const [inArchived, setInArchived] = useState(false);
-  // Settings state
+
+  // Convert notification settings from DB to format used by the component
   const [settings, setSettings] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    if (notificationSettings && notificationSettings.length > 0) {
+      const settingsMap: Record<string, boolean> = {};
+      notificationSettings.forEach((setting: DBNotificationSetting) => {
+        settingsMap[setting.settingType] = setting.enabled;
+      });
+      setSettings(settingsMap);
+    } else {
+      // Fallback to default settings if none found
+      const initialSettings: Record<string, boolean> = {};
+      AllNotificationSettingTypes.forEach((setting) => {
+        initialSettings[setting] =
+          defaultNotificationSettings[setting].defaultEnabled;
+      });
+      setSettings(initialSettings);
+    }
+  }, [notificationSettings]);
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -75,45 +201,14 @@ const Notifications = ({ onClose }: NotificationsProps) => {
 
   // Dismiss notification (move to archive)
   const dismissNotification = (id: string) => {
-    const notification = incomingNotifications.find((n) => n.id === id);
-    if (notification) {
-      // Remove from incoming
-      setIncomingNotifications((prev) => prev.filter((n) => n.id !== id));
-      // Add to archived
-      setArchivedNotifications((prev) => [
-        ...prev,
-        { ...notification, isArchived: true, isRead: true },
-      ]);
-    }
+    markAsArchived.mutate({ id });
   };
 
   // Archive all notifications
   const archiveAll = () => {
-    setArchivedNotifications((prev) => [
-      ...prev,
-      ...incomingNotifications
-        .filter((n) => n.type !== 'promo')
-        .map((n) => ({
-          ...n,
-          isArchived: true,
-          isRead: true,
-        })),
-    ]);
-    setIncomingNotifications(
-      incomingNotifications.filter((n) => n.type === 'promo')
-    );
+    archiveAllMutation.mutate();
     setInArchived(true);
   };
-
-  // Initialize settings state
-  useEffect(() => {
-    const initialSettings: Record<string, boolean> = {};
-    AllNotificationSettingTypes.forEach((setting) => {
-      initialSettings[setting] =
-        defaultNotificationSettings[setting].defaultEnabled;
-    });
-    setSettings(initialSettings);
-  }, []);
 
   // Toggle setting
   const toggleSetting = (settingId: string) => {
@@ -121,6 +216,12 @@ const Notifications = ({ onClose }: NotificationsProps) => {
       ...prev,
       [settingId]: !prev[settingId],
     }));
+
+    // Persist setting to backend
+    updateSetting.mutate({
+      settingType: settingId,
+      enabled: !settings[settingId],
+    });
   };
 
   return (
@@ -145,7 +246,9 @@ const Notifications = ({ onClose }: NotificationsProps) => {
             <>
               {/* Embla Carousel for promo notifications */}
               <PromoCarousel
-                incomingNotifications={incomingNotifications}
+                incomingNotifications={incomingNotifications.filter(
+                  (n) => n.type === 'promo'
+                )}
                 dismissNotification={dismissNotification}
               />
 

@@ -31,6 +31,9 @@ model User {
   banExpires DateTime?
 
   plan String
+  
+  notifications       Notification[]
+  notificationSettings NotificationSetting[]
 
   @@unique([email])
   @@map("user")
@@ -81,4 +84,44 @@ model Verification {
   updatedAt  DateTime?
 
   @@map("verification")
+}
+
+model Notification {
+  id            String   @id @default(uuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type          String   // 'system', 'comment', 'like', 'promo'
+  title         String?
+  message       String?
+  username      String?
+  course        String?
+  timestamp     DateTime @default(now())
+  category      String
+  isRead        Boolean  @default(false)
+  isArchived    Boolean  @default(false)
+  avatar        String?
+  highlightedBorder Boolean? @default(false)
+  
+  // PromoNotification specific fields
+  description   String?
+  imageUrl      String?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("notifications")
+}
+
+model NotificationSetting {
+  id            String   @id @default(uuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  settingType   String   // 'news', 'comments', 'jobs'
+  enabled       Boolean  @default(true)
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([userId, settingType])
+  @@map("notification_settings")
 }

@@ -39,6 +39,8 @@ export function NotificationContent({
           <div className="flex h-9 w-9 shrink-0">
             <Image
               src={notification.avatar}
+              width={36}
+              height={36}
               alt=""
               className="h-9 w-9 object-cover"
             />
@@ -163,6 +165,8 @@ export function ArchievedNotificationContent({
           <div className="flex h-9 w-9 shrink-0">
             <Image
               src={notification.avatar}
+              width={36}
+              height={36}
               alt=""
               className="h-9 w-9 object-cover"
             />

@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import Notifications from './Notifications';
 import Image from 'next/image';
 import noNotificationsImage from './assets/no-notifications.png';
+import { api } from '~/trpc/react';
 
 interface NotificationsModalProps {
   isOpen: boolean;
@@ -12,6 +13,9 @@ export function NotificationsModal({
   isOpen,
   onClose,
 }: NotificationsModalProps) {
+  // Get unread notification count
+  const { data: unreadCount = 0 } = api.notifications.getUnreadCount.useQuery();
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -40,7 +44,7 @@ export function NotificationsModal({
               boxShadow: '0 0 20px rgba(0, 0, 0, 0.3)',
             }}
           >
-            <Notifications onClose={onClose} notificationsNum={5} />
+            <Notifications onClose={onClose} notificationsNum={unreadCount} />
           </motion.div>
         </div>
       )}
@@ -52,6 +56,9 @@ export function NotificationsModalMobile({
   isOpen,
   onClose,
 }: NotificationsModalProps) {
+  // Get unread notification count
+  const { data: unreadCount = 0 } = api.notifications.getUnreadCount.useQuery();
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -75,7 +82,7 @@ export function NotificationsModalMobile({
               mass: 1,
               duration: 0.4,
             }}
-            className="flex flex-col fixed top-0 z-[100000000000] h-[100dvh] max-w-screen min-w-screen overflow-y-scroll"
+            className="fixed top-0 z-[100000000000] flex h-[100dvh] max-w-screen min-w-screen flex-col overflow-y-scroll"
             style={{
               boxShadow: '0 0 20px rgba(0, 0, 0, 0.3)',
             }}
@@ -100,7 +107,7 @@ export function NotificationsModalMobile({
               </svg>
               Назад
             </div>
-            <Notifications onClose={onClose} notificationsNum={5} />
+            <Notifications onClose={onClose} notificationsNum={unreadCount} />
           </motion.div>
         </div>
       )}
@@ -110,7 +117,7 @@ export function NotificationsModalMobile({
 
 export const NoNewNotifications = () => {
   return (
-    <div className="flex w-full justify-center flex-grow items-center">
+    <div className="flex w-full flex-grow items-center justify-center">
       <div className="flex flex-col items-center gap-5 text-center">
         <div className="bg-accent flex h-15 w-15 items-center justify-center rounded-full">
           <Image src={noNotificationsImage} alt="No notifications" />

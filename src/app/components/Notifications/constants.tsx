@@ -1,11 +1,4 @@
 import { Notification, PromoNotification } from './types';
-import bgImage from './assets/bg.png';
-import bgImage1 from './assets/bg1.png';
-import bgImage2 from './assets/bg2.png';
-import bfImage from './assets/bf-avatar.svg';
-import user1Image from './assets/user1-avatar.png';
-import user2Image from './assets/user2-avatar.png';
-
 
 export const initialNotifications: Notification[] = [
   {
@@ -18,7 +11,7 @@ export const initialNotifications: Notification[] = [
     category: 'Система',
     isRead: true,
     isArchived: false,
-    avatar: bfImage,
+    avatar: '/images/avatars/bf-avatar.svg',
     highlightedBorder: true,
   },
   {
@@ -32,7 +25,7 @@ export const initialNotifications: Notification[] = [
     category: 'Комментарий',
     isRead: true,
     isArchived: false,
-    avatar: user1Image,
+    avatar: '/images/avatars/user1-avatar.png',
   },
   {
     id: 'like-1',
@@ -43,7 +36,7 @@ export const initialNotifications: Notification[] = [
     category: 'Лайк',
     isRead: false,
     isArchived: false,
-    avatar: user2Image,
+    avatar: '/images/avatars/user2-avatar.png',
   },
   {
     id: 'congrats',
@@ -54,7 +47,7 @@ export const initialNotifications: Notification[] = [
     category: 'Система',
     isRead: false,
     isArchived: false,
-    avatar: bfImage,
+    avatar: '/images/avatars/bf-avatar.svg',
     highlightedBorder: true,
   },
   {
@@ -67,7 +60,7 @@ export const initialNotifications: Notification[] = [
     category: 'Система',
     isRead: false,
     isArchived: false,
-    avatar: bfImage,
+    avatar: '/images/avatars/bf-avatar.svg',
     highlightedBorder: true,
   },
   {
@@ -80,7 +73,7 @@ export const initialNotifications: Notification[] = [
     category: 'Система',
     isRead: false,
     isArchived: false,
-    avatar: bfImage,
+    avatar: '/images/avatars/bf-avatar.svg',
     highlightedBorder: true,
   },
   {
@@ -93,11 +86,10 @@ export const initialNotifications: Notification[] = [
     category: 'Система',
     isRead: false,
     isArchived: false,
-    avatar: bfImage,
+    avatar: '/images/avatars/bf-avatar.svg',
     highlightedBorder: true,
   },
 ];
-
 
 // Carousel slides (promotion notifications)
 export const carouselSlides = [
@@ -107,7 +99,7 @@ export const carouselSlides = [
     title: 'Предложение для студентов',
     description:
       'Уникальный условия по оплате курса для студентов. Заполните форму в тарифах',
-    image: bgImage,
+    image: '/images/slider/slide-1.png',
   },
   {
     id: 2,
@@ -115,7 +107,7 @@ export const carouselSlides = [
     title: 'Новые курсы',
     description:
       'Мы активно занимаемся расширением библиотеки курсов. Пожалуйста, следите за обновлениями!',
-    image: bgImage1,
+    image: '/images/slider/slide-2.png',
   },
   {
     id: 3,
@@ -123,10 +115,9 @@ export const carouselSlides = [
     title: 'Будь в курсе событий!',
     description:
       'Подписывайся на наши социальные сети, мы активно публикуем новости WEB3 мира!',
-    image: bgImage2,
+    image: '/images/slider/slide-3.png',
   },
 ];
-
 
 export const promoNotifications: PromoNotification[] = carouselSlides.map(
   (slide) => ({
@@ -139,6 +130,6 @@ export const promoNotifications: PromoNotification[] = carouselSlides.map(
     timestamp: 'Сегодня',
     isRead: false,
     isArchived: false,
-    avatar: bgImage,
+    avatar: '/images/avatars/bf-avatar.svg',
   })
 );
