@@ -8,6 +8,7 @@ export interface Tariff {
   description: string;
   bigIcon: string;
   features: TariffFeature[];
+  shortFeatures: TariffFeature[];
   price?: {
     monthly: number;
     total: number;
@@ -30,6 +31,11 @@ export const TARIFFS: Tariff[] = [
       { text: '5 лекций / уроков' },
       { text: 'Реферальная программа', bg: true },
     ],
+    shortFeatures: [
+      { text: 'Ознакомление с курсами', bg: true },
+      { text: '5 лекций / уроков' },
+      { text: 'Реферальная программа', bg: true },
+    ],
     isActive: true,
   },
   {
@@ -43,6 +49,10 @@ export const TARIFFS: Tariff[] = [
       { text: 'Автоматическая проверка решений', bg: true },
       { text: 'Образовательные материалы по теме курса' },
       { text: 'NFT Диплом', bg: true },
+    ],
+    shortFeatures: [
+      { text: 'Все материалы курса', bg: true },
+      { text: 'Авто проверка ваших задач' },
     ],
     price: {
       monthly: 14000,
@@ -62,6 +72,12 @@ export const TARIFFS: Tariff[] = [
       { text: 'Премиумные материалы и задачи' },
       { text: 'Консультация для трудоустройства', bg: true },
       { text: 'Помощь в подготовке резюме' },
+    ],
+    shortFeatures: [
+      { text: 'Включая все с Starter', bg: true },
+      { text: 'Премиумные материалы и задачи' },
+      { text: 'Персональный ai ментор и.т.д', bg: true },
+
     ],
     price: {
       monthly: 18000,

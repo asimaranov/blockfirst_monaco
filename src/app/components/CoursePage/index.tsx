@@ -10,6 +10,7 @@ import Image from 'next/image';
 import { InfoPopover } from '../shared/InfoPopover';
 import Link from 'next/link';
 import AuthorIcon from './assets/author-icon.png';
+import { TARIFFS, Tariff, TariffFeature } from '~/app/lib/constants/tariff';
 
 const Tariffs = [
   {
@@ -163,7 +164,6 @@ const courseStatusTypes = [
   },
 ];
 
-
 // Component for the mobile author info section
 const MobileAuthorInfo = () => {
   return (
@@ -251,7 +251,7 @@ const TariffCard = ({ tariff }: { tariff: (typeof Tariffs)[0] }) => {
                     viewBox="0 0 20 20"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    className='h-5 w-5'
+                    className="h-5 w-5"
                   >
                     <g id="Check - Circle">
                       <path
@@ -278,13 +278,17 @@ const TariffCard = ({ tariff }: { tariff: (typeof Tariffs)[0] }) => {
 // Component for course stats item
 const CourseStatItem = ({ stat }: { stat: (typeof courseStats)[0] }) => {
   return (
-    <div className="flex-1 px-5 sm:px-8 py-5">
-      <div className="flex flex-row sm:flex-col gap-3 items-center sm:items-start">
+    <div className="flex-1 px-5 py-5 sm:px-8">
+      <div className="flex flex-row items-center gap-3 sm:flex-col sm:items-start">
         <div className="flex flex-row items-center gap-3">
           {stat.icon}
-          <span className="text-3xl sm:text-2xl text-gray-100 font-medium">{stat.value}</span>
+          <span className="text-3xl font-medium text-gray-100 sm:text-2xl">
+            {stat.value}
+          </span>
         </div>
-        <span className="text-secondary text-xs ml-auto sm:ml-0">{stat.label}</span>
+        <span className="text-secondary ml-auto text-xs sm:ml-0">
+          {stat.label}
+        </span>
       </div>
     </div>
   );
@@ -298,7 +302,7 @@ const CourseSection = ({
 }) => {
   return (
     <div className="flex flex-col">
-      <div className="flex cursor-pointer items-center justify-between bg-[#14171C] px-5 sm:px-8 py-3">
+      <div className="flex cursor-pointer items-center justify-between bg-[#14171C] px-5 py-3 sm:px-8">
         <div className="flex items-center gap-4">
           <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#01050D]">
             <span className="text-xs text-gray-100">{section.id}</span>
@@ -321,7 +325,7 @@ const CourseSection = ({
         </div>
       </div>
       {section.lessons && (
-        <div className="flex flex-col gap-4 px-5 sm:px-8 pt-5">
+        <div className="flex flex-col gap-4 px-5 pt-5 sm:px-8">
           {section.lessons.map((lesson, lessonIndex) => (
             <div key={lessonIndex} className="flex gap-1">
               <div className="flex h-5 w-5 shrink-0 items-center justify-center">
@@ -340,6 +344,113 @@ const CourseSection = ({
           ))}
         </div>
       )}
+    </div>
+  );
+};
+
+// Component for tariff features section
+const TariffFeatureList = ({
+  features,
+  isAlternateRow = true,
+}: {
+  features: TariffFeature[];
+  isAlternateRow?: boolean;
+}) => {
+  return (
+    <div className="flex flex-col">
+      {features.map((feature, index) => (
+        <div
+          key={index}
+          className={`flex h-12 items-center px-5 sm:px-8 ${feature.bg || (isAlternateRow && index % 2 === 0) ? 'bg-[#14171C]' : ''}`}
+        >
+          <div className="flex items-center gap-3">
+            <div className="flex h-5 w-5 items-center justify-center rounded-full">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
+              >
+                <g id="Check - Circle">
+                  <path
+                    id="Vector"
+                    d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
+                    stroke="#195AF4"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </g>
+              </svg>
+            </div>
+            <span className="text-sm text-gray-100">{feature.text}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+// Component for tariff section
+const TariffSection = ({
+  tariff,
+  showFeatures = true,
+}: {
+  tariff: Tariff;
+  showFeatures?: boolean;
+}) => {
+  return (
+    <div className="flex flex-col">
+      <div className="relative h-20 border-t border-[#282D33] bg-[#01050D] bg-[url(/images/misc/tariff-section-grid.svg)] bg-cover bg-right-bottom bg-no-repeat">
+        <div className="pointer-events-none absolute inset-0 z-[1] opacity-50 mix-blend-soft-light">
+          <div className="bg-gradient-radial h-full w-full from-gray-100 to-transparent" />
+        </div>
+        <div className="relative z-[2] px-5 py-5 sm:px-8">
+          <div className="flex flex-row items-center justify-between">
+            <div className="flex flex-row items-center gap-4">
+              <div className="h-10 w-10 overflow-hidden rounded-full bg-[#01050D]">
+                <Image
+                  src={tariff.bigIcon}
+                  alt={tariff.name}
+                  width={40}
+                  height={40}
+                  className="h-10 w-10 object-cover"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-3">
+                  <span className="text-base font-medium">{tariff.name}</span>
+                  {tariff.sale && (
+                    <span className="bg-error rounded-full px-2 py-1 text-xs">
+                      Sale {tariff.sale.percent}%
+                    </span>
+                  )}
+                </div>
+                <div className="text-secondary text-xs">Платный тариф</div>
+              </div>
+            </div>
+            <Link href="/pricing">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M10.901 4.46918C11.1939 4.17629 11.6688 4.17629 11.9617 4.46918L16.9617 9.46913C17.1023 9.60978 17.1814 9.80055 17.1814 9.99946C17.1814 10.1984 17.1023 10.3891 16.9617 10.5298L11.9617 15.5298C11.6688 15.8227 11.1939 15.8227 10.901 15.5298C10.6081 15.2369 10.6081 14.762 10.901 14.4691L14.6207 10.7495H3.57422C3.16001 10.7495 2.82422 10.4137 2.82422 9.99946C2.82422 9.58525 3.16001 9.24946 3.57422 9.24946H14.6207L10.901 5.52984C10.6081 5.23695 10.6081 4.76208 10.901 4.46918Z"
+                  fill="#F2F2F2"
+                />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </div>
+      {showFeatures && <TariffFeatureList features={tariff.shortFeatures} />}
     </div>
   );
 };
@@ -371,14 +482,22 @@ export default async function CoursePage({
           </div>
           <div className="h-9.5 w-full"></div>
 
+          <div className="mt-1.5 mb-10 flex flex-col gap-10 sm:hidden">
+            {TARIFFS[1] && <TariffSection tariff={TARIFFS[1]} />}
+            {TARIFFS[2] && <TariffSection tariff={TARIFFS[2]} />}
+          </div>
+
           {/* Bottom section with stats */}
-          <div className="border-accent divide-accent flex flex-col divide-y sm:divide-x sm:divide-y-0 border-t border-b sm:flex-row mb-10 sm:mb-0">
+          <div className="border-accent divide-accent mb-10 flex flex-col divide-y border-t border-b sm:mb-0 sm:flex-row sm:divide-x sm:divide-y-0">
             {courseStats.map((stat, index) => (
               <CourseStatItem key={index} stat={stat} />
             ))}
           </div>
-          <div className="flex flex-row justify-between px-5 sm:px-8 py-4">
-            <span className="text-secondary/50 text-sm   sm:text-xs uppercase">
+
+          {/* Tariff sections */}
+
+          <div className="flex flex-row justify-between px-5 py-4 sm:px-8">
+            <span className="text-secondary/50 text-sm uppercase sm:text-xs">
               Структура курса
             </span>
             <InfoPopover
