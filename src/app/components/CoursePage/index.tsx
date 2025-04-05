@@ -1,13 +1,9 @@
-'use server'
+'use server';
 import { Topbar } from './Topbar';
-import {
-  COURSE_DATA,
-  COURSES,
-} from '~/app/lib/constants/courses';
+import { COURSE_DATA, COURSES } from '~/app/lib/constants/courses';
 import { CourseInfoTopCard } from '~/app/components/CourseInfoTopCard';
 import Footer from '~/app/components/Footer';
 import Image from 'next/image';
-import { InfoPopover } from '../shared/InfoPopover';
 import { TARIFFS } from '~/app/lib/constants/tariff';
 import TariffCard from './components/TariffCard';
 import tasksIcon from './assets/tasks-icon.svg';
@@ -16,6 +12,7 @@ import CourseStatItem, { CourseStat } from './components/CourseStatItem';
 import MobileAuthorInfo from './components/MobileAuthorInfo';
 import TariffSection from './components/TariffSection';
 import CourseSection from './components/CourseSection';
+import { CourseStructurePopover } from './components/CourseStructurePopover';
 
 const courseStats: CourseStat[] = [
   {
@@ -32,25 +29,6 @@ const courseStats: CourseStat[] = [
     type: 'lectures',
     label: 'Лекций в курсе',
     icon: <Image src={tasksIcon} alt={''} className="h-9 w-9" />,
-  },
-];
-
-const courseStatusTypes = [
-  {
-    type: 'available',
-    text: 'Доступно для прохождения',
-  },
-  {
-    type: 'starter',
-    text: 'Требуется оплата тарифа',
-  },
-  {
-    type: 'upcoming',
-    text: 'По мере прохождения разблокируется',
-  },
-  {
-    type: 'completed',
-    text: 'Завершенный курс',
   },
 ];
 
@@ -97,56 +75,7 @@ export default async function CoursePage({ courseId }: { courseId: string }) {
             <span className="text-secondary/50 text-sm uppercase sm:text-xs">
               Структура курса
             </span>
-            <InfoPopover
-              position="right"
-              title="Структура курса заблокирована?"
-              content="Первая глава доступна бесплатно, остальные — по подписке. После оплаты главы будут разблокированы по мере прохождения."
-            >
-              <div className="flex flex-col gap-4 pt-5">
-                {courseStatusTypes.map((item, index) => (
-                  <div
-                    key={index}
-                    className="font-delight flex items-center gap-3"
-                  >
-                    {item.type === 'available' && (
-                      <div className="flex h-6 w-22 items-center gap-1 rounded-lg bg-[#33CF89]/10 px-2">
-                        <div className="h-1 w-1 rounded-full bg-[#33CF89]" />
-                        <span className="text-xs text-[#33CF89]">
-                          Available
-                        </span>
-                      </div>
-                    )}
-
-                    {item.type === 'starter' && (
-                      <div className="flex h-6 w-22 items-center gap-1 rounded-lg bg-gradient-to-r from-[#FF20A2]/10 to-[#FF2020]/10 px-2">
-                        <div className="h-1 w-1 rounded-full bg-[#FF20A2]" />
-                        <span className="bg-gradient-to-r from-[#FF20A2] to-[#FF2020] bg-clip-text text-xs text-transparent">
-                          STARTER
-                        </span>
-                      </div>
-                    )}
-
-                    {item.type === 'upcoming' && (
-                      <div className="flex h-6 w-22 items-center gap-1 rounded-lg bg-[#9AA6B5]/10 px-2">
-                        <div className="h-1 w-1 rounded-full bg-[#9AA6B5]" />
-                        <span className="text-xs text-[#9AA6B5]">Upcoming</span>
-                      </div>
-                    )}
-
-                    {item.type === 'completed' && (
-                      <div className="flex h-6 w-22 items-center gap-1 rounded-lg bg-[#9AA6B5]/10 px-2 opacity-50">
-                        <div className="h-1 w-1 rounded-full bg-[#9AA6B5]" />
-                        <span className="text-xs text-[#9AA6B5]">
-                          Completed
-                        </span>
-                      </div>
-                    )}
-
-                    <span className="text-xs text-white">{item.text}</span>
-                  </div>
-                ))}
-              </div>
-            </InfoPopover>
+            <CourseStructurePopover />
           </div>
           <div className="flex flex-col gap-8">
             {courseData.structure.map((section) => (
