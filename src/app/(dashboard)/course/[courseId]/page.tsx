@@ -1,6 +1,6 @@
 import CoursePage from '../../../components/CoursePage';
-import { getServerSession } from '~/server/auth';
-import { redirect } from 'next/navigation';
+// import { getServerSession } from '~/server/auth';
+// import { redirect } from 'next/navigation';
 
 type Params = Promise<{ courseId: string }>;
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
@@ -12,5 +12,5 @@ export default async function DashboardPage(props: { params: Params }) {
   //   redirect('/signin');
   // }
 
-  return <CoursePage session={{} as any} courseId={params.courseId} />;
+  return <CoursePage courseId={params.courseId} />;
 }

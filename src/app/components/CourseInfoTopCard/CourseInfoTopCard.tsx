@@ -1,18 +1,21 @@
+'use server';
 import Link from 'next/link';
 import { ICourse } from '~/app/lib/constants/courses';
 import Image from 'next/image';
 import { AlumniCounter } from './AlumniCounter';
 import { RatingCounter } from './RatingCounter';
 import { CourseProgress } from './CourseProgress';
-import { useTranslations } from 'next-intl';
+// import { useTranslations,  } from 'next-intl';
+import {getTranslations} from 'next-intl/server';
+
 import GridSvg from './assets/grid.svg';
 import TheoryIcon from './assets/TheoryIcon.svg';
 import PracticeIcon from './assets/PracticeIcon.svg';
 import VideoIcon from './assets/VideoIcon.svg';
 import ClockIcon from './assets/clock.svg';
 
-export default function CourseInfoTopCard({ course }: { course: ICourse }) {
-  const t = useTranslations('UserSpace');
+export default async function CourseInfoTopCard({ course }: { course: ICourse }) {
+  const t = await getTranslations('UserSpace');
 
   return (
     <section className="border-accent static sm:sticky top-0 flex flex-col gap-10 self-start">
