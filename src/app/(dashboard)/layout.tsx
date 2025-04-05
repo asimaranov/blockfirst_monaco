@@ -1,20 +1,30 @@
 import Sidebar from '~/app/components/Sidebar/Sidebar';
 import MobileNavbar from '~/app/components/mobile/MobileNavbar';
-export default function AuthPageBase({
+import { api } from '~/trpc/server';
+import { HydrateClient } from '~/trpc/server';
+
+export default async function AuthPageBase({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Prefetch notifications data
+  await api.notifications.getAll.prefetch();
+  await api.notifications.getUnreadCount.prefetch();
+  await api.notifications.getSettings.prefetch();
+
   return (
     <div className="bg-background relative flex max-h-screen flex-col sm:flex-row">
-      <MobileNavbar />
-      <Sidebar />
-      <div
-        className="bg-dark-bg w-full px-0 sm:px-16 overflow-visible sm:overflow-scroll"
-        id="content-view"
-      >
-        {children}
-      </div>
+      <HydrateClient>
+        <MobileNavbar />
+        <Sidebar />
+        <div
+          className="bg-dark-bg w-full overflow-visible px-0 sm:overflow-scroll sm:px-16"
+          id="content-view"
+        >
+          {children}
+        </div>
+      </HydrateClient>
     </div>
   );
 }
