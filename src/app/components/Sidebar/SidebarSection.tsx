@@ -39,7 +39,7 @@ function SidebarSection({
 }) {
   const pathname = usePathname();
   const unreadCount = api.notifications.getUnreadCount.useQuery(undefined, {
-    refetchInterval: 1000,
+    refetchInterval: 5000,
   });
 
   return (
