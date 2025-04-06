@@ -13,6 +13,8 @@ import MobileAuthorInfo from './components/MobileAuthorInfo';
 import TariffSection from './components/TariffSection';
 import CourseSection from './components/CourseSection';
 import { CourseStructurePopover } from './components/CourseStructurePopover';
+import { api } from '~/trpc/server';
+import { cn } from '~/helpers';
 
 const courseStats: CourseStat[] = [
   {
@@ -35,6 +37,7 @@ const courseStats: CourseStat[] = [
 export default async function CoursePage({ courseId }: { courseId: string }) {
   const course = COURSES.find((x) => x.id === courseId)!;
   const courseData = COURSE_DATA[courseId as keyof typeof COURSE_DATA];
+  const userData = await api.userData.getUserData();
 
   return (
     <main className="border-accent border-r-0 border-l-0 sm:border-r sm:border-l">
@@ -47,20 +50,27 @@ export default async function CoursePage({ courseId }: { courseId: string }) {
         <CourseInfoTopCard course={course} />
         <div className="border-accent flex flex-col border-l-0 sm:border-l">
           {/* Top section with Starter and Pro blocks */}
-          <div className="border-accent divide-accent hidden flex-row divide-x border-b sm:flex">
-            {TARIFFS.slice(1).map((tariff) => (
-              <TariffCard key={tariff.name} tariff={tariff} />
-            ))}
-          </div>
-          <div className="h-9.5 w-full"></div>
-
-          <div className="mt-1.5 mb-10 flex flex-col gap-10 sm:hidden">
-            {TARIFFS[1] && <TariffSection tariff={TARIFFS[1]} />}
-            {TARIFFS[2] && <TariffSection tariff={TARIFFS[2]} />}
-          </div>
+          {userData.plan === 'free' && (
+            <>
+              <div className="border-accent divide-accent mb-9.5 hidden flex-row divide-x border-b sm:flex">
+                {TARIFFS.slice(1).map((tariff) => (
+                  <TariffCard key={tariff.name} tariff={tariff} />
+                ))}
+              </div>
+              <div className="mt-1.5 mb-10 flex flex-col gap-10 sm:hidden">
+                {TARIFFS[1] && <TariffSection tariff={TARIFFS[1]} />}
+                {TARIFFS[2] && <TariffSection tariff={TARIFFS[2]} />}
+              </div>
+            </>
+          )}
 
           {/* Bottom section with stats */}
-          <div className="border-accent divide-accent mb-10 flex flex-col divide-y border-t border-b sm:mb-0 sm:flex-row sm:divide-x sm:divide-y-0">
+          <div
+            className={cn(
+              'border-accent divide-accent mb-10 flex flex-col divide-y border-b sm:mb-0 sm:flex-row sm:divide-x sm:divide-y-0',
+              userData.plan === 'free' && 'border-t'
+            )}
+          >
             {courseStats.map((stat, index) => (
               <CourseStatItem
                 key={index}
