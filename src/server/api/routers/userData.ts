@@ -26,10 +26,10 @@ export const userDataRouter = createTRPCRouter({
 
       // Create default user data
       const newUserData = await UserDataModel.create(defaultUserData);
-      return newUserData;
+      return newUserData.toJSON();
     }
 
-    return userData;
+    return userData.toJSON();
   }),
 
   // Get only the user plan

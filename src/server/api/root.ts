@@ -13,7 +13,7 @@ export const appRouter = createTRPCRouter({
   post: postRouter,
   tinkoff: tinkoffRouter,
   notifications: notificationsRouter,
-  // userData: userDataRouter,
+  userData: userDataRouter,
 });
 
 // export type definition of API

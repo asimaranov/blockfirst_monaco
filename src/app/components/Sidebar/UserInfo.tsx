@@ -1,9 +1,30 @@
-import { cn } from '~/helpers';
+'use client';
+
 import { Skeleton } from '../shared/Skeleton';
 import { IUser } from '~/app/lib/types/IUser';
 import { SubscriptionLabel } from './assets/SubscriptionLabel';
+import { api } from '~/trpc/react';
+import { SubscriptionType } from '~/app/lib/constants/subsctiptions';
+import { PlanType } from '~/server/models/userData';
+
+const planTypeToSubscriptionType = (plan: PlanType) => {
+  switch (plan) {
+    case 'free':
+      return SubscriptionType.Free;
+    case 'starter':
+      return SubscriptionType.Starter;
+    case 'pro':
+      return SubscriptionType.Pro;
+    default:
+      return SubscriptionType.Free;
+  }
+};
 
 export function UserInfo({ user }: { user?: IUser }) {
+  const { data: userData } = api.userData.getUserData.useQuery(undefined, {
+    refetchInterval: 15000,
+  });
+
   return (
     <div className={'flex flex-row border-t border-[#282D33] px-8 py-5'}>
       {user?.name?.[0] ? (
@@ -13,7 +34,7 @@ export function UserInfo({ user }: { user?: IUser }) {
           }
         >
           <span
-            className={'font-roboto text-[0.87vw] uppercase text-[#F2F2F2]'}
+            className={'font-roboto text-[0.87vw] text-[#F2F2F2] uppercase'}
           >
             {user.name[0]}
           </span>
@@ -25,7 +46,7 @@ export function UserInfo({ user }: { user?: IUser }) {
         {user?.name ? (
           <span
             className={
-              'text-base line-clamp-1 font-roboto font-medium text-[#F2F2F2]'
+              'font-roboto line-clamp-1 text-base font-medium text-[#F2F2F2]'
             }
           >
             {user.name.split(' ')[0]}
@@ -34,9 +55,9 @@ export function UserInfo({ user }: { user?: IUser }) {
           <Skeleton className="h-5 w-[5.21vw] rounded-full" />
         )}
         {user?.startTimestamp ? (
-          <span className="text-xs font-roboto text-[#9AA6B5]">
+          <span className="font-roboto text-xs text-[#9AA6B5]">
             Старт —{' '}
-            <span className="text-xs font-roboto text-[#F2F2F2]">
+            <span className="font-roboto text-xs text-[#F2F2F2]">
               {new Date(user?.startTimestamp).toLocaleDateString('ru-RU', {
                 day: '2-digit',
                 month: '2-digit',
@@ -50,9 +71,11 @@ export function UserInfo({ user }: { user?: IUser }) {
       </div>
       <div className="ml-auto">
         {user?.subscriptionType != undefined ? (
-          <SubscriptionLabel type={user.subscriptionType} />
+          <SubscriptionLabel
+            type={planTypeToSubscriptionType(userData?.plan || 'free')}
+          />
         ) : (
-          <Skeleton className="w-34 h-6 rounded-full" />
+          <Skeleton className="h-6 w-34 rounded-full" />
         )}
       </div>
     </div>
