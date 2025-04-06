@@ -111,7 +111,6 @@ export default async function Sidebar() {
     },
   ];
 
-
   return (
     <>
       <section className="relative z-10 hidden h-screen w-full max-w-86 flex-col sm:flex">
@@ -164,7 +163,9 @@ export default async function Sidebar() {
             <span
               className={cn(
                 'font-roboto text-secondary mr-8 ml-4 text-center text-[0.75vw] leading-4 text-nowrap',
-                user.subscriptionType === SubscriptionType.Free && 'opacity-60'
+                user.subscriptionType === SubscriptionType.Free
+                  ? 'opacity-60'
+                  : 'text-foreground'
               )}
             >
               Закрытый клуб BlockFirst
