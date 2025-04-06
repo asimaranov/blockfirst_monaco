@@ -34,93 +34,6 @@ interface NotificationsProps {
   notificationsNum: number;
 }
 
-// Define DB notification type
-interface DBNotification {
-  id: string;
-  userId: string;
-  type: string;
-  title: string | null;
-  message: string | null;
-  username: string | null;
-  course: string | null;
-  timestamp?: Date;
-  category: string;
-  isRead: boolean;
-  isArchived: boolean;
-  avatar: string | null;
-  highlightedBorder?: boolean | null;
-  description: string | null;
-  imageUrl: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-// Define DB notification setting type
-interface DBNotificationSetting {
-  id: string;
-  userId: string;
-  settingType: string;
-  enabled: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-// Adapter function to convert DB notification to frontend Notification type
-const adaptNotification = (dbNotification: DBNotification): Notification => {
-  const baseNotification = {
-    id: dbNotification.id,
-    timestamp:
-      dbNotification.timestamp?.toISOString() ||
-      dbNotification.createdAt.toISOString(),
-    category: dbNotification.category,
-    isRead: dbNotification.isRead,
-    isArchived: dbNotification.isArchived,
-    avatar: dbNotification.avatar,
-  };
-
-  switch (dbNotification.type) {
-    case 'promo':
-      return {
-        ...baseNotification,
-        type: 'promo' as const,
-        title: dbNotification.title || '',
-        description: dbNotification.description || '',
-        image: dbNotification.imageUrl,
-      } as PromoNotification;
-    case 'system':
-      return {
-        ...baseNotification,
-        type: 'system' as const,
-        title: dbNotification.title || '',
-        message: dbNotification.message || '',
-        highlightedBorder: dbNotification.highlightedBorder || false,
-      } as SystemNotification;
-    case 'comment':
-      return {
-        ...baseNotification,
-        type: 'comment' as const,
-        username: dbNotification.username || '',
-        course: dbNotification.course || '',
-        message: dbNotification.message || '',
-      } as CommentNotification;
-    case 'like':
-      return {
-        ...baseNotification,
-        type: 'like' as const,
-        username: dbNotification.username || '',
-        course: dbNotification.course || '',
-      } as LikeNotification;
-    default:
-      // Default to system notification
-      return {
-        ...baseNotification,
-        type: 'system' as const,
-        title: dbNotification.title || 'System Notification',
-        message: dbNotification.message || '',
-      } as SystemNotification;
-  }
-};
-
 const Notifications = ({ onClose }: NotificationsProps) => {
   const [activeTab, setActive] = useState<'incoming' | 'archieve' | 'settings'>(
     'incoming'
@@ -128,7 +41,9 @@ const Notifications = ({ onClose }: NotificationsProps) => {
 
   // Fetch notifications using tRPC
   const { data: allNotifications, refetch: refetchNotifications } =
-    api.notifications.getAll.useQuery();
+    api.notifications.getAll.useQuery(undefined, {
+      refetchInterval: 10000, // Refetch every 10 seconds
+    });
   const markAsRead = api.notifications.markAsRead.useMutation({
     onSuccess: () => refetchNotifications(),
   });
@@ -146,20 +61,36 @@ const Notifications = ({ onClose }: NotificationsProps) => {
 
   // Derived states from fetched data
   const incomingNotifications =
-    allNotifications?.map(adaptNotification).filter((n) => !n.isArchived) || [];
+    allNotifications?.filter((n) => !n.isArchived) || [];
   const archivedNotifications =
-    allNotifications?.map(adaptNotification).filter((n) => n.isArchived) || [];
+    allNotifications?.filter((n) => n.isArchived) || [];
   const [inArchived, setInArchived] = useState(false);
 
   // Convert notification settings from DB to format used by the component
   const [settings, setSettings] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
-    if (notificationSettings && notificationSettings.length > 0) {
+    if (notificationSettings) {
+      // With the new structure, notificationSettings will be a single object
       const settingsMap: Record<string, boolean> = {};
-      notificationSettings.forEach((setting: DBNotificationSetting) => {
-        settingsMap[setting.settingType] = setting.enabled;
-      });
+      if (notificationSettings.settings) {
+        // Map settings from the object to our Record
+        AllNotificationSettingTypes.forEach((settingType) => {
+          settingsMap[settingType] =
+            notificationSettings.settings[
+              settingType as keyof typeof notificationSettings.settings
+            ] ??
+            defaultNotificationSettings[
+              settingType as keyof typeof defaultNotificationSettings
+            ].defaultEnabled;
+        });
+      } else {
+        // Fallback to default settings if none found
+        AllNotificationSettingTypes.forEach((setting) => {
+          settingsMap[setting] =
+            defaultNotificationSettings[setting].defaultEnabled;
+        });
+      }
       setSettings(settingsMap);
     } else {
       // Fallback to default settings if none found
@@ -202,6 +133,15 @@ const Notifications = ({ onClose }: NotificationsProps) => {
   // Dismiss notification (move to archive)
   const dismissNotification = (id: string) => {
     markAsArchived.mutate({ id });
+  };
+
+  // Mark notification as read
+  const markNotificationAsRead = (id: string) => {
+    // Only mark as read if not already read
+    const notification = allNotifications?.find(n => n.id === id);
+    if (notification && !notification.isRead) {
+      markAsRead.mutate({ id });
+    }
   };
 
   // Archive all notifications
@@ -266,10 +206,12 @@ const Notifications = ({ onClose }: NotificationsProps) => {
                       isMobile={isMobile}
                       dismissNotification={dismissNotification}
                     >
-                      <NotificationContent
-                        notification={notification}
-                        dismissNotification={dismissNotification}
-                      />
+                      <div onClick={() => markNotificationAsRead(notification.id)}>
+                        <NotificationContent
+                          notification={notification}
+                          dismissNotification={dismissNotification}
+                        />
+                      </div>
                     </SwipeableNotification>
                   ))
               ) : (

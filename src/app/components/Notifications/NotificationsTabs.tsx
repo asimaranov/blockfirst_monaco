@@ -3,11 +3,12 @@ import { useEffect, useRef, useState } from 'react';
 import { Notification } from './types';
 import { motion } from 'motion/react';
 import SettingIcon from './assets/settings';
+import { INotification } from '~/server/models/notification';
 
 interface NotificationsTabsProps {
   activeTab: string;
   setActive: (tab: 'incoming' | 'archieve' | 'settings') => void;
-  incomingNotifications: Notification[];
+  incomingNotifications: INotification[];
 }
 
 export default function NotificationsTabs({

@@ -1,31 +1,37 @@
+'use client';
+
 import { motion, AnimatePresence } from 'motion/react';
 import Notifications from './Notifications';
 import Image from 'next/image';
 import noNotificationsImage from './assets/no-notifications.png';
 import { api } from '~/trpc/react';
+import { useNotificationsModalStore } from '~/store/notificationsModal';
 
 interface NotificationsModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+  onClose?: () => void;
+  unreadCount?: number;
 }
 
-export function NotificationsModal({
-  isOpen,
+function NotificationsModalDesktop({
   onClose,
+  unreadCount,
 }: NotificationsModalProps) {
-  // Get unread notification count
-  const { data: unreadCount = 0 } = api.notifications.getUnreadCount.useQuery();
+  const { isOpen, close } = useNotificationsModalStore();
+  const handleClose = () => {
+    close();
+    onClose?.();
+  };
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="right-0">
+        <div className="right-0 z-[10000000000000000000000]">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            onClick={onClose}
+            onClick={handleClose}
             className="fixed inset-0 z-40 ml-86 bg-black/50"
           />
           <motion.div
@@ -44,7 +50,10 @@ export function NotificationsModal({
               boxShadow: '0 0 20px rgba(0, 0, 0, 0.3)',
             }}
           >
-            <Notifications onClose={onClose} notificationsNum={unreadCount} />
+            <Notifications
+              onClose={handleClose}
+              notificationsNum={unreadCount || 0}
+            />
           </motion.div>
         </div>
       )}
@@ -52,12 +61,46 @@ export function NotificationsModal({
   );
 }
 
-export function NotificationsModalMobile({
-  isOpen,
-  onClose,
-}: NotificationsModalProps) {
-  // Get unread notification count
+export function NotificationsModal({ onClose }: NotificationsModalProps) {
   const { data: unreadCount = 0 } = api.notifications.getUnreadCount.useQuery();
+
+  const { isOpen, type, close } = useNotificationsModalStore();
+
+  const handleClose = () => {
+    close();
+    onClose?.();
+  };
+
+  if (!isOpen) return null;
+
+  if (type === 'desktop') {
+    return (
+      <NotificationsModalDesktop
+        onClose={handleClose}
+        unreadCount={unreadCount}
+      />
+    );
+  }
+
+  return (
+    <NotificationsModalMobile
+      onClose={handleClose}
+      unreadCount={unreadCount}
+    />
+  );
+}
+
+function NotificationsModalMobile({
+  onClose,
+  unreadCount,
+}: NotificationsModalProps) {
+  const { isOpen, close } = useNotificationsModalStore();
+  const handleClose = () => {
+    close();
+    onClose?.();
+  };
+
+  // Get unread notification count
 
   return (
     <AnimatePresence>
@@ -68,7 +111,7 @@ export function NotificationsModalMobile({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            onClick={onClose}
+            onClick={handleClose}
             className="fixed inset-0 z-40 bg-black/50"
           />
           <motion.div
@@ -89,7 +132,7 @@ export function NotificationsModalMobile({
           >
             <div
               className="bg-dark-bg flex h-15 flex-row items-center gap-2 p-5 text-base"
-              onClick={onClose}
+              onClick={handleClose}
             >
               <svg
                 width="20"
@@ -107,7 +150,10 @@ export function NotificationsModalMobile({
               </svg>
               Назад
             </div>
-            <Notifications onClose={onClose} notificationsNum={unreadCount} />
+            <Notifications
+              onClose={handleClose}
+              notificationsNum={unreadCount || 0}
+            />
           </motion.div>
         </div>
       )}

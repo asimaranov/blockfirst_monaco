@@ -1,20 +1,20 @@
 import { betterAuth, type BetterAuthOptions } from 'better-auth';
-import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { openAPI, admin } from 'better-auth/plugins';
 import { emailOTP } from 'better-auth/plugins';
+import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import {
   sendChangeEmailVerification,
   sendResetPasswordEmail,
   sendVerificationEmail,
 } from '~/server/auth/email';
-import { PrismaClient } from '@prisma/client';
+import { MongoClient } from "mongodb";
+import { env } from '~/env';
 
-const prisma = new PrismaClient();
+const client = new MongoClient(env.MONGODB_URI!);
+const db = client.db(env.DATABASE_NAME!);
 
 export const auth = betterAuth({
-  database: prismaAdapter(prisma, {
-    provider: 'postgresql',
-  }),
+  database: mongodbAdapter(db),
   plugins: [
     emailOTP({
       sendVerificationOnSignUp: true,

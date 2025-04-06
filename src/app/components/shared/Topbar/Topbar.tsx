@@ -6,11 +6,6 @@ import { IUser } from '~/app/lib/types/IUser';
 import { authClient } from '~/server/auth/client';
 import { SubscriptionType } from '~/app/lib/constants/subsctiptions';
 import MobileBurgerMenu from '../../mobile/MobileBurgerMenu';
-import {
-  NotificationsModal,
-  NotificationsModalMobile,
-} from '../../Notifications/NotificationsModal';
-import Link from 'next/link';
 import MobilePremiumTopbar from './MobilePremiumTopbar';
 
 export interface TopbarProps {
@@ -73,10 +68,6 @@ export function Topbar({
         <MobilePremiumTopbar text={mobilePremiumText} />
       )}
 
-      <NotificationsModalMobile
-        isOpen={isNotificationsOpen}
-        onClose={() => setIsNotificationsOpen(false)}
-      />
       {mobileNav && (
         <div className="relative sm:hidden">
           <MobileHeader

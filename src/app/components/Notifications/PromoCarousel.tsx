@@ -7,6 +7,10 @@ import { PromoNotification, Notification } from './types';
 import { useCallback, useEffect, useState } from 'react';
 import { cn } from '~/helpers';
 import { PanInfo } from 'motion/react';
+import {
+  INotification,
+  IPromoNotification,
+} from '~/server/models/notification';
 
 /*
   emblaRef,
@@ -39,7 +43,7 @@ export default function PromoCarousel({
   incomingNotifications,
   dismissNotification,
 }: {
-  incomingNotifications: Notification[];
+  incomingNotifications: INotification[];
   dismissNotification: (id: string) => void;
 }) {
   // Embla carousel setup
@@ -105,7 +109,7 @@ export default function PromoCarousel({
           <div className="flex">
             {incomingNotifications
               .filter(
-                (notification): notification is PromoNotification =>
+                (notification): notification is IPromoNotification =>
                   notification.type === 'promo'
               )
               .map((notification) => (

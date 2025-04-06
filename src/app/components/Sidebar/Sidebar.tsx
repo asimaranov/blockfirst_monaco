@@ -1,22 +1,12 @@
-'use client';
-
 import Image from 'next/image';
 import LogoSvg from './assets/logo-dashboard.svg';
-import logoutImg from './assets/logout.svg';
-import logoutHoverImg from './assets/logout-hover.svg';
 import Link from 'next/link';
-import { MenuItem } from './MenuItem';
-import { MenuLink } from './MenuLink';
 import starterIMG from 'public/subscriptions/starter.svg';
 import { UserInfo } from './UserInfo';
 import { IUser } from '~/app/lib/types/IUser';
-import { authClient } from '~/server/auth/client';
 import { Socials } from './Socials';
 import { cn } from '~/helpers';
-import { ReactNode, useEffect, useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
 import { SubscriptionType } from '~/app/lib/constants/subsctiptions';
-import { NotificationsModal } from '../Notifications/NotificationsModal';
 import LightningIcon from './assets/section_icons/lightning';
 import TariffIcon from './assets/section_icons/tariff';
 import CertIcon from './assets/section_icons/cert';
@@ -26,124 +16,111 @@ import JobIcon from './assets/section_icons/job';
 import ReferralIcon from './assets/section_icons/referral';
 import NotificationsIcon from './assets/section_icons/notifications';
 import { api } from '~/trpc/react';
+import SignOutButton from './SignOutButton';
+import { SidebarSection, SidebarSections } from './SidebarSection';
+import { auth } from '~/server/auth';
+import { headers } from 'next/headers';
 
-interface SidebarSection {
-  title: string;
-  isPro: boolean;
-  items: SidebarItem[];
-}
-
-interface SidebarItem {
-  title: string;
-  href: string;
-  otherHref?: string;
-  icon: ReactNode;
-  type?: 'notifications';
-  locked?: boolean;
-  notificationCount?: number;
-}
-
-const sidebarSections: SidebarSection[] = [
-  {
-    title: 'Основное',
-    isPro: false,
-    items: [
-      {
-        title: 'Мои Курсы',
-        href: '/dashboard',
-        icon: <LightningIcon />,
-        otherHref: '/course',
-      },
-      {
-        title: 'Тариф',
-        href: '/pricing',
-        icon: <TariffIcon />,
-      },
-      {
-        title: 'Диплом',
-        href: '/diploma',
-        icon: <CertIcon />,
-      },
-    ],
-  },
-  {
-    title: 'Персонально',
-    isPro: true,
-    items: [
-      {
-        title: 'Твой куратор',
-        href: '/mentor',
-        icon: <MentorIcon />,
-
-        locked: true,
-      },
-      {
-        title: 'Подготовка резюме',
-        href: '/cv',
-        icon: <CvIcon />,
-        locked: true,
-      },
-      {
-        title: 'Трудоустройство',
-        href: '/employment',
-        icon: <JobIcon />,
-
-        locked: true,
-      },
-    ],
-  },
-  {
-    title: 'Аккаунт',
-    isPro: false,
-    items: [
-      {
-        title: 'Реферальная программа',
-        href: '/referral',
-        icon: <ReferralIcon />,
-
-        locked: false,
-      },
-      {
-        title: 'Уведомления',
-        href: '#',
-        icon: <NotificationsIcon />,
-        notificationCount: 3,
-        locked: false,
-        type: 'notifications',
-      },
-    ],
-  },
-];
-
-export default function Sidebar() {
-  const pathname = usePathname();
-  const router = useRouter();
-  const session = authClient.useSession();
-  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+export default async function Sidebar() {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
   // Get unread notification count
-  const { data: unreadCount } = api.notifications.getUnreadCount.useQuery();
+  // const { data: unreadCount } = api.notifications.getUnreadCount.useQuery();
 
   const user: IUser = {
-    name: session.data?.user?.name ?? '',
+    name: session?.user?.name ?? '',
     startTimestamp: Date.now(),
     createdAt: new Date().toISOString(),
     subscriptionType: SubscriptionType.Starter,
   };
 
-  // Create a copy of the sidebar sections with the updated notification count
-  const updatedSidebarSections = [...sidebarSections].map((section) => ({
-    ...section,
-    items: section.items.map((item) => {
-      if (item.type === 'notifications') {
-        return {
-          ...item,
-          notificationCount: unreadCount || 0,
-        };
-      }
-      return item;
-    }),
-  }));
+  const sidebarSections: SidebarSection[] = [
+    {
+      title: 'Основное',
+      isPro: false,
+      items: [
+        {
+          title: 'Мои Курсы',
+          href: '/dashboard',
+          icon: <LightningIcon />,
+          otherHref: '/course',
+        },
+        {
+          title: 'Тариф',
+          href: '/pricing',
+          icon: <TariffIcon />,
+        },
+        {
+          title: 'Диплом',
+          href: '/diploma',
+          icon: <CertIcon />,
+        },
+      ],
+    },
+    {
+      title: 'Персонально',
+      isPro: true,
+      items: [
+        {
+          title: 'Твой куратор',
+          href: '/mentor',
+          icon: <MentorIcon />,
+
+          locked: true,
+        },
+        {
+          title: 'Подготовка резюме',
+          href: '/cv',
+          icon: <CvIcon />,
+          locked: true,
+        },
+        {
+          title: 'Трудоустройство',
+          href: '/employment',
+          icon: <JobIcon />,
+
+          locked: true,
+        },
+      ],
+    },
+    {
+      title: 'Аккаунт',
+      isPro: false,
+      items: [
+        {
+          title: 'Реферальная программа',
+          href: '/referral',
+          icon: <ReferralIcon />,
+
+          locked: false,
+        },
+        {
+          title: 'Уведомления',
+          href: '#',
+          icon: <NotificationsIcon />,
+          notificationCount: 3,
+          locked: false,
+          type: 'notifications',
+        },
+      ],
+    },
+  ];
+
+  // // Create a copy of the sidebar sections with the updated notification count
+  // const updatedSidebarSections = [...sidebarSections].map((section) => ({
+  //   ...section,
+  //   items: section.items.map((item) => {
+  //     if (item.type === 'notifications') {
+  //       return {
+  //         ...item,
+  //         notificationCount: unreadCount || 0,
+  //       };
+  //     }
+  //     return item;
+  //   }),
+  // }));
 
   return (
     <>
@@ -153,72 +130,9 @@ export default function Sidebar() {
             <Link href="/dashboard" className="hover:opacity-80">
               <Image src={LogoSvg} alt="logo" className="w-[9.664vw]" />
             </Link>
-            <div
-              className={
-                'group cursor-pointer rounded-full border border-[#282D33] py-[0.58vw] pr-[0.52vw] pl-[0.64vw] hover:border-transparent hover:bg-[#F2F2F2]'
-              }
-              onClick={async () => {
-                try {
-                  await authClient.signOut();
-                } catch (error) {
-                  console.error('Sign out error', error);
-                } finally {
-                  router.push('/signin');
-                }
-              }}
-            >
-              <Image
-                src={logoutImg}
-                alt="logout"
-                className="h-4 w-4 group-hover:hidden group-data-[active=true]:hidden"
-              />
-              <Image
-                src={logoutHoverImg}
-                alt="logout"
-                className="hidden h-4 w-4 group-hover:block group-data-[active=true]:block"
-              />
-            </div>
+            <SignOutButton />
           </div>
-          {updatedSidebarSections.map((section) => (
-            <MenuItem
-              key={section.title}
-              title={section.title}
-              isPro={section.isPro}
-            >
-              {section.items.map((item) => (
-                <MenuLink
-                  key={item.title}
-                  title={item.title}
-                  href={item.href}
-                  isCurrentPage={
-                    pathname.startsWith(item.href) ||
-                    (!!item.otherHref && pathname.startsWith(item.otherHref))
-                  }
-                  locked={item.locked}
-                  notificationCount={item.notificationCount}
-                  onClick={() => {
-                    console.log(item.type, 'item.type');
-                    if (item.type === 'notifications') {
-                      setIsNotificationsOpen(!isNotificationsOpen);
-                    }
-                  }}
-                >
-                  <div className="h-4 w-4">
-                    {/* Check if the icon is a react node */}
-                    {typeof item.icon === 'object' ? (
-                      item.icon
-                    ) : (
-                      <Image
-                        src={item.icon as any}
-                        alt={item.title}
-                        className="h-4 w-4"
-                      />
-                    )}
-                  </div>
-                </MenuLink>
-              ))}
-            </MenuItem>
-          ))}
+          <SidebarSections sections={sidebarSections} />
         </nav>
         <div className={'mt-auto flex flex-col border-t border-[#282D33]'}>
           <Link href="#" className={'flex flex-row items-center px-8 py-5'}>
@@ -277,12 +191,6 @@ export default function Sidebar() {
           <Socials />
         </div>
       </section>
-
-      {/* Notifications Modal */}
-      <NotificationsModal
-        isOpen={isNotificationsOpen}
-        onClose={() => setIsNotificationsOpen(false)}
-      />
     </>
   );
 }

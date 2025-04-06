@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { cn } from '~/helpers';
 import { PromoNotification } from './types';
 import noNotificationsImage from './assets/no-notifications.png';
+import { INotification, IPromoNotification } from '~/server/models/notification';
 export function NotificationContent({
   notification,
   dismissNotification,
@@ -116,7 +117,7 @@ export function NotificationContentPromo({
   notification,
   dismissNotification,
 }: {
-  notification: PromoNotification;
+  notification: IPromoNotification;
   dismissNotification: (id: string) => void;
 }) {
   return (
@@ -156,7 +157,7 @@ export function NotificationContentPromo({
 export function ArchievedNotificationContent({
   notification,
 }: {
-  notification: Notification;
+  notification: INotification;
 }) {
   return (
     <div className="group relative flex flex-col px-8 py-5 first:pt-8 hover:bg-[#282D33]/30">

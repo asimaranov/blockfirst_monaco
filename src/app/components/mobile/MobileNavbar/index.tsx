@@ -9,12 +9,9 @@ import LightningIcon from '../../Sidebar/assets/section_icons/lightning';
 import TariffIcon from '../../Sidebar/assets/section_icons/tariff';
 import CertIcon from '../../Sidebar/assets/section_icons/cert';
 import ReferralIcon from '../../Sidebar/assets/section_icons/referral';
-import NotificationsIcon from '../../Sidebar/assets/section_icons/notifications';
-import {
-  NotificationsModal,
-  NotificationsModalMobile,
-} from '../../Notifications/NotificationsModal';
 import PremiumIcon from './assets/premium-icon.png';
+import { useNotificationsModalStore } from '~/store/notificationsModal';
+
 interface NavItemProps {
   href: string;
   icon: React.ReactNode;
@@ -69,7 +66,7 @@ const MobileNavbar: React.FC = () => {
   const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const { toggle } = useNotificationsModalStore();
 
   // Debounce the visibility updates to prevent flickering
   const setVisibilityDebounced = useCallback(
@@ -221,21 +218,13 @@ const MobileNavbar: React.FC = () => {
                 label={item.label}
                 isActive={isRouteActive(item)}
                 onClick={
-                  item.type === 'notifications'
-                    ? () => setIsNotificationsOpen(true)
-                    : undefined
+                  item.type === 'notifications' ? () => toggle('mobile') : undefined
                 }
               />
             ))}
           </motion.nav>
         )}
       </AnimatePresence>
-
-      {/* Use the NotificationsModal component */}
-      <NotificationsModalMobile
-        isOpen={isNotificationsOpen}
-        onClose={() => setIsNotificationsOpen(false)}
-      />
     </>
   );
 };

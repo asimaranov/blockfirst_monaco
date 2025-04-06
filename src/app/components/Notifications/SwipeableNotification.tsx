@@ -1,6 +1,6 @@
 import { motion, useMotionValue, PanInfo, useTransform } from 'motion/react';
 import { useState } from 'react';
-import { Notification } from './types';
+import { INotification } from '~/server/models/notification';
 
 
 export const SwipeableNotification = ({
@@ -10,7 +10,7 @@ export const SwipeableNotification = ({
   isArchived = false,
   dismissNotification,
 }: {
-  notification: Notification;
+  notification: INotification;
   children: React.ReactNode;
   isArchived?: boolean;
   isMobile: boolean;
@@ -37,7 +37,7 @@ export const SwipeableNotification = ({
       setIsRemoving(true);
       // Wait for animation to complete before actually removing
       await new Promise((resolve) => setTimeout(resolve, 300));
-      dismissNotification(notification.id);
+      dismissNotification(notification.id!);
     }
   };
 
