@@ -15,7 +15,7 @@ import CvIcon from './assets/section_icons/cv';
 import JobIcon from './assets/section_icons/job';
 import ReferralIcon from './assets/section_icons/referral';
 import NotificationsIcon from './assets/section_icons/notifications';
-import { api } from '~/trpc/react';
+import { api } from '~/trpc/server';
 import SignOutButton from './SignOutButton';
 import { SidebarSection, SidebarSections } from './SidebarSection';
 import { auth } from '~/server/auth';
@@ -28,6 +28,7 @@ export default async function Sidebar() {
 
   // Get unread notification count
   // const { data: unreadCount } = api.notifications.getUnreadCount.useQuery();
+  const unreadCount = await api.notifications.getUnreadCount();
 
   const user: IUser = {
     name: session?.user?.name ?? '',
@@ -100,27 +101,13 @@ export default async function Sidebar() {
           title: 'Уведомления',
           href: '#',
           icon: <NotificationsIcon />,
-          notificationCount: 3,
+          notificationCount: unreadCount || 0,
           locked: false,
           type: 'notifications',
         },
       ],
     },
   ];
-
-  // // Create a copy of the sidebar sections with the updated notification count
-  // const updatedSidebarSections = [...sidebarSections].map((section) => ({
-  //   ...section,
-  //   items: section.items.map((item) => {
-  //     if (item.type === 'notifications') {
-  //       return {
-  //         ...item,
-  //         notificationCount: unreadCount || 0,
-  //       };
-  //     }
-  //     return item;
-  //   }),
-  // }));
 
   return (
     <>
