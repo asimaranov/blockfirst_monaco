@@ -97,7 +97,6 @@ export function SidebarSections({ sections }: { sections: SidebarSection[] }) {
           }}
         />
       ))}
-      <NotificationsModal />
     </>
   );
 }

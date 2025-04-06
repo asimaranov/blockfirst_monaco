@@ -7,7 +7,7 @@ import { authClient } from '~/server/auth/client';
 import { SubscriptionType } from '~/app/lib/constants/subsctiptions';
 import MobileBurgerMenu from '../../mobile/MobileBurgerMenu';
 import MobilePremiumTopbar from './MobilePremiumTopbar';
-
+import { useNotificationsModalStore } from '~/store/notificationsModal';
 export interface TopbarProps {
   /**
    * Left side content
@@ -52,7 +52,8 @@ export function Topbar({
   };
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const { toggle } = useNotificationsModalStore();
+   
 
   const handleMenuToggle = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -73,7 +74,7 @@ export function Topbar({
           <MobileHeader
             hasNotifications={true}
             onNotificationClick={() =>
-              setIsNotificationsOpen(!isNotificationsOpen)
+              toggle('mobile')
             }
             username={user.name}
             startDate={new Date(user?.startTimestamp).toLocaleDateString(

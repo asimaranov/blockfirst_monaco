@@ -100,7 +100,7 @@ const NotificationSchema = new mongoose.Schema<INotification>(
     toJSON: {
       virtuals: true,
       transform: function (doc, ret) {
-        ret.id = ret._id;
+        ret.id = ret._id.toString();
         delete ret._id;
         delete ret.__v;
 

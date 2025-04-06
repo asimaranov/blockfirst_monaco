@@ -50,7 +50,9 @@ export const notificationsRouter = createTRPCRouter({
       }
     }
 
-    return notifications as INotification[];
+    const r =  notifications.map((notification) => notification.toJSON());
+    console.log(r)
+    return r
   }),
 
   // Get only unread notifications count
