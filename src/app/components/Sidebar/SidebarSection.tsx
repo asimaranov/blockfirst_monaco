@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { NotificationsModal } from '../Notifications/NotificationsModal';
 import { useNotificationsModalStore } from '~/store/notificationsModal';
-
+import { api } from '~/trpc/react';
 export interface SidebarSection {
   title: string;
   isPro: boolean;
@@ -38,6 +38,9 @@ function SidebarSection({
   };
 }) {
   const pathname = usePathname();
+  const unreadCount = api.notifications.getUnreadCount.useQuery(undefined, {
+    refetchInterval: 1000,
+  });
 
   return (
     <MenuItem key={section.title} title={section.title} isPro={section.isPro}>
@@ -51,7 +54,11 @@ function SidebarSection({
             (!!item.otherHref && pathname.startsWith(item.otherHref))
           }
           locked={item.locked}
-          notificationCount={item.notificationCount}
+          notificationCount={
+            item.type === 'notifications'
+              ? unreadCount.data
+              : item.notificationCount
+          }
           onClick={() => {
             if (item.type === 'notifications') {
               notificationsState.setIsNotificationsOpen(true);
