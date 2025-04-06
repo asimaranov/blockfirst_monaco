@@ -58,6 +58,7 @@ export const notificationsRouter = createTRPCRouter({
     await dbConnect();
 
     const count = await NotificationModel.countDocuments({
+      type: { $ne: 'promo' },
       userId: ctx.session.user.id,
       isRead: false,
       isArchived: false,
