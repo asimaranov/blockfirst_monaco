@@ -11,7 +11,9 @@ export default async function AuthPageBase({
 }) {
   // Prefetch notifications data
   // await api.notifications.getAll.prefetch();
-  // await api.notifications.getUnreadCount.prefetch();
+  await api.notifications.getUnreadCount.prefetch();
+  await api.userData.getUserData.prefetch();
+
   // await api.notifications.getSettings.prefetch();
 
   return (

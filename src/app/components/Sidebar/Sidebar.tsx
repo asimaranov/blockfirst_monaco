@@ -20,6 +20,7 @@ import SignOutButton from './SignOutButton';
 import { SidebarSection, SidebarSections } from './SidebarSection';
 import { auth } from '~/server/auth';
 import { headers } from 'next/headers';
+import { planTypeToSubscriptionType } from '~/app/lib/utils';
 
 export default async function Sidebar() {
   const session = await auth.api.getSession({
@@ -29,12 +30,13 @@ export default async function Sidebar() {
   // Get unread notification count
   // const { data: unreadCount } = api.notifications.getUnreadCount.useQuery();
   const unreadCount = await api.notifications.getUnreadCount();
+  const userData = await api.userData.getUserData();
 
   const user: IUser = {
     name: session?.user?.name ?? '',
     startTimestamp: Date.now(),
     createdAt: new Date().toISOString(),
-    subscriptionType: SubscriptionType.Starter,
+    subscriptionType: planTypeToSubscriptionType(userData.plan),
   };
 
   const sidebarSections: SidebarSection[] = [
@@ -109,6 +111,7 @@ export default async function Sidebar() {
     },
   ];
 
+
   return (
     <>
       <section className="relative z-10 hidden h-screen w-full max-w-86 flex-col sm:flex">
@@ -161,12 +164,12 @@ export default async function Sidebar() {
             <span
               className={cn(
                 'font-roboto text-secondary mr-8 ml-4 text-center text-[0.75vw] leading-4 text-nowrap',
-                user.subscriptionType !== SubscriptionType.Pro && 'opacity-60'
+                user.subscriptionType === SubscriptionType.Free && 'opacity-60'
               )}
             >
               Закрытый клуб BlockFirst
             </span>
-            {user.subscriptionType !== SubscriptionType.Pro && (
+            {user.subscriptionType === SubscriptionType.Free && (
               <Image
                 src={starterIMG}
                 alt="Starter subscription"

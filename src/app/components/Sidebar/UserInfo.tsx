@@ -4,21 +4,7 @@ import { Skeleton } from '../shared/Skeleton';
 import { IUser } from '~/app/lib/types/IUser';
 import { SubscriptionLabel } from './assets/SubscriptionLabel';
 import { api } from '~/trpc/react';
-import { SubscriptionType } from '~/app/lib/constants/subsctiptions';
-import { PlanType } from '~/server/models/userData';
-
-const planTypeToSubscriptionType = (plan: PlanType) => {
-  switch (plan) {
-    case 'free':
-      return SubscriptionType.Free;
-    case 'starter':
-      return SubscriptionType.Starter;
-    case 'pro':
-      return SubscriptionType.Pro;
-    default:
-      return SubscriptionType.Free;
-  }
-};
+import { planTypeToSubscriptionType } from '~/app/lib/utils';
 
 export function UserInfo({ user }: { user?: IUser }) {
   const { data: userData } = api.userData.getUserData.useQuery(undefined, {

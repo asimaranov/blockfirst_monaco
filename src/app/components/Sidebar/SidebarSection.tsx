@@ -41,9 +41,12 @@ function SidebarSection({
   const unreadCount = api.notifications.getUnreadCount.useQuery(undefined, {
     refetchInterval: 5000,
   });
+  const { data: userData } = api.userData.getUserData.useQuery(undefined, {
+    refetchInterval: 15000,
+  });
 
   return (
-    <MenuItem key={section.title} title={section.title} isPro={section.isPro}>
+    <MenuItem key={section.title} title={section.title} isPro={section.isPro && userData?.plan === 'free'}>
       {section.items.map((item) => (
         <MenuLink
           key={item.title}
@@ -53,7 +56,7 @@ function SidebarSection({
             pathname.startsWith(item.href) ||
             (!!item.otherHref && pathname.startsWith(item.otherHref))
           }
-          locked={item.locked}
+          locked={item.locked && userData?.plan === 'free'}
           notificationCount={
             item.type === 'notifications'
               ? unreadCount.data

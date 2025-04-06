@@ -1,3 +1,6 @@
+import { PlanType } from "~/server/models/userData";
+import { SubscriptionType } from "./constants/subsctiptions";
+
 export function formatPrice(price: number, currency: string = '₽') {
   const formatter = new Intl.NumberFormat('ru-RU');
   return `${currency}${formatter.format(Math.ceil(price))}`;
@@ -35,3 +38,16 @@ export function formatRelativeTime(date: Date): string {
       .replace(/\//g, '-');
   }
 }
+
+export const planTypeToSubscriptionType = (plan: PlanType) => {
+  switch (plan) {
+    case 'free':
+      return SubscriptionType.Free;
+    case 'starter':
+      return SubscriptionType.Starter;
+    case 'pro':
+      return SubscriptionType.Pro;
+    default:
+      return SubscriptionType.Free;
+  }
+};
