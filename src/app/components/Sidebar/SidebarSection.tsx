@@ -46,7 +46,7 @@ function SidebarSection({
   });
 
   return (
-    <MenuItem key={section.title} title={section.title} isPro={section.isPro && userData?.plan === 'free'}>
+    <MenuItem key={section.title} title={section.title} isPro={section.isPro && userData?.plan !== 'pro'}>
       {section.items.map((item) => (
         <MenuLink
           key={item.title}
@@ -56,7 +56,7 @@ function SidebarSection({
             pathname.startsWith(item.href) ||
             (!!item.otherHref && pathname.startsWith(item.otherHref))
           }
-          locked={item.locked && userData?.plan === 'free'}
+          locked={item.locked && userData?.plan !== 'pro'}
           notificationCount={
             item.type === 'notifications'
               ? unreadCount.data
