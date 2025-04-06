@@ -10,9 +10,9 @@ export default async function AuthPageBase({
   children: React.ReactNode;
 }) {
   // Prefetch notifications data
-  // await api.notifications.getAll.prefetch();
-  // await api.notifications.getUnreadCount.prefetch();
-  // await api.notifications.getSettings.prefetch();
+  await api.notifications.getAll.prefetch();
+  await api.notifications.getUnreadCount.prefetch();
+  await api.notifications.getSettings.prefetch();
 
   return (
     <div className="bg-background relative flex max-h-screen flex-col sm:flex-row">
