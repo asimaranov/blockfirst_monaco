@@ -138,8 +138,9 @@ export default function MentorPage({ session }: { session: Session }) {
       <div className="flex h-auto flex-col sm:h-screen">
         <Topbar lastestUpdate={'18 марта 2025'} />
         <div className="flex flex-row gap-3 overflow-x-auto px-5 pt-10 pb-8 whitespace-nowrap sm:hidden">
-          {mentors.map((mentor) => (
+          {mentors.map((mentor, i) => (
             <div
+              key={i}
               className={cn(
                 'flex shrink-0 flex-row items-center justify-center gap-2 rounded-full border px-4 py-2.5 text-xs',
                 mentor.current && 'border-success',
