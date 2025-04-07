@@ -183,7 +183,7 @@ export default function PremiumPage({ session }: { session: Session }) {
           </div>
           <div className="rounded-lg p-5">
             <div className="mt-10">
-              <div className="text-secondary mb-8 flex justify-between text-xs">
+              <div className="text-secondary mb-1 flex justify-between text-xs">
                 <span className="text-secondary/50 text-sm uppercase">
                   персонально
                 </span>

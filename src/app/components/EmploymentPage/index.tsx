@@ -16,12 +16,10 @@ import Footer from '../Footer';
 import { Modal } from '../shared/Modal';
 import { ApplyForm } from './ApplyForm';
 
-enum SalarySortOption {
+enum SortType {
+  NONE,
   SALARY_UP,
   SALARY_DOWN,
-}
-
-enum PublishedSortOption {
   PUBLISHED_UP,
   PUBLISHED_DOWN,
 }
@@ -39,12 +37,7 @@ export default function EmploymentPage({ session }: { session: Session }) {
     VacancySpeciality[]
   >([]);
   const [sortOption, setSortOption] = useState<VacancySort>(VacancySort.ALL);
-  const [salarySortOption, setSalarySortOption] = useState<
-    SalarySortOption | undefined
-  >(undefined);
-  const [publishedSortOption, setPublishedSortOption] = useState<
-    PublishedSortOption | undefined
-  >(undefined);
+  const [activeSortType, setActiveSortType] = useState<SortType>(SortType.NONE);
   const [isApplyFormOpen, setIsApplyFormOpen] = useState(false);
 
   const sortVacancies = (vacancies: IVacancy[]) => {
@@ -90,21 +83,42 @@ export default function EmploymentPage({ session }: { session: Session }) {
       return vacanciesToFilter;
     };
 
-    const sortedBySalaryAndDate = filterBySpeciality(
-      filterByViewed(vacancies)
-    ).sort((a, b) => {
-      const salaryDiff =
-        salarySortOption === SalarySortOption.SALARY_UP
-          ? getSalary(a.salary) - getSalary(b.salary)
-          : getSalary(b.salary) - getSalary(a.salary);
-      const dateDiff =
-        publishedSortOption === PublishedSortOption.PUBLISHED_UP
-          ? new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime()
-          : new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
-      return salaryDiff || dateDiff;
-    });
+    const sortedVacancies = filterBySpeciality(filterByViewed(vacancies));
 
-    return sortedBySalaryAndDate;
+    // Apply active sort
+    if (activeSortType !== SortType.NONE) {
+      return [...sortedVacancies].sort((a, b) => {
+        // Salary sorting
+        if (
+          activeSortType === SortType.SALARY_UP ||
+          activeSortType === SortType.SALARY_DOWN
+        ) {
+          const salaryA = getSalary(a.salary);
+          const salaryB = getSalary(b.salary);
+
+          return activeSortType === SortType.SALARY_UP
+            ? salaryA - salaryB
+            : salaryB - salaryA;
+        }
+
+        // Publication date sorting
+        if (
+          activeSortType === SortType.PUBLISHED_UP ||
+          activeSortType === SortType.PUBLISHED_DOWN
+        ) {
+          const dateA = new Date(a.updatedAt).getTime();
+          const dateB = new Date(b.updatedAt).getTime();
+
+          return activeSortType === SortType.PUBLISHED_UP
+            ? dateA - dateB
+            : dateB - dateA;
+        }
+
+        return 0;
+      });
+    }
+
+    return sortedVacancies;
   };
 
   return (
@@ -112,7 +126,7 @@ export default function EmploymentPage({ session }: { session: Session }) {
       <Modal isOpen={isApplyFormOpen} onClose={() => setIsApplyFormOpen(false)}>
         <ApplyForm onClose={() => setIsApplyFormOpen(false)} />
       </Modal>
-      <div className="flex flex-1 flex-col sm:flex-row border-accent">
+      <div className="border-accent flex flex-1 flex-col sm:flex-row">
         <YourVacancies
           lastestUpdate={lastUpdate}
           vacanciesCount={VACANCIES.length || 0}
@@ -122,17 +136,17 @@ export default function EmploymentPage({ session }: { session: Session }) {
           setSortOption={setSortOption}
         />
         {/* Sticky header */}
-        <div className=" relative flex flex-1 flex-col">
-          <div className="hidden sm:grid bg-background sticky top-0 z-[2] items-center gap-9 px-8 py-3.5 grid-cols-[calc(50*var(--spacing))_calc(35*var(--spacing))_calc(28*var(--spacing))_calc(25*var(--spacing))_1fr]">
+        <div className="relative flex flex-1 flex-col">
+          <div className="bg-background sticky top-0 z-[2] hidden grid-cols-[calc(50*var(--spacing))_calc(35*var(--spacing))_calc(28*var(--spacing))_calc(25*var(--spacing))_1fr] items-center gap-9 px-8 py-3.5 sm:grid">
             <span className="text-secondary text-xs uppercase opacity-50">
               Вакансия
             </span>
             <button
               onClick={() => {
-                setSalarySortOption(
-                  salarySortOption === SalarySortOption.SALARY_UP
-                    ? SalarySortOption.SALARY_DOWN
-                    : SalarySortOption.SALARY_UP
+                setActiveSortType(
+                  activeSortType === SortType.SALARY_UP
+                    ? SortType.SALARY_DOWN
+                    : SortType.SALARY_UP
                 );
               }}
               className="group flex cursor-pointer flex-row items-center gap-1 @sm:mt-2"
@@ -143,9 +157,9 @@ export default function EmploymentPage({ session }: { session: Session }) {
               <SortIcon
                 className="mb-0.5 size-3"
                 arrow={
-                  salarySortOption === SalarySortOption.SALARY_UP
+                  activeSortType === SortType.SALARY_UP
                     ? 'up'
-                    : salarySortOption === SalarySortOption.SALARY_DOWN
+                    : activeSortType === SortType.SALARY_DOWN
                       ? 'down'
                       : 'none'
                 }
@@ -156,10 +170,10 @@ export default function EmploymentPage({ session }: { session: Session }) {
             </span>
             <button
               onClick={() => {
-                setPublishedSortOption(
-                  publishedSortOption === PublishedSortOption.PUBLISHED_UP
-                    ? PublishedSortOption.PUBLISHED_DOWN
-                    : PublishedSortOption.PUBLISHED_UP
+                setActiveSortType(
+                  activeSortType === SortType.PUBLISHED_UP
+                    ? SortType.PUBLISHED_DOWN
+                    : SortType.PUBLISHED_UP
                 );
               }}
               className="group flex cursor-pointer flex-row items-center gap-1 @sm:mt-2"
@@ -170,9 +184,9 @@ export default function EmploymentPage({ session }: { session: Session }) {
               <SortIcon
                 className="mb-0.5 size-3"
                 arrow={
-                  publishedSortOption === PublishedSortOption.PUBLISHED_UP
+                  activeSortType === SortType.PUBLISHED_UP
                     ? 'up'
-                    : publishedSortOption === PublishedSortOption.PUBLISHED_DOWN
+                    : activeSortType === SortType.PUBLISHED_DOWN
                       ? 'down'
                       : 'none'
                 }
@@ -190,14 +204,14 @@ export default function EmploymentPage({ session }: { session: Session }) {
                     key={vacancy.id}
                     vacancy={vacancy}
                     onApply={() => setIsApplyFormOpen(true)}
-                   />
+                  />
                 )
               )}
             </div>
           </div>
         </div>
       </div>
-      <Footer className="block sm:hidden border-accent border-t" />
+      <Footer className="border-accent block border-t sm:hidden" />
     </main>
   );
 }
