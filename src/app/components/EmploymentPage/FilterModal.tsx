@@ -55,7 +55,7 @@ export const FilterModal = ({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="flex h-[780px] w-full  flex-col bg-[#0f1217]">
+      <div className="flex h-[780px] w-full  flex-col bg-[#0f1217] flex-grow">
         <div className="flex flex-col py-5 h-full">
           <div className="flex flex-col gap-8">
             {/* Header */}
