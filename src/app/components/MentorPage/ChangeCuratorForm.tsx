@@ -6,6 +6,7 @@ import TelegramSvg from '~/app/components/input-legends/telegram';
 import BookIcon from '~/app/components/input-legends/book';
 import FormContainer from '../shared/FormContainer';
 import FormField, { FormTextArea } from '../shared/FormField';
+import { api } from '~/trpc/react';
 
 interface StudentFormProps {
   onClose: () => void;
@@ -16,9 +17,30 @@ export default function ChangeCuratorForm({ onClose }: StudentFormProps) {
   const [telegram, setTelegram] = useState('');
   const [motivation, setMotivation] = useState('');
   const [formState, setFormState] = useState<'input' | 'success'>('input');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const submitFormMutation = api.formSubmissions.submitForm.useMutation({
+    onSuccess: () => {
+      setFormState('success');
+      setIsSubmitting(false);
+    },
+    onError: (error) => {
+      setError(error.message || 'Произошла ошибка при отправке формы');
+      setIsSubmitting(false);
+    },
+  });
 
   const handleSubmit = () => {
-    setFormState('success');
+    setIsSubmitting(true);
+    setError(null);
+
+    submitFormMutation.mutate({
+      formType: 'changeCurator',
+      name,
+      telegram,
+      motivation,
+    });
   };
 
   return (
@@ -27,11 +49,14 @@ export default function ChangeCuratorForm({ onClose }: StudentFormProps) {
       title="Смена куратора"
       description="Пожалуйста, кратко опишите причины, по которым вы хотите сменить куратора. Наша команда рассмотрит ваше обращение индивидуально"
       submitButtonText="Продолжить"
-      submitDisabled={name === '' || telegram === '' || motivation === ''}
+      submitDisabled={
+        name === '' || telegram === '' || motivation === '' || isSubmitting
+      }
       onSubmit={handleSubmit}
       formState={formState}
       successTitle="Письмо отправлено"
       successDescription="В ближайшее время с вами свяжется менеджер для обсуждения вопроса о смене куратора"
+      error={error}
     >
       <FormField
         icon={<UserIcon active={name !== ''} />}

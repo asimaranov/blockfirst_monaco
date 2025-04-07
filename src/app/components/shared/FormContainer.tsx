@@ -70,6 +70,7 @@ interface FormContainerProps {
   successButtonText?: string;
   showBackButton?: boolean;
   onBackClick?: () => void;
+  error?: string | null;
 }
 
 interface BottomTextProps {
@@ -95,6 +96,7 @@ export default function FormContainer({
   successButtonText = 'Спасибо',
   showBackButton = false,
   onBackClick,
+  error,
 }: FormContainerProps) {
   if (formState === 'success') {
     return (
@@ -158,7 +160,7 @@ export default function FormContainer({
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.5 }}
-                  className="text-foreground text-xl sm:text-2xl text-center"
+                  className="text-foreground text-center text-xl sm:text-2xl"
                 >
                   {successTitle}
                 </motion.h2>
@@ -246,6 +248,10 @@ export default function FormContainer({
           <div className="flex flex-1 flex-col gap-8">{children}</div>
         </div>
 
+        {error && (
+          <div className="mt-4 text-center text-sm text-red-500">{error}</div>
+        )}
+
         {(kind || 'form') == 'form' && (
           <button
             disabled={submitDisabled}
@@ -262,7 +268,7 @@ export default function FormContainer({
         )}
       </div>
       {bottomText && kind !== 'info' && (
-        <div className="flex h-8 w-full items-center justify-center gap-1 bg-[#14171C] text-xs shrink-0">
+        <div className="flex h-8 w-full shrink-0 items-center justify-center gap-1 bg-[#14171C] text-xs">
           <span className="text-secondary">{bottomText.main}</span>
           <Link
             href={bottomText.link}

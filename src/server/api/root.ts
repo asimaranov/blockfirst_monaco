@@ -3,6 +3,7 @@ import { tinkoffRouter } from '~/server/api/routers/tinkoff';
 import { notificationsRouter } from '~/server/api/routers/notifications';
 import { userDataRouter } from '~/server/api/routers/userData';
 import { subscribersRouter } from '~/server/api/routers/subscribers';
+import { formSubmissionsRouter } from '~/server/api/routers/formSubmissions';
 import { createCallerFactory, createTRPCRouter } from '~/server/api/trpc';
 
 /**
@@ -16,6 +17,7 @@ export const appRouter = createTRPCRouter({
   notifications: notificationsRouter,
   userData: userDataRouter,
   subscribers: subscribersRouter,
+  formSubmissions: formSubmissionsRouter,
 });
 
 // export type definition of API

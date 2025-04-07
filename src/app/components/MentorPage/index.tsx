@@ -16,10 +16,9 @@ import { Modal } from '../shared/Modal';
 import ChangeCuratorForm from './ChangeCuratorForm';
 import MentorSelectedIcon from './assets/mentor-selected-icon.svg';
 import MentorLockedIcon from './assets/mentor-locked-icon.svg';
-
+import { api } from '~/trpc/react';
 import { cn } from '~/helpers';
 import Link from 'next/link';
-
 
 const ComingSoon = () => {
   return (
@@ -130,8 +129,36 @@ export default function MentorPage({ session }: { session: Session }) {
   const [telegram, setTelegram] = useState('');
   const [course, setCourse] = useState('');
   const [success, setSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const submitMutation = api.formSubmissions.submitForm.useMutation({
+    onSuccess: () => {
+      setSuccess(true);
+      setIsSubmitting(false);
+      setError('');
+    },
+    onError: (error) => {
+      setIsSubmitting(false);
+      setError(error.message || 'Произошла ошибка при отправке формы');
+    },
+  });
+
+  const handleSubmit = async () => {
+    if (!name || !telegram || !course) return;
+
+    setIsSubmitting(true);
+    setError('');
+
+    submitMutation.mutate({
+      formType: 'mentor',
+      name,
+      telegram,
+      course,
+    });
+  };
 
   return (
     <main className="border-accent border-r-0 border-l-0 sm:border-r sm:border-l">
@@ -297,7 +324,10 @@ export default function MentorPage({ session }: { session: Session }) {
 
                   <div className="flex gap-2">
                     {mentors[index]!.skills?.map((skill, i) => (
-                      <span className="text-secondary text-xxs rounded-lg bg-[#14171C] px-3 py-2 uppercase" key={i}>
+                      <span
+                        className="text-secondary text-xxs rounded-lg bg-[#14171C] px-3 py-2 uppercase"
+                        key={i}
+                      >
                         {skill}
                       </span>
                     ))}
@@ -449,7 +479,7 @@ export default function MentorPage({ session }: { session: Session }) {
               </div>
 
               {/* Contact options */}
-              <div className="border-accent flex flex-col border-b-0 sm:border-b sm:flex-row divide-y divide-accent sm:divide-y-0">
+              <div className="border-accent divide-accent flex flex-col divide-y border-b-0 sm:flex-row sm:divide-y-0 sm:border-b">
                 {/* Calls */}
                 <div className="border-accent w-auto border-r-0 sm:w-1/2 sm:border-r">
                   <div className="bg-background safari-blend-screen relative h-16 overflow-hidden bg-[url(/images/misc/top-tab-grid-mobile.svg)] bg-cover bg-no-repeat sm:bg-[url(/images/misc/top-tab-grid.svg)]">
@@ -597,26 +627,58 @@ export default function MentorPage({ session }: { session: Session }) {
                   {/* Submit button */}
                   <motion.button
                     className="bg-primary text-foreground mt-10 ml-auto flex h-12 w-12 cursor-pointer items-center justify-center rounded-full disabled:opacity-30 sm:mt-0"
-                    disabled={name === '' || telegram === '' || course === ''}
+                    disabled={
+                      name === '' ||
+                      telegram === '' ||
+                      course === '' ||
+                      isSubmitting
+                    }
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={() => setSuccess(true)}
+                    onClick={handleSubmit}
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="h-5 w-5 cursor-pointer"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                      />
-                    </svg>
+                    {isSubmitting ? (
+                      <svg
+                        className="h-5 w-5 animate-spin"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                    ) : (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="h-5 w-5 cursor-pointer"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                        />
+                      </svg>
+                    )}
                   </motion.button>
+
+                  {error && (
+                    <p className="mt-2 text-xs text-red-500">{error}</p>
+                  )}
                 </div>
               )}
 

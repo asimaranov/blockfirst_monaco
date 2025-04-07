@@ -139,18 +139,18 @@ export default function UsdtForm({ onClose, onFullClose }: StudentFormProps) {
             </defs>
           </svg>
         </div>
-        <div className="text-secondary opacity flex h-12 w-full items-center justify-between rounded-[8px] sm:rounded-[0.463vw] bg-[#14171C] px-5 text-center text-sm">
+        <div className="text-secondary opacity flex h-12 w-full items-center justify-between rounded-[8px] bg-[#14171C] px-5 text-center text-sm sm:rounded-[0.463vw]">
           {paymentAddress}
           <CopyButton textToCopy={paymentAddress} />
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 mt-auto">
+      <div className="mt-auto flex flex-col gap-3">
         <div className="text-2xll flex w-full flex-col items-center leading-8">
           1700 USDT
         </div>
         <div className="bg-accent h-px w-full"></div>
-        <div className="flex w-full flex-row items-center justify-center gap-1 pb-5 sm:pb-8 text-sm">
+        <div className="flex w-full flex-row items-center justify-center gap-1 pb-5 text-sm sm:pb-8">
           <span className="text-secondary">Валюта –</span>
           <svg
             width="16"
@@ -178,8 +178,6 @@ export default function UsdtForm({ onClose, onFullClose }: StudentFormProps) {
           Tether (TRC20)
         </div>
       </div>
-
-      
     </FormContainer>
   );
 }
