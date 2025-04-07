@@ -1,5 +1,5 @@
 import freeSubImg from 'public/subscriptions/bage/coin-free.svg';
-import starterSubImg from 'public/subscriptions/bage/coin-base.svg';
+import starterSubImg from 'public/subscriptions/bage/coin-starter.svg';
 import proSubImg from 'public/subscriptions/bage/coin-pro.svg';
 
 export enum SubscriptionType {

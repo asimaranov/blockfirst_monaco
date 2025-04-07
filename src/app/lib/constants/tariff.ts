@@ -18,6 +18,8 @@ export interface Tariff {
     percent: number;
   };
   isActive?: boolean;
+  unlocked?: boolean;
+
 }
 
 export const TARIFFS: Tariff[] = [
@@ -36,7 +38,6 @@ export const TARIFFS: Tariff[] = [
       { text: '5 лекций / уроков' },
       { text: 'Реферальная программа', bg: true },
     ],
-    isActive: true,
   },
   {
     name: 'Starter',
