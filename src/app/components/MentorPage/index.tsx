@@ -134,6 +134,12 @@ export default function MentorPage({ session }: { session: Session }) {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // Query to get curator status
+  const { data: curatorStatus, isLoading: isLoadingCuratorStatus } =
+    api.userData.getCuratorStatus.useQuery(undefined, {});
+
+  console.log('Curator status', curatorStatus);
+
   const submitMutation = api.formSubmissions.submitForm.useMutation({
     onSuccess: () => {
       setSuccess(true);
@@ -159,6 +165,12 @@ export default function MentorPage({ session }: { session: Session }) {
       course,
     });
   };
+
+  // Determine if the form should be shown or a pending message
+  const showAssigningMessage =
+    !isLoadingCuratorStatus && curatorStatus?.isAssigning && !success;
+  const showForm =
+    !isLoadingCuratorStatus && !curatorStatus?.isAssigning && !success;
 
   return (
     <main className="border-accent border-r-0 border-l-0 sm:border-r sm:border-l">
@@ -543,7 +555,7 @@ export default function MentorPage({ session }: { session: Session }) {
               {/* Header with instructions */}
               <div>
                 <div className="relative flex h-12 items-center bg-[#14171C]">
-                  {success && (
+                  {(success || showAssigningMessage) && (
                     <div className="bg-dark-bg absolute top-0 left-0 h-full w-full opacity-50"></div>
                   )}
                   <div className="flex items-center gap-4 px-5 sm:px-8">
@@ -567,7 +579,7 @@ export default function MentorPage({ session }: { session: Session }) {
                     </div>
                   </div>
                 </div>
-                {!success && (
+                {showForm && (
                   <div className="px-5 py-5 sm:px-8">
                     <p className="text-secondary text-sm">
                       Заполните все поля и наш куратор свяжется с вами в
@@ -575,10 +587,18 @@ export default function MentorPage({ session }: { session: Session }) {
                     </p>
                   </div>
                 )}
+                {showAssigningMessage && (
+                  <div className="px-5 py-5 sm:px-8">
+                    <p className="text-secondary text-sm">
+                      Ваша заявка уже отправлена. Наш куратор скоро свяжется с
+                      вами.
+                    </p>
+                  </div>
+                )}
               </div>
 
-              {/* Contact form */}
-              {!success && (
+              {/* Contact form - only show if not already submitted */}
+              {showForm && (
                 <div className="flex h-full flex-col px-5 sm:px-8">
                   <div className="flex flex-1 flex-col gap-8">
                     <div className="border-accent group focus-within:border-foreground flex h-12 items-center border-b px-4">
@@ -682,6 +702,68 @@ export default function MentorPage({ session }: { session: Session }) {
                 </div>
               )}
 
+              {/* Assigning message */}
+              {showAssigningMessage && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.5 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="flex flex-1 flex-col items-center justify-center gap-8"
+                >
+                  <div className="relative flex h-25 w-25 items-center justify-center">
+                    <div className="rounded-full" />
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: 0.3, duration: 0.5 }}
+                      className=""
+                    >
+                      <svg
+                        width="150"
+                        height="150"
+                        viewBox="0 0 150 150"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-25 w-25"
+                      >
+                        <path
+                          d="M0 75C0 116.421 33.5786 150 75 150C116.421 150 150 116.421 150 75C150 33.5786 116.421 0 75 0C33.5786 0 0 33.5786 0 75ZM148.5 75C148.5 115.593 115.593 148.5 75 148.5C34.4071 148.5 1.5 115.593 1.5 75C1.5 34.4071 34.4071 1.5 75 1.5C115.593 1.5 148.5 34.4071 148.5 75Z"
+                          fill="#195AF4"
+                        />
+                        <path
+                          d="M61 77.5L68.5 85L88.5 65"
+                          stroke="#F2F2F2"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </motion.div>
+                  </div>
+
+                  <div className="flex flex-col items-center gap-4">
+                    <motion.h2
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
+                      className="text-foreground text-center text-base"
+                    >
+                      Запрос отправлен
+                    </motion.h2>
+                    <motion.p
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.6 }}
+                      className="text-secondary w-85 text-center text-sm"
+                    >
+                      Куратор ответит Вам в ближайшее время. Вся дальнейшая
+                      коммуникация будет в Telegram.
+                    </motion.p>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Success message after form submission */}
               {success && (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.5 }}

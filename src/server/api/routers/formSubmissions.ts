@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { createTRPCRouter, publicProcedure, protectedProcedure } from '../trpc';
 import FormSubmissionModel from '~/server/models/formSubmission';
+import UserDataModel from '~/server/models/userData';
 import dbConnect from '~/server/mongodb';
 
 // Define Zod schemas for validation
@@ -58,7 +59,7 @@ export const formSubmissionsRouter = createTRPCRouter({
   // Submit a form (public)
   submitForm: publicProcedure
     .input(formSubmissionSchema)
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input, ctx }) => {
       await dbConnect();
 
       try {
@@ -70,6 +71,21 @@ export const formSubmissionsRouter = createTRPCRouter({
             additionalInfo: input.motivation,
           }),
         });
+
+        // If it's a mentor form submission and user is authenticated, update user data
+        if (input.formType === 'mentor' && ctx.session?.user?.id) {
+          await UserDataModel.findOneAndUpdate(
+            { userId: ctx.session.user.id },
+            {
+              $set: { 'curator.isAssigning': true },
+              $setOnInsert: {
+                userId: ctx.session.user.id,
+                coursesProgress: [],
+              },
+            },
+            { upsert: true }
+          );
+        }
 
         return {
           success: true,
@@ -179,6 +195,28 @@ export const formSubmissionsRouter = createTRPCRouter({
 
         if (input.status === 'processed' || input.status === 'rejected') {
           formSubmission.processedAt = new Date();
+
+          // If it's a mentor form, update the user's curator assignment status
+          if (formSubmission.formType === 'mentor' && formSubmission.telegram) {
+            // Find the user by telegram and update isAssigning to false
+            // Note: This assumes that telegram usernames are unique and used as identifiers
+            await UserDataModel.updateMany(
+              { 'telegramAccount.username': formSubmission.telegram },
+              { $set: { 'curator.isAssigning': false } }
+            );
+
+            // If processed, also set the assignedAt date
+            if (input.status === 'processed') {
+              await UserDataModel.updateMany(
+                { 'telegramAccount.username': formSubmission.telegram },
+                {
+                  $set: {
+                    'curator.assignedAt': new Date(),
+                  },
+                }
+              );
+            }
+          }
         }
 
         if (input.adminNotes) {
