@@ -304,4 +304,127 @@ export const referralsRouter = createTRPCRouter({
         referrerId: referralCode.userId,
       };
     }),
+
+  // Get referral stats with time period filtering
+  getReferralStatsByPeriod: protectedProcedure
+    .input(
+      z.object({
+        timePeriod: z.enum(['all', '7d', '30d', '90d', 'lm', 'year']),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      await dbConnect();
+
+      // Calculate date range based on time period
+      const now = new Date();
+      let startDate = new Date(0); // Default to epoch time for "all"
+
+      switch (input.timePeriod) {
+        case '7d': // Last 7 days
+          startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+          break;
+        case '30d': // Current month
+          startDate = new Date(now.getFullYear(), now.getMonth(), 1);
+          break;
+        case '90d': // Previous month
+          startDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+          const lastDayPrevMonth = new Date(
+            now.getFullYear(),
+            now.getMonth(),
+            0
+          ).getDate();
+          now.setDate(lastDayPrevMonth);
+          now.setMonth(now.getMonth() - 1);
+          break;
+        case 'lm': // Month before previous
+          startDate = new Date(now.getFullYear(), now.getMonth() - 2, 1);
+          const lastDayBeforePrevMonth = new Date(
+            now.getFullYear(),
+            now.getMonth() - 1,
+            0
+          ).getDate();
+          now.setDate(lastDayBeforePrevMonth);
+          now.setMonth(now.getMonth() - 2);
+          break;
+        case 'year': // Last year
+          startDate = new Date(
+            now.getFullYear() - 1,
+            now.getMonth(),
+            now.getDate()
+          );
+          break;
+        default: // 'all' - no filtering needed
+          break;
+      }
+
+      // Create date filter if not "all"
+      const dateFilter =
+        input.timePeriod !== 'all'
+          ? { registrationDate: { $gte: startDate, $lte: now } }
+          : {};
+
+      // Prepare the base query
+      const baseQuery = {
+        referrerId: ctx.session.user.id,
+        ...dateFilter,
+      };
+
+      // Execute queries in parallel for better performance
+      const [totalReferrals, totalEarnings, activePlans, totalBalance] =
+        await Promise.all([
+          // Count total referrals
+          ReferralModel.countDocuments(baseQuery),
+
+          // Calculate total earnings for the period
+          ReferralModel.aggregate([
+            { $match: baseQuery },
+            { $group: { _id: null, total: { $sum: '$earnings' } } },
+          ]),
+
+          // Count referrals by plan type
+          ReferralModel.aggregate([
+            { $match: baseQuery },
+            { $group: { _id: '$plan', count: { $sum: 1 } } },
+          ]),
+
+          // Calculate total balance (sum of all earnings across all time periods)
+          ReferralModel.aggregate([
+            { $match: { referrerId: ctx.session.user.id } }, // No date filter for total balance
+            { $group: { _id: null, total: { $sum: '$earnings' } } },
+          ]),
+        ]);
+
+      const earnings = totalEarnings.length > 0 ? totalEarnings[0].total : 0;
+      const balance = totalBalance.length > 0 ? totalBalance[0].total : 0;
+
+      // Calculate count of purchased plans (non-free)
+      const planCounts = {
+        free: 0,
+        starter: 0,
+        pro: 0,
+      };
+
+      activePlans.forEach((plan) => {
+        if (
+          plan._id &&
+          typeof plan._id === 'string' &&
+          plan._id in planCounts
+        ) {
+          planCounts[plan._id as PlanType] = plan.count;
+        }
+      });
+
+      // Calculate total purchased plans (excluding free)
+      const totalPurchases = planCounts.starter + planCounts.pro;
+
+      return {
+        totalReferrals,
+        totalPurchases,
+        earnings,
+        balance,
+        formattedEarnings: `${earnings.toLocaleString('ru-RU')} ₽`,
+        formattedBalance: `${balance.toLocaleString('ru-RU')} ₽`,
+        planCounts,
+      };
+    }),
 });

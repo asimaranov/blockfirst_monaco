@@ -18,9 +18,18 @@ import { Modal } from '../shared/Modal';
 import { ReferralTable } from './ReferralTable';
 import { WithdrawForm } from './WithdrawForm';
 import { FilterModal } from './FilterModal';
+import { api } from '~/trpc/react';
 
 // Add new types
 type TimePeriod = 'all' | '7d' | '30d' | '90d' | 'lm' | 'year';
+
+// Define a simple Skeleton component
+const SkeletonLoader = ({ className }: { className?: string }) => (
+  <div
+    className={`animate-pulse rounded-md bg-gray-700 ${className}`}
+    style={{ animationDuration: '1.5s' }}
+  />
+);
 
 // Add new components
 const StatCard = ({
@@ -32,7 +41,7 @@ const StatCard = ({
   badgeColor = 'bg-[#14171C]',
 }: {
   title: string;
-  value: string;
+  value: React.ReactNode;
   subtitle: string;
   icon: React.ReactNode;
   badgeText?: string;
@@ -205,6 +214,13 @@ export default function ReferralPage({ session }: { session: Session }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isWithdrawOpen, setIsWithdrawOpen] = useState(false);
 
+  // Fetch referral stats using tRPC
+  const {
+    data: stats,
+    isLoading,
+    error,
+  } = api.referrals.getReferralStatsByPeriod.useQuery({ timePeriod });
+
   return (
     <main className="border-accent border-r-0 border-l-0 sm:border-r sm:border-l">
       <div className="flex h-auto w-full flex-col sm:h-screen">
@@ -258,7 +274,13 @@ export default function ReferralPage({ session }: { session: Session }) {
                 {/* Referrals Card */}
                 <StatCard
                   title="рефералы"
-                  value="24"
+                  value={
+                    isLoading ? (
+                      <SkeletonLoader className="h-8 w-16" />
+                    ) : (
+                      String(stats?.totalReferrals ?? 0)
+                    )
+                  }
                   subtitle="Приглашенных пользователей"
                   icon={<Image src={UserSvg} alt={''} className="h-9 w-9" />}
                 />
@@ -266,7 +288,13 @@ export default function ReferralPage({ session }: { session: Session }) {
                 {/* Purchases Card */}
                 <StatCard
                   title="Покупки"
-                  value="12"
+                  value={
+                    isLoading ? (
+                      <SkeletonLoader className="h-8 w-16" />
+                    ) : (
+                      String(stats?.totalPurchases ?? 0)
+                    )
+                  }
                   subtitle="Приобретённых тарифов"
                   icon={
                     <Image src={TaskSquareSvg} alt={''} className="h-9 w-9" />
@@ -276,7 +304,13 @@ export default function ReferralPage({ session }: { session: Session }) {
                 {/* Earnings Card */}
                 <StatCard
                   title="Процент"
-                  value="56 012 ₽"
+                  value={
+                    isLoading ? (
+                      <SkeletonLoader className="h-8 w-24" /> // Slightly wider for currency
+                    ) : (
+                      (stats?.formattedEarnings ?? '0 ₽')
+                    )
+                  }
                   subtitle="Доход от рефералов"
                   icon={<Image src={PercentSvg} alt={''} className="h-9 w-9" />}
                   badgeText="Процент — 3%"
@@ -353,9 +387,13 @@ export default function ReferralPage({ session }: { session: Session }) {
                       </defs>
                     </svg>
                   </div>
-                  <div className="text-center">
+                  <div className="flex items-center justify-center text-center">
                     <span className="text-foreground text-4xl leading-10.5">
-                      157 910 ₽
+                      {isLoading ? (
+                        <SkeletonLoader className="h-10 w-32" /> // Match text size
+                      ) : (
+                        (stats?.formattedBalance ?? '0 ₽')
+                      )}
                     </span>
                   </div>
                 </div>
@@ -372,7 +410,7 @@ export default function ReferralPage({ session }: { session: Session }) {
                     onClick={() => {
                       setIsWithdrawOpen(true);
                     }}
-                    // disabled={true}
+                    disabled={isLoading || (stats?.balance ?? 0) < 2000}
                   >
                     <svg
                       width="20"
