@@ -90,8 +90,25 @@ export default function NewsletterSubscription() {
 
       {message && (
         <div
-          className={`text-xs ${message.type === 'success' ? 'text-green-500' : 'text-red-500'}`}
+          className={`text-xs flex flex-row items-center gap-2 ${message.type === 'success' ? 'text-success' : 'text-error'}`}
         >
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className='w-3.5 h-3.5'
+          >
+            <path
+              d="M3 7.00009L5.5 9.50009L11 4.00009"
+              stroke="#33CF8E"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+
           {message.text}
         </div>
       )}
