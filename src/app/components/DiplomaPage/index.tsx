@@ -150,10 +150,10 @@ export default function DiplomaPage({ session }: { session: Session }) {
                 <Image
                   src={DiplomaIcon}
                   alt="NFT Diploma"
-                  className="w-10 h-10 sm:w-15 sm:h-15 object-cover"
+                  className="h-10 w-10 object-cover sm:h-15 sm:w-15"
                 />
                 <div className="flex flex-col gap-2">
-                  <h2 className="text-foreground text-2xll leading-8.25">
+                  <h2 className="text-foreground sm:text-2xll text-xl leading-5.75 sm:leading-8.25">
                     NFT диплом
                   </h2>
                   <p className="text-secondary text-sm sm:text-xs">
@@ -164,7 +164,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
               </div>
 
               {/* Competencies Grid */}
-              <div className="bg-dark-bg grid grid-cols-1 gap-x-16 gap-y-5 p-5 sm:grid-cols-2 sm:p-8">
+              <div className="bg-dark-bg mt-5 grid grid-cols-1 gap-x-16 gap-y-5 p-5 sm:mt-0 sm:grid-cols-2 sm:p-8">
                 {competencies.map((competency, index) => (
                   <div key={index} className="flex items-start gap-4">
                     <div className="h-5 w-5">

@@ -9,6 +9,7 @@ export function MenuLink({
   locked,
   isCurrentPage,
   notificationCount,
+  type,
   onClick,
 }: {
   title: string;
@@ -17,6 +18,7 @@ export function MenuLink({
   locked?: boolean;
   isCurrentPage: boolean;
   notificationCount?: number;
+  type: 'notifications' | 'default';
   onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }) {
   return (
@@ -37,8 +39,8 @@ export function MenuLink({
         >
           {title}
         </span>
-        {notificationCount != undefined && (
-          <NotificationCounter count={notificationCount} />
+        {type === 'notifications' && (
+          <NotificationCounter count={notificationCount || 0} />
         )}
         {locked && (
           <svg

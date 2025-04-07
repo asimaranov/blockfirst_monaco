@@ -50,6 +50,7 @@ function SidebarSection({
       {section.items.map((item) => (
         <MenuLink
           key={item.title}
+          type={item.type ?? 'default'}
           title={item.title}
           href={item.href}
           isCurrentPage={
