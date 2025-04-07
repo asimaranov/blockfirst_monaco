@@ -21,8 +21,8 @@ export function ApplyForm({ onClose }: ApplyFormProps) {
     {
       name: 'Телеграм',
       icon: TelegramIcon,
-      value: 'https://t.me/changeme',
-      button: <RedirectArrowButton hrefToOpen={'https://t.me/changeme'} />,
+      value: 'https://t.me/asimaranov',
+      button: <RedirectArrowButton hrefToOpen={'https://t.me/asimaranov'} />,
     },
     {
       name: 'Веб-сайт',

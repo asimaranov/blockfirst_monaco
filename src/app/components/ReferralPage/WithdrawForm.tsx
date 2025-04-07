@@ -18,8 +18,8 @@ export function WithdrawForm({ onClose }: ApplyFormProps) {
     {
       name: 'Телеграм',
       icon: TelegramFlatIcon,
-      value: 'https://t.me/changeme',
-      button: <RedirectArrowButton hrefToOpen={'https://t.me/changeme'} />,
+      value: 'https://t.me/asimaranov',
+      button: <RedirectArrowButton hrefToOpen={'https://t.me/asimaranov'} />,
     },
   ];
 
