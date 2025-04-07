@@ -172,8 +172,8 @@ export default function MentorPage({ session }: { session: Session }) {
         <div className="border-accent flex h-full flex-col border-b sm:flex-row">
           {/* Mentors sidebar */}
           <section className="border-accent hidden w-75 border-r sm:block">
-            {mentors.map((mentor) => (
-              <div className="border-accent relative border-b p-5">
+            {mentors.map((mentor, i) => (
+              <div className="border-accent relative border-b p-5" key={i}>
                 <div className="flex items-center justify-between">
                   {mentor.soon && <ComingSoon />}
                   {mentor.current && (
@@ -296,8 +296,8 @@ export default function MentorPage({ session }: { session: Session }) {
                   {/* Skills pills */}
 
                   <div className="flex gap-2">
-                    {mentors[index]!.skills?.map((skill) => (
-                      <span className="text-secondary text-xxs rounded-lg bg-[#14171C] px-3 py-2 uppercase">
+                    {mentors[index]!.skills?.map((skill, i) => (
+                      <span className="text-secondary text-xxs rounded-lg bg-[#14171C] px-3 py-2 uppercase" key={i}>
                         {skill}
                       </span>
                     ))}

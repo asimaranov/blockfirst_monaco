@@ -14,11 +14,11 @@ const menuSections = [
   {
     title: 'компания',
     links: [
-      { href: '/price', label: 'Стоимость' },
-      { href: '/faq', label: 'F.A.Q' },
-      { href: '/solidity', label: 'Курс Solidity' },
-      { href: '/blog', label: 'Блог' },
-      { href: '/articles', label: 'Статьи' },
+      { href: '/pricing', label: 'Стоимость' },
+      { href: 'https://blockfirst.io/faq', label: 'F.A.Q' },
+      { href: '/course/solidity', label: 'Курс Solidity' },
+      { href: 'https://blockfirst.io/blog', label: 'Блог' },
+      { href: 'https://blockfirst.io/blog', label: 'Статьи' },
     ],
   },
   {
@@ -27,7 +27,7 @@ const menuSections = [
       { href: 'https://youtube.com/blockfirst', label: 'Youtube' },
       { href: 'https://twitter.com/blockfirst', label: 'Twitter' },
       { href: 'https://medium.com/blockfirst', label: 'Medium' },
-      { href: 'https://t.me/blockfirst', label: 'Telegram' },
+      { href: 'https://t.me/blockfirst_edu', label: 'Telegram' },
     ],
   },
 ];
@@ -162,15 +162,15 @@ const MobileBurgerMenu = ({ isOpen, onClose }: MobileBurgerMenuProps) => {
         <div className="flex flex-col space-y-10">
           {/* Menu sections */}
           <div className="grid grid-cols-2 gap-x-4">
-            {menuSections.map((section) => (
-              <div key={section.title} className="flex flex-col">
+            {menuSections.map((section, i) => (
+              <div key={i} className="flex flex-col">
                 <span className="mb-5 text-xs text-[#9AA6B5]/50 uppercase">
                   {section.title}
                 </span>
                 <div className="flex flex-col space-y-4">
-                  {section.links.map((link) => (
+                  {section.links.map((link, i) => (
                     <Link
-                      key={link.href}
+                      key={i}
                       href={link.href}
                       className="text-sm text-[#f2f2f2]"
                       target={

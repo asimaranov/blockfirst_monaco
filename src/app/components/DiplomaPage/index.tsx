@@ -288,7 +288,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
                           <Progress
                             inactive={!!course.soon}
                             value={userProgress[course.id]}
-                            max={course.info?.lessonsCount || 0}
+                            max={course.info?.lessonsCount || 100}
                             className="h-2"
                           />
                         </div>
@@ -350,7 +350,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
                             <Progress
                               inactive={!!course.soon}
                               value={userProgress[course.id]}
-                              max={course.info?.lessonsCount || 0}
+                              max={course.info?.lessonsCount || 100}
                               className="h-2 rounded-full"
                             />
                           </div>

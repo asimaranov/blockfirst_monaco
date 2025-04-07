@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { BackToTopButton } from '../shared/BackToTopButton';
 
 export default function Footer({ className }: { className?: string }) {
@@ -243,7 +244,11 @@ export default function Footer({ className }: { className?: string }) {
                 </div>
               </div>
               {section.hasArrow && (
-                <div className="ml-auto h-5 w-5 cursor-pointer hover:opacity-50">
+                <Link
+                  href={section.href}
+                  target="_blank"
+                  className="ml-auto h-5 w-5 cursor-pointer hover:opacity-50"
+                >
                   <svg
                     width="20"
                     height="20"
@@ -259,7 +264,7 @@ export default function Footer({ className }: { className?: string }) {
                       fill="#F2F2F2"
                     />
                   </svg>
-                </div>
+                </Link>
               )}
             </div>
           ))}
