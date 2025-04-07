@@ -3,6 +3,7 @@ import MobileNavbar from '~/app/components/mobile/MobileNavbar';
 import { api } from '~/trpc/server';
 import { HydrateClient } from '~/trpc/server';
 import { NotificationsModal } from '../components/Notifications/NotificationsModal';
+import { Suspense } from 'react';
 
 export default async function AuthPageBase({
   children,
@@ -18,16 +19,17 @@ export default async function AuthPageBase({
 
   return (
     <div className="bg-background relative flex max-h-screen flex-col sm:flex-row">
-        <MobileNavbar />
-        
-        <Sidebar />
-        <NotificationsModal />
+      <MobileNavbar />
+      <Sidebar />
+      <NotificationsModal />
+      <Suspense>
         <div
           className="bg-dark-bg w-full overflow-visible px-0 sm:overflow-scroll sm:px-16"
           id="content-view"
         >
           {children}
         </div>
+      </Suspense>
     </div>
   );
 }

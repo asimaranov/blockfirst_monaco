@@ -8,6 +8,8 @@ import { usePathname } from 'next/navigation';
 import { NotificationsModal } from '../Notifications/NotificationsModal';
 import { useNotificationsModalStore } from '~/store/notificationsModal';
 import { api } from '~/trpc/react';
+import { getSidebarSectionsData } from './SidebarSectionsData';
+
 export interface SidebarSection {
   title: string;
   isPro: boolean;
@@ -87,8 +89,10 @@ function SidebarSection({
   );
 }
 
-export function SidebarSections({ sections }: { sections: SidebarSection[] }) {
+export function SidebarSections() {
   const { toggle } = useNotificationsModalStore();
+  const sections = getSidebarSectionsData({ unreadCount: 0 });
+
 
   return (
     <>
