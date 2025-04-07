@@ -86,7 +86,9 @@ const starterFeatures = premiumFeatures.filter(
 
 export default async function PremiumPage({ session }: { session: Session }) {
   const userData = await api.userData.getUserData();
-  const tariff = TARIFFS.find((t) => t.name === planTypeToSubscriptionType(userData.plan as PlanType));
+  const tariff = TARIFFS.find(
+    (t) => t.name === planTypeToSubscriptionType(userData.plan as PlanType)
+  );
 
   return (
     <main className="border-accent border-r-0 border-l-0 sm:border-r sm:border-l">
@@ -183,16 +185,24 @@ export default async function PremiumPage({ session }: { session: Session }) {
                 />
               </div>
               <div className="ml-4">
-                <div className="text-foreground text-2xl font-medium">{tariff?.name}</div>
-                <div className="text-secondary mt-2 text-sm">
-                  {userData.plan === 'free' ? 'Стартовый тариф' : <>
-                  <span>Оплачено {' '}</span>
-                  <span className='text-foreground'>{userData.premiumEndDate?.toLocaleDateString('ru-RU', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric'
-                  })}</span>
-                  </>}
+                <div className="text-foreground text-2xl font-medium">
+                  {tariff?.name}
+                </div>
+                <div className="text-secondary mt-2 text-sm whitespace-nowrap">
+                  {userData.plan === 'free' ? (
+                    'Стартовый тариф'
+                  ) : (
+                    <>
+                      <span>Оплачен </span>
+                      <span className="text-foreground">
+                        {userData.premiumEndDate?.toLocaleDateString('ru-RU', {
+                          day: 'numeric',
+                          month: 'numeric',
+                          year: 'numeric',
+                        })}
+                      </span>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -206,9 +216,11 @@ export default async function PremiumPage({ session }: { session: Session }) {
                 <span className="text-secondary/50 text-sm uppercase">
                   персонально
                 </span>
-                <div className="flex items-center">
-                  <Image src={proIMG} alt="Pro" className="h-5 w-8.25" />
-                </div>
+                {userData.plan != 'pro' && (
+                  <div className="flex items-center">
+                    <Image src={proIMG} alt="Pro" className="h-5 w-8.25" />
+                  </div>
+                )}
               </div>
 
               <div className="">
@@ -224,7 +236,14 @@ export default async function PremiumPage({ session }: { session: Session }) {
                         {feature.label}
                       </span>
                     </div>
-                    <Image src={LockImage} alt="Lock" width={20} height={20} />
+                    {userData.plan !== 'pro' && (
+                      <Image
+                        src={LockImage}
+                        alt="Lock"
+                        width={20}
+                        height={20}
+                      />
+                    )}
                   </Link>
                 ))}
               </div>
@@ -234,11 +253,13 @@ export default async function PremiumPage({ session }: { session: Session }) {
                   <span className="text-secondary/50 text-sm uppercase">
                     Телеграм чат
                   </span>
-                  <Image
-                    src={starterIMG}
-                    alt="Starter"
-                    className="h-5 w-14.75"
-                  />
+                  {userData.plan === 'free' && (
+                    <Image
+                      src={starterIMG}
+                      alt="Starter"
+                      className="h-5 w-14.75"
+                    />
+                  )}
                 </div>
 
                 {starterFeatures.map((feature) => (
@@ -252,7 +273,14 @@ export default async function PremiumPage({ session }: { session: Session }) {
                         {feature.label}
                       </span>
                     </div>
-                    <Image src={LockImage} alt="Lock" width={20} height={20} />
+                    {userData.plan === 'free' && (
+                      <Image
+                        src={LockImage}
+                        alt="Lock"
+                        width={20}
+                        height={20}
+                      />
+                    )}
                   </div>
                 ))}
               </div>
