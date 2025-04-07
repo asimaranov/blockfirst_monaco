@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { BackToTopButton } from '../shared/BackToTopButton';
+import NewsletterSubscription from './NewsletterSubscription';
 
 export default function Footer({ className }: { className?: string }) {
   const mobileLinkSections = [
@@ -137,35 +138,7 @@ export default function Footer({ className }: { className?: string }) {
                 </span>
               </p>
             </div>
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-4">
-                <input
-                  type="email"
-                  placeholder="Электронная почта"
-                  className="text-foreground placeholder:text-secondary h-full w-full bg-transparent text-sm placeholder:opacity-50 focus:outline-hidden"
-                  id="email"
-                  name="email"
-                  required
-                  autoComplete="email"
-                />
-                <svg
-                  width="21"
-                  height="20"
-                  viewBox="0 0 21 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="text-secondary h-5 w-5 cursor-pointer"
-                >
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M11.401 4.46943C11.6939 4.17653 12.1688 4.17653 12.4617 4.46942L17.4617 9.46937C17.6023 9.61003 17.6814 9.80079 17.6814 9.9997C17.6814 10.1986 17.6023 10.3894 17.4617 10.53L12.4617 15.53C12.1688 15.8229 11.6939 15.8229 11.401 15.53C11.1081 15.2371 11.1081 14.7623 11.401 14.4694L15.1207 10.7497H4.07422C3.66001 10.7497 3.32422 10.4139 3.32422 9.99971C3.32422 9.58549 3.66001 9.24971 4.07422 9.24971H15.1207L11.401 5.53009C11.1081 5.2372 11.1081 4.76232 11.401 4.46943Z"
-                    fill="#F2F2F2"
-                  />
-                </svg>
-              </div>
-              <div className="h-[1px] w-full bg-[#282F33]"></div>
-            </div>
+            <NewsletterSubscription />
           </div>
           {/* <div className="flex-grow"></div> */}
 

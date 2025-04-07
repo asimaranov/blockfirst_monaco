@@ -2,6 +2,7 @@ import { postRouter } from '~/server/api/routers/post';
 import { tinkoffRouter } from '~/server/api/routers/tinkoff';
 import { notificationsRouter } from '~/server/api/routers/notifications';
 import { userDataRouter } from '~/server/api/routers/userData';
+import { subscribersRouter } from '~/server/api/routers/subscribers';
 import { createCallerFactory, createTRPCRouter } from '~/server/api/trpc';
 
 /**
@@ -14,6 +15,7 @@ export const appRouter = createTRPCRouter({
   tinkoff: tinkoffRouter,
   notifications: notificationsRouter,
   userData: userDataRouter,
+  subscribers: subscribersRouter,
 });
 
 // export type definition of API
