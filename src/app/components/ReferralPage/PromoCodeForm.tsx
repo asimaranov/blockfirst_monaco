@@ -14,9 +14,16 @@ export default function PromoCodeForm({
 }) {
   const [promoCode, setPromoCode] = useState('');
   const [formState, setFormState] = useState<'input' | 'success'>('input');
-
+  const [error, setError] = useState<string | undefined>(undefined);
   const handleSubmit = () => {
     setFormState('success');
+  };
+
+  const checkPromoCode = async (code: string) => {
+    // const response = await fetch(`/api/promo-code?code=${promoCode}`);
+    // const data = await response.json();
+    // return data;
+    return code === '123456';
   };
 
   return (
@@ -25,13 +32,14 @@ export default function PromoCodeForm({
       title="Промокод"
       description="Пожалуйста, введите промокод, предоставленный вам менеджером, для активации персональной реферальной программы"
       submitButtonText="Активировать"
-      submitDisabled={promoCode === ''}
+      submitDisabled={promoCode === '' || error !== undefined}
       onSubmit={handleSubmit}
       formState={formState}
       successTitle="Промокод активирован"
       successDescription="Вы успешно активировали промокод. Теперь вам доступен индивидуальный процент от дохода"
       showBackButton={formState === 'input'}
       onBackClick={onClose}
+      
     >
       <FormField
         type="text"
@@ -39,11 +47,17 @@ export default function PromoCodeForm({
         value={promoCode}
         placeholder="Ваш промокод"
         icon={<PromoCodeIcon active={promoCode !== ''} />}
-        onChange={(e) => setPromoCode(e.target.value)}
+        onChange={async (e) => {
+          setPromoCode(e.target.value);
+          const promoResp = await checkPromoCode(e.target.value);
+          if (!promoResp) {
+            setError('Данный промокод не зарегистрирован');
+          } else {
+            setError(undefined);
+          }
+        }}
         onBlur={() => setPromoCode(promoCode.trim())}
-        error={
-          promoCode === '' ? 'Данный промокод не зарегистрирован' : undefined
-        }
+        error={promoCode !== '' ? error : undefined}
       />
     </FormContainer>
   );

@@ -25,7 +25,7 @@ export default function BloggerForm({ onClose }: ApplyFormProps) {
       value: 'Рассмотрим персональные условия',
       stepText: 'Первый шаг',
       actionButton: (
-        <RedirectArrowButton hrefToOpen={'https://t.me/changeme'} />
+        <RedirectArrowButton hrefToOpen={'https://t.me/asimaranov'} />
       ),
     },
     {
