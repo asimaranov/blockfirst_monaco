@@ -4,6 +4,7 @@ import { notificationsRouter } from '~/server/api/routers/notifications';
 import { userDataRouter } from '~/server/api/routers/userData';
 import { subscribersRouter } from '~/server/api/routers/subscribers';
 import { formSubmissionsRouter } from '~/server/api/routers/formSubmissions';
+import { referralsRouter } from '~/server/api/routers/referrals';
 import { createCallerFactory, createTRPCRouter } from '~/server/api/trpc';
 
 /**
@@ -18,6 +19,7 @@ export const appRouter = createTRPCRouter({
   userData: userDataRouter,
   subscribers: subscribersRouter,
   formSubmissions: formSubmissionsRouter,
+  referrals: referralsRouter,
 });
 
 // export type definition of API

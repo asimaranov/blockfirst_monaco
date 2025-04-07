@@ -15,6 +15,7 @@ import { auth } from '~/server/auth';
 import NotificationModel from '../models/notification';
 import NotificationSettingModel from '../models/notificationSetting';
 import UserDataModel from '../models/userData';
+import ReferralModel from '../models/referral';
 import dbConnect from '../mongodb';
 
 /**
@@ -43,7 +44,8 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
       models: {
         notification: NotificationModel,
         notificationSetting: NotificationSettingModel,
-        // userData: UserDataModel,
+        userData: UserDataModel,
+        referral: ReferralModel,
       },
     },
     ...opts,

@@ -8,7 +8,7 @@ import { cn } from '~/helpers';
 
 interface CopyButtonProps {
   textToCopy?: string;
-  appearanceType?: 'far' | 'near'
+  appearanceType?: 'far' | 'near';
   onCopy?: () => void;
   className?: string;
 }
@@ -17,7 +17,7 @@ export default function CopyButton({
   textToCopy = '',
   onCopy,
   className = '',
-  appearanceType = 'far'
+  appearanceType = 'far',
 }: CopyButtonProps) {
   const [isCopied, setIsCopied] = useState(false);
 
@@ -38,7 +38,7 @@ export default function CopyButton({
   return (
     <div className={className}>
       <button
-        className="button group relative cursor-pointer rounded-md transition-colors z-10"
+        className="button group relative z-10 cursor-pointer rounded-md transition-colors"
         onClick={handleCopy}
         title={isCopied ? 'Copied!' : 'Copy to clipboard'}
       >
@@ -54,14 +54,20 @@ export default function CopyButton({
       </button>
       {isCopied && (
         <div className="relative">
-          <div className={cn(appearanceType === 'far' ? "absolute top-5.5 -right-5 z-50" : "absolute top-1 -right-5 z-50 translate-y-1/2")}>
+          <div
+            className={cn(
+              appearanceType === 'far'
+                ? 'absolute top-5.5 -right-5 z-50'
+                : 'absolute top-1 -right-5 z-50 translate-y-1/2'
+            )}
+          >
             <svg
               width="92"
               height="30"
               viewBox="0 0 92 30"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              className='z-50 w-23 h-7.5 '
+              className="z-50 h-7.5 w-23"
             >
               <rect y="6" width="92" height="24" rx="8" fill="#1D2026" />
               <path

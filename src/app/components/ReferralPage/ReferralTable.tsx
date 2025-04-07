@@ -11,15 +11,18 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { SortIcon } from '../EmploymentPage/assets/sort-icon';
 import AvatarsIcon from './assets/avatars-icon.png';
+import { api } from '~/trpc/react';
+import { IReferral } from '~/server/models/referral';
 
+// The shape of our referral data after transformations
 type ReferralData = {
-  id: number;
+  id: string;
   name: string;
   avatar?: string;
-  registrationDate: string;
+  formattedRegistrationDate: string;
   plan: string;
-  earnings: string;
-  learningTime: string;
+  formattedEarnings: string;
+  formattedLearningTime: string;
 };
 
 enum SortOption {
@@ -28,45 +31,6 @@ enum SortOption {
   REGISTRATION_UP,
   REGISTRATION_DOWN,
 }
-
-const referrals: ReferralData[] = [
-  {
-    id: 1,
-    name: 'Андрей',
-    // avatar: 'https://i.pravatar.cc/300',
-    registrationDate: '23.05.2025',
-    plan: 'Starter',
-    earnings: '12 570 ₽',
-    learningTime: '2д 16ч',
-  },
-  {
-    id: 2,
-    name: 'Виталий',
-    // avatar: 'https://i.pravatar.cc/301',
-    registrationDate: '12.04.2025',
-    plan: 'Pro',
-    earnings: '5 720 ₽',
-    learningTime: '12ч',
-  },
-  {
-    id: 3,
-    name: 'Valve_Gaben',
-    avatar: 'https://i.pravatar.cc/302',
-    registrationDate: '02.03.2025',
-    plan: 'Free',
-    earnings: '0.00 ₽',
-    learningTime: '1д 3ч',
-  },
-  // {
-  //   id: 4,
-  //   name: 'Никитос',
-  //   // avatar: 'https://i.pravatar.cc/303',
-  //   registrationDate: '18.12.2025',
-  //   plan: 'Starter',
-  //   earnings: '4 120 ₽',
-  //   learningTime: '5м',
-  // },
-];
 
 const PlanBadge = ({ plan }: { plan: string }) => (
   <div className="flex items-center gap-2">
@@ -96,7 +60,9 @@ const ReferralCard = ({ referral }: { referral: ReferralData }) => (
     transition={{ duration: 0.3 }}
     className="flex w-full gap-7"
   >
-    <div className="text-secondary text-sm">{referral.id}.</div>
+    <div className="text-secondary text-sm">
+      {Number(referral.id.slice(-4)) || 1}.
+    </div>
     <div className="flex w-full flex-col gap-6">
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-3">
@@ -120,16 +86,18 @@ const ReferralCard = ({ referral }: { referral: ReferralData }) => (
         <PlanBadge plan={referral.plan} />
       </div>
       <div className="flex items-center justify-between">
-        <span className="text-foreground text-base">{referral.earnings}</span>
+        <span className="text-foreground text-base">
+          {referral.formattedEarnings}
+        </span>
         <div className="flex gap-2">
           <div className="flex h-7 items-center justify-center rounded-lg bg-[#14171C] px-2">
             <span className="text-secondary text-xs">
-              {referral.registrationDate}
+              {referral.formattedRegistrationDate}
             </span>
           </div>
           <div className="flex h-7 items-center justify-center rounded-lg bg-[#14171C] px-2">
             <span className="text-secondary text-xs">
-              {referral.learningTime}
+              {referral.formattedLearningTime}
             </span>
           </div>
         </div>
@@ -142,6 +110,21 @@ export const ReferralTable = () => {
   const [sortOption, setSortOption] = useState<SortOption | undefined>(
     undefined
   );
+
+  // Fetch referrals using tRPC
+  const { data: apiReferrals = [], isLoading } =
+    api.referrals.getUserReferrals.useQuery();
+
+  // Convert API response to our component's expected format
+  const referrals: ReferralData[] = apiReferrals.map((referral) => ({
+    id: referral.id || '',
+    name: referral.name,
+    avatar: referral.avatar,
+    formattedRegistrationDate: referral.registrationDate.toLocaleDateString(),
+    plan: referral.plan,
+    formattedEarnings: referral.earnings.toString() || '',
+    formattedLearningTime: referral.learningTimeMinutes.toString() || '',
+  }));
 
   const sortReferrals = (referralsToSort: ReferralData[]) => {
     if (referralsToSort.length === 0) return [];
@@ -157,24 +140,43 @@ export const ReferralTable = () => {
     return [...referralsToSort].sort((a, b) => {
       switch (sortOption) {
         case SortOption.EARNINGS_UP:
-          return getEarningsValue(a.earnings) - getEarningsValue(b.earnings);
+          return (
+            getEarningsValue(a.formattedEarnings) -
+            getEarningsValue(b.formattedEarnings)
+          );
         case SortOption.EARNINGS_DOWN:
-          return getEarningsValue(b.earnings) - getEarningsValue(a.earnings);
+          return (
+            getEarningsValue(b.formattedEarnings) -
+            getEarningsValue(a.formattedEarnings)
+          );
         case SortOption.REGISTRATION_UP:
           return (
-            getRegistrationDateValue(a.registrationDate) -
-            getRegistrationDateValue(b.registrationDate)
+            getRegistrationDateValue(a.formattedRegistrationDate) -
+            getRegistrationDateValue(b.formattedRegistrationDate)
           );
         case SortOption.REGISTRATION_DOWN:
           return (
-            getRegistrationDateValue(b.registrationDate) -
-            getRegistrationDateValue(a.registrationDate)
+            getRegistrationDateValue(b.formattedRegistrationDate) -
+            getRegistrationDateValue(a.formattedRegistrationDate)
           );
         default:
           return 0;
       }
     });
   };
+
+  const sortedReferrals = sortReferrals(referrals);
+
+  // Show loading state or empty state if needed
+  if (isLoading) {
+    return (
+      <div className="border-accent flex grow flex-col border-0 pt-8 pb-10 sm:border-b sm:pt-0 sm:pb-8">
+        <div className="flex h-full w-full items-center justify-center">
+          <span className="text-secondary/50 text-sm">Загрузка...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="border-accent flex grow flex-col gap-6 border-0 pt-8 pb-10 sm:border-b sm:pt-0 sm:pb-8">
@@ -259,14 +261,14 @@ export const ReferralTable = () => {
 
           {/* Mobile Cards - visible only on mobile */}
           <div className="flex flex-col gap-8 px-4 sm:hidden">
-            {sortReferrals(referrals).map((referral) => (
+            {sortedReferrals.map((referral) => (
               <ReferralCard key={`mobile-${referral.id}`} referral={referral} />
             ))}
           </div>
 
           {/* Table Body - visible only on desktop */}
           <div className="hidden flex-col gap-8 px-8 sm:flex">
-            {sortReferrals(referrals).map((referral) => (
+            {sortedReferrals.map((referral, index) => (
               <motion.div
                 key={referral.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -274,7 +276,7 @@ export const ReferralTable = () => {
                 transition={{ duration: 0.3 }}
                 className="grid w-full grid-cols-[calc(7*var(--spacing))_1fr_1fr_1fr_1fr_1fr] gap-8"
               >
-                <span className="text-secondary text-sm">{referral.id}.</span>
+                <span className="text-secondary text-sm">{index + 1}.</span>
                 <div className="flex items-center gap-3">
                   {referral.avatar ? (
                     <Image
@@ -296,13 +298,13 @@ export const ReferralTable = () => {
                   </span>
                 </div>
                 <span className="text-secondary text-sm">
-                  {referral.registrationDate}
+                  {referral.formattedRegistrationDate}
                 </span>
                 <PlanBadge plan={referral.plan} />
                 <span className="text-foreground text-sm">
-                  {referral.earnings}
+                  {referral.formattedEarnings}
                 </span>
-                <LearningTime time={referral.learningTime} />
+                <LearningTime time={referral.formattedLearningTime} />
               </motion.div>
             ))}
           </div>

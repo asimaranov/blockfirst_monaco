@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   Topbar as UnifiedTopbar,
@@ -9,12 +9,37 @@ import Image from 'next/image';
 import CopyButton from '../shared/CopyButton/CopyButton';
 import { Modal } from '../shared/Modal';
 import BloggerForm from './BloggerForm';
+import { api } from '~/trpc/react';
 
 export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
   const [copied, setCopied] = useState(false);
-  const referralLink = 'www.blockfirst.ru/ref2001';
-
+  const [referralLink, setReferralLink] = useState('');
   const [isBloggersFormOpen, setIsBloggersFormOpen] = useState(false);
+
+  // Fetch user's referral code
+  const { data: referralCodeData, isLoading } =
+    api.referrals.getUserReferralCode.useQuery();
+
+  // Update referral link when data is loaded
+  useEffect(() => {
+    if (referralCodeData && referralCodeData.code) {
+      const baseUrl = window.location.origin;
+      setReferralLink(`${baseUrl}/ref/${referralCodeData.code}`);
+    }
+  }, [referralCodeData]);
+
+  // Handle copy function
+  const handleCopy = async () => {
+    if (referralLink) {
+      try {
+        await navigator.clipboard.writeText(referralLink);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      } catch (error) {
+        console.error('Failed to copy: ', error);
+      }
+    }
+  };
 
   return (
     <>
@@ -39,7 +64,7 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
                 <h1 className="text-foreground text-xl leading-8.25 font-medium sm:text-3xl">
                   Реферальная программа
                 </h1>
-                <p className="text-secondary text-sm sm:text-xs leading-5">
+                <p className="text-secondary text-sm leading-5 sm:text-xs">
                   Приглашайте друзей и коллег для обучения в BlockFirst и
                   увеличивайте свой доход!
                 </p>
@@ -51,10 +76,11 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
                 <CopyButton
                   appearanceType="near"
                   className="flex items-center"
+                  onCopy={handleCopy}
                 />
               </div>
               <button
-                className="bg-[#01050d] flex flex-1 flex-row justify-center rounded-full border border-[#195AF4] py-2 text-sm"
+                className="flex flex-1 flex-row justify-center rounded-full border border-[#195AF4] bg-[#01050d] py-2 text-sm"
                 onClick={() => {
                   console.log('clicked');
                   setIsBloggersFormOpen(true);
@@ -83,32 +109,15 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
           <div className="hidden flex-row items-center gap-8 sm:flex">
             <div className="relative">
               <div className="flex items-center space-x-2">
-                <span className="text-foreground text-sm">{referralLink}</span>
+                <span className="text-foreground text-sm">
+                  {isLoading ? 'Загрузка...' : referralLink}
+                </span>
                 <CopyButton
                   appearanceType="near"
                   className="flex items-center"
+                  onCopy={handleCopy}
                 />
               </div>
-
-              <AnimatePresence>
-                {copied && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    className="absolute top-8 right-0 z-10 mt-2"
-                  >
-                    <div className="relative">
-                      <div className="absolute -top-1 right-7 h-0 w-0 border-x-[6.5px] border-b-[6px] border-x-transparent border-b-[#0f1217]"></div>
-                      <div className="bg-dark-bg rounded-lg px-3 py-2">
-                        <span className="text-secondary text-xs">
-                          Скопировано
-                        </span>
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
             </div>
 
             <button
