@@ -34,6 +34,8 @@ export interface IUserData {
     curatorId?: string;
     assignedAt?: Date;
   };
+  premiumStartDate?: Date;
+  premiumEndDate?: Date;
   createdAt: Date;
   updatedAt: Date;
   id?: string;
@@ -114,6 +116,12 @@ const UserDataSchema = new mongoose.Schema<IUserData>(
       },
       curatorId: String,
       assignedAt: Date,
+    },
+    premiumStartDate: {
+      type: Date,
+    },
+    premiumEndDate: {
+      type: Date,
     },
     createdAt: {
       type: Date,

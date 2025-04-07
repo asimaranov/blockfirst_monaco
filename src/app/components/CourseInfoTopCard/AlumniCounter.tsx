@@ -1,4 +1,4 @@
-import alumniAvatarsImg from 'public/misc/alumni-avatars.svg';
+import alumniAvatarsImg from 'public/misc/alumni-avatars.png';
 import Image from 'next/image';
 
 export function AlumniCounter({ count }: { count: number }) {

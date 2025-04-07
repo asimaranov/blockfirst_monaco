@@ -16,6 +16,9 @@ import CvIcon from '../Sidebar/assets/section_icons/cv';
 import JobIcon from '../Sidebar/assets/section_icons/job';
 import ClubIcon from './assets/club-icon.svg';
 import Link from 'next/link';
+import { api } from '~/trpc/server';
+import { planTypeToSubscriptionType } from '~/app/lib/utils';
+import { PlanType } from '~/server/models/userData';
 
 // Premium feature data
 const premiumFeatures = [
@@ -81,99 +84,115 @@ const starterFeatures = premiumFeatures.filter(
   (feature) => feature.tariff === 'STARTER TARIF'
 );
 
-export default function PremiumPage({ session }: { session: Session }) {
+export default async function PremiumPage({ session }: { session: Session }) {
+  const userData = await api.userData.getUserData();
+  const tariff = TARIFFS.find((t) => t.name === planTypeToSubscriptionType(userData.plan as PlanType));
+
   return (
     <main className="border-accent border-r-0 border-l-0 sm:border-r sm:border-l">
       <div className="flex min-h-screen w-full flex-col bg-cover bg-center">
         {/* <Topbar /> */}
 
-        {/* Hero Section */}
-        <section className="relative px-5 pt-5 pb-10">
-          <div className="absolute inset-0 bg-gradient-to-b bg-[url('/images/misc/premium-grid.svg')] bg-top"></div>
+        {userData.plan === 'free' && (
+          <>
+            <section className="relative px-5 pt-5 pb-10">
+              <div className="absolute inset-0 bg-gradient-to-b bg-[url('/images/misc/premium-grid.svg')] bg-top"></div>
 
-          {/* Main Content */}
-          <div className="relative z-10 flex flex-col gap-7">
-            <div className="flex items-center justify-center">
-              <Image
-                src={'/images/logo/form-logo.svg'}
-                alt="Logo"
-                width={152}
-                height={44}
-                className="w-34.5"
-              />
-            </div>
-
-            <div className="text-center">
-              <h1 className="text-foreground text-3xl font-bold">
-                Премиум возможности
-              </h1>
-              <p className="text-secondary mt-4 text-sm">
-                Улучшите качество своего обучения в WEB3 с помощью
-                дополнительных функций
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Premium Cards */}
-        <section className="space-y-3 px-2 py-3 pb-10">
-          {premiumFeatures.map((feature) => (
-            <motion.div
-              key={feature.id}
-              className={`${feature.bgColor} rounded-xl p-5`}
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.2 }}
-            >
-              <div className="mb-5 flex items-center justify-between">
-                <div className="flex items-center">
-                  <div className="bg-foreground flex items-center justify-center rounded-full p-1.5 pr-4">
-                    <Image
-                      src={feature.tariffIcon!}
-                      alt={feature.tariff}
-                      width={20}
-                      height={20}
-                      className="h-5 w-5"
-                    />
-                    <span className="text-background ml-2 text-sm font-medium">
-                      {feature.tariff}
-                    </span>
-                  </div>
+              {/* Main Content */}
+              <div className="relative z-10 flex flex-col gap-7">
+                <div className="flex items-center justify-center">
+                  <Image
+                    src={'/images/logo/form-logo.svg'}
+                    alt="Logo"
+                    width={152}
+                    height={44}
+                    className="w-34.5"
+                  />
                 </div>
-                <div className="flex items-center">
-                  <Image src={LockImage} alt="Lock" width={20} height={20} />
-                </div>
-              </div>
 
-              <div className="flex flex-col gap-5">
-                <Image src={feature.image} alt={feature.title} />
-
-                <div className="text-foreground">
-                  <h3 className="text-lg font-medium">{feature.title}</h3>
-                  <p className="text-foreground/90 mt-4 text-sm">
-                    {feature.description}
+                <div className="text-center">
+                  <h1 className="text-foreground text-3xl font-bold">
+                    Премиум возможности
+                  </h1>
+                  <p className="text-secondary mt-4 text-sm">
+                    Улучшите качество своего обучения в WEB3 с помощью
+                    дополнительных функций
                   </p>
                 </div>
               </div>
-            </motion.div>
-          ))}
-        </section>
+            </section>
 
+            <section className="space-y-3 px-2 py-3 pb-10">
+              {premiumFeatures.map((feature) => (
+                <motion.div
+                  key={feature.id}
+                  className={`${feature.bgColor} rounded-xl p-5`}
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <div className="mb-5 flex items-center justify-between">
+                    <div className="flex items-center">
+                      <div className="bg-foreground flex items-center justify-center rounded-full p-1.5 pr-4">
+                        <Image
+                          src={feature.tariffIcon!}
+                          alt={feature.tariff}
+                          width={20}
+                          height={20}
+                          className="h-5 w-5"
+                        />
+                        <span className="text-background ml-2 text-sm font-medium">
+                          {feature.tariff}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex items-center">
+                      <Image
+                        src={LockImage}
+                        alt="Lock"
+                        width={20}
+                        height={20}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col gap-5">
+                    <Image src={feature.image} alt={feature.title} />
+
+                    <div className="text-foreground">
+                      <h3 className="text-lg font-medium">{feature.title}</h3>
+                      <p className="text-foreground/90 mt-4 text-sm">
+                        {feature.description}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </section>
+          </>
+        )}
         {/* Account Info */}
         <section className="mt-auto mb-10">
-          <div className="bg-background bg-[url(/images/misc/tariff-section-grid.svg)] bg-cover bg-right-bottom bg-no-repeat flex items-center justify-between p-5">
+          <div className="bg-background flex items-center justify-between bg-[url(/images/misc/tariff-section-grid.svg)] bg-cover bg-right-bottom bg-no-repeat p-5">
             <div className="flex items-center">
               <div className="h-13 w-13 overflow-hidden rounded-full">
                 <Image
-                  src={TARIFFS[0]?.bigIcon!}
+                  src={tariff?.bigIcon!}
                   alt="User"
                   width={52}
                   height={52}
                 />
               </div>
               <div className="ml-4">
-                <div className="text-foreground text-2xl font-medium">Free</div>
+                <div className="text-foreground text-2xl font-medium">{tariff?.name}</div>
                 <div className="text-secondary mt-2 text-sm">
-                  Стартовый тариф
+                  {userData.plan === 'free' ? 'Стартовый тариф' : <>
+                  <span>Оплачено {' '}</span>
+                  <span className='text-foreground'>{userData.premiumEndDate?.toLocaleDateString('ru-RU', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                  })}</span>
+                  </>}
                 </div>
               </div>
             </div>

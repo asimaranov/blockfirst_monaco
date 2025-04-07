@@ -11,6 +11,10 @@ import CertIcon from '../../Sidebar/assets/section_icons/cert';
 import ReferralIcon from '../../Sidebar/assets/section_icons/referral';
 import PremiumIcon from './assets/premium-icon.png';
 import { useNotificationsModalStore } from '~/store/notificationsModal';
+import { api } from '~/trpc/react';
+import { TARIFFS } from '~/app/lib/constants/tariff';
+import { planTypeToSubscriptionType } from '~/app/lib/utils';
+import { PlanType } from '~/server/models/userData';
 
 interface NavItemProps {
   href: string;
@@ -67,6 +71,9 @@ const MobileNavbar: React.FC = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const { toggle } = useNotificationsModalStore();
+  const userData = api.userData.getUserData.useQuery();
+  const plan = planTypeToSubscriptionType(userData.data?.plan as PlanType);
+  const tariff = TARIFFS.find((t) => t.name === plan);
 
   // Debounce the visibility updates to prevent flickering
   const setVisibilityDebounced = useCallback(
@@ -91,7 +98,7 @@ const MobileNavbar: React.FC = () => {
     { href: '/pricing', icon: <TariffIcon />, label: 'Тариф' },
     {
       href: '/premium',
-      icon: <Image src={PremiumIcon} alt="Notifications" className="h-5 w-5" />,
+      icon: <Image src={tariff?.bigIcon || PremiumIcon} alt="Notifications" className="h-5 w-5" width={20} height={20} />,
       label: 'Премиум',
       type: 'premium',
     },
