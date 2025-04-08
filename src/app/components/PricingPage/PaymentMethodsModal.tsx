@@ -245,11 +245,12 @@ const PaymentMethodsModal = ({
           onClose={function (): void {
             setIsTetherPayment(false);
           }}
+          tariff={tariff}
         />
       ) : (
         <div
           className={cn(
-            'flex h-full w-full flex-col border-l-0 sm:border-l border-[#282D33]/50 bg-[#0F1115] sm:w-105'
+            'flex h-full w-full flex-col border-l-0 border-[#282D33]/50 bg-[#0F1115] sm:w-105 sm:border-l'
           )}
         >
           <FormMobileControls
