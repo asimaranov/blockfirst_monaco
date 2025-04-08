@@ -65,6 +65,7 @@
     "zustand": "^5.0.3"
   },
   "devDependencies": {
+    "@daochild/tronweb-typescript": "^1.2.3",
     "@tailwindcss/postcss": "^4.0.14",
     "@types/eslint": "^8.56.10",
     "@types/node": "^20.17.24",

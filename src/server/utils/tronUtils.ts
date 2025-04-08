@@ -42,9 +42,30 @@ export const decryptPrivateKey = (encryptedKey: string): string => {
 export const getUsdtBalance = async (address: string): Promise<number> => {
   const tronWeb = getTronWeb();
 
+  let abi = [
+    {
+      'outputs': [{ 'type': 'uint256' }],
+      'constant': true,
+      'inputs': [{ 'name': 'who', 'type': 'address' }],
+      'name': 'balanceOf',
+      'stateMutability': 'View',
+      'type': 'Function'
+    },
+    {
+      'outputs': [{ 'type': 'bool' }],
+      'inputs': [
+        { 'name': '_to', 'type': 'address' },
+        { 'name': '_value', 'type': 'uint256' }
+      ],
+      'name': 'transfer',
+      'stateMutability': 'Nonpayable',
+      'type': 'Function'
+    },
+  ];
+
   try {
     // Create contract instance
-    const contract = await tronWeb.contract().at(USDT_CONTRACT_ADDRESS);
+    const contract = await tronWeb.contract(abi, USDT_CONTRACT_ADDRESS);
 
     // Call balanceOf method
     const balance = await contract.balanceOf(address).call();
