@@ -9,5 +9,5 @@ export default async function Pricing() {
   //   redirect('/signin');
   // }
 
-  return <PricingPage session={{} as any} />;
+  return <PricingPage />;
 }

@@ -1,15 +1,52 @@
 import { Topbar } from './Topbar';
-import { Session } from '~/server/auth';
+import { getServerSession, Session } from '~/server/auth';
 import Footer from '~/app/components/Footer';
 import { TARIFFS } from '~/app/lib/constants/tariff';
 import TariffCard from './TariffCard';
 import { api } from '~/trpc/server';
 import { planTypeToSubscriptionType } from '~/app/lib/utils';
+import { cookies } from 'next/headers';
 
-export default async function PricingPage({ session }: { session: Session }) {
+export default async function PricingPage() {
   const userData = await api.userData.getUserData();
   const userPlan = planTypeToSubscriptionType(userData.plan);
   const userTariff = TARIFFS.find(x => x.name == userPlan);
+
+    // Check for referral cookies and apply them if present
+    const cookieStore = await cookies();
+    const referralCode = cookieStore.get('referral_code')?.value;
+    const referrerId = cookieStore.get('referrer_id')?.value;
+  
+    // Get current user session
+    const session = await getServerSession();
+  
+    // If user is authenticated and referral cookies exist, apply the referral
+    if (session?.user && referralCode && referrerId) {
+      try {
+        // Check if user already has a referral by trying to apply it
+        // The API will handle the duplicate check internally
+        await api.referrals.applyReferralCode({
+          code: referralCode,
+          userId: session.user.id,
+          name: session.user.name || 'User',
+          avatar: session.user.image || '',
+        });
+  
+        console.log(
+          `Applied referral code ${referralCode} for user ${session.user.id}`
+        );
+  
+        // // Remove the cookies after processing
+        cookieStore.delete('referral_code');
+        cookieStore.delete('referrer_id');
+      } catch (error) {
+        console.error('Error applying referral:', error);
+        // Remove cookies even if there was an error
+        cookieStore.delete('referral_code');
+        cookieStore.delete('referrer_id');
+      }
+    }
+  
 
   const tariffs = TARIFFS.map((x) =>
     x.name == userPlan

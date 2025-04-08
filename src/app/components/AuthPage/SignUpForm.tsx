@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import FormField from './components/FormField';
 import FormWrapper from './components/FormWrapper';
 import ErrorBadge from './components/ErrorBadge';
+import { api } from '~/trpc/react';
 
 export default function SignUpForm({
   setAuthStep,

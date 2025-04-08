@@ -1,33 +1,17 @@
 import Link from 'next/link';
 import { ICourse } from '~/app/lib/constants/courses';
 import Image from 'next/image';
-import medalImg from 'public/misc/medal.svg';
 import { AlumniCounter } from './AlumniCounter';
 import { RatingCounter } from './RatingCounter';
 import { CourseProgress } from './CourseProgress';
-import { Progress } from '../shared/Progress';
 import { useTranslations } from 'next-intl';
 import GridSvg from './assets/grid.svg';
-import { motion, useAnimation } from 'motion/react';
 
 export function CourseTopCard({ course }: { course: ICourse }) {
   const t = useTranslations('UserSpace');
-  const controls = useAnimation();
 
   return (
-    <section
-      className="border-accent group relative flex-row gap-10 border-t border-b hover:bg-[#14171C] sm:flex"
-      onMouseEnter={() => {
-        if (!course.soon) {
-          controls.start({ rotate: -5, scale: 1.2 });
-        }
-      }}
-      onMouseLeave={() => {
-        if (!course.soon) {
-          controls.start({ rotate: 0, scale: 1 });
-        }
-      }}
-    >
+    <section className="border-accent group relative flex-row gap-10 border-t border-b hover:bg-[#14171C] sm:flex">
       <div className="bg-background relative z-0 h-full w-157 shrink-0 overflow-hidden">
         <Image
           src={GridSvg}
@@ -37,14 +21,10 @@ export function CourseTopCard({ course }: { course: ICourse }) {
           className="pointer-events-none absolute top-0 left-0 z-20 w-full"
           quality={100}
         />
-        <motion.div
-          className="relative z-10"
-          animate={controls}
-          initial={{ rotate: 0, scale: 1 }}
-          transition={{
-            duration: 0.3,
-            ease: 'easeInOut',
-          }}
+        <div
+          className={`relative z-10 transition-transform duration-400 ease-in-out ${
+            course.soon ? '' : 'group-hover:scale-120 group-hover:-rotate-5'
+          }`}
         >
           <Image
             src={course.bigImg}
@@ -54,7 +34,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
             className="w-full"
             quality={100}
           />
-        </motion.div>
+        </div>
         <div className="pointer-events-none absolute top-0 left-0 flex h-full w-full items-center justify-center">
           {course.bage?.title && (
             <span className="bg-background/30 border-foreground/20 z-30 flex items-center justify-center gap-2 rounded-full border px-6 py-4 text-sm backdrop-blur-sm">

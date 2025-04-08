@@ -4,17 +4,19 @@ import { api } from '~/trpc/server';
 import { HydrateClient } from '~/trpc/server';
 import { NotificationsModal } from '../components/Notifications/NotificationsModal';
 import { Suspense } from 'react';
+import { cookies } from 'next/headers';
+import { getServerSession } from '~/server/auth';
 
-export default async function AuthPageBase({
+export default async function Layout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+
   // Prefetch notifications data
   // await api.notifications.getAll.prefetch();
   // await api.notifications.getUnreadCount.prefetch();
   // await api.userData.getUserData.prefetch();
-
   // await api.notifications.getSettings.prefetch();
 
   return (

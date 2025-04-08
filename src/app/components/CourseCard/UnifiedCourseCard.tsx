@@ -8,7 +8,6 @@ import { Info } from '../icons/Info';
 import GridSvg from './assets/grid.svg';
 import LightSvg from './assets/light.svg';
 import ClockSvg from './assets/clock.svg';
-import { motion, useAnimation } from 'motion/react';
 import { Progress } from '../shared/Progress';
 import Link from 'next/link';
 
@@ -30,32 +29,19 @@ export function UnifiedCourseCard({
   className,
 }: UnifiedCourseCardProps) {
   const t = useTranslations('UserSpace');
-  const controls = useAnimation();
   const isHistory = variant === 'history';
 
   return (
     <div
       className={`group relative flex shrink-0 flex-col items-center hover:bg-[#14171C] nth-[3n]:border-r-0 ${className}`}
-      onMouseEnter={() => {
-        if (!course.soon || isHistory) {
-          controls.start({ rotate: -30, scale: 1.2 });
-        }
-      }}
-      onMouseLeave={() => {
-        if (!course.soon || isHistory) {
-          controls.start({ rotate: 0, scale: 1 });
-        }
-      }}
     >
       <div className="bg-background relative w-full overflow-hidden">
-        <motion.div
-          className="relative z-10"
-          animate={controls}
-          initial={{ rotate: 0, scale: 1 }}
-          transition={{
-            duration: 0.3,
-            ease: 'easeInOut',
-          }}
+        <div
+          className={`relative z-10 transition-transform duration-400 ease-in-out ${
+            !course.soon || isHistory
+              ? 'group-hover:scale-120 group-hover:-rotate-30'
+              : ''
+          }`}
         >
           <Image
             src={course.smallImg}
@@ -65,7 +51,7 @@ export function UnifiedCourseCard({
             className="w-full"
             quality={100}
           />
-        </motion.div>
+        </div>
         <Image
           src={GridSvg}
           alt={''}
