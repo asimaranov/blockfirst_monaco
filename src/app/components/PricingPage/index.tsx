@@ -37,13 +37,13 @@ export default async function PricingPage() {
         );
   
         // // Remove the cookies after processing
-        cookieStore.delete('referral_code');
-        cookieStore.delete('referrer_id');
+        // cookieStore.delete('referral_code');
+        // cookieStore.delete('referrer_id');
       } catch (error) {
         console.error('Error applying referral:', error);
         // Remove cookies even if there was an error
-        cookieStore.delete('referral_code');
-        cookieStore.delete('referrer_id');
+        // cookieStore.delete('referral_code');
+        // cookieStore.delete('referrer_id');
       }
     }
   
