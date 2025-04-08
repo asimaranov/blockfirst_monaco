@@ -11,7 +11,6 @@ interface CopyButtonProps {
   appearanceType?: 'far' | 'near';
   onCopy?: () => void;
   className?: string;
-  disabled?: boolean;
 }
 
 export default function CopyButton({
@@ -19,13 +18,10 @@ export default function CopyButton({
   onCopy,
   className = '',
   appearanceType = 'far',
-  disabled = false,
 }: CopyButtonProps) {
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopy = async () => {
-    if (disabled || !textToCopy) return;
-
     try {
       await navigator.clipboard.writeText(textToCopy);
       setIsCopied(true);
@@ -42,13 +38,9 @@ export default function CopyButton({
   return (
     <div className={className}>
       <button
-        className={cn(
-          'button group relative z-10 cursor-pointer rounded-md transition-colors',
-          disabled && 'cursor-not-allowed opacity-50'
-        )}
+        className="button group relative z-10 cursor-pointer rounded-md transition-colors"
         onClick={handleCopy}
         title={isCopied ? 'Copied!' : 'Copy to clipboard'}
-        disabled={disabled}
       >
         {isCopied ? (
           <Image
