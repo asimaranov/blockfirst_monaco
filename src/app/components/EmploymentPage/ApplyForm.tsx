@@ -12,9 +12,10 @@ import CopyButton from '../shared/CopyButton/CopyButton';
 
 interface ApplyFormProps {
   onClose: () => void;
+  onSubmit?: () => void;
 }
 
-export function ApplyForm({ onClose }: ApplyFormProps) {
+export function ApplyForm({ onClose, onSubmit }: ApplyFormProps) {
   const [formState] = useState<'input' | 'success'>('input');
 
   const contactItems = [
@@ -40,12 +41,12 @@ export function ApplyForm({ onClose }: ApplyFormProps) {
 
   return (
     <FormContainer
-      kind='info'
+      kind="info"
       onClose={onClose}
       title="Отклик на вакансию"
       description="Мы предоставляем контакты и дополнительную информацию работодателя"
       formState={formState}
-      onSubmit={() => {}}
+      onSubmit={onSubmit || (() => {})}
       submitButtonText=""
       bottomText={{
         main: 'Неверные контакты?',
@@ -60,7 +61,6 @@ export function ApplyForm({ onClose }: ApplyFormProps) {
           icon={item.icon}
           value={item.value}
           actionButton={item.button}
-          
         />
       ))}
     </FormContainer>

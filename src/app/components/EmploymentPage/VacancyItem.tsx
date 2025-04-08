@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { IVacancy, VacancyCurrency } from '~/app/lib/constants/vacancies';
+import { VacancyCurrency, VacancyFormat } from '~/app/lib/constants/vacancies';
 import { cn } from '~/helpers';
 import { useViewedVacancyStore } from '~/store/viewedVacancy';
 import RequirementsIcon from './assets/requirements-icon.svg';
@@ -9,8 +9,37 @@ import ResponsibilitiesIcon from './assets/responsibilities-icon.svg';
 import Image from 'next/image';
 import ToggleMinus from '../shared/ToggleMinus/ToggleMinus';
 
+// Define a general vacancy interface that works with both sources
+interface IVacancyGeneral {
+  id?: string;
+  title: string;
+  description: string;
+  updatedAt: string | Date;
+  speciality: string;
+  format: VacancyFormat | [VacancyFormat, VacancyFormat];
+  salary?:
+    | {
+        amount: number | { from?: number; to?: number };
+        currency: VacancyCurrency;
+      }
+    | undefined;
+  publisher: {
+    name: string;
+    contacts: {
+      telegram: string;
+      cite: string;
+      email: string;
+    };
+  };
+  responsibilities: string[];
+  requirements: string[];
+  applied?: boolean;
+  isPersonal?: boolean;
+  userId?: string;
+}
+
 interface VacancyItemProps {
-  vacancy: IVacancy;
+  vacancy: IVacancyGeneral;
   onApply: () => void;
 }
 
@@ -19,7 +48,7 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
 
   const { viewedVacancies, add: addViewedVacancy } = useViewedVacancyStore();
 
-  const renderSalary = (salary?: IVacancy['salary']) => {
+  const renderSalary = (salary?: IVacancyGeneral['salary']) => {
     if (!salary) return '—';
 
     if (typeof salary.amount === 'number') {
@@ -35,12 +64,18 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
   };
 
   useEffect(() => {
-    if (isExpanded) {
+    if (isExpanded && vacancy.id) {
       if (viewedVacancies.includes(vacancy.id)) return;
 
       addViewedVacancy(vacancy.id);
     }
-  }, [isExpanded]);
+  }, [isExpanded, vacancy.id, viewedVacancies, addViewedVacancy]);
+
+  // Format date properly whether it's a string or Date object
+  const formattedDate =
+    typeof vacancy.updatedAt === 'string'
+      ? new Date(vacancy.updatedAt).toLocaleDateString('ru-RU')
+      : (vacancy.updatedAt as Date).toLocaleDateString('ru-RU');
 
   return (
     <div
@@ -48,13 +83,20 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
       className={cn(
         'border-accent relative transition-colors duration-200 not-last:border-b hover:bg-[#14171C]',
         isExpanded && 'bg-dark-bg sm:bg-[#14171C]',
-        'lg:grid lg:grid-cols-[calc(50*var(--spacing))_calc(35*var(--spacing))_calc(28*var(--spacing))_calc(20*var(--spacing))_1fr] lg:items-center lg:gap-x-9 lg:px-8 lg:py-6',
+        'lg:grid lg:grid-cols-[calc(50*var(--spacing))_calc(35*var(--spacing))_calc(28*var(--spacing))_calc(25*var(--spacing))_1fr] lg:items-center lg:gap-x-9 lg:px-8 lg:py-6',
         'flex flex-col px-5 py-8'
       )}
     >
       {/* Desktop Layout */}
       <div className="hidden lg:flex lg:flex-col lg:gap-1.5">
-        <span className="text-sm font-medium">{vacancy.title}</span>
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium">{vacancy.title}</span>
+          {vacancy.isPersonal && (
+            <span className="inline-flex items-center rounded-full bg-[#9747FF]/10 px-2 py-0.5 text-xs font-medium text-[#9747FF]">
+              Персональное
+            </span>
+          )}
+        </div>
         <span className="text-secondary text-xs">{vacancy.publisher.name}</span>
       </div>
       <span className="hidden text-sm lg:block">
@@ -66,7 +108,7 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
           : vacancy.format}
       </div>
       <span className="text-secondary hidden text-xs lg:block">
-        {new Date(vacancy.updatedAt).toLocaleDateString('ru-RU')}
+        {formattedDate}
       </span>
       <div className="hidden items-center justify-center gap-9 lg:flex">
         {!vacancy.applied ? (
@@ -101,9 +143,9 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
                 <path
                   d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
                   stroke="#33CF8E"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
               Отклик
@@ -119,9 +161,16 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
       {/* Mobile Layout */}
       <div className="mb-6 flex w-full flex-row justify-between lg:hidden">
         <div className="flex max-w-[306px] flex-col gap-2">
-          <h3 className="text-foreground text-xl sm:text-base font-medium">
-            {vacancy.title}
-          </h3>
+          <div className="flex flex-wrap items-center gap-2">
+            <h3 className="text-foreground text-xl font-medium sm:text-base">
+              {vacancy.title}
+            </h3>
+            {vacancy.isPersonal && (
+              <span className="inline-flex items-center rounded-full bg-[#9747FF]/10 px-2 py-0.5 text-xs font-medium text-[#9747FF]">
+                Персональное
+              </span>
+            )}
+          </div>
           <span className="text-secondary text-xs">
             {vacancy.publisher.name}
           </span>
@@ -131,7 +180,7 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
         </div>
       </div>
 
-      <div className="flex w-full flex-row justify-between lg:hidden items-center">
+      <div className="flex w-full flex-row items-center justify-between lg:hidden">
         <span className="text-foreground text-[16px]">
           {renderSalary(vacancy.salary)}
         </span>
@@ -144,9 +193,7 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
             </span>
           </div>
           <div className="rounded-lg bg-[#14171C] px-2 py-1.5">
-            <span className="text-secondary text-xs">
-              {new Date(vacancy.updatedAt).toLocaleDateString('ru-RU')}
-            </span>
+            <span className="text-secondary text-xs">{formattedDate}</span>
           </div>
         </div>
       </div>

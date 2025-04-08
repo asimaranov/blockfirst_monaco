@@ -6,6 +6,7 @@ import { subscribersRouter } from '~/server/api/routers/subscribers';
 import { formSubmissionsRouter } from '~/server/api/routers/formSubmissions';
 import { referralsRouter } from '~/server/api/routers/referrals';
 import { trc20Router } from '~/server/api/routers/trc20';
+import { vacanciesRouter } from '~/server/api/routers/vacancies';
 import { createCallerFactory, createTRPCRouter } from '~/server/api/trpc';
 
 /**
@@ -22,6 +23,7 @@ export const appRouter = createTRPCRouter({
   formSubmissions: formSubmissionsRouter,
   referrals: referralsRouter,
   trc20: trc20Router,
+  vacancies: vacanciesRouter,
 });
 
 // export type definition of API

@@ -17,6 +17,7 @@ import NotificationSettingModel from '../models/notificationSetting';
 import UserDataModel from '../models/userData';
 import ReferralModel from '../models/referral';
 import TronWalletModel from '../models/tronWallet';
+import VacancyModel from '../models/vacancy';
 import dbConnect from '../mongodb';
 
 /**
@@ -48,6 +49,7 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
         userData: UserDataModel,
         referral: ReferralModel,
         tronWallet: TronWalletModel,
+        vacancy: VacancyModel,
       },
     },
     ...opts,

@@ -2,19 +2,40 @@
 
 import { Session } from '~/server/auth';
 import YourVacancies from './YourVacancies';
-import {
-  VACANCIES,
-  VacancySort,
-  VacancySpeciality,
-} from '~/app/lib/constants/vacancies';
+import { VacancySort, VacancySpeciality } from '~/app/lib/constants/vacancies';
 import { useState } from 'react';
 import { VacancyItem } from './VacancyItem';
-import { IVacancy } from '~/app/lib/constants/vacancies';
 import { SortIcon } from './assets/sort-icon';
 import { useViewedVacancyStore } from '~/store/viewedVacancy';
 import Footer from '../Footer';
 import { Modal } from '../shared/Modal';
 import { ApplyForm } from './ApplyForm';
+import { api } from '~/trpc/react';
+
+// Define a general vacancy interface matching the one used in VacancyItem
+interface IVacancyGeneral {
+  id?: string;
+  title: string;
+  description: string;
+  updatedAt: string | Date;
+  speciality: string;
+  format: any; // Using any to avoid circular imports, will be properly typed at runtime
+  salary?: {
+    amount: number | { from?: number; to?: number };
+    currency: any;
+  };
+  publisher: {
+    name: string;
+    contacts: {
+      telegram: string;
+      cite: string;
+      email: string;
+    };
+  };
+  responsibilities: string[];
+  requirements: string[];
+  applied?: boolean;
+}
 
 enum SortType {
   NONE,
@@ -25,11 +46,25 @@ enum SortType {
 }
 
 export default function EmploymentPage({ session }: { session: Session }) {
-  const lastUpdate = new Date(
-    Math.min(
-      ...VACANCIES.map((vacancy) => new Date(vacancy.updatedAt).getTime())
-    )
-  ).toLocaleDateString('ru-RU');
+  // API query for vacancies
+  const {
+    data: vacancyData,
+    isLoading,
+    error,
+  } = api.vacancies.getAll.useQuery();
+  const vacancies = vacancyData?.vacancies || [];
+
+  // Get API mutation for applying to a vacancy
+  const markAsApplied = api.vacancies.markAsApplied.useMutation();
+
+  // Calculate the last update time from the vacancies
+  const lastUpdate = vacancies.length
+    ? new Date(
+        Math.min(
+          ...vacancies.map((vacancy) => new Date(vacancy.updatedAt).getTime())
+        )
+      ).toLocaleDateString('ru-RU')
+    : new Date().toLocaleDateString('ru-RU');
 
   const { viewedVacancies } = useViewedVacancyStore();
 
@@ -39,11 +74,28 @@ export default function EmploymentPage({ session }: { session: Session }) {
   const [sortOption, setSortOption] = useState<VacancySort>(VacancySort.ALL);
   const [activeSortType, setActiveSortType] = useState<SortType>(SortType.NONE);
   const [isApplyFormOpen, setIsApplyFormOpen] = useState(false);
+  const [currentVacancyId, setCurrentVacancyId] = useState<string | null>(null);
 
-  const sortVacancies = (vacancies: IVacancy[]) => {
-    if (vacancies.length === 0) return [];
+  const handleApply = (vacancyId: string) => {
+    setCurrentVacancyId(vacancyId);
+    setIsApplyFormOpen(true);
+  };
 
-    const getSalary = (salary?: IVacancy['salary']) => {
+  const handleSubmitApplication = async () => {
+    if (currentVacancyId && session) {
+      try {
+        await markAsApplied.mutateAsync({ id: currentVacancyId });
+      } catch (error) {
+        console.error('Error marking vacancy as applied:', error);
+      }
+    }
+    setIsApplyFormOpen(false);
+  };
+
+  const sortVacancies = (vacanciesArray: IVacancyGeneral[]) => {
+    if (vacanciesArray.length === 0) return [];
+
+    const getSalary = (salary?: IVacancyGeneral['salary']) => {
       if (!salary?.amount) return 0;
 
       if (typeof salary.amount === 'number') {
@@ -58,32 +110,32 @@ export default function EmploymentPage({ session }: { session: Session }) {
       return salary.amount.to ?? 0;
     };
 
-    const filterBySpeciality = (vacanciesToFilter: IVacancy[]) => {
+    const filterBySpeciality = (vacanciesToFilter: IVacancyGeneral[]) => {
       if (specialityFilters.length === 0) return vacanciesToFilter;
       return vacanciesToFilter.filter((vacancy) =>
         specialityFilters.includes(vacancy.speciality as VacancySpeciality)
       );
     };
 
-    const filterByViewed = (vacanciesToFilter: IVacancy[]) => {
+    const filterByViewed = (vacanciesToFilter: IVacancyGeneral[]) => {
       if (viewedVacancies.length === 0) return vacanciesToFilter;
 
       if (sortOption === VacancySort.VIEWED) {
         return vacanciesToFilter.filter((vacancy) =>
-          viewedVacancies.includes(vacancy.id)
+          viewedVacancies.includes(vacancy.id || '')
         );
       }
 
       if (sortOption === VacancySort.NEW) {
         return vacanciesToFilter.filter(
-          (vacancy) => !viewedVacancies.includes(vacancy.id)
+          (vacancy) => !viewedVacancies.includes(vacancy.id || '')
         );
       }
 
       return vacanciesToFilter;
     };
 
-    const sortedVacancies = filterBySpeciality(filterByViewed(vacancies));
+    const sortedVacancies = filterBySpeciality(filterByViewed(vacanciesArray));
 
     // Apply active sort
     if (activeSortType !== SortType.NONE) {
@@ -124,12 +176,15 @@ export default function EmploymentPage({ session }: { session: Session }) {
   return (
     <main className="border-accent flex min-h-screen w-full flex-col border-r-0 border-l-0 sm:border-r sm:border-l">
       <Modal isOpen={isApplyFormOpen} onClose={() => setIsApplyFormOpen(false)}>
-        <ApplyForm onClose={() => setIsApplyFormOpen(false)} />
+        <ApplyForm
+          onClose={() => setIsApplyFormOpen(false)}
+          onSubmit={handleSubmitApplication}
+        />
       </Modal>
       <div className="border-accent flex flex-1 flex-col sm:flex-row">
         <YourVacancies
           lastestUpdate={lastUpdate}
-          vacanciesCount={VACANCIES.length || 0}
+          vacanciesCount={vacancies.length || 0}
           specialityFilters={specialityFilters}
           setSpecialityFilters={setSpecialityFilters}
           sortOption={sortOption}
@@ -197,15 +252,30 @@ export default function EmploymentPage({ session }: { session: Session }) {
           {/* Vacancies list */}
           <div className="relative max-h-[calc(100vh-var(--header-height))] overflow-y-auto">
             <div className="flex flex-col">
-              {sortVacancies(VACANCIES).map(
-                // TODO: move VACANCIES to state
-                (vacancy) => (
+              {isLoading ? (
+                <div className="flex justify-center p-10">
+                  <div className="text-accent">Loading vacancies...</div>
+                </div>
+              ) : error ? (
+                <div className="flex justify-center p-10">
+                  <div className="text-red-500">
+                    Error loading vacancies. Please try again.
+                  </div>
+                </div>
+              ) : sortVacancies(vacancies).length === 0 ? (
+                <div className="flex justify-center p-10">
+                  <div className="text-secondary">
+                    No vacancies found matching your criteria.
+                  </div>
+                </div>
+              ) : (
+                sortVacancies(vacancies).map((vacancy) => (
                   <VacancyItem
                     key={vacancy.id}
                     vacancy={vacancy}
-                    onApply={() => setIsApplyFormOpen(true)}
+                    onApply={() => handleApply(vacancy.id || '')}
                   />
-                )
+                ))
               )}
             </div>
           </div>
