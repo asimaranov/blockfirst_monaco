@@ -62,7 +62,7 @@ export function UnifiedCourseCard({
         />
         <div className="pointer-events-none absolute top-0 left-0 z-30 flex h-full w-full items-center justify-center">
           {course.bage?.title && (
-            <span className="text-xs sm:text-xxs bg-background/30 border-foreground/20 flex items-center justify-center gap-2 rounded-full border px-6 py-3 backdrop-blur-sm sm:px-4">
+            <span className="sm:text-xxs bg-background/30 border-foreground/20 flex items-center justify-center gap-2 rounded-full border px-6 py-3 text-xs backdrop-blur-sm sm:px-4">
               {course.bage?.img && (
                 <Image
                   src={course.bage.img}
@@ -87,8 +87,23 @@ export function UnifiedCourseCard({
                 <div className="flex">
                   {course.soon ? (
                     <>
-                      <div className="bg-secondary h-4 w-4 rounded-full" />
-                      <div className="bg-secondary -ml-1 h-4 w-4 rounded-full" />
+                      <svg
+                        width="30"
+                        height="16"
+                        viewBox="0 0 30 16"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-7.5"
+                      >
+                        <path
+                          d="M8 16C12.4183 16 16 12.4182 16 8C16 3.58179 12.4183 0 8 0C3.58167 0 0 3.58179 0 8C0 12.4182 3.58167 16 8 16Z"
+                          fill="#9AA6B5"
+                        />
+                        <path
+                          d="M17.0017 8C17.0017 9.76929 16.4912 11.4192 15.6094 12.8108C17.0693 14.7478 19.3893 16 22.0017 16C26.42 16 30.0017 12.4182 30.0017 8C30.0017 3.58179 26.42 0 22.0017 0C19.3893 0 17.0693 1.2522 15.6094 3.18921C16.4912 4.58081 17.0017 6.23071 17.0017 8Z"
+                          fill="#9AA6B5"
+                        />
+                      </svg>
                     </>
                   ) : (
                     <>

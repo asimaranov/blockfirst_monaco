@@ -9,7 +9,7 @@ export async function CoursesTab() {
 
   return (
     <div className="grid grid-cols-1 gap-0 sm:gap-8">
-      <div className="hidden sm:block">
+      <div className="hidden sm:flex">
         {COURSES?.[0] ? (
           <CourseTopCard course={COURSES[0]} />
         ) : (

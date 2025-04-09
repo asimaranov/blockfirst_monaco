@@ -30,7 +30,7 @@ export default async function Dashboard({ session }: { session: Session }) {
   return (
     <main className="border-accent border-0 sm:border-r sm:border-l">
       <DashboardTabs tabs={tabs} defaultTab="courses" lastUpdate={lastUpdate} />
-      <Footer />
+      <Footer className="border-t sm:border-t-0 border-accent" />
     </main>
   );
 }
