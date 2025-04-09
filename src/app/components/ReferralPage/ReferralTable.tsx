@@ -10,9 +10,8 @@ import {
 import Image from 'next/image';
 import { useState } from 'react';
 import { SortIcon } from '../EmploymentPage/assets/sort-icon';
-import AvatarsIcon from './assets/avatars-icon.png';
+import AvatarsIcon from './assets/no-referrals.png';
 import { api } from '~/trpc/react';
-import { IReferral } from '~/server/models/referral';
 import { planTypeToSubscriptionType } from '~/app/lib/utils';
 import { PlanType } from '~/server/models/userData';
 
@@ -172,7 +171,7 @@ export const ReferralTable = () => {
   // Show loading state or empty state if needed
   if (isLoading) {
     return (
-      <div className="border-accent flex grow flex-col border-0 pt-8 pb-10 sm:border-b sm:pt-0 sm:pb-8">
+      <div className="border-accent flex grow flex-col border-0 pb-0 sm:border-b sm:pb-8">
         <div className="flex h-full w-full items-center justify-center">
           <span className="text-secondary/50 text-sm">Загрузка...</span>
         </div>
@@ -181,7 +180,7 @@ export const ReferralTable = () => {
   }
 
   return (
-    <div className="border-accent flex grow flex-col gap-6 border-0 pt-8 pb-10 sm:border-b sm:pt-0 sm:pb-8">
+    <div className="border-accent flex grow flex-col gap-6 border-0 pb-0 sm:border-b sm:pb-8">
       {referrals.length === 0 ? (
         <div className="flex h-full w-full flex-col items-center justify-center gap-5 py-16">
           <Image
