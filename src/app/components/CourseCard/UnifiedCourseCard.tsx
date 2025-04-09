@@ -62,7 +62,7 @@ export function UnifiedCourseCard({
         />
         <div className="pointer-events-none absolute top-0 left-0 z-30 flex h-full w-full items-center justify-center">
           {course.bage?.title && (
-            <span className="text-xxs bg-background/30 border-foreground/20 flex items-center justify-center gap-2 rounded-full border px-4 py-3 backdrop-blur-sm">
+            <span className="text-xs sm:text-xxs bg-background/30 border-foreground/20 flex items-center justify-center gap-2 rounded-full border px-6 py-3 backdrop-blur-sm sm:px-4">
               {course.bage?.img && (
                 <Image
                   src={course.bage.img}
@@ -135,7 +135,7 @@ export function UnifiedCourseCard({
                 In Progress
               </div>
             ) : (
-              <div className="text-secondary text-xxs flex items-center gap-3">
+              <div className="text-secondary text-xxs flex items-center gap-3 uppercase">
                 {!course.soon ? (
                   <span>
                     {course.info?.lessonsCount || 0}{' '}
