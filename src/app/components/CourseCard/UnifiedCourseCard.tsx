@@ -194,11 +194,13 @@ export function UnifiedCourseCard({
         {isHistory ? (
           <div className="mt-6 flex w-full justify-between gap-4 text-sm">
             <Link href={`/course/${course.id}`}>
-              <button
-                className={`border-primary hover:bg-primary flex h-11 cursor-pointer items-center justify-center gap-1.5 rounded-full border px-10 duration-300`}
-              >
-                <Info /> Подробнее
-              </button>
+              <div className='flex'>
+                <button
+                  className={`border-primary hover:bg-primary flex py-3.5 text-center cursor-pointer items-center justify-center gap-1.5 rounded-full border px-9 duration-300 sm:px-10`}
+                >
+                  <Info /> Подробнее
+                </button>
+              </div>
             </Link>
             <div className="mr-9 flex flex-row items-center justify-center gap-1.5">
               <Image src={ClockSvg} className="h-4 w-4" alt={''} />{' '}

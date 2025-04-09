@@ -71,7 +71,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
           </div>
         </div>
         <div className="mt-6 flex flex-col gap-4">
-          <span className="text-2xll font-bold">{course.title}</span>
+          <span className="sm:text-2xll text-xl font-bold">{course.title}</span>
           <span className="text-secondary text-sm">{course.description}</span>
         </div>
         <CourseProgress progress={4} className="mt-6" />
