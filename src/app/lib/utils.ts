@@ -3,7 +3,7 @@ import { SubscriptionType } from "./constants/subsctiptions";
 
 export function formatPrice(price: number, currency: string = '₽') {
   const formatter = new Intl.NumberFormat('ru-RU');
-  return `${currency}${formatter.format(Math.ceil(price))}`;
+  return `${formatter.format(Math.ceil(price))} ${currency}`;
 }
 
 // Format date to relative time

@@ -9,9 +9,12 @@ export interface IReferral {
   name: string;
   avatar?: string;
   registrationDate: Date;
+  formattedRegistrationDate: string;
   plan: PlanType;
   earnings: number;
+  formattedEarnings: string;
   learningTimeMinutes: number;
+  formattedLearningTime: string;
   createdAt: Date;
   updatedAt: Date;
   id?: string;

@@ -12,7 +12,7 @@ import { useState } from 'react';
 import { SortIcon } from '../EmploymentPage/assets/sort-icon';
 import AvatarsIcon from './assets/no-referrals.png';
 import { api } from '~/trpc/react';
-import { planTypeToSubscriptionType } from '~/app/lib/utils';
+import { formatPrice, planTypeToSubscriptionType } from '~/app/lib/utils';
 import { PlanType } from '~/server/models/userData';
 
 // The shape of our referral data after transformations
@@ -37,8 +37,18 @@ const PlanBadge = ({ plan }: { plan: string }) => (
   <div className="flex items-center gap-2">
     <div className="h-3.5 w-3.5">
       <Image
-        src={subscriptionTypeIcons[planTypeToSubscriptionType(plan.toLowerCase() as PlanType) ]}
-        alt={subscriptionTypeLabels[planTypeToSubscriptionType(plan.toLowerCase() as PlanType) as SubscriptionType]}
+        src={
+          subscriptionTypeIcons[
+            planTypeToSubscriptionType(plan.toLowerCase() as PlanType)
+          ]
+        }
+        alt={
+          subscriptionTypeLabels[
+            planTypeToSubscriptionType(
+              plan.toLowerCase() as PlanType
+            ) as SubscriptionType
+          ]
+        }
         className="h-3.5 w-3.5"
       />
     </div>
@@ -49,21 +59,25 @@ const PlanBadge = ({ plan }: { plan: string }) => (
 const LearningTime = ({ time }: { time: string }) => (
   <div className="flex items-center gap-1">
     <div className="bg-secondary h-1 w-1 rounded-full" />
-    <span className="text-secondary text-xs">{time}</span>
+    <span className="text-secondary text-sm">{time}</span>
   </div>
 );
 
 // Mobile card component for referrals
-const ReferralCard = ({ referral }: { referral: ReferralData }) => (
+const ReferralCard = ({
+  referral,
+  id,
+}: {
+  referral: ReferralData;
+  id: number;
+}) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.3 }}
     className="flex w-full gap-7"
   >
-    <div className="text-secondary text-sm">
-      {Number(referral.id.slice(-4)) || 1}.
-    </div>
+    <div className="text-secondary/50 text-sm">{Number(id)}.</div>
     <div className="flex w-full flex-col gap-6">
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-3">
@@ -88,7 +102,7 @@ const ReferralCard = ({ referral }: { referral: ReferralData }) => (
       </div>
       <div className="flex items-center justify-between">
         <span className="text-foreground text-base">
-          {referral.formattedEarnings}
+          {formatPrice(Number(referral.formattedEarnings) + 1)}
         </span>
         <div className="flex gap-2">
           <div className="flex h-7 items-center justify-center rounded-lg bg-[#14171C] px-2">
@@ -116,12 +130,15 @@ export const ReferralTable = () => {
   const { data: apiReferrals = [], isLoading } =
     api.referrals.getUserReferrals.useQuery();
 
+
+  console.log('apiReferrals', apiReferrals);
+
   // Convert API response to our component's expected format
   const referrals: ReferralData[] = apiReferrals.map((referral) => ({
     id: referral.id || '',
     name: referral.name,
     avatar: referral.avatar,
-    formattedRegistrationDate: referral.registrationDate.toLocaleDateString(),
+    formattedRegistrationDate: referral.formattedRegistrationDate,
     plan: referral.plan,
     formattedEarnings: referral.earnings.toString() || '',
     formattedLearningTime: referral.learningTimeMinutes.toString() || '',
@@ -171,16 +188,17 @@ export const ReferralTable = () => {
   // Show loading state or empty state if needed
   if (isLoading) {
     return (
-      <div className="border-accent flex grow flex-col border-0 pb-0 sm:border-b sm:pb-8">
-        <div className="flex h-full w-full items-center justify-center">
-          <span className="text-secondary/50 text-sm">Загрузка...</span>
+      <div className="flex h-full grow flex-col items-center justify-center gap-4">
+          <div className="border-primary h-16 w-16 animate-spin rounded-full border-t-2 border-b-2"></div>
+          <p className="text-lg font-medium text-gray-600">
+            Loading...
+          </p>
         </div>
-      </div>
     );
   }
 
   return (
-    <div className="border-accent flex grow flex-col gap-6 border-0 pb-0 sm:border-b sm:pb-8">
+    <div className="border-accent flex grow flex-col gap-6 border-0 pt-8 pb-0 sm:border-b sm:pt-0 sm:pb-8">
       {referrals.length === 0 ? (
         <div className="flex h-full w-full flex-col items-center justify-center gap-5 py-16">
           <Image
@@ -261,9 +279,13 @@ export const ReferralTable = () => {
           </div>
 
           {/* Mobile Cards - visible only on mobile */}
-          <div className="flex flex-col gap-8 px-4 sm:hidden">
-            {sortedReferrals.map((referral) => (
-              <ReferralCard key={`mobile-${referral.id}`} referral={referral} />
+          <div className="flex flex-col gap-8 px-5 pb-10 sm:hidden">
+            {sortedReferrals.map((referral, id) => (
+              <ReferralCard
+                key={`mobile-${referral.id}`}
+                referral={referral}
+                id={id}
+              />
             ))}
           </div>
 
