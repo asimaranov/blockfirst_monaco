@@ -3,6 +3,7 @@ export interface IVacancy {
   title: string;
   description: string;
   updatedAt: string;
+  publishedDate: string;
   speciality: VacancySpeciality | string;
   format: VacancyFormat | [VacancyFormat, VacancyFormat];
   salary:
@@ -66,13 +67,15 @@ export const VACANCIES: IVacancy[] = [
     id: '1',
     title: 'Smart Contract Developer',
     speciality: VacancySpeciality.SOLIDITY_DEVELOPER,
-    description: 'Привет! Мы – международная IT-компания Crypton Studio, самая крупная команда blockchain-разработчиков в Европе. На данный момент у нас открыты несколько вакансий Smart-contract разработчиков с релокацией в Латвию, Францию, США, Канаду, а также варианты работы с проживанием в Таиланде.',
+    description:
+      'Привет! Мы – международная IT-компания Crypton Studio, самая крупная команда blockchain-разработчиков в Европе. На данный момент у нас открыты несколько вакансий Smart-contract разработчиков с релокацией в Латвию, Францию, США, Канаду, а также варианты работы с проживанием в Таиланде.',
     salary: {
       amount: 9999,
       currency: VacancyCurrency.RUB,
     },
     format: [VacancyFormat.REMOTE, VacancyFormat.OFFICE],
     updatedAt: '2024-02-15',
+    publishedDate: '2024-02-15',
     publisher: {
       name: 'DeFi Protocol',
       contacts: {
@@ -100,6 +103,7 @@ export const VACANCIES: IVacancy[] = [
     salary: undefined,
     format: [VacancyFormat.REMOTE, VacancyFormat.OFFICE],
     updatedAt: '2024-02-14',
+    publishedDate: '2024-02-14',
     publisher: {
       name: 'NFT Market',
       contacts: {
@@ -131,6 +135,7 @@ export const VACANCIES: IVacancy[] = [
     },
     format: VacancyFormat.REMOTE,
     updatedAt: '2024-02-13',
+    publishedDate: '2024-02-13',
     publisher: {
       name: 'CryptoExchange',
       contacts: {
@@ -162,6 +167,7 @@ export const VACANCIES: IVacancy[] = [
     },
     format: VacancyFormat.OFFICE,
     updatedAt: '2024-02-12',
+    publishedDate: '2024-02-12',
     publisher: {
       name: 'Web3 Solutions',
       contacts: {
@@ -192,6 +198,7 @@ export const VACANCIES: IVacancy[] = [
     },
     format: VacancyFormat.HYBRID,
     updatedAt: '2024-02-11',
+    publishedDate: '2024-02-11',
     publisher: {
       name: 'NFT Studio',
       contacts: {
@@ -218,6 +225,7 @@ export const VACANCIES: IVacancy[] = [
     },
     format: VacancyFormat.REMOTE,
     updatedAt: '2024-02-10',
+    publishedDate: '2024-02-10',
     publisher: {
       name: 'DApp Factory',
       contacts: {
@@ -244,6 +252,7 @@ export const VACANCIES: IVacancy[] = [
     },
     format: VacancyFormat.OFFICE,
     updatedAt: '2024-02-09',
+    publishedDate: '2024-02-09',
     publisher: {
       name: 'Blockchain Solutions',
       contacts: {
@@ -270,6 +279,7 @@ export const VACANCIES: IVacancy[] = [
     },
     format: VacancyFormat.HYBRID,
     updatedAt: '2024-02-08',
+    publishedDate: '2024-02-08',
     publisher: {
       name: 'DeFi Platform',
       contacts: {
@@ -296,6 +306,7 @@ export const VACANCIES: IVacancy[] = [
     },
     format: VacancyFormat.REMOTE,
     updatedAt: '2024-02-07',
+    publishedDate: '2024-02-07',
     publisher: {
       name: 'Crypto Startup',
       contacts: {
@@ -322,6 +333,7 @@ export const VACANCIES: IVacancy[] = [
     },
     format: VacancyFormat.HYBRID,
     updatedAt: '2024-02-06',
+    publishedDate: '2024-02-06',
     publisher: {
       name: 'DeFi Labs',
       contacts: {

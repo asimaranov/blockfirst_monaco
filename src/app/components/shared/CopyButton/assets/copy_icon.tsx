@@ -1,4 +1,6 @@
-export default function CopyIcon() {
+import { cn } from "~/helpers";
+
+export default function CopyIcon({ className }: { className?: string }) {
   return (
     <svg
       width="20"
@@ -6,7 +8,7 @@ export default function CopyIcon() {
       viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="h-5 w-5 hover:opacity-50 cursor-pointer"
+      className={cn('h-5 w-5', className)}
     >
       <path
         d="M13.0039 10.676V13.826C13.0039 16.451 11.9539 17.501 9.32891 17.501H6.17891C3.55391 17.501 2.50391 16.451 2.50391 13.826V10.676C2.50391 8.05098 3.55391 7.00098 6.17891 7.00098H9.32891C11.9539 7.00098 13.0039 8.05098 13.0039 10.676Z"

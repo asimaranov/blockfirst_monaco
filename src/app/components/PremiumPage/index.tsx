@@ -113,9 +113,9 @@ const premiumFeatures = [
 ];
 
 const premiumFeatures2 = [
-  premiumFeatures[4],
-  premiumFeatures[5],
-  premiumFeatures[3],
+  premiumFeatures[4]!,
+  premiumFeatures[5]!,
+  premiumFeatures[3]!,
 ];
 
 // Group features by tariff type

@@ -15,6 +15,7 @@ interface IVacancyGeneral {
   title: string;
   description: string;
   updatedAt: string | Date;
+  publishedDate: string | Date;
   speciality: string;
   format: VacancyFormat | [VacancyFormat, VacancyFormat];
   salary?:
@@ -71,11 +72,11 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
     }
   }, [isExpanded, vacancy.id, viewedVacancies, addViewedVacancy]);
 
-  // Format date properly whether it's a string or Date object
+  // Format date properly whether it's a string or Date object using publishedDate instead of updatedAt
   const formattedDate =
-    typeof vacancy.updatedAt === 'string'
-      ? new Date(vacancy.updatedAt).toLocaleDateString('ru-RU')
-      : (vacancy.updatedAt as Date).toLocaleDateString('ru-RU');
+    typeof vacancy.publishedDate === 'string'
+      ? new Date(vacancy.publishedDate).toLocaleDateString('ru-RU')
+      : (vacancy.publishedDate as Date).toLocaleDateString('ru-RU');
 
   return (
     <div
@@ -83,7 +84,7 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
       className={cn(
         'border-accent relative transition-colors duration-200 not-last:border-b hover:bg-[#14171C]',
         isExpanded && 'bg-dark-bg sm:bg-[#14171C]',
-        'lg:grid lg:grid-cols-[calc(50*var(--spacing))_calc(35*var(--spacing))_calc(28*var(--spacing))_calc(25*var(--spacing))_1fr] lg:items-center lg:gap-x-9 lg:px-8 lg:py-6',
+        'lg:grid lg:grid-cols-[calc(50*var(--spacing))_calc(35*var(--spacing))_calc(28*var(--spacing))_calc(19.75*var(--spacing))_1fr] lg:items-center lg:gap-x-9 lg:px-8 lg:py-6',
         'flex flex-col px-5 py-8'
       )}
     >

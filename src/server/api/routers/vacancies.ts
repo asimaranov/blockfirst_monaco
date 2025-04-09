@@ -5,6 +5,7 @@ import {
   publicProcedure,
 } from '~/server/api/trpc';
 import VacancyModel, { IVacancy } from '~/server/models/vacancy';
+import UserVacancyApplicationModel from '~/server/models/userVacancyApplication';
 import {
   VacancyFormat,
   VacancySpeciality,
@@ -50,7 +51,7 @@ const VacancyInputSchema = z.object({
   publisher: PublisherSchema,
   responsibilities: z.array(z.string()),
   requirements: z.array(z.string()),
-  applied: z.boolean().optional(),
+  publishedDate: z.date().optional(),
   isPersonal: z.boolean().optional(),
   userId: z.string().optional(),
 });
@@ -64,7 +65,7 @@ export const vacanciesRouter = createTRPCRouter({
           specialities: z.array(z.string()).optional(),
           limit: z.number().min(1).max(100).optional(),
           offset: z.number().min(0).optional(),
-          sortBy: z.enum(['updatedAt', 'salary']).optional(),
+          sortBy: z.enum(['updatedAt', 'publishedDate', 'salary']).optional(),
           sortOrder: z.enum(['asc', 'desc']).optional(),
         })
         .optional()
@@ -103,8 +104,8 @@ export const vacanciesRouter = createTRPCRouter({
           sortOptions[input.sortBy] = sortOrder;
         }
       } else {
-        // Default sort by updatedAt descending
-        sortOptions.updatedAt = -1;
+        // Default sort by publishedDate descending
+        sortOptions.publishedDate = -1;
       }
 
       // Execute query with pagination
@@ -115,8 +116,34 @@ export const vacanciesRouter = createTRPCRouter({
 
       const total = await VacancyModel.countDocuments(query);
 
+      // If user is logged in, check which vacancies they've applied to
+      let userApplications: Record<string, boolean> = {};
+      if (ctx.session?.user?.id) {
+        const applications = await UserVacancyApplicationModel.find({
+          userId: ctx.session.user.id,
+          vacancyId: { $in: vacancies.map((v) => v._id.toString()) },
+        });
+
+        userApplications = applications.reduce(
+          (acc, app) => {
+            acc[app.vacancyId] = true;
+            return acc;
+          },
+          {} as Record<string, boolean>
+        );
+      }
+
       return {
-        vacancies: vacancies.map((vacancy) => vacancy.toJSON()),
+        vacancies: vacancies.map((vacancy) => {
+          const vacancyJson = vacancy.toJSON();
+          // Add applied property indicating if the current user has applied
+          if (ctx.session?.user?.id) {
+            vacancyJson.applied = !!userApplications[vacancy._id.toString()];
+          } else {
+            vacancyJson.applied = false;
+          }
+          return vacancyJson;
+        }),
         total,
       };
     }),
@@ -140,14 +167,32 @@ export const vacanciesRouter = createTRPCRouter({
       };
 
       const vacancies = await VacancyModel.find(query)
-        .sort({ updatedAt: -1 })
+        .sort({ publishedDate: -1 })
         .skip(input?.offset || 0)
         .limit(input?.limit || 50);
 
       const total = await VacancyModel.countDocuments(query);
 
+      // Get user applications for these vacancies
+      const applications = await UserVacancyApplicationModel.find({
+        userId: ctx.session.user.id,
+        vacancyId: { $in: vacancies.map((v) => v._id.toString()) },
+      });
+
+      const userApplications = applications.reduce(
+        (acc, app) => {
+          acc[app.vacancyId] = true;
+          return acc;
+        },
+        {} as Record<string, boolean>
+      );
+
       return {
-        vacancies: vacancies.map((vacancy) => vacancy.toJSON()),
+        vacancies: vacancies.map((vacancy) => {
+          const vacancyJson = vacancy.toJSON();
+          vacancyJson.applied = !!userApplications[vacancy._id.toString()];
+          return vacancyJson;
+        }),
         total,
       };
     }),
@@ -175,7 +220,21 @@ export const vacanciesRouter = createTRPCRouter({
         });
       }
 
-      return vacancy.toJSON();
+      const vacancyJson = vacancy.toJSON();
+
+      // Check if the user has applied to this vacancy
+      if (ctx.session?.user?.id) {
+        const application = await UserVacancyApplicationModel.findOne({
+          userId: ctx.session.user.id,
+          vacancyId: input.id,
+        });
+
+        vacancyJson.applied = !!application;
+      } else {
+        vacancyJson.applied = false;
+      }
+
+      return vacancyJson;
     }),
 
   // Create a new vacancy
@@ -200,6 +259,7 @@ export const vacanciesRouter = createTRPCRouter({
       const vacancyData = {
         ...input,
         updatedAt: new Date(),
+        publishedDate: input.publishedDate || new Date(),
       };
 
       if (input.isPersonal) {
@@ -223,6 +283,7 @@ export const vacanciesRouter = createTRPCRouter({
         isPersonal: true,
         userId: ctx.session.user.id,
         updatedAt: new Date(),
+        publishedDate: input.publishedDate || new Date(),
       });
 
       await newVacancy.save();
@@ -273,7 +334,20 @@ export const vacanciesRouter = createTRPCRouter({
       Object.assign(vacancy, updateData, { updatedAt: new Date() });
       await vacancy.save();
 
-      return vacancy.toJSON();
+      // Get application status for this user
+      const vacancyJson = vacancy.toJSON();
+      if (ctx.session?.user?.id) {
+        const application = await UserVacancyApplicationModel.findOne({
+          userId: ctx.session.user.id,
+          vacancyId: input.id,
+        });
+
+        vacancyJson.applied = !!application;
+      } else {
+        vacancyJson.applied = false;
+      }
+
+      return vacancyJson;
     }),
 
   // Delete a vacancy
@@ -305,12 +379,20 @@ export const vacanciesRouter = createTRPCRouter({
 
       await VacancyModel.deleteOne({ _id: input.id });
 
+      // Delete all applications for this vacancy
+      await UserVacancyApplicationModel.deleteMany({ vacancyId: input.id });
+
       return { success: true };
     }),
 
   // Mark a vacancy as applied by the current user
   markAsApplied: protectedProcedure
-    .input(z.object({ id: z.string() }))
+    .input(
+      z.object({
+        id: z.string(),
+        applicationType: z.enum(['link', 'copy', 'other']).default('other'),
+      })
+    )
     .mutation(async ({ input, ctx }) => {
       await dbConnect();
 
@@ -331,11 +413,77 @@ export const vacanciesRouter = createTRPCRouter({
         });
       }
 
-      // For simplicity, we're just setting applied=true
-      // In a real app, you'd create an application record
-      vacancy.applied = true;
-      await vacancy.save();
+      // Create or update application record
+      await UserVacancyApplicationModel.findOneAndUpdate(
+        {
+          userId: ctx.session.user.id,
+          vacancyId: input.id,
+        },
+        {
+          userId: ctx.session.user.id,
+          vacancyId: input.id,
+          appliedAt: new Date(),
+          applicationType: input.applicationType,
+        },
+        { upsert: true, new: true }
+      );
 
-      return vacancy.toJSON();
+      // Return vacancy with applied status
+      const vacancyJson = vacancy.toJSON();
+      vacancyJson.applied = true;
+
+      return vacancyJson;
+    }),
+
+  // Get all vacancies the current user has applied to
+  getAppliedVacancies: protectedProcedure
+    .input(
+      z
+        .object({
+          limit: z.number().min(1).max(100).optional(),
+          offset: z.number().min(0).optional(),
+        })
+        .optional()
+    )
+    .query(async ({ input, ctx }) => {
+      await dbConnect();
+
+      // Find all applications for this user
+      const applications = await UserVacancyApplicationModel.find({
+        userId: ctx.session.user.id,
+      })
+        .sort({ appliedAt: -1 })
+        .skip(input?.offset || 0)
+        .limit(input?.limit || 50);
+
+      const vacancyIds = applications.map((app) => app.vacancyId);
+
+      // Get the vacancies
+      const vacancies = await VacancyModel.find({
+        _id: { $in: vacancyIds },
+      });
+
+      // Create a map of vacancy IDs to applications
+      const appMap = applications.reduce(
+        (acc, app) => {
+          acc[app.vacancyId] = app;
+          return acc;
+        },
+        {} as Record<string, any>
+      );
+
+      // Return vacancies with applied status and application date
+      return {
+        vacancies: vacancies.map((vacancy) => {
+          const vacancyJson = vacancy.toJSON();
+          vacancyJson.applied = true;
+          vacancyJson.appliedAt =
+            appMap[vacancy._id.toString()]?.appliedAt || null;
+          vacancyJson.applicationType =
+            appMap[vacancy._id.toString()]?.applicationType || null;
+          return vacancyJson;
+        }),
+        total: vacancies.length,
+      };
     }),
 });

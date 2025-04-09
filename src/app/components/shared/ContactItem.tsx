@@ -35,14 +35,21 @@ export default function ContactItem({
 export function RedirectArrowButton({
   hrefToOpen,
   onClick,
+  disabled,
 }: {
   hrefToOpen?: string;
   onClick?: () => void;
+  disabled?: boolean;
 }) {
   return (
     <div
-      className="h-5 w-5 cursor-pointer hover:opacity-50"
+      className={`h-5 w-5 ${
+        disabled
+          ? 'cursor-not-allowed opacity-50'
+          : 'cursor-pointer hover:opacity-50'
+      }`}
       onClick={() => {
+        if (disabled) return;
         if (onClick) {
           onClick();
         } else if (hrefToOpen) {

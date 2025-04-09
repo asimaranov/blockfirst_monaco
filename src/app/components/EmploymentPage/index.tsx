@@ -18,6 +18,7 @@ interface IVacancyGeneral {
   title: string;
   description: string;
   updatedAt: string | Date;
+  publishedDate: string | Date;
   speciality: string;
   format: any; // Using any to avoid circular imports, will be properly typed at runtime
   salary?: {
@@ -51,17 +52,18 @@ export default function EmploymentPage({ session }: { session: Session }) {
     data: vacancyData,
     isLoading,
     error,
-  } = api.vacancies.getAll.useQuery();
+  } = api.vacancies.getAll.useQuery(undefined, {
+    refetchInterval: 5_000,
+  });
   const vacancies = vacancyData?.vacancies || [];
-
-  // Get API mutation for applying to a vacancy
-  const markAsApplied = api.vacancies.markAsApplied.useMutation();
 
   // Calculate the last update time from the vacancies
   const lastUpdate = vacancies.length
     ? new Date(
         Math.min(
-          ...vacancies.map((vacancy) => new Date(vacancy.updatedAt).getTime())
+          ...vacancies.map((vacancy) =>
+            new Date(vacancy.publishedDate).getTime()
+          )
         )
       ).toLocaleDateString('ru-RU')
     : new Date().toLocaleDateString('ru-RU');
@@ -74,103 +76,88 @@ export default function EmploymentPage({ session }: { session: Session }) {
   const [sortOption, setSortOption] = useState<VacancySort>(VacancySort.ALL);
   const [activeSortType, setActiveSortType] = useState<SortType>(SortType.NONE);
   const [isApplyFormOpen, setIsApplyFormOpen] = useState(false);
-  const [currentVacancyId, setCurrentVacancyId] = useState<string | null>(null);
+  const [currentVacancy, setCurrentVacancy] = useState<IVacancyGeneral | null>(
+    null
+  );
 
-  const handleApply = (vacancyId: string) => {
-    setCurrentVacancyId(vacancyId);
+  // Sort vacancies based on active sort type
+  const sortVacancies = (vacancies: IVacancyGeneral[]) => {
+    // First filter by speciality if filters are set
+    const filteredVacancies =
+      specialityFilters.length > 0
+        ? vacancies.filter((vacancy) =>
+            specialityFilters.includes(vacancy.speciality as VacancySpeciality)
+          )
+        : vacancies;
+
+    // Then apply sorting
+    switch (activeSortType) {
+      case SortType.SALARY_UP:
+        return [...filteredVacancies].sort((a, b) => {
+          const salaryA = getSalaryValue(a.salary?.amount);
+          const salaryB = getSalaryValue(b.salary?.amount);
+          return salaryA - salaryB;
+        });
+      case SortType.SALARY_DOWN:
+        return [...filteredVacancies].sort((a, b) => {
+          const salaryA = getSalaryValue(a.salary?.amount);
+          const salaryB = getSalaryValue(b.salary?.amount);
+          return salaryB - salaryA;
+        });
+      case SortType.PUBLISHED_UP:
+        return [...filteredVacancies].sort(
+          (a, b) =>
+            new Date(a.publishedDate).getTime() -
+            new Date(b.publishedDate).getTime()
+        );
+      case SortType.PUBLISHED_DOWN:
+        return [...filteredVacancies].sort(
+          (a, b) =>
+            new Date(b.publishedDate).getTime() -
+            new Date(a.publishedDate).getTime()
+        );
+      default:
+        return filteredVacancies;
+    }
+  };
+
+  // Helper to get comparable salary value
+  const getSalaryValue = (amount: any) => {
+    if (!amount) return 0;
+    if (typeof amount === 'number') return amount;
+    if (amount.from && amount.to) return (amount.from + amount.to) / 2;
+    return amount.from || amount.to || 0;
+  };
+
+  // Handle vacancy sorting
+  const handleSortClick = () => {
+    // Cycle through sort types
+    switch (activeSortType) {
+      case SortType.NONE:
+        setActiveSortType(SortType.PUBLISHED_DOWN);
+        break;
+      case SortType.PUBLISHED_DOWN:
+        setActiveSortType(SortType.PUBLISHED_UP);
+        break;
+      case SortType.PUBLISHED_UP:
+        setActiveSortType(SortType.SALARY_DOWN);
+        break;
+      case SortType.SALARY_DOWN:
+        setActiveSortType(SortType.SALARY_UP);
+        break;
+      case SortType.SALARY_UP:
+        setActiveSortType(SortType.NONE);
+        break;
+    }
+  };
+
+  const handleApply = (vacancy: IVacancyGeneral) => {
+    setCurrentVacancy(vacancy);
     setIsApplyFormOpen(true);
   };
 
   const handleSubmitApplication = async () => {
-    if (currentVacancyId && session) {
-      try {
-        await markAsApplied.mutateAsync({ id: currentVacancyId });
-      } catch (error) {
-        console.error('Error marking vacancy as applied:', error);
-      }
-    }
     setIsApplyFormOpen(false);
-  };
-
-  const sortVacancies = (vacanciesArray: IVacancyGeneral[]) => {
-    if (vacanciesArray.length === 0) return [];
-
-    const getSalary = (salary?: IVacancyGeneral['salary']) => {
-      if (!salary?.amount) return 0;
-
-      if (typeof salary.amount === 'number') {
-        return salary.amount;
-      }
-      if ('from' in salary.amount && !('to' in salary.amount)) {
-        return salary.amount.from ?? 0;
-      }
-      if ('to' in salary.amount && !('from' in salary.amount)) {
-        return salary.amount.to ?? 0;
-      }
-      return salary.amount.to ?? 0;
-    };
-
-    const filterBySpeciality = (vacanciesToFilter: IVacancyGeneral[]) => {
-      if (specialityFilters.length === 0) return vacanciesToFilter;
-      return vacanciesToFilter.filter((vacancy) =>
-        specialityFilters.includes(vacancy.speciality as VacancySpeciality)
-      );
-    };
-
-    const filterByViewed = (vacanciesToFilter: IVacancyGeneral[]) => {
-      if (viewedVacancies.length === 0) return vacanciesToFilter;
-
-      if (sortOption === VacancySort.VIEWED) {
-        return vacanciesToFilter.filter((vacancy) =>
-          viewedVacancies.includes(vacancy.id || '')
-        );
-      }
-
-      if (sortOption === VacancySort.NEW) {
-        return vacanciesToFilter.filter(
-          (vacancy) => !viewedVacancies.includes(vacancy.id || '')
-        );
-      }
-
-      return vacanciesToFilter;
-    };
-
-    const sortedVacancies = filterBySpeciality(filterByViewed(vacanciesArray));
-
-    // Apply active sort
-    if (activeSortType !== SortType.NONE) {
-      return [...sortedVacancies].sort((a, b) => {
-        // Salary sorting
-        if (
-          activeSortType === SortType.SALARY_UP ||
-          activeSortType === SortType.SALARY_DOWN
-        ) {
-          const salaryA = getSalary(a.salary);
-          const salaryB = getSalary(b.salary);
-
-          return activeSortType === SortType.SALARY_UP
-            ? salaryA - salaryB
-            : salaryB - salaryA;
-        }
-
-        // Publication date sorting
-        if (
-          activeSortType === SortType.PUBLISHED_UP ||
-          activeSortType === SortType.PUBLISHED_DOWN
-        ) {
-          const dateA = new Date(a.updatedAt).getTime();
-          const dateB = new Date(b.updatedAt).getTime();
-
-          return activeSortType === SortType.PUBLISHED_UP
-            ? dateA - dateB
-            : dateB - dateA;
-        }
-
-        return 0;
-      });
-    }
-
-    return sortedVacancies;
   };
 
   return (
@@ -179,6 +166,8 @@ export default function EmploymentPage({ session }: { session: Session }) {
         <ApplyForm
           onClose={() => setIsApplyFormOpen(false)}
           onSubmit={handleSubmitApplication}
+          vacancyId={currentVacancy?.id || ''}
+          vacancy={currentVacancy || undefined}
         />
       </Modal>
       <div className="border-accent flex flex-1 flex-col sm:flex-row">
@@ -273,7 +262,7 @@ export default function EmploymentPage({ session }: { session: Session }) {
                   <VacancyItem
                     key={vacancy.id}
                     vacancy={vacancy}
-                    onApply={() => handleApply(vacancy.id || '')}
+                    onApply={() => handleApply(vacancy)}
                   />
                 ))
               )}

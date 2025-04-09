@@ -12,6 +12,7 @@ export interface IVacancy {
   title: string;
   description: string;
   updatedAt: Date;
+  publishedDate: Date; // New field for publication date
   speciality: VacancySpeciality | string;
   format: VacancyFormat | [VacancyFormat, VacancyFormat];
   salary?: {
@@ -28,7 +29,10 @@ export interface IVacancy {
   };
   responsibilities: string[];
   requirements: string[];
+  // Fields added on JSON response but not in DB
   applied?: boolean;
+  appliedAt?: Date;
+  applicationType?: 'link' | 'copy' | 'other';
   createdAt?: Date;
   isPersonal?: boolean;
   userId?: string; // ID of the user this vacancy is for (if it's a personal vacancy)
@@ -114,6 +118,11 @@ const VacancySchema = new mongoose.Schema<IVacancy>(
       type: Date,
       default: Date.now,
     },
+    publishedDate: {
+      type: Date,
+      default: Date.now,
+      index: true, // Index for efficient sorting by publication date
+    },
     speciality: {
       type: String,
       required: true,
@@ -155,10 +164,6 @@ const VacancySchema = new mongoose.Schema<IVacancy>(
       type: [String],
       required: true,
     },
-    applied: {
-      type: Boolean,
-      default: false,
-    },
     isPersonal: {
       type: Boolean,
       default: false,
@@ -182,6 +187,13 @@ const VacancySchema = new mongoose.Schema<IVacancy>(
         // Convert updatedAt to ISO string for frontend compatibility
         if (ret.updatedAt) {
           ret.updatedAt = new Date(ret.updatedAt).toISOString().split('T')[0];
+        }
+
+        // Convert publishedDate to ISO string for frontend compatibility
+        if (ret.publishedDate) {
+          ret.publishedDate = new Date(ret.publishedDate)
+            .toISOString()
+            .split('T')[0];
         }
 
         return ret;
