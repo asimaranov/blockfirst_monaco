@@ -6,7 +6,6 @@ import { VacancySort, VacancySpeciality } from '~/app/lib/constants/vacancies';
 import { useState } from 'react';
 import { VacancyItem } from './VacancyItem';
 import { SortIcon } from './assets/sort-icon';
-import { useViewedVacancyStore } from '~/store/viewedVacancy';
 import Footer from '../Footer';
 import { Modal } from '../shared/Modal';
 import { ApplyForm } from './ApplyForm';
@@ -68,8 +67,6 @@ export default function EmploymentPage({ session }: { session: Session }) {
       ).toLocaleDateString('ru-RU')
     : new Date().toLocaleDateString('ru-RU');
 
-  const { viewedVacancies } = useViewedVacancyStore();
-
   const [specialityFilters, setSpecialityFilters] = useState<
     VacancySpeciality[]
   >([]);
@@ -80,15 +77,28 @@ export default function EmploymentPage({ session }: { session: Session }) {
     null
   );
 
+  console.log('Vacancies', vacancies);
+
   // Sort vacancies based on active sort type
   const sortVacancies = (vacancies: IVacancyGeneral[]) => {
     // First filter by speciality if filters are set
-    const filteredVacancies =
+    let filteredVacancies =
       specialityFilters.length > 0
         ? vacancies.filter((vacancy) =>
             specialityFilters.includes(vacancy.speciality as VacancySpeciality)
           )
         : vacancies;
+
+    // Then filter by applied status based on sortOption
+    if (sortOption === VacancySort.VIEWED) {
+      filteredVacancies = filteredVacancies.filter(
+        (vacancy) => vacancy.applied === true
+      );
+    } else if (sortOption === VacancySort.NEW) {
+      filteredVacancies = filteredVacancies.filter(
+        (vacancy) => vacancy.applied !== true
+      );
+    }
 
     // Then apply sorting
     switch (activeSortType) {
@@ -239,8 +249,8 @@ export default function EmploymentPage({ session }: { session: Session }) {
             <div className="@sm:hidden"></div>
           </div>
           {/* Vacancies list */}
-          <div className="relative max-h-[calc(100vh-var(--header-height))] overflow-y-auto h-full">
-            <div className="flex flex-col h-full">
+          <div className="relative h-full max-h-[calc(100vh-var(--header-height))] overflow-y-auto">
+            <div className="flex h-full flex-col">
               {isLoading ? (
                 <div className="flex h-full grow flex-col items-center justify-center gap-4">
                   <div className="border-primary h-16 w-16 animate-spin rounded-full border-t-2 border-b-2"></div>

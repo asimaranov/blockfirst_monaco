@@ -32,31 +32,26 @@ export const FilterModal = ({
   sortOption,
   setSortOption,
 }: FilterModalProps) => {
-  const [localSortOption, setLocalSortOption] =
-    useState<VacancySort>(sortOption);
+  // const [localSortOption, setLocalSortOption] =
+  //   useState<VacancySort>(sortOption);
   const [rotationAngle, setRotationAngle] = useState(0);
 
   const handleReset = () => {
     setSpecialityFilters([]);
-    setLocalSortOption(VACANCY_SORT_OPTIONS[0] as VacancySort);
+    // setLocalSortOption(VACANCY_SORT_OPTIONS[0] as VacancySort);
     setRotationAngle((prevAngle) => prevAngle + 360);
   };
 
   const handleApply = () => {
     setSpecialityFilters(specialityFilters);
-    setSortOption(localSortOption);
+    // setSortOption(localSortOption);
     onClose();
   };
 
-  
-  useEffect(() => {
-    console.log('Speciality filters changed', specialityFilters);
-  }, [specialityFilters]);
-
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="flex h-[780px] w-full  flex-col bg-[#0f1217] flex-grow">
-        <div className="flex flex-col py-5 h-full">
+      <div className="flex h-[780px] w-full flex-grow flex-col bg-[#0f1217]">
+        <div className="flex h-full flex-col py-5">
           <div className="flex flex-col gap-8">
             {/* Header */}
             <div className="mx-5 flex flex-col gap-5">
@@ -72,7 +67,9 @@ export const FilterModal = ({
                 </button>
               </div>
 
-              <h2 className="text-foreground text-xl text-center">Фильтр вакансий</h2>
+              <h2 className="text-foreground text-center text-xl">
+                Фильтр вакансий
+              </h2>
             </div>
 
             <div className="flex flex-col gap-8">
@@ -133,12 +130,12 @@ export const FilterModal = ({
                     <div
                       key={option}
                       className="bg-dark-bg cursor-pointer"
-                      onClick={() => setLocalSortOption(option)}
+                      onClick={() => setSortOption(option)}
                     >
                       <Radio
                         title={option}
-                        isActive={localSortOption === option}
-                        onChange={() => setLocalSortOption(option)}
+                        isActive={sortOption === option}
+                        onChange={() => setSortOption(option)}
                       />
                     </div>
                   ))}
@@ -148,7 +145,7 @@ export const FilterModal = ({
           </div>
 
           {/* Footer buttons */}
-          <div className="flex flex-col gap-5 px-5 mt-auto">
+          <div className="mt-auto flex flex-col gap-5 px-5">
             <button
               onClick={handleReset}
               className="text-primary flex items-center justify-center gap-1 text-xs"
