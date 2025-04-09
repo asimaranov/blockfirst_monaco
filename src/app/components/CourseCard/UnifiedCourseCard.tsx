@@ -157,7 +157,7 @@ export function UnifiedCourseCard({
             )}
           </div>
           <div className="flex flex-col gap-4">
-            <h3 className="text-lg font-medium text-[#F2F2F2]">
+            <h3 className="text-xl font-medium text-[#F2F2F2]">
               {course.title}
             </h3>
             <p className="text-secondary line-clamp-2 text-sm leading-5">
