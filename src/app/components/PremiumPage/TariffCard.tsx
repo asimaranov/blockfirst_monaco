@@ -18,16 +18,16 @@ export default function TariffCard({
   subtitle,
   subtitleWhite = '',
   isPaid = false,
-  badgeText = 'Maximum features',
+  badgeText = 'Maximum Features',
   image,
 }: TariffCardProps) {
   return (
     <div className="hidden w-full flex-row gap-5 bg-cover bg-right-bottom bg-no-repeat px-8 pt-10 pb-8 sm:flex">
       {image}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-3">
         <div className="flex flex-row gap-3">
           <span className="text-2xl font-medium  leading-6">{title}</span>
-          <span className="text-secondary border-secondary/50 font-delight self-start rounded-full border px-3 py-1 text-xs whitespace-nowrap -mt-1">
+          <span className="text-secondary border-secondary/50 font-delight self-center rounded-full border px-3 py-1 text-xs whitespace-nowrap">
             {badgeText}
           </span>
         </div>

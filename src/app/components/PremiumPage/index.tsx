@@ -163,7 +163,7 @@ export default async function PremiumPage({ session }: { session: Session }) {
           <div className="ml-auto self-center">
             <Link href="/pricing">
               <button className="text-foreground border-primary/50 hover:bg-primary flex cursor-pointer flex-row items-center justify-center rounded-full border bg-[#01050D] px-6 py-2.5 text-sm">
-                Посмотреть тарифы
+                Открыть тарифы
                 <svg
                   width="21"
                   height="21"
@@ -184,7 +184,7 @@ export default async function PremiumPage({ session }: { session: Session }) {
 
         <TariffCard
           image={<Image src={ProIcon} alt="Pro" className="h-12.5 w-12.5" />}
-          title="Pro tariff"
+          title="Pro Tariff"
           subtitle="Откроете для себя все возможности, которые предлагает образовательная платформа BlockFirst."
           subtitleWhite="Включено все с Starter тарифа."
           isPaid={userData.plan === 'pro'}
@@ -240,7 +240,7 @@ export default async function PremiumPage({ session }: { session: Session }) {
           image={
             <Image src={StarterIcon} alt="Starter" className="h-12.5 w-12.5" />
           }
-          badgeText="Basic features"
+          badgeText="Basic Features"
           title="Starter Tariff"
           subtitle='С тарифом "Starter" вы получите доступ к основным функциям, необходимым для начала обучения'
           isPaid={userData.plan === 'starter' || userData.plan === 'pro'}
