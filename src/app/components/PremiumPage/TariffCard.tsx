@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import CoinIcon from './assets/coin-icon.png';
 import NotPaidBadge from './assets/not-paid-badge.svg';
+import PaidBadge from './assets/paid-badge.svg';
 import { ReactNode } from 'react';
 
 interface TariffCardProps {
@@ -31,16 +32,14 @@ export default function TariffCard({
           </span>
         </div>
 
-        <span className="text-secondary/50 text-xs font-medium">
+        <span className="text-secondary/50 text-xs">
           {subtitle}
           <span className="text-foreground"> {subtitleWhite}</span>
         </span>
       </div>
-      {!isPaid && (
         <div className="ml-auto self-center">
-          <Image src={NotPaidBadge} alt="Not paid" />
+          <Image src={isPaid ? PaidBadge : NotPaidBadge} alt="Not paid" />
         </div>
-      )}
-    </div>
+      </div>
   );
 }

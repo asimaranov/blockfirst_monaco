@@ -32,9 +32,9 @@ export default function PremiumFeatureCard({
   return (
     <div
       key={id}
-      className={`${bgColor} hidden rounded-xl p-5 transition-transform duration-200 hover:scale-102 nth-[-n+3]:block sm:rounded-none sm:px-8 ease-in-out`}
+      className={`${bgColor} h-full sm:hidden rounded-xl p-5 nth-[-n+3]:flex sm:rounded-none sm:px-8 flex flex-col gap-5`}
     >
-      <div className="mb-5 flex items-center justify-between sm:hidden">
+      <div className="flex items-center justify-between sm:hidden">
         <div className="flex items-center">
           <div className="bg-foreground flex items-center justify-center rounded-full p-1.5 pr-4">
             <Image

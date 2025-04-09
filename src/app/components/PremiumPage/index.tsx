@@ -28,6 +28,7 @@ import ProIcon from './assets/pro-icon.png';
 import FullAccessMobile from './assets/full-access-mobile.png';
 
 import NotPaidBadge from './assets/not-paid-badge.svg';
+import { cn } from '~/helpers';
 
 // Premium feature data
 const premiumFeatures = [
@@ -83,6 +84,32 @@ const premiumFeatures = [
     label: 'Закрытый клуб BlockFirst',
     href: '#',
   },
+  {
+    id: 'mentor',
+    title: 'Персональный куратор ✌️',
+    description:
+      'Куратор окажет помощь в решении сложных задач и ответит на все ваши вопросы до завершения курса.',
+    image: FullAccessMobile,
+    bgColor: 'bg-none',
+    tariff: 'STARTER TARIF',
+    tariffIcon: TARIFFS[1]?.bigIcon,
+    icon: <MentorIcon className="h-5 w-5" />,
+    label: 'Твой куратор',
+    href: '/mentor',
+  },
+  {
+    id: 'cv',
+    title: 'Подготовка резюме 💣',
+    description:
+      'После прохождения каждого этапа, вы разблокируете возможность улучшить свое резюме с куратором для работадателей.',
+    image: NftDiplomaMobile,
+    bgColor: 'bg-none',
+    tariff: 'STARTER TARIF',
+    tariffIcon: TARIFFS[1]?.bigIcon,
+    icon: <CvIcon className="h-5 w-5" />,
+    label: 'Подготовка резюме',
+    href: '/cv',
+  },
 ];
 
 const premiumFeatures2 = [
@@ -92,7 +119,7 @@ const premiumFeatures2 = [
     description:
       'Куратор окажет помощь в решении сложных задач и ответит на все ваши вопросы до завершения курса.',
     image: FullAccessMobile,
-    bgColor: 'bg-none',
+    bgColor: 'bg-[#14171C] border-accent border-t border-r border-b',
     tariff: 'PRO TARIF',
     tariffIcon: TARIFFS[2]?.bigIcon,
     icon: <MentorIcon className="h-5 w-5" />,
@@ -105,7 +132,7 @@ const premiumFeatures2 = [
     description:
       'После прохождения каждого этапа, вы разблокируете возможность улучшить свое резюме с куратором для работадателей.',
     image: NftDiplomaMobile,
-    bgColor: 'bg-none',
+    bgColor: 'bg-[#14171C] border-accent border-t border-b',
     tariff: 'PRO TARIF',
     tariffIcon: TARIFFS[2]?.bigIcon,
     icon: <CvIcon className="h-5 w-5" />,
@@ -118,7 +145,7 @@ const premiumFeatures2 = [
     description:
       'Доступ к закрытому комьюнити энтузиастов. Cможете найти сокомандников и построить будущее в блокчейн индустрии.',
     image: ClubImage,
-    bgColor: 'bg-[#30BF69]',
+    bgColor: 'bg-[#30BF69] border-accent border-b',
     tariff: 'STARTER TARIF',
     tariffIcon: TARIFFS[1]?.bigIcon,
     icon: <Image src={ClubIcon} alt="Club" className="h-5 w-5" />,
@@ -152,27 +179,29 @@ export default async function PremiumPage({ session }: { session: Session }) {
           />
           <div className="flex flex-col gap-2">
             <span className="text-3xl font-medium">Премиум возможности</span>
-            <span className="text-secondary text-xs font-medium">
+            <span className="text-secondary text-xs">
               Улучшите качество своего обучения в WEB3 с помощью дополнительных
               функций!
             </span>
           </div>
           <div className="ml-auto self-center">
-            <button className="text-foreground border-primary/50 flex cursor-pointer flex-row items-center justify-center rounded-full border bg-[#01050D] px-6 py-2.5 text-sm">
-              Посмотреть тарифы
-              <svg
-                width="21"
-                height="21"
-                viewBox="0 0 21 21"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M14.2305 4.93358C14.5292 4.6468 15.0042 4.65636 15.291 4.95506L19.9062 9.76365C20.1848 10.0539 20.1848 10.5125 19.9062 10.8027L15.291 15.6113C15.0042 15.9102 14.5293 15.9196 14.2305 15.6328C13.9319 15.3459 13.9222 14.871 14.209 14.5722L18.3262 10.2832L14.209 5.99412C13.9222 5.69533 13.9317 5.22041 14.2305 4.93358Z"
-                  fill="#F2F2F2"
-                />
-              </svg>
-            </button>
+            <Link href="/pricing">
+              <button className="text-foreground border-primary/50 hover:bg-primary flex cursor-pointer flex-row items-center justify-center rounded-full border bg-[#01050D] px-6 py-2.5 text-sm">
+                Посмотреть тарифы
+                <svg
+                  width="21"
+                  height="21"
+                  viewBox="0 0 21 21"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M14.2305 4.93358C14.5292 4.6468 15.0042 4.65636 15.291 4.95506L19.9062 9.76365C20.1848 10.0539 20.1848 10.5125 19.9062 10.8027L15.291 15.6113C15.0042 15.9102 14.5293 15.9196 14.2305 15.6328C13.9319 15.3459 13.9222 14.871 14.209 14.5722L18.3262 10.2832L14.209 5.99412C13.9222 5.69533 13.9317 5.22041 14.2305 4.93358Z"
+                    fill="#F2F2F2"
+                  />
+                </svg>
+              </button>
+            </Link>
           </div>
         </div>
 
@@ -181,49 +210,50 @@ export default async function PremiumPage({ session }: { session: Session }) {
           title="Pro tarif"
           subtitle="Откроете для себя все возможности, которые предлагает образовательная платформа BlockFirst."
           subtitleWhite="Включено все с Starter тарифа"
+          isPaid={userData.plan === 'pro'}
         />
 
-        {userData.plan === 'free' && (
-          <>
-            <section className="relative flex px-5 pt-5 pb-10 sm:hidden">
-              <div className="absolute inset-0 bg-gradient-to-b bg-[url('/images/misc/premium-grid.svg')] bg-top"></div>
+        <section className="relative flex px-5 pt-5 pb-10 sm:hidden">
+          <div className="absolute inset-0 bg-gradient-to-b bg-[url('/images/misc/premium-grid.svg')] bg-top"></div>
 
-              {/* Main Content */}
-              <div className="relative z-10 flex flex-col gap-7">
-                <div className="flex items-center justify-center">
-                  <Image
-                    src={'/images/logo/form-logo.svg'}
-                    alt="Logo"
-                    width={152}
-                    height={44}
-                    className="w-34.5"
-                  />
-                </div>
+          {/* Main Content */}
+          <div className="relative z-10 flex flex-col gap-7">
+            <div className="flex items-center justify-center">
+              <Image
+                src={'/images/logo/form-logo.svg'}
+                alt="Logo"
+                width={152}
+                height={44}
+                className="w-34.5"
+              />
+            </div>
 
-                <div className="text-center">
-                  <h1 className="text-foreground text-3xl font-bold">
-                    Премиум возможности
-                  </h1>
-                  <p className="text-secondary mt-4 text-sm">
-                    Улучшите качество своего обучения в WEB3 с помощью
-                    дополнительных функций
-                  </p>
-                </div>
-              </div>
-            </section>
+            <div className="text-center">
+              <h1 className="text-foreground text-3xl font-bold">
+                Премиум возможности
+              </h1>
+              <p className="text-secondary mt-4 text-sm">
+                Улучшите качество своего обучения в WEB3 с помощью
+                дополнительных функций
+              </p>
+            </div>
+          </div>
+        </section>
 
-            <section className="flex flex-col space-y-3 px-2 py-3 pb-10 sm:flex-row sm:px-0 sm:py-0">
-              {premiumFeatures.map((feature) => (
-                <PremiumFeatureCard
-                  key={feature.id}
-                  {...feature}
-                  isLocked={userData.plan === 'free'}
-                />
-              ))}
-            </section>
-          </>
-        )}
-
+        <section
+          className={cn(
+            'flex grid-cols-3 flex-col space-y-3 px-2 py-3 pb-10 sm:grid sm:flex-row sm:px-0 sm:py-0',
+            userData.plan !== 'free' && 'hidden sm:grid'
+          )}
+        >
+          {premiumFeatures.map((feature) => (
+            <PremiumFeatureCard
+              key={feature.id}
+              {...feature}
+              isLocked={userData.plan === 'free'}
+            />
+          ))}
+        </section>
         <TariffCard
           image={
             <Image src={StarterIcon} alt="Starter" className="h-12.5 w-12.5" />
@@ -231,6 +261,7 @@ export default async function PremiumPage({ session }: { session: Session }) {
           badgeText="Basic features"
           title="Starter Tarif"
           subtitle='С тарифом "Starter" вы получите доступ к основным функциям, необходимым для начала обучения'
+          isPaid={userData.plan === 'starter' || userData.plan === 'pro'}
         />
 
         <section className="hidden grid-cols-3 space-y-3 px-2 py-3 pb-10 sm:grid sm:flex-row sm:px-0 sm:py-0">
