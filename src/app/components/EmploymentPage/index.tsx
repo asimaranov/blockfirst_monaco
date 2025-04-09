@@ -260,7 +260,7 @@ export default function EmploymentPage({ session }: { session: Session }) {
                 </div>
               ) : error ? (
                 <div className="flex justify-center p-10">
-                  <div className="text-red-500">
+                  <div className="text-error">
                     Error loading vacancies. Please try again.
                   </div>
                 </div>

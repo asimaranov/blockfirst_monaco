@@ -30,7 +30,7 @@ export default function FormField({
       <div
         className={cn(
           'border-accent group focus-within:border-foreground flex h-12 items-center border-b px-4',
-          error && 'border-red-500'
+          error && 'border-error'
         )}
       >
         {icon && <div className="w-4">{icon}</div>}
@@ -48,7 +48,7 @@ export default function FormField({
       {error && (
         <div className="flex items-center gap-2 pt-2">
           <Image src={ErrorDecorationSvg} alt={''} width={14} height={14} className='w-3.5 h-3.5' />
-          <span className="text-xs text-red-500">{error}</span>
+          <span className="text-xs text-error">{error}</span>
         </div>
       )}
     </div>
@@ -77,7 +77,7 @@ export function FormTextArea({
       <div
         className={cn(
           'border-accent group focus-within:border-b-foreground flex w-full flex-1 flex-col p-4',
-          error && 'border-red-500'
+          error && 'border-error'
         )}
       >
         <div className="flex flex-1 items-start gap-3">
@@ -94,7 +94,7 @@ export function FormTextArea({
           />
         </div>
       </div>
-      {error && <span className="pl-4 text-xs text-red-500">{error}</span>}
+      {error && <span className="pl-4 text-xs text-error">{error}</span>}
     </div>
   );
 }

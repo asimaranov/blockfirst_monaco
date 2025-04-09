@@ -697,7 +697,7 @@ export default function MentorPage({ session }: { session: Session }) {
                   </motion.button>
 
                   {error && (
-                    <p className="mt-2 text-xs text-red-500">{error}</p>
+                    <p className="mt-2 text-xs text-error">{error}</p>
                   )}
                 </div>
               )}

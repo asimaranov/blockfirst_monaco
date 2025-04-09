@@ -249,7 +249,7 @@ export default function FormContainer({
         </div>
 
         {error && (
-          <div className="mt-4 text-center text-sm text-red-500">{error}</div>
+          <div className="mt-4 text-center text-sm text-error">{error}</div>
         )}
 
         {(kind || 'form') == 'form' && (

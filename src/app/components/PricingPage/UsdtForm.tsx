@@ -106,7 +106,7 @@ export default function UsdtForm({
                 className="h-full w-full"
               />
             ) : (
-              <div className="flex h-full w-full items-center justify-center text-center text-red-500">
+              <div className="flex h-full w-full items-center justify-center text-center text-error">
                 Ошибка при создании кошелька. Пожалуйста, попробуйте позже.
               </div>
             )}
