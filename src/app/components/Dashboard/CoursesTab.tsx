@@ -28,7 +28,7 @@ export async function CoursesTab() {
         <div className="border-accent flex flex-row gap-3 border-t p-5 pt-10 text-base">
           <div>Другие курсы</div>
           <div className="bg-foreground text-background flex h-5 w-7.5 items-center justify-center rounded-[100px] text-center text-sm font-medium">
-            <span className="mt-[1px] leading-4">8</span>
+            <span className="mt-[0.0579vw] leading-4">8</span>
           </div>
         </div>
       </div>

@@ -10,9 +10,6 @@ interface PremiumFeatureCardProps {
   bgColor: string;
   tariff: string;
   tariffIcon: any;
-  icon: React.ReactNode;
-  label: string;
-  href?: string;
   isLocked?: boolean;
 }
 
@@ -24,9 +21,6 @@ export default function PremiumFeatureCard({
   bgColor,
   tariff,
   tariffIcon,
-  icon,
-  label,
-  href,
   isLocked = false,
 }: PremiumFeatureCardProps) {
   return (

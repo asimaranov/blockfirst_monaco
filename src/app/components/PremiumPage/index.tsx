@@ -16,7 +16,7 @@ import NftDiplomaMobile from './assets/nft-diploma-mobile.png';
 import MentorIcon from '../Sidebar/assets/section_icons/mentor';
 import CvIcon from '../Sidebar/assets/section_icons/cv';
 import JobIcon from '../Sidebar/assets/section_icons/job';
-import ClubIcon from './assets/club-icon.svg';
+import ClubIcon from '../Sidebar/assets/section_icons/club';
 import Link from 'next/link';
 import { api } from '~/trpc/server';
 import { planTypeToSubscriptionType } from '~/app/lib/utils';
@@ -30,6 +30,36 @@ import FullAccessMobile from './assets/full-access-mobile.png';
 import NotPaidBadge from './assets/not-paid-badge.svg';
 import { cn } from '~/helpers';
 
+const menuItems = [
+  {
+    id: 'mentor',
+    icon: <MentorIcon className="h-5 w-5" />,
+    label: 'Твой куратор',
+    href: '/mentor',
+    tariff: 'PRO TARIFF',
+  },
+  {
+    id: 'cv',
+    icon: <CvIcon className="h-5 w-5" />,
+    label: 'Подготовка резюме',
+    href: '/cv',
+    tariff: 'PRO TARIFF',
+  },
+  {
+    id: 'jobs',
+    icon: <JobIcon className="h-5 w-5" />,
+    label: 'Трудоустройство',
+    href: '/employment',
+    tariff: 'PRO TARIFF',
+  },
+  {
+    id: 'club',
+    icon: <ClubIcon className="h-5 w-5" />,
+    label: 'Закрытый клуб BlockFirst',
+    href: '#',
+    tariff: 'STARTER TARIFF',
+  },
+];
 // Premium feature data
 const premiumFeatures = [
   {
@@ -39,11 +69,8 @@ const premiumFeatures = [
       'Куратор окажет помощь в решении сложных задач и ответит на все ваши вопросы до завершения курса.',
     image: MentorImage,
     bgColor: 'bg-primary',
-    tariff: 'PRO TARIF',
+    tariff: 'PRO TARIFF',
     tariffIcon: TARIFFS[2]?.bigIcon,
-    icon: <MentorIcon className="h-5 w-5" />,
-    label: 'Твой куратор',
-    href: '/mentor',
   },
   {
     id: 'cv',
@@ -52,11 +79,8 @@ const premiumFeatures = [
       'После прохождения каждого этапа, вы разблокируете возможность улучшить свое резюме с куратором для работадателей.',
     image: CVImage,
     bgColor: 'bg-[#E57A2E]',
-    tariff: 'PRO TARIF',
+    tariff: 'PRO TARIFF',
     tariffIcon: TARIFFS[2]?.bigIcon,
-    icon: <CvIcon className="h-5 w-5" />,
-    label: 'Подготовка резюме',
-    href: '/cv',
   },
   {
     id: 'jobs',
@@ -65,11 +89,8 @@ const premiumFeatures = [
       'Мы агрегируем актуальные вакансии для наших учеников. Доступны персонализированные предложения от наших партнеров.',
     image: JobsImage,
     bgColor: 'bg-[#7417E5]',
-    tariff: 'PRO TARIF',
+    tariff: 'PRO TARIFF',
     tariffIcon: TARIFFS[2]?.bigIcon,
-    icon: <JobIcon className="h-5 w-5" />,
-    label: 'Трудоустройство',
-    href: '/employment',
   },
   {
     id: 'club',
@@ -78,37 +99,28 @@ const premiumFeatures = [
       'Доступ к закрытому комьюнити энтузиастов. Cможете найти сокомандников и построить будущее в блокчейн индустрии.',
     image: ClubImage,
     bgColor: 'bg-[#30BF69]',
-    tariff: 'STARTER TARIF',
+    tariff: 'STARTER TARIFF',
     tariffIcon: TARIFFS[1]?.bigIcon,
-    icon: <Image src={ClubIcon} alt="Club" className="h-5 w-5" />,
-    label: 'Закрытый клуб BlockFirst',
-    href: '#',
   },
   {
-    id: 'mentor',
-    title: 'Персональный куратор ✌️',
+    id: 'full-access',
+    title: 'Полный доступ 🔥',
     description:
-      'Куратор окажет помощь в решении сложных задач и ответит на все ваши вопросы до завершения курса.',
+      'Получите доступ ко всем основным материалам курса, автоматическую проверку решений, образовательные материалы по теме курса.',
     image: FullAccessMobile,
     bgColor: 'bg-[#14171C] border-accent sm:border-t sm:border-r sm:border-b',
-    tariff: 'PRO TARIF',
-    tariffIcon: TARIFFS[2]?.bigIcon,
-    icon: <MentorIcon className="h-5 w-5" />,
-    label: 'Твой куратор',
-    href: '/mentor',
+    tariff: 'STARTER TARIFF',
+    tariffIcon: TARIFFS[1]?.bigIcon,
   },
   {
-    id: 'cv',
-    title: 'Подготовка резюме 💣',
+    id: 'nft-diploma',
+    title: 'NFT диплом ⚡️',
     description:
-      'После прохождения каждого этапа, вы разблокируете возможность улучшить свое резюме с куратором для работадателей.',
+      'Разблокируется после прохождения каждого курса. Интерактивный диплом обновляется с каждой новой записью о ваших компетенциях. ',
     image: NftDiplomaMobile,
     bgColor: 'bg-[#14171C]  border-accent sm:border-t sm:border-b',
-    tariff: 'PRO TARIF',
-    tariffIcon: TARIFFS[2]?.bigIcon,
-    icon: <CvIcon className="h-5 w-5" />,
-    label: 'Подготовка резюме',
-    href: '/cv',
+    tariff: 'STARTER TARIFF',
+    tariffIcon: TARIFFS[1]?.bigIcon,
   },
 ];
 
@@ -119,11 +131,11 @@ const premiumFeatures2 = [
 ];
 
 // Group features by tariff type
-const proFeatures = premiumFeatures.filter(
-  (feature) => feature.tariff === 'PRO TARIF'
+const proFeatures = menuItems.filter(
+  (feature) => feature.tariff === 'PRO TARIFF'
 );
-const starterFeatures = premiumFeatures.filter(
-  (feature) => feature.tariff === 'STARTER TARIF'
+const starterFeatures = menuItems.filter(
+  (feature) => feature.tariff === 'STARTER TARIFF'
 );
 
 export default async function PremiumPage({ session }: { session: Session }) {
@@ -158,7 +170,7 @@ export default async function PremiumPage({ session }: { session: Session }) {
                   viewBox="0 0 21 21"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5"
+                  className="h-5 w-5"
                 >
                   <path
                     d="M14.2305 4.93358C14.5292 4.6468 15.0042 4.65636 15.291 4.95506L19.9062 9.76365C20.1848 10.0539 20.1848 10.5125 19.9062 10.8027L15.291 15.6113C15.0042 15.9102 14.5293 15.9196 14.2305 15.6328C13.9319 15.3459 13.9222 14.871 14.209 14.5722L18.3262 10.2832L14.209 5.99412C13.9222 5.69533 13.9317 5.22041 14.2305 4.93358Z"
@@ -172,7 +184,7 @@ export default async function PremiumPage({ session }: { session: Session }) {
 
         <TariffCard
           image={<Image src={ProIcon} alt="Pro" className="h-12.5 w-12.5" />}
-          title="Pro tarif"
+          title="Pro tariff"
           subtitle="Откроете для себя все возможности, которые предлагает образовательная платформа BlockFirst."
           subtitleWhite="Включено все с Starter тарифа"
           isPaid={userData.plan === 'pro'}
@@ -224,7 +236,7 @@ export default async function PremiumPage({ session }: { session: Session }) {
             <Image src={StarterIcon} alt="Starter" className="h-12.5 w-12.5" />
           }
           badgeText="Basic features"
-          title="Starter Tarif"
+          title="Starter Tariff"
           subtitle='С тарифом "Starter" вы получите доступ к основным функциям, необходимым для начала обучения'
           isPaid={userData.plan === 'starter' || userData.plan === 'pro'}
         />
@@ -260,7 +272,7 @@ export default async function PremiumPage({ session }: { session: Session }) {
                     'Стартовый тариф'
                   ) : (
                     <>
-                      <span>Оплачен </span>
+                      <span>Оплачен до </span>
                       <span className="text-foreground">
                         {userData.premiumEndDate?.toLocaleDateString('ru-RU', {
                           day: 'numeric',
@@ -297,7 +309,10 @@ export default async function PremiumPage({ session }: { session: Session }) {
                     href={feature.href ?? '#'}
                     className="border-accent flex items-center justify-between border-b pt-7 pb-5"
                   >
-                    <div className="flex items-center">
+                    <div
+                      className="flex items-center group"
+                      data-active={userData.plan === 'pro'}
+                    >
                       {feature.icon}
                       <span className="text-secondary ml-3 text-base">
                         {feature.label}
@@ -334,7 +349,10 @@ export default async function PremiumPage({ session }: { session: Session }) {
                     key={feature.id}
                     className="border-accent mt-3 flex items-center justify-between pt-5 pb-5"
                   >
-                    <div className="flex items-center">
+                    <div
+                      className="flex items-center group"
+                      data-active={userData.plan !== 'free'}
+                    >
                       {feature.icon}
                       <span className="text-secondary ml-3 text-base">
                         {feature.label}
