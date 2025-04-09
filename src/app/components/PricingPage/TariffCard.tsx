@@ -116,7 +116,7 @@ export default function TariffCard({ tariff }: { tariff: Tariff }) {
             <div className="flex items-center gap-2">
               <button
                 className={cn(
-                  'flex items-center rounded-full border border-[#1959F4] bg-[#1959F4] px-11 py-3 duration-300',
+                  'flex items-center rounded-full border border-[#1959F4] bg-[#1959F4] px-10.5 py-3.5 sm:px-10.75 duration-300',
                   isLoading
                     ? 'border-[#1242B2] bg-[#1242B2]'
                     : 'hover:bg-dark-bg cursor-pointer',
