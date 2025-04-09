@@ -27,7 +27,7 @@ export default function TariffCard({
       <div className="flex flex-col gap-2">
         <div className="flex flex-row gap-3">
           <span className="text-2xl font-medium  leading-6">{title}</span>
-          <span className="text-secondary border-secondary/50 font-delight self-start rounded-full border px-3 py-1 text-xs whitespace-nowrap">
+          <span className="text-secondary border-secondary/50 font-delight self-start rounded-full border px-3 py-1 text-xs whitespace-nowrap -mt-1">
             {badgeText}
           </span>
         </div>

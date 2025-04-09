@@ -186,7 +186,7 @@ export default async function PremiumPage({ session }: { session: Session }) {
           image={<Image src={ProIcon} alt="Pro" className="h-12.5 w-12.5" />}
           title="Pro tariff"
           subtitle="Откроете для себя все возможности, которые предлагает образовательная платформа BlockFirst."
-          subtitleWhite="Включено все с Starter тарифа"
+          subtitleWhite="Включено все с Starter тарифа."
           isPaid={userData.plan === 'pro'}
         />
 
