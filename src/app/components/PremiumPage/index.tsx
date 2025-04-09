@@ -190,7 +190,12 @@ export default async function PremiumPage({ session }: { session: Session }) {
           isPaid={userData.plan === 'pro'}
         />
 
-        <section className="relative flex px-5 pt-5 pb-10 sm:hidden">
+        <section
+          className={cn(
+            'relative flex px-5 pt-5 pb-10 sm:hidden',
+            userData.plan !== 'free' && 'hidden'
+          )}
+        >
           <div className="absolute inset-0 bg-gradient-to-b bg-[url('/images/misc/premium-grid.svg')] bg-top"></div>
 
           {/* Main Content */}
