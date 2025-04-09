@@ -239,11 +239,14 @@ export default function EmploymentPage({ session }: { session: Session }) {
             <div className="@sm:hidden"></div>
           </div>
           {/* Vacancies list */}
-          <div className="relative max-h-[calc(100vh-var(--header-height))] overflow-y-auto">
-            <div className="flex flex-col">
+          <div className="relative max-h-[calc(100vh-var(--header-height))] overflow-y-auto h-full">
+            <div className="flex flex-col h-full">
               {isLoading ? (
-                <div className="flex justify-center p-10">
-                  <div className="text-accent">Loading vacancies...</div>
+                <div className="flex h-full grow flex-col items-center justify-center gap-4">
+                  <div className="border-primary h-16 w-16 animate-spin rounded-full border-t-2 border-b-2"></div>
+                  <p className="text-lg font-medium text-gray-600">
+                    Loading...
+                  </p>
                 </div>
               ) : error ? (
                 <div className="flex justify-center p-10">
