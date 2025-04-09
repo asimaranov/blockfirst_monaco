@@ -130,7 +130,7 @@ export default function Footer({ className }: { className?: string }) {
           {/* Newsletter signup */}
           <div className="max-w-auto flex flex-col gap-10 sm:max-w-77">
             <div className="flex flex-col gap-4">
-              <h3 className="text-2xl">Новости. Скидки. Анонсы</h3>
+              <h3 className="text-xl sm:text-2xl">Новости. Скидки. Анонсы</h3>
               <p className="text-secondary text-sm text-nowrap">
                 Подписываясь на рассылку, вы можете быть <br />
                 <span className="text-secondary text-sm text-nowrap">
@@ -147,7 +147,7 @@ export default function Footer({ className }: { className?: string }) {
             {mobileLinkSections.map((section, index) => (
               <div
                 key={index}
-                className={`flex w-1/2 flex-col gap-8 sm:w-auto ${section.className || ''}`}
+                className={`flex w-1/2 flex-col gap-5 sm:gap-8 sm:w-auto ${section.className || ''}`}
               >
                 <span className="text-secondary text-xs uppercase opacity-50">
                   {section.title}

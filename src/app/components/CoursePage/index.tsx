@@ -36,8 +36,17 @@ const courseStats: CourseStat[] = [
 
 export default async function CoursePage({ courseId }: { courseId: string }) {
   const course = COURSES.find((x) => x.id === courseId)!;
-  const courseData = COURSE_DATA[courseId as keyof typeof COURSE_DATA];
+  const courseDataRaw = COURSE_DATA[courseId as keyof typeof COURSE_DATA];
   const userData = await api.userData.getUserData();
+
+  const courseData = {
+    ...courseDataRaw,
+    structure: courseDataRaw.structure.map((section) => ({
+      ...section,
+      status: userData.plan === 'free' ? 'starter' : 'available',
+    })),
+  };
+  console.log('courseData', courseData);
 
   return (
     <main className="border-accent border-r-0 border-l-0 sm:border-r sm:border-l">
