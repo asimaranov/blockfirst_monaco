@@ -151,7 +151,7 @@ export const InfoPopover = ({
                 transition={{ duration: 0.2 }}
               >
                 <div className="text-foreground pb-3 text-sm">{title}</div>
-                <div className="text-secondary text-xs">{content}</div>
+                <div className="text-secondary text-xs leading-5">{content}</div>
                 {children}
               </motion.div>
             )}

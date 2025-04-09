@@ -130,7 +130,7 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
               e.stopPropagation();
               onApply();
             }}
-            className="group flex w-33 cursor-pointer flex-col items-center justify-center rounded-full border border-[#33CF8E]/10 bg-[#33CF8E]/10 px-7.5 py-2.5 transition-colors duration-200 hover:border-[#33CF8E]"
+            className="group flex w-33 cursor-pointer flex-col items-center justify-center rounded-full bg-[#33CF8E]/10 px-7.5 py-2.5 transition-colors duration-200"
           >
             <span className="flex flex-row items-center justify-center gap-1 text-sm leading-4 text-[#33CF8E] transition-colors duration-200">
               <svg

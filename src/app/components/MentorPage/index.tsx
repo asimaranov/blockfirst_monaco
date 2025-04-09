@@ -510,8 +510,8 @@ export default function MentorPage({ session }: { session: Session }) {
                     </div>
                   </div>
                   <div className="px-5 pt-6 pb-10 sm:px-8 sm:py-4">
-                    <p className="text-foreground text-sm sm:text-xs">
-                      Звонок согласовывается в чате. <br />
+                    <p className="text-foreground text-sm leading-5 sm:text-xs">
+                      Звонок согласовывается в чате.{' '}
                       <span className="text-secondary">
                         Пожалуйста, заранее подготовьте вопрос или опишите
                         проблему.
@@ -539,9 +539,8 @@ export default function MentorPage({ session }: { session: Session }) {
                     </div>
                   </div>
                   <div className="px-5 pt-6 pb-10 sm:px-8 sm:py-4">
-                    <p className="text-foreground text-sm sm:text-xs">
-                      Обращайтесь с вопросами, возникшими в процессе курса.
-                      <br />
+                    <p className="text-foreground text-sm leading-5 sm:text-xs">
+                      Обращайтесь с вопросами, возникшими в процессе курса.{' '}
                       <span className="text-secondary">
                         Куратор быстро поможет вам!
                       </span>
