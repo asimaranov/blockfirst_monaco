@@ -166,7 +166,7 @@ export default function UsdtForm({
           {wallet?.amount || '...'} USDT
         </div>
         <div className="bg-accent h-px w-full"></div>
-        <div className="flex w-full flex-row items-center justify-center gap-1 pb-5 text-sm sm:pb-8">
+        <div className="flex w-full flex-row items-center justify-center gap-1 pb-5 text-sm sm:pb-8 leading-4">
           <span className="text-secondary">Валюта –</span>
           <svg
             width="16"

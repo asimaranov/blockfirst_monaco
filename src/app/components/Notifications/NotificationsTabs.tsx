@@ -60,7 +60,7 @@ export default function NotificationsTabs({
           ref={incomingTabRef}
           className={cn(
             'opacity-50 hover:opacity-100',
-            'flex cursor-pointer flex-row items-center justify-center gap-1 px-8 py-4 text-sm',
+            'flex cursor-pointer flex-row items-center justify-center gap-1 px-5 py-4 text-sm sm:px-8',
             activeTab == 'incoming' && 'opacity-100',
             'w-38.75'
           )}
@@ -82,7 +82,7 @@ export default function NotificationsTabs({
           ref={archieveTabRef}
           className={cn(
             'opacity-50 hover:opacity-100',
-            'flex cursor-pointer flex-row items-center justify-center gap-1 px-8 py-4 text-sm',
+            'flex cursor-pointer flex-row items-center justify-center gap-1 px-5 py-4 text-sm sm:px-8',
             activeTab == 'archieve' && 'opacity-100'
           )}
           onClick={() => setActive('archieve')}
@@ -95,7 +95,7 @@ export default function NotificationsTabs({
           className={cn(
             'group opacity-50 hover:opacity-100',
             activeTab == 'settings' && 'active',
-            'flex cursor-pointer flex-row items-center justify-center gap-1 px-8 py-4 text-sm',
+            'flex cursor-pointer flex-row items-center justify-center gap-1 px-5 py-4 text-sm sm:px-8',
             activeTab == 'settings' && 'opacity-100'
           )}
           onClick={() => setActive('settings')}

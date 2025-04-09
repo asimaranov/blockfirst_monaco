@@ -169,8 +169,7 @@ export default function MentorPage({ session }: { session: Session }) {
   // Determine if the form should be shown or a pending message
   const showAssigningMessage =
     !isLoadingCuratorStatus && curatorStatus?.isAssigning && !success;
-  const showForm =
-    !isLoadingCuratorStatus && !curatorStatus?.isAssigning && !success;
+  const showForm = !curatorStatus?.isAssigning && !success;
 
   return (
     <main className="border-accent border-r-0 border-l-0 sm:border-r sm:border-l">
@@ -318,7 +317,7 @@ export default function MentorPage({ session }: { session: Session }) {
                 {/* About section */}
                 <div className="flex flex-col gap-4">
                   <div className="flex w-full items-center justify-between">
-                    <p className="text-secondary text-xs uppercase opacity-50">
+                    <p className="text-secondary text-sm uppercase opacity-50 sm:text-xs">
                       о кураторе
                     </p>
                     <InfoPopover
@@ -351,7 +350,7 @@ export default function MentorPage({ session }: { session: Session }) {
                   {/* Education */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="text-secondary h-3.5 w-3.5">
+                      <div className="text-secondary h-4 w-4 sm:h-3.5 sm:w-3.5">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
@@ -363,11 +362,11 @@ export default function MentorPage({ session }: { session: Session }) {
                           <path d="M4.462 19.462c.42-.419.753-.89 1-1.394.453.213.902.434 1.347.661a6.743 6.743 0 01-1.286 1.794.75.75 0 11-1.06-1.06z" />
                         </svg>
                       </div>
-                      <span className="text-secondary text-xs">
+                      <span className="text-secondary text-sm sm:text-xs">
                         Образование:
                       </span>
                     </div>
-                    <span className="text-foreground text-xs">
+                    <span className="text-foreground text-sm sm:text-xs">
                       {mentors[index]!.education}
                     </span>
                   </div>
@@ -375,25 +374,25 @@ export default function MentorPage({ session }: { session: Session }) {
                   {/* Experience */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="text-secondary h-3.5 w-3.5">
+                      <div className="text-secondary h-4 w-4 sm:h-3.5 sm:w-3.5">
                         <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 16 16"
+                          fill="none"
                           xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 24 24"
-                          fill="currentColor"
-                          className="h-3.5 w-3.5"
                         >
                           <path
-                            fillRule="evenodd"
-                            d="M14.447 3.027a.75.75 0 01.527.92l-4.5 16.5a.75.75 0 01-1.448-.394l4.5-16.5a.75.75 0 01.921-.526zM16.72 6.22a.75.75 0 011.06 0l5.25 5.25a.75.75 0 010 1.06l-5.25 5.25a.75.75 0 11-1.06-1.06L21.44 12l-4.72-4.72a.75.75 0 010-1.06zm-9.44 0a.75.75 0 010 1.06L2.56 12l4.72 4.72a.75.75 0 11-1.06 1.06L.97 12.53a.75.75 0 010-1.06l5.25-5.25a.75.75 0 011.06 0z"
-                            clipRule="evenodd"
+                            d="M8.0026 1.33203C4.3226 1.33203 1.33594 4.3187 1.33594 7.9987C1.33594 11.6787 4.3226 14.6654 8.0026 14.6654C11.6826 14.6654 14.6693 11.6787 14.6693 7.9987C14.6693 4.3187 11.6826 1.33203 8.0026 1.33203ZM5.68927 8.9787C5.8826 9.17203 5.8826 9.49203 5.68927 9.68536C5.58927 9.78536 5.4626 9.83203 5.33594 9.83203C5.20927 9.83203 5.0826 9.78536 4.9826 9.68536L3.64927 8.35203C3.45594 8.1587 3.45594 7.8387 3.64927 7.64536L4.9826 6.31203C5.17594 6.1187 5.49594 6.1187 5.68927 6.31203C5.8826 6.50536 5.8826 6.82536 5.68927 7.0187L4.70927 7.9987L5.68927 8.9787ZM9.12927 6.6387L7.79594 9.75203C7.71594 9.9387 7.52927 10.052 7.33594 10.052C7.26927 10.052 7.2026 10.0387 7.1426 10.012C6.88927 9.90536 6.76927 9.61203 6.8826 9.35203L8.21594 6.2387C8.3226 5.98536 8.61594 5.86536 8.86927 5.9787C9.1226 6.09203 9.23594 6.38536 9.12927 6.6387ZM12.3559 8.35203L11.0226 9.68536C10.9226 9.78536 10.7959 9.83203 10.6693 9.83203C10.5426 9.83203 10.4159 9.78536 10.3159 9.68536C10.1226 9.49203 10.1226 9.17203 10.3159 8.9787L11.2959 7.9987L10.3159 7.0187C10.1226 6.82536 10.1226 6.50536 10.3159 6.31203C10.5093 6.1187 10.8293 6.1187 11.0226 6.31203L12.3559 7.64536C12.5493 7.8387 12.5493 8.1587 12.3559 8.35203Z"
+                            fill="#9AA6B5"
                           />
                         </svg>
                       </div>
-                      <span className="text-secondary text-xs">
+                      <span className="text-secondary text-sm sm:text-xs">
                         Опыт работы:
                       </span>
                     </div>
-                    <span className="text-foreground text-xs">
+                    <span className="text-foreground text-sm sm:text-xs">
                       {mentors[index]!.experience}
                     </span>
                   </div>
@@ -411,9 +410,11 @@ export default function MentorPage({ session }: { session: Session }) {
                           <path d="M21.721 12.752a9.711 9.711 0 00-.945-5.003 12.754 12.754 0 01-4.339 2.708 18.991 18.991 0 01-.214 4.772 17.165 17.165 0 005.498-2.477zM14.634 15.55a17.324 17.324 0 00.332-4.647c-.952.227-1.945.347-2.966.347-1.021 0-2.014-.12-2.966-.347a17.515 17.515 0 00.332 4.647 17.385 17.385 0 005.268 0zM9.772 17.119a18.963 18.963 0 004.456 0A17.182 17.182 0 0112 21.724a17.18 17.18 0 01-2.228-4.605zM7.777 15.23a18.87 18.87 0 01-.214-4.774 12.753 12.753 0 01-4.34-2.708 9.711 9.711 0 00-.944 5.004 17.165 17.165 0 005.498 2.477zM21.356 14.752a9.765 9.765 0 01-7.478 6.817 18.64 18.64 0 001.988-4.718 18.627 18.627 0 005.49-2.098zM2.644 14.752c1.682.971 3.53 1.688 5.49 2.099a18.64 18.64 0 001.988 4.718 9.765 9.765 0 01-7.478-6.816zM13.878 2.43a9.755 9.755 0 016.116 3.986 11.267 11.267 0 01-3.746 2.504 18.63 18.63 0 00-2.37-6.49zM12 2.276a17.152 17.152 0 012.805 7.121c-.897.23-1.837.353-2.805.353-.968 0-1.908-.122-2.805-.353A17.151 17.151 0 0112 2.276zM10.122 2.43a18.629 18.629 0 00-2.37 6.49 11.266 11.266 0 01-3.746-2.504 9.754 9.754 0 016.116-3.985z" />
                         </svg>
                       </div>
-                      <span className="text-secondary text-xs">Языки:</span>
+                      <span className="text-secondary text-sm sm:text-xs">
+                        Языки:
+                      </span>
                     </div>
-                    <span className="text-foreground text-xs">
+                    <span className="text-foreground text-sm sm:text-xs">
                       Typescript, Solidity, Rust, Python
                     </span>
                   </div>
@@ -426,7 +427,7 @@ export default function MentorPage({ session }: { session: Session }) {
             </div>
 
             <div className="flex flex-1 flex-col gap-5 pt-10 sm:gap-6 sm:pt-0">
-              <div className="mx-8 mt-auto">
+              <div className="mx-5 mt-auto sm:mx-8">
                 <div className="bg-success/10 flex items-center justify-center gap-1 rounded-full py-3">
                   <div className="flex h-5 w-5 items-center justify-center rounded-full">
                     <svg
@@ -452,7 +453,7 @@ export default function MentorPage({ session }: { session: Session }) {
                 </div>
               </div>
 
-              <div className="flex h-8 items-center justify-center bg-[#14171C]">
+              <div className="flex h-8 items-center justify-center bg-none sm:bg-[#14171C]">
                 <Modal
                   isOpen={isModalOpen}
                   onClose={() => setIsModalOpen(false)}
@@ -480,7 +481,7 @@ export default function MentorPage({ session }: { session: Session }) {
               {/* Header */}
               <div className="border-accent h-12 border-b">
                 <div className="flex h-full items-center justify-between px-5 sm:px-8">
-                  <span className="text-secondary text-xs uppercase opacity-50">
+                  <span className="text-secondary text-sm uppercase opacity-50 sm:text-xs">
                     Связь с куратором
                   </span>
                   <InfoPopover
@@ -505,7 +506,7 @@ export default function MentorPage({ session }: { session: Session }) {
                           className="h-8 w-8"
                         />
                       </div>
-                      <span className="text-foreground text-lg">Звонки</span>
+                      <span className="text-foreground text-base">Звонки</span>
                     </div>
                   </div>
                   <div className="px-5 pt-6 pb-10 sm:px-8 sm:py-4">
@@ -696,9 +697,7 @@ export default function MentorPage({ session }: { session: Session }) {
                     )}
                   </motion.button>
 
-                  {error && (
-                    <p className="mt-2 text-xs text-error">{error}</p>
-                  )}
+                  {error && <p className="text-error mt-2 text-xs">{error}</p>}
                 </div>
               )}
 
@@ -710,7 +709,7 @@ export default function MentorPage({ session }: { session: Session }) {
                   transition={{ duration: 0.5 }}
                   className="flex flex-1 flex-col items-center justify-center gap-8"
                 >
-                  <div className="relative flex h-25 w-25 items-center justify-center">
+                  <div className="relative flex h-37.5 w-37.5 items-center justify-center sm:h-25 sm:w-25">
                     <div className="rounded-full" />
                     <motion.div
                       initial={{ scale: 0 }}
@@ -724,7 +723,7 @@ export default function MentorPage({ session }: { session: Session }) {
                         viewBox="0 0 150 150"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-25 w-25"
+                        className="h-37.5 w-37.5 sm:h-25 sm:w-25"
                       >
                         <path
                           d="M0 75C0 116.421 33.5786 150 75 150C116.421 150 150 116.421 150 75C150 33.5786 116.421 0 75 0C33.5786 0 0 33.5786 0 75ZM148.5 75C148.5 115.593 115.593 148.5 75 148.5C34.4071 148.5 1.5 115.593 1.5 75C1.5 34.4071 34.4071 1.5 75 1.5C115.593 1.5 148.5 34.4071 148.5 75Z"
@@ -825,7 +824,7 @@ export default function MentorPage({ session }: { session: Session }) {
               )}
 
               {/* Privacy notice */}
-              <div className="mt-auto flex h-8 shrink-0 items-center justify-center bg-[#14171C]">
+              <div className="mt-4.25 flex h-8 shrink-0 items-center justify-center bg-[#14171C] sm:mt-auto">
                 <div className="flex items-center gap-2">
                   <div className="text-secondary h-3.5 w-3.5">
                     <svg

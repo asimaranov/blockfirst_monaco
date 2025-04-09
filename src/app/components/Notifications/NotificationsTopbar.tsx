@@ -24,7 +24,7 @@ export const NotificationsTopbar = ({
           </div>
           <div className="flex items-center">
             <button
-              className="border-primary/50 hover:border-primary flex cursor-pointer items-center gap-1 rounded-full border py-1.5 pr-3 pl-2 leading-4"
+              className="border-primary/50 hover:border-primary flex cursor-pointer items-center gap-1 rounded-full border-[0.5px] py-1.5 pr-3 pl-2 leading-4"
               onClick={archiveAll}
             >
               <div className="h-4 w-4">

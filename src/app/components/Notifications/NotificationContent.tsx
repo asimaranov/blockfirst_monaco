@@ -93,7 +93,7 @@ export function NotificationContent({
         {(notification.type === 'system' ||
           notification.type === 'comment') && (
           <div className="mt-4">
-            <div className="relative ml-14.5">
+            <div className="relative ml-12 sm:ml-14.5">
               <div className="relative rounded-sm bg-[#14171C] p-2 px-3">
                 <div
                   className={cn(
@@ -130,7 +130,7 @@ export function NotificationContentPromo({
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
-        <div className="relative z-20 flex h-full flex-col justify-between p-8 pb-4">
+        <div className="relative z-20 flex h-full flex-col justify-between p-5 sm:p-8 pb-4">
           <div className="flex flex-col">
             <div>
               <span className="border-secondary/50 text-secondary h-6 rounded-full border px-3 py-1 text-xs backdrop-blur-sm">
@@ -216,7 +216,7 @@ export function ArchievedNotificationContent({
         {(notification.type === 'system' ||
           notification.type === 'comment') && (
           <div className="mt-4">
-            <div className="relative ml-14.5">
+            <div className="relative ml-12 sm:ml-14.5">
               <div className="relative rounded-sm bg-[#14171C] p-2 px-3">
                 <div
                   className={cn(

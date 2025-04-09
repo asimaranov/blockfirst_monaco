@@ -83,10 +83,7 @@ export function NotificationsModal({ onClose }: NotificationsModalProps) {
   }
 
   return (
-    <NotificationsModalMobile
-      onClose={handleClose}
-      unreadCount={unreadCount}
-    />
+    <NotificationsModalMobile onClose={handleClose} unreadCount={unreadCount} />
   );
 }
 
@@ -131,7 +128,7 @@ function NotificationsModalMobile({
             }}
           >
             <div
-              className="bg-dark-bg flex h-15 flex-row items-center gap-2 p-5 text-base"
+              className="bg-dark-bg border-accent flex h-15 flex-row items-center gap-2 border-b p-5 text-base sm:border-b-0"
               onClick={handleClose}
             >
               <svg

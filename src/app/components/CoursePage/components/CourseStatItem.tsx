@@ -4,13 +4,17 @@ export interface CourseStat {
   icon: React.ReactNode;
 }
 
-export default function CourseStatItem ({ stat }: { stat: CourseStat & { value: string } }) {
+export default function CourseStatItem({
+  stat,
+}: {
+  stat: CourseStat & { value: string };
+}) {
   return (
     <div className="flex-1 px-5 py-5 sm:px-8">
       <div className="flex flex-row items-center gap-3 sm:flex-col sm:items-start">
         <div className="flex flex-row items-center gap-3">
           {stat.icon}
-          <span className="text-3xl font-medium text-gray-100 sm:text-2xl">
+          <span className="text-3xl font-medium text-gray-100">
             {stat.value}
           </span>
         </div>
@@ -20,4 +24,4 @@ export default function CourseStatItem ({ stat }: { stat: CourseStat & { value: 
       </div>
     </div>
   );
-};
+}

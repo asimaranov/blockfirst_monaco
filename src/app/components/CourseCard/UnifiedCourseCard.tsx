@@ -79,11 +79,11 @@ export function UnifiedCourseCard({
           )}
         </div>
       </div>
-      <div className="flex w-full flex-col p-8 px-5 pt-7 sm:px-8">
+      <div className="flex w-full flex-col p-8 px-5 pt-10 pb-10 sm:px-8 sm:pt-7 sm:pb-5">
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div className="flex gap-2">
-              <div className="flex items-center gap-1 rounded-full bg-[#01050D] px-2 py-1">
+              <div className="flex items-center gap-1 rounded-full bg-[#01050D] px-1.5 py-1 sm:px-2">
                 <div className="flex">
                   {course.soon ? (
                     <>
@@ -96,11 +96,11 @@ export function UnifiedCourseCard({
                         className="h-4 w-7.5"
                       >
                         <path
-                          d="M8 16C12.4183 16 16 12.4182 16 8C16 3.58179 12.4183 0 8 0C3.58167 0 0 3.58179 0 8C0 12.4182 3.58167 16 8 16Z"
+                          d="M8 0C10.6123 0 12.9324 1.2522 14.3923 3.18921C13.5105 4.58081 13 6.23071 13 8C13 9.76929 13.5105 11.4192 14.3923 12.8108C12.9324 14.7478 10.6123 16 8 16C3.58179 16 0 12.4182 0 8C0 3.58179 3.58179 0 8 0Z"
                           fill="#9AA6B5"
                         />
                         <path
-                          d="M17.0017 8C17.0017 9.76929 16.4912 11.4192 15.6094 12.8108C17.0693 14.7478 19.3893 16 22.0017 16C26.42 16 30.0017 12.4182 30.0017 8C30.0017 3.58179 26.42 0 22.0017 0C19.3893 0 17.0693 1.2522 15.6094 3.18921C16.4912 4.58081 17.0017 6.23071 17.0017 8Z"
+                          d="M22 16C26.4182 16 30 12.4182 30 8C30 3.58179 26.4182 0 22 0C17.5818 0 14 3.58179 14 8C14 12.4182 17.5818 16 22 16Z"
                           fill="#9AA6B5"
                         />
                       </svg>
@@ -113,6 +113,7 @@ export function UnifiedCourseCard({
                         width={16}
                         height={16}
                         className="h-4 w-4"
+                        quality={100}
                       />
                       <Image
                         src={'/avatars/user1.png'}
@@ -120,6 +121,7 @@ export function UnifiedCourseCard({
                         width={16}
                         height={16}
                         className="-ml-1 h-4 w-4"
+                        quality={100}
                       />
                     </>
                   )}
@@ -128,7 +130,7 @@ export function UnifiedCourseCard({
                   {course.info?.alumniCount || 0}+
                 </span>
               </div>
-              <div className="flex items-center gap-1 rounded-full bg-[#01050D] px-2 py-1">
+              <div className="flex items-center gap-1 rounded-full bg-[#01050D] px-1.5 py-1 sm:px-2">
                 {course.soon ? <StarGrey /> : <Star />}
                 <span className="text-xs">
                   {(course.info?.rating || 0).toFixed(1)}
@@ -194,9 +196,9 @@ export function UnifiedCourseCard({
         {isHistory ? (
           <div className="mt-6 flex w-full justify-between gap-4 text-sm">
             <Link href={`/course/${course.id}`}>
-              <div className='flex'>
+              <div className="flex">
                 <button
-                  className={`border-primary hover:bg-primary flex py-3.5 text-center cursor-pointer items-center justify-center gap-1.5 rounded-full border px-9 duration-300 sm:px-10`}
+                  className={`border-primary hover:bg-primary flex cursor-pointer items-center justify-center gap-1.5 rounded-full border px-9 py-3.5 text-center duration-300 sm:px-10 sm:py-3`}
                 >
                   <Info /> Подробнее
                 </button>
@@ -208,22 +210,22 @@ export function UnifiedCourseCard({
             </div>
           </div>
         ) : !course?.soon ? (
-          <div className="mt-6 flex w-full gap-4 text-sm">
+          <div className="mt-6 flex w-full gap-0 text-sm sm:gap-4">
             <button
-              className={`border-primary hover:bg-primary flex h-11 flex-1 cursor-pointer items-center justify-center gap-2 rounded-full border duration-300`}
+              className={`border-primary hover:bg-primary flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-full border py-3.5 duration-300 sm:py-3`}
             >
               Начать <ChevronRight />
             </button>
             <Link
               href={`/course/${course.id}`}
-              className="hover:border-secondary flex h-11 flex-1 cursor-pointer items-center justify-center gap-2 rounded-full border border-transparent duration-300"
+              className="hover:border-secondary flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-full border border-transparent py-3.5 duration-300 sm:py-3"
             >
               <Info /> Подробнее
             </Link>
           </div>
         ) : (
           <button
-            className={`bg-background z-100 mt-6 flex h-11 w-full items-center justify-center gap-2 rounded-full text-sm`}
+            className={`bg-background z-100 mt-6 flex w-full items-center justify-center gap-2 rounded-full py-3.5 text-sm sm:py-3`}
           >
             🔥Скоро🔥
           </button>

@@ -35,7 +35,7 @@ export default function TariffCard({ tariff }: { tariff: Tariff }) {
       <div className="relative bg-[#01050D] p-5 py-8 sm:p-8">
         <div className="relative z-1 bg-[url(/images/misc/tariff-grid.svg)] bg-cover bg-no-repeat bg-blend-screen">
           {tariff.sale && (
-            <div className="absolute top-0 right-0">
+            <div className="absolute -top-3 right-0">
               <span className="bg-error rounded-full px-2 py-1 text-xs uppercase">
                 Sale {tariff.sale.percent}%
               </span>
@@ -108,7 +108,7 @@ export default function TariffCard({ tariff }: { tariff: Tariff }) {
                 <span className="text-base">/мес</span>
               </span>
               {tariff.price.installments && (
-                <span className="text-secondary text-xs">
+                <span className="text-secondary text-xxs leading-3">
                   Рассрочка {tariff.price.installments} месяцев
                 </span>
               )}

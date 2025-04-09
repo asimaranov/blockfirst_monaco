@@ -294,7 +294,7 @@ export default async function PremiumPage({ session }: { session: Session }) {
               Активный тариф
             </span>
           </div>
-          <div className="rounded-lg p-5">
+          <div className="rounded-lg p-5 pb-0 sm:pb-5">
             <div className="mt-10">
               <div className="text-secondary mb-1 flex justify-between text-xs">
                 <span className="text-secondary/50 text-sm uppercase">
@@ -315,7 +315,7 @@ export default async function PremiumPage({ session }: { session: Session }) {
                     className="border-accent flex items-center justify-between border-b pt-7 pb-5"
                   >
                     <div
-                      className="flex items-center group"
+                      className="group flex items-center"
                       data-active={userData.plan === 'pro'}
                     >
                       {feature.icon}
@@ -355,7 +355,7 @@ export default async function PremiumPage({ session }: { session: Session }) {
                     className="border-accent mt-3 flex items-center justify-between pt-5 pb-5"
                   >
                     <div
-                      className="flex items-center group"
+                      className="group flex items-center"
                       data-active={userData.plan !== 'free'}
                     >
                       {feature.icon}

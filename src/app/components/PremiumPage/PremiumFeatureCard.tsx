@@ -54,7 +54,7 @@ export default function PremiumFeatureCard({
         <Image src={image} alt={title} />
 
         <div className="text-foreground">
-          <h3 className="text-lg font-medium">{title}</h3>
+          <h3 className="text-xl font-medium leading-5.75">{title}</h3>
           <p className="text-foreground/90 mt-4 text-sm">{description}</p>
         </div>
       </div>

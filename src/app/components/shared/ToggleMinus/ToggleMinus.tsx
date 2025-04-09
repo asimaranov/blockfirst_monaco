@@ -36,7 +36,7 @@ export default function ToggleMinus({
           x2="15"
           y2="10"
           stroke="currentColor"
-          strokeWidth="2"
+          strokeWidth="1.5"
           strokeLinecap="round"
           className="transition-transform duration-300"
         />
@@ -46,7 +46,7 @@ export default function ToggleMinus({
           x2="10"
           y2="15"
           stroke="currentColor"
-          strokeWidth="2"
+          strokeWidth="1.5"
           strokeLinecap="round"
           className={cn(
             'origin-center transition-transform duration-300',

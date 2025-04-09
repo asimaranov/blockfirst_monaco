@@ -53,7 +53,6 @@ export function Topbar({
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { toggle } = useNotificationsModalStore();
-   
 
   const handleMenuToggle = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -65,17 +64,13 @@ export function Topbar({
 
   return (
     <>
-      {mobilePremiumText && (
-        <MobilePremiumTopbar text={mobilePremiumText} />
-      )}
+      {mobilePremiumText && <MobilePremiumTopbar text={mobilePremiumText} />}
 
       {mobileNav && (
         <div className="relative sm:hidden">
           <MobileHeader
             hasNotifications={true}
-            onNotificationClick={() =>
-              toggle('mobile')
-            }
+            onNotificationClick={() => toggle('mobile')}
             username={user.name}
             startDate={new Date(user?.startTimestamp).toLocaleDateString(
               'ru-RU',
@@ -95,7 +90,7 @@ export function Topbar({
 
       <nav
         className={cn(
-          'flex w-full flex-row items-center justify-between px-5 py-6 sm:px-8',
+          'flex w-full flex-row items-center justify-between px-5 py-6 pt-10 pb-8 sm:px-8 sm:pt-6 sm:pb-6',
           showBorder && 'border-b-0 border-[#282D33] sm:border-b',
           className
         )}
