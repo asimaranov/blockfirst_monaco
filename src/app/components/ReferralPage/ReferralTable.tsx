@@ -13,6 +13,8 @@ import { SortIcon } from '../EmploymentPage/assets/sort-icon';
 import AvatarsIcon from './assets/avatars-icon.png';
 import { api } from '~/trpc/react';
 import { IReferral } from '~/server/models/referral';
+import { planTypeToSubscriptionType } from '~/app/lib/utils';
+import { PlanType } from '~/server/models/userData';
 
 // The shape of our referral data after transformations
 type ReferralData = {
@@ -36,8 +38,8 @@ const PlanBadge = ({ plan }: { plan: string }) => (
   <div className="flex items-center gap-2">
     <div className="h-3.5 w-3.5">
       <Image
-        src={subscriptionTypeIcons[plan as SubscriptionType]}
-        alt={subscriptionTypeLabels[plan as SubscriptionType]}
+        src={subscriptionTypeIcons[planTypeToSubscriptionType(plan.toLowerCase() as PlanType) ]}
+        alt={subscriptionTypeLabels[planTypeToSubscriptionType(plan.toLowerCase() as PlanType) as SubscriptionType]}
         className="h-3.5 w-3.5"
       />
     </div>
