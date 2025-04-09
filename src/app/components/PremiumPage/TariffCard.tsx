@@ -26,20 +26,24 @@ export default function TariffCard({
       {image}
       <div className="flex flex-col gap-2">
         <div className="flex flex-row gap-3">
-          <span className="text-2xl font-medium">{title}</span>
+          <span className="text-2xl font-medium  leading-6">{title}</span>
           <span className="text-secondary border-secondary/50 font-delight self-start rounded-full border px-3 py-1 text-xs whitespace-nowrap">
             {badgeText}
           </span>
         </div>
 
-        <span className="text-secondary/50 text-xs">
+        <span className="text-secondary/50 text-xs leading-3.5">
           {subtitle}
           <span className="text-foreground"> {subtitleWhite}</span>
         </span>
       </div>
-        <div className="ml-auto self-center">
-          <Image src={isPaid ? PaidBadge : NotPaidBadge} alt="Not paid" />
-        </div>
+      <div className="ml-auto self-center">
+        {isPaid ? (
+          <Image src={PaidBadge} alt="Paid" className="h-8 w-24.75" />
+        ) : (
+          <Image src={NotPaidBadge} alt="Not paid" className="h-8 w-28.75" />
+        )}
       </div>
+    </div>
   );
 }

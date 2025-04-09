@@ -90,9 +90,9 @@ const premiumFeatures = [
     description:
       'Куратор окажет помощь в решении сложных задач и ответит на все ваши вопросы до завершения курса.',
     image: FullAccessMobile,
-    bgColor: 'bg-none',
-    tariff: 'STARTER TARIF',
-    tariffIcon: TARIFFS[1]?.bigIcon,
+    bgColor: 'bg-[#14171C] border-accent sm:border-t sm:border-r sm:border-b',
+    tariff: 'PRO TARIF',
+    tariffIcon: TARIFFS[2]?.bigIcon,
     icon: <MentorIcon className="h-5 w-5" />,
     label: 'Твой куратор',
     href: '/mentor',
@@ -103,9 +103,9 @@ const premiumFeatures = [
     description:
       'После прохождения каждого этапа, вы разблокируете возможность улучшить свое резюме с куратором для работадателей.',
     image: NftDiplomaMobile,
-    bgColor: 'bg-none',
-    tariff: 'STARTER TARIF',
-    tariffIcon: TARIFFS[1]?.bigIcon,
+    bgColor: 'bg-[#14171C]  border-accent sm:border-t sm:border-b',
+    tariff: 'PRO TARIF',
+    tariffIcon: TARIFFS[2]?.bigIcon,
     icon: <CvIcon className="h-5 w-5" />,
     label: 'Подготовка резюме',
     href: '/cv',
@@ -113,45 +113,9 @@ const premiumFeatures = [
 ];
 
 const premiumFeatures2 = [
-  {
-    id: 'mentor',
-    title: 'Персональный куратор ✌️',
-    description:
-      'Куратор окажет помощь в решении сложных задач и ответит на все ваши вопросы до завершения курса.',
-    image: FullAccessMobile,
-    bgColor: 'bg-[#14171C] border-accent border-t border-r border-b',
-    tariff: 'PRO TARIF',
-    tariffIcon: TARIFFS[2]?.bigIcon,
-    icon: <MentorIcon className="h-5 w-5" />,
-    label: 'Твой куратор',
-    href: '/mentor',
-  },
-  {
-    id: 'cv',
-    title: 'Подготовка резюме 💣',
-    description:
-      'После прохождения каждого этапа, вы разблокируете возможность улучшить свое резюме с куратором для работадателей.',
-    image: NftDiplomaMobile,
-    bgColor: 'bg-[#14171C] border-accent border-t border-b',
-    tariff: 'PRO TARIF',
-    tariffIcon: TARIFFS[2]?.bigIcon,
-    icon: <CvIcon className="h-5 w-5" />,
-    label: 'Подготовка резюме',
-    href: '/cv',
-  },
-  {
-    id: 'club',
-    title: 'Закрытый клуб BlockFirst 😎',
-    description:
-      'Доступ к закрытому комьюнити энтузиастов. Cможете найти сокомандников и построить будущее в блокчейн индустрии.',
-    image: ClubImage,
-    bgColor: 'bg-[#30BF69] border-accent border-b',
-    tariff: 'STARTER TARIF',
-    tariffIcon: TARIFFS[1]?.bigIcon,
-    icon: <Image src={ClubIcon} alt="Club" className="h-5 w-5" />,
-    label: 'Закрытый клуб BlockFirst',
-    href: '#',
-  },
+  premiumFeatures[4],
+  premiumFeatures[5],
+  premiumFeatures[3],
 ];
 
 // Group features by tariff type
@@ -194,6 +158,7 @@ export default async function PremiumPage({ session }: { session: Session }) {
                   viewBox="0 0 21 21"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5"
                 >
                   <path
                     d="M14.2305 4.93358C14.5292 4.6468 15.0042 4.65636 15.291 4.95506L19.9062 9.76365C20.1848 10.0539 20.1848 10.5125 19.9062 10.8027L15.291 15.6113C15.0042 15.9102 14.5293 15.9196 14.2305 15.6328C13.9319 15.3459 13.9222 14.871 14.209 14.5722L18.3262 10.2832L14.209 5.99412C13.9222 5.69533 13.9317 5.22041 14.2305 4.93358Z"
