@@ -12,7 +12,7 @@ import { useState } from 'react';
 import { SortIcon } from '../EmploymentPage/assets/sort-icon';
 import AvatarsIcon from './assets/no-referrals.png';
 import { api } from '~/trpc/react';
-import { formatPrice, planTypeToSubscriptionType } from '~/app/lib/utils';
+import { formatLearningTime, formatPrice, formatRelativeTime, planTypeToSubscriptionType } from '~/app/lib/utils';
 import { PlanType } from '~/server/models/userData';
 
 // The shape of our referral data after transformations
@@ -77,7 +77,7 @@ const ReferralCard = ({
     transition={{ duration: 0.3 }}
     className="flex w-full gap-7"
   >
-    <div className="text-secondary/50 text-sm">{Number(id)}.</div>
+    <div className="text-secondary/50 text-sm">{Number(id + 1)}.</div>
     <div className="flex w-full flex-col gap-6">
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-3">
@@ -102,7 +102,7 @@ const ReferralCard = ({
       </div>
       <div className="flex items-center justify-between">
         <span className="text-foreground text-base">
-          {formatPrice(Number(referral.formattedEarnings) + 1)}
+          {formatPrice(Number(referral.formattedEarnings))}
         </span>
         <div className="flex gap-2">
           <div className="flex h-7 items-center justify-center rounded-lg bg-[#14171C] px-2">
@@ -130,7 +130,6 @@ export const ReferralTable = () => {
   const { data: apiReferrals = [], isLoading } =
     api.referrals.getUserReferrals.useQuery();
 
-
   console.log('apiReferrals', apiReferrals);
 
   // Convert API response to our component's expected format
@@ -141,7 +140,9 @@ export const ReferralTable = () => {
     formattedRegistrationDate: referral.formattedRegistrationDate,
     plan: referral.plan,
     formattedEarnings: referral.earnings.toString() || '',
-    formattedLearningTime: referral.learningTimeMinutes.toString() || '',
+    formattedLearningTime: formatLearningTime(
+      referral.learningTimeMinutes
+    ),
   }));
 
   const sortReferrals = (referralsToSort: ReferralData[]) => {
@@ -189,28 +190,15 @@ export const ReferralTable = () => {
   if (isLoading) {
     return (
       <div className="flex h-full grow flex-col items-center justify-center gap-4">
-          <div className="border-primary h-16 w-16 animate-spin rounded-full border-t-2 border-b-2"></div>
-          <p className="text-lg font-medium text-gray-600">
-            Loading...
-          </p>
-        </div>
+        <div className="border-primary h-16 w-16 animate-spin rounded-full border-t-2 border-b-2"></div>
+        <p className="text-lg font-medium text-gray-600">Loading...</p>
+      </div>
     );
   }
 
   return (
     <div className="border-accent flex grow flex-col gap-6 border-0 pt-8 pb-0 sm:border-b sm:pt-0 sm:pb-8">
-      {referrals.length === 0 ? (
-        <div className="flex h-full w-full flex-col items-center justify-center gap-5 py-16">
-          <Image
-            src={AvatarsIcon}
-            alt="Ничего не найдено"
-            className="h-8 w-22.75"
-          />
-          <span className="text-secondary/50 text-sm">
-            Нет зарегистрированных рефералов :(
-          </span>
-        </div>
-      ) : (
+      {
         <>
           {/* Table Header - visible only on desktop */}
           <div className="hidden h-9 items-center bg-[#14171C] px-8 sm:flex">
@@ -227,7 +215,7 @@ export const ReferralTable = () => {
                 }}
                 className="group flex cursor-pointer flex-row items-center gap-1"
               >
-                <span className="text-secondary/50 text-xs uppercase group-hover:opacity-100">
+                <span className="text-secondary/50 text-xs uppercase group-hover:text-secondary">
                   регистрация
                 </span>
                 <SortIcon
@@ -252,7 +240,7 @@ export const ReferralTable = () => {
                 }}
                 className="group flex cursor-pointer flex-row items-center gap-1"
               >
-                <span className="text-secondary/50 text-xs uppercase group-hover:opacity-100">
+                <span className="text-secondary/50 text-xs uppercase group-hover:text-secondary">
                   Доход
                 </span>
                 <SortIcon
@@ -277,6 +265,19 @@ export const ReferralTable = () => {
               </div>
             </div>
           </div>
+
+          {referrals.length == 0 && (
+            <div className="flex h-full w-full flex-col items-center justify-center gap-5 py-16">
+              <Image
+                src={AvatarsIcon}
+                alt="Ничего не найдено"
+                className="h-8 w-22.75"
+              />
+              <span className="text-secondary/50 text-sm">
+                Нет зарегистрированных рефералов :(
+              </span>
+            </div>
+          )}
 
           {/* Mobile Cards - visible only on mobile */}
           <div className="flex flex-col gap-8 px-5 pb-10 sm:hidden">
@@ -325,14 +326,14 @@ export const ReferralTable = () => {
                 </span>
                 <PlanBadge plan={referral.plan} />
                 <span className="text-foreground text-sm">
-                  {referral.formattedEarnings}
+                  {formatPrice(Number(referral.formattedEarnings))}
                 </span>
                 <LearningTime time={referral.formattedLearningTime} />
               </motion.div>
             ))}
           </div>
         </>
-      )}
+      }
     </div>
   );
 };
