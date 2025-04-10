@@ -82,29 +82,51 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
                   onCopy={handleCopy}
                 />
               </div>
-              <button
-                className="flex flex-1 flex-row justify-center rounded-full border border-[#195AF4] bg-[#01050d] py-2 text-sm"
-                onClick={() => {
-                  console.log('clicked');
-                  setIsBloggersFormOpen(true);
-                }}
-              >
-                {bloggerStatus?.isBlogger ? 'Аккаунт блогера' : 'Блогерам'}
-                <svg
-                  width="21"
-                  height="20"
-                  viewBox="0 0 21 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+              {!bloggerStatus?.isBlogger ? (
+                <button
+                  className="flex flex-1 flex-row justify-center rounded-full border border-[#195AF4] bg-[#01050d] py-2 text-sm"
+                  onClick={() => {
+                    console.log('clicked');
+                    setIsBloggersFormOpen(true);
+                  }}
                 >
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M14.7307 4.43156C15.0295 4.14474 15.5043 4.15448 15.7911 4.45332L20.4065 9.26205C20.685 9.55226 20.685 10.0105 20.4065 10.3007L15.7911 15.1095C15.5043 15.4083 15.0295 15.418 14.7307 15.1312C14.4318 14.8444 14.4221 14.3696 14.7089 14.0708L18.8258 9.78139L14.7089 5.492C14.4221 5.19316 14.4318 4.71838 14.7307 4.43156Z"
-                    fill="#F2F2F2"
-                  />
-                </svg>
-              </button>
+                  {'Блогерам'}
+                  <svg
+                    width="21"
+                    height="20"
+                    viewBox="0 0 21 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M14.7307 4.43156C15.0295 4.14474 15.5043 4.15448 15.7911 4.45332L20.4065 9.26205C20.685 9.55226 20.685 10.0105 20.4065 10.3007L15.7911 15.1095C15.5043 15.4083 15.0295 15.418 14.7307 15.1312C14.4318 14.8444 14.4221 14.3696 14.7089 14.0708L18.8258 9.78139L14.7089 5.492C14.4221 5.19316 14.4318 4.71838 14.7307 4.43156Z"
+                      fill="#F2F2F2"
+                    />
+                  </svg>
+                </button>
+              ) : (
+                <div className="flex flex-row items-center justify-center gap-1 rounded-[100px] bg-[#06191A] px-6 py-2.5 text-sm text-[#33CF8E]">
+                  <svg
+                    width="20"
+                    height="21"
+                    viewBox="0 0 20 21"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                  >
+                    <path
+                      d="M5.44922 11.15L8.04922 13.75L14.5492 7.25"
+                      stroke="#33CF8E"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  Аккаунт блогера
+                </div>
+              )}
             </div>
           </div>
         }
@@ -123,13 +145,14 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
               </div>
             </div>
             {bloggerStatus?.isBlogger ? (
-              <div className="rounded-[100px] bg-[#33CF8E]/10 px-6 py-2.5 text-sm text-[#33CF8E] flex flex-row gap-1 items-center justify-center">
+              <div className="flex flex-row items-center justify-center gap-1 rounded-[100px] bg-[#06191A] px-6 py-2.5 text-sm text-[#33CF8E]">
                 <svg
                   width="20"
                   height="21"
                   viewBox="0 0 20 21"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
                 >
                   <path
                     d="M5.44922 11.15L8.04922 13.75L14.5492 7.25"

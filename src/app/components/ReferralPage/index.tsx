@@ -393,7 +393,7 @@ export default function ReferralPage({ session }: { session: Session }) {
                   <div className="flex items-center justify-center text-center">
                     <span className="text-foreground text-4xl leading-10.5">
                       {isLoading ? (
-                        <SkeletonLoader className="h-10 w-32" /> // Match text size
+                        <SkeletonLoader className="h-10.5 w-32" /> // Match text size
                       ) : (
                         (stats?.formattedBalance ?? '0 ₽')
                       )}
