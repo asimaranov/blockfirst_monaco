@@ -259,7 +259,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
                                     count: course.info?.lessonsCount || 0,
                                   })}
                                 </span>
-                                <div className="bg-secondary/20 h-0.5 w-0.5 rounded-full" />
+                                <div className="bg-secondary/20 h-3 w-0.25 rounded-full" />
                                 <span className="text-secondary text-xxs uppercase">
                                   {course.info?.duration || 0}{' '}
                                   {t('month', {
@@ -270,7 +270,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
                             ) : (
                               <div className="flex items-center gap-3 text-xs">
                                 <span className="text-secondary">—</span>
-                                <div className="bg-secondary/20 h-0.5 w-0.5 rounded-full" />
+                                <div className="bg-secondary/20 h-3 w-0.25 rounded-full" />
                                 <span className="text-secondary">—</span>
                               </div>
                             )}
@@ -300,7 +300,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
                   <div className="flex flex-col sm:hidden">
                     {COURSES.map((course, index) => (
                       <div key={course.id} className="flex flex-col last:mb-8">
-                        <div className="flex px-4 py-6">
+                        <div className="flex px-4 py-6 pt-8 sm:pt-6">
                           <div className="mt-2.5 mr-4 flex h-6 w-6 items-center justify-center self-start">
                             <span className="text-secondary text-sm">
                               {index + 1}.
@@ -326,7 +326,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
                                       count: course.info?.lessonsCount || 0,
                                     })}
                                   </span>
-                                  <div className="bg-secondary/20 h-0.5 w-0.5 rounded-full" />
+                                  <div className="bg-secondary/20 h-3 w-0.25 rounded-full" />
                                   <span className="text-secondary text-xxs uppercase">
                                     {course.info?.duration || 0}{' '}
                                     {t('month', {
@@ -337,7 +337,7 @@ export default function DiplomaPage({ session }: { session: Session }) {
                               ) : (
                                 <div className="flex items-center gap-3 text-xs">
                                   <span className="text-secondary">—</span>
-                                  <div className="bg-secondary/20 h-0.5 w-0.5 rounded-full" />
+                                  <div className="bg-secondary/20 h-3 w-0.25 rounded-full" />
                                   <span className="text-secondary">—</span>
                                 </div>
                               )}

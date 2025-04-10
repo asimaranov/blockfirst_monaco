@@ -54,7 +54,7 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
       </Modal>
       <UnifiedTopbar
         showBorder={false}
-        className="relative bg-[#01050d] bg-[url('/images/misc/referral-header-bg-mobile.png')] bg-cover bg-center sm:bg-[url('/images/misc/header-bg.png')]"
+        className="relative bg-[#01050d] bg-[url('/images/misc/referral-header-bg-mobile.png')] bg-cover bg-center sm:bg-[url('/images/misc/header-bg.png')] py-6"
         leftContent={
           <div className="flex flex-col">
             <div className="flex flex-row space-x-5">

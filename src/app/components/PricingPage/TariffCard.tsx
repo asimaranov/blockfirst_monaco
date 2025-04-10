@@ -53,7 +53,7 @@ export default function TariffCard({ tariff }: { tariff: Tariff }) {
             </div>
             <div className="flex flex-col items-center gap-3 text-center">
               <h3 className="text-2xll">{tariff.name}</h3>
-              <p className="text-secondary text-sm sm:text-xs leading-5">
+              <p className="text-secondary text-sm leading-5 sm:text-xs">
                 {tariff.description}
               </p>
             </div>
@@ -102,7 +102,7 @@ export default function TariffCard({ tariff }: { tariff: Tariff }) {
       </div>
 
       {tariff.price && !tariff.unlocked && (
-        <div className="mt-auto flex flex-col gap-6 pt-8 pb-0">
+        <div className="mt-auto flex flex-col gap-6 pt-10 pb-0 sm:pt-8">
           <div className="flex justify-between px-5 sm:px-8">
             <div className="flex flex-col gap-2">
               <span className="text-2xll leading-7 font-medium text-gray-50">
@@ -180,10 +180,10 @@ export default function TariffCard({ tariff }: { tariff: Tariff }) {
       )}
 
       {tariff.unlocked && (
-        <div className="mt-auto flex flex-col gap-6 pt-8 pb-0">
+        <div className="mt-auto flex flex-col gap-6 pt-10 pb-0 sm:pt-8">
           <div
             className={cn(
-              'mx-8 mt-auto flex h-13 cursor-pointer items-center justify-center gap-1 rounded-full bg-[#33CF8E]/10',
+              'mx-5 mt-auto flex cursor-pointer items-center justify-center gap-1 rounded-full bg-[#33CF8E]/10 py-3.5 sm:mx-8 sm:py-4',
               tariff.unlocked && !tariff.isActive && 'bg-[#9AA6B5]/10'
             )}
           >

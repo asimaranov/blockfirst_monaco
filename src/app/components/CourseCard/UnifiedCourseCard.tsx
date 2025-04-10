@@ -75,7 +75,7 @@ export function UnifiedCourseCard({
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div className="flex gap-2">
-              <div className="flex items-center gap-1 rounded-full bg-[#01050D] px-1.5 py-1 sm:px-2">
+              <div className="flex items-center gap-1 rounded-full bg-[#01050D] px-1.5 py-1 pr-3">
                 <div className="flex">
                   {course.soon ? (
                     <>
@@ -122,7 +122,7 @@ export function UnifiedCourseCard({
                   {course.info?.alumniCount || 0}+
                 </span>
               </div>
-              <div className="flex items-center gap-1 rounded-full bg-[#01050D] px-1.5 py-1 sm:px-2">
+              <div className="flex items-center gap-1 rounded-full bg-[#01050D] px-3 py-1">
                 {course.soon ? <StarGrey /> : <Star />}
                 <span className="text-xs">
                   {(course.info?.rating || 0).toFixed(1)}
@@ -176,7 +176,7 @@ export function UnifiedCourseCard({
         </div>
 
         {(showProgress || isHistory) && (
-          <div className="mt-5">
+          <div className="mt-6 sm:mt-5">
             <div className="flex flex-row items-center gap-3 text-base font-semibold">
               <Image src={LightSvg} alt={''} className="h-5 w-5" />
               {percent}%
@@ -202,7 +202,7 @@ export function UnifiedCourseCard({
             </div>
           </div>
         ) : !course?.soon ? (
-          <div className="mt-6 flex w-full gap-0 text-sm sm:gap-4">
+          <div className="mt-8 sm:mt-6 flex w-full gap-0 text-sm sm:gap-4">
             <button
               className={`border-primary hover:bg-primary flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-full border py-3.5 duration-300 sm:py-3`}
             >

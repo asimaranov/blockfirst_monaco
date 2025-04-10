@@ -247,7 +247,7 @@ export default function ReferralPage({ session }: { session: Session }) {
             <div className="border-accent flex flex-1 flex-col border-0 sm:border-b">
               {/* Header */}
               <div className="border-accent flex h-auto flex-row items-start justify-between border-b px-5 pb-6 sm:h-28 sm:items-center sm:px-8 sm:pb-0">
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-5 sm:gap-3">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className="flex h-5 w-5 items-center justify-center">

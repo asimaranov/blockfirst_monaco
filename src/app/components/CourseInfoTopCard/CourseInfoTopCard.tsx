@@ -51,7 +51,7 @@ export default async function CourseInfoTopCard({
         </div>
       </div>
 
-      <div className="flex w-full flex-col p-5 pt-0 sm:p-8 sm:pt-0">
+      <div className="flex w-full flex-col p-5 pt-0 sm:p-8 sm:pt-0 pb-16 sm:pb-8">
         <div className="flex flex-row items-center justify-between">
           <div className="flex flex-row items-center gap-1">
             <AlumniCounter count={course.info!.alumniCount} />
@@ -106,8 +106,8 @@ export default async function CourseInfoTopCard({
             </div>
           </div>
         </div>
-        <CourseProgress progress={4} className="mt-6" />
-        <div className="mt-8 flex flex-col-reverse items-center justify-between gap-4 sm:flex-row">
+        <CourseProgress progress={4} className="mt-8 sm:mt-6" />
+        <div className="mt-8 flex flex-col-reverse items-center justify-between gap-5 sm:gap-4 sm:flex-row">
           <Link
             href={`#`}
             className={
