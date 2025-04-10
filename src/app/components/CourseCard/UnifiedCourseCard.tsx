@@ -10,6 +10,7 @@ import LightSvg from './assets/light.svg';
 import ClockSvg from './assets/clock.svg';
 import { Progress } from '../shared/Progress';
 import Link from 'next/link';
+import { CourseBadge } from '../shared/CourseBadge';
 
 type UnifiedCourseCardProps = {
   course: ICourse;
@@ -62,24 +63,15 @@ export function UnifiedCourseCard({
         />
         <div className="pointer-events-none absolute top-0 left-0 z-30 flex h-full w-full items-center justify-center">
           {course.bage?.title && (
-            <span className="sm:text-xxs bg-background/30 border-foreground/20 flex items-center justify-center gap-2 rounded-full border px-6 py-3 text-xs backdrop-blur-sm sm:px-4">
-              {course.bage?.img && (
-                <Image
-                  src={course.bage.img}
-                  alt={course.bage?.title}
-                  width={16}
-                  height={16}
-                  className="h-4 w-4"
-                />
-              )}
-              <span className="font-delight z-30 mt-0.5">
-                {course.bage?.title}
-              </span>
-            </span>
+            <CourseBadge
+              badge={course.bage}
+              className="sm:text-xxs px-6 py-3 text-xs leading-3.5 sm:px-4"
+              imgClassName="h-3.5 w-3.5 sm:h-4 sm:w-4"
+            />
           )}
         </div>
       </div>
-      <div className="flex w-full flex-col p-8 px-5 pt-10 pb-10 sm:px-8 sm:pt-7 sm:pb-7">
+      <div className="flex w-full flex-col p-8 px-5 pt-10 pb-10 sm:px-8 sm:pt-7 sm:pb-8">
         <div className="flex flex-col gap-6">
           <div className="flex items-center justify-between">
             <div className="flex gap-2">

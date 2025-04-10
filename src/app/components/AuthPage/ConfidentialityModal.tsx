@@ -66,7 +66,7 @@ export function ConfidentialityModal({
           >
             <div className="flex h-full w-full flex-col p-5 sm:p-16">
               {/* Header */}
-              <div className="mb-4 sm:mb-8 flex flex-col gap-4">
+              <div className="mb-4 flex flex-col gap-6 sm:mb-8 sm:gap-4">
                 <div className="self-center">
                   <Image
                     src={ConsentIcon}
@@ -74,13 +74,13 @@ export function ConfidentialityModal({
                     className="h-8 w-32"
                   />
                 </div>
-                <h2 className="text-center text-xl sm:text-3xl font-bold text-white">
+                <h2 className="text-center text-xl font-bold text-white sm:text-3xl">
                   Персональные данные
                 </h2>
               </div>
 
               {/* Content */}
-              <p className="mb-10 text-center text-sm text-slate-400">
+              <p className="mb-8 text-center text-sm text-slate-400 sm:mb-10">
                 Я соглашаюсь с{' '}
                 <Link href="/privacy-policy" className="underline">
                   политикой обработки персональных данных
@@ -93,7 +93,7 @@ export function ConfidentialityModal({
 
               {/* Checkbox */}
               <motion.div
-                className="group flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-[#9AA6B5]/10 px-4 py-4 hover:bg-[#195AF4]/10 data-[checked=true]:bg-[#195AF4]/10"
+                className="group flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-[#9AA6B5]/10 px-4 py-3.5 group-hover:bg-[#195AF4]/10 group-data-[checked=true]:bg-[#195AF4]/10 sm:py-4"
                 onClick={() => setIsChecked(!isChecked)}
                 data-checked={isChecked}
                 whileTap={{ scale: 0.95 }}
@@ -116,7 +116,8 @@ export function ConfidentialityModal({
                       viewBox="0 0 20 20"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                      initial={{ opacity: 0, scale: 0.5 }}
+                      className="h-5 w-5"
+                      initial={{ opacity: 1, scale: 0.5 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{
                         type: 'spring',
@@ -145,12 +146,13 @@ export function ConfidentialityModal({
                     </motion.svg>
                   ) : (
                     <motion.svg
+                      className="h-5 w-5"
                       width="20"
                       height="20"
                       viewBox="0 0 20 20"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                      initial={{ opacity: 0, scale: 0.5 }}
+                      initial={{ opacity: 1, scale: 0.5 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{
                         type: 'spring',

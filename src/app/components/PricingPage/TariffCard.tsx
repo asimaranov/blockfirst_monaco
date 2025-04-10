@@ -53,7 +53,7 @@ export default function TariffCard({ tariff }: { tariff: Tariff }) {
             </div>
             <div className="flex flex-col items-center gap-3 text-center">
               <h3 className="text-2xll">{tariff.name}</h3>
-              <p className="text-secondary text-sm sm:text-xs">
+              <p className="text-secondary text-sm sm:text-xs leading-5">
                 {tariff.description}
               </p>
             </div>

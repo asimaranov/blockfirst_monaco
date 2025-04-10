@@ -33,7 +33,7 @@ export default function TariffSection({
                 <div className="flex items-center gap-3">
                   <span className="text-base font-medium">{tariff.name}</span>
                   {tariff.sale && (
-                    <span className="bg-error rounded-full px-2 py-1 text-xs">
+                    <span className="bg-error rounded-full px-2 py-1 text-xs uppercase">
                       Sale {tariff.sale.percent}%
                     </span>
                   )}

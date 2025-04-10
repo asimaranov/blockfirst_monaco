@@ -491,7 +491,7 @@ export default function CVPage({ session }: { session: Session }) {
                         <span className="text-secondary text-xs">
                           Телеграм бот
                         </span>
-                        <span className="text-foreground text-base">
+                        <span className="text-foreground text-sm">
                           t.me/blockfirst_edu/app
                         </span>
                       </div>
@@ -532,7 +532,7 @@ export default function CVPage({ session }: { session: Session }) {
                     </div>
                     <div className="flex flex-col gap-1">
                       <span className="text-secondary text-xs">E-mail</span>
-                      <span className="text-foreground text-base">
+                      <span className="text-foreground text-sm">
                         hello@blockfirst.io
                       </span>
                     </div>

@@ -270,7 +270,7 @@ export const ReferralTable = () => {
           </div>
 
           {referrals.length == 0 && (
-            <div className="flex h-full w-full flex-col items-center justify-center gap-5 py-16">
+            <div className="flex h-full w-full flex-col items-center justify-center gap-5 py-16 grow">
               <Image
                 src={AvatarsIcon}
                 alt="Ничего не найдено"

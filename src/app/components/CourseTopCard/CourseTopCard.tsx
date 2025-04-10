@@ -6,6 +6,7 @@ import { RatingCounter } from './RatingCounter';
 import { CourseProgress } from './CourseProgress';
 import { useTranslations } from 'next-intl';
 import GridSvg from './assets/grid.svg';
+import { CourseBadge } from '../shared/CourseBadge';
 
 export function CourseTopCard({ course }: { course: ICourse }) {
   const t = useTranslations('UserSpace');
@@ -37,18 +38,10 @@ export function CourseTopCard({ course }: { course: ICourse }) {
         </div>
         <div className="pointer-events-none absolute top-0 left-0 flex h-full w-full items-center justify-center">
           {course.bage?.title && (
-            <span className="bg-background/30 border-foreground/20 z-30 flex items-center justify-center gap-2 rounded-full border px-6 py-4 text-sm backdrop-blur-sm">
-              {course.bage?.img && (
-                <Image
-                  src={course.bage.img}
-                  alt={course.bage.title}
-                  className="h-4 w-4"
-                  width={16}
-                  height={16}
-                />
-              )}
-              <span className="font-delight mt-0.5">{course.bage.title}</span>
-            </span>
+            <CourseBadge
+              badge={course.bage}
+              className="px-6 py-4 pr-6.75 leading-3.5 sm:leading-4"
+            />
           )}
         </div>
       </div>
