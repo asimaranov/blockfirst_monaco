@@ -20,6 +20,9 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
   const { data: referralCodeData, isLoading } =
     api.referrals.getUserReferralCode.useQuery();
 
+  // Fetch blogger status
+  const { data: bloggerStatus } = api.referrals.getBloggerStatus.useQuery();
+
   // Update referral link when data is loaded
   useEffect(() => {
     if (referralCodeData && referralCodeData.code) {
@@ -86,7 +89,7 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
                   setIsBloggersFormOpen(true);
                 }}
               >
-                Блогерам
+                {bloggerStatus?.isBlogger ? 'Аккаунт блогера' : 'Блогерам'}
                 <svg
                   width="21"
                   height="20"
@@ -119,22 +122,42 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
                 />
               </div>
             </div>
-
-            <button
-              className="border-primary hover:bg-primary flex h-10 w-33 cursor-pointer items-center justify-center rounded-full border bg-[#01050d]"
-              onClick={() => setIsBloggersFormOpen(true)}
-            >
-              <div className="flex items-center space-x-0">
-                <span className="text-foreground text-sm">Блогерам</span>
-                <Image
-                  src={'/images/icons/forward-arrow.svg'}
-                  alt="forward-arrow"
-                  width={21}
-                  height={20}
-                  className="h-5 w-5"
-                />
+            {bloggerStatus?.isBlogger ? (
+              <div className="rounded-[100px] bg-[#33CF8E]/10 px-6 py-2.5 text-sm text-[#33CF8E] flex flex-row gap-1 items-center justify-center">
+                <svg
+                  width="20"
+                  height="21"
+                  viewBox="0 0 20 21"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M5.44922 11.15L8.04922 13.75L14.5492 7.25"
+                    stroke="#33CF8E"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+                Аккаунт блогера
               </div>
-            </button>
+            ) : (
+              <button
+                className="border-primary hover:bg-primary flex h-10 w-33 cursor-pointer items-center justify-center rounded-full border bg-[#01050d]"
+                onClick={() => setIsBloggersFormOpen(true)}
+              >
+                <div className="flex items-center space-x-0">
+                  <span className="text-foreground text-sm">Блогерам</span>
+                  <Image
+                    src={'/images/icons/forward-arrow.svg'}
+                    alt=""
+                    width={21}
+                    height={20}
+                    className="h-5 w-5"
+                  />
+                </div>
+              </button>
+            )}
           </div>
         }
       />

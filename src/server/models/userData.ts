@@ -34,6 +34,12 @@ export interface IUserData {
     curatorId?: string;
     assignedAt?: Date;
   };
+  blogger: {
+    isBlogger: boolean;
+    referralPercent: number;
+    activatedAt?: Date;
+    promoCodeId?: string;
+  };
   premiumStartDate?: Date;
   premiumEndDate?: Date;
   createdAt: Date;
@@ -116,6 +122,24 @@ const UserDataSchema = new mongoose.Schema<IUserData>(
       },
       curatorId: String,
       assignedAt: Date,
+    },
+    blogger: {
+      isBlogger: {
+        type: Boolean,
+        default: false,
+      },
+      referralPercent: {
+        type: Number,
+        default: 3,
+        min: 1,
+        max: 25,
+      },
+      activatedAt: {
+        type: Date,
+      },
+      promoCodeId: {
+        type: String,
+      },
     },
     premiumStartDate: {
       type: Date,

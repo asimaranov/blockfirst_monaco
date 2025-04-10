@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { Tariff, TARIFFS } from '~/app/lib/constants/tariff';
+import { Tariff } from '~/app/lib/constants/tariff';
 import Image from 'next/image';
 import { cn } from '~/helpers';
 import { formatPrice } from '~/app/lib/utils';
@@ -35,7 +35,7 @@ export default function TariffCard({ tariff }: { tariff: Tariff }) {
       <div className="relative bg-[#01050D] p-5 py-8 sm:p-8">
         <div className="relative z-1 bg-[url(/images/misc/tariff-grid.svg)] bg-cover bg-no-repeat bg-blend-screen">
           {tariff.sale && (
-            <div className="absolute -top-3 sm:top-0 right-0">
+            <div className="absolute -top-3 right-0 sm:top-0">
               <span className="bg-error rounded-full px-2 py-1 text-xs uppercase">
                 Sale {tariff.sale.percent}%
               </span>
@@ -53,7 +53,9 @@ export default function TariffCard({ tariff }: { tariff: Tariff }) {
             </div>
             <div className="flex flex-col items-center gap-3 text-center">
               <h3 className="text-2xll">{tariff.name}</h3>
-              <p className="text-secondary text-sm sm:text-xs">{tariff.description}</p>
+              <p className="text-secondary text-sm sm:text-xs">
+                {tariff.description}
+              </p>
             </div>
           </div>
         </div>
@@ -116,7 +118,7 @@ export default function TariffCard({ tariff }: { tariff: Tariff }) {
             <div className="flex items-center gap-2">
               <button
                 className={cn(
-                  'flex items-center rounded-full border border-[#1959F4] bg-[#1959F4] px-10.5 py-3.5 sm:px-10.75 duration-300',
+                  'flex items-center rounded-full border border-[#1959F4] bg-[#1959F4] px-10.5 py-3.5 duration-300 sm:px-10.75',
                   isLoading
                     ? 'border-[#1242B2] bg-[#1242B2]'
                     : 'hover:bg-dark-bg cursor-pointer',
@@ -179,10 +181,26 @@ export default function TariffCard({ tariff }: { tariff: Tariff }) {
 
       {tariff.unlocked && (
         <div className="mt-auto flex flex-col gap-6 pt-8 pb-0">
-          <div className={cn("mx-8 mt-auto flex h-13 cursor-pointer items-center justify-center gap-1 rounded-full bg-[#33CF8E]/10", (tariff.unlocked && !tariff.isActive) && "bg-[#9AA6B5]/10")}>
+          <div
+            className={cn(
+              'mx-8 mt-auto flex h-13 cursor-pointer items-center justify-center gap-1 rounded-full bg-[#33CF8E]/10',
+              tariff.unlocked && !tariff.isActive && 'bg-[#9AA6B5]/10'
+            )}
+          >
             <div className="flex items-center gap-1">
-              <CheckIcon color={tariff.unlocked && !tariff.isActive ? '#9AA6B5' : '#33CF8E'} />
-              <span className={cn("text-sm text-[#33CF8E]", (tariff.unlocked && !tariff.isActive) && "text-[#9AA6B5]")}>Активный тариф</span>
+              <CheckIcon
+                color={
+                  tariff.unlocked && !tariff.isActive ? '#9AA6B5' : '#33CF8E'
+                }
+              />
+              <span
+                className={cn(
+                  'text-sm text-[#33CF8E]',
+                  tariff.unlocked && !tariff.isActive && 'text-[#9AA6B5]'
+                )}
+              >
+                Активный тариф
+              </span>
             </div>
           </div>
           {!tariff.price ? (

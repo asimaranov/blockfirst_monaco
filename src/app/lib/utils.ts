@@ -1,5 +1,5 @@
-import { PlanType } from "~/server/models/userData";
-import { SubscriptionType } from "./constants/subsctiptions";
+import { PlanType } from '~/server/models/userData';
+import { SubscriptionType } from './constants/subsctiptions';
 
 export function formatPrice(price: number, currency: string = '₽') {
   const formatter = new Intl.NumberFormat('ru-RU');

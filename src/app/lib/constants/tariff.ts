@@ -4,6 +4,7 @@ export interface TariffFeature {
 }
 
 export interface Tariff {
+  id: string;
   name: string;
   description: string;
   bigIcon: string;
@@ -19,11 +20,11 @@ export interface Tariff {
   };
   isActive?: boolean;
   unlocked?: boolean;
-
 }
 
 export const TARIFFS: Tariff[] = [
   {
+    id: 'free',
     name: 'Free',
     description:
       'Стартовый тариф, который включает в себя ознакомление с курсами и платформой в целом.',
@@ -40,6 +41,7 @@ export const TARIFFS: Tariff[] = [
     ],
   },
   {
+    id: 'starter',
     name: 'Starter',
     description:
       'Подходит для самостоятельного обучения. В тарифе не предусмотрен ментор, консультации и резюме.',
@@ -62,6 +64,7 @@ export const TARIFFS: Tariff[] = [
     },
   },
   {
+    id: 'pro',
     name: 'Pro',
     description:
       'Получи максимум от прохождения курсов. Менторы, консультации, комьюнити и многое другое.',
@@ -78,7 +81,6 @@ export const TARIFFS: Tariff[] = [
       { text: 'Включая все с Starter', bg: true },
       { text: 'Премиумные материалы и задачи' },
       { text: 'Персональный ai ментор и.т.д', bg: true },
-
     ],
     price: {
       monthly: 18000,
@@ -90,3 +92,17 @@ export const TARIFFS: Tariff[] = [
     },
   },
 ];
+
+export const UpgradeTariff: Tariff = {
+  ...TARIFFS[2]!,
+  id: 'pro-upgrade',
+  name: 'Pro',
+  price: {
+    monthly: TARIFFS[2]!.price!.monthly - TARIFFS[1]!.price!.monthly,
+    total: TARIFFS[2]!.price!.total - TARIFFS[1]!.price!.total,
+    installments: 10,
+  },
+  isActive: true,
+};
+
+export const ALL_TARIFFS = [...TARIFFS, UpgradeTariff];

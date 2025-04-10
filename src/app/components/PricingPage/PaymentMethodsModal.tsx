@@ -12,6 +12,7 @@ interface PaymentMethodsModalProps {
   isOpen: boolean;
   onClose: () => void;
   tariff: {
+    id: string;
     name: string;
     price?: {
       monthly: number;
@@ -211,7 +212,7 @@ const PaymentMethodsModal = ({
     // Handle payment based on type
     if (type === 't-bank') {
       createPaymentLink({
-        tariff: tariff.name,
+        tariff: tariff.id,
       });
     }
     if (type === 'tether') {

@@ -7,6 +7,7 @@ import {
 import ReferralModel, { IReferral } from '~/server/models/referral';
 import UserDataModel, { PlanType } from '~/server/models/userData';
 import ReferralCodeModel from '~/server/models/referralCode';
+import PromoCodeModel from '~/server/models/promoCode';
 import dbConnect from '~/server/mongodb';
 import { nanoid } from 'nanoid';
 
@@ -369,13 +370,12 @@ export const referralsRouter = createTRPCRouter({
         ...dateFilter,
       };
 
-      // Execute queries in parallel for better performance
-      const [totalReferrals, totalEarnings, activePlans, totalBalance] =
+      const [totalReferrals, totalEarnings, activePlans, userData] =
         await Promise.all([
           // Count total referrals
           ReferralModel.countDocuments(baseQuery),
 
-          // Calculate total earnings for the period
+          // Calculate total earnings
           ReferralModel.aggregate([
             { $match: baseQuery },
             { $group: { _id: null, total: { $sum: '$earnings' } } },
@@ -387,17 +387,16 @@ export const referralsRouter = createTRPCRouter({
             { $group: { _id: '$plan', count: { $sum: 1 } } },
           ]),
 
-          // Calculate total balance (sum of all earnings across all time periods)
-          ReferralModel.aggregate([
-            { $match: { referrerId: ctx.session.user.id } }, // No date filter for total balance
-            { $group: { _id: null, total: { $sum: '$earnings' } } },
-          ]),
+          // Get the user data to check referral percentage
+          UserDataModel.findOne({ userId: ctx.session.user.id }),
         ]);
 
       const earnings = totalEarnings.length > 0 ? totalEarnings[0].total : 0;
-      const balance = totalBalance.length > 0 ? totalBalance[0].total : 0;
 
-      // Calculate count of purchased plans (non-free)
+      // Calculate total number of purchases (non-free plans)
+      let totalPurchases = 0;
+
+      // Organize plan counts
       const planCounts = {
         free: 0,
         starter: 0,
@@ -405,26 +404,182 @@ export const referralsRouter = createTRPCRouter({
       };
 
       activePlans.forEach((plan) => {
-        if (
-          plan._id &&
-          typeof plan._id === 'string' &&
-          plan._id in planCounts
-        ) {
-          planCounts[plan._id as PlanType] = plan.count;
+        if (plan._id && typeof plan._id === 'string') {
+          if (plan._id in planCounts) {
+            planCounts[plan._id as PlanType] = plan.count;
+            // Count all non-free plans as purchases
+            if (plan._id !== 'free') {
+              totalPurchases += plan.count;
+            }
+          }
         }
       });
 
-      // Calculate total purchased plans (excluding free)
-      const totalPurchases = planCounts.starter + planCounts.pro;
+      // Get the referral percentage from user data
+      const referralPercent = userData?.blogger?.isBlogger
+        ? userData.blogger.referralPercent
+        : 3; // Default percentage
 
       return {
         totalReferrals,
         totalPurchases,
         earnings,
-        balance,
+        referralPercent,
+        isBlogger: userData?.blogger?.isBlogger || false,
         formattedEarnings: `${earnings.toLocaleString('ru-RU')} ₽`,
-        formattedBalance: `${balance.toLocaleString('ru-RU')} ₽`,
+        balance: earnings, // For the balance display
+        formattedBalance: `${earnings.toLocaleString('ru-RU')} ₽`,
         planCounts,
       };
     }),
+
+  // New endpoints for promo codes
+
+  // Check if promo code is valid
+  checkPromoCode: protectedProcedure
+    .input(
+      z.object({
+        code: z.string(),
+      })
+    )
+    .query(async ({ input }) => {
+      await dbConnect();
+
+      const promoCode = await PromoCodeModel.findOne({
+        code: input.code,
+        isActive: true,
+        usedBy: { $exists: false }, // Not used by anyone yet
+      });
+
+      if (!promoCode) {
+        return {
+          valid: false,
+          message: 'Данный промокод не зарегистрирован',
+        };
+      }
+
+      return {
+        valid: true,
+        referralPercent: promoCode.referralPercent,
+      };
+    }),
+
+  // Activate promo code for a blogger
+  activatePromoCode: protectedProcedure
+    .input(
+      z.object({
+        code: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      await dbConnect();
+
+      // Check if the code exists and is active
+      const promoCode = await PromoCodeModel.findOne({
+        code: input.code,
+        isActive: true,
+        usedBy: { $exists: false }, // Not used by anyone yet
+      });
+
+      if (!promoCode) {
+        throw new Error(
+          'Данный промокод не зарегистрирован или уже использован'
+        );
+      }
+
+      // Update the promo code with used info
+      await PromoCodeModel.findByIdAndUpdate(promoCode.id, {
+        usedBy: ctx.session.user.id,
+        usedAt: new Date(),
+      });
+
+      console.log('Set is blogger', promoCode);
+
+      // Update user data to mark as blogger with custom referral percentage
+      await UserDataModel.findOneAndUpdate(
+        { userId: ctx.session.user.id },
+        {
+          $set: {
+            'blogger.isBlogger': true,
+            'blogger.referralPercent': promoCode.referralPercent,
+            'blogger.activatedAt': new Date(),
+            'blogger.promoCodeId': promoCode.id,
+          },
+        },
+        { upsert: true, new: true }
+      );
+
+      return {
+        success: true,
+        referralPercent: promoCode.referralPercent,
+      };
+    }),
+
+  // Create promo code (restricted to admin/manager users only)
+  createPromoCode: protectedProcedure
+    .input(
+      z.object({
+        code: z.string().optional(),
+        referralPercent: z.number().min(1).max(25).default(5),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      await dbConnect();
+
+      // TODO: Add role check here - this should be restricted to admin/manager users
+      // For now, we're assuming all users can create promo codes for demonstration purposes
+
+      // Generate a code if not provided
+      const code = input.code || `blog${nanoid(6)}`;
+
+      // Check if code already exists
+      const existingCode = await PromoCodeModel.findOne({ code });
+      if (existingCode) {
+        throw new Error('Промокод с таким кодом уже существует');
+      }
+
+      // Create the promo code
+      const promoCode = await PromoCodeModel.create({
+        code,
+        referralPercent: input.referralPercent,
+        createdBy: ctx.session.user.id,
+        isActive: true,
+      });
+
+      return promoCode.toJSON();
+    }),
+
+  // Get all promo codes (admin only)
+  getAllPromoCodes: protectedProcedure.query(async ({ ctx }) => {
+    await dbConnect();
+
+    // TODO: Add role check here - this should be restricted to admin/manager users
+    // For now, we're assuming all users can view promo codes for demonstration purposes
+
+    const promoCodes = await PromoCodeModel.find().sort({ createdAt: -1 });
+
+    return promoCodes.map((code) => code.toJSON());
+  }),
+
+  // Get user's blogger status
+  getBloggerStatus: protectedProcedure.query(async ({ ctx }) => {
+    await dbConnect();
+
+    const userData = await UserDataModel.findOne({
+      userId: ctx.session.user.id,
+    });
+
+    if (!userData) {
+      return {
+        isBlogger: false,
+        referralPercent: 3, // Default
+      };
+    }
+
+    return {
+      isBlogger: userData.blogger?.isBlogger || false,
+      referralPercent: userData.blogger?.referralPercent || 3,
+      activatedAt: userData.blogger?.activatedAt,
+    };
+  }),
 });

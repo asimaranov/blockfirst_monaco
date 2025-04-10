@@ -221,6 +221,9 @@ export default function ReferralPage({ session }: { session: Session }) {
     error,
   } = api.referrals.getReferralStatsByPeriod.useQuery({ timePeriod });
 
+  // Fetch blogger status separately
+  const { data: bloggerStatus } = api.referrals.getBloggerStatus.useQuery();
+
   return (
     <main className="border-accent border-r-0 border-l-0 sm:border-r sm:border-l">
       <div className="flex h-auto w-full flex-col sm:h-screen">
@@ -313,7 +316,7 @@ export default function ReferralPage({ session }: { session: Session }) {
                   }
                   subtitle="Доход от рефералов"
                   icon={<Image src={PercentSvg} alt={''} className="h-9 w-9" />}
-                  badgeText="Процент — 3%"
+                  badgeText={`Процент — ${bloggerStatus?.referralPercent || 3}%`}
                   badgeColor="bg-success/10"
                 />
               </div>

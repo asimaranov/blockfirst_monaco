@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { api } from '~/trpc/react';
 import PromoCodeIcon from '~/app/components/input-legends/promo-code';
 import FormContainer from '../shared/FormContainer';
 import FormField from '../shared/FormField';
@@ -15,15 +16,35 @@ export default function PromoCodeForm({
   const [promoCode, setPromoCode] = useState('');
   const [formState, setFormState] = useState<'input' | 'success'>('input');
   const [error, setError] = useState<string | undefined>(undefined);
-  const handleSubmit = () => {
-    setFormState('success');
-  };
+  const [referralPercent, setReferralPercent] = useState<number | null>(null);
 
-  const checkPromoCode = async (code: string) => {
-    // const response = await fetch(`/api/promo-code?code=${promoCode}`);
-    // const data = await response.json();
-    // return data;
-    return code === '123456';
+  // tRPC mutations
+  const checkPromoCodeQuery = api.referrals.checkPromoCode.useQuery(
+    { code: promoCode },
+    {
+      enabled: promoCode.length > 0,
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  const activatePromoCodeMutation = api.referrals.activatePromoCode.useMutation(
+    {
+      onSuccess: (data) => {
+        if (data.referralPercent) {
+          setReferralPercent(data.referralPercent);
+        }
+        setFormState('success');
+      },
+      onError: (error) => {
+        setError(error.message);
+      },
+    }
+  );
+
+  const handleSubmit = async () => {
+    if (!error && promoCode) {
+      await activatePromoCodeMutation.mutateAsync({ code: promoCode });
+    }
   };
 
   return (
@@ -32,14 +53,13 @@ export default function PromoCodeForm({
       title="Промокод"
       description="Пожалуйста, введите промокод, предоставленный вам менеджером, для активации персональной реферальной программы"
       submitButtonText="Активировать"
-      submitDisabled={promoCode === '' || error !== undefined}
+      submitDisabled={false}
       onSubmit={handleSubmit}
       formState={formState}
       successTitle="Промокод активирован"
-      successDescription="Вы успешно активировали промокод. Теперь вам доступен индивидуальный процент от дохода"
+      successDescription={`Вы успешно активировали промокод. Теперь вам доступен индивидуальный процент от дохода: ${referralPercent || 3}%`}
       showBackButton={formState === 'input'}
       onBackClick={onClose}
-      
     >
       <FormField
         type="text"
@@ -47,17 +67,14 @@ export default function PromoCodeForm({
         value={promoCode}
         placeholder="Ваш промокод"
         icon={<PromoCodeIcon active={promoCode !== ''} />}
-        onChange={async (e) => {
+        onChange={(e) => {
           setPromoCode(e.target.value);
-          const promoResp = await checkPromoCode(e.target.value);
-          if (!promoResp) {
-            setError('Данный промокод не зарегистрирован');
-          } else {
+          if (!e.target.value) {
             setError(undefined);
           }
         }}
         onBlur={() => setPromoCode(promoCode.trim())}
-        error={promoCode !== '' ? error : undefined}
+        error={error}
       />
     </FormContainer>
   );

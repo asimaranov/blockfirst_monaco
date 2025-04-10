@@ -106,7 +106,7 @@ export default function UsdtForm({
                 className="h-full w-full"
               />
             ) : (
-              <div className="flex h-full w-full items-center justify-center text-center text-error">
+              <div className="text-error flex h-full w-full items-center justify-center text-center">
                 Ошибка при создании кошелька. Пожалуйста, попробуйте позже.
               </div>
             )}
@@ -166,7 +166,7 @@ export default function UsdtForm({
           {wallet?.amount || '...'} USDT
         </div>
         <div className="bg-accent h-px w-full"></div>
-        <div className="flex w-full flex-row items-center justify-center gap-1 pb-5 text-sm sm:pb-8 leading-4">
+        <div className="flex w-full flex-row items-center justify-center gap-1 pb-5 text-sm leading-4 sm:pb-8">
           <span className="text-secondary">Валюта –</span>
           <svg
             width="16"

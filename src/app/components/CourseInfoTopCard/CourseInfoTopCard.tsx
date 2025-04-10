@@ -127,7 +127,7 @@ export default async function CourseInfoTopCard({
               </span>
               <Image
                 src={'/images/icons/forward-arrow.svg'}
-                alt="forward-arrow"
+                alt=""
                 width={21}
                 height={20}
                 className="h-5 w-5"

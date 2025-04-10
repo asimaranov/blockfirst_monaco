@@ -1,6 +1,6 @@
 import { createHash, randomUUID } from 'crypto';
 import { z } from 'zod';
-import { TARIFFS } from '~/app/lib/constants/tariff';
+import { ALL_TARIFFS } from '~/app/lib/constants/tariff';
 
 import {
   createTRPCRouter,
@@ -23,12 +23,15 @@ export const tinkoffRouter = createTRPCRouter({
     .input(z.object({ tariff: z.string() }))
     .output(z.string())
     .mutation(async ({ ctx, input }) => {
-      const tariff = TARIFFS.find((t) => t.name === input.tariff);
+      console.log('input input', input);
+
+      const tariff = ALL_TARIFFS.find((t) => t.id === input.tariff);
+
       const request = {
         TerminalKey: '1741879511517DEMO',
         Amount: (tariff?.price?.total || 0) * 100,
         OrderId: randomUUID(),
-        Description: 'Starter',
+        Description: tariff?.id || '',
         NotificationURL: 'https://sanyawebapp.ddns.net/notification_tinkoff',
         SuccessURL: 'https://app.blockfirst.io/pricing',
         FailURL: 'https://app.blockfirst.io/pricing',
@@ -98,7 +101,6 @@ export const tinkoffRouter = createTRPCRouter({
       const response = await createPaymentRequest.json();
 
       console.log(response);
-
 
       return response.PaymentURL;
     }),
