@@ -482,9 +482,7 @@ export const referralsRouter = createTRPCRouter({
       });
 
       if (!promoCode) {
-        throw new Error(
-          'Данный промокод не зарегистрирован'
-        );
+        throw new Error('Данный промокод не зарегистрирован');
       }
 
       // Update the promo code with used info

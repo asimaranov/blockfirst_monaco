@@ -12,7 +12,12 @@ import { useState } from 'react';
 import { SortIcon } from '../EmploymentPage/assets/sort-icon';
 import AvatarsIcon from './assets/no-referrals.png';
 import { api } from '~/trpc/react';
-import { formatLearningTime, formatPrice, formatRelativeTime, planTypeToSubscriptionType } from '~/app/lib/utils';
+import {
+  formatLearningTime,
+  formatPrice,
+  formatRelativeTime,
+  planTypeToSubscriptionType,
+} from '~/app/lib/utils';
 import { PlanType } from '~/server/models/userData';
 
 // The shape of our referral data after transformations
@@ -75,9 +80,9 @@ const ReferralCard = ({
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.3 }}
-    className="flex w-full gap-7"
+    className="flex w-full gap-4"
   >
-    <div className="text-secondary/50 text-sm">{Number(id + 1)}.</div>
+    <div className="text-secondary/50 text-sm w-6 h-6">{Number(id + 1)}.</div>
     <div className="flex w-full flex-col gap-6">
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-3">
@@ -140,9 +145,7 @@ export const ReferralTable = () => {
     formattedRegistrationDate: referral.formattedRegistrationDate,
     plan: referral.plan,
     formattedEarnings: referral.earnings.toString() || '',
-    formattedLearningTime: formatLearningTime(
-      referral.learningTimeMinutes
-    ),
+    formattedLearningTime: formatLearningTime(referral.learningTimeMinutes),
   }));
 
   const sortReferrals = (referralsToSort: ReferralData[]) => {
@@ -215,7 +218,7 @@ export const ReferralTable = () => {
                 }}
                 className="group flex cursor-pointer flex-row items-center gap-1"
               >
-                <span className="text-secondary/50 text-xs uppercase group-hover:text-secondary">
+                <span className="text-secondary/50 group-hover:text-secondary text-xs uppercase">
                   регистрация
                 </span>
                 <SortIcon
@@ -240,7 +243,7 @@ export const ReferralTable = () => {
                 }}
                 className="group flex cursor-pointer flex-row items-center gap-1"
               >
-                <span className="text-secondary/50 text-xs uppercase group-hover:text-secondary">
+                <span className="text-secondary/50 group-hover:text-secondary text-xs uppercase">
                   Доход
                 </span>
                 <SortIcon
