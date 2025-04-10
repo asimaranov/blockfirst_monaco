@@ -13,6 +13,7 @@ import FormField from './components/FormField';
 import FormWrapper from './components/FormWrapper';
 import ErrorBadge from './components/ErrorBadge';
 import { api } from '~/trpc/react';
+import { ConfidentialityModal } from './ConfidentialityModal';
 
 export default function SignUpForm({
   setAuthStep,
@@ -28,6 +29,7 @@ export default function SignUpForm({
     'disabled' | 'loading' | 'active'
   >('active');
   const [error, setError] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -76,39 +78,8 @@ export default function SignUpForm({
   }, [router, setTopButtonState]);
 
   const handleSignUp = async () => {
-    setBottomButtonState('loading');
-    const { data, error } = await authClient.signUp.email({
-      email: formik.values.email,
-      name: formik.values.username,
-      password: formik.values.password,
-    });
-    setBottomButtonState('active');
-
-    if (error) {
-      console.error('Error in email OTP send', error);
-      setError(error.message ?? 'Unknown error');
-    }
-
-    if (data) {
-      setAuthState({
-        email: formik.values.email,
-        username: formik.values.username,
-        password: formik.values.password,
-      });
-      setTopButtonState({
-        state: 'back',
-        onClick: () => {
-          setAuthStep(AuthStep.SignIn);
-          setTopButtonState({
-            state: undefined,
-            onClick: () => {},
-          });
-        },
-      });
-      setAuthStep(AuthStep.SignUpConfirmEmail);
-
-      console.log('Email OTP sent', data);
-    }
+    setIsModalOpen(true);
+    
   };
 
   // Get password validation errors for badge display
@@ -126,6 +97,7 @@ export default function SignUpForm({
   };
 
   return (
+    <>
     <FormWrapper
       mainText={`Открой двери
 в мир web3`}
@@ -212,5 +184,45 @@ BlockFirst. Мы рады видеть каждого!`}
         <ErrorBadge errors={getApiError()} />
       </div>
     </FormWrapper>
+    <ConfidentialityModal
+      isOpen={isModalOpen}
+      onClose={() => setIsModalOpen(false)}
+      onConfirm={async () => {
+        setBottomButtonState('loading');
+        const { data, error } = await authClient.signUp.email({
+          email: formik.values.email,
+          name: formik.values.username,
+          password: formik.values.password,
+        });
+        setBottomButtonState('active');
+    
+        if (error) {
+          console.error('Error in email OTP send', error);
+          setError(error.message ?? 'Unknown error');
+        }
+    
+        if (data) {
+          setAuthState({
+            email: formik.values.email,
+            username: formik.values.username,
+            password: formik.values.password,
+          });
+          setTopButtonState({
+            state: 'back',
+            onClick: () => {
+              setAuthStep(AuthStep.SignIn);
+              setTopButtonState({
+                state: undefined,
+                onClick: () => {},
+              });
+            },
+          });
+          setAuthStep(AuthStep.SignUpConfirmEmail);
+    
+          console.log('Email OTP sent', data);
+        }
+      }}
+    />
+    </>
   );
 }
