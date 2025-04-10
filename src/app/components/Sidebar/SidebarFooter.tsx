@@ -2,19 +2,21 @@ import { UserInfo } from './UserInfo';
 import { Socials } from './Socials';
 import { IUser } from '~/app/lib/types/IUser';
 import { ClubLink } from './ClubLink';
-import { auth } from '~/server/auth';
+import { auth, getServerSession } from '~/server/auth';
 import { headers } from 'next/headers';
 import { planTypeToSubscriptionType } from '~/app/lib/utils';
 import { api } from '~/trpc/server';
+import { redirect } from 'next/navigation';
 
 interface SidebarFooterProps {
   user: IUser;
 }
 
 export async function SidebarFooter() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const session = await getServerSession();
+  if (!session) {
+    redirect('/signin');
+  }
 
   const userData = await api.userData.getUserData();
 

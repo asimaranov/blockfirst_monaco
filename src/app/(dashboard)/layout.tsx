@@ -13,10 +13,6 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
-  if (!session) {
-    redirect('/signin');
-  }
 
   // Prefetch notifications data
   // await api.notifications.getAll.prefetch();
