@@ -1,15 +1,11 @@
-'use client';
-
 import { Skeleton } from '../shared/Skeleton';
 import { IUser } from '~/app/lib/types/IUser';
 import { SubscriptionLabel } from './assets/SubscriptionLabel';
-import { api } from '~/trpc/react';
+import { api } from '~/trpc/server';
 import { planTypeToSubscriptionType } from '~/app/lib/utils';
 
-export function UserInfo({ user }: { user?: IUser }) {
-  const { data: userData } = api.userData.getUserData.useQuery(undefined, {
-    refetchInterval: 15000,
-  });
+export async function UserInfo({ user }: { user?: IUser }) {
+  const userData = await api.userData.getUserData();
 
   return (
     <div className={'flex flex-row border-t border-[#282D33] px-8 py-5'}>
