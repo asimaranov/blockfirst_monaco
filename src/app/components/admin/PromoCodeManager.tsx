@@ -67,7 +67,6 @@ export default function PromoCodeManager() {
               <FormField
                 type="text"
                 name="promoCode"
-                label="Код промокода"
                 value={newCode}
                 placeholder="Введите код промокода"
                 icon={<PromoCodeIcon active={newCode !== ''} />}
@@ -85,10 +84,9 @@ export default function PromoCodeManager() {
               <FormField
                 type="number"
                 name="percentage"
-                label="Процент"
                 value={percentage.toString()}
                 min={1}
-                max={25}
+                max={99}
                 onChange={(e) => setPercentage(parseInt(e.target.value) || 5)}
               />
             </div>
