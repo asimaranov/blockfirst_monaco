@@ -520,7 +520,7 @@ export const referralsRouter = createTRPCRouter({
     .input(
       z.object({
         code: z.string().optional(),
-        referralPercent: z.number().min(1).max(25).default(5),
+        referralPercent: z.number().min(1).max(99).default(5),
       })
     )
     .mutation(async ({ ctx, input }) => {
