@@ -33,7 +33,7 @@ const PromoCodeSchema = new mongoose.Schema<IPromoCode>(
       type: Number,
       required: true,
       min: 1,
-      max: 25, // Maximum allowed percentage
+      max: 99, // Maximum allowed percentage
       default: 5,
     },
     usedBy: {
