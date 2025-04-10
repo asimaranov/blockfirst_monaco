@@ -6,12 +6,17 @@ import { NotificationsModal } from '../components/Notifications/NotificationsMod
 import { Suspense } from 'react';
 import { cookies } from 'next/headers';
 import { getServerSession } from '~/server/auth';
+import { redirect } from 'next/navigation';
 
 export default async function Layout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession();
+  if (!session) {
+    redirect('/signin');
+  }
 
   // Prefetch notifications data
   // await api.notifications.getAll.prefetch();
