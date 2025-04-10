@@ -64,9 +64,9 @@ export default function BloggerForm({ onClose }: ApplyFormProps) {
             setIsPromoCodeFormOpen(false);
           }}
           bottomText={{
-            main: 'Неверные контакты?',
-            secondary: 'Написать нам',
-            link: '#',
+            main: 'Электронный адрес',
+            secondary: 'hello@blockfirst.io',
+            link: 'mailto:hello@blockfirst.io',
           }}
         >
           <div className="text-secondary/50 -mx-5 sm:-mx-10 bg-[#14171C] px-6 sm:px-8 py-3.5 text-xs uppercase">
