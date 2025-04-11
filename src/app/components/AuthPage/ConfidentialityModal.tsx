@@ -22,6 +22,7 @@ export function ConfidentialityModal({
     if (isChecked) {
       setTimeout(() => {
         onConfirm();
+        setIsChecked(false);
         onClose();
       }, 1000);
     }
@@ -93,11 +94,10 @@ export function ConfidentialityModal({
 
               {/* Checkbox */}
               <motion.div
-                className="group flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-[#9AA6B5]/10 px-4 py-3.5 group-hover:bg-[#195AF4]/10 group-data-[checked=true]:bg-[#195AF4]/10 sm:py-4"
+                className="group flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-[#9AA6B5]/10 px-4 py-3.5 hover:bg-[#195AF4]/10 data-[checked=true]:bg-[#195AF4]/10 sm:py-4"
                 onClick={() => setIsChecked(!isChecked)}
                 data-checked={isChecked}
                 whileTap={{ scale: 0.95 }}
-                whileHover={{ backgroundColor: 'rgba(25, 90, 244, 0.1)' }}
                 transition={{
                   type: 'spring',
                   stiffness: 400,
