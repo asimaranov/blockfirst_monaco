@@ -23,7 +23,7 @@ interface VerificationEmailTemplateProps {
 }
 
 const defaultBaseUrl = process.env.VERCEL_URL
-  ? `https://blockfirst.io`
+  ? `https://app.blockfirst.io`
   : '';
 
 const VerificationEmailTemplate = ({
