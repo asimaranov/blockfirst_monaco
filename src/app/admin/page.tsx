@@ -50,6 +50,21 @@ export default function AdminDashboard() {
               Статистика программы
             </a>
           </div>
+
+          {/* Email Templates Preview */}
+          <div className="rounded-lg border border-gray-700 bg-gray-800 p-6">
+            <h2 className="mb-4 text-xl">Шаблоны писем</h2>
+            <p className="mb-4 text-gray-400">
+              Просматривайте и тестируйте шаблоны писем, используемые платформой
+              для коммуникации с пользователями.
+            </p>
+            <a
+              href="/admin/email-previews"
+              className="inline-block rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
+            >
+              Просмотр шаблонов
+            </a>
+          </div>
         </div>
       </main>
     </div>

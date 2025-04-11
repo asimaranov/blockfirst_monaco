@@ -1,5 +1,5 @@
 import { CourseStructure } from "~/app/lib/constants/courses";
-
+import CourseBadge from "./CourseBadge";
 // Component for course section
 export default function CourseSection ({
   section,
@@ -16,18 +16,7 @@ export default function CourseSection ({
           <span className="text-sm sm:text-base">{section.title}</span>
         </div>
         <div className="flex items-center gap-1">
-          <div
-            className={`h-1 w-1 rounded-full ${section.status === 'available' ? 'bg-[#33CF89]' : 'bg-[#FF2052]'}`}
-          />
-          <span
-            className={`text-xs ${
-              section.status === 'available'
-                ? 'text-[#33CF89]'
-                : 'bg-gradient-to-r from-[#FF20A2] to-[#FF2020] bg-clip-text text-transparent'
-            }`}
-          >
-            {section.status === 'available' ? 'Available' : 'STARTER'}
-          </span>
+          <CourseBadge badgeType="available" />
         </div>
       </div>
       {section.lessons && (
