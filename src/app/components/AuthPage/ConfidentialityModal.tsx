@@ -65,7 +65,7 @@ export function ConfidentialityModal({
             transition={{ type: 'tween', duration: 0.3 }}
             className="border-accent/40 fixed bottom-0 left-0 z-[100000] w-full overflow-hidden border-t bg-[#0F1217]/50 backdrop-blur-[50px] sm:w-117"
           >
-            <div className="flex h-full w-full flex-col p-5 sm:p-16">
+            <div className="flex h-full w-full flex-col p-5 py-8 sm:py-5 sm:p-16">
               {/* Header */}
               <div className="mb-4 flex flex-col gap-6 sm:mb-8 sm:gap-4">
                 <div className="self-center">
@@ -83,11 +83,11 @@ export function ConfidentialityModal({
               {/* Content */}
               <p className="mb-8 text-center text-sm text-slate-400 sm:mb-10">
                 Я соглашаюсь с{' '}
-                <Link href="/privacy-policy" className="underline">
+                <Link href="/privacy-policy.pdf" className="underline">
                   политикой обработки персональных данных
                 </Link>{' '}
                 и с{' '}
-                <Link href="/terms-of-service" className="underline">
+                <Link href="/terms-of-service.pdf" className="underline">
                   правилами пользования Платформой
                 </Link>
               </p>
