@@ -32,13 +32,12 @@ const VerificationEmailTemplate = ({
 }: VerificationEmailTemplateProps) => {
   const otpDigits = otp.split('');
 
-  const logoUrl = `${baseUrl}/email/logo.svg`;
-  const keyIconUrl = `${baseUrl}/email/key-icon.svg`;
-  const copyIconUrl = `${baseUrl}/email/copy-asset.svg`;
-  const telegramIconUrl = `${baseUrl}/email/telegram-icon.svg`;
-  const youtubeIconUrl = `${baseUrl}/email/youtube-icon.svg`;
-  const mediumIconUrl = `${baseUrl}/email/medium-icon.svg`;
-  const twitterIconUrl = `${baseUrl}/email/twitter-icon.svg`;
+  const logoUrl = `${baseUrl}/email/logo.png`;
+  const keyIconUrl = `${baseUrl}/email/key-icon.png`;
+  const telegramIconUrl = `${baseUrl}/email/telegram-icon.png`;
+  const youtubeIconUrl = `${baseUrl}/email/youtube-icon.png`;
+  const mediumIconUrl = `${baseUrl}/email/medium-icon.png`;
+  const twitterIconUrl = `${baseUrl}/email/twitter-icon.png`;
   const topCoverUrl = `${baseUrl}/email/top-cover.png`;
 
   return (
