@@ -14,16 +14,17 @@ const client = new MongoClient(env.MONGODB_URI!);
 const db = client.db(env.DATABASE_NAME!);
 
 export const auth = betterAuth({
+  secret: env.AUTH_SECRET,
   advanced: {
     crossSubDomainCookies: {
       enabled: true,
-      domain: '.blockfirst.io', // Domain with a leading period
+      domain: env.NODE_ENV === 'production' ? '.blockfirst.io' : 'localhost', // Domain with leading period for production, localhost for dev
     },
     defaultCookieAttributes: {
-      secure: true,
+      secure: env.NODE_ENV === 'production',
       httpOnly: true,
-      sameSite: 'none', // Allows CORS-based cookie sharing across subdomains
-      partitioned: true, // New browser standards will mandate this for foreign cookies
+      sameSite: env.NODE_ENV === 'production' ? 'none' : 'lax', // Allows CORS-based cookie sharing across subdomains in production
+      partitioned: env.NODE_ENV === 'production', // New browser standards will mandate this for foreign cookies
     },
   },
   trustedOrigins: [
