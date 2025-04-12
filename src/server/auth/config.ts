@@ -1,19 +1,37 @@
 import { betterAuth, type BetterAuthOptions } from 'better-auth';
 import { openAPI, admin } from 'better-auth/plugins';
 import { emailOTP } from 'better-auth/plugins';
-import { mongodbAdapter } from "better-auth/adapters/mongodb";
+import { mongodbAdapter } from 'better-auth/adapters/mongodb';
 import {
   sendChangeEmailVerification,
   sendResetPasswordEmail,
   sendVerificationEmail,
 } from '~/server/auth/email';
-import { MongoClient } from "mongodb";
+import { MongoClient } from 'mongodb';
 import { env } from '~/env';
 
 const client = new MongoClient(env.MONGODB_URI!);
 const db = client.db(env.DATABASE_NAME!);
 
 export const auth = betterAuth({
+  advanced: {
+    crossSubDomainCookies: {
+      enabled: true,
+      domain: '.blockfirst.io', // Domain with a leading period
+    },
+    defaultCookieAttributes: {
+      secure: true,
+      httpOnly: true,
+      sameSite: 'none', // Allows CORS-based cookie sharing across subdomains
+      partitioned: true, // New browser standards will mandate this for foreign cookies
+    },
+  },
+  trustedOrigins: [
+    'http://localhost:3000',
+    'https://app.blockfirst.io',
+    'https://editor.blockfirst.io',
+    'https://blog.blockfirst.io',
+  ],
   database: mongodbAdapter(db),
   plugins: [
     emailOTP({
@@ -64,7 +82,7 @@ export const auth = betterAuth({
   rateLimit: {
     window: 10, // time window in seconds
     max: 100, // max requests in the window
-},
+  },
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -84,7 +102,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     requireEmailVerification: true,
-    
+
     // autoSignIn: false,
     sendResetPassword: async ({ user, url }) => {
       const { error } = await sendResetPasswordEmail({
