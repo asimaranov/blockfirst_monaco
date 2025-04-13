@@ -76,7 +76,7 @@ export function UnifiedCourseCard({
           <div className="flex items-center justify-between">
             <div className="flex gap-2">
               <div className="flex items-center gap-1 rounded-full bg-[#01050D] px-1.5 py-1 pr-3">
-                <div className="flex">
+                <div className="flex items-center j">
                   {course.soon ? (
                     <>
                       <svg
@@ -118,13 +118,13 @@ export function UnifiedCourseCard({
                     </>
                   )}
                 </div>
-                <span className="text-xs">
+                <span className="text-xs leading-3.5">
                   {course.info?.alumniCount || 0}+
                 </span>
               </div>
               <div className="flex items-center gap-1 rounded-full bg-[#01050D] px-3 py-1">
                 {course.soon ? <StarGrey /> : <Star />}
-                <span className="text-xs">
+                <span className="text-xs leading-3.5">
                   {(course.info?.rating || 0).toFixed(1)}
                 </span>
               </div>
