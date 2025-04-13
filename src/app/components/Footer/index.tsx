@@ -7,10 +7,10 @@ export default function Footer({ className }: { className?: string }) {
     {
       title: 'Компания',
       links: [
-        { label: 'Стоимость', href: '#' },
+        { label: 'Стоимость', href: 'https://app.blockfirst.io/pricing' },
         { label: 'F.A.Q', href: 'https://blockfirst.io/faqs' },
-        { label: 'Курс Solidity', href: '#' },
-        { label: 'Блог', href: '#' },
+        { label: 'Курс Solidity', href: 'https://app.blockfirst.io/course/solidity' },
+        { label: 'Блог', href: 'https://blockfirst.io/blog' },
         // { label: 'Статьи', href: '#' },
       ],
       className: '',
@@ -38,7 +38,7 @@ export default function Footer({ className }: { className?: string }) {
     {
       title: 'Сообщество',
       links: [
-        { label: 'Блог', href: '#' },
+        { label: 'Блог', href: 'https://blockfirst.io/blog' },
         // { label: 'Статьи', href: '#' },
       ],
       className: 'hidden sm:flex',
