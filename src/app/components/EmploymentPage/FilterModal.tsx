@@ -156,23 +156,20 @@ export const FilterModal = ({
 
             <button
               onClick={handleApply}
-              className="bg-primary text-foreground flex items-center justify-center rounded-full px-6 py-3"
+              className="bg-primary text-foreground flex items-center justify-center rounded-full px-6 py-3.5"
             >
               <div className="flex items-center">
                 <span className="text-sm">Применить фильтр</span>
                 <svg
-                  width="20"
+                  width="21"
                   height="20"
-                  viewBox="0 0 20 20"
+                  viewBox="0 0 21 20"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M14.75 9.5L10.25 14.25M14.75 9.5L10.25 4.75M14.75 9.5H4.75"
-                    stroke="#F2F2F2"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+                    d="M14.2305 4.43358C14.5292 4.1468 15.0042 4.15636 15.291 4.45506L19.9062 9.26365C20.1848 9.55386 20.1848 10.0125 19.9062 10.3027L15.291 15.1113C15.0042 15.4102 14.5293 15.4196 14.2305 15.1328C13.9319 14.8459 13.9222 14.371 14.209 14.0722L18.3262 9.78319L14.209 5.49412C13.9222 5.19533 13.9317 4.72041 14.2305 4.43358Z"
+                    fill="#F2F2F2"
                   />
                 </svg>
               </div>

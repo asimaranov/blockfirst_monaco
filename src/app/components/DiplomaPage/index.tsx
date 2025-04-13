@@ -131,8 +131,6 @@ export default function DiplomaPage({ session }: { session: Session }) {
               'Освоил язык Solidity',
               'Разработка смарт-контрактов',
               'Получен опыт DeFI',
-              'Может скамить на 200%',
-              'Холодные продажи',
             ]}
           />
         </DiplomaView>

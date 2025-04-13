@@ -226,7 +226,7 @@ export default function FormContainer({
           bottomText && 'pb-6'
         )}
       >
-        <div className="flex flex-1 flex-col gap-6 sm:gap-8">
+        <div className="flex flex-1 flex-col gap-8 sm:gap-8">
           <div className="flex flex-col items-center gap-8">
             <Image
               src={'/images/logo/form-logo.svg'}

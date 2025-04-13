@@ -186,7 +186,7 @@ export function UnifiedCourseCard({
         )}
 
         {isHistory ? (
-          <div className="mt-6 flex w-full justify-between gap-4 text-sm">
+          <div className="mt-8 sm:mt-6 flex w-full justify-between gap-4 text-sm">
             <Link href={`/course/${course.id}`}>
               <div className="flex">
                 <button

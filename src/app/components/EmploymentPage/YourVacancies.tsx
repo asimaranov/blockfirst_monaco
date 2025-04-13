@@ -42,7 +42,7 @@ export default function YourVacancies({
     <section className="border-accent static top-0 left-0 flex h-auto w-auto shrink-0 flex-col border-r-0 sm:sticky sm:h-screen sm:w-80 sm:border-r">
       <MobilePremiumTopbar text={'Твои вакансии'} />
       {/* Header */}
-      <div className="bg-background relative px-8 py-6">
+      <div className="bg-background relative px-5 sm:px-8 py-6">
         <Image
           src={GridBg}
           alt="Grid Background"

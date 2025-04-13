@@ -252,7 +252,7 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
         )}
       >
         <div className="overflow-hidden">
-          <div className="flex flex-col pt-8">
+          <div className="flex flex-col pt-10 sm:pt-8">
             <div className="flex flex-col gap-3 pb-8">
               <span className="text-secondary/50 text-sm uppercase sm:text-xs">
                 Описание вакансии
