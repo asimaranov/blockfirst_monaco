@@ -139,7 +139,7 @@ export function NotificationContentPromo({
             </div>
           </div>
           <div>
-            <div className="flex flex-col space-y-3 pb-8">
+            <div className="flex flex-col space-y-3 pb-8 sm:pb-0">
               <h3 className="text-foreground text-base font-medium">
                 {notification.title}
               </h3>

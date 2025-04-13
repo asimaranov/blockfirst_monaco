@@ -17,6 +17,7 @@ export function Topbar({
       rightContent={
         <AuthorInfo author={courseAuthor} avatarUrl={courseAuthorAvatar} className='hidden sm:flex' />
       }
+      className='pt-5'
     />
   );
 }

@@ -82,7 +82,7 @@ export default function MentorPage({ session }: { session: Session }) {
       smallImage: '/mentors/andrey_simaranov/small.png',
       bigImageWidth: 416,
       bigImageHeight: 514,
-      description: 'CEO BlockFirst, Solidity Auditor',
+      description: 'Solidity Auditor',
       about:
         'Aудитор Solidity в Mixbytes auditor DAO. Co-Founder и разработчик проекта Xraise.io в экосистеме ZkSync. Founder проекта ZkNoid',
       skills: ['BlockChain', 'Fullstack', 'auditor'],
@@ -350,12 +350,12 @@ export default function MentorPage({ session }: { session: Session }) {
                   {/* Education */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="text-secondary h-4 w-4 sm:h-3.5 sm:w-3.5">
+                      <div className="text-secondary size-4 sm:size-3.5">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
                           fill="currentColor"
-                          className="h-3.5 w-3.5"
+                          className="size-4 sm:size-3.5"
                         >
                           <path d="M11.7 2.805a.75.75 0 01.6 0A60.65 60.65 0 0122.83 8.72a.75.75 0 01-.231 1.337 49.949 49.949 0 00-9.902 3.912l-.003.002-.34.18a.75.75 0 01-.707 0A50.009 50.009 0 007.5 12.174v-.224c0-.131.067-.248.172-.311a54.614 54.614 0 014.653-2.52.75.75 0 00-.65-1.352 56.129 56.129 0 00-4.78 2.589 1.858 1.858 0 00-.859 1.228 49.803 49.803 0 00-4.634-1.527.75.75 0 01-.231-1.337A60.653 60.653 0 0111.7 2.805z" />
                           <path d="M13.06 15.473a48.45 48.45 0 017.666-3.282c.134 1.414.22 2.843.255 4.285a.75.75 0 01-.46.71 47.878 47.878 0 00-8.105 4.342.75.75 0 01-.832 0 47.877 47.877 0 00-8.104-4.342.75.75 0 01-.461-.71c.035-1.442.121-2.87.255-4.286A48.4 48.4 0 016 13.18v1.27a1.5 1.5 0 00-.14 2.508c-.09.38-.222.753-.397 1.11.452.213.901.434 1.346.661a6.729 6.729 0 00.551-1.608 1.5 1.5 0 00.14-2.67v-.645a48.549 48.549 0 013.44 1.668 2.25 2.25 0 002.12 0z" />
@@ -374,13 +374,14 @@ export default function MentorPage({ session }: { session: Session }) {
                   {/* Experience */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="text-secondary h-4 w-4 sm:h-3.5 sm:w-3.5">
+                      <div className="text-secondary size-4 sm:size-3.5">
                         <svg
                           width="16"
                           height="16"
                           viewBox="0 0 16 16"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
+                          className="size-4 sm:size-3.5"
                         >
                           <path
                             d="M8.0026 1.33203C4.3226 1.33203 1.33594 4.3187 1.33594 7.9987C1.33594 11.6787 4.3226 14.6654 8.0026 14.6654C11.6826 14.6654 14.6693 11.6787 14.6693 7.9987C14.6693 4.3187 11.6826 1.33203 8.0026 1.33203ZM5.68927 8.9787C5.8826 9.17203 5.8826 9.49203 5.68927 9.68536C5.58927 9.78536 5.4626 9.83203 5.33594 9.83203C5.20927 9.83203 5.0826 9.78536 4.9826 9.68536L3.64927 8.35203C3.45594 8.1587 3.45594 7.8387 3.64927 7.64536L4.9826 6.31203C5.17594 6.1187 5.49594 6.1187 5.68927 6.31203C5.8826 6.50536 5.8826 6.82536 5.68927 7.0187L4.70927 7.9987L5.68927 8.9787ZM9.12927 6.6387L7.79594 9.75203C7.71594 9.9387 7.52927 10.052 7.33594 10.052C7.26927 10.052 7.2026 10.0387 7.1426 10.012C6.88927 9.90536 6.76927 9.61203 6.8826 9.35203L8.21594 6.2387C8.3226 5.98536 8.61594 5.86536 8.86927 5.9787C9.1226 6.09203 9.23594 6.38536 9.12927 6.6387ZM12.3559 8.35203L11.0226 9.68536C10.9226 9.78536 10.7959 9.83203 10.6693 9.83203C10.5426 9.83203 10.4159 9.78536 10.3159 9.68536C10.1226 9.49203 10.1226 9.17203 10.3159 8.9787L11.2959 7.9987L10.3159 7.0187C10.1226 6.82536 10.1226 6.50536 10.3159 6.31203C10.5093 6.1187 10.8293 6.1187 11.0226 6.31203L12.3559 7.64536C12.5493 7.8387 12.5493 8.1587 12.3559 8.35203Z"
@@ -400,12 +401,12 @@ export default function MentorPage({ session }: { session: Session }) {
                   {/* Languages */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="text-secondary h-3.5 w-3.5">
+                      <div className="text-secondary size-4 sm:size-3.5">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 24 24"
                           fill="currentColor"
-                          className="h-3.5 w-3.5"
+                          className="size-4 sm:size-3.5"
                         >
                           <path d="M21.721 12.752a9.711 9.711 0 00-.945-5.003 12.754 12.754 0 01-4.339 2.708 18.991 18.991 0 01-.214 4.772 17.165 17.165 0 005.498-2.477zM14.634 15.55a17.324 17.324 0 00.332-4.647c-.952.227-1.945.347-2.966.347-1.021 0-2.014-.12-2.966-.347a17.515 17.515 0 00.332 4.647 17.385 17.385 0 005.268 0zM9.772 17.119a18.963 18.963 0 004.456 0A17.182 17.182 0 0112 21.724a17.18 17.18 0 01-2.228-4.605zM7.777 15.23a18.87 18.87 0 01-.214-4.774 12.753 12.753 0 01-4.34-2.708 9.711 9.711 0 00-.944 5.004 17.165 17.165 0 005.498 2.477zM21.356 14.752a9.765 9.765 0 01-7.478 6.817 18.64 18.64 0 001.988-4.718 18.627 18.627 0 005.49-2.098zM2.644 14.752c1.682.971 3.53 1.688 5.49 2.099a18.64 18.64 0 001.988 4.718 9.765 9.765 0 01-7.478-6.816zM13.878 2.43a9.755 9.755 0 016.116 3.986 11.267 11.267 0 01-3.746 2.504 18.63 18.63 0 00-2.37-6.49zM12 2.276a17.152 17.152 0 012.805 7.121c-.897.23-1.837.353-2.805.353-.968 0-1.908-.122-2.805-.353A17.151 17.151 0 0112 2.276zM10.122 2.43a18.629 18.629 0 00-2.37 6.49 11.266 11.266 0 01-3.746-2.504 9.754 9.754 0 016.116-3.985z" />
                         </svg>
@@ -825,13 +826,14 @@ export default function MentorPage({ session }: { session: Session }) {
               {/* Privacy notice */}
               <div className="mt-4.25 flex h-8 shrink-0 items-center justify-center bg-[#14171C] sm:mt-auto">
                 <div className="flex items-center gap-2">
-                  <div className="text-secondary h-3.5 w-3.5">
+                  <div className="text-secondary size-4 sm:size-3.5">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
                       strokeWidth={1}
                       stroke="currentColor"
+                      className='size-4 sm:size-3.5'
                     >
                       <path
                         strokeLinecap="round"
