@@ -429,7 +429,7 @@ export default function MentorPage({ session }: { session: Session }) {
 
             <div className="flex flex-1 flex-col gap-5 pt-10 sm:gap-6 sm:pt-0">
               <div className="mx-5 mt-auto sm:mx-8">
-                <div className="bg-success/10 flex items-center justify-center gap-1 rounded-full py-3">
+                <div className="bg-success/10 flex items-center justify-center gap-1 rounded-full py-3.5 ">
                   <div className="flex h-5 w-5 items-center justify-center rounded-full">
                     <svg
                       width="20"
