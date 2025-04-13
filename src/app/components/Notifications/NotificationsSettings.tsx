@@ -1,5 +1,5 @@
-import { cn } from "~/helpers";
-import { NotificationSetting, NotificationSettings } from "./types";
+import { cn } from '~/helpers';
+import { NotificationSetting, NotificationSettings } from './types';
 
 // Settings data
 export const notificationSettings: NotificationSetting[] = [
@@ -156,54 +156,54 @@ export default function NotificationsSettings({
   settings: Record<string, boolean>;
   toggleSetting: (id: string) => void;
 }) {
-  return <div className="flex flex-col p-8">
-  <p className="text-foreground mb-3 text-base font-medium">
-    Уведомления от BlockFirst
-  </p>
-  <p className="text-secondary mb-8 text-sm">
-    Получайте актуальные обновления, информацию о скидках на курсы и
-    релизах продуктов
-  </p>
+  return (
+    <div className="flex flex-col p-8 px-5 pt-10 sm:px-8 sm:pt-8">
+      <p className="text-foreground mb-3 text-base font-medium">
+        Уведомления от BlockFirst
+      </p>
+      <p className="text-secondary mb-10 sm:mb-8 text-sm">
+        Получайте актуальные обновления, информацию о скидках на курсы и релизах
+        продуктов
+      </p>
 
-  <p className="text-secondary/50 mb-1 text-xs uppercase">
-    Настройки
-  </p>
-  <div className="flex flex-col">
-    {notificationSettings.map((setting, index) => (
-      <div
-        key={setting.id}
-        className={cn(
-          'flex flex-col',
-          index < notificationSettings.length - 1 &&
-            'border-accent border-b'
-        )}
-      >
-        <div className="flex items-center justify-between py-5">
-          <div className="flex gap-3">
-            <div className="text-foreground">{setting.icon}</div>
-            <div className="flex flex-col gap-2">
-              <span className="text-foreground text-sm leading-4">
-                {setting.title}
-              </span>
-              <span className="text-secondary text-xs leading-3.5">
-                {setting.description}
-              </span>
+      <p className="text-secondary/50 mb-1 text-xs uppercase">Настройки</p>
+      <div className="flex flex-col">
+        {notificationSettings.map((setting, index) => (
+          <div
+            key={setting.id}
+            className={cn(
+              'flex flex-col',
+              index < notificationSettings.length - 1 &&
+                'border-accent border-b'
+            )}
+          >
+            <div className="flex items-center justify-between py-5">
+              <div className="flex gap-3">
+                <div className="text-foreground">{setting.icon}</div>
+                <div className="flex flex-col gap-2">
+                  <span className="text-foreground text-sm leading-4">
+                    {setting.title}
+                  </span>
+                  <span className="text-secondary text-xs leading-3.5">
+                    {setting.description}
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center">
+                <label className="relative inline-flex cursor-pointer items-center">
+                  <input
+                    type="checkbox"
+                    className="peer sr-only"
+                    checked={settings[setting.id] || false}
+                    onChange={() => toggleSetting(setting.id)}
+                  />
+                  <div className="peer bg-background after:bg-foreground peer-checked:bg-primary h-5 w-9 rounded-full after:absolute after:top-0.5 after:left-0.5 after:h-4 after:w-4 after:rounded-full after:transition-all after:content-[''] peer-checked:after:translate-x-full"></div>
+                </label>
+              </div>
             </div>
           </div>
-          <div className="flex items-center">
-            <label className="relative inline-flex cursor-pointer items-center">
-              <input
-                type="checkbox"
-                className="peer sr-only"
-                checked={settings[setting.id] || false}
-                onChange={() => toggleSetting(setting.id)}
-              />
-              <div className="peer bg-background after:bg-foreground peer-checked:bg-primary h-5 w-9 rounded-full after:absolute after:top-0.5 after:left-0.5 after:h-4 after:w-4 after:rounded-full after:transition-all after:content-[''] peer-checked:after:translate-x-full"></div>
-            </label>
-          </div>
-        </div>
+        ))}
       </div>
-    ))}
-  </div>
-</div>;
+    </div>
+  );
 }

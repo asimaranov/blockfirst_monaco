@@ -15,7 +15,7 @@ export default function AuthPageBase({
 }) {
   return (
     <div className="bg-background relative flex h-dvh flex-row overflow-hidden">
-      <div className="outline-accent relative z-10 flex h-full flex-col overflow-y-scroll px-5 py-8 outline-[0.0579vw] sm:max-w-117 sm:min-w-117 sm:p-16">
+      <div className="outline-accent/40 relative z-10 flex h-full flex-col overflow-y-scroll px-5 py-8 outline-[0.0579vw] sm:max-w-117 sm:min-w-117 sm:p-16">
         <Image
           src={GridLeftSvg}
           alt="grid"

@@ -290,11 +290,11 @@ export default async function PremiumPage({ session }: { session: Session }) {
                 </div>
               </div>
             </div>
-            <span className="text-success border-success/50 self-start rounded-full border px-3 py-1 text-xs whitespace-nowrap">
+            <span className="text-success border-success/50 self-start rounded-full border px-3 py-1.75 text-xs whitespace-nowrap leading-3.5">
               Активный тариф
             </span>
           </div>
-          <div className="rounded-lg p-5 pb-0 sm:pb-5">
+          <div className="rounded-lg p-5 py-0 sm:py-5">
             <div className="mt-10">
               <div className="text-secondary mb-1 flex justify-between text-xs">
                 <span className="text-secondary/50 text-sm uppercase">
