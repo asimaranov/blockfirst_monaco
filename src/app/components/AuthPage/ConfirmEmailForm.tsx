@@ -66,7 +66,9 @@ export default function ConfirmEmailForm({
         if (activeInput.clear) {
           inputRefs.current[activeInput.index]!.value = '';
         }
-        inputRefs.current[activeInput.index]!.focus();
+        if (inputRefs.current[activeInput.index]) {
+          inputRefs.current[activeInput.index]!.focus();
+        }
       }, 100);
     }
   }, [activeInput]);
@@ -170,7 +172,7 @@ export default function ConfirmEmailForm({
                 }}
                 key={index}
                 className={cn(
-                  'h-14.5 w-14.5 border-b bg-transparent text-center text-2xl text-foreground placeholder:text-center focus:outline-hidden',
+                  'text-foreground h-14.5 w-14.5 border-b bg-transparent text-center text-2xl placeholder:text-center focus:outline-hidden',
                   isError && 'border-error'
                 )}
                 placeholder={'-'}
@@ -196,11 +198,15 @@ export default function ConfirmEmailForm({
                   }
 
                   if (newDigit.length > 0) {
-                    e.currentTarget.value = e.key;
-                    setActiveInput({
-                      index: activeInput.index + 1,
-                      clear: true,
-                    });
+                    e.currentTarget.value = newDigit;
+
+                    // Only move to the next input if not already at the end
+                    if (index < 4) {
+                      setActiveInput({
+                        index: index + 1,
+                        clear: true,
+                      });
+                    }
                   }
                   updateWholeCode();
                 }}
@@ -219,7 +225,7 @@ export default function ConfirmEmailForm({
             ))}
           </div>
           {isError && (
-            <div className="absolute flex flex-row items-center gap-2 pt-3 text-xs text-error">
+            <div className="text-error absolute flex flex-row items-center gap-2 pt-3 text-xs">
               <Image
                 src={ErrorNoticeSvg}
                 alt={''}
@@ -230,19 +236,14 @@ export default function ConfirmEmailForm({
           )}
         </div>
         <div className="flex w-full flex-col items-center gap-4 pt-6 sm:pt-16">
-          <span className="text-lg text-foreground">
+          <span className="text-foreground text-lg">
             {String(Math.floor(timer / 60)).padStart(2, '0')}:
             {String(timer % 60).padStart(2, '0')}
           </span>
           <div className="flex flex-row gap-1">
-            <span className="text-sm text-foreground">
-              Не получили код?
-            </span>
+            <span className="text-foreground text-sm">Не получили код?</span>
             <button
-              className={cn(
-                'text-sm text-primary',
-                timer > 0 && 'opacity-50'
-              )}
+              className={cn('text-primary text-sm', timer > 0 && 'opacity-50')}
               disabled={timer > 0}
               onClick={sendEmailCode}
             >
