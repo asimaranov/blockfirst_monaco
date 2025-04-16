@@ -112,7 +112,7 @@ const mockCourseSections = [
         status: 'available',
         lessons: [
           { title: 'События', status: 'completed' },
-          { title: 'Десятичные числа', status: 'completed' },
+          { title: 'Десятичные числа', status: 'completedNoExtra' },
           { title: 'Изучите openzeppelin, Erc20', status: 'locked' },
           { title: 'Утверждения и видимость', status: 'available' },
         ],
