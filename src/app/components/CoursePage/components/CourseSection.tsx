@@ -1,5 +1,5 @@
 import { CourseStructure } from "~/app/lib/constants/courses";
-import CourseBadge from "./CourseBadge";
+import CourseBadge from "../../shared/CourseStatusBadge";
 // Component for course section
 export default function CourseSection ({
   section,

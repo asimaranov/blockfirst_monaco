@@ -4,10 +4,12 @@ export default function ToggleMinus({
   isExpanded,
   onToggle,
   className,
+  disabled,
 }: {
   isExpanded: boolean;
   onToggle: () => void;
   className?: string;
+  disabled?: boolean;
 }) {
   return (
     <button
@@ -16,6 +18,7 @@ export default function ToggleMinus({
         className
       )}
       onClick={onToggle}
+      disabled={disabled}
     >
       <svg
         width="20"

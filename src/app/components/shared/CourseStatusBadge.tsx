@@ -80,7 +80,7 @@ const badges = {
   ),
 };
 
-export default function CourseBadge({
+export default function CourseStatusBadge({
   badgeType,
 }: {
   badgeType: 'available' | 'starter' | 'upcoming' | 'completed';

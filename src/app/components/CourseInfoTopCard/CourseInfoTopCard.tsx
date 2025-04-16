@@ -109,7 +109,7 @@ export default async function CourseInfoTopCard({
         <CourseProgress progress={4} className="mt-8 sm:mt-6" />
         <div className="mt-8 flex flex-col-reverse items-center justify-between gap-5 sm:gap-4 sm:flex-row">
           <Link
-            href={`#`}
+            href={`/lesson/${course.id}`}
             className={
               'bg-primary border-primary flex w-full flex-col items-center justify-center rounded-full border py-3 duration-300 hover:bg-transparent'
             }
