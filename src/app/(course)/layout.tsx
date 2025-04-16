@@ -21,13 +21,13 @@ export default async function Layout({
   // await api.notifications.getSettings.prefetch();
 
   return (
-    <div className="bg-background relative flex max-h-screen flex-col sm:flex-row">
+    <div className="bg-dark-bg relative flex max-h-screen flex-col sm:flex-row">
       <MobileNavbar />
       <LessonSidebar />
       <NotificationsModal />
       <Suspense>
         <div
-          className="bg-dark-bg w-full overflow-visible px-0 sm:overflow-scroll sm:px-16"
+          className="bg-dark-bg w-full overflow-visible px-0 sm:overflow-scroll sm:mx-16 border-accent border"
           id="content-view"
         >
           {children}
