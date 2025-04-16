@@ -88,8 +88,6 @@ export function CourseModule({
   total,
   status,
 }: CourseModuleProps) {
-  const [isExpanded, setIsExpanded] = useState(status === 'available');
-
   return (
     <div className="flex w-full flex-col">
       <div
@@ -98,10 +96,7 @@ export function CourseModule({
           status === 'available' ? 'bg-[#0B0D12]' : 'hover:bg-[#0B0D12]/50'
         )}
       >
-        <div
-          className="flex w-full cursor-pointer items-center justify-between"
-          onClick={() => setIsExpanded(!isExpanded)}
-        >
+        <div className="flex w-full items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="flex h-5 w-5 items-center justify-center">
               {icon}
@@ -117,38 +112,32 @@ export function CourseModule({
         </div>
       </div>
 
-      {isExpanded && (
-        <div className="mt-6 ml-6 flex">
-          <div className="w-4 pt-1.25 pb-2.5 pl-0.5">
-            <div className="border-accent left-1/2 h-full w-4 rounded-bl-lg border-b-[0.5px] border-l-[0.5px]"></div>
-          </div>
-          <div className="flex flex-1 flex-col gap-5 pl-3">
-            {lessons.map((lesson, idx) => (
-              <div key={idx} className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <span
-                    className={cn(
-                      'text-sm text-gray-400',
-                      lesson.status === 'available' && 'text-white'
-                    )}
-                  >
-                    {lesson.title}
-                  </span>
-                </div>
-                {lesson.status === 'completed' && (
-                  <>{LessonStates.completed}</>
-                )}
-                {lesson.status === 'completedNoExtra' && (
-                  <>{LessonStates.completedNoExtra}</>
-                )}
-                {lesson.status === 'skipped' && (
-                  <>{LessonStates.skipped}</>
-                )}
-              </div>
-            ))}
-          </div>
+      <div className="mt-6 ml-6 flex">
+        <div className="w-4 pt-1.25 pb-2.5 pl-0.5">
+          <div className="border-accent left-1/2 h-full w-4 rounded-bl-lg border-b-[0.5px] border-l-[0.5px]"></div>
         </div>
-      )}
+        <div className="flex flex-1 flex-col gap-5 pl-3">
+          {lessons.map((lesson, idx) => (
+            <div key={idx} className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <span
+                  className={cn(
+                    'text-sm text-gray-400',
+                    lesson.status === 'available' && 'text-white'
+                  )}
+                >
+                  {lesson.title}
+                </span>
+              </div>
+              {lesson.status === 'completed' && <>{LessonStates.completed}</>}
+              {lesson.status === 'completedNoExtra' && (
+                <>{LessonStates.completedNoExtra}</>
+              )}
+              {lesson.status === 'skipped' && <>{LessonStates.skipped}</>}
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

@@ -102,7 +102,7 @@ const mockCourseSections = [
     title: 'Мир токенов',
     icon: <CodeIcon />,
     status: 'available',
-    finalTestStatus: 'available',
+    finalTestStatus: 'completed',
     modules: [
       {
         title: 'Основы блокчейна',
@@ -130,13 +130,39 @@ const mockCourseSections = [
       },
     ],
   },
+  
   {
-    title: 'Мультисиг и НФТ',
+    title: 'Основы блокчейна и стэйкинг',
     icon: <CodeIcon />,
-    status: 'locked',
+    status: 'available',
     finalTestStatus: 'locked',
     modules: [
-      
+      {
+        title: 'txs, ноды, консенсус, mempool',
+        icon: <CodeIcon />,
+        progress: 2,
+        total: 4,
+        status: 'available',
+        lessons: [
+          {title: 'Изучаем транзакции', status: 'completed'},
+          {title: 'Изучаем ноды', status: 'completed'},
+          {title: 'Изучаем консенсус', status: 'completed'},
+          {title: 'Изучаем mempool', status: 'available'},
+        ],
+      },
+      {
+        title: 'Учимся работать со временем',
+        icon: <CodeIcon />,
+        progress: 2,
+        total: 4,
+        status: 'available',
+        lessons: [
+          {title: 'Изучаем хеши', status: 'completed'},
+          {title: 'Изучаем хеши', status: 'completed'},
+          {title: 'Изучаем хеши', status: 'completed'},
+          {title: 'Изучаем хеши', status: 'available'},
+        ],
+      },
     ],
   },
   {
@@ -215,7 +241,7 @@ const mockCourseSections = [
 
 export function CourseSections() {
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex flex-col">
       <div className="flex-1">
         {mockCourseSections.map((section, index) => (
           <CourseSection
@@ -223,7 +249,7 @@ export function CourseSections() {
             title={section.title}
             status={section.status as 'available' | 'locked' | 'upcoming'}
             modules={section.modules as Module[]}
-            finalTestStatus={section.finalTestStatus as 'available' | 'locked' | 'upcoming'}
+            finalTestStatus={section.finalTestStatus as 'available' | 'locked' | 'completed'}
           />
         ))}
       </div>

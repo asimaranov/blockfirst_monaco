@@ -8,6 +8,7 @@ import { CircularProgressBar } from '../shared/CircularProgressBar';
 import CourseStatusBadgeBg from '../shared/CourseStatusBadgeBg';
 import { TakeTestButton } from './TakeTestButton';
 import ToggleMinus from '../shared/ToggleMinus/ToggleMinus';
+import { motion, AnimatePresence } from 'motion/react';
 
 interface CourseSectionProps {
   title: string;
@@ -23,11 +24,15 @@ interface CourseSectionProps {
     total: number;
     status: 'available' | 'upcoming' | 'locked';
   }[];
-  finalTestStatus: 'available' | 'upcoming' | 'locked';
-
+  finalTestStatus: 'locked' | 'available' | 'completed';
 }
 
-export function CourseSection({ title, status, modules, finalTestStatus }: CourseSectionProps) {
+export function CourseSection({
+  title,
+  status,
+  modules,
+  finalTestStatus,
+}: CourseSectionProps) {
   const [isExpanded, setIsExpanded] = useState(true);
 
   // Calculate overall section progress
@@ -98,28 +103,40 @@ export function CourseSection({ title, status, modules, finalTestStatus }: Cours
             onToggle={() => setIsExpanded(!isExpanded)}
             disabled={status === 'locked'}
           />
-          
         </div>
       </div>
 
-      {isExpanded && status !== 'locked' && (
-        <div className="flex flex-col gap-8">
-          {modules.map((module, idx) => (
-            <CourseModule
-              key={idx}
-              title={module.title}
-              icon={module.icon}
-              lessons={module.lessons}
-              progress={module.progress}
-              status={module.status}
-              total={module.lessons.length}
-            />
-          ))}
-          <div className="mt-auto px-4 py-4">
-            <TakeTestButton href="/course/test" finalTestStatus={finalTestStatus} />
-          </div>
-        </div>
-      )}
+      <AnimatePresence initial={false}>
+        {isExpanded && status !== 'locked' && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            className="overflow-hidden"
+          >
+            <div className="flex flex-col gap-8">
+              {modules.map((module, idx) => (
+                <CourseModule
+                  key={idx}
+                  title={module.title}
+                  icon={module.icon}
+                  lessons={module.lessons}
+                  progress={module.progress}
+                  status={module.status}
+                  total={module.lessons.length}
+                />
+              ))}
+              <div className="mt-auto px-4 py-4">
+                <TakeTestButton
+                  onClick={() => {}}
+                  isCompleted={finalTestStatus === 'completed'}
+                />
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
