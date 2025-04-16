@@ -1,6 +1,6 @@
 import React from 'react';
 import { cn } from '~/helpers';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import FireIcon from './assets/Fire.png';
 import SparklesIcon from './assets/Sparkles.png';
 // import { motion } from 'framer-motion'; // Uncomment if using animations
@@ -73,39 +73,63 @@ const VerifyIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const LessonPage = () => {
-  // NOTE: Replace placeholder image URLs and icons with actual assets
-  const avatarUrl = '/images/avatars/alex-avatar.png'; // Placeholder
+// --- Data Structures ---
+const user = {
+  name: 'Алекс',
+  avatarUrl: '/images/avatars/alex-avatar.png', // Placeholder
+  tags: ['Стартапер', 'самоучка'],
+  badge: 'BF Heroes',
+};
 
-  // Glassmorphism style for rounded elements
-  // Ensure 'foreground' color is defined in your Tailwind config
+interface Stat {
+  icon: StaticImageData;
+  alt: string;
+  value: number;
+  label: string;
+}
+
+const stats: Stat[] = [
+  { icon: FireIcon, alt: 'Fire', value: 12, label: 'Стрик' },
+  { icon: SparklesIcon, alt: 'Sparkles', value: 12, label: 'XP' },
+];
+
+interface Action {
+  id: string;
+  type: 'button' | 'icon';
+  content: React.ReactNode | string; // For icon or text
+  icon?: () => JSX.Element; // For icon buttons
+}
+
+// Define actions - adjust content/icons as needed
+const actions: Action[] = [
+  { id: 'theme', type: 'icon', content: <MoonIcon /> },
+  { id: 'share', type: 'icon', content: <ShareIcon /> },
+];
+
+const tags = ['Economy', 'DEFI', 'TOKENS'];
+
+// --- Component ---
+const LessonPage = () => {
+  // Glassmorphism style
   const glassStyle =
     'bg-foreground/5 border-[0.026vw] border-foreground/20 backdrop-blur-lg';
 
   return (
-    // Use provided color: background: #01050d; foreground: #f2f2f2;
-    <div className="bg-background text-foreground relative h-[250px] w-full overflow-hidden">
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(/images/covers/LessonCover.png)` }}
-      >
-        {/* Use provided color: background: #01050d */}
+    <div className="bg-background text-foreground relative h-62.5 w-full overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0 bg-[url('/images/covers/LessonCover.png')] bg-cover bg-center bg-no-repeat">
         <div className="from-background/0 via-background/50 to-background absolute inset-0 bg-gradient-to-t"></div>
-        {/* Optional: Grid Overlay could be another div or pseudo-element */}
       </div>
 
-      {/* Main Content - Positioned above background */}
-      {/* Using p-8 based on Figma x:64, y:32 offset from parent container */}
       <div className="relative z-10 flex h-full flex-col justify-between px-16 py-8">
         {/* Top Row */}
         <div className="flex items-start justify-between">
           {/* Left Section: Last Updated */}
-          {/* Use provided color: success: #48cc9e; foreground: #f2f2f2; secondary: #9aa6b5 */}
-          {/* Use provided font size: xs: 12px */}
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
               <div className="bg-success h-1.5 w-1.5 rounded-full"></div>
-              <span className="text-foreground text-sm">08.03.2025</span>
+              <span className="text-foreground text-sm">08.03.2025</span>{' '}
+              {/* Example Date */}
             </div>
             <span className="text-secondary/50 text-xs">
               Последнее обновление
@@ -115,46 +139,38 @@ const LessonPage = () => {
           {/* Right Section: Stats & Actions */}
           <div className="flex items-center gap-8">
             {/* Stats */}
-            {/* Use provided font size: sm: 14px */}
             <div className="flex items-center gap-3">
-              <div
-                className={`flex items-center gap-2 rounded-full px-4 py-2.5 ${glassStyle}`}
-              >
-                <Image src={FireIcon} alt="Fire" className="h-5 w-5" />
-
-                <span className="text-sm">
-                  12<span className="text-foreground/50"> — Стрик</span>
-                </span>
-              </div>
-              <div
-                className={`flex items-center gap-2 rounded-full px-4 py-2.5 ${glassStyle}`}
-              >
-                <Image src={SparklesIcon} alt="Sparkles" className="h-5 w-5" />
-                {/* Placeholder color */}
-                <span className="text-sm">
-                  12<span className="text-foreground/50"> — XP</span>
-                </span>
-              </div>
+              {stats.map((stat) => (
+                <div
+                  key={stat.alt}
+                  className={`flex items-center gap-2 rounded-full px-4 py-2.5 ${glassStyle}`}
+                >
+                  <Image src={stat.icon} alt={stat.alt} className="h-5 w-5" />
+                  <span className="text-sm">
+                    {stat.value}
+                    <span className="text-foreground/50"> — {stat.label}</span>
+                  </span>
+                </div>
+              ))}
             </div>
 
             {/* Actions */}
-            {/* Use provided color: primary: #195af4 */}
-            {/* Use provided font size: sm: 14px */}
             <div className="flex items-center gap-3">
-              <button className="bg-primary hover:bg-primary/90 flex cursor-pointer items-center gap-1 rounded-full px-6 py-2.5 text-sm transition-colors">
+              {/* Premium Button (kept separate due to unique styling/content) */}
+              <button className="bg-primary hover:bg-[#1242B2] flex cursor-pointer items-center gap-1 rounded-full px-6 py-2.5 text-sm transition-colors">
                 Премиум тариф
                 <ChevronRightIcon />
               </button>
-              <button
-                className={`border-foreground bg-foreground hover:bg-background group cursor-pointer rounded-full border p-3 transition-colors duration-100`}
-              >
-                <MoonIcon />
-              </button>
-              <button
-                className={`border-foreground bg-foreground hover:bg-background group cursor-pointer rounded-full border p-3 transition-colors duration-100`}
-              >
-                <ShareIcon />
-              </button>
+              {/* Icon Buttons */}
+              {actions.map((action) => (
+                <button
+                  key={action.id}
+                  className={`border-foreground bg-foreground hover:bg-background group cursor-pointer rounded-full border p-3 transition-colors duration-100`}
+                  // Add onClick handlers here if needed: onClick={() => handleAction(action.id)}
+                >
+                  {action.content}
+                </button>
+              ))}
             </div>
           </div>
         </div>
@@ -164,46 +180,45 @@ const LessonPage = () => {
           {/* User Info */}
           <div className="flex items-center gap-5">
             <div className="relative h-12 w-12 flex-shrink-0">
-              {' '}
-              {/* Added fixed size to parent for absolute positioning of VerifyIcon */}
               <img
-                src={avatarUrl}
-                alt="User Avatar"
+                src={user.avatarUrl}
+                alt={`${user.name}'s Avatar`}
                 className="h-full w-full rounded-full object-cover"
               />
               <VerifyIcon className="absolute right-0 bottom-0" />
             </div>
-            {/* Use provided font size: xl: 20px; xxs: 10px; xs: 12px */}
-            {/* Use provided color: secondary: #9aa6b5 */}
             <div className="flex flex-col">
               <div className="mb-1 flex items-center gap-3">
-                <span className="text-2xl font-medium">Алекс</span>
+                <span className="text-2xl font-medium">{user.name}</span>
                 <span
                   className={`border-foreground/20 font-delight rounded-full border px-3 pt-1 pb-1.25 text-xs leading-3.75 ${glassStyle}`}
                 >
-                  BF Heroes
+                  {user.badge}
                 </span>
               </div>
               <div className="text-secondary text-xxs flex items-center gap-3 uppercase">
-                <span>Стартапер</span>
-                <span className="bg-secondary/20 h-3 w-px"></span>
-                <span>самоучка</span>
+                {user.tags.map((tag, index) => (
+                  <>
+                    <span key={tag}>{tag}</span>
+                    {index < user.tags.length - 1 && (
+                      <span className="bg-secondary/20 h-3 w-px"></span>
+                    )}
+                  </>
+                ))}
               </div>
             </div>
           </div>
 
           {/* Tags */}
-          {/* Use provided font size: sm: 14px */}
           <div className="flex items-center gap-2">
-            <span className={`rounded-lg px-4 py-2 text-xs ${glassStyle}`}>
-              Economy
-            </span>
-            <span className={`rounded-lg px-4 py-2 text-xs ${glassStyle}`}>
-              DEFI
-            </span>
-            <span className={`rounded-lg px-4 py-2 text-xs ${glassStyle}`}>
-              TOKENS
-            </span>
+            {tags.map((tag) => (
+              <span
+                key={tag}
+                className={`rounded-lg px-4 py-2 text-xs ${glassStyle}`}
+              >
+                {tag}
+              </span>
+            ))}
           </div>
         </div>
       </div>
