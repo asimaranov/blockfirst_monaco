@@ -3,6 +3,10 @@ import { cn } from '~/helpers';
 import Image, { StaticImageData } from 'next/image';
 import FireIcon from './assets/Fire.png';
 import SparklesIcon from './assets/Sparkles.png';
+
+import PlateEditor from './PlateEditor';
+import RightSidebar from './RightSidebar';
+
 // import { motion } from 'framer-motion'; // Uncomment if using animations
 
 const ChevronRightIcon = () => (
@@ -109,7 +113,7 @@ const actions: Action[] = [
 const tags = ['Economy', 'DEFI', 'TOKENS'];
 
 // --- Component ---
-const LessonPage = () => {
+const Cover = () => {
   // Glassmorphism style
   const glassStyle =
     'bg-foreground/5 border-[0.026vw] border-foreground/20 backdrop-blur-lg';
@@ -157,7 +161,7 @@ const LessonPage = () => {
             {/* Actions */}
             <div className="flex items-center gap-3">
               {/* Premium Button (kept separate due to unique styling/content) */}
-              <button className="bg-primary hover:bg-[#1242B2] flex cursor-pointer items-center gap-1 rounded-full px-6 py-2.5 text-sm transition-colors">
+              <button className="bg-primary flex cursor-pointer items-center gap-1 rounded-full px-6 py-2.5 text-sm transition-colors hover:bg-[#1242B2]">
                 Премиум тариф
                 <ChevronRightIcon />
               </button>
@@ -198,12 +202,12 @@ const LessonPage = () => {
               </div>
               <div className="text-secondary text-xxs flex items-center gap-3 uppercase">
                 {user.tags.map((tag, index) => (
-                  <>
+                  <div key={tag}>
                     <span key={tag}>{tag}</span>
                     {index < user.tags.length - 1 && (
                       <span className="bg-secondary/20 h-3 w-px"></span>
                     )}
-                  </>
+                  </div>
                 ))}
               </div>
             </div>
@@ -221,6 +225,20 @@ const LessonPage = () => {
             ))}
           </div>
         </div>
+      </div>
+    </div>
+  );
+};
+
+const LessonPage = () => {
+  return (
+    <div>
+      <Cover />
+      <div className="flex min-h-screen flex-row">
+        <div className="flex-1 px-16">
+          <PlateEditor />
+        </div>
+        <RightSidebar />
       </div>
     </div>
   );
