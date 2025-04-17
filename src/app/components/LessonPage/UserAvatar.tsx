@@ -32,7 +32,6 @@ export function UserAvatar() {
         <Skeleton className="my-auto h-10 w-10 rounded-full" />
       )}
       <div className="flex flex-col">
-        <PlateEditor />
       </div>
     </div>
   );
