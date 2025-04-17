@@ -258,27 +258,4 @@ export const ARTICLE_DATA = [
       },
     ],
   },
-  {
-    id: '-ukvSNVBS2',
-    type: 'p',
-    children: [
-      {
-        text: '',
-        color: 'rgb(23, 43, 83)',
-        
-      },
-    ],
-  },
-  {
-    id: 'C_JhT2IaUD',
-    type: 'p',
-    children: [
-      {
-        text: '.',
-        color: 'rgb(23, 43, 83)',
-        
-      },
-    ],
-  },
-  { id: 'Pq3jcBl__D', type: 'p', children: [{ text: '' }] },
 ];

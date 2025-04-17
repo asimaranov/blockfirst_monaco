@@ -5,6 +5,7 @@ import Cover from './Cover'; // Import the extracted Cover component
 import PlateEditor from './PlateEditor';
 import RightSidebar from './RightSidebar';
 import { PlateController } from '@udecode/plate/react';
+import ContentFooter from './ContentFooter';
 
 // import { motion } from 'framer-motion'; // Uncomment if using animations
 
@@ -16,6 +17,7 @@ const LessonPage = () => {
         <PlateController>
           <div className="flex-1 px-16">
             <PlateEditor />
+            <ContentFooter />
           </div>
           <RightSidebar />
         </PlateController>

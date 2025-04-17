@@ -130,7 +130,6 @@ export function ImageElementStatic({
   );
 }
 
-
 const plugins = [
   BaseEquationPlugin,
   BaseColumnPlugin,
@@ -201,6 +200,7 @@ const plugins = [
   BaseTogglePlugin,
 ];
 
+
 const PlateEditor = () => {
   const editor = usePlateEditor({
     value: ARTICLE_DATA,
@@ -214,12 +214,11 @@ const PlateEditor = () => {
         bold: withProps(PlateLeaf, { as: 'strong' }),
         h1: withProps(PlateElement, {
           as: 'h1',
-          className:
-            'mb-4 mt-6 text-3xl font-semibold tracking-tight lg:text-4xl',
+          className: 'mb-4 mt-6 text-3xl font-medium tracking-tight',
         }),
         h2: withProps(PlateElement, {
           as: 'h2',
-          className: 'mb-4 mt-6 text-2xl font-semibold tracking-tight',
+          className: 'mb-4 mt-6 text-2xl font-medium tracking-tight',
         }),
         h3: withProps(PlateElement, {
           as: 'h3',
@@ -238,7 +237,8 @@ const PlateEditor = () => {
 
   return (
     <Plate editor={editor}>
-      <PlateContent readOnly  />
+      <PlateContent readOnly />
+      
     </Plate>
   );
 };
