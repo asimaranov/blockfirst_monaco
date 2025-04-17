@@ -4,7 +4,6 @@ import FireAction from './assets/FireAction.png';
 
 import Image from 'next/image';
 
-
 const ShareIcon = () => {
   return (
     <svg
@@ -45,10 +44,9 @@ const StarIcon = ({ className }: { className: string }) => {
   );
 };
 
-
 export default function ContentFooter() {
   return (
-    <div className="border-accent flex flex-row border-b pb-10 pt-21.5">
+    <div className="border-accent flex flex-row border-b pt-21.5 pb-10 px-16">
       <button className="border-accent flex h-11 items-center gap-2 rounded-[100px] border px-6">
         <svg
           width="20"

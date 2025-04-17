@@ -115,7 +115,7 @@ const Cover = () => {
     'bg-foreground/5 border-[0.026vw] border-foreground/20 backdrop-blur-lg';
 
   return (
-    <div className="bg-background text-foreground relative h-62.5 w-full overflow-hidden">
+    <div className="bg-background text-foreground relative h-62.5 w-full overflow-hidden border-accent border-x">
       {/* Background Image */}
       <div className="absolute inset-0 bg-[url('/images/covers/LessonCover.png')] bg-cover bg-center bg-no-repeat">
         <div className="from-background/0 via-background/50 to-background absolute inset-0 bg-gradient-to-t"></div>

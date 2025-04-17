@@ -1,4 +1,5 @@
 'use client';
+
 import {
   usePlateEditor,
   Plate,
@@ -200,7 +201,6 @@ const plugins = [
   BaseTogglePlugin,
 ];
 
-
 const PlateEditor = () => {
   const editor = usePlateEditor({
     value: ARTICLE_DATA,
@@ -236,10 +236,11 @@ const PlateEditor = () => {
   });
 
   return (
-    <Plate editor={editor}>
-      <PlateContent readOnly />
-      
-    </Plate>
+    <div className="px-16">
+      <Plate editor={editor}>
+        <PlateContent readOnly />
+      </Plate>
+    </div>
   );
 };
 

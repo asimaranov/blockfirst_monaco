@@ -6,18 +6,19 @@ import PlateEditor from './PlateEditor';
 import RightSidebar from './RightSidebar';
 import { PlateController } from '@udecode/plate/react';
 import ContentFooter from './ContentFooter';
-
+import CommentsSection from './CommentsSection';
 // import { motion } from 'framer-motion'; // Uncomment if using animations
 
 const LessonPage = () => {
   return (
     <div>
       <Cover />
-      <div className="flex min-h-screen flex-row">
+      <div className="flex min-h-screen flex-row border-accent border-x">
         <PlateController>
-          <div className="flex-1 px-16">
+          <div className="flex-1 ">
             <PlateEditor />
             <ContentFooter />
+            <CommentsSection />
           </div>
           <RightSidebar />
         </PlateController>
