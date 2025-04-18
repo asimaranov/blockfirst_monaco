@@ -177,7 +177,7 @@ const Cover = () => {
         </div>
 
         {/* Bottom Row */}
-        <div className="flex items-end justify-between">
+        <div className="flex justify-between items-center">
           {/* User Info */}
           <div className="flex items-center gap-5">
             <div className="relative h-12 w-12 flex-shrink-0">
