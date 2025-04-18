@@ -6,6 +6,7 @@ const badges = {
       viewBox="0 0 72 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="h-6 w-18"
     >
       <rect width="72" height="24" rx="8" fill="#33CF8E" fill-opacity="0.1" />
       <circle cx="10" cy="12" r="2" fill="#33CF8E" />
@@ -22,6 +23,7 @@ const badges = {
       viewBox="0 0 75 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="h-6 w-18.75"
     >
       <rect
         width="75"
@@ -68,6 +70,7 @@ const badges = {
       viewBox="0 0 88 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="h-6 w-22"
     >
       <rect width="88" height="24" rx="8" fill="#9AA6B5" fill-opacity="0.1" />
       <circle cx="10" cy="12" r="2" fill="#9AA6B5" />
@@ -84,6 +87,7 @@ const badges = {
       viewBox="0 0 86 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="h-6 w-21.5"
     >
       <rect width="86" height="24" rx="8" fill="#9AA6B5" fill-opacity="0.1" />
       <g opacity="0.5">

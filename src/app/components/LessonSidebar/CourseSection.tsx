@@ -104,6 +104,7 @@ export function CourseSection({
                   viewBox="0 0 20 20"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
+                  className='w-5 h-5'
                 >
                   <path
                     d="M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z"
@@ -151,12 +152,10 @@ export function CourseSection({
                   total={module.lessons.length}
                 />
               ))}
-              <div className="mt-auto px-4 py-4">
                 <TakeTestButton
                   onClick={() => {}}
                   isCompleted={finalTestStatus === 'completed'}
                 />
-              </div>
             </div>
           </motion.div>
         )}
