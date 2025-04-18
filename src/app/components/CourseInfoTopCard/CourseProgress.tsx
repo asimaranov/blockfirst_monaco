@@ -6,9 +6,11 @@ import { cn } from '~/helpers';
 export function CourseProgress({
   progress,
   className,
+  progressClassName,
 }: {
   progress: number;
   className?: string;
+  progressClassName?: string;
 }) {
   return (
     <div className={cn('flex flex-col gap-4', className)}>
@@ -22,7 +24,7 @@ export function CourseProgress({
           {progress}%
         </span>
       </div>
-      <Progress value={progress} useFlag />
+      <Progress value={progress} useFlag className={progressClassName} />
     </div>
   );
 }

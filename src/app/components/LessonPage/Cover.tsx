@@ -129,10 +129,10 @@ const Cover = () => {
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
               <div className="bg-success h-1.5 w-1.5 rounded-full"></div>
-              <span className="text-foreground text-sm">08.03.2025</span>{' '}
+              <span className="text-foreground text-sm leading-4">08.03.2025</span>{' '}
               {/* Example Date */}
             </div>
-            <span className="text-secondary/50 text-xs">
+            <span className="text-secondary/50 text-xs leading-3.5">
               Последнее обновление
             </span>
           </div>
@@ -189,8 +189,8 @@ const Cover = () => {
               <VerifyIcon className="absolute right-0 bottom-0" />
             </div>
             <div className="flex flex-col">
-              <div className="mb-1 flex items-center gap-3">
-                <span className="text-2xl font-medium">{user.name}</span>
+              <div className="mb-3 flex items-center gap-3">
+                <span className="text-2xl font-medium leading-6">{user.name}</span>
                 <span
                   className={`border-foreground/20 font-delight rounded-full border px-3 pt-1 pb-1.25 text-xs leading-3.75 ${glassStyle}`}
                 >
@@ -200,9 +200,9 @@ const Cover = () => {
               <div className="text-secondary text-xxs flex items-center gap-3 uppercase">
                 {user.tags.map((tag, index) => (
                   <div key={tag} className="flex items-center gap-3">
-                    <span key={tag}>{tag}</span>
+                    <span key={tag} className='leading-3'>{tag}</span>
                     {index < user.tags.length - 1 && (
-                      <span className="bg-secondary/20 mx-1.5 h-3 w-px"></span>
+                      <span className="bg-secondary/20 h-3 w-px"></span>
                     )}
                   </div>
                 ))}

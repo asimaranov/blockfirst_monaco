@@ -138,7 +138,8 @@ export default function LessonSidebarHeader() {
         <div className="">
           <CourseProgress
             progress={40}
-            className="rounded-lg bg-[#0B0D12] px-8 py-5"
+            className="rounded-lg bg-[#0B0D12] px-8 py-5 "
+            progressClassName='h-2'
           />
         </div>
 

@@ -102,7 +102,7 @@ export function ImageElementStatic({
     };
 
   return (
-    <SlateElement className={cn(className, 'py-2.5')} {...props}>
+    <SlateElement className={cn(className, '')} {...props}>
       <figure className="group relative m-0 inline-block">
         <div
           className="relative max-w-full min-w-[92px]"
@@ -215,7 +215,8 @@ const PlateEditor = () => {
         bold: withProps(PlateLeaf, { as: 'strong' }),
         h1: withProps(PlateElement, {
           as: 'h1',
-          className: 'mb-4 mt-6 text-3xl font-medium tracking-tight',
+          className:
+            'text-3xl font-medium tracking-tight mt-16 mb-6 first:mt-10 ',
         }),
         h2: withProps(PlateElement, {
           as: 'h2',
@@ -228,7 +229,7 @@ const PlateEditor = () => {
         italic: withProps(PlateLeaf, { as: 'em' }),
         p: withProps(PlateElement, {
           as: 'p',
-          className: 'mb-4 text-base leading-6 text-foreground/90 font-light',
+          className: 'mb-6 text-base leading-6 text-foreground/90 font-light',
         }),
         underline: withProps(PlateLeaf, { as: 'u' }),
         img: ImageElementStatic,
@@ -239,7 +240,7 @@ const PlateEditor = () => {
   return (
     <div className="px-16">
       <Plate editor={editor}>
-        <PlateContent readOnly />
+        <PlateContent readOnly className="group" />
       </Plate>
     </div>
   );

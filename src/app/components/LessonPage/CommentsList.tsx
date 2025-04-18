@@ -200,14 +200,14 @@ export default function CommentsList() {
         ))}
       </div>
       <div className="flex items-center justify-center">
-        <button className="border-primary flex items-center gap-2 rounded-full border px-4 py-2 cursor-pointer  text-sm">
+        <button className="border-primary flex cursor-pointer items-center gap-2 rounded-full border px-5 py-3 text-sm leading-5">
           <svg
             width="20"
             height="20"
             viewBox="0 0 20 20"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className='h-5 w-5'
+            className="h-5 w-5"
           >
             <path
               fill-rule="evenodd"

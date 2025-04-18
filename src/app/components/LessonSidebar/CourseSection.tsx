@@ -120,7 +120,7 @@ export function CourseSection({
               )}
             </div>
 
-            <span className="text-sm text-white">{title}</span>
+            <span className=" text-white text-base leading-5">{title}</span>
           </div>
           {/* Toggle expand/collapse */}
           <ToggleMinus

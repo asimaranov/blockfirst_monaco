@@ -178,7 +178,6 @@ export const ARTICLE_DATA = [
       },
     ],
   },
-  { id: 'Gj7w3Jwcro', type: 'p', children: [{ text: ' ' }] },
   {
     id: 'gDhTd1zJ6u',
     url: 'https://cdn.javarush.com/images/article/6af1d88e-67b3-4138-90a9-65aa9afc646e/1024.webp',
@@ -204,7 +203,7 @@ export const ARTICLE_DATA = [
   },
   {
     id: 'uY1xZOgr0B',
-    type: 'h2',
+    type: 'h1',
     children: [
       { text: '4', color: 'inherit' },
       {

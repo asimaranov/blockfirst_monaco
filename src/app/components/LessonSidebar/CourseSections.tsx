@@ -102,6 +102,7 @@ const mockCourseSections = [
     icon: <CodeIcon />,
     status: 'completed',
     finalTestStatus: 'completed',
+    expanded: false,
     modules: [
       {
         title: 'Основы блокчейна',
@@ -131,7 +132,7 @@ const mockCourseSections = [
   },
   
   {
-    title: 'Основы блокчейна и стэйкинг',
+    title: 'Основы блокчейна',
     icon: <CodeIcon />,
     status: 'available',
     expanded: true,
@@ -166,7 +167,7 @@ const mockCourseSections = [
     ],
   },
   {
-    title: 'Основы блокчейна и мультисиг',
+    title: 'Блокчейн и мультисиг',
     icon: <CodeIcon />,
     status: 'upcoming',
     finalTestStatus: 'locked',
