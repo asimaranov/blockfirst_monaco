@@ -12,6 +12,7 @@ const LessonStates = {
       viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="h-5 w-5"
     >
       <path
         d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
@@ -29,6 +30,7 @@ const LessonStates = {
       viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="h-5 w-5"
     >
       <g clip-path="url(#clip0_3422_12315)">
         <path
@@ -64,6 +66,7 @@ const LessonStates = {
           viewBox="0 0 20 20"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
         >
           <path
             fill-rule="evenodd"
@@ -114,7 +117,7 @@ export function CourseModule({
               {title}
             </span>
           </div>
-          <div>
+          <div className='flex items-center justify-center'>
             <span className="text-foreground text-sm">{progress}</span>
             <span className="text-secondary text-xs">/{total}</span>
           </div>
@@ -131,7 +134,7 @@ export function CourseModule({
               <div className="flex items-center gap-4">
                 <span
                   className={cn(
-                    'text-sm text-secondary cursor-pointer hover:text-foreground',
+                    'text-secondary hover:text-foreground cursor-pointer text-sm',
                     lesson.status === 'available' && 'text-foreground'
                   )}
                 >

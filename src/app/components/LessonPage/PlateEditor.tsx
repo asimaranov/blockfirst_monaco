@@ -228,7 +228,7 @@ const PlateEditor = () => {
         italic: withProps(PlateLeaf, { as: 'em' }),
         p: withProps(PlateElement, {
           as: 'p',
-          className: 'mb-4',
+          className: 'mb-4 text-base leading-6',
         }),
         underline: withProps(PlateLeaf, { as: 'u' }),
         img: ImageElementStatic,

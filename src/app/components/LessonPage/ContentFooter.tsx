@@ -12,6 +12,7 @@ const ShareIcon = () => {
       viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="h-5 w-5"
     >
       <path
         d="M12.5 3V7C4.5 7 2.5 11.1 2.5 17C3.54 13.04 6.5 11 10.5 11H12.5V15L18.5 8.68L12.5 3Z"
@@ -54,6 +55,7 @@ export default function ContentFooter() {
           viewBox="0 0 20 20"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
         >
           <path
             fill-rule="evenodd"
@@ -90,6 +92,7 @@ export default function ContentFooter() {
           </div>
         </div>
       </div>
+
       <button className="border-accent flex h-11 items-center gap-2 rounded-[100px] border px-6">
         <span className="text-sm">Вперед</span>
 
@@ -99,6 +102,7 @@ export default function ContentFooter() {
           viewBox="0 0 21 20"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
         >
           <path
             d="M14.2305 4.43162C14.5292 4.14484 15.0042 4.15441 15.291 4.45311L19.9062 9.2617C20.1848 9.55191 20.1848 10.0106 19.9062 10.3008L15.291 15.1094C15.0042 15.4082 14.5293 15.4177 14.2305 15.1308C13.9319 14.844 13.9222 14.369 14.209 14.0703L18.3262 9.78123L14.209 5.49217C13.9222 5.19338 13.9317 4.71846 14.2305 4.43162Z"

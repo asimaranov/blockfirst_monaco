@@ -28,7 +28,7 @@ export default function CommentsSection() {
               </Plate>
             </DndProvider>
 
-            <button className="border-primary absolute right-5 bottom-5 cursor-pointer rounded-[100px] border px-4 py-2">
+            <button className="border-primary absolute right-5 bottom-5 cursor-pointer rounded-[100px] border px-4 py-2 text-xs">
               Опубликовать
             </button>
           </div>
