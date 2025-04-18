@@ -50,7 +50,7 @@ export function CourseSection({
     totalLessons > 0 ? completedLessons / totalLessons : 0;
 
   return (
-    <div className="mt-12 mb-8 flex w-full flex-col space-y-8 px-4">
+    <div className="mt-12 mb-8 flex w-full flex-col px-4">
       <div className="w-full px-4">
         <div className="mb-4 flex items-center justify-between">
           {/* Available indicator */}
@@ -139,7 +139,7 @@ export function CourseSection({
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-8 pt-8">
               {modules.map((module, idx) => (
                 <CourseModule
                   key={idx}
