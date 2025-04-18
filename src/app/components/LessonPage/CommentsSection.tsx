@@ -8,10 +8,21 @@ import { Plate } from '@udecode/plate/react';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import CommentsList from './CommentsList';
+import { useState } from 'react';
+import type { Value } from '@udecode/plate';
+import { cn } from '~/lib/utils';
+
 export default function CommentsSection() {
+  const [commentDisabled, setCommentDisabled] = useState(true);
+  const [editorFocused, setEditorFocused] = useState(false);
+  // console.log(comment);
+
+  // console.log(commentDisabled, comment?.[0]?.value, !comment?.[0]?.value, comment?.length);
+
   const editor = useCreateEditor({
     id: 'comments',
   });
+
   return (
     <div className="flex flex-col">
       <div className="flex px-16 pt-16 pb-16">
@@ -19,16 +30,43 @@ export default function CommentsSection() {
           <div>
             <UserAvatar />
           </div>
-          <div className="relative  w-190">
+          <div
+            className={cn(
+              'relative w-190 rounded-[0.625vw] border-[0.026vw] border-border',
+              editorFocused && 'border-secondary/50',
+            )}
+          >
             <DndProvider backend={HTML5Backend}>
-              <Plate editor={editor}>
-                <EditorContainer className="dark " data-registry="plate">
-                  <Editor variant="none" className="bg-background  p-5 min-h-40" />
+              <Plate
+                editor={editor}
+                
+                onChange={({ value }) => {
+                  const commentDisabled =
+                    value?.length === 0 ||
+                    (value?.length == 1 && !value?.[0]?.children[0].text);
+
+                  if (commentDisabled) {
+                    setCommentDisabled(true);
+                  } else {
+                    setCommentDisabled(false);
+                  }
+                }}
+              >
+                <EditorContainer className="dark rounded-[0.625vw] " data-registry="plate">
+                  <Editor
+                    variant="none"
+                    className="bg-background min-h-40 p-5 rounded-b-[0.625vw] rounded-t-none pb-17"
+                    onFocus={() => setEditorFocused(true)}
+                    onBlur={() => setEditorFocused(false)}
+                  />
                 </EditorContainer>
               </Plate>
             </DndProvider>
 
-            <button className="border-primary absolute right-5 bottom-5 cursor-pointer rounded-[100px] border px-4 py-2 text-xs">
+            <button
+              className="border-primary absolute right-5 bottom-5 not-disabled:cursor-pointer rounded-[100px] border px-4 py-2 text-xs disabled:opacity-50"
+              disabled={commentDisabled}
+            >
               Опубликовать
             </button>
           </div>
