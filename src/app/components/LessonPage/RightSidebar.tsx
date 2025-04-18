@@ -169,7 +169,7 @@ const RightSidebar = () => {
   const activeHeadingIndex = useHeadingsIntersection(headingList, editor);
 
   return (
-    <div className="w-75 bg-[#14171C] border-accent border-l">
+    <div className="w-75 bg-[#14171C] border-accent border-l min-h-screen">
       <LessonNavigation
         items={headingList.map((heading) => heading.title)}
         activeIndex={activeHeadingIndex}

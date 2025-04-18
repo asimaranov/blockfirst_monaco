@@ -173,7 +173,7 @@ export const COURSE_DATA = {
       {
         id: 1,
         title: 'Мир токенов',
-        status: 'available',
+        status: 'completed',
         lessons: [
           'Видеолекция – Введение в solidity',
           'Путешествие начинается – типы данных в первой лексеме',

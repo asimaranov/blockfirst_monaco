@@ -12,7 +12,7 @@ import { motion, AnimatePresence } from 'motion/react';
 
 interface CourseSectionProps {
   title: string;
-  status: 'available' | 'upcoming' | 'locked';
+  status: 'available' | 'upcoming' | 'locked' | 'completed';
   modules: {
     title: string;
     icon: React.ReactNode;
@@ -25,6 +25,7 @@ interface CourseSectionProps {
     status: 'available' | 'upcoming' | 'locked';
   }[];
   finalTestStatus: 'locked' | 'available' | 'completed';
+  expanded?: boolean;
 }
 
 export function CourseSection({
@@ -32,8 +33,9 @@ export function CourseSection({
   status,
   modules,
   finalTestStatus,
+  expanded = true,
 }: CourseSectionProps) {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(expanded);
 
   // Calculate overall section progress
   let totalLessons = 0;
@@ -59,20 +61,22 @@ export function CourseSection({
                 ? 'available'
                 : status === 'upcoming'
                   ? 'upcoming'
-                  : 'starter'
+                  : status === 'completed'
+                    ? 'completed'
+                    : 'starter'
             }
           />
         </div>
         <div className="flex flex-row justify-between gap-4">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-4">
-              {(status === 'available' || status === 'upcoming') && (
+              {status === 'available' && (
                 <CircularProgressBar
                   progress={sectionProgress}
                   className="h-5 w-5"
                 />
               )}
-              {status === 'locked' && (
+              {(status === 'locked' || status === 'upcoming') && (
                 <svg
                   width="20"
                   height="20"
@@ -93,6 +97,26 @@ export function CourseSection({
                   />
                 </svg>
               )}
+              {status === 'completed' && (
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z"
+                    fill="#195AF4"
+                  />
+                  <path
+                    d="M6.625 10.2104L8.73396 12.3194L13.3737 7.67969"
+                    stroke="#F2F2F2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              )}
             </div>
 
             <span className="text-sm text-white">{title}</span>
@@ -101,13 +125,13 @@ export function CourseSection({
           <ToggleMinus
             isExpanded={isExpanded}
             onToggle={() => setIsExpanded(!isExpanded)}
-            disabled={status === 'locked'}
+            disabled={status === 'locked' || status === 'upcoming'}
           />
         </div>
       </div>
 
       <AnimatePresence initial={false}>
-        {isExpanded && status !== 'locked' && (
+        {isExpanded && status !== 'locked' && status !== 'upcoming' && (
           <motion.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}

@@ -1,7 +1,6 @@
 'use client';
 
 import { CourseSection } from './CourseSection';
-import { TakeTestButton } from './TakeTestButton';
 
 type Module = {
   title: string;
@@ -101,7 +100,7 @@ const mockCourseSections = [
   {
     title: 'Мир токенов',
     icon: <CodeIcon />,
-    status: 'available',
+    status: 'completed',
     finalTestStatus: 'completed',
     modules: [
       {
@@ -135,6 +134,7 @@ const mockCourseSections = [
     title: 'Основы блокчейна и стэйкинг',
     icon: <CodeIcon />,
     status: 'available',
+    expanded: true,
     finalTestStatus: 'locked',
     modules: [
       {
@@ -168,7 +168,7 @@ const mockCourseSections = [
   {
     title: 'Основы блокчейна и мультисиг',
     icon: <CodeIcon />,
-    status: 'locked',
+    status: 'upcoming',
     finalTestStatus: 'locked',
     modules: [
       
@@ -250,6 +250,7 @@ export function CourseSections() {
             status={section.status as 'available' | 'locked' | 'upcoming'}
             modules={section.modules as Module[]}
             finalTestStatus={section.finalTestStatus as 'available' | 'locked' | 'completed'}
+            expanded={section.expanded}
           />
         ))}
       </div>

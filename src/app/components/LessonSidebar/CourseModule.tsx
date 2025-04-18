@@ -85,7 +85,7 @@ interface CourseModuleProps {
     status?: 'available' | 'skipped' | 'completed' | 'completedNoExtra';
   }[];
   progress: number;
-  status: 'available' | 'upcoming' | 'locked';
+  status: 'available' | 'upcoming' | 'locked' | 'completed';
   total: number;
 }
 
@@ -131,8 +131,8 @@ export function CourseModule({
               <div className="flex items-center gap-4">
                 <span
                   className={cn(
-                    'text-sm text-gray-400',
-                    lesson.status === 'available' && 'text-white'
+                    'text-sm text-secondary cursor-pointer hover:text-foreground',
+                    lesson.status === 'available' && 'text-foreground'
                   )}
                 >
                   {lesson.title}
