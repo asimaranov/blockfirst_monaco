@@ -27,7 +27,7 @@ export default async function Layout({
       <NotificationsModal />
       <Suspense>
         <div
-          className="bg-dark-bg w-full overflow-visible px-0 sm:overflow-scroll  border-accent border"
+          className="bg-dark-bg w-full overflow-visible px-0 sm:overflow-scroll "
           id="content-view"
         >
           <div className='px-16'>
