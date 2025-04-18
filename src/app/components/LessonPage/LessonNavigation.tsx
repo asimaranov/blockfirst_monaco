@@ -21,7 +21,7 @@ export default function LessonNavigation({
       activeIndex === i ? 'active' : activeIndex > i ? 'completed' : 'upcoming',
   }));
   return (
-    <div className="sticky top-0 flex w-75 flex-col gap-8 px-8 pt-10">
+    <div className="sticky top-0 flex w-75 flex-col gap-8 px-8 pt-10 h-screen">
       <div className="flex items-center justify-between">
         <span className="text-secondary/50 text-xs uppercase">
           Структура урока
