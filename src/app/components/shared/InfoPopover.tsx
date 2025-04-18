@@ -13,19 +13,45 @@ interface InfoPopoverProps {
   content: string;
   children?: ReactNode;
   className?: string;
+  popoverClassName?: string;
   offsetTop?: number;
   offsetSide?: number;
   position?: PopoverPosition;
+  icon?: ReactNode;
+  hideOnHover?: boolean;
 }
 
+const InfoPopoverIcon = ({ empty }: { empty?: boolean }) => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={cn(
+        'text-secondary h-5 w-5 cursor-pointer transition delay-100 duration-300 ease-in-out hover:text-[#F2F2F2] sm:h-4 sm:w-4',
+        empty && 'hover:text-secondary cursor-default'
+      )}
+    >
+      <circle cx="8" cy="8" r="6.66667" stroke="currentColor" />
+      <path d="M8 7.33333V10.6667" stroke="currentColor" />
+      <circle cx="8" cy="5.33333" r="0.666667" fill="currentColor" />
+    </svg>
+  );
+};
+
 export const InfoPopover = ({
+  icon,
   title,
   content,
   children,
   className,
+  popoverClassName,
   offsetTop = 4,
   offsetSide = -8,
   position = 'right',
+  hideOnHover = false,
 }: InfoPopoverProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const infoRef = useRef<HTMLDivElement>(null);
@@ -74,25 +100,27 @@ export const InfoPopover = ({
     <div
       ref={infoRef}
       className={cn('relative inline-block', className)}
-      onMouseEnter={() => setIsHovered(true)}
+      onMouseEnter={() => {
+        if (!hideOnHover) {
+          setIsHovered(true);
+        }
+      }}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 16 16"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className={cn(
-          'text-secondary h-5 w-5 cursor-pointer transition delay-100 duration-300 ease-in-out hover:text-[#F2F2F2] sm:h-4 sm:w-4',
-          !title && !content && 'hover:text-secondary cursor-default'
-        )}
+      <div
+        onMouseEnter={() => {
+          if (hideOnHover) {
+            setIsHovered(true);
+          }
+        }}
+        onMouseLeave={() => {
+          if (hideOnHover) {
+            setIsHovered(false);
+          }
+        }}
       >
-        <circle cx="8" cy="8" r="6.66667" stroke="currentColor" />
-        <path d="M8 7.33333V10.6667" stroke="currentColor" />
-        <circle cx="8" cy="5.33333" r="0.666667" fill="currentColor" />
-      </svg>
-
+        {icon || <InfoPopoverIcon empty={!title && !content} />}
+      </div>
       {typeof document !== 'undefined' &&
         createPortal(
           <AnimatePresence>
@@ -131,7 +159,10 @@ export const InfoPopover = ({
             {isHovered && !isMobile && (
               // Desktop popover with original positioning
               <motion.div
-                className={cn('flex w-112 flex-col bg-[#1D2026] p-6')}
+                className={cn(
+                  'flex w-112 flex-col bg-[#1D2026] p-6',
+                  popoverClassName
+                )}
                 style={{
                   position: 'fixed',
                   zIndex: 100000,
@@ -151,7 +182,9 @@ export const InfoPopover = ({
                 transition={{ duration: 0.2 }}
               >
                 <div className="text-foreground pb-3 text-sm">{title}</div>
-                <div className="text-secondary text-xs leading-5">{content}</div>
+                <div className="text-secondary text-xs leading-5">
+                  {content}
+                </div>
                 {children}
               </motion.div>
             )}

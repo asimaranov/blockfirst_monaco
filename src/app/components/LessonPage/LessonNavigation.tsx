@@ -26,7 +26,10 @@ export default function LessonNavigation({
         <span className="text-secondary/50 text-xs uppercase">
           Структура урока
         </span>
-        <InfoPopover title="Структура урока" content="Структура урока" />
+        <InfoPopover
+          title="Структура урока"
+          content="Степ-бар отображает текущий прогресс прохождения урока и содержит только заголовки глав."
+        />
       </div>
 
       <div className="flex flex-col gap-4">
