@@ -7,22 +7,27 @@ import RightSidebar from './RightSidebar';
 import { PlateController } from '@udecode/plate/react';
 import ContentFooter from './ContentFooter';
 import CommentsSection from './CommentsSection';
+import Footer from '../Footer';
 // import { motion } from 'framer-motion'; // Uncomment if using animations
 
 const LessonPage = () => {
   return (
     <div>
       <Cover />
-      <div className="flex min-h-screen flex-row border-accent border-x">
+      <div className="border-accent flex min-h-screen flex-row border-x">
         <PlateController activeId={'content'}>
-          <div className="flex-1 ">
+          <div className="flex-1">
             <PlateEditor />
             <ContentFooter />
-            <CommentsSection />
+            <PlateController activeId={'comments'}>
+              <CommentsSection />
+            </PlateController>
           </div>
           <RightSidebar />
         </PlateController>
       </div>
+      <Footer className='border-accent border-x border-t'  />
+
     </div>
   );
 };
