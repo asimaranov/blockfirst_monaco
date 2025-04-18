@@ -14,7 +14,7 @@ const LessonPage = () => {
     <div>
       <Cover />
       <div className="flex min-h-screen flex-row border-accent border-x">
-        <PlateController>
+        <PlateController activeId={'content'}>
           <div className="flex-1 ">
             <PlateEditor />
             <ContentFooter />

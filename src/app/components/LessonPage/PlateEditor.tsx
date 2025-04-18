@@ -203,6 +203,7 @@ const plugins = [
 
 const PlateEditor = () => {
   const editor = usePlateEditor({
+    id: 'content',
     value: ARTICLE_DATA,
     plugins: plugins,
     override: {

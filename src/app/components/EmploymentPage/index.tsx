@@ -264,14 +264,14 @@ export default function EmploymentPage({ session }: { session: Session }) {
                     Error loading vacancies. Please try again.
                   </div>
                 </div>
-              ) : sortVacancies(vacancies).length === 0 ? (
+              ) : sortVacancies(vacancies as IVacancyGeneral[]).length === 0 ? (
                 <div className="flex justify-center p-10">
                   <div className="text-secondary">
                     No vacancies found matching your criteria.
                   </div>
                 </div>
               ) : (
-                sortVacancies(vacancies).map((vacancy) => (
+                sortVacancies(vacancies as IVacancyGeneral[]).map((vacancy) => (
                   <VacancyItem
                     key={vacancy.id}
                     vacancy={vacancy}

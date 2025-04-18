@@ -255,7 +255,7 @@ export default function FormSubmissionsPage() {
                 </tr>
               </thead>
               <tbody>
-                {data.data.map((submission: FormSubmissionWithVirtuals) => (
+                {(data.data as any[]).map((submission: FormSubmissionWithVirtuals) => (
                   <tr
                     key={submission.id || String(submission._id)}
                     className="hover:bg-gray-50"

@@ -165,7 +165,7 @@ function useHeadingsIntersection(
 const RightSidebar = () => {
   const headingList = useEditorSelector(getHeadingList, []);
   const containerRef = useScrollRef();
-  const editor = useEditorRef();
+  const editor = useEditorRef('content');
   const activeHeadingIndex = useHeadingsIntersection(headingList, editor);
 
   return (

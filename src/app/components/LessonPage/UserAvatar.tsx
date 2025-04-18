@@ -15,7 +15,7 @@ export function UserAvatar() {
   };
 
   return (
-    <div className={'flex flex-row px-8 py-5'}>
+    <div className={'flex flex-row pr-5'}>
       {user?.name?.[0] ? (
         <div
           className={
