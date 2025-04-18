@@ -19,11 +19,11 @@ export default function CommentsSection() {
           <div>
             <UserAvatar />
           </div>
-          <div className="relative h-40 w-190">
+          <div className="relative  w-190">
             <DndProvider backend={HTML5Backend}>
               <Plate editor={editor}>
-                <EditorContainer className="dark" data-registry="plate">
-                  <Editor variant="demo" className="bg-background" />
+                <EditorContainer className="dark " data-registry="plate">
+                  <Editor variant="none" className="bg-background  p-5 min-h-40" />
                 </EditorContainer>
               </Plate>
             </DndProvider>

@@ -44,7 +44,7 @@ export function FloatingToolbarButtons() {
           </ToolbarGroup>
 
           <ToolbarGroup>
-            <TurnIntoDropdownMenu />
+            {/* <TurnIntoDropdownMenu /> */}
 
             <MarkToolbarButton nodeType={BoldPlugin.key} tooltip="Bold (⌘+B)">
               <BoldIcon />
@@ -82,12 +82,12 @@ export function FloatingToolbarButtons() {
         </>
       )}
 
-      <ToolbarGroup>
-        <CommentToolbarButton />
-        <SuggestionToolbarButton />
+      {/* <ToolbarGroup>
+          <CommentToolbarButton />
+          <SuggestionToolbarButton />
 
         {!readOnly && <MoreDropdownMenu />}
-      </ToolbarGroup>
+      </ToolbarGroup> */}
     </>
   );
 }

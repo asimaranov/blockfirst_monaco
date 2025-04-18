@@ -112,7 +112,7 @@ export function CourseModule({
         </div>
       </div>
 
-      <div className="mt-6 ml-6 flex">
+      <div className="mt-6 ml-6 mr-4 flex">
         <div className="w-4 pt-1.25 pb-2.5 pl-0.5">
           <div className="border-accent left-1/2 h-full w-4 rounded-bl-lg border-b-[0.5px] border-l-[0.5px]"></div>
         </div>

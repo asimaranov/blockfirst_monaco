@@ -75,7 +75,7 @@ export function FixedToolbarButtons() {
             <RedoToolbarButton />
           </ToolbarGroup>
 
-          <ToolbarGroup>
+          {/* <ToolbarGroup>
             <AIToolbarButton tooltip="AI commands">
               <WandSparklesIcon />
             </AIToolbarButton>
@@ -87,13 +87,13 @@ export function FixedToolbarButtons() {
             </ExportToolbarButton>
 
             <ImportToolbarButton />
-          </ToolbarGroup>
-
+          </ToolbarGroup> */}
+          {/* 
           <ToolbarGroup>
             <InsertDropdownMenu />
             <TurnIntoDropdownMenu />
             <FontSizeToolbarButton />
-          </ToolbarGroup>
+          </ToolbarGroup> */}
 
           <ToolbarGroup>
             <MarkToolbarButton nodeType={BoldPlugin.key} tooltip="Bold (⌘+B)">
@@ -132,36 +132,30 @@ export function FixedToolbarButtons() {
               <BaselineIcon />
             </ColorDropdownMenu>
 
-            <ColorDropdownMenu
+            {/* <ColorDropdownMenu
               nodeType={FontBackgroundColorPlugin.key}
               tooltip="Background color"
             >
               <PaintBucketIcon />
-            </ColorDropdownMenu>
+            </ColorDropdownMenu> */}
           </ToolbarGroup>
 
-          <ToolbarGroup>
+          {/* <ToolbarGroup>
             <AlignDropdownMenu />
 
             <NumberedIndentListToolbarButton />
             <BulletedIndentListToolbarButton />
             <IndentTodoToolbarButton />
             <ToggleToolbarButton />
-          </ToolbarGroup>
-
-          <ToolbarGroup>
-            <LinkToolbarButton />
-            <TableDropdownMenu />
-            <EmojiDropdownMenu />
-          </ToolbarGroup>
+          </ToolbarGroup> */}
 
           <ToolbarGroup>
             <MediaToolbarButton nodeType={ImagePlugin.key} />
-            <MediaToolbarButton nodeType={VideoPlugin.key} />
-            <MediaToolbarButton nodeType={AudioPlugin.key} />
+            {/* <MediaToolbarButton nodeType={VideoPlugin.key} />
+            <MediaToolbarButton nodeType={AudioPlugin.key} /> */}
             <MediaToolbarButton nodeType={FilePlugin.key} />
           </ToolbarGroup>
-
+          {/* 
           <ToolbarGroup>
             <LineHeightDropdownMenu />
             <OutdentToolbarButton />
@@ -170,22 +164,26 @@ export function FixedToolbarButtons() {
 
           <ToolbarGroup>
             <MoreDropdownMenu />
-          </ToolbarGroup>
+          </ToolbarGroup> */}
         </>
       )}
 
       <div className="grow" />
-
       <ToolbarGroup>
+        <LinkToolbarButton />
+        {/* <TableDropdownMenu /> */}
+        <EmojiDropdownMenu />
+      </ToolbarGroup>
+      {/* <ToolbarGroup>
         <MarkToolbarButton nodeType={HighlightPlugin.key} tooltip="Highlight">
           <HighlighterIcon />
         </MarkToolbarButton>
         <CommentToolbarButton />
-      </ToolbarGroup>
+      </ToolbarGroup> */}
 
-      <ToolbarGroup>
+      {/* <ToolbarGroup>
         <ModeDropdownMenu />
-      </ToolbarGroup>
+      </ToolbarGroup> */}
     </div>
   );
 }

@@ -105,7 +105,7 @@ export const editorPlugins = [
   autoformatPlugin,
   cursorOverlayPlugin,
   ...blockMenuPlugins,
-  ...dndPlugins,
+  // ...dndPlugins,
   EmojiPlugin.configure({ options: { data: emojiMartData as any } }),
   exitBreakPlugin,
   resetBlockTypePlugin,
@@ -120,5 +120,5 @@ export const editorPlugins = [
 
   // UI
   FixedToolbarPlugin,
-  FloatingToolbarPlugin,
+  // FloatingToolbarPlugin,
 ];
