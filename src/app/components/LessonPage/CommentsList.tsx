@@ -198,6 +198,7 @@ export default function CommentsList() {
   // Use the dummy data count for the header
   const commentCount = commentsData.length;
   const [sort, setSort] = useState('new');
+  const [loading, setLoading] = useState(false);
 
   return (
     <div className="w-full px-16 pb-16">
@@ -228,14 +229,22 @@ export default function CommentsList() {
         ))}
       </div>
       <div className="flex items-center justify-center">
-        <button className="border-primary flex cursor-pointer items-center gap-2 rounded-full border px-5 py-3 text-sm leading-5">
+        <button
+          className={cn(
+            'border-primary hover:bg-primary flex cursor-pointer items-center gap-2 rounded-full border px-5 py-3 text-sm leading-5',
+            loading &&
+              'cursor-default border-[#1242B2] bg-[#1242B2] hover:bg-[#1242B2]'
+          )}
+          disabled={loading}
+          onClick={() => setLoading(true)}
+        >
           <svg
             width="20"
             height="20"
             viewBox="0 0 20 20"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
+            className={cn('h-5 w-5', loading && 'animate-spin')}
           >
             <path
               fill-rule="evenodd"
@@ -244,7 +253,7 @@ export default function CommentsList() {
               fill="#F2F2F2"
             />
           </svg>
-          Больше комментариев
+          {loading ? 'Загружаем' : 'Больше комментариев'}
         </button>
       </div>
     </div>

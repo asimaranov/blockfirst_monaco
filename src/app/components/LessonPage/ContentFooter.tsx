@@ -3,6 +3,7 @@ import BrokenHeart from './assets/BrokenHeart.png';
 import FireAction from './assets/FireAction.png';
 
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 const ShareIcon = () => {
   return (
@@ -24,7 +25,7 @@ const ShareIcon = () => {
 };
 
 const Separator = () => {
-  return <div className="bg-secondary/20 mx-7 h-8 w-px" />;
+  return <div className="bg-secondary/20 h-8 w-px" />;
 };
 
 const StarIcon = ({ className }: { className: string }) => {
@@ -72,6 +73,8 @@ const Button = ({ children }: { children: React.ReactNode }) => (
 );
 
 export default function ContentFooter() {
+  const [rating, setRating] = useState<number | undefined>(undefined);
+
   return (
     <div className="border-accent flex flex-row border-b px-16 pt-21.5 pb-10">
       <Button>
@@ -95,7 +98,7 @@ export default function ContentFooter() {
       </Button>
 
       <div className="mr-auto ml-auto flex flex-row items-center">
-        <div className="group flex cursor-pointer flex-row gap-2">
+        <div className="group mr-7 flex cursor-pointer flex-row gap-2">
           <ShareIcon />
           <span className="group-hover:text-foreground/50 text-sm">
             Поделиться
@@ -104,61 +107,78 @@ export default function ContentFooter() {
 
         <Separator />
 
-        <div className="flex items-center">
-          {Array.from({ length: 5 }).map((_, index) => (
-            <button className="group cursor-pointer " key={index}>
-              <StarIcon className="block not-first:ml-[-0.0521vw] group-hover:hidden group-has-[~button:hover]:hidden" />
-              <StarIconFilled className="hidden group-hover:block group-has-[~button:hover]:block" />
-            </button>
-          ))}
-          <Separator />
+        <div className={cn("mx-2 flex items-center px-5 h-8 rounded-[0.3125vw] group/rating", !!rating && 'hover:bg-secondary/10 cursor-pointer')}>
+          {rating ? (
+            <button className="flex flex-row items-center justify-center gap-2 cursor-pointer">
+              <StarIconFilled className="" />
 
-          <div className="flex flex-row items-center justify-center gap-3">
-            <div className="bg-secondary/10 group flex h-8 w-8 cursor-pointer items-center justify-center rounded-[0.3021vw] text-sm">
-              <Image
-                src={BrokenHeart}
-                className="h-4 w-4 group-hover:hidden"
-                alt="broken heart"
+              {rating.toFixed(2)}
+            </button>
+          ) : (
+            <>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <button
+                  className="group cursor-pointer"
+                  key={index}
+                  onClick={() => {
+                    setRating(index + 1);
+                  }}
+                >
+                  <StarIcon className="block not-first:ml-[-0.0521vw] group-hover:hidden group-has-[~button:hover]:hidden" />
+                  <StarIconFilled className="hidden group-hover:block group-has-[~button:hover]:block" />
+                </button>
+              ))}
+            </>
+          )}
+        </div>
+
+        <Separator />
+
+        <div className="flex flex-row items-center justify-center gap-3 ml-7">
+          <div className="bg-secondary/10 group flex h-8 w-8 cursor-pointer items-center justify-center rounded-[0.3021vw] text-sm">
+            <Image
+              src={BrokenHeart}
+              className="h-4 w-4 group-hover:hidden"
+              alt="broken heart"
+            />
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="hidden h-5 w-5 group-hover:block"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M3.53906 10C3.53906 9.65482 3.81888 9.375 4.16406 9.375H9.9974H15.8307C16.1759 9.375 16.4557 9.65482 16.4557 10C16.4557 10.3452 16.1759 10.625 15.8307 10.625H9.9974H4.16406C3.81888 10.625 3.53906 10.3452 3.53906 10Z"
+                fill="#F2F2F2"
               />
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="hidden h-5 w-5 group-hover:block"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M3.53906 10C3.53906 9.65482 3.81888 9.375 4.16406 9.375H9.9974H15.8307C16.1759 9.375 16.4557 9.65482 16.4557 10C16.4557 10.3452 16.1759 10.625 15.8307 10.625H9.9974H4.16406C3.81888 10.625 3.53906 10.3452 3.53906 10Z"
-                  fill="#F2F2F2"
-                />
-              </svg>
-            </div>
-            <span className="text-sm">123</span>
-            <div className="bg-secondary/10 group flex h-8 w-8 cursor-pointer items-center justify-center rounded-[0.3021vw] text-sm">
-              <Image
-                src={FireAction}
-                className="h-4 w-4 group-hover:hidden"
-                alt="fire"
+            </svg>
+          </div>
+          <span className="text-sm">123</span>
+          <div className="bg-secondary/10 group flex h-8 w-8 cursor-pointer items-center justify-center rounded-[0.3021vw] text-sm">
+            <Image
+              src={FireAction}
+              className="h-4 w-4 group-hover:hidden"
+              alt="fire"
+            />
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="hidden h-5 w-5 group-hover:block"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M9.9974 3.41406C10.4116 3.41406 10.7474 3.74985 10.7474 4.16406V9.2474H15.8307C16.2449 9.2474 16.5807 9.58318 16.5807 9.9974C16.5807 10.4116 16.2449 10.7474 15.8307 10.7474H10.7474V15.8307C10.7474 16.2449 10.4116 16.5807 9.9974 16.5807C9.58318 16.5807 9.2474 16.2449 9.2474 15.8307V10.7474H4.16406C3.74985 10.7474 3.41406 10.4116 3.41406 9.9974C3.41406 9.58318 3.74985 9.2474 4.16406 9.2474H9.2474V4.16406C9.2474 3.74985 9.58318 3.41406 9.9974 3.41406Z"
+                fill="#F2F2F2"
               />
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="hidden h-5 w-5 group-hover:block"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M9.9974 3.41406C10.4116 3.41406 10.7474 3.74985 10.7474 4.16406V9.2474H15.8307C16.2449 9.2474 16.5807 9.58318 16.5807 9.9974C16.5807 10.4116 16.2449 10.7474 15.8307 10.7474H10.7474V15.8307C10.7474 16.2449 10.4116 16.5807 9.9974 16.5807C9.58318 16.5807 9.2474 16.2449 9.2474 15.8307V10.7474H4.16406C3.74985 10.7474 3.41406 10.4116 3.41406 9.9974C3.41406 9.58318 3.74985 9.2474 4.16406 9.2474H9.2474V4.16406C9.2474 3.74985 9.58318 3.41406 9.9974 3.41406Z"
-                  fill="#F2F2F2"
-                />
-              </svg>
-            </div>
+            </svg>
           </div>
         </div>
       </div>
