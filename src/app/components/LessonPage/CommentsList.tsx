@@ -78,9 +78,9 @@ const ReplyIcon = () => (
 
 const MoreIcon = () => (
   <svg
-    className={'h-4 w-4'}
+    className={'group-data-[active=true]/button:fill-foreground h-4 w-4'}
     viewBox="0 0 16 16"
-    fill="currentColor"
+    fill="#9AA6B5"
     xmlns="http://www.w3.org/2000/svg"
   >
     <circle cx="3" cy="8" r="1.5" />
@@ -183,9 +183,9 @@ function CommentItem({ comment }: { comment: Comment }) {
           </button>
           <DropDownAction
             button={
-              <button className="text-secondary group flex w-6.5 cursor-pointer items-center justify-center rounded-[0.2083vw] hover:bg-[#1D2026]">
+              <div className="text-secondary flex w-6.5 cursor-pointer items-center justify-center rounded-[0.2083vw] hover:bg-[#1D2026]">
                 <MoreIcon />
-              </button>
+              </div>
             }
             options={[
               { label: 'Спам & Фишинг', value: 'spam' },
