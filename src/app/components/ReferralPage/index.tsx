@@ -19,6 +19,7 @@ import { ReferralTable } from './ReferralTable';
 import { WithdrawForm } from './WithdrawForm';
 import { FilterModal } from './FilterModal';
 import { api } from '~/trpc/react';
+import { DropDownSelector, SelectOption } from '../shared/DropDownSelector';
 
 // Add new types
 type TimePeriod = 'all' | '7d' | '30d' | '90d' | 'lm' | 'year';
@@ -71,19 +72,15 @@ const StatCard = ({
   </div>
 );
 
-const TimePeriodSelector = ({
-  value,
-  onChange,
-}: {
-  value: TimePeriod;
-  onChange: (period: TimePeriod) => void;
-}) => {
+export default function ReferralPage({ session }: { session: Session }) {
+  const [index, setIndex] = useState(0);
+  const [timePeriod, setTimePeriod] = useState<TimePeriod>('7d');
   const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [isWithdrawOpen, setIsWithdrawOpen] = useState(false);
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
 
-  const periods: { label: string; value: TimePeriod }[] = [
+  // Define time period options
+  const timePeriodOptions: SelectOption[] = [
     { label: 'Все время', value: 'all' },
     { label: 'Последнюю неделю', value: '7d' },
     { label: 'Текущий месяц', value: '30d' },
@@ -91,128 +88,6 @@ const TimePeriodSelector = ({
     { label: 'Позапрошлый месяц', value: 'lm' },
     { label: 'Последний год', value: 'year' },
   ];
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  const handleOpenMobileFilter = () => {
-    setIsFilterModalOpen(true);
-  };
-
-  return (
-    <>
-      <FilterModal
-        isOpen={isFilterModalOpen}
-        onClose={() => setIsFilterModalOpen(false)}
-        selectedPeriod={value}
-        onSelectPeriod={onChange}
-      />
-
-      <div className="relative" ref={dropdownRef}>
-        <button
-          onClick={() => {
-            if (window.innerWidth < 640) {
-              handleOpenMobileFilter();
-            } else {
-              setIsOpen(!isOpen);
-            }
-          }}
-          className="flex h-auto cursor-pointer items-center justify-end gap-2 rounded-[5.787vw] bg-transparent px-0 py-0 transition-colors hover:bg-[#1c2026] sm:h-8 sm:bg-[#14171C] sm:px-4 sm:py-2.25"
-        >
-          <span className="text-foreground hidden text-xs sm:block">
-            {periods.find((p) => p.value === value)?.label}
-          </span>
-
-          <AnimatedToggleCheck
-            isOpen={isOpen}
-            className="hidden h-3.5 w-3.5 sm:block"
-          />
-          <div className="flex items-center justify-center gap-2 sm:hidden">
-            {value !== 'all' && (
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-3 w-3 shrink-0"
-              >
-                <circle cx="6" cy="6" r="6" fill="#14171C" />
-                <circle cx="6" cy="6" r="4" fill="#CF3336" />
-              </svg>
-            )}
-
-            <Image
-              src={'/images/icons/tool-icon.svg'}
-              alt="tool-icon"
-              width={20}
-              height={20}
-              className="h-5 w-5"
-            />
-          </div>
-        </button>
-
-        {isOpen && (
-          <div className="absolute top-full right-0 z-10 mt-2 w-45.5 rounded-lg bg-[#14171C] py-2 shadow-lg">
-            {periods.map((period) => (
-              <button
-                key={period.value}
-                onClick={() => {
-                  onChange(period.value);
-                  setIsOpen(false);
-                }}
-                className={`flex w-45.5 cursor-pointer flex-row items-center gap-2 px-4 py-2 text-left text-sm transition-colors hover:bg-[#1c2026] ${
-                  value === period.value ? 'text-foreground' : 'text-secondary'
-                } text-xs`}
-              >
-                {period.value == value ? (
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-3.5 w-3.5"
-                  >
-                    <path
-                      d="M2.44922 7.65L5.04922 10.25L11.5492 3.75"
-                      stroke="#195AF4"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                ) : (
-                  <div className="w-3.5"></div>
-                )}
-                {period.label}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
-    </>
-  );
-};
-
-export default function ReferralPage({ session }: { session: Session }) {
-  const [index, setIndex] = useState(0);
-  const [timePeriod, setTimePeriod] = useState<TimePeriod>('7d');
-  const [isOpen, setIsOpen] = useState(false);
-  const [isWithdrawOpen, setIsWithdrawOpen] = useState(false);
 
   // Fetch referral stats using tRPC
   const {
@@ -266,9 +141,22 @@ export default function ReferralPage({ session }: { session: Session }) {
                     Ниже предоставлена информация по вашим рефералам
                   </span>
                 </div>
-                <TimePeriodSelector
+                <DropDownSelector
                   value={timePeriod}
-                  onChange={setTimePeriod}
+                  onChange={(value: string) =>
+                    setTimePeriod(value as TimePeriod)
+                  }
+                  options={timePeriodOptions}
+                  mobileFilterComponent={
+                    <FilterModal
+                      isOpen={isFilterModalOpen}
+                      onClose={() => setIsFilterModalOpen(false)}
+                      selectedPeriod={timePeriod}
+                      onSelectPeriod={(period) =>
+                        setTimePeriod(period as TimePeriod)
+                      }
+                    />
+                  }
                 />
               </div>
 

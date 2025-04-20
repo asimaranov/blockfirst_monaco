@@ -1,5 +1,7 @@
+import { cn } from '@udecode/cn';
 import { motion } from 'motion/react';
-
+import { DropDownSelector } from '../shared/DropDownSelector';
+import { useState } from 'react';
 // Placeholder Icons (Simple SVGs)
 const ChevronDownIcon = ({ className }: { className?: string }) => (
   <svg
@@ -18,7 +20,24 @@ const ChevronDownIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const HeartIcon = ({ className }: { className?: string }) => (
+const HeartIcon = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M8.41203 13.8731C8.18536 13.9531 7.81203 13.9531 7.58536 13.8731C5.65203 13.2131 1.33203 10.4597 1.33203 5.79307C1.33203 3.73307 2.99203 2.06641 5.0387 2.06641C6.25203 2.06641 7.32536 2.65307 7.9987 3.55974C8.67203 2.65307 9.75203 2.06641 10.9587 2.06641C13.0054 2.06641 14.6654 3.73307 14.6654 5.79307C14.6654 10.4597 10.3454 13.2131 8.41203 13.8731Z"
+      stroke="#9AA6B5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+);
+
+const HeartFilledIcon = () => (
   <svg
     width="16"
     height="16"
@@ -90,6 +109,7 @@ interface Comment {
   text: string;
   likes: number;
   replies: number;
+  isLiked: boolean;
 }
 
 // Dummy Data for Comments
@@ -102,6 +122,7 @@ const commentsData: Comment[] = [
     text: 'Поздравляю с успешным завершением курсов по Solidity на платформе BlockFirst! Это отличный шаг в мир разработки смарт-контрактов и блокчейн-технологий.',
     likes: 481,
     replies: 21,
+    isLiked: false,
   },
   {
     id: '2',
@@ -111,6 +132,7 @@ const commentsData: Comment[] = [
     text: 'Отличный курс! Много полезной информации и практических заданий.',
     likes: 123,
     replies: 5,
+    isLiked: true,
   },
   {
     id: '3',
@@ -120,6 +142,7 @@ const commentsData: Comment[] = [
     text: 'Присоединяюсь к поздравлениям! Курс действительно стоящий.',
     likes: 98,
     replies: 2,
+    isLiked: false,
   },
 ];
 
@@ -145,8 +168,13 @@ function CommentItem({ comment }: { comment: Comment }) {
 
         {/* Actions */}
         <div className="flex items-center gap-6 text-sm">
-          <button className="text-error flex cursor-pointer items-center gap-1">
-            <HeartIcon />
+          <button
+            className={cn(
+              'flex cursor-pointer items-center gap-1',
+              comment.isLiked && 'text-error'
+            )}
+          >
+            {comment.isLiked ? <HeartFilledIcon /> : <HeartIcon />}
             <span>{comment.likes}</span>
           </button>
           <button className="text-secondary flex cursor-pointer items-center gap-1">
@@ -169,6 +197,7 @@ function CommentItem({ comment }: { comment: Comment }) {
 export default function CommentsList() {
   // Use the dummy data count for the header
   const commentCount = commentsData.length;
+  const [sort, setSort] = useState('new');
 
   return (
     <div className="w-full px-16 pb-16">
@@ -181,16 +210,15 @@ export default function CommentsList() {
             {commentCount}
           </div>
         </div>
-        {/* Right: Sort Dropdown */}
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="bg-dark-bg text-foreground hover:bg-accent flex items-center gap-2 rounded-full px-4 py-1.5 text-sm transition-colors" /* py adjusted for 32px height */
-        >
-          <span>Новые</span>
-          <ChevronDownIcon className="text-primary" />
-          {/* Icon color from figma */}
-        </motion.button>
+        <DropDownSelector
+          value={sort}
+          onChange={(value) => setSort(value)}
+          options={[
+            { label: 'Новые', value: 'new' },
+            { label: 'Популярные', value: 'popular' },
+            { label: 'Старые', value: 'old' },
+          ]}
+        />
       </div>
       {/* Comments Container */}
       <div className="flex flex-col gap-8 pb-16">
