@@ -3,34 +3,34 @@
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import AnimatedToggleCheck from './AnimatedToggleCheck';
+import { cn } from '~/helpers';
 
 export type SelectOption = {
   label: string;
   value: string;
+  icon?: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
 };
 
 type DropDownSelectorProps = {
   button: React.ReactNode;
-  value: string;
-  onChange: (value: string) => void;
   options: SelectOption[];
   mobileFilterComponent?: React.ReactNode;
   className?: string;
   buttonClassName?: string;
   dropdownClassName?: string;
-  optionClassName?: string;
+  successBlock?: React.ReactNode;
 };
 
 export default function DropDownAction({
   button,
-  value,
-  onChange,
   options,
   mobileFilterComponent,
   className = '',
   buttonClassName = '',
   dropdownClassName = '',
-  optionClassName = '',
+  successBlock,
 }: DropDownSelectorProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -97,66 +97,44 @@ export default function DropDownAction({
               Пожаловаться
             </span>
             {isSuccess ? (
-              <div className="flex flex-col items-center justify-center gap-2 pt-9 pb-14">
-                <svg
-                  width="33"
-                  height="32"
-                  viewBox="0 0 33 32"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8.25"
-                >
-                  <rect
-                    x="1"
-                    y="0.5"
-                    width="31"
-                    height="31"
-                    rx="15.5"
-                    stroke="#195AF4"
-                  />
-                  <path
-                    d="M11.043 16.7855L14.163 19.9055L21.963 12.1055"
-                    stroke="#F2F2F2"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-                <div className="flex flex-col gap-3 text-center px-5">
-                  <p className="text-base font-medium">Жалоба принята</p>
-                  <p className="text-xs text-secondary">Мы проверим этот комментарий на наличие нарушений</p>
-
-                </div>
-              </div>
+              successBlock
             ) : (
-              <>
+              <>  
                 {options.map((option) => (
                   <button
                     key={option.value}
                     onClick={() => {
-                      setIsSuccess(true);
-                      // onChange(option.value);
-                      // setIsOpen(false);
+                      if (successBlock) {
+                        setIsSuccess(true);
+                      }
+                      option.onClick?.();
                     }}
-                    className={`text-foreground group flex w-60.75 cursor-pointer flex-row items-center gap-2 rounded-[0.4167vw] px-4 py-3.25 text-left text-xs whitespace-nowrap transition-colors duration-100 hover:bg-[#272B33] ${optionClassName}`}
+                    className={cn(
+                      `text-foreground group flex w-60.75 cursor-pointer flex-row items-center gap-2 rounded-[0.4167vw] px-4 py-3.25 text-left text-xs whitespace-nowrap transition-colors duration-100 hover:bg-[#272B33] ${option.className}`
+                    )}
                   >
-                    <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 14 14"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-3.5 w-3.5"
-                    >
-                      <path
-                        d="M2.44922 7.65L5.04922 10.25L11.5492 3.75"
-                        stroke="#195AF4"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="opacity-0 transition-all duration-100 group-hover:opacity-100"
-                      />
-                    </svg>
+                    {option.icon ? (
+                      option.icon
+                    ) : (
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-3.5 w-3.5"
+                      >
+                        <path
+                          d="M2.44922 7.65L5.04922 10.25L11.5492 3.75"
+                          stroke="#195AF4"
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          className="opacity-0 transition-all duration-100 group-hover:opacity-100"
+                        />
+                      </svg>
+                    )}
+
                     {option.label}
                   </button>
                 ))}
