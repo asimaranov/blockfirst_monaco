@@ -392,7 +392,7 @@ export default function CommentsList() {
             {replyFormAfterId === comment.id && (
               <div className="flex flex-row gap-5 pt-8 pl-15">
                 <UserAvatar avatarInitial={'В'} isSelf={true} />
-                <CommentsEditor />
+                <CommentsEditor className="w-175" />
               </div>
             )}
             <div className="flex flex-col gap-8 pt-8 pl-15">

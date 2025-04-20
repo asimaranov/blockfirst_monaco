@@ -12,7 +12,7 @@ import { useState } from 'react';
 import type { Value } from '@udecode/plate';
 import { cn } from '~/lib/utils';
 
-export default function CommentsEditor() {
+export default function CommentsEditor({ className }: { className?: string }) {
   const [commentDisabled, setCommentDisabled] = useState(true);
   const [editorFocused, setEditorFocused] = useState(false);
   // console.log(comment);
@@ -27,6 +27,7 @@ export default function CommentsEditor() {
     <div
       className={cn(
         'border-border relative w-190 rounded-[0.625vw] border-[0.026vw]',
+        className,
         editorFocused && 'border-secondary/50'
       )}
     >
