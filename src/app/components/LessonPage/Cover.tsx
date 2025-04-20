@@ -3,6 +3,7 @@ import { cn } from '~/helpers';
 import Image, { StaticImageData } from 'next/image';
 import FireIcon from './assets/Fire.png';
 import SparklesIcon from './assets/Sparkles.png';
+import Link from 'next/link';
 
 // Helper Icon Components (moved from LessonPage.tsx)
 const ChevronRightIcon = () => (
@@ -158,10 +159,12 @@ const Cover = () => {
             {/* Actions */}
             <div className="flex items-center gap-3">
               {/* Premium Button (kept separate due to unique styling/content) */}
+              <Link href="/premium" target="_blank">
               <button className="bg-primary flex cursor-pointer items-center gap-1 rounded-full px-6 py-2.5 text-sm transition-colors hover:bg-[#1242B2]">
                 Премиум тариф
                 <ChevronRightIcon />
               </button>
+              </Link>
               {/* Icon Buttons */}
               {actions.map((action) => (
                 <button
