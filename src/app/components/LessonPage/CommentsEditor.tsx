@@ -8,11 +8,11 @@ import { Plate } from '@udecode/plate/react';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import CommentsList from './CommentsList';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { Value } from '@udecode/plate';
 import { cn } from '~/lib/utils';
 
-export default function CommentsEditor({ className }: { className?: string }) {
+export default function CommentsEditor({ className, value }: { className?: string, value?: string }) {
   const [commentDisabled, setCommentDisabled] = useState(true);
   const [editorFocused, setEditorFocused] = useState(false);
   // console.log(comment);
@@ -22,6 +22,13 @@ export default function CommentsEditor({ className }: { className?: string }) {
   const editor = useCreateEditor({
     id: 'comments',
   });
+
+  useEffect(() => {
+    if (value) {
+      console.log('Setting value', value);
+      editor.tf.setValue(value);
+    }
+  }, [value, editor]);
 
   return (
     <div
@@ -33,6 +40,7 @@ export default function CommentsEditor({ className }: { className?: string }) {
     >
       <DndProvider backend={HTML5Backend}>
         <Plate
+          
           editor={editor}
           onChange={({ value }) => {
             const commentDisabled =

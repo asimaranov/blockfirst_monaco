@@ -89,7 +89,7 @@ export default function DropDownAction({
 
         {isOpen && (
           <div
-            className={`absolute top-full left-0 z-10 flex w-60.75 translate-y-4 flex-col rounded-lg bg-[#1D2026] shadow-lg ${dropdownClassName}`}
+            className={`absolute top-full left-0 z-100 flex w-60.75 translate-y-4 flex-col rounded-lg bg-[#1D2026] shadow-lg ${dropdownClassName}`}
           >
             <span className="text-secondary/50 py-3 pl-5 text-xs uppercase">
               Пожаловаться

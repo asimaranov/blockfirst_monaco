@@ -116,7 +116,7 @@ const commentsData: Comment[] = [
     isLiked: false,
     answers: [
       {
-        id: '1',
+        id: '1-1',
         author: 'Виталий',
         isSelf: true,
         avatarInitial: 'В',
@@ -127,7 +127,7 @@ const commentsData: Comment[] = [
         isLiked: false,
       },
       {
-        id: '2',
+        id: '1-2',
         author: 'Андрей',
         avatarInitial: 'А',
         timestamp: '17 Апреля, 13:59',
@@ -357,6 +357,7 @@ export default function CommentsList() {
   const commentCount = commentsData.length;
   const [sort, setSort] = useState('new');
   const [loading, setLoading] = useState(false);
+  const [replyToUser, setReplyToUser] = useState<string | null>(null);
   const [replyFormAfterId, setReplyFormAfterId] = useState<string | null>(null);
 
   return (
@@ -392,7 +393,7 @@ export default function CommentsList() {
             {replyFormAfterId === comment.id && (
               <div className="flex flex-row gap-5 pt-8 pl-15">
                 <UserAvatar avatarInitial={'В'} isSelf={true} />
-                <CommentsEditor className="w-175" />
+                <CommentsEditor className="w-175" value={`@${replyToUser}`} />
               </div>
             )}
             <div className="flex flex-col gap-8 pt-8 pl-15">
@@ -401,7 +402,10 @@ export default function CommentsList() {
                   <CommentItem
                     key={answer.id}
                     comment={answer}
-                    setReplyFormAfterId={setReplyFormAfterId}
+                    setReplyFormAfterId={() => {
+                      setReplyToUser(answer.author);
+                      setReplyFormAfterId(comment.id);
+                    }}
                   />
                 ))}
             </div>
