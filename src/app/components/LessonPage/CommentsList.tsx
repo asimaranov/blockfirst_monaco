@@ -2,23 +2,7 @@ import { cn } from '@udecode/cn';
 import { motion } from 'motion/react';
 import { DropDownSelector } from '../shared/DropDownSelector';
 import { useState } from 'react';
-// Placeholder Icons (Simple SVGs)
-const ChevronDownIcon = ({ className }: { className?: string }) => (
-  <svg
-    className={`h-3.5 w-3.5 ${className}`}
-    viewBox="0 0 14 14"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M2.9165 5.25L6.99984 9.33333L11.0832 5.25"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
-);
+import DropDownAction from '../shared/DropDownAction';
 
 const HeartIcon = () => (
   <svg
@@ -55,14 +39,14 @@ const HeartFilledIcon = () => (
   </svg>
 );
 
-const CommentIcon = ({ className }: { className?: string }) => (
+const CommentIcon = () => (
   <svg
     width="16"
     height="16"
     viewBox="0 0 16 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className={`h-4 w-4 ${className}`}
+    className={'h-4 w-4'}
   >
     <path
       fill-rule="evenodd"
@@ -74,14 +58,14 @@ const CommentIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const ReplyIcon = ({ className }: { className?: string }) => (
+const ReplyIcon = () => (
   <svg
     width="16"
     height="16"
     viewBox="0 0 16 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className={`h-4 w-4 ${className}`}
+    className={'h-4 w-4'}
   >
     <path
       d="M9.90527 13.0029C9.61304 13.265 9.25372 13.1624 9.13086 12.8633L9.10938 12.8008C9.10261 12.7763 9.09785 12.7477 9.09473 12.7119L9.09082 12.5791V12.5781L9.09375 10.6338V10.6328C9.09409 10.5836 9.10041 10.3711 8.94141 10.2012C8.78376 10.0329 8.57313 10.0247 8.51953 10.0215V10.0205C6.22478 9.87672 4.30486 9.02592 2.7998 7.35547L2.50391 7.01074C1.71729 6.04444 1.23543 4.94177 1.04883 3.71094C1.21043 3.91578 1.40252 4.08423 1.59473 4.22754L1.78613 4.36328H1.78711C2.5181 4.86011 3.3215 5.15646 4.12012 5.37598L4.46191 5.46582H4.46289C5.63621 5.76085 6.8232 5.90016 8.01074 5.95215L8.52051 5.96973C8.58151 5.97115 8.68044 5.96576 8.78418 5.91895C8.90745 5.86317 9.00021 5.76471 9.0498 5.64453C9.09032 5.54631 9.09173 5.45777 9.0918 5.42871C9.09183 5.41103 9.09102 5.39421 9.09082 5.38867V3.39355C9.09201 3.09862 9.22672 2.93058 9.42383 2.87207L9.51172 2.85352C9.64714 2.83587 9.76563 2.87432 9.89453 2.99414H9.89551C11.1611 4.17168 12.4281 5.33339 13.6709 6.51855L14.9043 7.71289H14.9053C15.0513 7.85668 15.0755 8.06103 14.9512 8.23633L14.8887 8.30957C14.1841 9.00357 13.4675 9.68499 12.7451 10.3623L10.5645 12.3916L9.90527 13.0029Z"
@@ -92,9 +76,9 @@ const ReplyIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const MoreIcon = ({ className }: { className?: string }) => (
+const MoreIcon = () => (
   <svg
-    className={`h-4 w-4 ${className}`}
+    className={'h-4 w-4'}
     viewBox="0 0 16 16"
     fill="currentColor"
     xmlns="http://www.w3.org/2000/svg"
@@ -197,9 +181,23 @@ function CommentItem({ comment }: { comment: Comment }) {
               Ответить
             </span>
           </button>
-          <button className="text-secondary group cursor-pointer w-6.5 hover:bg-[#1D2026] flex items-center justify-center rounded-[0.2083vw]">
-            <MoreIcon />
-          </button>
+          <DropDownAction
+            button={
+              <button className="text-secondary group flex w-6.5 cursor-pointer items-center justify-center rounded-[0.2083vw] hover:bg-[#1D2026]">
+                <MoreIcon />
+              </button>
+            }
+            options={[
+              { label: 'Спам & Фишинг', value: 'spam' },
+              { label: 'Порнография', value: 'nsfw' },
+              { label: 'Оскорбления', value: 'offensive' },
+              { label: 'Политические высказывания', value: 'political' },
+              { label: 'Оскорбление религии', value: 'religious' },
+              { label: 'Оскорбительная высказывание', value: 'other' },
+            ]}
+            value={''}
+            onChange={() => {}}
+          />
         </div>
       </div>
     </div>
