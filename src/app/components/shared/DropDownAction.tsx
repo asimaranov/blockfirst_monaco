@@ -1,8 +1,6 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import Image from 'next/image';
-import AnimatedToggleCheck from './AnimatedToggleCheck';
 import { cn } from '~/helpers';
 
 export type SelectOption = {

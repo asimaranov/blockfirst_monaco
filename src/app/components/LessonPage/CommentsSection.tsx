@@ -2,11 +2,7 @@ import { Skeleton } from '../shared/Skeleton';
 import { IUser } from '~/app/lib/types/IUser';
 import { UserAvatar } from './UserAvatar';
 import { useCreateEditor } from './PlateComment';
-import { Editor } from '~/components/plate-ui/editor';
-import { EditorContainer } from '~/components/plate-ui/editor';
-import { Plate } from '@udecode/plate/react';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { DndProvider } from 'react-dnd';
+import CommentsEditor from './CommentsEditor';
 import CommentsList from './CommentsList';
 import { useState } from 'react';
 import type { Value } from '@udecode/plate';
@@ -30,46 +26,7 @@ export default function CommentsSection() {
           <div>
             <UserAvatar />
           </div>
-          <div
-            className={cn(
-              'relative w-190 rounded-[0.625vw] border-[0.026vw] border-border',
-              editorFocused && 'border-secondary/50',
-            )}
-          >
-            <DndProvider backend={HTML5Backend}>
-              <Plate
-                editor={editor}
-                
-                onChange={({ value }) => {
-                  const commentDisabled =
-                    value?.length === 0 ||
-                    (value?.length == 1 && !value?.[0]?.children[0].text);
-
-                  if (commentDisabled) {
-                    setCommentDisabled(true);
-                  } else {
-                    setCommentDisabled(false);
-                  }
-                }}
-              >
-                <EditorContainer className="dark rounded-[0.625vw] " data-registry="plate">
-                  <Editor
-                    variant="none"
-                    className="bg-background min-h-40 p-5 rounded-b-[0.625vw] rounded-t-none pb-17"
-                    onFocus={() => setEditorFocused(true)}
-                    onBlur={() => setEditorFocused(false)}
-                  />
-                </EditorContainer>
-              </Plate>
-            </DndProvider>
-
-            <button
-              className="border-primary absolute right-5 bottom-5 not-disabled:cursor-pointer rounded-[100px] border px-4 py-2 text-xs disabled:opacity-50"
-              disabled={commentDisabled}
-            >
-              Опубликовать
-            </button>
-          </div>
+          <CommentsEditor />
         </div>
       </div>
       <CommentsList />
