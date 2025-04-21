@@ -304,7 +304,6 @@ function CommentItem({
                 : [
                     { label: 'Спам & Фишинг', value: 'spam' },
                     { label: 'Порнография', value: 'nsfw' },
-                    { label: 'Оскорбления', value: 'offensive' },
                     { label: 'Политические высказывания', value: 'political' },
                     { label: 'Оскорбление религии', value: 'religious' },
                     { label: 'Оскорбительная высказывание', value: 'other' },
