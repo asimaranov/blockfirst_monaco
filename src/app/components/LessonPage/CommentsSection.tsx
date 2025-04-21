@@ -7,17 +7,9 @@ import CommentsList from './CommentsList';
 import { useState } from 'react';
 import type { Value } from '@udecode/plate';
 import { cn } from '~/lib/utils';
+import { PlateController } from '@udecode/plate/react';
 
 export default function CommentsSection() {
-  const [commentDisabled, setCommentDisabled] = useState(true);
-  const [editorFocused, setEditorFocused] = useState(false);
-  // console.log(comment);
-
-  // console.log(commentDisabled, comment?.[0]?.value, !comment?.[0]?.value, comment?.length);
-
-  const editor = useCreateEditor({
-    id: 'comments',
-  });
 
   return (
     <div className="flex flex-col">
@@ -29,7 +21,7 @@ export default function CommentsSection() {
           <CommentsEditor />
         </div>
       </div>
-      <CommentsList />
+        <CommentsList />
     </div>
   );
 }

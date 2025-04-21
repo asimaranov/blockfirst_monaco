@@ -4,7 +4,7 @@ import { UserAvatar } from './UserAvatar';
 import { useCreateEditor } from './PlateComment';
 import { Editor } from '~/components/plate-ui/editor';
 import { EditorContainer } from '~/components/plate-ui/editor';
-import { Plate } from '@udecode/plate/react';
+import { Plate, useEditorRef, useEditorState } from '@udecode/plate/react';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import CommentsList from './CommentsList';
@@ -12,7 +12,15 @@ import { useEffect, useState } from 'react';
 import type { Value } from '@udecode/plate';
 import { cn } from '~/lib/utils';
 
-export default function CommentsEditor({ className, value }: { className?: string, value?: string }) {
+export default function CommentsEditor({
+  className,
+  value,
+  id,
+}: {
+  className?: string;
+  value?: string;
+  id?: string;
+}) {
   const [commentDisabled, setCommentDisabled] = useState(true);
   const [editorFocused, setEditorFocused] = useState(false);
   // console.log(comment);
@@ -20,13 +28,19 @@ export default function CommentsEditor({ className, value }: { className?: strin
   // console.log(commentDisabled, comment?.[0]?.value, !comment?.[0]?.value, comment?.length);
 
   const editor = useCreateEditor({
-    id: 'comments',
+    id: id || 'comments',
   });
+
+  // const editorState = useEditorState();
 
   useEffect(() => {
     if (value) {
-      console.log('Setting value', value);
-      editor.tf.setValue(value);
+      editor?.tf.setValue([
+        {
+          type: 'p',
+          children: [{ text: value }],
+        },
+      ]);
     }
   }, [value, editor]);
 
@@ -40,12 +54,14 @@ export default function CommentsEditor({ className, value }: { className?: strin
     >
       <DndProvider backend={HTML5Backend}>
         <Plate
-          
           editor={editor}
           onChange={({ value }) => {
             const commentDisabled =
               value?.length === 0 ||
-              (value?.length == 1 && !value?.[0]?.children[0].text);
+              (value?.length == 1 &&
+                (!value?.[0]?.children ||
+                  value?.[0]?.children.length == 0 ||
+                  !value?.[0]?.children[0].text));
 
             if (commentDisabled) {
               setCommentDisabled(true);

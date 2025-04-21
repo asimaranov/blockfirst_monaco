@@ -4,6 +4,7 @@ import { DropDownSelector } from '../shared/DropDownSelector';
 import { useState } from 'react';
 import DropDownAction from '../shared/DropDownAction';
 import CommentsEditor from './CommentsEditor';
+import { PlateController } from '@udecode/plate/react';
 
 const HeartIcon = () => (
   <svg
@@ -358,7 +359,7 @@ export default function CommentsList() {
   const [sort, setSort] = useState('new');
   const [loading, setLoading] = useState(false);
   const [replyToUser, setReplyToUser] = useState<string | null>(null);
-  const [replyFormAfterId, setReplyFormAfterId] = useState<string | null>(null);
+  const [replyFormAfterId, setReplyFormAfterId] = useState<string | null>('1');
 
   return (
     <div className="w-full px-16 pb-16">
@@ -388,12 +389,16 @@ export default function CommentsList() {
           <div key={comment.id} className="">
             <CommentItem
               comment={comment}
-              setReplyFormAfterId={setReplyFormAfterId}
+              setReplyFormAfterId={() => {
+                setReplyToUser(null);
+                setReplyFormAfterId(comment.id);
+              }}
             />
             {replyFormAfterId === comment.id && (
               <div className="flex flex-row gap-5 pt-8 pl-15">
                 <UserAvatar avatarInitial={'В'} isSelf={true} />
-                <CommentsEditor className="w-175" value={`@${replyToUser}`} />
+
+                <CommentsEditor className="w-175" value={replyToUser ? `@${replyToUser}, ` : ''} id='sub-editor' />
               </div>
             )}
             <div className="flex flex-col gap-8 pt-8 pl-15">

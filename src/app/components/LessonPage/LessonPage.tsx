@@ -15,19 +15,16 @@ const LessonPage = () => {
     <div>
       <Cover />
       <div className="border-accent flex min-h-screen flex-row border-x">
-        <PlateController activeId={'content'}>
+        <PlateController>
           <div className="flex-1">
             <PlateEditor />
             <ContentFooter />
-            <PlateController activeId={'comments'}>
-              <CommentsSection />
-            </PlateController>
+            <CommentsSection />
           </div>
           <RightSidebar />
         </PlateController>
       </div>
-      <Footer className='border-accent border-x border-t'  />
-
+      <Footer className="border-accent border-x border-t" />
     </div>
   );
 };
