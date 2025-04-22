@@ -4,8 +4,13 @@ import { api } from '~/trpc/react';
 import { Skeleton } from '../shared/Skeleton';
 import { authClient } from '~/server/auth/client';
 import PlateEditor from './PlateEditor';
+import { cn } from '~/helpers';
 
-export function UserAvatar() {
+export function UserAvatar({
+  className,
+}: {
+  className?: string;
+}) {
   const session = authClient.useSession();
 
   const user = {
@@ -13,23 +18,21 @@ export function UserAvatar() {
   };
 
   return (
-    <div className={'flex flex-row pr-5'}>
+    <>
       {user?.name?.[0] ? (
         <div
-          className={
-            'my-auto flex h-10 w-10 flex-col items-center justify-center rounded-full bg-[#195AF4]'
-          }
+          className={cn(
+            'flex h-10 w-10 flex-col items-center justify-center rounded-full bg-[#195AF4]',
+            className
+          )}
         >
-          <span
-            className={'font-roboto text-[0.87vw] text-[#F2F2F2] uppercase'}
-          >
+          <span className={'font-roboto text-sm leading-5 text-[#F2F2F2] uppercase'}>
             {user.name[0]}
           </span>
         </div>
       ) : (
         <Skeleton className="my-auto h-10 w-10 rounded-full" />
       )}
-      <div className="flex flex-col"></div>
-    </div>
+    </>
   );
 }

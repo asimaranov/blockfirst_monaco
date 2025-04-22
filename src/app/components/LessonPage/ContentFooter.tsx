@@ -189,8 +189,7 @@ const CopyIcon = () => {
 
 export default function ContentFooter() {
   const [rating, setRating] = useState<number | undefined>(undefined);
-  const pathname = usePathname()
-
+  const pathname = usePathname();
 
   const title = 'Изучи блокчейн разработку с blockfirst';
   const description = 'Изучи блокчейн разработку с blockfirst';
@@ -314,7 +313,7 @@ export default function ContentFooter() {
             <button className="relative flex cursor-pointer flex-row items-center justify-center gap-2">
               <StarIconFilled className="" />
 
-              {rating.toFixed(2)}
+              <span className='text-sm leading-5'>{rating.toFixed(2)}</span>
             </button>
           ) : (
             <>

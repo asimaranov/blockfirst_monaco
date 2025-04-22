@@ -1,5 +1,5 @@
 import { betterAuth, type BetterAuthOptions } from 'better-auth';
-import { openAPI, admin } from 'better-auth/plugins';
+import { openAPI, admin, customSession } from 'better-auth/plugins';
 import { emailOTP } from 'better-auth/plugins';
 import { mongodbAdapter } from 'better-auth/adapters/mongodb';
 import {
@@ -9,11 +9,14 @@ import {
 } from '~/server/auth/email';
 import { MongoClient } from 'mongodb';
 import { env } from '~/env';
+import { api } from '~/trpc/server';
+import UserDataModel, { IUserData } from '../models/userData';
+import dbConnect from '../mongodb';
 
 const client = new MongoClient(env.MONGODB_URI!);
 const db = client.db(env.DATABASE_NAME!);
 
-export const auth = betterAuth({
+const options = {
   secret: env.AUTH_SECRET,
   advanced: {
     crossSubDomainCookies: {
@@ -114,4 +117,26 @@ export const auth = betterAuth({
       if (error) return console.log('sendResetPasswordEmail Error: ', error);
     },
   },
-} satisfies BetterAuthOptions);
+} satisfies BetterAuthOptions;
+
+export const auth = betterAuth({
+  ...options,
+  plugins: [
+    ...(options.plugins ?? []),
+    customSession(async ({ user, session }) => {
+      await dbConnect();
+
+      const userData = await UserDataModel.findOne({
+        userId: user.id,
+      });
+
+      return {
+        user: {
+          ...user,
+          tariff: userData?.plan || 'free',
+        },
+        session,
+      };
+    }, options),
+  ],
+});

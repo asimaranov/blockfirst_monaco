@@ -1,6 +1,5 @@
 import { Skeleton } from '../shared/Skeleton';
 import { IUser } from '~/app/lib/types/IUser';
-import { UserAvatar } from './UserAvatar';
 import { useCreateEditor } from './PlateComment';
 import { Editor } from '~/components/plate-ui/editor';
 import { EditorContainer } from '~/components/plate-ui/editor';

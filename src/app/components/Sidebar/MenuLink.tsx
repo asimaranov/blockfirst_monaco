@@ -1,13 +1,16 @@
+'use client';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 import { NotificationCounter } from '../shared/NotificationCounter';
+import { usePathname } from 'next/navigation';
+import { useNotificationsModalStore } from '~/store/notificationsModal';
 
 export function MenuLink({
   title,
   children,
   href,
+  otherHref,
   locked,
-  isCurrentPage,
   notificationCount,
   type,
   onClick,
@@ -15,12 +18,20 @@ export function MenuLink({
   title: string;
   children: ReactNode;
   href: string;
+  otherHref?: string;
   locked?: boolean;
-  isCurrentPage: boolean;
   notificationCount?: number;
   type: 'notifications' | 'default';
   onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }) {
+  const pathname = usePathname();
+  const { toggle } = useNotificationsModalStore();
+
+
+  const isCurrentPage =
+    pathname.startsWith(href) ||
+    (!!otherHref && pathname.startsWith(otherHref));
+
   return (
     <Link
       href={href}
@@ -28,7 +39,14 @@ export function MenuLink({
         'group flex cursor-pointer flex-row items-center gap-4 border-b border-transparent px-4 py-3.5 hover:border-[#282D33] data-[active=true]:border-[#F2F2F2]'
       }
       data-active={isCurrentPage}
-      onClick={onClick}
+      onClick={(e) => {
+        if (type === 'notifications') {
+          toggle('desktop');
+        }
+        if (onClick) {
+          onClick(e);
+        }
+      }}
     >
       {children}
       <div className={'flex w-full flex-row items-center justify-between'}>

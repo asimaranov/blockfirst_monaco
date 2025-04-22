@@ -8,6 +8,7 @@ import { SubscriptionType } from '~/app/lib/constants/subsctiptions';
 import MobileBurgerMenu from '../../mobile/MobileBurgerMenu';
 import MobilePremiumTopbar from './MobilePremiumTopbar';
 import { useNotificationsModalStore } from '~/store/notificationsModal';
+import { planTypeToSubscriptionType } from '~/app/lib/utils';
 export interface TopbarProps {
   /**
    * Left side content
@@ -46,9 +47,10 @@ export function Topbar({
 
   const user: IUser = {
     name: session.data?.user?.name ?? '',
-    startTimestamp: Date.now(),
-    createdAt: new Date().toISOString(),
+    startTimestamp: new Date('2025-04-25').getTime(),
+    createdAt: new Date('2025-04-25').toISOString(),
     subscriptionType: SubscriptionType.Starter,
+    tariff: planTypeToSubscriptionType(session?.data?.user?.tariff ?? 'free'),
   };
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);

@@ -8,9 +8,6 @@ import { planTypeToSubscriptionType } from '~/app/lib/utils';
 import { api } from '~/trpc/server';
 import { redirect } from 'next/navigation';
 
-interface SidebarFooterProps {
-  user: IUser;
-}
 
 export async function SidebarFooter() {
   const session = await getServerSession();
@@ -18,17 +15,14 @@ export async function SidebarFooter() {
     redirect('/signin');
   }
 
-  const userData = await api.userData.getUserData();
-
   const user: IUser = {
     name: session?.user?.name ?? '',
-    startTimestamp: Date.now(),
-    createdAt: new Date().toISOString(),
-    subscriptionType: planTypeToSubscriptionType(userData.plan),
+    startTimestamp: new Date('2025-04-25').getTime(),
+    createdAt: new Date('2025-04-25').toISOString(),
+    tariff: planTypeToSubscriptionType(session?.user?.tariff ?? 'free'),
+    subscriptionType: planTypeToSubscriptionType(session?.user?.tariff ?? 'free'),
   };
 
-  // // Get sidebar sections data
-  // const sidebarSections = getSidebarSectionsData({ unreadCount });
 
   return (
     <div className={'mt-auto flex flex-col border-t border-[#282D33]'}>

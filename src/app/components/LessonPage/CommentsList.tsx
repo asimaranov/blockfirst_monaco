@@ -216,7 +216,7 @@ const UserAvatar = ({
 }) => (
   <div
     className={cn(
-      'bg-accent text-foreground flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full text-lg font-medium',
+      'bg-accent text-foreground flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full text-sm leading-5',
       isSelf && 'bg-primary'
     )}
   >

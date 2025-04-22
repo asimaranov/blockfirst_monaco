@@ -5,4 +5,5 @@ export interface IUser {
   startTimestamp: number;
   createdAt: string;
   subscriptionType: SubscriptionType;
+  tariff: SubscriptionType;
 }
