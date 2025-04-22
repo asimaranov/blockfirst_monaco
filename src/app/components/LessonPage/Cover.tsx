@@ -6,6 +6,9 @@ import SparklesIcon from './assets/Sparkles.png';
 import Link from 'next/link';
 import { createPortal } from 'react-dom';
 import FireGrey from './assets/FireGrey.png';
+import FirePremium from './assets/FirePremium.png';
+import PremiumBorder from './assets/PremiumBorder.svg';
+
 import { InfoPopover, InfoPopoverIcon } from '../shared/InfoPopover';
 
 // Helper Icon Components (moved from LessonPage.tsx)
@@ -231,7 +234,7 @@ const Cover = () => {
                 <div
                   key={stat.alt}
                   ref={statRefs.current[stat.alt]}
-                  className={`flex cursor-pointer items-center gap-2 rounded-full px-4 py-2.5 ${glassStyle} z-10 border hover:border-foreground hover:bg-foreground/10`}
+                  className={`flex cursor-pointer items-center gap-2 rounded-full px-4 py-2.5 ${glassStyle} hover:border-foreground hover:bg-foreground/10 z-10 border`}
                   onClick={() =>
                     setStatPopoverOpen(
                       statPopoverOpen === stat.alt ? null : stat.alt
@@ -261,55 +264,111 @@ const Cover = () => {
                         {Array.from({ length: 6 }).map((_, i) => (
                           <div
                             className={cn(
-                              'relative flex flex-col items-center justify-center gap-2 rounded-[0.4167vw] px-4 py-5',
+                              'group relative flex flex-col items-center justify-center gap-2 rounded-[0.4167vw] px-4 py-5',
                               i < activeDay
-                                ? 'bg-success/10'
-                                : 'border-accent rounded-[0.4167vw] border'
+                                ? 'not-last:bg-success/10 last:bg-[linear-gradient(98deg,_rgba(255,_32,_162,_0.10)_1.97%,_rgba(255,_91,_32,_0.10)_104.5%)]'
+                                : i != 5 &&
+                                    'outline-accent rounded-[0.4167vw] outline-[0.1042vw]',
+                              ''
                             )}
                             key={i}
                           >
+                            {i == 5 && activeDay != 6 && (
+                              <Image
+                                src={PremiumBorder}
+                                alt="PremiumBorder"
+                                className="absolute top-0 right-0 h-21 w-23.75"
+                              />
+                            )}
                             {i < activeDay && (
                               <div className="absolute top-0 right-0 translate-x-1/4 -translate-y-1/4">
-                                <svg
-                                  width="16"
-                                  height="16"
-                                  viewBox="0 0 16 16"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <rect
+                                {i != 5 ? (
+                                  <svg
                                     width="16"
                                     height="16"
-                                    rx="8"
-                                    fill="#33CF8E"
-                                  />
-                                  <path
-                                    d="M5.26953 8.39078L6.82953 9.95078L10.7295 6.05078"
-                                    stroke="#01050D"
-                                    stroke-width="1.5"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                  />
-                                </svg>
+                                    viewBox="0 0 16 16"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-4 w-4"
+                                  >
+                                    <rect
+                                      width="16"
+                                      height="16"
+                                      rx="8"
+                                      fill="#33CF8E"
+                                    />
+                                    <path
+                                      d="M5.26953 8.39078L6.82953 9.95078L10.7295 6.05078"
+                                      stroke="#01050D"
+                                      stroke-width="1.5"
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                    />
+                                  </svg>
+                                ) : (
+                                  <svg
+                                    width="16"
+                                    height="16"
+                                    viewBox="0 0 16 16"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-4 w-4"
+                                  >
+                                    <rect
+                                      width="16"
+                                      height="16"
+                                      rx="8"
+                                      fill="url(#paint0_linear_3623_24863)"
+                                    />
+                                    <path
+                                      d="M5.26953 8.39078L6.82953 9.95078L10.7295 6.05078"
+                                      stroke="#01050D"
+                                      stroke-width="1.5"
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                    />
+                                    <defs>
+                                      <linearGradient
+                                        id="paint0_linear_3623_24863"
+                                        x1="-1.95918"
+                                        y1="16"
+                                        x2="16.4375"
+                                        y2="18.6683"
+                                        gradientUnits="userSpaceOnUse"
+                                      >
+                                        <stop stop-color="#FF20A2" />
+                                        <stop offset="1" stop-color="#FF5B20" />
+                                      </linearGradient>
+                                    </defs>
+                                  </svg>
+                                )}
                               </div>
                             )}
 
                             <Image
-                              src={i < activeDay ? FireIcon : FireGrey}
+                              src={
+                                i == 5
+                                  ? FirePremium
+                                  : i < activeDay
+                                    ? FireIcon
+                                    : FireGrey
+                              }
                               alt="fire"
                               className="h-5 w-5"
                             />
                             <span
                               className={cn(
-                                i < activeDay ? 'text-success' : '',
-                                'text-sm'
+                                i < activeDay
+                                  ? 'text-success group-last:text-[#FE20A2]'
+                                  : '',
+                                'text-sm leading-4'
                               )}
                             >
                               {50 * (i + 1)}
                               <span
                                 className={cn(
                                   i < activeDay
-                                    ? 'text-success/50'
+                                    ? 'text-success/50 group-last:text-[#FE20A2]/50'
                                     : 'text-secondary/50'
                                 )}
                               >
