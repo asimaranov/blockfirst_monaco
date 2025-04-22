@@ -27,6 +27,7 @@ export default function SignOutButton() {
         src={logoutImg}
         alt="logout"
         className="h-4 w-4 group-hover:hidden group-data-[active=true]:hidden"
+        loading='eager'
       />
       <Image
         src={logoutHoverImg}

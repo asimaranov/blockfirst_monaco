@@ -17,6 +17,7 @@ export function CourseProgress({
           src={medalImg}
           alt="progress"
           className="h-6 w-6"
+          loading='eager'
         />
         <span className="font-roboto text-xl font-semibold leading-6 text-[#F2F2F2]">
           {progress}%

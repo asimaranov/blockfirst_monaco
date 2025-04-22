@@ -15,7 +15,7 @@ export function MenuItem({
   // isBase?: boolean;
 }) {
   return (
-    <div className={'mx-4 mt-6 nth-[2]:mt-8 flex flex-col'}>
+    <div className={'mx-4 mt-6 flex flex-col'}>
       <div className={'flex flex-row items-center justify-between mb-3'}>
         <span
           className={

@@ -28,7 +28,7 @@
   --radius: 0.6rem;
 }
 
-@theme {
+@theme inline {
   --spacing: 4px;
 
   /* Font variables now controlled by Next.js font optimization via CSS variables */
@@ -434,4 +434,10 @@
   --chart-5: hsl(340 75% 55%);
   --brand: hsl(213.3 93.9% 67.8%);
   --highlight: hsl(48 96% 53%);
+}
+
+
+@theme inline {
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-roboto-mono);
 }
