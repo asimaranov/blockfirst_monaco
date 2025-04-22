@@ -50,9 +50,6 @@ export function CourseSection({
   const sectionProgress =
     totalLessons > 0 ? completedLessons / totalLessons : 0;
 
-
-  console.log(expanded);
-
   return (
     <div className="mt-12 mb-8 flex w-full flex-col px-4">
       <div className="w-full px-4">

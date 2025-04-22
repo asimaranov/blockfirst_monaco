@@ -8,6 +8,7 @@ import { createPortal } from 'react-dom';
 import FireGrey from './assets/FireGrey.png';
 import FirePremium from './assets/FirePremium.png';
 import PremiumBorder from './assets/PremiumBorder.svg';
+import { motion } from 'motion/react';
 
 import { InfoPopover, InfoPopoverIcon } from '../shared/InfoPopover';
 
@@ -166,17 +167,23 @@ const Popover = ({
   if (typeof document === 'undefined') return null;
 
   return createPortal(
-    <div
+    <motion.div
       ref={popoverRef}
       className="fixed z-50 flex flex-col rounded-[0.4167vw] bg-[#1D2026] p-7 shadow-lg"
       style={{
         top: `${position.top}px`,
         left: `${position.left}px`,
-        transform: 'translateX(-50%)',
+      }}
+      initial={{ opacity: 0, y: -20, scale: 0.95, x: '-50%' }}
+      animate={{ opacity: 1, y: 0, scale: 1, x: '-50%' }}
+      exit={{ opacity: 0, y: -10, scale: 0.95, x: '-50%' }}
+      transition={{
+        duration: 0.2,
+        ease: 'easeOut',
       }}
     >
       {children}
-    </div>,
+    </motion.div>,
     document.body
   );
 };
