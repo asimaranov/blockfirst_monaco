@@ -281,6 +281,7 @@ function CommentItem({
             </span>
           </button>
           <DropDownAction
+            header={comment.isSelf ? undefined : 'Пожаловаться'}
             button={
               <div className="text-secondary flex w-6.5 cursor-pointer items-center justify-center rounded-[0.2083vw] group-data-[active=true]/button:bg-[#1D2026] hover:bg-[#1D2026]">
                 <MoreIcon />
@@ -397,7 +398,11 @@ export default function CommentsList() {
               <div className="flex flex-row gap-5 pt-8 pl-15">
                 <UserAvatar avatarInitial={'В'} isSelf={true} />
 
-                <CommentsEditor className="w-175" value={replyToUser ? `@${replyToUser}, ` : ''} id='sub-editor' />
+                <CommentsEditor
+                  className="w-175"
+                  value={replyToUser ? `@${replyToUser}, ` : ''}
+                  id="sub-editor"
+                />
               </div>
             )}
             <div className="flex flex-col gap-8 pt-8 pl-15">

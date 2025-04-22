@@ -4,6 +4,7 @@ import FireAction from './assets/FireAction.png';
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import DropDownAction from '../shared/DropDownAction';
 
 const ShareIcon = () => {
   return (
@@ -72,8 +73,124 @@ const Button = ({ children }: { children: React.ReactNode }) => (
   </button>
 );
 
+const VkIcon = () => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect width="16" height="16" rx="8" fill="#0077FF" />
+      <path
+        d="M8.39457 10.7992C5.38795 10.7992 3.67302 8.69712 3.60156 5.19922H5.10762C5.15709 7.76659 6.2674 8.85407 7.14685 9.0783V5.19922H8.56496V7.41343C9.43342 7.31814 10.3458 6.30913 10.6537 5.19922H12.0718C11.9558 5.77485 11.7246 6.31988 11.3926 6.80022C11.0606 7.28056 10.6351 7.68587 10.1425 7.99081C10.6923 8.26944 11.178 8.66382 11.5674 9.14792C11.9568 9.63202 12.2411 10.1948 12.4016 10.7992H10.8405C10.6965 10.2743 10.4037 9.80434 9.99892 9.44835C9.59412 9.09236 9.09529 8.86613 8.56496 8.79802V10.7992H8.39457Z"
+        fill="white"
+      />
+    </svg>
+  );
+};
+
+const FacebookIcon = () => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect width="16" height="16" rx="8" fill="#0B84EE" />
+      <path
+        d="M8.66439 8.14514H10.1533L10.387 6.62344H8.66409V5.79176C8.66409 5.15962 8.86939 4.59907 9.45713 4.59907H10.4016V3.27112C10.2356 3.24857 9.88468 3.19922 9.22155 3.19922C7.83684 3.19922 7.02503 3.93494 7.02503 5.6111V6.62344H5.60156V8.14514H7.02503V12.3276C7.30694 12.3703 7.59248 12.3992 7.88559 12.3992C8.15054 12.3992 8.40913 12.3748 8.66439 12.3401V8.14514Z"
+        fill="white"
+      />
+    </svg>
+  );
+};
+
+const TwitterIcon = () => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clip-path="url(#clip0_3557_48836)">
+        <rect width="16" height="16" rx="8" fill="#01050D" />
+        <path
+          d="M8.59552 7.38246L11.2307 4.38281H10.6065L8.31738 6.98683L6.49047 4.38281H4.38281L7.14607 8.32092L4.38281 11.4661H5.00704L7.4228 8.7156L9.35257 11.4661H11.4602M5.23234 4.84379H6.19133L10.606 11.0278H9.64676"
+          fill="white"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_3557_48836">
+          <rect width="16" height="16" rx="8" fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
+
+const TelegramIcon = () => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect width="16" height="16" rx="8" fill="#1EA1DD" />
+      <path
+        d="M11.2016 5.04167L9.99939 11.3177C9.99939 11.3177 9.83119 11.7528 9.36912 11.5441L6.59539 9.34181L6.58253 9.33532C6.9572 8.98694 9.86252 6.28185 9.9895 6.15923C10.1861 5.96933 10.064 5.85627 9.83581 5.99972L5.54428 8.82197L3.88862 8.24509C3.88862 8.24509 3.62807 8.14911 3.603 7.94042C3.5776 7.73139 3.89719 7.61834 3.89719 7.61834L10.6468 4.87636C10.6468 4.87636 11.2016 4.62395 11.2016 5.04167Z"
+        fill="#FEFEFE"
+      />
+    </svg>
+  );
+};
+
+const CopyIcon = () => {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <g clip-path="url(#clip0_3557_48848)">
+        <path
+          d="M10.4 8.53766V11.0577C10.4 13.1577 9.56 13.9977 7.46 13.9977H4.94C2.84 13.9977 2 13.1577 2 11.0577V8.53766C2 6.43766 2.84 5.59766 4.94 5.59766H7.46C9.56 5.59766 10.4 6.43766 10.4 8.53766Z"
+          stroke="#F2F2F2"
+          stroke-width="0.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <path
+          d="M14.0016 4.93609V7.45609C14.0016 9.55609 13.1616 10.3961 11.0616 10.3961H10.4016V8.53609C10.4016 6.43609 9.56156 5.59609 7.46156 5.59609H5.60156V4.93609C5.60156 2.83609 6.44156 1.99609 8.54156 1.99609H11.0616C13.1616 1.99609 14.0016 2.83609 14.0016 4.93609Z"
+          stroke="#F2F2F2"
+          stroke-width="0.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </g>
+      <defs>
+        <clipPath id="clip0_3557_48848">
+          <rect width="16" height="16" fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+};
+
 export default function ContentFooter() {
   const [rating, setRating] = useState<number | undefined>(undefined);
+
+  const title = 'Изучи блокчейн разработку с blockfirst';
+  const description = 'Изучи блокчейн разработку с blockfirst';
 
   return (
     <div className="border-accent flex flex-row border-b px-16 pt-21.5 pb-10">
@@ -98,18 +215,62 @@ export default function ContentFooter() {
       </Button>
 
       <div className="mr-auto ml-auto flex flex-row items-center">
-        <div className="group mr-7 flex cursor-pointer flex-row gap-2">
-          <ShareIcon />
-          <span className="group-hover:text-foreground/50 text-sm">
-            Поделиться
-          </span>
-        </div>
-
+        <DropDownAction
+          direction="top"
+          button={
+            <div className="group mr-7 flex cursor-pointer flex-row gap-2">
+              <ShareIcon />
+              <span className="group-hover:text-foreground/50 text-sm">
+                Поделиться
+              </span>
+            </div>
+          }
+          options={[
+            {
+              label: 'Вконтакте',
+              value: 'vk',
+              icon: <VkIcon />,
+              link: `https://vk.com/share.php?url=${window.location.href}&title=${title}&description=${description}`,
+            },
+            {
+              label: 'Facebook',
+              value: 'facebook',
+              icon: <FacebookIcon />,
+              link: `https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`,
+            },
+            {
+              label: 'Twitter (X)',
+              value: 'twitter',
+              icon: <TwitterIcon />,
+              link: `https://twitter.com/intent/tweet?url=${window.location.href}&text=${title}`,
+            },
+            {
+              label: 'Telegram',
+              value: 'telegram',
+              icon: <TelegramIcon />,
+              link: `https://t.me/share/url?url=${window.location.href}&text=${title}`,
+            },
+            {
+              label: 'Копировать ссылку',
+              value: 'copy',
+              icon: <CopyIcon />,
+              closeOnClick: true,
+              onClick: () => {
+                navigator.clipboard.writeText(window.location.href);
+              },
+            },
+          ]}
+        />
         <Separator />
 
-        <div className={cn("mx-2 flex items-center px-5 h-8 rounded-[0.3125vw] group/rating", !!rating && 'hover:bg-secondary/10 cursor-pointer')}>
+        <div
+          className={cn(
+            'group/rating mx-2 flex h-8 items-center rounded-[0.3125vw] px-5',
+            !!rating && 'hover:bg-secondary/10 cursor-pointer'
+          )}
+        >
           {rating ? (
-            <button className="flex flex-row items-center justify-center gap-2 cursor-pointer">
+            <button className="flex cursor-pointer flex-row items-center justify-center gap-2">
               <StarIconFilled className="" />
 
               {rating.toFixed(2)}
@@ -134,7 +295,7 @@ export default function ContentFooter() {
 
         <Separator />
 
-        <div className="flex flex-row items-center justify-center gap-3 ml-7">
+        <div className="ml-7 flex flex-row items-center justify-center gap-3">
           <div className="bg-secondary/10 group flex h-8 w-8 cursor-pointer items-center justify-center rounded-[0.3021vw] text-sm">
             <Image
               src={BrokenHeart}
