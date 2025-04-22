@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { cn } from '~/helpers';
 import Image, { StaticImageData } from 'next/image';
 import FireIcon from './assets/Fire.png';
 import SparklesIcon from './assets/Sparkles.png';
 import Link from 'next/link';
+import { createPortal } from 'react-dom';
+import FireGrey from './assets/FireGrey.png';
+import { InfoPopover, InfoPopoverIcon } from '../shared/InfoPopover';
 
 // Helper Icon Components (moved from LessonPage.tsx)
 const ChevronRightIcon = () => (
@@ -29,7 +32,7 @@ const MoonIcon = () => (
     viewBox="0 0 16 16"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className='w-4 h-4'
+    className="h-4 w-4"
   >
     <path
       d="M14.3551 10.6183C14.2484 10.4383 13.9484 10.1583 13.2018 10.2916C12.7884 10.365 12.3684 10.3983 11.9484 10.3783C10.3951 10.3116 8.98842 9.59829 8.00843 8.49829C7.14176 7.53162 6.60842 6.27162 6.60176 4.91162C6.60176 4.15162 6.74842 3.41829 7.04842 2.72495C7.34176 2.05162 7.13509 1.69829 6.98842 1.55162C6.83509 1.39829 6.47509 1.18495 5.76842 1.47829C3.04176 2.62495 1.35509 5.35829 1.55509 8.28495C1.75509 11.0383 3.68843 13.3916 6.24843 14.2783C6.86176 14.4916 7.50843 14.6183 8.17509 14.645C8.28176 14.6516 8.38842 14.6583 8.49509 14.6583C10.7284 14.6583 12.8218 13.605 14.1418 11.8116C14.5884 11.1916 14.4684 10.7983 14.3551 10.6183Z"
@@ -110,14 +113,94 @@ const actions: Action[] = [
 
 const tags = ['Economy', 'DEFI', 'TOKENS'];
 
+// Popover component using Portal
+const Popover = ({
+  isOpen,
+  onClose,
+  triggerRef,
+  children,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  triggerRef: React.RefObject<HTMLElement>;
+  children: React.ReactNode;
+}) => {
+  const popoverRef = useRef<HTMLDivElement>(null);
+  const [position, setPosition] = useState({ top: 0, left: 0 });
+
+  useEffect(() => {
+    if (isOpen && triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect();
+      setPosition({
+        top: rect.bottom + window.scrollY + 10, // 10px below the trigger
+        left: rect.left + rect.width / 2 + window.scrollX,
+      });
+    }
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        popoverRef.current &&
+        !popoverRef.current.contains(event.target as Node) &&
+        triggerRef.current &&
+        !triggerRef.current.contains(event.target as Node)
+      ) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen, onClose, triggerRef]);
+
+  if (!isOpen) return null;
+
+  // Only render in browser environment
+  if (typeof document === 'undefined') return null;
+
+  return createPortal(
+    <div
+      ref={popoverRef}
+      className="fixed z-50 flex flex-col rounded-[0.4167vw] bg-[#1D2026] p-7 shadow-lg"
+      style={{
+        top: `${position.top}px`,
+        left: `${position.left}px`,
+        transform: 'translateX(-50%)',
+      }}
+    >
+      {children}
+    </div>,
+    document.body
+  );
+};
+
 // --- Component ---
 const Cover = () => {
   // Glassmorphism style
   const glassStyle =
     'bg-foreground/5 border-[0.026vw] border-foreground/20 backdrop-blur-lg';
 
+  // State for popover
+  const [statPopoverOpen, setStatPopoverOpen] = useState<string | null>(null);
+  const statRefs = useRef<{ [key: string]: React.RefObject<HTMLDivElement> }>(
+    {}
+  );
+
+  const activeDay = 3;
+
+  // Initialize refs for stat items
+  useEffect(() => {
+    stats.forEach((stat) => {
+      statRefs.current[stat.alt] = React.createRef();
+    });
+  }, []);
+
   return (
-    <div className="bg-background text-foreground relative h-62.5 w-full overflow-hidden border-accent border-x">
+    <div className="bg-background text-foreground border-accent relative h-62.5 w-full overflow-hidden border-x">
       {/* Background Image */}
       <div className="absolute inset-0 bg-[url('/images/covers/LessonCover.png')] bg-cover bg-center bg-no-repeat">
         <div className="from-background/0 via-background/50 to-background absolute inset-0 bg-gradient-to-t"></div>
@@ -130,7 +213,9 @@ const Cover = () => {
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
               <div className="bg-success h-1.5 w-1.5 rounded-full"></div>
-              <span className="text-foreground text-sm leading-4">08.03.2025</span>{' '}
+              <span className="text-foreground text-sm leading-4">
+                08.03.2025
+              </span>{' '}
               {/* Example Date */}
             </div>
             <span className="text-secondary/50 text-xs leading-3.5">
@@ -145,13 +230,105 @@ const Cover = () => {
               {stats.map((stat) => (
                 <div
                   key={stat.alt}
-                  className={`flex items-center gap-2 rounded-full px-4 py-2.5 ${glassStyle}`}
+                  ref={statRefs.current[stat.alt]}
+                  className={`flex cursor-pointer items-center gap-2 rounded-full px-4 py-2.5 ${glassStyle} z-10`}
+                  onClick={() =>
+                    setStatPopoverOpen(
+                      statPopoverOpen === stat.alt ? null : stat.alt
+                    )
+                  }
                 >
                   <Image src={stat.icon} alt={stat.alt} className="h-5 w-5" />
                   <span className="text-sm">
                     {stat.value}
                     <span className="text-foreground/50"> — {stat.label}</span>
                   </span>
+
+                  {statRefs.current[stat.alt] && (
+                    <Popover
+                      isOpen={statPopoverOpen === stat.alt}
+                      onClose={() => setStatPopoverOpen(null)}
+                      triggerRef={statRefs.current[stat.alt]}
+                    >
+                      <div className="mb-6 flex w-77.25 flex-col gap-3">
+                        <span className="text-xl">Стрик & Опыт</span>
+                        <span className="text-secondary text-sm">
+                          Ежедневно заходите на платформу, что бы попасть в
+                          лидерборд и получать бонусы!
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-3 gap-3">
+                        {Array.from({ length: 6 }).map((_, i) => (
+                          <div
+                            className={cn(
+                              'relative flex flex-col items-center justify-center gap-2 rounded-[0.4167vw] px-4 py-5',
+                              i < activeDay
+                                ? 'bg-success/10'
+                                : 'border-accent rounded-[0.4167vw] border'
+                            )}
+                            key={i}
+                          >
+                            {i < activeDay && (
+                              <div className="absolute top-0 right-0 translate-x-1/4 -translate-y-1/4">
+                                <svg
+                                  width="16"
+                                  height="16"
+                                  viewBox="0 0 16 16"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <rect
+                                    width="16"
+                                    height="16"
+                                    rx="8"
+                                    fill="#33CF8E"
+                                  />
+                                  <path
+                                    d="M5.26953 8.39078L6.82953 9.95078L10.7295 6.05078"
+                                    stroke="#01050D"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                  />
+                                </svg>
+                              </div>
+                            )}
+
+                            <Image
+                              src={i < activeDay ? FireIcon : FireGrey}
+                              alt="fire"
+                              className="h-5 w-5"
+                            />
+                            <span
+                              className={cn(
+                                i < activeDay ? 'text-success' : '',
+                                'text-sm'
+                              )}
+                            >
+                              {50 * (i + 1)}
+                              <span
+                                className={cn(
+                                  i < activeDay
+                                    ? 'text-success/50'
+                                    : 'text-secondary/50'
+                                )}
+                              >
+                                {' '}
+                                – XP
+                              </span>
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="flex items-center justify-center gap-2 pt-6 text-xs leading-3.5">
+                        <InfoPopoverIcon empty={true} />
+                        {/* <InfoPopover title={''} content={''}></InfoPopover> */}
+                        <span className="text-secondary">
+                          Лидерборд в разработке, поинты сохранятся
+                        </span>
+                      </div>
+                    </Popover>
+                  )}
                 </div>
               ))}
             </div>
@@ -160,10 +337,10 @@ const Cover = () => {
             <div className="flex items-center gap-3">
               {/* Premium Button (kept separate due to unique styling/content) */}
               <Link href="/premium" target="_blank">
-              <button className="bg-primary flex cursor-pointer items-center gap-1 rounded-full px-6 py-2.5 text-sm transition-colors hover:bg-[#1242B2]">
-                Премиум тариф
-                <ChevronRightIcon />
-              </button>
+                <button className="bg-primary flex cursor-pointer items-center gap-1 rounded-full px-6 py-2.5 text-sm transition-colors hover:bg-[#1242B2]">
+                  Премиум тариф
+                  <ChevronRightIcon />
+                </button>
               </Link>
               {/* Icon Buttons */}
               {actions.map((action) => (
@@ -180,7 +357,7 @@ const Cover = () => {
         </div>
 
         {/* Bottom Row */}
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
           {/* User Info */}
           <div className="flex items-center gap-5">
             <div className="relative h-12 w-12 flex-shrink-0">
@@ -193,7 +370,9 @@ const Cover = () => {
             </div>
             <div className="flex flex-col">
               <div className="mb-3 flex items-center gap-3">
-                <span className="text-2xl font-medium leading-6">{user.name}</span>
+                <span className="text-2xl leading-6 font-medium">
+                  {user.name}
+                </span>
                 <span
                   className={`border-foreground/20 font-delight rounded-full border px-3 pt-1 pb-1.25 text-xs leading-3.75 ${glassStyle}`}
                 >
@@ -203,7 +382,9 @@ const Cover = () => {
               <div className="text-secondary text-xxs flex items-center gap-3 uppercase">
                 {user.tags.map((tag, index) => (
                   <div key={tag} className="flex items-center gap-3">
-                    <span key={tag} className='leading-3'>{tag}</span>
+                    <span key={tag} className="leading-3">
+                      {tag}
+                    </span>
                     {index < user.tags.length - 1 && (
                       <span className="bg-secondary/20 h-3 w-px"></span>
                     )}

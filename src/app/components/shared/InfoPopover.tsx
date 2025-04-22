@@ -21,7 +21,7 @@ interface InfoPopoverProps {
   hideOnHover?: boolean;
 }
 
-const InfoPopoverIcon = ({ empty }: { empty?: boolean }) => {
+export const InfoPopoverIcon = ({ empty }: { empty?: boolean }) => {
   return (
     <svg
       width="16"
