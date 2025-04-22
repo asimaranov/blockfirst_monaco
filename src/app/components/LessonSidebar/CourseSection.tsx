@@ -9,6 +9,7 @@ import CourseStatusBadgeBg from '../shared/CourseStatusBadgeBg';
 import { TakeTestButton } from './TakeTestButton';
 import ToggleMinus from '../shared/ToggleMinus/ToggleMinus';
 import { motion, AnimatePresence } from 'motion/react';
+import { cn } from '~/helpers';
 
 interface CourseSectionProps {
   title: string;
@@ -33,9 +34,9 @@ export function CourseSection({
   status,
   modules,
   finalTestStatus,
-  expanded = true,
+  expanded,
 }: CourseSectionProps) {
-  const [isExpanded, setIsExpanded] = useState(expanded);
+  const [isExpanded, setIsExpanded] = useState(!!expanded);
 
   // Calculate overall section progress
   let totalLessons = 0;
@@ -48,6 +49,9 @@ export function CourseSection({
   });
   const sectionProgress =
     totalLessons > 0 ? completedLessons / totalLessons : 0;
+
+
+  console.log(expanded);
 
   return (
     <div className="mt-12 mb-8 flex w-full flex-col px-4">
@@ -67,7 +71,19 @@ export function CourseSection({
             }
           />
         </div>
-        <div className="flex flex-row justify-between gap-4 cursor-pointer" onClick={() => setIsExpanded(!isExpanded)}>
+        <div
+          className={cn(
+            'flex cursor-pointer flex-row justify-between gap-4',
+            status === 'locked' || status === 'upcoming'
+              ? 'cursor-default'
+              : ''
+          )}
+          onClick={() => {
+            if (status === 'available' || status === 'completed') {
+              setIsExpanded(!isExpanded);
+            }
+          }}
+        >
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-4">
               {status === 'available' && (
@@ -104,7 +120,7 @@ export function CourseSection({
                   viewBox="0 0 20 20"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className='w-5 h-5'
+                  className="h-5 w-5"
                 >
                   <path
                     d="M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z"
@@ -120,7 +136,7 @@ export function CourseSection({
               )}
             </div>
 
-            <span className=" text-white text-base leading-5">{title}</span>
+            <span className="text-base leading-5 text-white">{title}</span>
           </div>
           {/* Toggle expand/collapse */}
           <ToggleMinus
@@ -152,10 +168,10 @@ export function CourseSection({
                   total={module.lessons.length}
                 />
               ))}
-                <TakeTestButton
-                  onClick={() => {}}
-                  isCompleted={finalTestStatus === 'completed'}
-                />
+              <TakeTestButton
+                onClick={() => {}}
+                isCompleted={finalTestStatus === 'completed'}
+              />
             </div>
           </motion.div>
         )}

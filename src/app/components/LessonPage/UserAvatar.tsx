@@ -6,11 +6,7 @@ import { authClient } from '~/server/auth/client';
 import PlateEditor from './PlateEditor';
 import { cn } from '~/helpers';
 
-export function UserAvatar({
-  className,
-}: {
-  className?: string;
-}) {
+export function UserAvatar({ className }: { className?: string }) {
   const session = authClient.useSession();
 
   const user = {
@@ -26,12 +22,16 @@ export function UserAvatar({
             className
           )}
         >
-          <span className={'font-roboto text-sm leading-5 text-[#F2F2F2] uppercase'}>
+          <span
+            className={'font-roboto text-sm leading-5 text-[#F2F2F2] uppercase'}
+          >
             {user.name[0]}
           </span>
         </div>
       ) : (
-        <Skeleton className="my-auto h-10 w-10 rounded-full" />
+        <div>
+          <Skeleton className="my-auto h-10 w-10 rounded-full" />
+        </div>
       )}
     </>
   );

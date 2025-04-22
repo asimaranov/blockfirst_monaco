@@ -180,6 +180,7 @@ const DeleteIcon = () => (
     viewBox="0 0 14 14"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    className="h-3.5 w-3.5"
   >
     <path
       fill-rule="evenodd"
@@ -197,6 +198,7 @@ const EditIcon = () => (
     viewBox="0 0 14 14"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    className="h-3.5 w-3.5"
   >
     <path
       fill-rule="evenodd"
@@ -228,10 +230,14 @@ const UserAvatar = ({
 function CommentItem({
   comment,
   setReplyFormAfterId,
+  setIsThreadOpened: setIsThreadOpenedExternal,
 }: {
   comment: Comment;
   setReplyFormAfterId: (id: string) => void;
+  setIsThreadOpened: (isOpened: boolean) => void;
 }) {
+  const [isThreadOpened, setIsThreadOpened] = useState(false);
+
   return (
     <div>
       <div className="flex flex-row gap-5">
@@ -239,7 +245,7 @@ function CommentItem({
           avatarInitial={comment.avatarInitial}
           isSelf={!!comment.isSelf}
         />
-        <div className="mb-1 flex items-center gap-3">
+        <div className="flex items-center gap-3">
           <span className="text-foreground text-base font-medium">
             {comment.author}
           </span>
@@ -266,12 +272,48 @@ function CommentItem({
               {comment.likes}
             </span>
           </button>
-          <button className="text-secondary group flex cursor-pointer items-center gap-1">
-            <CommentIcon />
-            <span className="text-secondary group-hover:text-foreground">
-              {comment.replies}
-            </span>
-          </button>
+          {isThreadOpened ? (
+            <button
+              className="hover:text-foreground group flex cursor-pointer flex-row gap-1"
+              onClick={() => {
+                setIsThreadOpened(false);
+                setIsThreadOpenedExternal(false);
+              }}
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4 opacity-80 group-hover:opacity-100"
+              >
+                <path
+                  fill-rule="evenodd"
+                  clip-rule="evenodd"
+                  d="M3.05602 10.7977C3.33876 11.0728 3.79098 11.0666 4.06608 10.7838L8.00201 6.73856L11.9379 10.7838C12.213 11.0666 12.6653 11.0728 12.948 10.7977C13.2307 10.5226 13.2369 10.0703 12.9618 9.7876L8.51395 5.21617C8.37948 5.07797 8.19484 5 8.00201 5C7.80917 5 7.62453 5.07797 7.49006 5.21617L3.04218 9.7876C2.76708 10.0703 2.77328 10.5226 3.05602 10.7977Z"
+                  fill="#195AF4"
+                />
+              </svg>
+              <span className="text-secondary group-hover:text-foreground">
+                Скрыть
+              </span>
+            </button>
+          ) : (
+            <button
+              className="text-secondary group flex cursor-pointer items-center gap-1"
+              onClick={() => {
+                setIsThreadOpened(true);
+                setIsThreadOpenedExternal(true);
+              }}
+            >
+              <CommentIcon />
+              <span className="text-secondary group-hover:text-foreground">
+                {comment.replies}
+              </span>
+            </button>
+          )}
+
           <button
             className="group flex cursor-pointer items-center gap-1"
             onClick={() => setReplyFormAfterId(comment.id)}
@@ -361,6 +403,7 @@ export default function CommentsList() {
   const [loading, setLoading] = useState(false);
   const [replyToUser, setReplyToUser] = useState<string | null>(null);
   const [replyFormAfterId, setReplyFormAfterId] = useState<string | null>(null);
+  const [openedComments, setOpenedComments] = useState<string[]>([]);
 
   return (
     <div className="w-full px-16 pb-16">
@@ -394,6 +437,15 @@ export default function CommentsList() {
                 setReplyToUser(null);
                 setReplyFormAfterId(comment.id);
               }}
+              setIsThreadOpened={(isOpened: boolean) => {
+                if (isOpened) {
+                  setOpenedComments((prev) => [...prev, comment.id]);
+                } else {
+                  setOpenedComments((prev) =>
+                    prev.filter((id) => id !== comment.id)
+                  );
+                }
+              }}
             />
             {replyFormAfterId === comment.id && (
               <div className="flex flex-row gap-5 pt-8 pl-15">
@@ -406,19 +458,34 @@ export default function CommentsList() {
                 />
               </div>
             )}
-            <div className="flex flex-col gap-8 pt-8 pl-15">
-              {comment.answers &&
-                comment.answers.map((answer) => (
-                  <CommentItem
+            {comment.answers && openedComments.includes(comment.id) && (
+              <motion.div
+                className="flex flex-col gap-8 pt-8 pl-15"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.5, staggerChildren: 0.1 }}
+              >
+                {comment.answers.map((answer) => (
+                  <motion.div
                     key={answer.id}
-                    comment={answer}
-                    setReplyFormAfterId={() => {
-                      setReplyToUser(answer.author);
-                      setReplyFormAfterId(comment.id);
-                    }}
-                  />
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <CommentItem
+                      comment={answer}
+                      setReplyFormAfterId={() => {
+                        setReplyToUser(answer.author);
+                        setReplyFormAfterId(comment.id);
+                      }}
+                      setIsThreadOpened={(isOpened: boolean) => {}}
+                    />
+                  </motion.div>
                 ))}
-            </div>
+              </motion.div>
+            )}
           </div>
         ))}
       </div>

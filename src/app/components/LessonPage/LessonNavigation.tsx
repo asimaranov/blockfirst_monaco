@@ -170,6 +170,8 @@ export default function LessonNavigation() {
         <InfoPopover
           title="Структура урока"
           content="Степ-бар отображает текущий прогресс прохождения урока и содержит только заголовки глав."
+          className=""
+          offsetSide={-7.65}
         />
       </div>
 

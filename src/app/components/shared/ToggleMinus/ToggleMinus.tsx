@@ -14,7 +14,7 @@ export default function ToggleMinus({
   return (
     <button
       className={cn(
-        'group flex cursor-pointer items-center justify-center',
+        'group flex cursor-pointer disabled:cursor-auto items-center justify-center disabled:opacity-50',
         className
       )}
       onClick={onToggle}
@@ -28,8 +28,7 @@ export default function ToggleMinus({
         xmlns="http://www.w3.org/2000/svg"
         className={cn(
           'h-5 w-5',
-          'transition-transform duration-300',
-          isExpanded ? 'text-secondary' : 'group-hover:text-foreground'
+          'transition-transform duration-300'
         )}
         onClick={onToggle}
       >
@@ -41,7 +40,7 @@ export default function ToggleMinus({
           stroke="currentColor"
           strokeWidth="1.5"
           strokeLinecap="round"
-          className="transition-transform duration-300"
+          className="group-disabled:stroke-secondary transition-transform duration-300"
         />
         <line
           x1="10"
@@ -52,7 +51,7 @@ export default function ToggleMinus({
           strokeWidth="1.5"
           strokeLinecap="round"
           className={cn(
-            'origin-center transition-transform duration-300',
+            'group-disabled:stroke-secondary origin-center transition-transform duration-300',
             isExpanded ? 'scale-0' : 'scale-100'
           )}
         />

@@ -18,7 +18,7 @@ const LessonPage = () => {
         <PlateController>
           <div className="flex-1">
             <PlateEditor />
-            <ContentFooter />
+            <ContentFooter nextLocked={true} />
             <CommentsSection />
           </div>
           <RightSidebar />

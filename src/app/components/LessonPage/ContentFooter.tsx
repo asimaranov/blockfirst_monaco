@@ -68,8 +68,17 @@ const StarIconFilled = ({ className }: { className: string }) => {
   );
 };
 
-const Button = ({ children }: { children: React.ReactNode }) => (
-  <button className="border-accent hover:bg-foreground hover:text-background group flex h-11 cursor-pointer items-center gap-2 rounded-[100px] border px-6">
+const Button = ({
+  children,
+  disabled,
+}: {
+  children: React.ReactNode;
+  disabled?: boolean;
+}) => (
+  <button
+    className="border-accent not-disabled:hover:bg-foreground not-disabled:hover:text-background group flex h-11 not-disabled:cursor-pointer items-center gap-2 rounded-[100px] border px-6"
+    disabled={disabled}
+  >
     {children}
   </button>
 );
@@ -82,6 +91,7 @@ const VkIcon = () => {
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="h-4 w-4"
     >
       <rect width="16" height="16" rx="8" fill="#0077FF" />
       <path
@@ -100,6 +110,7 @@ const FacebookIcon = () => {
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="h-4 w-4"
     >
       <rect width="16" height="16" rx="8" fill="#0B84EE" />
       <path
@@ -118,6 +129,7 @@ const TwitterIcon = () => {
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="h-4 w-4"
     >
       <g clip-path="url(#clip0_3557_48836)">
         <rect width="16" height="16" rx="8" fill="#01050D" />
@@ -143,6 +155,7 @@ const TelegramIcon = () => {
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="h-4 w-4"
     >
       <rect width="16" height="16" rx="8" fill="#1EA1DD" />
       <path
@@ -161,6 +174,7 @@ const CopyIcon = () => {
       viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className="h-4 w-4"
     >
       <g clip-path="url(#clip0_3557_48848)">
         <path
@@ -187,13 +201,13 @@ const CopyIcon = () => {
   );
 };
 
-export default function ContentFooter() {
+export default function ContentFooter({ nextLocked }: { nextLocked: boolean }) {
   const [rating, setRating] = useState<number | undefined>(undefined);
   const pathname = usePathname();
 
   const title = 'Изучи блокчейн разработку с blockfirst';
   const description = 'Изучи блокчейн разработку с blockfirst';
-  const url = `https://blockfirst.io${pathname}`;
+  const url = `https://app.blockfirst.io${pathname}`;
 
   return (
     <div className="border-accent flex flex-row border-b px-16 pt-21.5 pb-10">
@@ -275,7 +289,7 @@ export default function ContentFooter() {
             rating && setRating(undefined);
           }}
         >
-          <button
+          {/* <button
             className="absolute top-full left-1/2 z-1000 hidden -translate-x-1/2 pt-3 group-hover/rating:block hover:hidden"
             onClick={() => {
               setRating(undefined);
@@ -307,13 +321,13 @@ export default function ContentFooter() {
                 fill="white"
               />
             </svg>
-          </button>
+          </button> */}
 
           {rating ? (
             <button className="relative flex cursor-pointer flex-row items-center justify-center gap-2">
               <StarIconFilled className="" />
 
-              <span className='text-sm leading-5'>{rating.toFixed(2)}</span>
+              <span className="text-sm leading-5">{rating.toFixed(2)}</span>
             </button>
           ) : (
             <>
@@ -384,23 +398,46 @@ export default function ContentFooter() {
         </div>
       </div>
 
-      <Button>
-        <span className="text-sm">Вперед</span>
-
-        <svg
-          width="21"
-          height="20"
-          viewBox="0 0 21 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5"
-        >
-          <path
-            d="M14.2305 4.43162C14.5292 4.14484 15.0042 4.15441 15.291 4.45311L19.9062 9.2617C20.1848 9.55191 20.1848 10.0106 19.9062 10.3008L15.291 15.1094C15.0042 15.4082 14.5293 15.4177 14.2305 15.1308C13.9319 14.844 13.9222 14.369 14.209 14.0703L18.3262 9.78123L14.209 5.49217C13.9222 5.19338 13.9317 4.71846 14.2305 4.43162Z"
-            fill="#F2F2F2"
-            className="group-hover:fill-background"
-          />
-        </svg>
+      <Button disabled={nextLocked}>
+        <span className={cn('text-sm', nextLocked && 'text-secondary/50')}>
+          Вперед
+        </span>
+        {nextLocked ? (
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+          >
+            <path
+              d="M10.0007 13.5679C10.6009 13.5679 11.0874 13.0813 11.0874 12.4812C11.0874 11.881 10.6009 11.3945 10.0007 11.3945C9.40058 11.3945 8.91406 11.881 8.91406 12.4812C8.91406 13.0813 9.40058 13.5679 10.0007 13.5679Z"
+              fill="#9AA6B5"
+              fill-opacity="0.5"
+            />
+            <path
+              d="M14.1854 8.35594V7.5226C14.1854 5.7226 13.752 3.33594 9.9987 3.33594C6.24536 3.33594 5.81203 5.7226 5.81203 7.5226V8.35594C3.94536 8.58927 3.33203 9.53594 3.33203 11.8626V13.1026C3.33203 15.8359 4.16536 16.6693 6.8987 16.6693H13.0987C15.832 16.6693 16.6654 15.8359 16.6654 13.1026V11.8626C16.6654 9.53594 16.052 8.58927 14.1854 8.35594ZM9.9987 14.4959C8.88536 14.4959 7.98536 13.5893 7.98536 12.4826C7.98536 11.3693 8.89203 10.4693 9.9987 10.4693C11.1054 10.4693 12.012 11.3759 12.012 12.4826C12.012 13.5959 11.112 14.4959 9.9987 14.4959ZM6.8987 8.29594C6.84536 8.29594 6.7987 8.29594 6.74536 8.29594V7.5226C6.74536 5.56927 7.2987 4.26927 9.9987 4.26927C12.6987 4.26927 13.252 5.56927 13.252 7.5226V8.3026C13.1987 8.3026 13.152 8.3026 13.0987 8.3026H6.8987V8.29594Z"
+              fill="#9AA6B5"
+              fill-opacity="0.5"
+            />
+          </svg>
+        ) : (
+          <svg
+            width="21"
+            height="20"
+            viewBox="0 0 21 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+          >
+            <path
+              d="M14.2305 4.43162C14.5292 4.14484 15.0042 4.15441 15.291 4.45311L19.9062 9.2617C20.1848 9.55191 20.1848 10.0106 19.9062 10.3008L15.291 15.1094C15.0042 15.4082 14.5293 15.4177 14.2305 15.1308C13.9319 14.844 13.9222 14.369 14.209 14.0703L18.3262 9.78123L14.209 5.49217C13.9222 5.19338 13.9317 4.71846 14.2305 4.43162Z"
+              fill="#F2F2F2"
+              className="group-hover:fill-background"
+            />
+          </svg>
+        )}
       </Button>
     </div>
   );
