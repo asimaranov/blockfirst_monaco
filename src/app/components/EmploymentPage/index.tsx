@@ -255,19 +255,19 @@ export default function EmploymentPage({ session }: { session: Session }) {
                 <div className="flex h-full grow flex-col items-center justify-center gap-4">
                   <div className="border-primary h-16 w-16 animate-spin rounded-full border-t-2 border-b-2"></div>
                   <p className="text-lg font-medium text-gray-600">
-                    Loading...
+                    Загрузка...
                   </p>
                 </div>
               ) : error ? (
                 <div className="flex justify-center p-10">
                   <div className="text-error">
-                    Error loading vacancies. Please try again.
+                    Ошибка загрузки вакансий. Пожалуйста, попробуйте еще раз.
                   </div>
                 </div>
               ) : sortVacancies(vacancies as IVacancyGeneral[]).length === 0 ? (
                 <div className="flex justify-center p-10">
                   <div className="text-secondary">
-                    No vacancies found matching your criteria.
+                    Ничего не найдено по заданным параметрам
                   </div>
                 </div>
               ) : (

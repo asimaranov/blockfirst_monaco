@@ -28,7 +28,7 @@ export default function NewsletterSubscription() {
     onError: (error) => {
       setMessage({
         text:
-          error.message || 'Произошла ошибка. Пожалуйста, попробуйте позже.',
+          error.message.includes('validation') ? 'Указан неверный ардес почты. Исправьте его и попробуйте снова.' : 'Произошла ошибка. Пожалуйста, попробуйте позже.',
         type: 'error',
       });
       setIsSubmitting(false);
@@ -92,12 +92,13 @@ export default function NewsletterSubscription() {
         <div
           className={`text-xs flex flex-row items-center gap-2 ${message.type === 'success' ? 'text-success' : 'text-error'}`}
         >
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+          {message.type === 'success' && (
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
             className='w-3.5 h-3.5'
           >
             <path
@@ -106,8 +107,9 @@ export default function NewsletterSubscription() {
               stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
-            />
-          </svg>
+              />
+            </svg>
+          )}
 
           {message.text}
         </div>

@@ -10,8 +10,6 @@ export function UserAvatar() {
 
   const user = {
     name: session?.data?.user?.name ?? '',
-    startTimestamp: Date.now(),
-    createdAt: new Date().toISOString(),
   };
 
   return (

@@ -360,7 +360,7 @@ export default function CommentsList() {
   const [sort, setSort] = useState('new');
   const [loading, setLoading] = useState(false);
   const [replyToUser, setReplyToUser] = useState<string | null>(null);
-  const [replyFormAfterId, setReplyFormAfterId] = useState<string | null>('1');
+  const [replyFormAfterId, setReplyFormAfterId] = useState<string | null>(null);
 
   return (
     <div className="w-full px-16 pb-16">

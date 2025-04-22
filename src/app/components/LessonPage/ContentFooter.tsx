@@ -5,6 +5,7 @@ import FireAction from './assets/FireAction.png';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import DropDownAction from '../shared/DropDownAction';
+import { usePathname } from 'next/navigation';
 
 const ShareIcon = () => {
   return (
@@ -188,9 +189,12 @@ const CopyIcon = () => {
 
 export default function ContentFooter() {
   const [rating, setRating] = useState<number | undefined>(undefined);
+  const pathname = usePathname()
+
 
   const title = 'Изучи блокчейн разработку с blockfirst';
   const description = 'Изучи блокчейн разработку с blockfirst';
+  const url = `https://blockfirst.io${pathname}`;
 
   return (
     <div className="border-accent flex flex-row border-b px-16 pt-21.5 pb-10">
@@ -230,25 +234,25 @@ export default function ContentFooter() {
               label: 'Вконтакте',
               value: 'vk',
               icon: <VkIcon />,
-              link: `https://vk.com/share.php?url=${window.location.href}&title=${title}&description=${description}`,
+              link: `https://vk.com/share.php?url=${url}&title=${title}&description=${description}`,
             },
             {
               label: 'Facebook',
               value: 'facebook',
               icon: <FacebookIcon />,
-              link: `https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`,
+              link: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
             },
             {
               label: 'Twitter (X)',
               value: 'twitter',
               icon: <TwitterIcon />,
-              link: `https://twitter.com/intent/tweet?url=${window.location.href}&text=${title}`,
+              link: `https://twitter.com/intent/tweet?url=${url}&text=${title}`,
             },
             {
               label: 'Telegram',
               value: 'telegram',
               icon: <TelegramIcon />,
-              link: `https://t.me/share/url?url=${window.location.href}&text=${title}`,
+              link: `https://t.me/share/url?url=${url}&text=${title}`,
             },
             {
               label: 'Копировать ссылку',
@@ -256,7 +260,7 @@ export default function ContentFooter() {
               icon: <CopyIcon />,
               closeOnClick: true,
               onClick: () => {
-                navigator.clipboard.writeText(window.location.href);
+                navigator.clipboard.writeText(url);
               },
             },
           ]}

@@ -67,7 +67,7 @@ export function CourseSection({
             }
           />
         </div>
-        <div className="flex flex-row justify-between gap-4">
+        <div className="flex flex-row justify-between gap-4 cursor-pointer" onClick={() => setIsExpanded(!isExpanded)}>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-4">
               {status === 'available' && (
