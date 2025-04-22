@@ -182,7 +182,7 @@ const Popover = ({
 const Cover = () => {
   // Glassmorphism style
   const glassStyle =
-    'bg-foreground/5 border-[0.026vw] border-foreground/20 backdrop-blur-lg';
+    'bg-foreground/1 border-[0.026vw] border-foreground/20 backdrop-blur-lg';
 
   // State for popover
   const [statPopoverOpen, setStatPopoverOpen] = useState<string | null>(null);
@@ -231,7 +231,7 @@ const Cover = () => {
                 <div
                   key={stat.alt}
                   ref={statRefs.current[stat.alt]}
-                  className={`flex cursor-pointer items-center gap-2 rounded-full px-4 py-2.5 ${glassStyle} z-10`}
+                  className={`flex cursor-pointer items-center gap-2 rounded-full px-4 py-2.5 ${glassStyle} z-10 border hover:border-foreground hover:bg-foreground/10`}
                   onClick={() =>
                     setStatPopoverOpen(
                       statPopoverOpen === stat.alt ? null : stat.alt
