@@ -193,7 +193,7 @@ const Cover = () => {
     {}
   );
 
-  const activeDay = 3;
+  const activeDay = 3 as number;
 
   // Initialize refs for stat items
   useEffect(() => {
