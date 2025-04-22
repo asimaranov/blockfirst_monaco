@@ -233,7 +233,7 @@ function CommentItem({
   setIsThreadOpened: setIsThreadOpenedExternal,
 }: {
   comment: Comment;
-  setReplyFormAfterId: (id: string) => void;
+  setReplyFormAfterId: (id: string | null) => void;
   setIsThreadOpened: (isOpened: boolean) => void;
 }) {
   const [isThreadOpened, setIsThreadOpened] = useState(false);
@@ -316,7 +316,12 @@ function CommentItem({
 
           <button
             className="group flex cursor-pointer items-center gap-1"
-            onClick={() => setReplyFormAfterId(comment.id)}
+            onClick={() => {
+              if (setReplyFormAfterId) {
+                setReplyFormAfterId('');
+              }
+              setReplyFormAfterId(comment.id)
+            }}
           >
             <ReplyIcon />
             <span className="text-primary group-hover:text-primary/50">
@@ -455,6 +460,10 @@ export default function CommentsList() {
                   className="w-175"
                   value={replyToUser ? `@${replyToUser}, ` : ''}
                   id="sub-editor"
+                  onCancel={() => {
+                    setReplyToUser(null);
+                    setReplyFormAfterId(null);
+                  }}
                 />
               </div>
             )}

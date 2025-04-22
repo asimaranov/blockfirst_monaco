@@ -15,10 +15,14 @@ export default function CommentsEditor({
   className,
   value,
   id,
+  onCancel,
+  replyFormAfterId,
 }: {
   className?: string;
   value?: string;
   id?: string;
+  onCancel?: () => void;
+  replyFormAfterId?: string | null;
 }) {
   const [commentDisabled, setCommentDisabled] = useState(true);
   const [editorFocused, setEditorFocused] = useState(false);
@@ -83,12 +87,24 @@ export default function CommentsEditor({
         </Plate>
       </DndProvider>
 
-      <button
-        className="border-primary absolute right-5 bottom-5 rounded-[100px] border px-4 py-2 text-xs not-disabled:cursor-pointer disabled:opacity-50"
-        disabled={commentDisabled}
-      >
-        Опубликовать
-      </button>
+      <div className="absolute right-5 bottom-5 flex flex-row gap-3">
+        {id == 'sub-editor' && (
+          <button
+            className="text-error cursor-pointer px-4 py-2 text-xs hover:opacity-50"
+            onClick={() => {
+              onCancel?.();
+            }}
+          >
+            Отменить
+          </button>
+        )}
+        <button
+          className="border-primary rounded-[100px] border px-4 py-2 text-xs not-disabled:cursor-pointer disabled:opacity-50"
+          disabled={commentDisabled}
+        >
+          Опубликовать
+        </button>
+      </div>
     </div>
   );
 }
