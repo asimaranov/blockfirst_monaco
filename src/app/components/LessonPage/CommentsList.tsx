@@ -282,6 +282,7 @@ function CommentItem({
               onClick={() => {
                 setIsThreadOpened(false);
                 setIsThreadOpenedExternal(false);
+                setReplyFormAfterId(null);
               }}
             >
               <svg
