@@ -91,6 +91,11 @@ import { TableCellHeaderStaticElement } from './plate/table';
 import { TableRowElementStatic } from './plate/table';
 import { TableCellElementStatic } from './plate/table';
 import { TableElementStatic } from './plate/table';
+import { CodeBlockElement } from '~/components/plate-ui/code-block-element';
+import { CodeLineElementStatic } from '~/components/plate-ui/code-line-element-static';
+import { CodeLeafStatic } from '~/components/plate-ui/code-leaf-static';
+import { CodeSyntaxLeafStatic } from '~/components/plate-ui/code-syntax-leaf-static';
+// import { CodeBlockElement } from '~/components/plate-ui/code-block-element';
 
 export function ImageElementStatic({
   children,
@@ -247,6 +252,12 @@ const PlateEditor = ({ richText }: { richText: Value }) => {
         [BaseTableCellPlugin.key]: TableCellElementStatic,
         [BaseTablePlugin.key]: TableElementStatic,
         [BaseTableRowPlugin.key]: TableRowElementStatic,
+
+        [BaseCodeBlockPlugin.key]: CodeBlockElement,
+        [BaseCodeLinePlugin.key]: CodeLineElementStatic,
+        [BaseCodePlugin.key]: CodeLeafStatic,
+        [BaseCodeSyntaxPlugin.key]: CodeSyntaxLeafStatic,
+  
       },
     },
   });
