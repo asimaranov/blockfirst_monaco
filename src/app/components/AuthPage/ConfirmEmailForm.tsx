@@ -176,7 +176,7 @@ export default function ConfirmEmailForm({
                   isError && 'border-error'
                 )}
                 placeholder={'-'}
-                type="text"
+                type="number"
                 maxLength={1}
                 onFocus={() => {
                   setActiveInput({
