@@ -12,7 +12,7 @@ import type { SlateLeafProps } from '@udecode/plate';
 
 import { SlateLeaf } from '@udecode/plate';
 
-import {  withRef } from '@udecode/cn';
+import { withRef } from '@udecode/cn';
 import { NodeApi } from '@udecode/plate';
 import { formatCodeBlock, isLangSupported } from '@udecode/plate-code-block';
 import { PlateElement } from '@udecode/plate/react';
@@ -20,7 +20,6 @@ import { BracesIcon, CheckIcon, CopyIcon } from 'lucide-react';
 
 import { Button } from './button';
 import { CodeBlockCombobox } from './code-block-combobox';
-
 
 export function CodeSyntaxLeafStatic({
   children,
@@ -97,9 +96,6 @@ export const CodeLineElementStatic = ({
   return <SlateElement {...props}>{children}</SlateElement>;
 };
 
-
-
-
 export const CodeBlockElement = withRef<typeof PlateElement>(
   ({ children, className, ...props }, ref) => {
     const { editor, element } = props;
@@ -126,7 +122,7 @@ export const CodeBlockElement = withRef<typeof PlateElement>(
         )}
         {...props}
       >
-        <div className="relative rounded-md bg-muted/50">
+        <div className="bg-muted/50 relative rounded-md">
           <pre className="overflow-x-auto p-8 pr-4 font-mono text-sm leading-[normal] [tab-size:2] print:break-inside-avoid">
             <code>{children}</code>
           </pre>
@@ -140,7 +136,7 @@ export const CodeBlockElement = withRef<typeof PlateElement>(
                 onClick={() => formatCodeBlock(editor, { element })}
                 title="Format code"
               >
-                <BracesIcon className="!size-3.5 text-muted-foreground" />
+                <BracesIcon className="text-muted-foreground !size-3.5" />
               </Button>
             )}
 
@@ -149,7 +145,7 @@ export const CodeBlockElement = withRef<typeof PlateElement>(
             <CopyButton
               size="icon"
               variant="ghost"
-              className="size-6 gap-1 text-xs text-muted-foreground"
+              className="text-muted-foreground size-6 gap-1 text-xs"
               value={() => NodeApi.string(element)}
             />
           </div>

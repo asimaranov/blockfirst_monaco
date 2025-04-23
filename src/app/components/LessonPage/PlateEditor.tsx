@@ -96,6 +96,7 @@ import { CodeLineElementStatic } from '~/components/plate-ui/code-line-element-s
 import { CodeLeafStatic } from '~/components/plate-ui/code-leaf-static';
 import { CodeSyntaxLeafStatic } from '~/components/plate-ui/code-syntax-leaf-static';
 // import { CodeBlockElement } from '~/components/plate-ui/code-block-element';
+import { all, createLowlight } from 'lowlight';
 
 export function ImageElementStatic({
   children,
@@ -164,9 +165,9 @@ const plugins = [
   BaseDatePlugin,
   BaseCalloutPlugin,
   BaseCodeBlockPlugin.configure({
-    // options: {
-    //   lowlight: createLowlight(all),
-    // },
+    options: {
+      lowlight: createLowlight(all),
+    },
   }),
   BaseIndentPlugin.extend({
     inject: {

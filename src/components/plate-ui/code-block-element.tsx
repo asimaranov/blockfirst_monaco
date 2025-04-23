@@ -57,7 +57,7 @@ export const CodeBlockElement = withRef<typeof PlateElement>(
             )}
 
             <CodeBlockCombobox />
-
+            <span>{element.lang as string}</span>
             <CopyButton
               size="icon"
               variant="ghost"
