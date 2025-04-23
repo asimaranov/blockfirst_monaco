@@ -25,7 +25,7 @@ export async function UserInfo({ user }: { user?: IUser }) {
         {user?.name ? (
           <span
             className={
-              'font-roboto line-clamp-1 text-base font-medium text-[#F2F2F2]'
+              'font-roboto line-clamp-1 text-sm font-medium text-[#F2F2F2] leading-4.75'
             }
           >
             {user.name.split(' ')[0]}

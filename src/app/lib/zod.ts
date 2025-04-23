@@ -16,7 +16,7 @@ export const signInSchema = object({
     .optional(),
   name: string({ required_error: 'Name is required' })
     .min(1, 'Name is required')
-    .max(32, 'Name must be less than 32 characters')
+    .max(13, 'Name must be less than 13 characters')
     .optional(),
 });
 
@@ -58,7 +58,7 @@ const passwordSchema = (type: 'password' | 'passwordConfirm') => Yup.string()
 
 export const frontendSchema = Yup.object({
   username: Yup.string()
-    .max(20, 'Не более 20 символов')
+    .max(13, 'Не более 13 символов')
     .required('Не заполнено имя'),
   password: passwordSchema('password'),
   passwordConfirm: passwordSchema('passwordConfirm'),
