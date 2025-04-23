@@ -1,4 +1,4 @@
-'use client';
+'use server';
 import React from 'react';
 import Cover from './Cover'; // Import the extracted Cover component
 
@@ -8,25 +8,34 @@ import { PlateController } from '@udecode/plate/react';
 import ContentFooter from './ContentFooter';
 import CommentsSection from './CommentsSection';
 import Footer from '../Footer';
-// import { motion } from 'framer-motion'; // Uncomment if using animations
+import prisma from '@/lib/prisma';
+import { Value } from '@udecode/plate';
 
-const LessonPage = () => {
+export default async function LessonPage({
+  params,
+}: {
+  params: Promise<{ courseId: string }>;
+}) {
+  const { courseId } = await params;
+  
+  const document = await prisma.document.findUnique({
+    where: {
+      id: courseId,
+    },
+  });
+
   return (
     <div>
       <Cover />
       <div className="border-accent flex min-h-screen flex-row border-x">
-        <PlateController>
           <div className="flex-1">
-            <PlateEditor />
+            <PlateEditor richText={document?.contentRich as Value} />
             <ContentFooter nextLocked={true} />
             <CommentsSection />
           </div>
           <RightSidebar />
-        </PlateController>
       </div>
       <Footer className="border-accent border-x border-t" />
     </div>
   );
-};
-
-export default LessonPage;
+}

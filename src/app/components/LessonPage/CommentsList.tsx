@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from '@udecode/cn';
 import { motion } from 'motion/react';
 import { DropDownSelector } from '../shared/DropDownSelector';

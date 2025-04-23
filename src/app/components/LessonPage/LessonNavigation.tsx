@@ -1,3 +1,4 @@
+'use client';
 import { authClient } from '~/server/auth/client';
 import { InfoPopover } from '../shared/InfoPopover';
 import { UserInfoClient } from '../Sidebar/UserInfoClient';
@@ -140,9 +141,6 @@ function useHeadingsIntersection(
 }
 
 export default function LessonNavigation() {
-
-
-
   const headingList = useEditorSelector(getHeadingList, [], {
     id: 'content',
   });
@@ -150,16 +148,14 @@ export default function LessonNavigation() {
   const editor = useEditorRef('content');
   const activeHeadingIndex = useHeadingsIntersection(headingList, editor);
 
-  const items=headingList.map((heading) => heading.title)
-  const activeIndex=activeHeadingIndex;
+  const items = headingList.map((heading) => heading.title);
+  const activeIndex = activeHeadingIndex;
 
   const navigationItems: NavigationItem[] = items.map((x, i) => ({
     title: x,
     type:
       activeIndex === i ? 'active' : activeIndex > i ? 'completed' : 'upcoming',
   }));
-
-
 
   return (
     <div className="sticky top-0 flex h-screen w-75 flex-col gap-8 pt-10">

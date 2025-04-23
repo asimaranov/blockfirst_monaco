@@ -6,11 +6,11 @@ import { authClient } from '~/server/auth/client';
 import PlateEditor from './PlateEditor';
 import { cn } from '~/helpers';
 
-export function UserAvatar({ className }: { className?: string }) {
-  const session = authClient.useSession();
+export async function UserAvatar({ className }: { className?: string }) {
+  const session = await getServerSession();
 
   const user = {
-    name: session?.data?.user?.name ?? '',
+    name: session?.user?.name ?? '',
   };
 
   return (

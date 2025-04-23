@@ -6,11 +6,7 @@ import {
   useScrollRef,
 } from '@udecode/plate/react';
 
-import {
-  type SlateEditor,
-  type TElement,
-  NodeApi,
-} from '@udecode/plate';
+import { type SlateEditor, type TElement, NodeApi } from '@udecode/plate';
 import {
   type Heading,
   BaseTocPlugin,
@@ -20,12 +16,15 @@ import {
 
 import LessonNavigation from './LessonNavigation';
 import { UserInfoClient } from '../Sidebar/UserInfoClient';
-
+import { Plate } from '@udecode/plate/react';
+import { useEditorStore } from '~/store/editorStore';
 const RightSidebar = () => {
-  
+  const editor = useEditorStore()
   return (
-    <div className="w-75 bg-[#14171C] border-accent border-l min-h-screen">
-      <LessonNavigation />
+    <div className="border-accent min-h-screen w-75 border-l bg-[#14171C]">
+      <Plate editor={editor.editor}>
+        <LessonNavigation />
+      </Plate>
     </div>
   );
 };

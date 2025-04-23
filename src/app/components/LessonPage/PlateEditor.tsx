@@ -8,12 +8,13 @@ import {
   PlateLeaf,
 } from '@udecode/plate/react';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   createSlateEditor,
   PlateStatic,
   BaseParagraphPlugin,
   TText,
+  Value,
 } from '@udecode/plate';
 import {
   BaseBoldPlugin,
@@ -85,6 +86,8 @@ import type { TImageElement } from '@udecode/plate-media';
 
 import { cn } from '@udecode/cn';
 import { type SlateElementProps, NodeApi, SlateElement } from '@udecode/plate';
+import { r } from 'node_modules/better-auth/dist/shared/better-auth.Cr5ixZZK';
+import { useEditorStore } from '~/store/editorStore';
 
 export function ImageElementStatic({
   children,
@@ -201,10 +204,14 @@ const plugins = [
   BaseTogglePlugin,
 ];
 
-const PlateEditor = () => {
+const PlateEditor = ({ richText }: { richText: Value }) => {
+
+  // console.log('richText', r/ );
+  const editorStore = useEditorStore()
+
   const editor = usePlateEditor({
     id: 'content',
-    value: ARTICLE_DATA,
+    value: richText,
     plugins: plugins,
     override: {
       components: {
@@ -236,6 +243,10 @@ const PlateEditor = () => {
       },
     },
   });
+
+  useEffect(() => {
+    editorStore.setEditor(editor)
+  }, [editor])
 
   return (
     <div className="px-16">

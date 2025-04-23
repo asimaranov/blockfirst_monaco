@@ -1,3 +1,4 @@
+'use client';
 import { Skeleton } from '../shared/Skeleton';
 import { IUser } from '~/app/lib/types/IUser';
 import { useCreateEditor } from './PlateComment';

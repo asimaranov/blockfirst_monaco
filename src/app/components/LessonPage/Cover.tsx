@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import { cn } from '~/helpers';
 import Image, { StaticImageData } from 'next/image';

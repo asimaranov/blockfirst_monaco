@@ -1,3 +1,5 @@
+'use client';
+
 import { cn } from '~/helpers';
 import BrokenHeart from './assets/BrokenHeart.png';
 import FireAction from './assets/FireAction.png';
