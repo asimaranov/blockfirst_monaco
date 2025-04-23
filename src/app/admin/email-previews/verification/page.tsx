@@ -41,7 +41,7 @@ export default async function VerificationEmailPreviewPage() {
       </div>
 
       <iframe
-        className="solid h-300 max-h-full w-150 rounded-lg bg-white"
+        className="solid h-300 max-h-full w-250 rounded-lg bg-white"
         srcDoc={html}
       />
     </div>

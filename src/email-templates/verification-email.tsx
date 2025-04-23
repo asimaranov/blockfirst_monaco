@@ -59,8 +59,8 @@ const VerificationEmailTemplate = ({
           },
         }}
       >
-        <Body className="bg-brand-dark text-brand-light mx-auto my-auto font-sans">
-          <Container className={`mx-auto py-[40px] max-w-[600px] p-[20px] bg-[url(${topCoverUrl})] bg-no-repeat bg-top-left bg-contain`}>
+        <Body className="bg-brand-dark text-brand-light mx-auto my-auto font-sans" style={{ backgroundColor: '#0f1217' }}>
+          <Container className={`mx-auto py-[40px] max-w-[600px] p-[20px] bg-[url(${topCoverUrl})] bg-no-repeat bg-top-left bg-contain bg-[#01050d] rounded-[12px]`}>
             <Section className="pt-[32px] text-center">
               <Img
                 src={logoUrl}
@@ -119,7 +119,7 @@ const VerificationEmailTemplate = ({
               </Text>
             </Section>
 
-            <Hr className="mx-0 my-[26px] w-full" style={{ borderColor: '#282D33', borderTop: "1px solid #282D33" }} />
+            {/* <Hr className="mx-0 my-[26px] w-full" style={{ borderColor: '#282D33', borderTop: "1px solid #282D33" }} /> */}
 
             <Section className="text-center">
               <div className="inline-block">
