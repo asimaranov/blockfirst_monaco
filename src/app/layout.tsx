@@ -12,6 +12,12 @@ export const metadata: Metadata = {
   description:
     'Начните свой путь в web3 с помощью специально разработанной платформы и персонального AI-ментора ',
   icons: [{ rel: 'icon', type: 'image/png', url: '/icon.png' }],
+  openGraph: {
+    title: 'Blockfirst - образовательная блокчейн платформа',
+    description:
+      'Начните свой путь в web3 с помощью специально разработанной платформы и персонального AI-ментора ',
+    images: [{ url: '/og-image.png' }],
+  },
 };
 
 export default async function RootLayout({

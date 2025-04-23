@@ -109,12 +109,20 @@ interface Action {
   type: 'button' | 'icon';
   content: React.ReactNode | string; // For icon or text
   icon?: () => JSX.Element; // For icon buttons
+  onClick?: () => void; // For button actions
 }
 
 // Define actions - adjust content/icons as needed
 const actions: Action[] = [
-  { id: 'theme', type: 'icon', content: <MoonIcon /> },
-  { id: 'share', type: 'icon', content: <ShareIcon /> },
+  { id: 'theme', type: 'icon', content: <MoonIcon />, onClick: () => {} },
+  { id: 'share', type: 'icon', content: <ShareIcon />, onClick: () => {
+      navigator.share({
+        title: document.title,
+        url: window.location.href,
+        text: 'Посмотри урок по web3 рабоботке ',
+      });
+    },
+  },
 ];
 
 const tags = ['Economy', 'DEFI', 'TOKENS'];
@@ -416,6 +424,7 @@ const Cover = () => {
               {actions.map((action) => (
                 <button
                   key={action.id}
+                  onClick={action.onClick}
                   className={`border-foreground bg-foreground hover:bg-background group cursor-pointer rounded-full border p-3 transition-colors duration-100`}
                   // Add onClick handlers here if needed: onClick={() => handleAction(action.id)}
                 >
