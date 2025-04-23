@@ -87,6 +87,10 @@ import type { TImageElement } from '@udecode/plate-media';
 import { cn } from '@udecode/cn';
 import { type SlateElementProps, NodeApi, SlateElement } from '@udecode/plate';
 import { useEditorStore } from '~/store/editorStore';
+import { TableCellHeaderStaticElement } from './plate/table';
+import { TableRowElementStatic } from './plate/table';
+import { TableCellElementStatic } from './plate/table';
+import { TableElementStatic } from './plate/table';
 
 export function ImageElementStatic({
   children,
@@ -204,9 +208,8 @@ const plugins = [
 ];
 
 const PlateEditor = ({ richText }: { richText: Value }) => {
-
   // console.log('richText', r/ );
-  const editorStore = useEditorStore()
+  const editorStore = useEditorStore();
 
   const editor = usePlateEditor({
     id: 'content',
@@ -239,13 +242,18 @@ const PlateEditor = ({ richText }: { richText: Value }) => {
         }),
         underline: withProps(PlateLeaf, { as: 'u' }),
         img: ImageElementStatic,
+
+        [BaseTableCellHeaderPlugin.key]: TableCellHeaderStaticElement,
+        [BaseTableCellPlugin.key]: TableCellElementStatic,
+        [BaseTablePlugin.key]: TableElementStatic,
+        [BaseTableRowPlugin.key]: TableRowElementStatic,
       },
     },
   });
 
   useEffect(() => {
-    editorStore.setEditor(editor)
-  }, [editor])
+    editorStore.setEditor(editor);
+  }, [editor]);
 
   return (
     <div className="px-16">
