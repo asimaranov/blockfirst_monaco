@@ -57,11 +57,15 @@ export default function SocialLogin() {
     <div className="mt-10 flex w-full items-center justify-center gap-3">
       <ConfidentialityModal
         isOpen={openModalProvider !== null}
-        onClose={() => {
+        onClose={(confirmed) => {
           setOpenModalProvider(null);
-          // setLoadingModalProvider(null);
+
+          if (!confirmed) {
+            setLoadingModalProvider(null);
+          }
         }}
         onConfirm={async () => {
+          console.log('confirmed');
           if (loadingModalProvider === 'google') {
             await authClient.signIn.social({
               provider: 'google',

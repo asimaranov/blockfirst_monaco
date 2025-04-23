@@ -186,7 +186,11 @@ BlockFirst. Мы рады видеть каждого!`}
     </FormWrapper>
     <ConfidentialityModal
       isOpen={isModalOpen}
-      onClose={() => setIsModalOpen(false)}
+      onClose={(confirmed) => {
+        if (!confirmed) {
+          setIsModalOpen(false);
+        }
+      }}
       onConfirm={async () => {
         setBottomButtonState('loading');
         const { data, error } = await authClient.signUp.email({

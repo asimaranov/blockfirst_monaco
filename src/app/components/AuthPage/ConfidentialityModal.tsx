@@ -7,7 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 interface ConfidentialityModalProps {
   isOpen: boolean;
-  onClose: () => void;
+  onClose: (confirmed: boolean) => void;
   onConfirm: () => void;
 }
 
@@ -23,7 +23,7 @@ export function ConfidentialityModal({
       setTimeout(() => {
         onConfirm();
         setIsChecked(false);
-        onClose();
+        onClose(true);
       }, 1000);
     }
   }, [isChecked]);
@@ -33,13 +33,6 @@ export function ConfidentialityModal({
     initial: { x: 0, y: '100%' },
     animate: { x: 0, y: 0 },
     exit: { x: 0, y: '100%' },
-  };
-
-  const handleConfirm = () => {
-    if (isChecked) {
-      onConfirm();
-      onClose();
-    }
   };
 
   return (
@@ -52,7 +45,7 @@ export function ConfidentialityModal({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            onClick={onClose}
+            onClick={() => onClose(false)}
             className="fixed inset-0 z-50 bg-black/50 opacity-50 sm:w-115"
           />
 
