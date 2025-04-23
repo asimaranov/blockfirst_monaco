@@ -73,7 +73,6 @@ export default function SocialLogin() {
           }
         }}
         onConfirm={async () => {
-          console.log('confirmed');
           if (loadingModalProvider === 'google') {
             await authClient.signIn.social({
               provider: 'google',

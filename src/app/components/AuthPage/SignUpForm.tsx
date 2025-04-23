@@ -187,9 +187,7 @@ BlockFirst. Мы рады видеть каждого!`}
     <ConfidentialityModal
       isOpen={isModalOpen}
       onClose={(confirmed) => {
-        if (!confirmed) {
           setIsModalOpen(false);
-        }
       }}
       onConfirm={async () => {
         setBottomButtonState('loading');
