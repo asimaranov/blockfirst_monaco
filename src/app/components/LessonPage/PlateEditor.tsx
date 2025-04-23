@@ -86,7 +86,6 @@ import type { TImageElement } from '@udecode/plate-media';
 
 import { cn } from '@udecode/cn';
 import { type SlateElementProps, NodeApi, SlateElement } from '@udecode/plate';
-import { r } from 'node_modules/better-auth/dist/shared/better-auth.Cr5ixZZK';
 import { useEditorStore } from '~/store/editorStore';
 
 export function ImageElementStatic({
@@ -211,7 +210,7 @@ const PlateEditor = ({ richText }: { richText: Value }) => {
 
   const editor = usePlateEditor({
     id: 'content',
-    value: richText,
+    value: richText || ARTICLE_DATA,
     plugins: plugins,
     override: {
       components: {
