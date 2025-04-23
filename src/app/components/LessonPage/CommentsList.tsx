@@ -510,7 +510,7 @@ export default function CommentsList() {
       <div className="flex items-center justify-center">
         <button
           className={cn(
-            'border-primary hover:bg-primary flex cursor-pointer items-center gap-2 rounded-full border px-5 py-3 text-sm leading-5',
+            'border-primary hover:bg-primary flex w-55 cursor-pointer items-center justify-center gap-2 rounded-full border px-5 py-3 text-sm leading-5',
             loading &&
               'cursor-default border-[#1242B2] bg-[#1242B2] hover:bg-[#1242B2]'
           )}
@@ -532,7 +532,10 @@ export default function CommentsList() {
               fill="#F2F2F2"
             />
           </svg>
-          {loading ? 'Загружаем' : 'Больше комментариев'}
+
+          <span className="text-sm leading-5 whitespace-nowrap">
+            {loading ? 'Загружаем' : 'Больше комментариев'}
+          </span>
         </button>
       </div>
     </div>
