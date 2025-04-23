@@ -149,12 +149,12 @@ export function FixedToolbarButtons() {
             <ToggleToolbarButton />
           </ToolbarGroup> */}
 
-          <ToolbarGroup>
+          {/* <ToolbarGroup> */}
             <MediaToolbarButton nodeType={ImagePlugin.key} />
             {/* <MediaToolbarButton nodeType={VideoPlugin.key} />
             <MediaToolbarButton nodeType={AudioPlugin.key} /> */}
-            <MediaToolbarButton nodeType={FilePlugin.key} />
-          </ToolbarGroup>
+            {/* <MediaToolbarButton nodeType={FilePlugin.key} /> */}
+          {/* </ToolbarGroup> */}
           {/* 
           <ToolbarGroup>
             <LineHeightDropdownMenu />
