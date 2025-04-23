@@ -262,7 +262,7 @@ const ImageModal = ({
     >
       <div className="relative max-h-[90vh] max-w-[90vw]">
         <button
-          className="absolute top-4 right-4 text-foreground hover:opacity-50 focus:outline-none cursor-pointer"
+          className="text-foreground absolute top-4 right-4 cursor-pointer hover:opacity-50 focus:outline-none"
           onClick={onClose}
         >
           <svg
@@ -271,6 +271,7 @@ const ImageModal = ({
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
           >
             <path
               d="M18 6L6 18"
@@ -364,6 +365,7 @@ function CommentItem({
                     viewBox="0 0 20 20"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
                   >
                     <path
                       d="M7.66406 9.75H11.8307"
