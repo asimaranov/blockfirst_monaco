@@ -461,7 +461,13 @@ export default function CommentsList() {
               }}
             />
             {replyFormAfterId === comment.id && (
-              <div className="flex flex-row gap-5 pt-8 pl-15">
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                className="flex flex-row gap-5 overflow-hidden pt-8 pl-15"
+              >
                 <UserAvatar avatarInitial={'В'} isSelf={true} />
 
                 <CommentsEditor
@@ -473,36 +479,18 @@ export default function CommentsList() {
                     setReplyFormAfterId(null);
                   }}
                 />
-              </div>
+              </motion.div>
             )}
             {comment.answers && openedComments.includes(comment.id) && (
               <motion.div
-                className="flex flex-col gap-8 overflow-hidden pt-8 pl-15"
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                transition={{
-                  duration: 0.3,
-                  height: {
-                    type: 'spring',
-                    stiffness: 150,
-                    damping: 20,
-                  },
-                  opacity: { duration: 0.2 },
-                }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                className="flex flex-col gap-8 overflow-hidden pt-8 pl-15"
               >
                 {comment.answers.map((answer, index) => (
-                  <motion.div
-                    key={answer.id}
-                    initial={{ opacity: 0, y: -5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    transition={{
-                      duration: 0.15,
-                      delay: index * 0.05,
-                      ease: 'easeOut',
-                    }}
-                  >
+                  <div key={answer.id}>
                     <CommentItem
                       comment={answer}
                       setReplyFormAfterId={() => {
@@ -512,7 +500,7 @@ export default function CommentsList() {
                       replyFormAfterId={replyFormAfterId}
                       setIsThreadOpened={(isOpened: boolean) => {}}
                     />
-                  </motion.div>
+                  </div>
                 ))}
               </motion.div>
             )}
@@ -545,7 +533,7 @@ export default function CommentsList() {
             />
           </svg>
 
-          <span className="whitespace-nowrap text-sm leading-5">
+          <span className="text-sm leading-5 whitespace-nowrap">
             {loading ? 'Загружаем' : 'Больше комментариев'}
           </span>
         </button>
