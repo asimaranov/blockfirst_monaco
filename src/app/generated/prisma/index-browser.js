@@ -7,14 +7,12 @@ const {
   makeStrictEnum,
   Public,
   getRuntime,
-  // @ts-ignore
   skip
 } = require('./runtime/index-browser.js')
 
 
 const Prisma = {}
 
-// @ts-ignore
 exports.Prisma = Prisma
 exports.$Enums = {}
 
@@ -271,7 +269,6 @@ exports.Prisma.ModelName = {
 class PrismaClient {
   constructor() {
     return new Proxy(this, {
-      // @ts-ignore
       get(target, prop) {
         let message
         const runtime = getRuntime()
