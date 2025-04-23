@@ -545,7 +545,7 @@ export default function CommentsList() {
             />
           </svg>
 
-          <span className="whi text-sm leading-5">
+          <span className="whitespace-nowrap text-sm leading-5">
             {loading ? 'Загружаем' : 'Больше комментариев'}
           </span>
         </button>
