@@ -501,7 +501,7 @@ function CommentItem({
                     { label: 'Порнография', value: 'nsfw' },
                     { label: 'Политические высказывания', value: 'political' },
                     { label: 'Оскорбление религии', value: 'religious' },
-                    { label: 'Оскорбительная высказывание', value: 'other' },
+                    { label: 'Оскорбительное высказывание', value: 'other' },
                   ]
             }
             successBlock={

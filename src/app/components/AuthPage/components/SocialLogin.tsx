@@ -5,16 +5,19 @@ import { useEffect, useState } from 'react';
 import LoadingIcon from '../assets/social/loading.svg';
 import Image from 'next/image';
 import TelegramLoginIcon from '../assets/social/telegram';
+import { ConfidentialityModal } from '../ConfidentialityModal';
 
 const SocialIcon = ({
+  isLoading,
+  setIsLoading,
   icon,
   onClick,
 }: {
+  isLoading: boolean;
+  setIsLoading: (isLoading: boolean) => void;
   icon: React.ReactNode;
   onClick: () => Promise<void>;
 }) => {
-  const [isLoading, setIsLoading] = useState(false);
-
   return (
     <button
       className="flex cursor-pointer items-center justify-center"
@@ -43,42 +46,77 @@ const SocialIcon = ({
 };
 
 export default function SocialLogin() {
+  const [openModalProvider, setOpenModalProvider] = useState<string | null>(
+    null
+  );
+  const [loadingModalProvider, setLoadingModalProvider] = useState<
+    string | null
+  >(null);
+
   return (
     <div className="mt-10 flex w-full items-center justify-center gap-3">
-      <SocialIcon
-        icon={<GoogleLoginIcon />}
-        onClick={async () => {
-          try {
+      <ConfidentialityModal
+        isOpen={openModalProvider !== null}
+        onClose={() => {
+          setOpenModalProvider(null);
+          // setLoadingModalProvider(null);
+        }}
+        onConfirm={async () => {
+          if (loadingModalProvider === 'google') {
             await authClient.signIn.social({
               provider: 'google',
               callbackURL: '/dashboard',
             });
-          } catch (error) {
-            console.error('Error in google signin', error);
-            alert('Error in google signin');
           }
+          if (loadingModalProvider === 'telegram') {
+            await new Promise((resolve, reject) => setTimeout(reject, 1000));
+          }
+          if (loadingModalProvider === 'vk') {
+            try {
+              await authClient.signIn.social({
+                provider: 'vk',
+                callbackURL: '/dashboard',
+              });
+            } catch (error) {
+              console.error('Error in vk signin', error);
+            }
+          }
+        }}
+      />
+
+      <SocialIcon
+        icon={<GoogleLoginIcon />}
+        isLoading={loadingModalProvider === 'google'}
+        setIsLoading={() => setLoadingModalProvider('google')}
+        onClick={async () => {
+          setOpenModalProvider('google');
+          // try {
+          //   await authClient.signIn.social({
+          //     provider: 'google',
+          //     callbackURL: '/dashboard',
+          //   });
+          // } catch (error) {
+          //   console.error('Error in google signin', error);
+          //   alert('Error in google signin');
+          // }
         }}
       />
 
       <SocialIcon
         icon={<TelegramLoginIcon />}
+        isLoading={loadingModalProvider === 'telegram'}
+        setIsLoading={() => setLoadingModalProvider('telegram')}
         onClick={async () => {
-          await new Promise((resolve, reject) => setTimeout(reject, 1000));
+          setOpenModalProvider('telegram');
         }}
       />
 
       <SocialIcon
         icon={<VkLoginIcon />}
+        isLoading={loadingModalProvider === 'vk'}
+        setIsLoading={() => setLoadingModalProvider('vk')}
         onClick={async () => {
-          try {
-            await authClient.signIn.social({
-              provider: 'vk',
-              callbackURL: '/dashboard',
-            });
-          } catch (error) {
-            console.error('Error in google signin', error);
-            alert('Error in google signin');
-          }
+          setOpenModalProvider('vk');
         }}
       />
     </div>
