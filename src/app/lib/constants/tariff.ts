@@ -1,5 +1,6 @@
 export interface TariffFeature {
   text: string;
+  textSecondary?: string;
   bg?: boolean;
 }
 
@@ -31,8 +32,9 @@ export const TARIFFS: Tariff[] = [
     bigIcon: '/pricing/big_icon/free.png',
     features: [
       { text: 'Ознакомление с курсами', bg: true },
-      { text: '5 лекций / уроков' },
-      { text: 'Реферальная программа', bg: true },
+      { text: 'Персональный ai ментор', textSecondary: '10k ток/день' },
+      { text: '5 лекций / уроков', bg: true },
+      { text: 'Реферальная программа' },
     ],
     shortFeatures: [
       { text: 'Ознакомление с курсами', bg: true },
@@ -48,10 +50,11 @@ export const TARIFFS: Tariff[] = [
     bigIcon: '/pricing/big_icon/starter.png',
     features: [
       { text: 'Доступ ко всем основным материалам курса', bg: true },
-      { text: 'Доступ к телеграм чату учеников курса' },
-      { text: 'Автоматическая проверка решений', bg: true },
-      { text: 'Образовательные материалы по теме курса' },
-      { text: 'NFT Диплом', bg: true },
+      { text: 'Персональный ai ментор', textSecondary: '50к ток/день' },
+      { text: 'Доступ к телеграм чату учеников курса', bg: true },
+      { text: 'Автоматическая проверка решений' },
+      { text: 'Образовательные материалы по теме курса', bg: true },
+      { text: 'NFT Диплом' },
     ],
     shortFeatures: [
       { text: 'Все материалы курса', bg: true },
@@ -71,7 +74,7 @@ export const TARIFFS: Tariff[] = [
     bigIcon: '/pricing/big_icon/pro.png',
     features: [
       { text: 'Все что включает Starter тариф', bg: true },
-      { text: 'Персональный ai ментор' },
+      { text: 'Персональный ai ментор', textSecondary: '100k ток/день' },
       { text: 'Обсуждение задач с куратором', bg: true },
       { text: 'Премиумные материалы и задачи' },
       { text: 'Консультация для трудоустройства', bg: true },
@@ -80,7 +83,7 @@ export const TARIFFS: Tariff[] = [
     shortFeatures: [
       { text: 'Включая все с Starter', bg: true },
       { text: 'Премиумные материалы и задачи' },
-      { text: 'Персональный ai ментор и.т.д', bg: true },
+      { text: 'Персональный ai ментор', bg: true },
     ],
     price: {
       monthly: 18000,

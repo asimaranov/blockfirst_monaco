@@ -96,7 +96,9 @@ export default function TariffCard({ tariff }: { tariff: Tariff }) {
               />
             </svg>
 
-            <span className="text-sm">{feature.text}</span>
+            <span className="text-sm">
+              {feature.text} <span className="text-sm text-secondary/50">{feature.textSecondary}</span>
+            </span>
           </div>
         ))}
       </div>
