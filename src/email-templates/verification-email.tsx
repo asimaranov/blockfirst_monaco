@@ -125,7 +125,7 @@ const VerificationEmailTemplate = ({
               <div className="inline-block">
                 <Row className="mb-[16px]">
                   <Column className="px-[16px]">
-                    <Link href="https://t.me/blockfirst">
+                    <Link href="https://t.me/blockfirst_edu">
                       <Img
                         src={telegramIconUrl}
                         width="40"
