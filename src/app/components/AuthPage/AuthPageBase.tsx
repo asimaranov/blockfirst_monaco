@@ -24,7 +24,7 @@ export default function AuthPageBase({
         <div className="relative z-10 mb-10 flex w-full items-center justify-center md:mb-16">
           {topButtonState && (
             <button
-              className="absolute top-0 left-0 pt-2.5"
+              className="absolute top-0 left-0 pt-2.5 cursor-pointer"
               onClick={onTopButtonClick}
             >
               {topButtonState === 'back' ? (

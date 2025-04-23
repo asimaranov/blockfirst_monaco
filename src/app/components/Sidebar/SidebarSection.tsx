@@ -37,6 +37,7 @@ async function SidebarSection({
     items: ISidebarItem[];
   };
 }) {
+  // TODO: it fails if no auth
   const unreadCount = await api.notifications.getUnreadCount();
   const session = await getServerSession();
 

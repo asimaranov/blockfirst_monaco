@@ -69,12 +69,12 @@ export default function SignUpForm({
         router.push('https://blockfirst.io/');
       },
     });
-    return () => {
-      setTopButtonState({
-        state: undefined,
-        onClick: () => {},
-      });
-    };
+    // return () => {
+    //   setTopButtonState({
+    //     state: undefined,
+    //     onClick: () => {},
+    //   });
+    // };
   }, [router, setTopButtonState]);
 
   const handleSignUp = async () => {
