@@ -477,19 +477,31 @@ export default function CommentsList() {
             )}
             {comment.answers && openedComments.includes(comment.id) && (
               <motion.div
-                className="flex flex-col gap-8 pt-8 pl-15"
+                className="flex flex-col gap-8 overflow-hidden pt-8 pl-15"
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.5, staggerChildren: 0.1 }}
+                transition={{
+                  duration: 0.3,
+                  height: {
+                    type: 'spring',
+                    stiffness: 150,
+                    damping: 20,
+                  },
+                  opacity: { duration: 0.2 },
+                }}
               >
-                {comment.answers.map((answer) => (
+                {comment.answers.map((answer, index) => (
                   <motion.div
                     key={answer.id}
-                    initial={{ opacity: 0, y: -10 }}
+                    initial={{ opacity: 0, y: -5 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.2 }}
+                    exit={{ opacity: 0 }}
+                    transition={{
+                      duration: 0.15,
+                      delay: index * 0.05,
+                      ease: 'easeOut',
+                    }}
                   >
                     <CommentItem
                       comment={answer}
@@ -533,7 +545,7 @@ export default function CommentsList() {
             />
           </svg>
 
-          <span className="text-sm leading-5 whitespace-nowrap">
+          <span className="whi text-sm leading-5">
             {loading ? 'Загружаем' : 'Больше комментариев'}
           </span>
         </button>
