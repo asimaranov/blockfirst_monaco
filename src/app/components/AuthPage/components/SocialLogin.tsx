@@ -53,6 +53,14 @@ export default function SocialLogin() {
     string | null
   >(null);
 
+  useEffect(() => {
+    if (loadingModalProvider === null) {
+      setTimeout(() => {
+        setLoadingModalProvider(null);
+      }, 10_000);
+    }
+  }, [loadingModalProvider]);
+
   return (
     <div className="mt-10 flex w-full items-center justify-center gap-3">
       <ConfidentialityModal
