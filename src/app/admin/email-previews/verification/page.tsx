@@ -7,11 +7,9 @@ import Link from 'next/link';
 
 export default async function VerificationEmailPreviewPage() {
   const [otp, setOtp] = useState('12345');
-  const baseUrl =
-    typeof window !== 'undefined' ? `${window.location.origin}` : '';
 
   const html = await render(
-    <VerificationEmailTemplate otp={otp} baseUrl={baseUrl} />
+    <VerificationEmailTemplate otp={otp} />
   );
 
   console.log(html);
