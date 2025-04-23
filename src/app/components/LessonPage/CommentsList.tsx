@@ -462,27 +462,31 @@ export default function CommentsList() {
                 }
               }}
             />
-            {replyFormAfterId === comment.id && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3, ease: 'easeInOut' }}
-                className="flex flex-row gap-5 overflow-hidden pt-8 pl-15"
-              >
-                <UserAvatar avatarInitial={'В'} isSelf={true} />
+            <AnimatePresence>
+              {replyFormAfterId === comment.id && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3, ease: 'easeInOut' }}
+                  className="overflow-hidden"
+                >
+                  <div className="flex flex-row gap-5 overflow-hidden pl-15 pt-8">
+                    <UserAvatar avatarInitial={'В'} isSelf={true} />
 
-                <CommentsEditor
-                  className="w-175"
-                  value={replyToUser ? `@${replyToUser}, ` : ''}
-                  id="sub-editor"
-                  onCancel={() => {
-                    setReplyToUser(null);
-                    setReplyFormAfterId(null);
-                  }}
-                />
-              </motion.div>
-            )}
+                    <CommentsEditor
+                      className="w-175"
+                      value={replyToUser ? `@${replyToUser}, ` : ''}
+                      id="sub-editor"
+                      onCancel={() => {
+                        setReplyToUser(null);
+                        setReplyFormAfterId(null);
+                      }}
+                    />
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
             <AnimatePresence>
               {comment.answers && openedComments.includes(comment.id) && (
                 <motion.div
@@ -490,7 +494,7 @@ export default function CommentsList() {
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.3, ease: 'easeInOut' }}
-                  className="flex flex-col overflow-hidden  pl-15"
+                  className="flex flex-col overflow-hidden pl-15"
                 >
                   {comment.answers.map((answer, index) => (
                     <div key={answer.id} className="pt-8">
