@@ -7,6 +7,7 @@ import { useState } from 'react';
 import DropDownAction from '../shared/DropDownAction';
 import CommentsEditor from './CommentsEditor';
 import { PlateController } from '@udecode/plate/react';
+import Image from 'next/image';
 
 const HeartIcon = () => (
   <svg
@@ -105,6 +106,10 @@ interface Comment {
   replies: number;
   isLiked: boolean;
   answers?: Comment[];
+  images?: {
+    id: string;
+    url: string;
+  }[];
 }
 
 // Dummy Data for Comments
@@ -161,6 +166,16 @@ const commentsData: Comment[] = [
     likes: 98,
     replies: 2,
     isLiked: false,
+    images: [
+      {
+        id: '1',
+        url: 'https://images.unsplash.com/photo-1722778610349-e3c02e277ec2?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      },
+      {
+        id: '2',
+        url: 'https://images.unsplash.com/photo-1669026219505-0545ae1dabf5?q=80&w=2400&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      },
+    ],
   },
   {
     id: '4',
@@ -228,6 +243,64 @@ const UserAvatar = ({
   </div>
 );
 
+// Image Modal Component
+const ImageModal = ({
+  imageUrl,
+  isOpen,
+  onClose,
+}: {
+  imageUrl: string;
+  isOpen: boolean;
+  onClose: () => void;
+}) => {
+  if (!isOpen) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80"
+      onClick={onClose}
+    >
+      <div className="relative max-h-[90vh] max-w-[90vw]">
+        <button
+          className="absolute top-4 right-4 text-foreground hover:opacity-50 focus:outline-none cursor-pointer"
+          onClick={onClose}
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M18 6L6 18"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M6 6L18 18"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+        <Image
+          src={imageUrl}
+          alt="Expanded image"
+          className="max-h-[90vh] max-w-[90vw] object-contain"
+          width={1000}
+          height={1000}
+          onClick={(e) => e.stopPropagation()}
+        />
+      </div>
+    </div>
+  );
+};
+
 // Comment Item Component
 function CommentItem({
   comment,
@@ -243,9 +316,17 @@ function CommentItem({
   className?: string;
 }) {
   const [isThreadOpened, setIsThreadOpened] = useState(false);
+  const [modalImage, setModalImage] = useState<string | null>(null);
 
   return (
     <div className={cn(className)}>
+      {/* Image Modal */}
+      <ImageModal
+        imageUrl={modalImage || ''}
+        isOpen={!!modalImage}
+        onClose={() => setModalImage(null)}
+      />
+
       <div className="flex flex-row gap-5">
         <UserAvatar
           avatarInitial={comment.avatarInitial}
@@ -262,7 +343,62 @@ function CommentItem({
       </div>
       <div className="flex flex-grow flex-col px-15">
         <p className="text-foreground mb-3 py-1 text-sm">{comment.text}</p>
-
+        {comment.images && comment.images.length > 0 && (
+          <div className="flex flex-row gap-3 pb-4">
+            {comment.images.map((image, i) => (
+              <div
+                className="group relative h-20 w-20 cursor-pointer"
+                key={i}
+                onClick={() => setModalImage(image.url)}
+              >
+                <Image
+                  src={image.url}
+                  alt={image.id}
+                  className="rounded-[0.4167vw] group-hover:brightness-40"
+                  fill
+                />
+                <div className="absolute inset-0 hidden items-center justify-center group-hover:flex">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M7.66406 9.75H11.8307"
+                      stroke="#F2F2F2"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M9.75 11.8307V7.66406"
+                      stroke="#F2F2F2"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M9.58464 17.5013C13.9569 17.5013 17.5013 13.9569 17.5013 9.58464C17.5013 5.21238 13.9569 1.66797 9.58464 1.66797C5.21238 1.66797 1.66797 5.21238 1.66797 9.58464C1.66797 13.9569 5.21238 17.5013 9.58464 17.5013Z"
+                      stroke="#F2F2F2"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M18.3346 18.3346L16.668 16.668"
+                      stroke="#F2F2F2"
+                      stroke-width="1.25"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
         {/* Actions */}
         <div className="flex items-center gap-6 text-sm">
           <button
@@ -417,9 +553,17 @@ export default function CommentsList() {
   const [replyToUser, setReplyToUser] = useState<string | null>(null);
   const [replyFormAfterId, setReplyFormAfterId] = useState<string | null>(null);
   const [openedComments, setOpenedComments] = useState<string[]>([]);
+  const [modalImage, setModalImage] = useState<string | null>(null);
 
   return (
     <div className="w-full px-16 pb-16">
+      {/* Image Modal */}
+      <ImageModal
+        imageUrl={modalImage || ''}
+        isOpen={!!modalImage}
+        onClose={() => setModalImage(null)}
+      />
+
       <div className="mb-8 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="text-foreground text-2xl font-medium">
@@ -471,7 +615,7 @@ export default function CommentsList() {
                   transition={{ duration: 0.3, ease: 'easeInOut' }}
                   className="overflow-hidden"
                 >
-                  <div className="flex flex-row gap-5 overflow-hidden pl-15 pt-8">
+                  <div className="flex flex-row gap-5 overflow-hidden pt-8 pl-15">
                     <UserAvatar avatarInitial={'В'} isSelf={true} />
 
                     <CommentsEditor

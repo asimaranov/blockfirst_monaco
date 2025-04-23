@@ -37,7 +37,16 @@ const config = {
         pathname: '/**',
         search: '',
       },
-      
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+        search: '',
+      },
+      {
+        hostname: 'images.unsplash.com',
+      },
     ],
   },
 };
