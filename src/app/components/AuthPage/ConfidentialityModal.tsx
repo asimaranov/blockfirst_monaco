@@ -45,7 +45,7 @@ export function ConfidentialityModal({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            onClick={() => onClose(false)}
+            onClick={() => onClose(isChecked)}
             className="fixed inset-0 z-50 bg-black/50 opacity-50 sm:w-115"
           />
 
