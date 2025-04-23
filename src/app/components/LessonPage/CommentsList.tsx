@@ -229,10 +229,12 @@ const UserAvatar = ({
 // Comment Item Component
 function CommentItem({
   comment,
+  replyFormAfterId,
   setReplyFormAfterId,
   setIsThreadOpened: setIsThreadOpenedExternal,
 }: {
   comment: Comment;
+  replyFormAfterId: string | null;
   setReplyFormAfterId: (id: string | null) => void;
   setIsThreadOpened: (isOpened: boolean) => void;
 }) {
@@ -317,10 +319,11 @@ function CommentItem({
           <button
             className="group flex cursor-pointer items-center gap-1"
             onClick={() => {
-              if (setReplyFormAfterId) {
-                setReplyFormAfterId('');
+              if (replyFormAfterId === comment.id) {
+                setReplyFormAfterId(null);
+              } else {
+                setReplyFormAfterId(comment.id);
               }
-              setReplyFormAfterId(comment.id)
             }}
           >
             <ReplyIcon />
@@ -438,10 +441,12 @@ export default function CommentsList() {
           <div key={comment.id} className="">
             <CommentItem
               comment={comment}
-              setReplyFormAfterId={() => {
+              setReplyFormAfterId={(id) => {
+                console.log('Settingg', id);
                 setReplyToUser(null);
-                setReplyFormAfterId(comment.id);
+                setReplyFormAfterId(id);
               }}
+              replyFormAfterId={replyFormAfterId}
               setIsThreadOpened={(isOpened: boolean) => {
                 if (isOpened) {
                   setOpenedComments((prev) => [...prev, comment.id]);
@@ -489,6 +494,7 @@ export default function CommentsList() {
                         setReplyToUser(answer.author);
                         setReplyFormAfterId(comment.id);
                       }}
+                      replyFormAfterId={replyFormAfterId}
                       setIsThreadOpened={(isOpened: boolean) => {}}
                     />
                   </motion.div>
