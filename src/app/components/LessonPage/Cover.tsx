@@ -10,7 +10,7 @@ import { createPortal } from 'react-dom';
 import FireGrey from './assets/FireGrey.png';
 import FirePremium from './assets/FirePremium.png';
 import PremiumBorder from './assets/PremiumBorder.svg';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 
 import { InfoPopover, InfoPopoverIcon } from '../shared/InfoPopover';
 
@@ -138,7 +138,7 @@ const Popover = ({
     if (isOpen && triggerRef.current) {
       const rect = triggerRef.current.getBoundingClientRect();
       setPosition({
-        top: rect.bottom + window.scrollY + 10, // 10px below the trigger
+        top: rect.bottom + window.scrollY + 20,
         left: rect.left + rect.width / 2 + window.scrollX,
       });
     }
@@ -163,29 +163,31 @@ const Popover = ({
     };
   }, [isOpen, onClose, triggerRef]);
 
-  if (!isOpen) return null;
-
   // Only render in browser environment
   if (typeof document === 'undefined') return null;
 
   return createPortal(
-    <motion.div
-      ref={popoverRef}
-      className="fixed z-50 flex flex-col rounded-[0.4167vw] bg-[#1D2026] p-7 shadow-lg"
-      style={{
-        top: `${position.top}px`,
-        left: `${position.left}px`,
-      }}
-      initial={{ opacity: 0, y: -20, scale: 0.95, x: '-50%' }}
-      animate={{ opacity: 1, y: 0, scale: 1, x: '-50%' }}
-      exit={{ opacity: 0, y: -10, scale: 0.95, x: '-50%' }}
-      transition={{
-        duration: 0.2,
-        ease: 'easeOut',
-      }}
-    >
-      {children}
-    </motion.div>,
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          ref={popoverRef}
+          className="fixed z-50 flex flex-col items-center justify-center rounded-[0.4167vw] bg-[#1D2026] p-7 shadow-lg"
+          style={{
+            top: `${position.top}px`,
+            left: `${position.left}px`,
+          }}
+          initial={{ opacity: 0, y: -20, scale: 0.95, x: '-50%' }}
+          animate={{ opacity: 1, y: 0, scale: 1, x: '-50%' }}
+          exit={{ opacity: 0, y: -20, scale: 0.95, x: '-50%' }}
+          transition={{
+            duration: 0.2,
+            ease: 'easeOut',
+          }}
+        >
+          {children}
+        </motion.div>
+      )}
+    </AnimatePresence>,
     document.body
   );
 };
@@ -262,9 +264,9 @@ const Cover = () => {
                       onClose={() => setStatPopoverOpen(null)}
                       triggerRef={statRefs.current[stat.alt]}
                     >
-                      <div className="mb-6 flex w-77.25 flex-col gap-3">
+                      <div className="mb-6 flex w-77.25 flex-col items-center gap-3">
                         <span className="text-xl">Стрик & Опыт</span>
-                        <span className="text-secondary text-sm">
+                        <span className="text-secondary text-center text-sm">
                           Ежедневно заходите на платформу, что бы попасть в
                           лидерборд и получать бонусы!
                         </span>
