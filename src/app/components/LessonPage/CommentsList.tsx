@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@udecode/cn';
-import { motion } from 'motion/react';
+import { AnimatePresence, motion } from 'motion/react';
 import { DropDownSelector } from '../shared/DropDownSelector';
 import { useState } from 'react';
 import DropDownAction from '../shared/DropDownAction';
@@ -234,16 +234,18 @@ function CommentItem({
   replyFormAfterId,
   setReplyFormAfterId,
   setIsThreadOpened: setIsThreadOpenedExternal,
+  className,
 }: {
   comment: Comment;
   replyFormAfterId: string | null;
   setReplyFormAfterId: (id: string | null) => void;
   setIsThreadOpened: (isOpened: boolean) => void;
+  className?: string;
 }) {
   const [isThreadOpened, setIsThreadOpened] = useState(false);
 
   return (
-    <div>
+    <div className={cn(className)}>
       <div className="flex flex-row gap-5">
         <UserAvatar
           avatarInitial={comment.avatarInitial}
@@ -481,29 +483,32 @@ export default function CommentsList() {
                 />
               </motion.div>
             )}
-            {comment.answers && openedComments.includes(comment.id) && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3, ease: 'easeInOut' }}
-                className="flex flex-col gap-8 overflow-hidden pt-8 pl-15"
-              >
-                {comment.answers.map((answer, index) => (
-                  <div key={answer.id}>
-                    <CommentItem
-                      comment={answer}
-                      setReplyFormAfterId={() => {
-                        setReplyToUser(answer.author);
-                        setReplyFormAfterId(comment.id);
-                      }}
-                      replyFormAfterId={replyFormAfterId}
-                      setIsThreadOpened={(isOpened: boolean) => {}}
-                    />
-                  </div>
-                ))}
-              </motion.div>
-            )}
+            <AnimatePresence>
+              {comment.answers && openedComments.includes(comment.id) && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3, ease: 'easeInOut' }}
+                  className="flex flex-col overflow-hidden  pl-15"
+                >
+                  {comment.answers.map((answer, index) => (
+                    <div key={answer.id} className="pt-8">
+                      <CommentItem
+                        comment={answer}
+                        setReplyFormAfterId={() => {
+                          setReplyToUser(answer.author);
+                          setReplyFormAfterId(comment.id);
+                        }}
+                        replyFormAfterId={replyFormAfterId}
+                        setIsThreadOpened={(isOpened: boolean) => {}}
+                        className=""
+                      />
+                    </div>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         ))}
       </div>
