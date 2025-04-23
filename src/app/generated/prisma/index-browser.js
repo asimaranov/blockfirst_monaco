@@ -17,11 +17,11 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.6.0
+ * Prisma Client JS version: 6.7.0-integration-push-sunrovnkrkpv.1
  * Query Engine version: f676762280b54cd07c770017ed3711ddde35f37a
  */
 Prisma.prismaVersion = {
-  client: "6.6.0",
+  client: "6.7.0-integration-push-sunrovnkrkpv.1",
   engine: "f676762280b54cd07c770017ed3711ddde35f37a"
 }
 
@@ -235,10 +235,77 @@ exports.Prisma.NullsOrder = {
   last: 'last'
 };
 
+exports.Prisma.SessionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  ip_address: 'ip_address',
+  user_agent: 'user_agent'
+};
+
+exports.Prisma.OauthAccountOrderByRelevanceFieldEnum = {
+  id: 'id',
+  providerId: 'providerId',
+  providerUserId: 'providerUserId',
+  userId: 'userId'
+};
+
+exports.Prisma.UserOrderByRelevanceFieldEnum = {
+  id: 'id',
+  username: 'username',
+  password_hash: 'password_hash',
+  email: 'email',
+  name: 'name',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  profileImageUrl: 'profileImageUrl',
+  stripeCustomerId: 'stripeCustomerId'
+};
+
 exports.Prisma.JsonNullValueFilter = {
   DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
+};
+
+exports.Prisma.DocumentOrderByRelevanceFieldEnum = {
+  id: 'id',
+  templateId: 'templateId',
+  userId: 'userId',
+  parentDocumentId: 'parentDocumentId',
+  title: 'title',
+  content: 'content',
+  coverImage: 'coverImage',
+  icon: 'icon'
+};
+
+exports.Prisma.DocumentVersionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  documentId: 'documentId',
+  userId: 'userId',
+  title: 'title'
+};
+
+exports.Prisma.DiscussionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  documentId: 'documentId',
+  userId: 'userId',
+  documentContent: 'documentContent'
+};
+
+exports.Prisma.CommentOrderByRelevanceFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  discussionId: 'discussionId',
+  content: 'content'
+};
+
+exports.Prisma.FileOrderByRelevanceFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  documentId: 'documentId',
+  url: 'url',
+  appUrl: 'appUrl',
+  type: 'type'
 };
 exports.UserRole = exports.$Enums.UserRole = {
   USER: 'USER',

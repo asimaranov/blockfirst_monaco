@@ -347,7 +347,7 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.6.0
+   * Prisma Client JS version: 6.7.0-integration-push-sunrovnkrkpv.1
    * Query Engine version: f676762280b54cd07c770017ed3711ddde35f37a
    */
   export type PrismaVersion = {
@@ -1418,6 +1418,10 @@ export namespace Prisma {
       timeout?: number
       isolationLevel?: Prisma.TransactionIsolationLevel
     }
+    /**
+     * Instance of a Driver Adapter, e.g., like one provided by `@prisma/adapter-planetscale`
+     */
+    adapter?: runtime.SqlDriverAdapterFactory | null
     /**
      * Global configuration for omitting model fields by default.
      * 
@@ -11242,6 +11246,41 @@ export namespace Prisma {
   export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
+  export const SessionOrderByRelevanceFieldEnum: {
+    id: 'id',
+    user_id: 'user_id',
+    ip_address: 'ip_address',
+    user_agent: 'user_agent'
+  };
+
+  export type SessionOrderByRelevanceFieldEnum = (typeof SessionOrderByRelevanceFieldEnum)[keyof typeof SessionOrderByRelevanceFieldEnum]
+
+
+  export const OauthAccountOrderByRelevanceFieldEnum: {
+    id: 'id',
+    providerId: 'providerId',
+    providerUserId: 'providerUserId',
+    userId: 'userId'
+  };
+
+  export type OauthAccountOrderByRelevanceFieldEnum = (typeof OauthAccountOrderByRelevanceFieldEnum)[keyof typeof OauthAccountOrderByRelevanceFieldEnum]
+
+
+  export const UserOrderByRelevanceFieldEnum: {
+    id: 'id',
+    username: 'username',
+    password_hash: 'password_hash',
+    email: 'email',
+    name: 'name',
+    firstName: 'firstName',
+    lastName: 'lastName',
+    profileImageUrl: 'profileImageUrl',
+    stripeCustomerId: 'stripeCustomerId'
+  };
+
+  export type UserOrderByRelevanceFieldEnum = (typeof UserOrderByRelevanceFieldEnum)[keyof typeof UserOrderByRelevanceFieldEnum]
+
+
   export const JsonNullValueFilter: {
     DbNull: typeof DbNull,
     JsonNull: typeof JsonNull,
@@ -11249,6 +11288,62 @@ export namespace Prisma {
   };
 
   export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
+
+
+  export const DocumentOrderByRelevanceFieldEnum: {
+    id: 'id',
+    templateId: 'templateId',
+    userId: 'userId',
+    parentDocumentId: 'parentDocumentId',
+    title: 'title',
+    content: 'content',
+    coverImage: 'coverImage',
+    icon: 'icon'
+  };
+
+  export type DocumentOrderByRelevanceFieldEnum = (typeof DocumentOrderByRelevanceFieldEnum)[keyof typeof DocumentOrderByRelevanceFieldEnum]
+
+
+  export const DocumentVersionOrderByRelevanceFieldEnum: {
+    id: 'id',
+    documentId: 'documentId',
+    userId: 'userId',
+    title: 'title'
+  };
+
+  export type DocumentVersionOrderByRelevanceFieldEnum = (typeof DocumentVersionOrderByRelevanceFieldEnum)[keyof typeof DocumentVersionOrderByRelevanceFieldEnum]
+
+
+  export const DiscussionOrderByRelevanceFieldEnum: {
+    id: 'id',
+    documentId: 'documentId',
+    userId: 'userId',
+    documentContent: 'documentContent'
+  };
+
+  export type DiscussionOrderByRelevanceFieldEnum = (typeof DiscussionOrderByRelevanceFieldEnum)[keyof typeof DiscussionOrderByRelevanceFieldEnum]
+
+
+  export const CommentOrderByRelevanceFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    discussionId: 'discussionId',
+    content: 'content'
+  };
+
+  export type CommentOrderByRelevanceFieldEnum = (typeof CommentOrderByRelevanceFieldEnum)[keyof typeof CommentOrderByRelevanceFieldEnum]
+
+
+  export const FileOrderByRelevanceFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    documentId: 'documentId',
+    url: 'url',
+    appUrl: 'appUrl',
+    type: 'type'
+  };
+
+  export type FileOrderByRelevanceFieldEnum = (typeof FileOrderByRelevanceFieldEnum)[keyof typeof FileOrderByRelevanceFieldEnum]
 
 
   /**
@@ -11383,6 +11478,7 @@ export namespace Prisma {
     ip_address?: SortOrderInput | SortOrder
     user_agent?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
+    _relevance?: SessionOrderByRelevanceInput
   }
 
   export type SessionWhereUniqueInput = Prisma.AtLeast<{
@@ -11436,6 +11532,7 @@ export namespace Prisma {
     providerUserId?: SortOrder
     userId?: SortOrder
     user?: UserOrderByWithRelationInput
+    _relevance?: OauthAccountOrderByRelevanceInput
   }
 
   export type OauthAccountWhereUniqueInput = Prisma.AtLeast<{
@@ -11521,6 +11618,7 @@ export namespace Prisma {
     files?: FileOrderByRelationAggregateInput
     discussions?: DiscussionOrderByRelationAggregateInput
     documentVersions?: DocumentVersionOrderByRelationAggregateInput
+    _relevance?: UserOrderByRelevanceInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -11650,6 +11748,7 @@ export namespace Prisma {
     discussions?: DiscussionOrderByRelationAggregateInput
     documentVersions?: DocumentVersionOrderByRelationAggregateInput
     files?: FileOrderByRelationAggregateInput
+    _relevance?: DocumentOrderByRelevanceInput
   }
 
   export type DocumentWhereUniqueInput = Prisma.AtLeast<{
@@ -11756,6 +11855,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     document?: DocumentOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
+    _relevance?: DocumentVersionOrderByRelevanceInput
   }
 
   export type DocumentVersionWhereUniqueInput = Prisma.AtLeast<{
@@ -11828,6 +11928,7 @@ export namespace Prisma {
     document?: DocumentOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
     comments?: CommentOrderByRelationAggregateInput
+    _relevance?: DiscussionOrderByRelevanceInput
   }
 
   export type DiscussionWhereUniqueInput = Prisma.AtLeast<{
@@ -11902,6 +12003,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
     discussion?: DiscussionOrderByWithRelationInput
+    _relevance?: CommentOrderByRelevanceInput
   }
 
   export type CommentWhereUniqueInput = Prisma.AtLeast<{
@@ -11977,6 +12079,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
     document?: DocumentOrderByWithRelationInput
+    _relevance?: FileOrderByRelevanceInput
   }
 
   export type FileWhereUniqueInput = Prisma.AtLeast<{
@@ -12761,6 +12864,7 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
     mode?: QueryMode
     not?: NestedStringFilter<$PrismaModel> | string
   }
@@ -12787,6 +12891,7 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
     mode?: QueryMode
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
@@ -12799,6 +12904,12 @@ export namespace Prisma {
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
+  }
+
+  export type SessionOrderByRelevanceInput = {
+    fields: SessionOrderByRelevanceFieldEnum | SessionOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
   }
 
   export type SessionCountOrderByAggregateInput = {
@@ -12836,6 +12947,7 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
     mode?: QueryMode
     not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
     _count?: NestedIntFilter<$PrismaModel>
@@ -12868,11 +12980,18 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
     mode?: QueryMode
     not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type OauthAccountOrderByRelevanceInput = {
+    fields: OauthAccountOrderByRelevanceFieldEnum | OauthAccountOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
   }
 
   export type OauthAccountProviderIdProviderUserIdCompoundUniqueInput = {
@@ -12998,6 +13117,12 @@ export namespace Prisma {
 
   export type DocumentVersionOrderByRelationAggregateInput = {
     _count?: SortOrder
+  }
+
+  export type UserOrderByRelevanceInput = {
+    fields: UserOrderByRelevanceFieldEnum | UserOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
   }
 
   export type UserCountOrderByAggregateInput = {
@@ -13144,6 +13269,12 @@ export namespace Prisma {
     isNot?: DocumentWhereInput | null
   }
 
+  export type DocumentOrderByRelevanceInput = {
+    fields: DocumentOrderByRelevanceFieldEnum | DocumentOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
   export type DocumentUserIdTemplateIdCompoundUniqueInput = {
     userId: string
     templateId: string
@@ -13259,6 +13390,12 @@ export namespace Prisma {
     isNot?: DocumentWhereInput
   }
 
+  export type DocumentVersionOrderByRelevanceInput = {
+    fields: DocumentVersionOrderByRelevanceFieldEnum | DocumentVersionOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
   export type DocumentVersionCountOrderByAggregateInput = {
     id?: SortOrder
     documentId?: SortOrder
@@ -13285,6 +13422,12 @@ export namespace Prisma {
     title?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type DiscussionOrderByRelevanceInput = {
+    fields: DiscussionOrderByRelevanceFieldEnum | DiscussionOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
   }
 
   export type DiscussionCountOrderByAggregateInput = {
@@ -13323,6 +13466,12 @@ export namespace Prisma {
     isNot?: DiscussionWhereInput
   }
 
+  export type CommentOrderByRelevanceInput = {
+    fields: CommentOrderByRelevanceFieldEnum | CommentOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
   export type CommentCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
@@ -13352,6 +13501,12 @@ export namespace Prisma {
     isEdited?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type FileOrderByRelevanceInput = {
+    fields: FileOrderByRelevanceFieldEnum | FileOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
   }
 
   export type FileCountOrderByAggregateInput = {
@@ -14121,6 +14276,7 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
@@ -14146,6 +14302,7 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
@@ -14160,6 +14317,7 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
     not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
@@ -14202,6 +14360,7 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
+    search?: string
     not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>

@@ -32,11 +32,11 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.6.0
+ * Prisma Client JS version: 6.7.0-integration-push-sunrovnkrkpv.1
  * Query Engine version: f676762280b54cd07c770017ed3711ddde35f37a
  */
 Prisma.prismaVersion = {
-  client: "6.6.0",
+  client: "6.7.0-integration-push-sunrovnkrkpv.1",
   engine: "f676762280b54cd07c770017ed3711ddde35f37a"
 }
 
@@ -208,10 +208,77 @@ exports.Prisma.NullsOrder = {
   last: 'last'
 };
 
+exports.Prisma.SessionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  ip_address: 'ip_address',
+  user_agent: 'user_agent'
+};
+
+exports.Prisma.OauthAccountOrderByRelevanceFieldEnum = {
+  id: 'id',
+  providerId: 'providerId',
+  providerUserId: 'providerUserId',
+  userId: 'userId'
+};
+
+exports.Prisma.UserOrderByRelevanceFieldEnum = {
+  id: 'id',
+  username: 'username',
+  password_hash: 'password_hash',
+  email: 'email',
+  name: 'name',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  profileImageUrl: 'profileImageUrl',
+  stripeCustomerId: 'stripeCustomerId'
+};
+
 exports.Prisma.JsonNullValueFilter = {
   DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
+};
+
+exports.Prisma.DocumentOrderByRelevanceFieldEnum = {
+  id: 'id',
+  templateId: 'templateId',
+  userId: 'userId',
+  parentDocumentId: 'parentDocumentId',
+  title: 'title',
+  content: 'content',
+  coverImage: 'coverImage',
+  icon: 'icon'
+};
+
+exports.Prisma.DocumentVersionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  documentId: 'documentId',
+  userId: 'userId',
+  title: 'title'
+};
+
+exports.Prisma.DiscussionOrderByRelevanceFieldEnum = {
+  id: 'id',
+  documentId: 'documentId',
+  userId: 'userId',
+  documentContent: 'documentContent'
+};
+
+exports.Prisma.CommentOrderByRelevanceFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  discussionId: 'discussionId',
+  content: 'content'
+};
+
+exports.Prisma.FileOrderByRelevanceFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  documentId: 'documentId',
+  url: 'url',
+  appUrl: 'appUrl',
+  type: 'type'
 };
 exports.UserRole = exports.$Enums.UserRole = {
   USER: 'USER',
@@ -263,7 +330,10 @@ const config = {
         "value": "rhel-openssl-3.0.x"
       }
     ],
-    "previewFeatures": [],
+    "previewFeatures": [
+      "driverAdapters",
+      "fullTextSearchPostgres"
+    ],
     "sourceFilePath": "/Users/andrey/projects/blockfirst_app/prisma/schema.prisma",
     "isCustomOutput": true
   },
@@ -272,7 +342,7 @@ const config = {
     "schemaEnvPath": "../../../../.env"
   },
   "relativePath": "../../../../prisma",
-  "clientVersion": "6.6.0",
+  "clientVersion": "6.7.0-integration-push-sunrovnkrkpv.1",
   "engineVersion": "f676762280b54cd07c770017ed3711ddde35f37a",
   "datasourceNames": [
     "db"
@@ -287,8 +357,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider      = \"prisma-client-js\"\n  binaryTargets = [\"native\", \"rhel-openssl-3.0.x\"]\n  output        = \"../src/app/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Session {\n  id         String   @id\n  user_id    String\n  expires_at DateTime\n  user       User     @relation(references: [id], fields: [user_id], onDelete: Cascade)\n  ip_address String?  @db.VarChar(45)\n  user_agent String?\n}\n\nmodel OauthAccount {\n  id             String @id @default(cuid())\n  providerId     String\n  providerUserId String\n  userId         String\n  user           User   @relation(references: [id], fields: [userId], onDelete: Cascade)\n\n  @@unique([providerId, providerUserId])\n}\n\nmodel User {\n  id            String         @id\n  username      String         @unique\n  password_hash String?\n  email         String?        @unique\n  sessions      Session[]\n  oauthAccounts OauthAccount[]\n  role          UserRole       @default(USER)\n\n  uploadLimit Int @default(100000000)\n\n  name             String?\n  firstName        String?\n  lastName         String?\n  profileImageUrl  String? @db.Text\n  version          Int     @default(1)\n  stripeCustomerId String? @unique\n\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @default(now())\n  deletedAt DateTime?\n\n  documents        Document[]\n  comments         Comment[]\n  files            File[]\n  discussions      Discussion[]\n  documentVersions DocumentVersion[]\n\n  @@index([username])\n}\n\nmodel Document {\n  id         String  @id\n  templateId String?\n\n  user             User       @relation(fields: [userId], references: [id], onDelete: Cascade)\n  userId           String\n  parentDocumentId String?\n  parentDocument   Document?  @relation(\"ParentChild\", fields: [parentDocumentId], references: [id])\n  children         Document[] @relation(\"ParentChild\")\n\n  title       String?\n  content     String?\n  contentRich Json?\n  coverImage  String?\n  icon        String?\n  isPublished Boolean @default(false)\n  isArchived  Boolean @default(false)\n\n  textStyle TextStyle @default(DEFAULT)\n  smallText Boolean   @default(false)\n  fullWidth Boolean   @default(false)\n  lockPage  Boolean   @default(false)\n  toc       Boolean   @default(true)\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  discussions      Discussion[]\n  documentVersions DocumentVersion[]\n  files            File[]\n\n  @@unique([userId, templateId])\n}\n\nmodel DocumentVersion {\n  id         String   @id\n  documentId String\n  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)\n  userId     String\n  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  title       String?\n  contentRich Json?\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel Discussion {\n  id String @id\n\n  documentId String\n  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)\n  userId     String\n  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  documentContent     String\n  documentContentRich Json?\n  isResolved          Boolean   @default(false)\n  comments            Comment[]\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @default(now()) @updatedAt\n}\n\nmodel Comment {\n  id String @id\n\n  userId String\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  discussionId String\n  discussion   Discussion @relation(fields: [discussionId], references: [id], onDelete: Cascade)\n\n  content     String\n  contentRich Json?\n  isEdited    Boolean @default(false)\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @default(now()) @updatedAt\n}\n\nmodel File {\n  id String @id\n\n  userId String\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  documentId String?\n  document   Document? @relation(fields: [documentId], references: [id])\n\n  size   Int\n  url    String @db.Text\n  appUrl String @db.Text\n  type   String\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @default(now()) @updatedAt\n}\n\nenum UserRole {\n  USER\n  ADMIN\n  SUPERADMIN\n}\n\nenum TextStyle {\n  DEFAULT\n  SERIF\n  MONO\n}\n",
-  "inlineSchemaHash": "41c0a57e627098976fd3667222cf30fdd61533b0a3e361f91d4dcd997b33e66c",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider        = \"prisma-client-js\"\n  binaryTargets   = [\"native\", \"rhel-openssl-3.0.x\"]\n  previewFeatures = [\"fullTextSearchPostgres\", \"driverAdapters\"]\n\n  output = \"../src/app/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Session {\n  id         String   @id\n  user_id    String\n  expires_at DateTime\n  user       User     @relation(references: [id], fields: [user_id], onDelete: Cascade)\n  ip_address String?  @db.VarChar(45)\n  user_agent String?\n}\n\nmodel OauthAccount {\n  id             String @id @default(cuid())\n  providerId     String\n  providerUserId String\n  userId         String\n  user           User   @relation(references: [id], fields: [userId], onDelete: Cascade)\n\n  @@unique([providerId, providerUserId])\n}\n\nmodel User {\n  id            String         @id\n  username      String         @unique\n  password_hash String?\n  email         String?        @unique\n  sessions      Session[]\n  oauthAccounts OauthAccount[]\n  role          UserRole       @default(USER)\n\n  uploadLimit Int @default(100000000)\n\n  name             String?\n  firstName        String?\n  lastName         String?\n  profileImageUrl  String? @db.Text\n  version          Int     @default(1)\n  stripeCustomerId String? @unique\n\n  createdAt DateTime  @default(now())\n  updatedAt DateTime  @default(now())\n  deletedAt DateTime?\n\n  documents        Document[]\n  comments         Comment[]\n  files            File[]\n  discussions      Discussion[]\n  documentVersions DocumentVersion[]\n\n  @@index([username])\n}\n\nmodel Document {\n  id         String  @id\n  templateId String?\n\n  user             User       @relation(fields: [userId], references: [id], onDelete: Cascade)\n  userId           String\n  parentDocumentId String?\n  parentDocument   Document?  @relation(\"ParentChild\", fields: [parentDocumentId], references: [id])\n  children         Document[] @relation(\"ParentChild\")\n\n  title       String?\n  content     String?\n  contentRich Json?\n  coverImage  String?\n  icon        String?\n  isPublished Boolean @default(false)\n  isArchived  Boolean @default(false)\n\n  textStyle TextStyle @default(DEFAULT)\n  smallText Boolean   @default(false)\n  fullWidth Boolean   @default(false)\n  lockPage  Boolean   @default(false)\n  toc       Boolean   @default(true)\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  discussions      Discussion[]\n  documentVersions DocumentVersion[]\n  files            File[]\n\n  @@unique([userId, templateId])\n}\n\nmodel DocumentVersion {\n  id         String   @id\n  documentId String\n  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)\n  userId     String\n  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  title       String?\n  contentRich Json?\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n}\n\nmodel Discussion {\n  id String @id\n\n  documentId String\n  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)\n  userId     String\n  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  documentContent     String\n  documentContentRich Json?\n  isResolved          Boolean   @default(false)\n  comments            Comment[]\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @default(now()) @updatedAt\n}\n\nmodel Comment {\n  id String @id\n\n  userId String\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  discussionId String\n  discussion   Discussion @relation(fields: [discussionId], references: [id], onDelete: Cascade)\n\n  content     String\n  contentRich Json?\n  isEdited    Boolean @default(false)\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @default(now()) @updatedAt\n}\n\nmodel File {\n  id String @id\n\n  userId String\n  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  documentId String?\n  document   Document? @relation(fields: [documentId], references: [id])\n\n  size   Int\n  url    String @db.Text\n  appUrl String @db.Text\n  type   String\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @default(now()) @updatedAt\n}\n\nenum UserRole {\n  USER\n  ADMIN\n  SUPERADMIN\n}\n\nenum TextStyle {\n  DEFAULT\n  SERIF\n  MONO\n}\n",
+  "inlineSchemaHash": "25a7cd425924a7ef16a6b5f235ccd3da71a24643fd3a5db44d9e1814c1d944b0",
   "copyEngine": true
 }
 
