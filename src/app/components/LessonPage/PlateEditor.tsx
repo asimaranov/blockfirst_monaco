@@ -97,6 +97,7 @@ import { CodeLeafStatic } from '~/components/plate-ui/code-leaf-static';
 import { CodeSyntaxLeafStatic } from '~/components/plate-ui/code-syntax-leaf-static';
 // import { CodeBlockElement } from '~/components/plate-ui/code-block-element';
 import { all, createLowlight } from 'lowlight';
+import { CalloutElementStatic } from './plate/callout-element-static';
 
 export function ImageElementStatic({
   children,
@@ -258,6 +259,7 @@ const PlateEditor = ({ richText }: { richText: Value }) => {
         [BaseCodeLinePlugin.key]: CodeLineElementStatic,
         [BaseCodePlugin.key]: CodeLeafStatic,
         [BaseCodeSyntaxPlugin.key]: CodeSyntaxLeafStatic,
+        [BaseCalloutPlugin.key]: CalloutElementStatic,
   
       },
     },
