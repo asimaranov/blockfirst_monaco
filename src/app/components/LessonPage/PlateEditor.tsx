@@ -98,6 +98,7 @@ import { CodeSyntaxLeafStatic } from '~/components/plate-ui/code-syntax-leaf-sta
 // import { CodeBlockElement } from '~/components/plate-ui/code-block-element';
 import { all, createLowlight } from 'lowlight';
 import { CalloutElementStatic } from './plate/callout-element-static';
+import { MediaVideoElement } from './plate/media-video-element';
 
 export function ImageElementStatic({
   children,
@@ -244,7 +245,7 @@ const PlateEditor = ({ richText }: { richText: Value }) => {
         }),
         italic: withProps(PlateLeaf, { as: 'em' }),
         p: withProps(PlateElement, {
-          as: 'p',
+          as: 'div',
           className: 'mb-6 text-base leading-6 text-foreground/90 font-light',
         }),
         underline: withProps(PlateLeaf, { as: 'u' }),
@@ -260,6 +261,7 @@ const PlateEditor = ({ richText }: { richText: Value }) => {
         [BaseCodePlugin.key]: CodeLeafStatic,
         [BaseCodeSyntaxPlugin.key]: CodeSyntaxLeafStatic,
         [BaseCalloutPlugin.key]: CalloutElementStatic,
+        [BaseVideoPlugin.key]: MediaVideoElement,
   
       },
     },

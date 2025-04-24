@@ -81,7 +81,8 @@ const getHeadingList = (editor?: SlateEditor) => {
 
   const values = editor.api.nodes<TElement>({
     at: [],
-    match: (n) => n.type && n.type === 'h1'});
+    match: (n) => isHeading(n),
+  });
 
   if (!values) return [];
 

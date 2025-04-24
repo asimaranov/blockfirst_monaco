@@ -60,7 +60,7 @@ const getHeadingList = (editor?: SlateEditor) => {
 
   const values = editor.api.nodes({
     at: [],
-    match: (n) => isHeading(n),
+    match: (n) => n.type && n.type === 'h1',
   });
 
   if (!values) return [];
@@ -149,7 +149,7 @@ export default function LessonNavigation() {
   const activeHeadingIndex = useHeadingsIntersection(headingList, editor);
 
   const items = headingList.map((heading) => heading.title);
-  const activeIndex = activeHeadingIndex;
+  const activeIndex = Math.min(activeHeadingIndex, items.length - 1);
 
   const navigationItems: NavigationItem[] = items.map((x, i) => ({
     title: x,
