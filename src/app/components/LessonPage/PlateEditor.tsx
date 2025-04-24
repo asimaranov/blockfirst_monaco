@@ -99,6 +99,8 @@ import { CodeSyntaxLeafStatic } from '~/components/plate-ui/code-syntax-leaf-sta
 import { all, createLowlight } from 'lowlight';
 import { CalloutElementStatic } from './plate/callout-element-static';
 import { MediaVideoElement } from './plate/media-video-element';
+import { TaskElement } from './plate/task-element';
+import { BaseTaskPlugin } from './plate/plugins/task-plugins';
 
 export function ImageElementStatic({
   children,
@@ -213,6 +215,7 @@ const plugins = [
   BaseMentionPlugin,
   BaseCommentsPlugin,
   BaseTogglePlugin,
+  BaseTaskPlugin
 ];
 
 const PlateEditor = ({ richText }: { richText: Value }) => {
@@ -255,14 +258,13 @@ const PlateEditor = ({ richText }: { richText: Value }) => {
         [BaseTableCellPlugin.key]: TableCellElementStatic,
         [BaseTablePlugin.key]: TableElementStatic,
         [BaseTableRowPlugin.key]: TableRowElementStatic,
-
+        [BaseTaskPlugin.key]: TaskElement,
         [BaseCodeBlockPlugin.key]: CodeBlockElement,
         [BaseCodeLinePlugin.key]: CodeLineElementStatic,
         [BaseCodePlugin.key]: CodeLeafStatic,
         [BaseCodeSyntaxPlugin.key]: CodeSyntaxLeafStatic,
         [BaseCalloutPlugin.key]: CalloutElementStatic,
         [BaseVideoPlugin.key]: MediaVideoElement,
-  
       },
     },
   });
