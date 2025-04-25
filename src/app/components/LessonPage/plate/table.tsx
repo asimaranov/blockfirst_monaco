@@ -4,7 +4,11 @@ import type { SlateElementProps } from '@udecode/plate';
 
 import { cn } from '@udecode/cn';
 import { SlateElement } from '@udecode/plate';
-import { type TTableCellElement, BaseTablePlugin, type TTableElement } from '@udecode/plate-table';
+import {
+  type TTableCellElement,
+  BaseTablePlugin,
+  type TTableElement,
+} from '@udecode/plate-table';
 
 export const TableElementStatic = ({
   children,
@@ -70,10 +74,10 @@ export function TableCellElementStatic({
           "before:absolute before:box-border before:content-[''] before:select-none",
           borders &&
             cn(
-              borders.bottom?.size && `before:border-b before:border-b-border`,
-              borders.right?.size && `before:border-r before:border-r-border`,
-              borders.left?.size && `before:border-l before:border-l-border`,
-              borders.top?.size && `before:border-t before:border-t-border`
+              borders.bottom?.size && `before:border-b-border before:border-b`,
+              borders.right?.size && `before:border-r-border before:border-r`,
+              borders.left?.size && `before:border-l-border before:border-l`,
+              borders.top?.size && `before:border-t-border before:border-t`
             )
         )
       )}
@@ -92,7 +96,7 @@ export function TableCellElementStatic({
       {...props}
     >
       <div
-        className="relative z-20 box-border h-full px-4 py-2"
+        className="relative z-20 box-border h-full px-8 pt-6 pb-0.25 flex justify-center whitespace-pre-wrap flex-col [&>*]:not-last:mb-1!"
         style={{ minHeight }}
       >
         {children}

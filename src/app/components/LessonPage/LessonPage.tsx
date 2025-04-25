@@ -28,7 +28,7 @@ export default async function LessonPage({
     <div>
       <Cover />
       <div className="border-accent flex min-h-screen flex-row border-x">
-          <div className="flex-1">
+          <div className="flex-1 w-239">
             <PlateEditor richText={document?.contentRich as Value} />
             <ContentFooter nextLocked={true} />
             <CommentsSection />
