@@ -22,6 +22,9 @@ export interface TaskCardProps {
   completionCount?: string;
   rating?: string;
 
+  regularTasksSolved?: boolean;
+  advancedTasksSolved?: boolean;
+
   // Actions
   onExecute?: () => void;
 }
@@ -37,6 +40,8 @@ export function TaskCard({
   description = '',
   completionCount = '0',
   rating = '0',
+  regularTasksSolved = false,
+  advancedTasksSolved = false,
   onExecute,
 }: TaskCardProps) {
   return (
@@ -112,31 +117,122 @@ export function TaskCard({
             </div>
           </div>
           <div className="flex w-full flex-col p-8">
-            <div className="flex flex-row items-center gap-2 pb-8">
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 16 16"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M10.7959 1.33594H5.20927C2.7826 1.33594 1.33594 2.7826 1.33594 5.20927V10.7893C1.33594 13.2226 2.7826 14.6693 5.20927 14.6693H10.7893C13.2159 14.6693 14.6626 13.2226 14.6626 10.7959V5.20927C14.6693 2.7826 13.2226 1.33594 10.7959 1.33594ZM6.75594 9.66927C6.94927 9.8626 6.94927 10.1826 6.75594 10.3759C6.65594 10.4759 6.52927 10.5226 6.4026 10.5226C6.27594 10.5226 6.14927 10.4759 6.04927 10.3759L4.38927 8.71594C3.99594 8.3226 3.99594 7.68927 4.38927 7.29594L6.04927 5.63594C6.2426 5.4426 6.5626 5.4426 6.75594 5.63594C6.94927 5.82927 6.94927 6.14927 6.75594 6.3426L5.09594 8.0026L6.75594 9.66927ZM11.6159 8.70927L9.95594 10.3693C9.85594 10.4693 9.72927 10.5159 9.6026 10.5159C9.47594 10.5159 9.34927 10.4693 9.24927 10.3693C9.05594 10.1759 9.05594 9.85594 9.24927 9.6626L10.9093 8.0026L9.24927 6.33594C9.05594 6.1426 9.05594 5.8226 9.24927 5.62927C9.4426 5.43594 9.7626 5.43594 9.95594 5.62927L11.6159 7.28927C12.0093 7.6826 12.0093 8.3226 11.6159 8.70927Z"
-                  fill="#F2F2F2"
-                />
-              </svg>
-              <span className="text-xs">Задача:</span>
-              <div className="flex">
-                {labels.map((x, i) => (
-                  <React.Fragment key={i}>
-                    <div className="text-secondary/50 text-xs">{x}</div>
-                    {i !== labels.length - 1 && (
-                      <div className="flex items-center justify-center px-2">
-                        <div className="bg-secondary h-1 w-1 rounded-full opacity-50"></div>
-                      </div>
-                    )}
-                  </React.Fragment>
-                ))}
+            <div className="flex flex-row justify-between pb-8">
+              <div className="flex flex-row items-center gap-2">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M10.7959 1.33594H5.20927C2.7826 1.33594 1.33594 2.7826 1.33594 5.20927V10.7893C1.33594 13.2226 2.7826 14.6693 5.20927 14.6693H10.7893C13.2159 14.6693 14.6626 13.2226 14.6626 10.7959V5.20927C14.6693 2.7826 13.2226 1.33594 10.7959 1.33594ZM6.75594 9.66927C6.94927 9.8626 6.94927 10.1826 6.75594 10.3759C6.65594 10.4759 6.52927 10.5226 6.4026 10.5226C6.27594 10.5226 6.14927 10.4759 6.04927 10.3759L4.38927 8.71594C3.99594 8.3226 3.99594 7.68927 4.38927 7.29594L6.04927 5.63594C6.2426 5.4426 6.5626 5.4426 6.75594 5.63594C6.94927 5.82927 6.94927 6.14927 6.75594 6.3426L5.09594 8.0026L6.75594 9.66927ZM11.6159 8.70927L9.95594 10.3693C9.85594 10.4693 9.72927 10.5159 9.6026 10.5159C9.47594 10.5159 9.34927 10.4693 9.24927 10.3693C9.05594 10.1759 9.05594 9.85594 9.24927 9.6626L10.9093 8.0026L9.24927 6.33594C9.05594 6.1426 9.05594 5.8226 9.24927 5.62927C9.4426 5.43594 9.7626 5.43594 9.95594 5.62927L11.6159 7.28927C12.0093 7.6826 12.0093 8.3226 11.6159 8.70927Z"
+                    fill="#F2F2F2"
+                  />
+                </svg>
+                <span className="text-xs">Задача:</span>
+                <div className="flex">
+                  {labels.map((x, i) => (
+                    <React.Fragment key={i}>
+                      <div className="text-secondary/50 text-xs">{x}</div>
+                      {i !== labels.length - 1 && (
+                        <div className="flex items-center justify-center px-2">
+                          <div className="bg-secondary h-1 w-1 rounded-full opacity-50"></div>
+                        </div>
+                      )}
+                    </React.Fragment>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex flex-row items-center gap-2">
+                <div
+                  className={cn(
+                    'border-primary/50 rounded-[0.4167vw] border-[calc(0.25*var(--spacing))] px-3.25 py-1.25',
+                    regularTasksSolved ? 'bg-primary' : 'cursor-pointer hover:bg-primary/10'
+                  )}
+                >
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
+                      stroke="#195AF4"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      className={cn(
+                        regularTasksSolved && 'stroke-white'
+                      )}
+                    />
+                  </svg>
+                </div>
+                <div className={cn(
+                    'rounded-[0.4167vw] border-[calc(0.25*var(--spacing))] border-[#F48E19]/50 px-3.25 py-1.25',
+                    advancedTasksSolved ? 'bg-[#F48E19]' : 'cursor-pointer hover:bg-[#F48E19]/10'
+                  )}
+                >
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5"
+                  >
+                    <g clip-path="url(#clip0_3557_29169)">
+                      <path
+                        d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
+                        stroke="#F48E19"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        className={cn(
+                          advancedTasksSolved && 'stroke-foreground'
+                        )}
+                      />
+                      <circle cx="17" cy="5.5" r="4.5" fill="#0F1217" className={cn(
+                        advancedTasksSolved && 'fill-[#F48E19]'
+                      )} />
+                      <path
+                        d="M14.8662 7.72559L16.2402 5.83887L14.1758 5.22363L14.4971 4.19824L16.5615 4.95703L16.5 2.60547H17.5391L17.4707 4.99805L19.5078 4.23926L19.8223 5.28516L17.7236 5.90723L19.0703 7.75977L18.2227 8.39551L16.958 6.42676L15.7207 8.34766L14.8662 7.72559Z"
+                        fill="#F48E19"
+                        className={cn(
+                          advancedTasksSolved && 'fill-foreground'
+                        )}
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_3557_29169">
+                        <rect width="20" height="20" fill="white" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </div>
+
+                <div className="flex flex-row gap-1 rounded-[0.4167vw] bg-[#33CF8E]/10 px-3.5 py-2 cursor-default">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4"
+                  >
+                    <path
+                      d="M11.5114 8.1899L10.7997 7.47823C10.6306 7.3324 10.5314 7.11656 10.5256 6.8774C10.5139 6.6149 10.6189 6.3524 10.8114 6.1599L11.5114 5.4599C12.1181 4.85323 12.3456 4.2699 12.1531 3.80906C11.9664 3.35406 11.3889 3.10323 10.5372 3.10323H4.44141V2.60156C4.44141 2.3624 4.24307 2.16406 4.00391 2.16406C3.76474 2.16406 3.56641 2.3624 3.56641 2.60156V13.3932C3.56641 13.6324 3.76474 13.8307 4.00391 13.8307C4.24307 13.8307 4.44141 13.6324 4.44141 13.3932V10.5466H10.5372C11.3772 10.5466 11.9431 10.2899 12.1356 9.82906C12.3281 9.36823 12.1064 8.79073 11.5114 8.1899Z"
+                      fill="#33CF8E"
+                    />
+                  </svg>
+                  <span className="text-xs leading-4 text-[#33CF8E]">
+                    Доступна
+                  </span>
+                </div>
               </div>
             </div>
             <div className="flex flex-col gap-4">
