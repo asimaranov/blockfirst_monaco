@@ -4,7 +4,8 @@ import type { SlateElementProps } from '@udecode/plate';
 
 import { cn } from '@udecode/cn';
 import { SlateElement } from '@udecode/plate';
-
+import CalloutBadge from './assets/callout-badge.svg';
+import Image from 'next/image';
 export function CalloutElementStatic({
   children,
   className,
@@ -12,25 +13,17 @@ export function CalloutElementStatic({
 }: SlateElementProps) {
   return (
     <SlateElement
-      className={cn('my-1 flex rounded-sm p-4 pl-3 bg-[#14171C]', className)}
+      className={cn('my-1 flex rounded-sm bg-[#14171C]', className)}
       style={{
         backgroundColor: props.element.backgroundColor as any,
       }}
       {...props}
     >
-      <div className="flex w-full gap-2 rounded-md">
-        <div
-          className="size-6 text-[18px] select-none"
-          style={{
-            fontFamily:
-              '"Apple Color Emoji", "Segoe UI Emoji", NotoColorEmoji, "Noto Color Emoji", "Segoe UI Symbol", "Android Emoji", EmojiSymbols',
-          }}
-        >
-          <span data-plate-prevent-deserialization>
-            {(props.element.icon as any) || '💡'}
-          </span>
+      <div className="flex flex-col w-full rounded-md">
+        <div className="w-full h-24 relative bg-[url('/images/covers/callout-cover.png')] bg-no-repeat bg-cover">
+          <Image src={CalloutBadge} alt="Callout Badge" className='absolute top-8 left-8 w-32.25 h-8' />
         </div>
-        <div className="w-full">{children}</div>
+        <div className="w-full  p-8">{children}</div>
       </div>
     </SlateElement>
   );
