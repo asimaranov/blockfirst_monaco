@@ -21,7 +21,7 @@ export const TableElementStatic = ({
 
   return (
     <SlateElement
-      className={cn(className, 'overflow-x-auto py-5')}
+      className={cn(className, 'overflow-x-auto my-16')}
       style={{ paddingLeft: marginLeft }}
       {...props}
     >

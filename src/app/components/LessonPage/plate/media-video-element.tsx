@@ -44,9 +44,9 @@ export const MediaVideoElement = withHOC(
     });
 
     return (
-      <PlateElement className={cn('py-2.5', className)} {...props}>
+      <PlateElement className={cn('my-16', className)} {...props}>
         <figure className="relative m-0 cursor-default" contentEditable={false}>
-          <Resizable
+          {/* <Resizable
             className={cn(isDragging && 'opacity-50')}
             align={align}
             options={{
@@ -55,9 +55,9 @@ export const MediaVideoElement = withHOC(
               minWidth: isTweet ? 300 : 100,
               readOnly,
             }}
-          >
+          > */}
             <div className="group/media">
-              <ResizeHandle
+              {/* <ResizeHandle
                 className={mediaResizeHandleVariants({ direction: 'left' })}
                 options={{ direction: 'left' }}
               />
@@ -65,7 +65,7 @@ export const MediaVideoElement = withHOC(
               <ResizeHandle
                 className={mediaResizeHandleVariants({ direction: 'right' })}
                 options={{ direction: 'right' }}
-              />
+              /> */}
 
               {!isUpload && isYoutube && (
                 <div ref={handleRef}>
@@ -107,7 +107,7 @@ export const MediaVideoElement = withHOC(
 
               {/* <MediaToolbar /> */}
             </div>
-          </Resizable>
+          {/* </Resizable> */}
 
           <Caption style={{ width }} align={align}>
             <CaptionTextarea

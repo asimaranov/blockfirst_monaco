@@ -118,7 +118,7 @@ export function ImageElementStatic({
     };
 
   return (
-    <SlateElement className={cn(className, '')} {...props}>
+    <SlateElement className={cn(className, 'mb-16 mt-16 ')} {...props}>
       <figure className="group relative m-0 inline-block">
         <div
           className="relative max-w-full min-w-[92px]"
@@ -215,7 +215,7 @@ const plugins = [
   BaseMentionPlugin,
   BaseCommentsPlugin,
   BaseTogglePlugin,
-  BaseTaskPlugin
+  BaseTaskPlugin,
 ];
 
 const PlateEditor = ({ richText }: { richText: Value }) => {

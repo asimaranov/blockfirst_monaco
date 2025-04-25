@@ -17,9 +17,6 @@ export function TaskElement({
     .replaceAll(' ', '')
     .split(',');
 
-  console.log('Task ids', taskIds);
-  console.log('Original task id', children[0].props?.text?.text);
-
   const [taskData, setTaskData] = useState<Record<string, TaskCardProps>>({});
   const [isLoading, setIsLoading] = useState(true);
 
@@ -44,19 +41,19 @@ export function TaskElement({
   }, [tasksData]);
 
   // Fallback data in case the API call fails
-  const fallbackTaskData: TaskCardProps = {
-    id: 'fallback',
-    updateDate: '15.03.2025',
-    heroImageSrc: '/heroes/Alex.png',
-    heroName: 'Алекс',
-    heroTagline: 'Реши задачу за нашего героя!',
-    labels: ['Глава 1', 'Тема 2', 'Урок 2'],
-    title: 'Комментарии излишни',
-    description:
-      'Не все комментарии одинаково полезны! Иногда они появляются в коде, если программист не уверен в какой-то строчке и хочет вернуться к ней позднее. Так и с этой задачей получилось: в ней один лишний ...',
-    completionCount: '1 207+',
-    rating: '1 207+',
-  };
+  // const fallbackTaskData: TaskCardProps = {
+  //   id: 'fallback',
+  //   updateDate: '15.03.2025',
+  //   heroImageSrc: '/heroes/Alex.png',
+  //   heroName: 'Алекс',
+  //   heroTagline: 'Реши задачу за нашего героя!',
+  //   labels: ['Глава 1', 'Тема 2', 'Урок 2'],
+  //   title: 'Комментарии излишни',
+  //   description:
+  //     'Не все комментарии одинаково полезны! Иногда они появляются в коде, если программист не уверен в какой-то строчке и хочет вернуться к ней позднее. Так и с этой задачей получилось: в ней один лишний ...',
+  //   completionCount: '1 207+',
+  //   rating: '1 207+',
+  // };
 
   return (
     <PlateElement
@@ -73,17 +70,14 @@ export function TaskElement({
         </span>
       </div>
       <div className="flex flex-col gap-10">
-        {isLoading ? (
-          <div className="py-4 text-center">Загрузка заданий...</div>
-        ) : (
-          taskIds.map((taskId) => (
-            <TaskCard
-              key={taskId}
-              {...(taskData[taskId] || fallbackTaskData)}
-              id={taskId}
-            />
-          ))
-        )}
+        {taskIds.map((taskId) => (
+          <TaskCard
+            key={taskId}
+            {...(taskData[taskId])}
+            id={taskId}
+            loading={isLoading}
+          />
+        ))}
       </div>
     </PlateElement>
   );
