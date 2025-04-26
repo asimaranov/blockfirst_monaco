@@ -7,6 +7,7 @@ import { cn } from '@udecode/cn';
 import { PlateElement } from '@udecode/plate/react';
 import { TaskCard, TaskCardProps } from './TaskCard';
 import { api } from '~/trpc/react';
+import { TaskData } from '~/server/api/routers/tasks';
 
 export function TaskElement({
   children,
@@ -17,7 +18,7 @@ export function TaskElement({
     .replaceAll(' ', '')
     .split(',');
 
-  const [taskData, setTaskData] = useState<Record<string, TaskCardProps>>({});
+  const [taskData, setTaskData] = useState<Record<string, TaskData>>({});
   const [isLoading, setIsLoading] = useState(true);
 
   // Use the trPC query to fetch task data
@@ -31,8 +32,8 @@ export function TaskElement({
   // Update the local state when data is loaded
   useEffect(() => {
     if (tasksData) {
-      const newTaskData: Record<string, TaskCardProps> = {};
-      tasksData.forEach((task: TaskCardProps) => {
+      const newTaskData: Record<string, TaskData> = {};
+      tasksData.forEach((task: TaskData) => {
         newTaskData[task.id] = task;
       });
       setTaskData(newTaskData);
@@ -76,6 +77,7 @@ export function TaskElement({
             {...(taskData[taskId])}
             id={taskId}
             loading={isLoading}
+            task={taskData[taskId]}
           />
         ))}
       </div>

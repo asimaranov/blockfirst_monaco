@@ -1,10 +1,12 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { cn } from '@udecode/cn';
-
+import TaskView from '../../TaskView/TaskView';
+import { TaskData } from '~/server/api/routers/tasks';
 export interface TaskCardProps {
+  task: TaskData;
   id: string;
   loading?: boolean;
   // Hero section
@@ -30,6 +32,7 @@ export interface TaskCardProps {
 }
 
 export function TaskCard({
+  task,
   loading,
   updateDate = '',
   heroImageSrc = '/heroes/Alex.png',
@@ -44,6 +47,7 @@ export function TaskCard({
   advancedTasksSolved = false,
   onExecute,
 }: TaskCardProps) {
+  const [taskViewOpened, setTaskViewOpened] = useState(false)
   return (
     <div
       className={cn(
@@ -59,6 +63,9 @@ export function TaskCard({
         </div>
       ) : (
         <>
+          {taskViewOpened && (
+            <TaskView onClose={() => setTaskViewOpened(false)} task={task} />
+          )}
           <div className="h-full w-83 shrink-0 bg-[#01050D]">
             <div className="flex h-full flex-col bg-[url('/grids/task-grid.svg')] bg-contain bg-bottom p-8">
               <div className="text-secondary/50 flex flex-row justify-between text-xs">
@@ -292,7 +299,7 @@ export function TaskCard({
               </div>
               <button
                 className="bg-primary ml-auto flex cursor-pointer flex-row items-center rounded-[5.2083vw] px-15.75 py-3 hover:bg-[#1242B2]"
-                onClick={onExecute}
+                onClick={() => setTaskViewOpened(true)}
               >
                 Выполнить
                 <svg

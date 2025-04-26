@@ -24,6 +24,19 @@ const headingDepth: Record<string, number> = {
   [HEADING_KEYS.h6]: 6,
 };
 
+export interface TaskData {
+    id: string;
+    updateDate: string;
+    heroImageSrc: string;
+    heroName: any;
+    heroTagline: string;
+    labels: string[];
+    title: any;
+    description: any;
+    completionCount: string;
+    rating: string;
+}
+
 export const tasksRouter = createTRPCRouter({
   getById: publicProcedure
     .input(z.object({ taskId: z.string() }))
@@ -182,7 +195,7 @@ export const tasksRouter = createTRPCRouter({
           description: shortDescriptionContent || '',
           completionCount: '5+',
           rating: '4.9',
-        };
+        } as TaskData;
       });
     }),
 });
