@@ -67,7 +67,7 @@ export function TaskCard({
             <TaskView onClose={() => setTaskViewOpened(false)} task={task} />
           )}
           <div className="h-full w-83 shrink-0 bg-[#01050D]">
-            <div className="flex h-full flex-col bg-[url('/grids/task-grid.svg')] bg-contain bg-bottom p-8">
+            <div className="flex h-full flex-col bg-[url('/images/grids/task-grid.svg')] bg-contain bg-bottom p-8">
               <div className="text-secondary/50 flex flex-row justify-between text-xs">
                 <span>Обновление задачи</span>
                 <div className="flex flex-row items-center gap-1">

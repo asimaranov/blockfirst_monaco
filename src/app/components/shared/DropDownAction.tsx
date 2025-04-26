@@ -153,6 +153,7 @@ export default function DropDownAction({
                       href={option.link}
                       target="_blank"
                       className="flex w-60.75 cursor-pointer flex-row items-center gap-2 px-4 py-3.25 text-left text-xs whitespace-nowrap transition-colors duration-100 first:rounded-t-[0.4167vw] last:rounded-b-[0.4167vw] hover:bg-[#272B33]"
+                      key={option.value}
                     >
                       {option.icon}
                       {option.label}
