@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import { TaskNavigation, TaskStatusBadge } from '../LessonPage/plate/TaskCard';
+import { InfoPopover } from '../shared/InfoPopover';
 
 export default function TaskView({
   task,
@@ -108,6 +110,37 @@ export default function TaskView({
               </div>
             </div>
             <span className="text-secondary text-xs">{task.heroTagline}</span>
+          </div>
+        </div>
+        <div className="p-8">
+          <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-row justify-between">
+                <TaskNavigation labels={task.labels} />
+                <TaskStatusBadge status={'in-progress'} />
+              </div>
+              <div className="flex flex-col gap-4">
+                <span className="text-2xl font-medium">{task.title}</span>
+                <span className="text-secondary text-sm">
+                  {task.description}
+                </span>
+              </div>
+            </div>
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-row justify-between">
+                <span className="text-secondary/50 text-xs uppercase">
+                  требования задачи
+                </span>
+
+                <InfoPopover
+                  title={'Требования задачи'}
+                  content={`
+1. Синий кружок обозначает, что все ключевые задачи или тесты должны быть выполнены.
+2.Синий кружок с оранжевой звездочкой указывает на то, что данная задача или тест имеют повышенный уровень сложности. Их выполнение не является обязательным.
+                  `}
+                ></InfoPopover>
+              </div>
+            </div>
           </div>
         </div>
       </div>

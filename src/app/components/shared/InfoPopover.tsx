@@ -149,7 +149,7 @@ export const InfoPopover = ({
                 <div className="text-foreground pb-3 text-center text-xl">
                   {title}
                 </div>
-                <div className="text-secondary text-center text-sm">
+                <div className="text-secondary text-center text-sm whitespace-pre-line">
                   {content}
                 </div>
                 {children}
@@ -182,7 +182,7 @@ export const InfoPopover = ({
                 transition={{ duration: 0.2 }}
               >
                 <div className="text-foreground pb-3 text-sm">{title}</div>
-                <div className="text-secondary text-xs leading-5">
+                <div className="text-secondary text-xs leading-5 whitespace-pre-line">
                   {content}
                 </div>
                 {children}
