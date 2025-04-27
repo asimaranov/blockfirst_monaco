@@ -1,9 +1,6 @@
 // 'use server';
 import { getServerSession } from '~/server/auth';
-import { api } from '~/trpc/react';
 import { Skeleton } from '../shared/Skeleton';
-import { authClient } from '~/server/auth/client';
-import PlateEditor from './PlateEditor';
 import { cn } from '~/helpers';
 
 export async function UserAvatar({ className }: { className?: string }) {

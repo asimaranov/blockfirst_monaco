@@ -43,8 +43,10 @@ export const CodeBlockElement = withRef<typeof PlateElement>(
             {/* <CodeBlockCombobox /> */}
             <span className="text-secondary/50 text-sm leading-5">
               {/* first letter uppercase */}
-              {(element.lang as string).charAt(0).toUpperCase() +
-                (element.lang as string).slice(1)}
+              {element.lang
+                ? (element.lang as string).charAt(0).toUpperCase() +
+                  (element.lang as string).slice(1)
+                : 'Code'}
             </span>
             <CopyButton
               size="icon"

@@ -17,7 +17,7 @@ export default async function LessonPage({
   params: Promise<{ courseId: string }>;
 }) {
   const { courseId } = await params;
-  
+
   const document = await prisma.document.findUnique({
     where: {
       id: courseId,
@@ -28,12 +28,14 @@ export default async function LessonPage({
     <div>
       <Cover />
       <div className="border-accent flex min-h-screen flex-row border-x">
-          <div className="flex-1 w-239">
+        <div className="w-239 flex-1">
+          <div className="px-16">
             <PlateEditor richText={document?.contentRich as Value} />
-            <ContentFooter nextLocked={true} />
-            <CommentsSection />
           </div>
-          <RightSidebar />
+          <ContentFooter nextLocked={true} />
+          <CommentsSection />
+        </div>
+        <RightSidebar />
       </div>
       <Footer className="border-accent border-x border-t" />
     </div>

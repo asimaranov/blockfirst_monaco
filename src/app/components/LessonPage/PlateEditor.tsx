@@ -274,11 +274,9 @@ const PlateEditor = ({ richText }: { richText: Value }) => {
   }, [editor]);
 
   return (
-    <div className="px-16">
       <Plate editor={editor}>
         <PlateContent readOnly className="group" />
       </Plate>
-    </div>
   );
 };
 

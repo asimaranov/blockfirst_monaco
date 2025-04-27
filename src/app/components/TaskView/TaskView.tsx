@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { TaskNavigation, TaskStatusBadge } from '../LessonPage/plate/TaskCard';
 import { InfoPopover } from '../shared/InfoPopover';
+import PlateEditor from '../LessonPage/PlateEditor';
 
 export default function TaskView({
   task,
@@ -144,7 +145,7 @@ export default function TaskView({
             <span className="text-secondary text-xs">{task.heroTagline}</span>
           </div>
         </div>
-        <div className="p-8">
+        <div className="p-8 overflow-y-scroll">
           <div className="flex flex-col gap-8">
             <div className="flex flex-col gap-6">
               <div className="flex flex-row justify-between">
@@ -210,7 +211,7 @@ export default function TaskView({
               </div>
               <div className="flex flex-col gap-5">
                 <span className="text-secondary text-sm">
-                  {task.description}
+                  <PlateEditor richText={task.problemStatement} />
                 </span>
               </div>
             </div>
