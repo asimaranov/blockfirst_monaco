@@ -441,3 +441,67 @@
   --font-sans: var(--font-inter);
   --font-mono: var(--font-roboto-mono);
 }
+
+
+
+
+
+#sidebarDiv,#sidebarRightDiv {
+  display: flex;
+  flex: none;
+  border: 1px solid var(--vscode-editorWidget-border)
+}
+
+#sidebar {
+  width: 300px
+}
+
+#editorsDiv {
+  flex: 1;
+  min-width: 0
+}
+
+#editors {
+  position: relative;
+  min-width: 0;
+  height: 99%;
+  border: 1px solid var(--vscode-editorWidget-border)
+}
+
+#sidebar-right {
+  max-width: 500px
+}
+
+#auxiliaryBar-left,#auxiliaryBar {
+  max-width: 300px
+}
+
+#panel {
+  display: none;
+  flex: 1;
+  border: 1px solid var(--vscode-editorWidget-border);
+  min-height: 0
+}
+
+#titleBar {
+  position: relative;
+  flex: none
+}
+
+#banner {
+  flex: none
+}
+
+#workbench-container {
+  height: 95vh;
+  display: flex;
+  flex-direction: column
+}
+
+#workbench-top {
+  display: flex;
+  gap: 20px;
+  flex: 2;
+  min-height: 0
+}
+  

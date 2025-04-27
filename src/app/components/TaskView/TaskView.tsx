@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { TaskNavigation, TaskStatusBadge } from '../LessonPage/plate/TaskCard';
 import { InfoPopover } from '../shared/InfoPopover';
 import PlateEditor from '../LessonPage/PlateEditor';
+import MonacoView from './MonacoView';
 
 export default function TaskView({
   task,
@@ -44,7 +45,7 @@ export default function TaskView({
   ];
 
   return (
-    <div className="fixed top-0 left-0 z-1000 h-full w-full bg-[#0F1217]">
+    <div className="fixed top-0 left-0 z-1000 h-full w-full bg-[#0F1217] flex flex-row justify-between">
       <div className="border-accent flex h-full w-150 flex-col border-r">
         <div className="flex flex-row items-center px-8 py-6">
           <div
@@ -268,6 +269,7 @@ export default function TaskView({
           </div>
         </div>
       </div>
+      <MonacoView/>
     </div>
   );
 }
