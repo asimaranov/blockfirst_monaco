@@ -129,6 +129,8 @@ export const configure = (htmlContainer?: HTMLElement): ConfigResult => {
     fileSystemProvider.registerFile(createDefaultWorkspaceFile(workspaceFile, '/workspace'));
     registerFileSystemOverlay(1, fileSystemProvider);
 
+    
+
     return {
         wrapperConfig,
         workspaceFile,
