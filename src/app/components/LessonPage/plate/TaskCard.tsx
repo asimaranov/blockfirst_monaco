@@ -6,6 +6,7 @@ import { cn } from '@udecode/cn';
 import { useParams, useRouter } from 'next/navigation';
 import { TaskData } from '~/server/api/routers/tasks';
 import Link from 'next/link';
+import { InfoPopover } from '../../shared/InfoPopover';
 export interface TaskCardProps {
   task: TaskData;
   id: string;
@@ -219,31 +220,44 @@ export function TaskCard({
               <TaskNavigation labels={labels} />
 
               <div className="flex flex-row items-center gap-2">
-                <div
-                  className={cn(
-                    'border-primary/50 rounded-[0.4167vw] border-[calc(0.25*var(--spacing))] px-3.25 py-1.25',
-                    regularTasksSolved
-                      ? 'bg-primary'
-                      : 'hover:bg-primary/10 cursor-pointer'
-                  )}
-                >
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
-                      stroke="#195AF4"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      className={cn(regularTasksSolved && 'stroke-white')}
-                    />
-                  </svg>
-                </div>
+                <InfoPopover
+                  title="Выполнение задач"
+                  content={`1. Синяя галочка — обозначает, что все основные задачи или тесты успешно выполнены.
+                    2. Оранжевая галочка — указывает на то, что выполнены сложные задачи или тесты.`}
+                  icon={
+                    <div
+                      className={cn(
+                        'border-primary/50 rounded-[0.4167vw] border-[calc(0.25*var(--spacing))] px-3.25 py-1.25',
+                        regularTasksSolved
+                          ? 'bg-primary'
+                          : 'hover:bg-primary/10 cursor-pointer'
+                      )}
+                    >
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
+                          stroke="#195AF4"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          className={cn(regularTasksSolved && 'stroke-white')}
+                        />
+                      </svg>
+                    </div>
+                  }
+                />
+                <InfoPopover
+                  title="Выполнение задач"
+                  content={`1. Синяя галочка — обозначает, что все основные задачи или тесты успешно выполнены.
+                    2. Оранжевая галочка — указывает на то, что выполнены сложные задачи или тесты.`}
+                  icon={
+
                 <div
                   className={cn(
                     'rounded-[0.4167vw] border-[calc(0.25*var(--spacing))] border-[#F48E19]/50 px-3.25 py-1.25',
@@ -289,8 +303,10 @@ export function TaskCard({
                         <rect width="20" height="20" fill="white" />
                       </clipPath>
                     </defs>
-                  </svg>
-                </div>
+                      </svg>
+                    </div>
+                  }
+                />
 
                 <TaskStatusBadge status={'in-progress'} />
               </div>
