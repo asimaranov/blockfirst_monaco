@@ -2,40 +2,107 @@ import Image from 'next/image';
 import BfRobot from './assets/bf-robot.png';
 import BfRobotBadge from './assets/bf-robot-badge.svg';
 import { InfoPopover } from '../shared/InfoPopover';
+import { useState } from 'react';
+import RobotImage from './assets/robot.png';
 
 export default function AiMentor({ task }: { task: any }) {
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState<
+    { role: string; content: string; timestamp: Date }[]
+  >([
+    {
+      role: 'assistant',
+      content: 'Привет! Я ваш персональный AI-ментор. Как я могу помочь?',
+      timestamp: new Date(),
+    },
+  ]);
+
+  const handleSendMessage = () => {
+    setMessages([
+      ...messages,
+      { role: 'user', content: message, timestamp: new Date() },
+    ]);
+    setMessage('');
+  };
+
   return (
     <>
-      <div className="mt-auto mb-auto flex flex-col items-center justify-center gap-8">
-        <div className="relative">
-          <Image
-            src={BfRobot}
-            alt="AI ментор"
-            width={80}
-            height={80}
-            className="h-20 w-20"
-          />
-          <div className="absolute bottom-0 left-1/2 h-7 w-35 -translate-x-1/2 translate-y-1/2 backdrop-blur-[10px]">
-            <Image src={BfRobotBadge} alt="" className="h-7 w-35" />
+      {messages.length == 0 ? (
+        <div className="mt-auto mb-auto flex flex-col items-center justify-center gap-8">
+          <div className="relative">
+            <Image
+              src={BfRobot}
+              alt="AI ментор"
+              width={80}
+              height={80}
+              className="h-20 w-20"
+            />
+            <div className="absolute bottom-0 left-1/2 h-7 w-35 -translate-x-1/2 translate-y-1/2 backdrop-blur-[10px]">
+              <Image src={BfRobotBadge} alt="" className="h-7 w-35" />
+            </div>
+          </div>
+          <div className="flex flex-col items-center gap-2 px-8">
+            <span className="text-2xl">Чем я могу помочь?</span>
+            <span className="text-secondary text-center text-sm">
+              Я ваш персональный AI — ментор, готовый оказать поддержку в поиске
+              решений, анализе данных и многом другом
+            </span>
           </div>
         </div>
-        <div className="flex flex-col items-center gap-2 px-8">
-          <span className="text-2xl">Чем я могу помочь?</span>
-          <span className="text-secondary text-center text-sm">
-            Я ваш персональный AI — ментор, готовый оказать поддержку в поиске
-            решений, анализе данных и многом другом
-          </span>
-        </div>
-      </div>
+      ) : (
+        <div className="mb-auto flex flex-col gap-8 px-8 pt-6">
+          <div className="flex flex-row gap-4 self-end">
+            <div className="flex flex-col gap-2">
+              <span className="rounded-[0.4167vw] bg-[#14171C] px-4 py-2">
+                Привет, AI ментор
+              </span>
+              <span className="text-secondary/50 self-end text-xs">
+                28 Апреля, 23:09
+              </span>
+            </div>
+            <div className="bg-primary h-9 w-9 rounded-full"></div>
+          </div>
 
-      <div className="flex flex-row gap-8 px-8 py-6">
+          <div className="flex flex-row gap-4">
+            <Image
+              src={RobotImage}
+              alt="Robot"
+              width={36}
+              height={36}
+              className="h-9 w-9"
+            />
+
+            <div className="flex flex-col gap-2">
+              <span className="rounded-[0.4167vw] bg-[#14171C] px-4 py-2">
+                Привет, Человек
+              </span>
+              <span className="text-secondary/50 text-xs">
+                28 Апреля, 23:09
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="border-accent flex flex-row gap-8 border-t px-8 py-6">
         <textarea
-          rows={1}
-          className="placeholder:text-secondary w-full resize-none rounded-lg py-2.5 text-sm"
+          className="placeholder:text-secondary w-full resize-none rounded-lg py-2.5 text-sm outline-hidden"
           placeholder="Введите сообщение ..."
+          onInput={(e) => {
+            (e.target as HTMLTextAreaElement).style.height = 'auto';
+            (e.target as HTMLTextAreaElement).style.height =
+              (e.target as HTMLTextAreaElement).scrollHeight + 'px';
+          }}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
         />
 
-        <div className="border-primary rounded-full border p-2.5">
+        <button
+          className="border-primary h-fit cursor-pointer self-end rounded-full border p-2.5"
+          onClick={() => {
+            handleSendMessage();
+          }}
+        >
           <svg
             width="20"
             height="20"
@@ -51,7 +118,7 @@ export default function AiMentor({ task }: { task: any }) {
               fill="#F2F2F2"
             />
           </svg>
-        </div>
+        </button>
       </div>
 
       <div className="border-accent sticky bottom-0 border-t px-8 py-4">
