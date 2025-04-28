@@ -449,9 +449,6 @@ importers:
       server-only:
         specifier: ^0.0.1
         version: 0.0.1
-      services:
-        specifier: link:monaco-languageclient/vscode/services
-        version: link:monaco-languageclient/vscode/services
       slate:
         specifier: ^0.112.0
         version: 0.112.0

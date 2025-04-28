@@ -28,7 +28,7 @@ export default function AiMentor({ task }: { task: any }) {
         </div>
       </div>
 
-      <div className="mt-auto flex flex-row gap-8 px-8 py-6">
+      <div className="flex flex-row gap-8 px-8 py-6">
         <textarea
           rows={1}
           className="placeholder:text-secondary w-full resize-none rounded-lg py-2.5 text-sm"

@@ -1158,3 +1158,18 @@
   background-color: #0f1217 !important;
 
 }
+
+
+/* Hide secondary vertical action bar */
+.monaco-action-bar.vertical:not(:first-child) {
+  display: none;
+}
+
+#statusBar {
+  display: none;
+}
+
+.monaco-tl-twistie {
+  padding-left: 24px !important;
+  padding-right: 15px !important;
+} 
