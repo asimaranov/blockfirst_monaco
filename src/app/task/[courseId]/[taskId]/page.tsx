@@ -4,9 +4,11 @@ import TaskView from '~/app/components/TaskView/TaskView';
 export default async function TaskPage({
   params,
 }: {
-  params: { taskId: string; lessonId: string; courseId: string };
+  params: Promise<{ taskId: string; courseId: string }>;
 }) {
-  const taskData = await api.tasks.getById({ taskId: params.taskId });
+  const { taskId, courseId } = await params;
+
+  const taskData = await api.tasks.getById({ taskId });
 
   if (!taskData) {
     return (
@@ -28,5 +30,5 @@ export default async function TaskPage({
     );
   }
 
-  return <TaskView task={taskData} courseId={params.courseId} />;
+  return <TaskView task={taskData} courseId={courseId} />;
 }

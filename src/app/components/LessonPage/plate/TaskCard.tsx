@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { cn } from '@udecode/cn';
 import { useParams, useRouter } from 'next/navigation';
 import { TaskData } from '~/server/api/routers/tasks';
+import Link from 'next/link';
 export interface TaskCardProps {
   task: TaskData;
   id: string;
@@ -137,7 +138,7 @@ export function TaskCard({
 
   const handleOpenTask = () => {
     if (task?.id) {
-      router.push(`/lesson/${courseId}/task/${task.id}`)
+      router.push(`/lesson/${courseId}/task/${task.id}`);
     }
   };
 
@@ -349,9 +350,10 @@ export function TaskCard({
                   <span className="text-base font-medium">{rating}</span>
                 </div>
               </div>
-              <button
+              <Link
+                href={`/task/${courseId}/${task.id}`}
                 className="bg-primary ml-auto flex cursor-pointer flex-row items-center rounded-[5.2083vw] px-15.75 py-3 hover:bg-[#1242B2]"
-                onClick={handleOpenTask}
+                prefetch={true}
               >
                 Выполнить
                 <svg
@@ -366,7 +368,7 @@ export function TaskCard({
                     fill="#F2F2F2"
                   />
                 </svg>
-              </button>
+              </Link>
             </div>
           </div>
         </>
