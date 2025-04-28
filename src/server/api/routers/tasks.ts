@@ -79,19 +79,86 @@ export const tasksRouter = createTRPCRouter({
         throw new Error('Task not found');
       }
 
+      // Process the document content using the same approach as getMultiple
+      const editor = createSlateEditor({
+        plugins: [BaseHeadingPlugin, BaseTocPlugin],
+        value: document.contentRich as any,
+      });
+
+      const headingList: Heading[] = [];
+
+      const values = editor.api.nodes<TElement>({
+        at: [],
+        match: (n) => isHeading(n),
+      });
+
+      Array.from(values, ([node, path]) => {
+        const { type } = node;
+        const title = NodeApi.string(node);
+        const depth = headingDepth[type];
+        const id = node.id as string;
+        title &&
+          headingList.push({
+            id,
+            depth,
+            path,
+            title,
+            type,
+          });
+      });
+
+      const title = headingList.find((heading) => heading.title == 'Title');
+      const titleContentNodePath = [
+        title?.path[0]! + 1,
+        ...title?.path.slice(1)!,
+      ];
+      const titleContentNode = editor.api.node(titleContentNodePath!)![0]!;
+      const titleContent = (titleContentNode?.children as any)[0]!.text;
+
+      const hero = headingList.find((heading) => heading.title == 'Hero');
+      const heroContentNodePath = [hero?.path[0]! + 1, ...hero?.path.slice(1)!];
+      const heroContentNode = editor.api.node(heroContentNodePath!)![0]!;
+      const heroContent = (heroContentNode?.children as any)[0]!.text;
+
+      const description = headingList.find(
+        (heading) => heading.title == 'Description'
+      );
+      const descriptionContentNodePath = [
+        description?.path[0]! + 1,
+        ...description?.path.slice(1)!,
+      ];
+      const descriptionContentNode = editor.api.node(
+        descriptionContentNodePath!
+      )![0]!;
+      const descriptionContent = (descriptionContentNode?.children as any)[0]!
+        .text;
+
+      const problemStatement = getContentBetweenHeadings(
+        editor,
+        'Problem Statement'
+      );
+      const problemStatementElements = problemStatement
+        ? Array.from(problemStatement, ([node]) => node as TElement)
+        : [];
+
       // Format the data to match TaskCardProps
       return {
         id: document.id,
         updateDate: document.updatedAt.toLocaleDateString('ru-RU'),
-        heroImageSrc: document.user?.profileImageUrl || '/heroes/Alex.png', // Fallback if no image
-        heroName: document.user?.name || document.user?.username || 'Алекс',
+        heroImageSrc: document.user?.profileImageUrl || '/heroes/Alex.png',
+        heroName:
+          heroContent ||
+          document.user?.name ||
+          document.user?.username ||
+          'Алекс',
         heroTagline: 'Реши задачу за нашего героя!',
-        labels: ['Глава 1', 'Тема 2', 'Урок 2'], // This could be dynamic based on metadata or categories
-        title: document.title || 'Без названия',
-        description: document.content || '',
-        completionCount: '1 207+', // This could be dynamic based on analytics
-        rating: '1 207+', // This could be dynamic based on analytics
-      };
+        labels: ['Глава 1', 'Тема 2', 'Урок 2'],
+        title: titleContent || document.title || 'Без названия',
+        description: descriptionContent || document.content || '',
+        problemStatement: problemStatementElements,
+        completionCount: '5+',
+        rating: '4.9',
+      } as TaskData;
     }),
 
   getMultiple: publicProcedure

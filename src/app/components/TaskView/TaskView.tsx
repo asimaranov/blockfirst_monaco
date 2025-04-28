@@ -1,4 +1,6 @@
+'use client';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import MonacoView from './MonacoView';
 import TaskInfo from './TaskInfo';
 import { cn } from '~/helpers';
@@ -7,11 +9,26 @@ import AiMentor from './AiMentor';
 export default function TaskView({
   task,
   onClose,
+  courseId,
 }: {
   task: any;
-  onClose: () => void;
+  onClose?: () => void;
+  courseId?: string;
 }) {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<'info' | 'ai-mentor'>('info');
+
+  const handleClose = () => {
+    if (onClose) {
+      onClose();
+    } else {
+      if (courseId) {
+        router.push(`/lesson/${courseId}`);
+      } else {
+        router.back();
+      }
+    }
+  };
 
   return (
     <div className="fixed top-0 left-0 z-1000 flex h-full w-full flex-row justify-between bg-[#0F1217]">
@@ -19,7 +36,7 @@ export default function TaskView({
         <div className="flex flex-row items-center px-8 py-6">
           <div
             className="group/back-button cursor-pointer p-2.5"
-            onClick={onClose}
+            onClick={handleClose}
           >
             <svg
               width="20"
@@ -95,8 +112,6 @@ export default function TaskView({
         {activeTab === 'info' && <TaskInfo task={task} />}
 
         {activeTab === 'ai-mentor' && <AiMentor task={task} />}
-
-        
       </div>
       <MonacoView />
     </div>

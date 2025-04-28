@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import { cn } from '@udecode/cn';
-import TaskView from '../../TaskView/TaskView';
+import { useParams, useRouter } from 'next/navigation';
 import { TaskData } from '~/server/api/routers/tasks';
 export interface TaskCardProps {
   task: TaskData;
@@ -132,7 +132,15 @@ export function TaskCard({
   advancedTasksSolved = false,
   onExecute,
 }: TaskCardProps) {
-  const [taskViewOpened, setTaskViewOpened] = useState(false);
+  const router = useRouter();
+  const { courseId } = useParams();
+
+  const handleOpenTask = () => {
+    if (task?.id) {
+      router.push(`/lesson/${courseId}/task/${task.id}`)
+    }
+  };
+
   return (
     <div
       className={cn(
@@ -148,9 +156,6 @@ export function TaskCard({
         </div>
       ) : (
         <>
-          {taskViewOpened && (
-            <TaskView onClose={() => setTaskViewOpened(false)} task={task} />
-          )}
           <div className="h-full w-83 shrink-0 bg-[#01050D]">
             <div className="flex h-full flex-col bg-[url('/images/grids/task-grid.svg')] bg-contain bg-bottom p-8">
               <div className="text-secondary/50 flex flex-row justify-between text-xs">
@@ -346,7 +351,7 @@ export function TaskCard({
               </div>
               <button
                 className="bg-primary ml-auto flex cursor-pointer flex-row items-center rounded-[5.2083vw] px-15.75 py-3 hover:bg-[#1242B2]"
-                onClick={() => setTaskViewOpened(true)}
+                onClick={handleOpenTask}
               >
                 Выполнить
                 <svg
