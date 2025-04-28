@@ -145,7 +145,7 @@
     "mongoose": "^8.13.2",
     "motion": "^12.6.3",
     "nanoid": "^5.1.5",
-    "next": "^15.4.0-canary.4",
+    "next": "^15.4.0-canary.12",
     "next-intl": "^4.0.2",
     "pdf-lib": "^1.17.1",
     "qr-code-styling": "^1.9.1",
