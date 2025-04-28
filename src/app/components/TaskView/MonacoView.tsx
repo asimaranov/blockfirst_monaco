@@ -10,8 +10,8 @@ const DynamicMonacoEditorReact = dynamic(async () => {
     const configResult = configure();
 
     return () => <comp.MonacoEditorReactComp
-        // style={{ 'height': '100%' }}
-        className='h-full w-full relative'
+        style={{ 'backgroundColor': '#0F1217' }}
+        className=' w-full relative h-200'
         wrapperConfig={configResult.wrapperConfig} />
 }, {
     ssr: false

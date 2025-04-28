@@ -110,10 +110,12 @@ export default function TaskView({
         </div>
 
         {activeTab === 'info' && <TaskInfo task={task} />}
-
         {activeTab === 'ai-mentor' && <AiMentor task={task} />}
       </div>
-      <MonacoView />
+      <div className="flex flex-col">
+        <MonacoView />
+        <div className="w-full flex-1 bg-blue-300"></div>
+      </div>
     </div>
   );
 }

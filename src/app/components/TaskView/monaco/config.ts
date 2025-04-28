@@ -96,13 +96,13 @@ export const configure = (htmlContainer?: HTMLElement): ConfigResult => {
             },
             userConfiguration: {
                 json: JSON.stringify({
-                    'workbench.colorTheme': 'Default Dark Modern',
+                    'workbench.colorTheme': 'Default Dark Blockfirst',
                     'editor.wordBasedSuggestions': 'off',
                     'typescript.tsserver.web.projectWideIntellisense.enabled': true,
                     'typescript.tsserver.web.projectWideIntellisense.suppressSemanticErrors': false,
                     'editor.guides.bracketPairsHorizontal': true,
                     'oct.serverUrl': 'https://api.open-collab.tools/',
-                    'editor.experimental.asyncTokenization': false
+                    'editor.experimental.asyncTokenization': false,
                 })
             },
         },

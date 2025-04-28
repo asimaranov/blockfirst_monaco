@@ -2,7 +2,6 @@ import Image from 'next/image';
 import { TaskNavigation, TaskStatusBadge } from '../LessonPage/plate/TaskCard';
 import { InfoPopover } from '../shared/InfoPopover';
 import PlateEditor from '../LessonPage/PlateEditor';
-import MonacoView from './MonacoView';
 
 export default function TaskInfo({ task }: { task: any }) {
   const tests = [
