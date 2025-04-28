@@ -1160,8 +1160,7 @@
 }
 
 
-/* Hide secondary vertical action bar */
-.monaco-action-bar.vertical:not(:first-child) {
+#activityBar > div > .content > div:last-child > .monaco-action-bar.vertical {
   display: none;
 }
 
