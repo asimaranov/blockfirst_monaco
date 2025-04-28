@@ -1169,7 +1169,7 @@
   display: none;
 }
 
-.monaco-tl-twistie {
-  padding-left: 24px !important;
+.monaco-tl-twistie.collapsible {
+  padding-left: 22px !important;
   padding-right: 15px !important;
 } 

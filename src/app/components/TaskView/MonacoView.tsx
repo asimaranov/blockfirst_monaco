@@ -93,7 +93,7 @@ const FloatingActionBar = () => {
   return (
     <div
       ref={actionBarRef}
-      className="border-accent z-50 flex flex-row items-center justify-center border-t text-white shadow-lg"
+      className="border-accent z-150 flex flex-row items-center justify-center border-t text-white shadow-lg"
       style={{
         position: 'fixed',
         bottom: position.bottom,
@@ -113,11 +113,61 @@ const FloatingActionBar = () => {
               height={20}
               className="h-5 w-5 shrink-0"
             />
-            <span className="text-foreground text-xl leading-5">
-              0<span className="text-foreground text-xs leading-5">— Проверок кода</span>
-            </span>
+            <div className="flex items-center justify-center gap-1">
+              <span className="text-foreground text-xl leading-5">0</span>
+              <span className="text-secondary text-xs leading-5">
+                — Проверок кода
+              </span>
+            </div>
           </div>
-          <button className="ml-auto text-sm">Проверить код</button>
+          <button className="bg-primary ml-auto flex cursor-pointer gap-2 rounded-[5.2083vw] px-6 py-3 text-sm">
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+            >
+              <path
+                d="M5.51953 12.0047V7.99469C5.51953 5.56965 5.51953 4.35713 6.30075 3.93063C7.08197 3.50412 8.10192 4.1598 10.1418 5.47116L13.2607 7.47616C15.0284 8.61257 15.9123 9.18077 15.9123 9.9997C15.9123 10.8186 15.0284 11.3868 13.2607 12.5232L10.1418 14.5282C8.10191 15.8396 7.08197 16.4953 6.30075 16.0688C5.51953 15.6423 5.51953 14.4297 5.51953 12.0047Z"
+                fill="#F2F2F2"
+              />
+            </svg>
+            <span className="text-sm">Проверить код</span>
+          </button>
+        </div>
+
+        <div className="flex gap-1 py-2.25 justify-center text-xs bg-[#14171C] border-accent border-x">
+          <div className="flex flex-row gap-2">
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 14 14"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-3.5 w-3.5"
+            >
+              <path
+                d="M6.11828 1.29969L3.20745 2.39635C2.53661 2.64719 1.98828 3.44052 1.98828 4.15219V8.48635C1.98828 9.17469 2.44328 10.0789 2.99745 10.493L5.50578 12.3655C6.32828 12.9839 7.68161 12.9839 8.50411 12.3655L11.0124 10.493C11.5666 10.0789 12.0216 9.17469 12.0216 8.48635V4.15219C12.0216 3.43469 11.4733 2.64135 10.8024 2.39052L7.89161 1.29969C7.39578 1.11885 6.60245 1.11885 6.11828 1.29969Z"
+                stroke="#9AA6B5"
+                stroke-width="0.875"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M5.28125 6.92464L6.22042 7.8638L8.72875 5.35547"
+                stroke="#9AA6B5"
+                stroke-width="0.875"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+
+            <span className="text-secondary">Возникла проблема? </span>
+          </div>
+
+          <span className="underline">Написать нам</span>
         </div>
       </div>
     </div>
