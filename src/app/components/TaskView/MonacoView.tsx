@@ -4,11 +4,18 @@ import React, { useEffect, useState, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import BfLogo from './assets/bf-logo.svg';
+import BfBadge from './assets/bf-badge.svg';
+import { InfoPopover, InfoPopoverIcon } from '../shared/InfoPopover';
+import LoadingComponent from './LoadingComponent';
 
 const DynamicMonacoEditorReact = dynamic(() => import('./MonacoViewDynamic'), {
     ssr: false,
+    loading: () => <LoadingComponent/>,
   }
 );
+
+
+// const DynamicMonacoEditorReact = LoadingComponent;
 
 const FloatingActionBar = () => {
   const [position, setPosition] = useState({ bottom: 0, left: 0, width: 0 });
@@ -115,7 +122,7 @@ const FloatingActionBar = () => {
           </button>
         </div>
 
-        <div className="flex gap-1 py-2.25 justify-center text-xs bg-[#14171C] border-accent border-x">
+        <div className="border-accent flex justify-center gap-1 border-x bg-[#14171C] py-2.25 text-xs">
           <div className="flex flex-row gap-2">
             <svg
               width="14"
@@ -155,7 +162,10 @@ export default function MonacoView() {
   const [showActionBar, setShowActionBar] = useState(true);
   return (
     <div className="h-full w-272">
-      <button onClick={() => setShowActionBar(!showActionBar)} className='absolute top-0 right-0 z-1000 bg-red-500 w-10 h-10'>
+      <button
+        onClick={() => setShowActionBar(!showActionBar)}
+        className="absolute top-0 right-0 z-1000 h-10 w-10 bg-red-500"
+      >
         {showActionBar ? 'hide' : 'show'}
       </button>
       {showActionBar && <DynamicMonacoEditorReact />}

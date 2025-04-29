@@ -21,7 +21,7 @@ interface InfoPopoverProps {
   hideOnHover?: boolean;
 }
 
-export const InfoPopoverIcon = ({ empty }: { empty?: boolean }) => {
+export const InfoPopoverIcon = ({ empty, className }: { empty?: boolean, className?: string }) => {
   return (
     <svg
       width="16"
@@ -31,7 +31,8 @@ export const InfoPopoverIcon = ({ empty }: { empty?: boolean }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(
         'text-secondary h-5 w-5 cursor-pointer transition delay-100 duration-300 ease-in-out hover:text-[#F2F2F2] sm:h-4 sm:w-4',
-        empty && 'hover:text-secondary cursor-default'
+        empty && 'hover:text-secondary cursor-default',
+        className,
       )}
     >
       <circle cx="8" cy="8" r="6.66667" stroke="currentColor" />
@@ -119,7 +120,7 @@ export const InfoPopover = ({
           }
         }}
       >
-        {icon || <InfoPopoverIcon empty={!title && !content} />}
+        {icon || <InfoPopoverIcon empty={!title && !content}  />}
       </div>
       {typeof document !== 'undefined' &&
         createPortal(
