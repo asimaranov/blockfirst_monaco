@@ -13,7 +13,7 @@ import {
 } from '@codingame/monaco-vscode-files-service-override';
 import getKeybindingsServiceOverride from '@codingame/monaco-vscode-keybindings-service-override';
 import getLifecycleServiceOverride from '@codingame/monaco-vscode-lifecycle-service-override';
-import getLocalizationServiceOverride from '@codingame/monaco-vscode-localization-service-override';
+import getLocalizationServiceOverride, { LocalizationOptions } from '@codingame/monaco-vscode-localization-service-override';
 import getBannerServiceOverride from '@codingame/monaco-vscode-view-banner-service-override';
 import getStatusBarServiceOverride from '@codingame/monaco-vscode-view-status-bar-service-override';
 import getTitleBarServiceOverride from '@codingame/monaco-vscode-view-title-bar-service-override';
@@ -28,10 +28,17 @@ import getSearchServiceOverride from '@codingame/monaco-vscode-search-service-ov
 import '@codingame/monaco-vscode-typescript-basics-default-extension';
 import '@codingame/monaco-vscode-typescript-language-features-default-extension';
 import '@codingame/monaco-vscode-search-result-default-extension';
+/* --------------------------------------------------------------------------------------------
+ * Copyright (c) 2024 TypeFox and others.
+ * Licensed under the MIT License. See LICENSE in the package root for license information.
+ * ------------------------------------------------------------------------------------------ */
+import {
+  registerExtension,
+  RegisterLocalExtensionResult,
+} from '@codingame/monaco-vscode-api/extensions';
 
-// import '../../resources/vsix/open-collaboration-tools.vsix';
+import 'vscode/localExtensionHost';
 
-import { createDefaultLocaleConfiguration } from 'monaco-languageclient/vscode/services';
 import { defaultHtmlAugmentationInstructions } from 'monaco-editor-wrapper/vscode/services';
 import { configureDefaultWorkerFactory } from 'monaco-editor-wrapper/workers/workerLoaders';
 import { createDefaultWorkspaceFile } from './client-utils';
@@ -45,6 +52,135 @@ import type { WrapperConfig } from 'monaco-editor-wrapper';
 import type { RegisterLocalProcessExtensionResult } from '@codingame/monaco-vscode-api/extensions';
 import { MonacoEditorLanguageClientWrapper } from 'monaco-editor-wrapper';
 import { defaultViewsInit } from './viewsService';
+
+
+export const createDefaultLocaleConfiguration = (): LocalizationOptions => {
+    return {
+      async clearLocale() {
+        const url = new URL(window.location.href);
+        url.searchParams.delete('locale');
+        window.history.pushState(null, '', url.toString());
+      },
+      async setLocale(id: string) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('locale', id);
+        window.history.pushState(null, '', url.toString());
+      },
+      availableLanguages: [
+        {
+          locale: 'en',
+          languageName: 'English',
+        },
+        {
+          locale: 'cs',
+          languageName: 'Czech',
+        },
+        {
+          locale: 'de',
+          languageName: 'German',
+        },
+        {
+          locale: 'es',
+          languageName: 'Spanish',
+        },
+        {
+          locale: 'fr',
+          languageName: 'French',
+        },
+        {
+          locale: 'it',
+          languageName: 'Italian',
+        },
+        {
+          locale: 'ja',
+          languageName: 'Japanese',
+        },
+        {
+          locale: 'ko',
+          languageName: 'Korean',
+        },
+        {
+          locale: 'pl',
+          languageName: 'Polish',
+        },
+        {
+          locale: 'pt-br',
+          languageName: 'Portuguese (Brazil)',
+        },
+        {
+          locale: 'qps-ploc',
+          languageName: 'Pseudo Language',
+        },
+        {
+          locale: 'ru',
+          languageName: 'Russian',
+        },
+        {
+          locale: 'tr',
+          languageName: 'Turkish',
+        },
+        {
+          locale: 'zh-hans',
+          languageName: 'Chinese (Simplified)',
+        },
+        {
+          locale: 'zh-hant',
+          languageName: 'Chinese (Traditional)',
+        },
+        {
+          locale: 'en',
+          languageName: 'English',
+        },
+      ],
+    };
+  };
+  
+var manifest = {
+  name: 'theme-defaults',
+  displayName: '%displayName%',
+  description: '%description%',
+  categories: ['Themes'],
+  version: '1.0.0',
+  publisher: 'vscode',
+  license: 'MIT',
+  engines: { vscode: '*' },
+  contributes: {
+    themes: [
+      {
+        id: 'Default Dark Blockfirst',
+        label: 'Default Dark Blockfirst',
+        uiTheme: 'vs-dark',
+        path: './themes/dark_blockfirst.json',
+      },
+    ],
+    // iconThemes: [
+    //   {
+    //     id: 'vs-minimal',
+    //     label: '%minimalIconThemeLabel%',
+    //     path: './fileicons/vs_minimal-icon-theme.json',
+    //   },
+    // ],
+  },
+  repository: { type: 'git', url: 'https://github.com/microsoft/vscode.git' },
+  main: undefined,
+};
+
+const { registerFileUrl, whenReady } = registerExtension(
+  manifest as any,
+  undefined,
+  { system: true }
+) as RegisterLocalExtensionResult;
+
+// registerFileUrl(
+//   './fileicons/vs_minimal-icon-theme.json',
+//   new URL('./resources/vs_minimal-icon-theme.json', import.meta.url).toString()
+// );
+
+registerFileUrl(
+  './themes/dark_blockfirst.json',
+  new URL('./themes/dark_blockfirst.json', import.meta.url).toString()
+);
+// import '../../resources/vsix/open-collaboration-tools.vsix';
 
 export const configurePostStart = async (
   wrapper: MonacoEditorLanguageClientWrapper,
@@ -136,15 +272,16 @@ export const configure = (htmlContainer?: HTMLElement): ConfigResult => {
         },
       },
       userConfiguration: {
-          json: JSON.stringify({
-              'workbench.colorTheme': 'Default Dark Blockfirst',
-              'editor.wordBasedSuggestions': 'off',
-              'typescript.tsserver.web.projectWideIntellisense.enabled': true,
-              'typescript.tsserver.web.projectWideIntellisense.suppressSemanticErrors': false,
-              'editor.guides.bracketPairsHorizontal': true,
-              'oct.serverUrl': 'https://api.open-collab.tools/',
-              'editor.experimental.asyncTokenization': false,
-          })
+        json: JSON.stringify({
+          'workbench.colorTheme': 'Default Dark Blockfirst',
+          'editor.wordBasedSuggestions': 'off',
+          'typescript.tsserver.web.projectWideIntellisense.enabled': true,
+          'typescript.tsserver.web.projectWideIntellisense.suppressSemanticErrors':
+            false,
+          'editor.guides.bracketPairsHorizontal': true,
+          'oct.serverUrl': 'https://api.open-collab.tools/',
+          'editor.experimental.asyncTokenization': false,
+        }),
       },
     },
     extensions: [

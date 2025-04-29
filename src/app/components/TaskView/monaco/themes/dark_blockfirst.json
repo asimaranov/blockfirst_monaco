@@ -1,6 +1,6 @@
 {
   "$schema": "vscode://schemas/color-theme",
-  "name": "Blockfirst dark",
+  "name": "Default Dark Blockfirst",
   "include": "./dark_plus.json",
   "colors": {
     "editor.inactiveSelectionBackground": "#3A3D41",
