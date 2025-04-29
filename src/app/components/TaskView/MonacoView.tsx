@@ -2,33 +2,10 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import dynamic from 'next/dynamic';
-import { MonacoEditorLanguageClientWrapper } from 'monaco-editor-wrapper';
-import { configurePostStart } from './monaco/common';
 import Image from 'next/image';
 import BfLogo from './assets/bf-logo.svg';
 
-const DynamicMonacoEditorReact = dynamic(
-  async () => {
-    const { configure } = await import('./monaco/config');
-    const comp = await import('@typefox/monaco-editor-react');
-    // const wrapperConfig = buildJsonClientUserConfig();
-    const configResult = configure();
-
-    return () => (
-      <comp.MonacoEditorReactComp
-        style={{ backgroundColor: '#0F1217' }}
-        className="relative h-full w-full"
-        wrapperConfig={configResult.wrapperConfig}
-        onLoad={async (wrapper: MonacoEditorLanguageClientWrapper) => {
-          await configurePostStart(wrapper, configResult);
-        }}
-        onError={(e) => {
-          console.error(e);
-        }}
-      />
-    );
-  },
-  {
+const DynamicMonacoEditorReact = dynamic(() => import('./MonacoViewDynamic'), {
     ssr: false,
   }
 );
@@ -175,10 +152,14 @@ const FloatingActionBar = () => {
 };
 
 export default function MonacoView() {
+  const [showActionBar, setShowActionBar] = useState(true);
   return (
     <div className="h-full w-272">
-      <DynamicMonacoEditorReact />
-      <FloatingActionBar />
+      <button onClick={() => setShowActionBar(!showActionBar)} className='absolute top-0 right-0 z-1000 bg-red-500 w-10 h-10'>
+        {showActionBar ? 'hide' : 'show'}
+      </button>
+      {showActionBar && <DynamicMonacoEditorReact />}
+      {showActionBar && <FloatingActionBar />}
     </div>
   );
 }

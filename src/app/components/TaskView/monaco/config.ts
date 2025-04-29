@@ -6,7 +6,11 @@
 
 import * as vscode from 'vscode';
 import { LogLevel } from '@codingame/monaco-vscode-api';
-import { RegisteredFileSystemProvider, registerFileSystemOverlay, RegisteredMemoryFile } from '@codingame/monaco-vscode-files-service-override';
+import {
+  RegisteredFileSystemProvider,
+  registerFileSystemOverlay,
+  RegisteredMemoryFile,
+} from '@codingame/monaco-vscode-files-service-override';
 import getKeybindingsServiceOverride from '@codingame/monaco-vscode-keybindings-service-override';
 import getLifecycleServiceOverride from '@codingame/monaco-vscode-lifecycle-service-override';
 import getLocalizationServiceOverride from '@codingame/monaco-vscode-localization-service-override';
@@ -27,115 +31,158 @@ import '@codingame/monaco-vscode-search-result-default-extension';
 
 // import '../../resources/vsix/open-collaboration-tools.vsix';
 
-import { createDefaultLocaleConfiguration } from './vscode-services';
-import { defaultHtmlAugmentationInstructions, defaultViewsInit } from 'monaco-editor-wrapper/vscode/services';
+import { createDefaultLocaleConfiguration } from 'monaco-languageclient/vscode/services';
+import { defaultHtmlAugmentationInstructions } from 'monaco-editor-wrapper/vscode/services';
 import { configureDefaultWorkerFactory } from 'monaco-editor-wrapper/workers/workerLoaders';
 import { createDefaultWorkspaceFile } from './client-utils';
 
 import type { WrapperConfig } from 'monaco-editor-wrapper';
+/* --------------------------------------------------------------------------------------------
+ * Copyright (c) 2024 TypeFox and others.
+ * Licensed under the MIT License. See LICENSE in the package root for license information.
+ * ------------------------------------------------------------------------------------------ */
 
+import type { RegisterLocalProcessExtensionResult } from '@codingame/monaco-vscode-api/extensions';
+import { MonacoEditorLanguageClientWrapper } from 'monaco-editor-wrapper';
+import { defaultViewsInit } from './viewsService';
+
+export const configurePostStart = async (
+  wrapper: MonacoEditorLanguageClientWrapper,
+  configResult: ConfigResult
+) => {
+  const result = wrapper.getExtensionRegisterResult(
+    'mlc-app-playground'
+  ) as RegisterLocalProcessExtensionResult;
+  result.setAsDefaultApi();
+
+  // WA: Force show explorer and not search
+  await vscode.commands.executeCommand('workbench.view.explorer');
+
+  await Promise.all([
+    await vscode.workspace.openTextDocument(configResult.helloTsUri),
+    await vscode.workspace.openTextDocument(configResult.testerTsUri),
+  ]);
+
+  await Promise.all([
+    await vscode.window.showTextDocument(configResult.helloTsUri),
+  ]);
+
+  console.log('Application Playground started');
+};
 export type ConfigResult = {
-    wrapperConfig: WrapperConfig
-    workspaceFile: vscode.Uri;
-    helloTsUri: vscode.Uri;
-    testerTsUri: vscode.Uri;
+  wrapperConfig: WrapperConfig;
+  workspaceFile: vscode.Uri;
+  helloTsUri: vscode.Uri;
+  testerTsUri: vscode.Uri;
+  configurePostStart: typeof configurePostStart;
 };
 
 export const configure = (htmlContainer?: HTMLElement): ConfigResult => {
-    const workspaceFile = vscode.Uri.file('/workspace/.vscode/workspace.code-workspace');
+  const workspaceFile = vscode.Uri.file(
+    '/workspace/.vscode/workspace.code-workspace'
+  );
 
-    const wrapperConfig: WrapperConfig = {
-        $type: 'extended',
-        id: 'AAP',
-        logLevel: LogLevel.Debug,
-        htmlContainer,
-        vscodeApiConfig: {
-            serviceOverrides: {
-                ...getKeybindingsServiceOverride(),
-                ...getLifecycleServiceOverride(),
-                ...getLocalizationServiceOverride(createDefaultLocaleConfiguration()),
-                ...getBannerServiceOverride(),
-                ...getStatusBarServiceOverride(),
-                ...getTitleBarServiceOverride(),
-                ...getExplorerServiceOverride(),
-                ...getRemoteAgentServiceOverride(),
-                ...getEnvironmentServiceOverride(),
-                ...getSecretStorageServiceOverride(),
-                ...getStorageServiceOverride(),
-                ...getSearchServiceOverride()
-            },
-            enableExtHostWorker: true,
-            viewsConfig: {
-                viewServiceType: 'ViewsService',
-                htmlAugmentationInstructions: defaultHtmlAugmentationInstructions,
-                viewsInitFunc: defaultViewsInit
-            },
-            workspaceConfig: {
-                enableWorkspaceTrust: true,
-                windowIndicator: {
-                    label: 'mlc-app-playground',
-                    tooltip: '',
-                    command: ''
-                },
-                workspaceProvider: {
-                    trusted: true,
-                    async open() {
-                        window.open(window.location.href);
-                        return true;
-                    },
-                    workspace: {
-                        workspaceUri: workspaceFile
-                    }
-                },
-                configurationDefaults: {
-                    'window.title': 'mlc-app-playground${separator}${dirty}${activeEditorShort}'
-                },
-                productConfiguration: {
-                    nameShort: 'mlc-app-playground',
-                    nameLong: 'mlc-app-playground'
-                }
-            },
-            userConfiguration: {
-                json: JSON.stringify({
-                    'workbench.colorTheme': 'Default Dark Blockfirst',
-                    'editor.wordBasedSuggestions': 'off',
-                    'typescript.tsserver.web.projectWideIntellisense.enabled': true,
-                    'typescript.tsserver.web.projectWideIntellisense.suppressSemanticErrors': false,
-                    'editor.guides.bracketPairsHorizontal': true,
-                    'oct.serverUrl': 'https://api.open-collab.tools/',
-                    'editor.experimental.asyncTokenization': false,
-                })
-            },
+  const wrapperConfig: WrapperConfig = {
+    $type: 'extended',
+    id: 'AAP',
+    logLevel: LogLevel.Debug,
+    htmlContainer,
+    automaticallyDispose: true,
+    vscodeApiConfig: {
+      serviceOverrides: {
+        ...getKeybindingsServiceOverride(),
+        ...getLifecycleServiceOverride(),
+        ...getLocalizationServiceOverride(createDefaultLocaleConfiguration()),
+        ...getBannerServiceOverride(),
+        ...getStatusBarServiceOverride(),
+        ...getTitleBarServiceOverride(),
+        ...getExplorerServiceOverride(),
+        ...getRemoteAgentServiceOverride(),
+        ...getEnvironmentServiceOverride(),
+        ...getSecretStorageServiceOverride(),
+        ...getStorageServiceOverride(),
+        ...getSearchServiceOverride(),
+      },
+      enableExtHostWorker: true,
+      viewsConfig: {
+        viewServiceType: 'ViewsService',
+        htmlAugmentationInstructions: defaultHtmlAugmentationInstructions,
+        viewsInitFunc: defaultViewsInit,
+      },
+      workspaceConfig: {
+        enableWorkspaceTrust: true,
+        windowIndicator: {
+          label: 'mlc-app-playground',
+          tooltip: '',
+          command: '',
         },
-        extensions: [{
-            config: {
-                name: 'mlc-app-playground',
-                publisher: 'TypeFox',
-                version: '1.0.0',
-                engines: {
-                    vscode: '*'
-                }
-            }
-        }],
-        editorAppConfig: {
-            monacoWorkerFactory: configureDefaultWorkerFactory
-        }
-    };
+        workspaceProvider: {
+          trusted: true,
+          async open() {
+            window.open(window.location.href);
+            return true;
+          },
+          workspace: {
+            workspaceUri: workspaceFile,
+          },
+        },
+        configurationDefaults: {
+          'window.title':
+            'mlc-app-playground${separator}${dirty}${activeEditorShort}',
+        },
+        productConfiguration: {
+          nameShort: 'mlc-app-playground',
+          nameLong: 'mlc-app-playground',
+        },
+      },
+      // userConfiguration: {
+      //     json: JSON.stringify({
+      //         'workbench.colorTheme': 'Default Dark Blockfirst',
+      //         'editor.wordBasedSuggestions': 'off',
+      //         'typescript.tsserver.web.projectWideIntellisense.enabled': true,
+      //         'typescript.tsserver.web.projectWideIntellisense.suppressSemanticErrors': false,
+      //         'editor.guides.bracketPairsHorizontal': true,
+      //         'oct.serverUrl': 'https://api.open-collab.tools/',
+      //         'editor.experimental.asyncTokenization': false,
+      //     })
+      // },
+    },
+    extensions: [
+      {
+        config: {
+          name: 'mlc-app-playground',
+          publisher: 'TypeFox',
+          version: '1.0.0',
+          engines: {
+            vscode: '*',
+          },
+        },
+      },
+    ],
+    editorAppConfig: {
+      monacoWorkerFactory: configureDefaultWorkerFactory,
+    },
+  };
 
-    const helloTsUri = vscode.Uri.file('/workspace/hello.ts');
-    const testerTsUri = vscode.Uri.file('/workspace/tester.ts');
-    const fileSystemProvider = new RegisteredFileSystemProvider(false);
-    fileSystemProvider.registerFile(new RegisteredMemoryFile(helloTsUri, `console.log('Hello, world!');`));
-    fileSystemProvider.registerFile(new RegisteredMemoryFile(testerTsUri, `console.log('Hello, world!');`));
-    fileSystemProvider.registerFile(createDefaultWorkspaceFile(workspaceFile, '/workspace'));
-    registerFileSystemOverlay(1, fileSystemProvider);
+  const helloTsUri = vscode.Uri.file('/workspace/hello.ts');
+  const testerTsUri = vscode.Uri.file('/workspace/tester.ts');
+  const fileSystemProvider = new RegisteredFileSystemProvider(false);
+  fileSystemProvider.registerFile(
+    new RegisteredMemoryFile(helloTsUri, `console.log('Hello, world!');`)
+  );
+  fileSystemProvider.registerFile(
+    new RegisteredMemoryFile(testerTsUri, `console.log('Hello, world!');`)
+  );
+  fileSystemProvider.registerFile(
+    createDefaultWorkspaceFile(workspaceFile, '/workspace')
+  );
+  registerFileSystemOverlay(1, fileSystemProvider);
 
-    
-
-    return {
-        wrapperConfig,
-        workspaceFile,
-        helloTsUri,
-        testerTsUri
-    };
+  return {
+    wrapperConfig,
+    workspaceFile,
+    helloTsUri,
+    testerTsUri,
+    configurePostStart,
+  };
 };

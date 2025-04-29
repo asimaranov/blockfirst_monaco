@@ -3,7 +3,7 @@ import BfRobot from './assets/bf-robot.png';
 import BfRobotBadge from './assets/bf-robot-badge.svg';
 import { InfoPopover } from '../shared/InfoPopover';
 import { useState } from 'react';
-import RobotImage from './assets/robot.png';
+import RobotImage from './assets/bf-robot.png';
 
 export default function AiMentor({ task }: { task: any }) {
   const [message, setMessage] = useState('');
