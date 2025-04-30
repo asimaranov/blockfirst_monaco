@@ -29,9 +29,10 @@ const chatMessageSchema = new Schema<ChatMessage>(
     timestamp: {
       type: Date,
       default: Date.now,
+      get: (value: any) => new Date(value),
     },
   },
-  { _id: false }
+  { _id: false, toJSON: { getters: true }, toObject: { getters: true } }
 );
 
 const chatHistorySchema = new Schema<ChatHistory>(
@@ -53,6 +54,8 @@ const chatHistorySchema = new Schema<ChatHistory>(
   },
   {
     timestamps: true,
+    toJSON: { getters: true },
+    toObject: { getters: true },
   }
 );
 
@@ -61,4 +64,4 @@ const ChatHistoryModel: Model<ChatHistory> =
   mongoose.models.ChatHistory ||
   mongoose.model<ChatHistory>('ChatHistory', chatHistorySchema);
 
-export default ChatHistoryModel; 
+export default ChatHistoryModel;

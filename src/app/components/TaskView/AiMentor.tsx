@@ -19,15 +19,34 @@ export default function AiMentor({ task }: { task: any }) {
     { role: string; content: string; timestamp: Date }[]
   >([]);
 
+  console.log('Chat id', task);
+
   // Load chat history from API
-  const { data: chatHistory } = api.ai.getChatHistory.useQuery({
-    taskId: task?._id,
-  });
+  const { data: chatHistory, isLoading } = api.ai.getChatHistory.useQuery(
+    {
+      taskId: task?.id,
+    },
+    {
+      // Ensure the query is refetched when the task ID changes
+      refetchOnMount: true,
+      refetchOnWindowFocus: true,
+      staleTime: 0,
+    }
+  );
 
   // Initialize AI chat
   useEffect(() => {
-    if (chatHistory && chatHistory.messages) {
-      setMessages(chatHistory.messages);
+    if (
+      chatHistory &&
+      chatHistory.messages &&
+      chatHistory.messages.length > 0
+    ) {
+      // Ensure messages are properly parsed with date objects
+      const parsedMessages = chatHistory.messages.map((msg) => ({
+        ...msg,
+        timestamp: new Date(msg.timestamp),
+      }));
+      setMessages(parsedMessages);
     }
   }, [chatHistory]);
 
@@ -59,7 +78,7 @@ export default function AiMentor({ task }: { task: any }) {
     try {
       await sendMessageMutation.mutateAsync({
         content: message,
-        taskId: task?._id,
+        taskId: task?.id,
       });
     } catch (error) {
       // Error handling is done in the onError callback
@@ -96,7 +115,7 @@ export default function AiMentor({ task }: { task: any }) {
           </div>
         </div>
       ) : (
-        <div className="mb-auto flex flex-col gap-8 overflow-y-scroll px-8 pt-6">
+        <div className="mb-auto flex flex-col gap-8 overflow-y-scroll px-8 pt-6 pb-5">
           {messages.map((x, index) =>
             x.role == 'assistant' ? (
               <div className="flex flex-row gap-4" key={`assistant-${index}`}>

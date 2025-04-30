@@ -48,6 +48,7 @@ export const aiRouter = createTRPCRouter({
         const chatHistory = await ctx.mongo.models.chatHistory
           .findOne(filter)
           .sort({ updatedAt: -1 })
+          .lean()
           .exec();
 
         if (!chatHistory) {
@@ -63,7 +64,17 @@ export const aiRouter = createTRPCRouter({
           };
         }
 
-        return chatHistory;
+        // Ensure all timestamps are proper Date objects
+        const parsedMessages = chatHistory.messages.map((msg: any) => ({
+          ...msg,
+          md: editor.getApi(MarkdownPlugin).markdown.deserialize(msg.content),
+          timestamp: new Date(msg.timestamp),
+        }));
+
+        return {
+          ...chatHistory,
+          messages: parsedMessages,
+        };
       } catch (error) {
         console.error('Error fetching chat history:', error);
         throw new TRPCError({
@@ -126,13 +137,11 @@ export const aiRouter = createTRPCRouter({
         // Get AI response
         const aiResponse = await getAiCompletion(chatHistory.messages);
 
-        
-
         // Add AI response to history
         const assistantMessage: Message = {
           role: 'assistant' as const,
           content: aiResponse,
-          
+
           timestamp: new Date(),
         };
 
@@ -141,11 +150,12 @@ export const aiRouter = createTRPCRouter({
         // Save to database
         await chatHistory.save();
 
-        const md = editor.getApi(MarkdownPlugin).markdown.deserialize(aiResponse);
-
+        const md = editor
+          .getApi(MarkdownPlugin)
+          .markdown.deserialize(aiResponse);
 
         return {
-          message: {...assistantMessage, md: md},
+          message: { ...assistantMessage, md: md },
         };
       } catch (error) {
         console.error('Error sending message to AI:', error);
