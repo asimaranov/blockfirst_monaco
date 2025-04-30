@@ -2,27 +2,73 @@ import Image from 'next/image';
 import BfRobot from './assets/bf-robot.png';
 import BfRobotBadge from './assets/bf-robot-badge.svg';
 import { InfoPopover } from '../shared/InfoPopover';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import RobotImage from './assets/bf-robot.png';
+import { api } from '~/trpc/react';
+import { format } from 'date-fns';
+import PlateEditor from '../LessonPage/PlateEditor';
+import { createEditor } from '@udecode/plate';
+import AiMessage from './AiMessage';
 
 export default function AiMentor({ task }: { task: any }) {
   const [message, setMessage] = useState('');
+  const [isGenerating, setIsGenerating] = useState(false);
+  const canWrite = message.length > 0 && !isGenerating;
+
   const [messages, setMessages] = useState<
     { role: string; content: string; timestamp: Date }[]
-  >([
-    {
-      role: 'assistant',
-      content: 'Привет! Я ваш персональный AI-ментор. Как я могу помочь?',
-      timestamp: new Date(),
-    },
-  ]);
+  >([]);
 
-  const handleSendMessage = () => {
-    setMessages([
-      ...messages,
-      { role: 'user', content: message, timestamp: new Date() },
-    ]);
+  // Load chat history from API
+  const { data: chatHistory } = api.ai.getChatHistory.useQuery({
+    taskId: task?._id,
+  });
+
+  // Initialize AI chat
+  useEffect(() => {
+    if (chatHistory && chatHistory.messages) {
+      setMessages(chatHistory.messages);
+    }
+  }, [chatHistory]);
+
+  // Send message mutation
+  const sendMessageMutation = api.ai.sendMessage.useMutation({
+    onSuccess: (data) => {
+      setIsGenerating(false);
+      setMessages((prev) => [...prev, data.message]);
+    },
+    onError: (error) => {
+      setIsGenerating(false);
+      console.error('Error sending message:', error);
+    },
+  });
+
+  const handleSendMessage = async () => {
+    if (!message.trim()) return;
+
+    const newMessage = {
+      role: 'user',
+      content: message,
+      timestamp: new Date(),
+    };
+
+    setMessages((prev) => [...prev, newMessage]);
     setMessage('');
+    setIsGenerating(true);
+
+    try {
+      await sendMessageMutation.mutateAsync({
+        content: message,
+        taskId: task?._id,
+      });
+    } catch (error) {
+      // Error handling is done in the onError callback
+    }
+  };
+
+  // Format date for display
+  const formatMessageDate = (date: Date) => {
+    return format(new Date(date), 'dd MMMM, HH:mm');
   };
 
   return (
@@ -50,75 +96,102 @@ export default function AiMentor({ task }: { task: any }) {
           </div>
         </div>
       ) : (
-        <div className="mb-auto flex flex-col gap-8 px-8 pt-6">
-          <div className="flex flex-row gap-4 self-end">
-            <div className="flex flex-col gap-2">
-              <span className="rounded-[0.4167vw] bg-[#14171C] px-4 py-2">
-                Привет, AI ментор
-              </span>
-              <span className="text-secondary/50 self-end text-xs">
-                28 Апреля, 23:09
-              </span>
-            </div>
-            <div className="bg-primary h-9 w-9 rounded-full"></div>
-          </div>
+        <div className="mb-auto flex flex-col gap-8 overflow-y-scroll px-8 pt-6">
+          {messages.map((x, index) =>
+            x.role == 'assistant' ? (
+              <div className="flex flex-row gap-4" key={`assistant-${index}`}>
+                <Image
+                  src={RobotImage}
+                  alt="Robot"
+                  width={36}
+                  height={36}
+                  className="h-9 w-9"
+                />
 
-          <div className="flex flex-row gap-4">
-            <Image
-              src={RobotImage}
-              alt="Robot"
-              width={36}
-              height={36}
-              className="h-9 w-9"
-            />
-
-            <div className="flex flex-col gap-2">
-              <span className="rounded-[0.4167vw] bg-[#14171C] px-4 py-2">
-                Привет, Человек
-              </span>
-              <span className="text-secondary/50 text-xs">
-                28 Апреля, 23:09
-              </span>
-            </div>
-          </div>
+                <div className="flex flex-col gap-2">
+                  <div className="px-4 py-2">
+                    <AiMessage richText={(x as any).md} />
+                  </div>
+                  <span className="text-secondary/50 text-xs">
+                    {formatMessageDate(x.timestamp)}
+                  </span>
+                </div>
+              </div>
+            ) : (
+              <div
+                className="flex flex-row gap-4 self-end"
+                key={`user-${index}`}
+              >
+                <div className="flex flex-col gap-2">
+                  <span className="rounded-[0.4167vw] bg-[#14171C] px-4 py-2">
+                    {x.content}
+                  </span>
+                  <span className="text-secondary/50 self-end text-xs">
+                    {formatMessageDate(x.timestamp)}
+                  </span>
+                </div>
+                <div className="bg-primary h-9 w-9 rounded-full"></div>
+              </div>
+            )
+          )}
         </div>
       )}
-
-      <div className="border-accent flex flex-row gap-8 border-t px-8 py-6">
-        <textarea
-          className="placeholder:text-secondary w-full resize-none rounded-lg py-2.5 text-sm outline-hidden"
-          placeholder="Введите сообщение ..."
-          onInput={(e) => {
-            (e.target as HTMLTextAreaElement).style.height = 'auto';
-            (e.target as HTMLTextAreaElement).style.height =
-              (e.target as HTMLTextAreaElement).scrollHeight + 'px';
-          }}
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-        />
-
-        <button
-          className="border-primary h-fit cursor-pointer self-end rounded-full border p-2.5"
-          onClick={() => {
-            handleSendMessage();
-          }}
-        >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M10 3.53906C10.1658 3.53906 10.3247 3.60491 10.4419 3.72212L15.4419 8.72212C15.686 8.9662 15.686 9.36193 15.4419 9.606C15.1979 9.85008 14.8021 9.85008 14.5581 9.606L10.625 5.67295L10.625 15.8307C10.625 16.1759 10.3452 16.4557 10 16.4557C9.65482 16.4557 9.375 16.1759 9.375 15.8307L9.375 5.67295L5.44194 9.60601C5.19786 9.85008 4.80214 9.85008 4.55806 9.60601C4.31398 9.36193 4.31398 8.9662 4.55806 8.72212L9.55806 3.72212C9.67527 3.60491 9.83424 3.53906 10 3.53906Z"
-              fill="#F2F2F2"
+      <div className="flex flex-col">
+        {isGenerating && (
+          <div className="font-delight flex flex-row gap-3 px-8 py-5 text-sm">
+            <Image
+              src={BfRobot}
+              alt="Robot"
+              width={20}
+              height={20}
+              className="h-5 w-5 shrink-0"
             />
-          </svg>
-        </button>
+            <span className="font-delight bg-[linear-gradient(98deg,#FF20A2_1.97%,#FF5B20_104.5%)] bg-clip-text leading-5 text-transparent">
+              Generating...
+            </span>
+          </div>
+        )}
+        <div className="border-accent flex flex-row gap-8 border-t px-8 py-6">
+          <textarea
+            className="placeholder:text-secondary w-full resize-none rounded-lg py-2.5 text-sm outline-hidden"
+            placeholder="Введите сообщение ..."
+            onInput={(e) => {
+              (e.target as HTMLTextAreaElement).style.height = 'auto';
+              (e.target as HTMLTextAreaElement).style.height =
+                (e.target as HTMLTextAreaElement).scrollHeight + 'px';
+            }}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey && canWrite) {
+                e.preventDefault();
+                handleSendMessage();
+              }
+            }}
+          />
+
+          <button
+            className="border-primary h-fit self-end rounded-full border p-2.5 not-disabled:cursor-pointer disabled:opacity-50"
+            onClick={handleSendMessage}
+            disabled={!canWrite}
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M10 3.53906C10.1658 3.53906 10.3247 3.60491 10.4419 3.72212L15.4419 8.72212C15.686 8.9662 15.686 9.36193 15.4419 9.606C15.1979 9.85008 14.8021 9.85008 14.5581 9.606L10.625 5.67295L10.625 15.8307C10.625 16.1759 10.3452 16.4557 10 16.4557C9.65482 16.4557 9.375 16.1759 9.375 15.8307L9.375 5.67295L5.44194 9.60601C5.19786 9.85008 4.80214 9.85008 4.55806 9.60601C4.31398 9.36193 4.31398 8.9662 4.55806 8.72212L9.55806 3.72212C9.67527 3.60491 9.83424 3.53906 10 3.53906Z"
+                fill="#F2F2F2"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
 
       <div className="border-accent sticky bottom-0 border-t px-8 py-4">

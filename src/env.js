@@ -27,6 +27,7 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(['development', 'test', 'production'])
       .default('development'),
+    ANTHROPIC_API_KEY: z.string(),
   },
 
   /**
@@ -59,6 +60,7 @@ export const env = createEnv({
     BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
     EMAIL_VERIFICATION_CALLBACK_URL:
       process.env.EMAIL_VERIFICATION_CALLBACK_URL,
+    ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

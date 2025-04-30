@@ -264,7 +264,7 @@ export const configure = (htmlContainer?: HTMLElement): ConfigResult => {
         },
         configurationDefaults: {
           'window.title':
-            'mlc-app-playground${separator}${dirty}${activeEditorShort}',
+            'BlockFirst Task${separator}${dirty}${activeEditorShort}',
         },
         productConfiguration: {
           nameShort: 'mlc-app-playground',
