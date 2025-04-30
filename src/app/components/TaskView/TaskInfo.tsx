@@ -92,7 +92,7 @@ export default function TaskInfo({ task }: { task: any }) {
           <div className="flex flex-col gap-6">
             <div className="flex flex-row justify-between">
               <TaskNavigation labels={task.labels} />
-              <TaskStatusBadge status={'in-progress'} />
+              <TaskStatusBadge status={'completed'} />
             </div>
             <div className="flex flex-col gap-4">
               <span className="text-2xl font-medium">{task.title}</span>
