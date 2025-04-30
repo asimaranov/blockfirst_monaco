@@ -140,7 +140,7 @@ export default function TaskView({
         {activeTab === 'ai-mentor' && <AiMentor task={task} />}
       </div>
       <div className="flex flex-col">
-        {/* <MonacoView /> */}
+        <MonacoView />
         <div className="w-full flex-1 bg-blue-300"></div>
       </div>
     </div>
