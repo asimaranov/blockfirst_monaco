@@ -91,6 +91,23 @@ export const initialNotifications: Notification[] = [
   },
 ];
 
+
+export const defaultNotifications: Notification[] = [
+  {
+    id: 'welcome',
+    type: 'system',
+    title: 'Добро пожаловать на платформу BlockFirst 🎉',
+    message:
+      'Впервые зарегистрированным пользователям дарим скидку 16% на покупку «Про» тарифа',
+    timestamp: '24 мин. назад',
+    category: 'Система',
+    isRead: true,
+    isArchived: false,
+    avatar: '/images/avatars/bf-avatar.svg',
+    highlightedBorder: true,
+  },
+];
+
 // Carousel slides (promotion notifications)
 export const carouselSlides = [
   {

@@ -8,6 +8,9 @@ import DropDownAction from '../shared/DropDownAction';
 import CommentsEditor from './CommentsEditor';
 import { PlateController } from '@udecode/plate/react';
 import Image from 'next/image';
+import {  } from 'better-auth/react';
+import { authClient } from '~/server/auth/client';
+import { redirect } from 'next/navigation';
 
 const HeartIcon = () => (
   <svg
@@ -319,6 +322,8 @@ function CommentItem({
   const [isThreadOpened, setIsThreadOpened] = useState(false);
   const [modalImage, setModalImage] = useState<string | null>(null);
 
+  const { data: session } = authClient.useSession();
+
   return (
     <div className={cn(className)}>
       {/* Image Modal */}
@@ -462,6 +467,9 @@ function CommentItem({
           <button
             className="group flex cursor-pointer items-center gap-1"
             onClick={() => {
+              if (!session) {
+                redirect('/signin');
+              }
               if (replyFormAfterId === comment.id) {
                 setReplyFormAfterId(null);
               } else {
@@ -474,6 +482,7 @@ function CommentItem({
               Ответить
             </span>
           </button>
+          {session && (
           <DropDownAction
             header={comment.isSelf ? undefined : 'Пожаловаться'}
             button={
@@ -540,7 +549,8 @@ function CommentItem({
                 </div>
               )
             }
-          />
+            />
+          )}
         </div>
       </div>
     </div>

@@ -5,6 +5,7 @@ import {
   publicProcedure,
 } from '~/server/api/trpc';
 import {
+  defaultNotifications,
   initialNotifications,
   promoNotifications,
 } from '~/app/components/Notifications/constants';
@@ -15,14 +16,34 @@ import {
 import NotificationModel, { INotification } from '~/server/models/notification';
 import NotificationSettingModel from '~/server/models/notificationSetting';
 import dbConnect from '~/server/mongodb';
+import { getServerSession } from '~/server/auth';
+import { formatRelativeTime } from '~/app/lib/utils';
 
 export const notificationsRouter = createTRPCRouter({
   // Get all notifications for a user
-  getAll: protectedProcedure.query(async ({ ctx }) => {
+  getAll: publicProcedure.query(async ({ ctx }) => {
+    const session = ctx.session;
+    if (!session) {
+      const notifications = [
+        ...defaultNotifications.map((notification) => ({
+          ...notification,
+          // userId: ctx.session!.user.id,
+          timestamp: formatRelativeTime(new Date()),
+        })),
+        ...promoNotifications.map((notification) => ({
+          ...notification,
+          // userId: ctx.session!.user.id,
+          timestamp: formatRelativeTime(new Date()),
+        })),
+      ];
+
+      return notifications as INotification[];
+    }
+
     await dbConnect();
 
     const notifications = await NotificationModel.find({
-      userId: ctx.session.user.id,
+      userId: session.user.id,
     }).sort({ _id: -1 }); // descending order
 
     // If no notifications found in MongoDB, seed with initial ones from constants
@@ -32,14 +53,14 @@ export const notificationsRouter = createTRPCRouter({
         await NotificationModel.insertMany(
           initialNotifications.map((notification) => ({
             ...notification,
-            userId: ctx.session.user.id,
+            userId: ctx.session!.user.id,
             timestamp: new Date(),
           }))
         );
         await NotificationModel.insertMany(
           promoNotifications.map((notification) => ({
             ...notification,
-            userId: ctx.session.user.id,
+            userId: ctx.session!.user.id,
             timestamp: new Date(),
           }))
         );
@@ -50,9 +71,9 @@ export const notificationsRouter = createTRPCRouter({
       }
     }
 
-    const r =  notifications.map((notification) => notification.toJSON());
-    console.log(r)
-    return r
+    const r = notifications.map((notification) => notification.toJSON());
+    console.log(r);
+    return r;
   }),
 
   // Get only unread notifications count

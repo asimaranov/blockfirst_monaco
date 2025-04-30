@@ -28,6 +28,8 @@ import { NotificationsTopbar } from './NotificationsTopbar';
 import NotificationsTabs from './NotificationsTabs';
 import PromoCarousel from './PromoCarousel';
 import { api } from '~/trpc/react';
+import { authClient } from '~/server/auth/client';
+import { redirect } from 'next/navigation';
 
 interface NotificationsProps {
   onClose?: () => void;
@@ -164,6 +166,8 @@ const Notifications = ({ onClose }: NotificationsProps) => {
     });
   };
 
+  const { data: session } = authClient.useSession();
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -207,11 +211,18 @@ const Notifications = ({ onClose }: NotificationsProps) => {
                       dismissNotification={dismissNotification}
                     >
                       <div
-                        onClick={() => markNotificationAsRead(notification.id)}
+                        onClick={() => {
+                          if (session) {
+                            markNotificationAsRead(notification.id);
+                          } else {
+                            redirect('/signin');
+                          }
+                        }}
                       >
                         <NotificationContent
                           notification={notification}
                           dismissNotification={dismissNotification}
+                          className={cn(!session && 'cursor-pointer')}
                         />
                       </div>
                     </SwipeableNotification>

@@ -5,14 +5,16 @@ import { PromoNotification } from './types';
 import noNotificationsImage from './assets/no-notifications.png';
 import { INotification, IPromoNotification } from '~/server/models/notification';
 export function NotificationContent({
+  className,
   notification,
   dismissNotification,
 }: {
   notification: Notification;
   dismissNotification: (id: string) => void;
+  className?: string;
 }) {
   return (
-    <div className="group relative flex flex-col px-8 py-5 first:pt-8 hover:bg-[#282D33]/30 nth-[2]:pt-8">
+    <div className={cn("group relative flex flex-col px-8 py-5 first:pt-8 hover:bg-[#282D33]/30 nth-[2]:pt-8", className)}>
       <button
         className="absolute top-0 right-0 m-2 hidden h-4 w-4 cursor-pointer group-hover:block"
         onClick={(e) => {

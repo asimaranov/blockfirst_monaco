@@ -40,7 +40,7 @@ export default function TaskInfo({ task }: { task: any }) {
   return (
     <>
       <div className="overflow-y-scroll ">
-        <div className="flex flex-row gap-5 bg-[#01050D] bg-[url('/images/grids/task-info-grid.svg')] bg-right-bottom bg-no-repeat px-8 py-6">
+        <div className="flex flex-row gap-5 bg-[#01050D] bg-[url('/images/grids/task-info-grid.svg')] bg-w-150 h-24 bg-right-bottom bg-no-repeat px-8 py-6">
           <div className="relative shrink-0">
             <Image
               src={task.heroImageSrc}
