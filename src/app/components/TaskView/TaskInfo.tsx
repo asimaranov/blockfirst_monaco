@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { TaskNavigation, TaskStatusBadge } from '../LessonPage/plate/TaskCard';
 import { InfoPopover } from '../shared/InfoPopover';
 import PlateEditor from '../LessonPage/PlateEditor';
+import { useState } from 'react';
 
 export default function TaskInfo({ task }: { task: any }) {
   const tests = [
@@ -9,38 +10,46 @@ export default function TaskInfo({ task }: { task: any }) {
       title: 'Программа должна содержать только две переменные типа int.',
       progress: 0,
       isAdvanced: false,
+      result: true,
     },
     {
       title: 'Нельзя изменять строки отвечающие за вывод в консоль.',
       progress: 10,
       isAdvanced: false,
+      result: true,
     },
     {
       title: 'Нельзя изменять строки с объявленными переменными int a и int b',
       progress: 100,
       isAdvanced: false,
+      result: false,
     },
     {
       title: 'Нужно написать подробные комментарии к коду',
       progress: 0,
       isAdvanced: true,
+      result: false,
     },
     {
       title: 'Нужно сделать чистый код',
       progress: 50,
       isAdvanced: true,
+      result: true,
     },
     {
       title: 'Нужно использовать только простые переменные',
       progress: 100,
       isAdvanced: true,
+      result: true,
     },
   ];
 
+  const [isLoading, setIsLoading] = useState(true);
+
   return (
     <>
-      <div className="overflow-y-scroll ">
-        <div className="flex flex-row gap-5 bg-[#01050D] bg-[url('/images/grids/task-info-grid.svg')] bg-w-150 h-24 bg-right-bottom bg-no-repeat px-8 py-6 bg-cover">
+      <div className="overflow-y-scroll">
+        <div className="bg-w-150 flex h-24 flex-row gap-5 bg-[#01050D] bg-[url('/images/grids/task-info-grid.svg')] bg-cover bg-right-bottom bg-no-repeat px-8 py-6">
           <div className="relative shrink-0">
             <Image
               src={task.heroImageSrc}
@@ -117,22 +126,44 @@ export default function TaskInfo({ task }: { task: any }) {
             <div className="flex flex-col gap-5">
               {tests.map((x) => (
                 <div className="flex flex-row gap-4">
-                  <svg
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                  >
-                    <path
-                      d="M10 2.5C14.1421 2.5 17.5 5.85786 17.5 10C17.5 14.1421 14.1421 17.5 10 17.5C5.85786 17.5 2.5 14.1421 2.5 10C2.5 5.85786 5.85786 2.5 10 2.5Z"
-                      stroke="#195AF4"
-                      stroke-opacity="0.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
+                  {isLoading ? (
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 animate-spin"
+                    >
+                      <path
+                        opacity="0.5"
+                        d="M18 10C18 14.4183 14.4183 18 10 18C5.58172 18 2 14.4183 2 10C2 5.58172 5.58172 2 10 2C14.4183 2 18 5.58172 18 10ZM3.04 10C3.04 13.8439 6.1561 16.96 10 16.96C13.8439 16.96 16.96 13.8439 16.96 10C16.96 6.1561 13.8439 3.04 10 3.04C6.1561 3.04 3.04 6.1561 3.04 10Z"
+                        fill="#195AF4"
+                      />
+                      <path
+                        d="M10 2.52C10 2.23281 10.2331 1.99824 10.5196 2.01689C11.761 2.09769 12.969 2.4671 14.0462 3.09869C15.2733 3.81813 16.2864 4.85173 16.9811 6.09299C17.6757 7.33425 18.0269 8.73829 17.9984 10.1604C17.9699 11.5826 17.5627 12.9714 16.8188 14.1838C16.0749 15.3962 15.0212 16.3884 13.7662 17.058C12.5113 17.7277 11.1005 18.0506 9.67919 17.9936C8.2579 17.9365 6.87752 17.5016 5.68027 16.7335C4.62922 16.0592 3.75268 15.1496 3.11833 14.0795C2.97188 13.8325 3.07543 13.5185 3.33146 13.3884V13.3884C3.58749 13.2583 3.89886 13.3616 4.0477 13.6072C4.59666 14.513 5.34647 15.2837 6.24184 15.8581C7.28344 16.5264 8.48437 16.9048 9.72089 16.9544C10.9574 17.004 12.1848 16.7231 13.2766 16.1405C14.3684 15.5579 15.2851 14.6947 15.9323 13.6399C16.5795 12.5851 16.9338 11.3769 16.9586 10.1396C16.9834 8.90231 16.6779 7.6808 16.0735 6.6009C15.4692 5.521 14.5878 4.62177 13.5202 3.99586C12.6025 3.45782 11.5758 3.13848 10.5195 3.05942C10.2331 3.03798 10 2.80719 10 2.52V2.52Z"
+                        fill="#195AF4"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                    >
+                      <path
+                        d="M10 2.5C14.1421 2.5 17.5 5.85786 17.5 10C17.5 14.1421 14.1421 17.5 10 17.5C5.85786 17.5 2.5 14.1421 2.5 10C2.5 5.85786 5.85786 2.5 10 2.5Z"
+                        stroke="#195AF4"
+                        stroke-opacity="0.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  )}
+
                   <span className="text-secondary text-sm">{x.title}</span>
                 </div>
               ))}

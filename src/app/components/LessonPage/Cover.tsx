@@ -213,8 +213,8 @@ const Cover = () => {
   const { data: session } = authClient.useSession();
 
   const stats: Stat[] = [
-    { icon: FireIcon, alt: 'Fire', value: session ? 300 : 0, label: 'Стрик' },
-    { icon: SparklesIcon, alt: 'Sparkles', value: session ? 300 : 0, label: 'XP' },
+    { icon: FireIcon, alt: 'Fire', value: session?.user ? 300 : 0, label: 'Стрик' },
+    { icon: SparklesIcon, alt: 'Sparkles', value: session?.user ? 300 : 0, label: 'XP' },
   ];
 
   const activeDay = session ? 3 : 0 as number;

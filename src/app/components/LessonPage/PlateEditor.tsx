@@ -118,7 +118,7 @@ export function ImageElementStatic({
     };
 
   return (
-    <SlateElement className={cn(className, 'mb-16 mt-16 ')} {...props}>
+    <SlateElement className={cn(className, 'mt-16 mb-16')} {...props}>
       <figure className="group relative m-0 inline-block">
         <div
           className="relative max-w-full min-w-[92px]"
@@ -230,7 +230,8 @@ const PlateEditor = ({ richText }: { richText: Value }) => {
       components: {
         blockquote: withProps(PlateElement, {
           as: 'blockquote',
-          className: 'mb-4 border-l-4 border-[#d0d7de] pl-4 text-[#636c76]',
+          className:
+            'mb-4 border-[#33CF8E] pl-5.5 text-[#636c76] bg-[url(/images/line.svg)] bg-top-left bg-repeat-y ',
         }),
         bold: withProps(PlateLeaf, { as: 'strong' }),
         h1: withProps(PlateElement, {
@@ -274,9 +275,9 @@ const PlateEditor = ({ richText }: { richText: Value }) => {
   }, [editor]);
 
   return (
-      <Plate editor={editor}>
-        <PlateContent readOnly className="group" />
-      </Plate>
+    <Plate editor={editor}>
+      <PlateContent readOnly className="group" />
+    </Plate>
   );
 };
 

@@ -72,7 +72,7 @@ export default function TaskView({
           <div className="mr-auto ml-auto flex h-10 w-71.5 flex-row rounded-[5.2083vw] bg-[#01050D]">
             <button
               className={cn(
-                'flex h-10 w-35.75 cursor-pointer items-center justify-center rounded-[5.2083vw]',
+                'flex h-10 w-35.75 cursor-pointer items-center justify-center rounded-[5.2083vw] group/tab-button',
                 activeTab === 'info' && 'bg-foreground'
               )}
               onClick={() => setActiveTab('info')}
@@ -80,7 +80,7 @@ export default function TaskView({
               <span
                 className={cn(
                   'text-foreground text-sm font-medium',
-                  activeTab === 'info' && 'text-[#01050D]'
+                  activeTab === 'info' ? 'text-[#01050D]' : 'group-hover/tab-button:text-foreground/50'
                 )}
               >
                 Условие
@@ -88,7 +88,7 @@ export default function TaskView({
             </button>
             <button
               className={cn(
-                'flex h-10 w-35.75 cursor-pointer items-center justify-center gap-2 rounded-[5.2083vw]',
+                'flex h-10 w-35.75 cursor-pointer items-center justify-center gap-2 rounded-[5.2083vw] group/tab-button',
                 'relative',
                 activeTab === 'ai-mentor' && 'bg-foreground'
               )}
@@ -105,7 +105,7 @@ export default function TaskView({
               <span
                 className={cn(
                   'text-foreground text-sm font-medium',
-                  activeTab === 'ai-mentor' && 'text-[#01050D]'
+                  activeTab === 'ai-mentor' ? 'text-[#01050D]' : 'group-hover/tab-button:text-foreground/50'
                 )}
               >
                 AI ментор
@@ -140,7 +140,7 @@ export default function TaskView({
         {activeTab === 'ai-mentor' && <AiMentor task={task} />}
       </div>
       <div className="flex flex-col">
-        <MonacoView />
+        {/* <MonacoView /> */}
         <div className="w-full flex-1 bg-blue-300"></div>
       </div>
     </div>
