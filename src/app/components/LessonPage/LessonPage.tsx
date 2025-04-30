@@ -10,6 +10,7 @@ import CommentsSection from './CommentsSection';
 import Footer from '../Footer';
 import prisma from '@/lib/prisma';
 import { Value } from '@udecode/plate';
+import { authClient } from '~/server/auth/client';
 
 export default async function LessonPage({
   params,
@@ -23,6 +24,8 @@ export default async function LessonPage({
       id: courseId,
     },
   });
+
+  const session = await authClient.getSession();
 
   return (
     <div>
