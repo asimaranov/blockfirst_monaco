@@ -1,5 +1,7 @@
 import { api } from '~/trpc/server';
 import TaskView from '~/app/components/TaskView/TaskView';
+import { getServerSession } from '~/server/auth';
+import { redirect } from 'next/navigation';
 
 export default async function TaskPage({
   params,
@@ -7,6 +9,11 @@ export default async function TaskPage({
   params: Promise<{ taskId: string; courseId: string }>;
 }) {
   const { taskId, courseId } = await params;
+
+  const session = await getServerSession();
+  if (!session) {
+    redirect('/signin');
+  }
 
   const taskData = await api.tasks.getById({ taskId });
 
