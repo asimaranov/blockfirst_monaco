@@ -6,7 +6,7 @@ import { cn } from '~/helpers';
 import { motion, AnimatePresence } from 'motion/react';
 import Image from 'next/image';
 
-type PopoverPosition = 'left' | 'right';
+type PopoverPosition = 'left' | 'right' | 'top';
 
 interface InfoPopoverProps {
   title: string;
@@ -21,7 +21,13 @@ interface InfoPopoverProps {
   hideOnHover?: boolean;
 }
 
-export const InfoPopoverIcon = ({ empty, className }: { empty?: boolean, className?: string }) => {
+export const InfoPopoverIcon = ({
+  empty,
+  className,
+}: {
+  empty?: boolean;
+  className?: string;
+}) => {
   return (
     <svg
       width="16"
@@ -32,7 +38,7 @@ export const InfoPopoverIcon = ({ empty, className }: { empty?: boolean, classNa
       className={cn(
         'text-secondary h-5 w-5 cursor-pointer transition delay-100 duration-300 ease-in-out hover:text-[#F2F2F2] sm:h-4 sm:w-4',
         empty && 'hover:text-secondary cursor-default',
-        className,
+        className
       )}
     >
       <circle cx="8" cy="8" r="6.66667" stroke="currentColor" />
@@ -80,7 +86,7 @@ export const InfoPopover = ({
       const rect = infoRef.current.getBoundingClientRect();
 
       setPopoverPosition({
-        top: rect.bottom,
+        top: position === 'top' ? rect.top : rect.bottom,
         left: position === 'left' ? rect.left : rect.right,
       });
     }
@@ -88,7 +94,7 @@ export const InfoPopover = ({
 
   // Desktop and mobile variants for the popover
   const desktopVariants = {
-    hidden: { opacity: 0, y: -5 },
+    hidden: { opacity: 0, y: position === 'top' ? 5 : -5 },
     visible: { opacity: 1, y: 0 },
   };
 
@@ -120,7 +126,7 @@ export const InfoPopover = ({
           }
         }}
       >
-        {icon || <InfoPopoverIcon empty={!title && !content}  />}
+        {icon || <InfoPopoverIcon empty={!title && !content} />}
       </div>
       {typeof document !== 'undefined' &&
         createPortal(
@@ -167,13 +173,20 @@ export const InfoPopover = ({
                 style={{
                   position: 'fixed',
                   zIndex: 100000,
-                  top: `calc(${popoverPosition.top}px + ${offsetTop || 0} * var(--spacing))`,
-                  ...(position === 'left'
+                  ...(position === 'top'
                     ? {
-                        left: `calc(${popoverPosition.left}px - ${offsetSide || 0} * var(--spacing))`,
+                        bottom: `calc(100vh - ${popoverPosition.top}px + ${offsetTop || 0} * var(--spacing))`,
+                        left: `calc(${popoverPosition.left}px - 56 * var(--spacing) + ${offsetSide || 0} * var(--spacing))`, // Center the popover with offsetSide adjustment
                       }
                     : {
-                        right: `calc(100vw - ${popoverPosition.left}px + ${offsetSide || 0} * var(--spacing))`,
+                        top: `calc(${popoverPosition.top}px + ${offsetTop || 0} * var(--spacing))`,
+                        ...(position === 'left'
+                          ? {
+                              left: `calc(${popoverPosition.left}px - ${offsetSide || 0} * var(--spacing))`,
+                            }
+                          : {
+                              right: `calc(100vw - ${popoverPosition.left}px + ${offsetSide || 0} * var(--spacing))`,
+                            }),
                       }),
                 }}
                 initial="hidden"
@@ -182,10 +195,14 @@ export const InfoPopover = ({
                 variants={desktopVariants}
                 transition={{ duration: 0.2 }}
               >
-                <div className="text-foreground pb-3 text-sm">{title}</div>
-                <div className="text-secondary text-xs leading-5 whitespace-pre-line">
-                  {content}
-                </div>
+                {title && content && (
+                  <>
+                    <div className="text-foreground pb-3 text-sm">{title}</div>
+                    <div className="text-secondary text-xs leading-5 whitespace-pre-line">
+                      {content}
+                    </div>
+                  </>
+                )}
                 {children}
               </motion.div>
             )}
