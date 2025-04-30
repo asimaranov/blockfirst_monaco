@@ -1,10 +1,12 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import MonacoView from './MonacoView';
 import TaskInfo from './TaskInfo';
 import { cn } from '~/helpers';
 import AiMentor from './AiMentor';
+import YourAssistant from './assets/your-assistant.png';
+import Image from 'next/image';
 
 export default function TaskView({
   task,
@@ -18,6 +20,17 @@ export default function TaskView({
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<'info' | 'ai-mentor'>('info');
   const [isAiMentorActive, setIsAiMentorActive] = useState(false);
+  const [isMentorPopoverShown, setIsMentorPopoverShown] = useState(false);
+
+  useEffect(() => {
+    if (!window.localStorage.aiPopoverShown) {
+      setIsMentorPopoverShown(true);
+      setTimeout(() => {
+        window.localStorage.aiPopoverShown = true;
+        setIsMentorPopoverShown(false);
+      }, 5000);
+    }
+  }, []);
 
   const handleClose = () => {
     if (onClose) {
@@ -75,11 +88,20 @@ export default function TaskView({
             </button>
             <button
               className={cn(
-                'flex h-10 w-35.75 cursor-pointer items-center justify-center rounded-[5.2083vw] gap-2',
+                'flex h-10 w-35.75 cursor-pointer items-center justify-center gap-2 rounded-[5.2083vw]',
+                'relative',
                 activeTab === 'ai-mentor' && 'bg-foreground'
               )}
               onClick={() => setActiveTab('ai-mentor')}
             >
+              {isMentorPopoverShown && (
+                <Image
+                  src={YourAssistant}
+                  alt="Your assistant"
+                  className="absolute -bottom-12 h-9.5 w-33.75"
+                ></Image>
+              )}
+
               <span
                 className={cn(
                   'text-foreground text-sm font-medium',
@@ -89,7 +111,7 @@ export default function TaskView({
                 AI ментор
               </span>
               {isAiMentorActive && (
-                <div className="w-1.5 h-1.5 bg-error rounded-full"></div>
+                <div className="bg-error h-1.5 w-1.5 rounded-full"></div>
               )}
             </button>
           </div>
@@ -101,6 +123,7 @@ export default function TaskView({
               viewBox="0 0 20 20"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
             >
               <path
                 fill-rule="evenodd"
