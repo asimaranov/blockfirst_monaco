@@ -6,7 +6,9 @@ import { planTypeToSubscriptionType } from '~/app/lib/utils';
 import { authClient } from '~/server/auth/client';
 
 export function UserInfoClient() {
-  const userData = api.userData.getUserData.useQuery();
+  const userData = api.userData.getUserData.useQuery(undefined, {
+    throwOnError: false,
+  });
   const session = authClient.useSession();
 
   if (!session.data ) {

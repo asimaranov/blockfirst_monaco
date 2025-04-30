@@ -42,9 +42,11 @@ function SidebarSection({
   const pathname = usePathname();
   const unreadCount = api.notifications.getUnreadCount.useQuery(undefined, {
     refetchInterval: 5000,
+    throwOnError: false,
   });
   const { data: userData } = api.userData.getUserData.useQuery(undefined, {
     refetchInterval: 15000,
+    throwOnError: false,
   });
 
   return (

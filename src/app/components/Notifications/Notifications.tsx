@@ -138,7 +138,7 @@ const Notifications = ({ onClose }: NotificationsProps) => {
   // Mark notification as read
   const markNotificationAsRead = (id: string) => {
     // Only mark as read if not already read
-    const notification = allNotifications?.find(n => n.id === id);
+    const notification = allNotifications?.find((n) => n.id === id);
     if (notification && !notification.isRead) {
       markAsRead.mutate({ id });
     }
@@ -206,7 +206,9 @@ const Notifications = ({ onClose }: NotificationsProps) => {
                       isMobile={isMobile}
                       dismissNotification={dismissNotification}
                     >
-                      <div onClick={() => markNotificationAsRead(notification.id)}>
+                      <div
+                        onClick={() => markNotificationAsRead(notification.id)}
+                      >
                         <NotificationContent
                           notification={notification}
                           dismissNotification={dismissNotification}

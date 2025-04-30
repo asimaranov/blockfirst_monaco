@@ -24,7 +24,7 @@ export function CalloutElementStatic({
           <Image src={CalloutBadge} alt="Callout Badge" className='absolute top-8 left-8 w-32.25 h-8' />
         </div>
         {/* Second child span text is sm  */}
-        <div className="w-full p-8 [&_span]:text-base">{children}</div>
+        <div className="w-full p-8 [&_span]:text-base [&>*]:leading-6">{children}</div>
       </div>
     </SlateElement>
   );

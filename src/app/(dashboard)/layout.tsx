@@ -13,12 +13,16 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
-
   // Prefetch notifications data
   // await api.notifications.getAll.prefetch();
   // await api.notifications.getUnreadCount.prefetch();
   // await api.userData.getUserData.prefetch();
   // await api.notifications.getSettings.prefetch();
+
+  const session = await getServerSession();
+  if (!session) {
+    redirect('/signin');
+  }
 
   return (
     <div className="bg-background relative flex max-h-screen flex-col sm:flex-row">

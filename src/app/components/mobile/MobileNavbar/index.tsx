@@ -71,7 +71,9 @@ const MobileNavbar: React.FC = () => {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const { toggle } = useNotificationsModalStore();
-  const userData = api.userData.getUserData.useQuery();
+  const userData = api.userData.getUserData.useQuery(undefined, {
+    throwOnError: false,
+  });
   const plan = planTypeToSubscriptionType(userData.data?.plan as PlanType);
   const tariff = TARIFFS.find((t) => t.name === plan);
 
