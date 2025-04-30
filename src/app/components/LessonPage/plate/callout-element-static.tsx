@@ -23,7 +23,8 @@ export function CalloutElementStatic({
         <div className="w-full h-24 relative bg-[url('/images/covers/callout-cover.png')] bg-no-repeat bg-cover">
           <Image src={CalloutBadge} alt="Callout Badge" className='absolute top-8 left-8 w-32.25 h-8' />
         </div>
-        <div className="w-full  p-8">{children}</div>
+        {/* Second child span text is sm  */}
+        <div className="w-full p-8 [&_span]:text-base">{children}</div>
       </div>
     </SlateElement>
   );

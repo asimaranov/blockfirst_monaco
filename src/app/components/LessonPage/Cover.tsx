@@ -114,7 +114,7 @@ interface Action {
 
 // Define actions - adjust content/icons as needed
 const actions: Action[] = [
-  { id: 'theme', type: 'icon', content: <MoonIcon />, onClick: () => {} },
+  // { id: 'theme', type: 'icon', content: <MoonIcon />, onClick: () => {} },
   { id: 'share', type: 'icon', content: <ShareIcon />, onClick: () => {
       navigator.share({
         title: document.title,

@@ -42,6 +42,7 @@ export const TaskNavigation = ({ labels }: { labels: string[] }) => {
         viewBox="0 0 16 16"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        className='w-4 h-4'
       >
         <path
           d="M10.7959 1.33594H5.20927C2.7826 1.33594 1.33594 2.7826 1.33594 5.20927V10.7893C1.33594 13.2226 2.7826 14.6693 5.20927 14.6693H10.7893C13.2159 14.6693 14.6626 13.2226 14.6626 10.7959V5.20927C14.6693 2.7826 13.2226 1.33594 10.7959 1.33594ZM6.75594 9.66927C6.94927 9.8626 6.94927 10.1826 6.75594 10.3759C6.65594 10.4759 6.52927 10.5226 6.4026 10.5226C6.27594 10.5226 6.14927 10.4759 6.04927 10.3759L4.38927 8.71594C3.99594 8.3226 3.99594 7.68927 4.38927 7.29594L6.04927 5.63594C6.2426 5.4426 6.5626 5.4426 6.75594 5.63594C6.94927 5.82927 6.94927 6.14927 6.75594 6.3426L5.09594 8.0026L6.75594 9.66927ZM11.6159 8.70927L9.95594 10.3693C9.85594 10.4693 9.72927 10.5159 9.6026 10.5159C9.47594 10.5159 9.34927 10.4693 9.24927 10.3693C9.05594 10.1759 9.05594 9.85594 9.24927 9.6626L10.9093 8.0026L9.24927 6.33594C9.05594 6.1426 9.05594 5.8226 9.24927 5.62927C9.4426 5.43594 9.7626 5.43594 9.95594 5.62927L11.6159 7.28927C12.0093 7.6826 12.0093 8.3226 11.6159 8.70927Z"
@@ -146,7 +147,7 @@ export function TaskCard({
   return (
     <div
       className={cn(
-        'bg-muted border-accent relative -mx-16 flex h-83 w-[calc(100%*var(--spacing)*32)] flex-row rounded-sm border-y'
+        'bg-muted border-accent relative -mx-16 flex h-83 w-[calc(100%*var(--spacing)*32)] flex-row border-y'
       )}
     >
       {loading ? (
@@ -175,7 +176,7 @@ export function TaskCard({
                     alt={heroName}
                     width={110}
                     height={110}
-                    className=""
+                    className="w-27.5 h-27.5"
                   />
                   <svg
                     width="20"
@@ -239,6 +240,7 @@ export function TaskCard({
                         viewBox="0 0 20 20"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
+                        className='w-5 h-5'
                       >
                         <path
                           d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
@@ -328,6 +330,7 @@ export function TaskCard({
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    className="w-6 h-6"
                   >
                     <rect width="24" height="24" rx="12" fill="#01050D" />
                     <path
@@ -356,6 +359,8 @@ export function TaskCard({
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
+                    className="w-6 h-6"
+
                   >
                     <rect width="24" height="24" rx="12" fill="#01050D" />
                     <path
@@ -368,7 +373,7 @@ export function TaskCard({
               </div>
               <Link
                 href={`/task/${courseId}/${task.id}`}
-                className="bg-primary ml-auto flex cursor-pointer flex-row items-center rounded-[5.2083vw] px-15.75 py-3 hover:bg-[#1242B2]"
+                className="bg-primary ml-auto flex cursor-pointer flex-row items-center rounded-[5.2083vw] px-15.75 py-3 hover:bg-[#1242B2] text-sm"
                 prefetch={true}
               >
                 Выполнить
@@ -378,6 +383,7 @@ export function TaskCard({
                   viewBox="0 0 21 20"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5"
                 >
                   <path
                     d="M14.2305 4.43162C14.5292 4.14484 15.0042 4.15441 15.291 4.45311L19.9062 9.2617C20.1848 9.55191 20.1848 10.0106 19.9062 10.3008L15.291 15.1094C15.0042 15.4082 14.5293 15.4177 14.2305 15.1308C13.9319 14.844 13.9222 14.369 14.209 14.0703L18.3262 9.78123L14.209 5.49217C13.9222 5.19338 13.9317 4.71846 14.2305 4.43162Z"

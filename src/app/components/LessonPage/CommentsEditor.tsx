@@ -51,7 +51,7 @@ export default function CommentsEditor({
   return (
     <div
       className={cn(
-        'border-border relative w-190 rounded-[0.625vw] border-[0.026vw]',
+        'border-border relative w-190 rounded-[0.625vw] border-[0.026vw] flex-grow',
         className,
         editorFocused && 'border-secondary/50'
       )}
@@ -88,7 +88,7 @@ export default function CommentsEditor({
         </Plate>
       </DndProvider>
 
-      <div className="absolute right-5 bottom-5 flex flex-row gap-3">
+      <div className="absolute right-5 bottom-5 flex flex-row gap-3 flex-grow">
         {id == 'sub-editor' && (
           <button
             className="text-error cursor-pointer px-4 py-2 text-xs hover:opacity-50"
