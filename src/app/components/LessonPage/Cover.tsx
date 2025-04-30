@@ -13,6 +13,7 @@ import PremiumBorder from './assets/PremiumBorder.svg';
 import { motion, AnimatePresence } from 'motion/react';
 
 import { InfoPopover, InfoPopoverIcon } from '../shared/InfoPopover';
+import { authClient } from '~/server/auth/client';
 
 // Helper Icon Components (moved from LessonPage.tsx)
 const ChevronRightIcon = () => (
@@ -99,10 +100,7 @@ interface Stat {
   label: string;
 }
 
-const stats: Stat[] = [
-  { icon: FireIcon, alt: 'Fire', value: 12, label: 'Стрик' },
-  { icon: SparklesIcon, alt: 'Sparkles', value: 12, label: 'XP' },
-];
+
 
 interface Action {
   id: string;
@@ -212,7 +210,14 @@ const Cover = () => {
     {}
   );
 
-  const activeDay = 3 as number;
+  const { data: session } = authClient.useSession();
+
+  const stats: Stat[] = [
+    { icon: FireIcon, alt: 'Fire', value: session ? 300 : 0, label: 'Стрик' },
+    { icon: SparklesIcon, alt: 'Sparkles', value: session ? 300 : 0, label: 'XP' },
+  ];
+
+  const activeDay = session ? 3 : 0 as number;
 
   // Initialize refs for stat items
   useEffect(() => {
