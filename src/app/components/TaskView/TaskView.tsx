@@ -17,6 +17,7 @@ export default function TaskView({
 }) {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<'info' | 'ai-mentor'>('info');
+  const [isAiMentorActive, setIsAiMentorActive] = useState(false);
 
   const handleClose = () => {
     if (onClose) {
@@ -74,7 +75,7 @@ export default function TaskView({
             </button>
             <button
               className={cn(
-                'flex h-10 w-35.75 cursor-pointer items-center justify-center rounded-[5.2083vw]',
+                'flex h-10 w-35.75 cursor-pointer items-center justify-center rounded-[5.2083vw] gap-2',
                 activeTab === 'ai-mentor' && 'bg-foreground'
               )}
               onClick={() => setActiveTab('ai-mentor')}
@@ -87,6 +88,9 @@ export default function TaskView({
               >
                 AI ментор
               </span>
+              {isAiMentorActive && (
+                <div className="w-1.5 h-1.5 bg-error rounded-full"></div>
+              )}
             </button>
           </div>
 

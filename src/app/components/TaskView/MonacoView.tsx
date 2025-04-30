@@ -9,6 +9,9 @@ import { InfoPopover, InfoPopoverIcon } from '../shared/InfoPopover';
 import LoadingComponent from './LoadingComponent';
 import Confetti from 'react-confetti';
 import { cn } from '~/helpers';
+import { Modal } from '../shared/Modal';
+import { TaskReportForm } from './TaskReportForm';
+import { useParams } from 'next/navigation';
 
 const DynamicMonacoEditorReact = dynamic(() => import('./MonacoViewDynamic'), {
   ssr: false,
@@ -55,8 +58,6 @@ const StarIconFilled = ({ className }: { className?: string }) => {
 };
 
 const FloatingActionBar = () => {
-  const ref = useRef(null);
-
   const [position, setPosition] = useState({
     bottom: 0,
     left: 0,
@@ -96,6 +97,7 @@ const FloatingActionBar = () => {
   );
   const errorPanelRef = useRef<HTMLDivElement>(null);
   const successPanelRef = useRef<HTMLDivElement>(null);
+  const [isTaskReportFormOpen, setIsTaskReportFormOpen] = useState(false);
 
   useEffect(() => {
     //     setError({
@@ -280,6 +282,15 @@ const FloatingActionBar = () => {
         // }),
       }}
     >
+      <Modal
+        isOpen={isTaskReportFormOpen}
+        onClose={() => setIsTaskReportFormOpen(false)}
+      >
+        <TaskReportForm
+          onClose={() => setIsTaskReportFormOpen(false)}
+          // taskId={}
+        />
+      </Modal>
       {/* Render confetti based on showConfetti state */}
       {showConfetti && (
         <Confetti
@@ -898,7 +909,12 @@ const FloatingActionBar = () => {
                 <span className="text-secondary">Возникла проблема? </span>
               </div>
 
-              <span className="underline">Написать нам</span>
+              <span
+                className="cursor-pointer underline"
+                onClick={() => setIsTaskReportFormOpen(true)}
+              >
+                Написать нам
+              </span>
             </div>
           </div>
         </div>

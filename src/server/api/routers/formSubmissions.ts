@@ -45,6 +45,14 @@ const changeCuratorFormSchema = z.object({
   motivation: z.string().min(1, 'Причина смены куратора обязательна'),
 });
 
+const reportTaskFormSchema = z.object({
+  formType: z.literal('reportTask'),
+  taskId: z.string().min(1, 'ID задачи обязателен'),
+  name: z.string().min(1, 'Имя обязательно'),
+  telegram: z.string().min(1, 'Telegram обязателен'),
+  issue: z.string().min(1, 'Описание проблемы обязательно'),
+});
+
 // Union type for all form types
 const formSubmissionSchema = z.discriminatedUnion('formType', [
   studentFormSchema,
@@ -53,6 +61,7 @@ const formSubmissionSchema = z.discriminatedUnion('formType', [
   cvApplyFormSchema,
   mentorFormSchema,
   changeCuratorFormSchema,
+  reportTaskFormSchema
 ]);
 
 export const formSubmissionsRouter = createTRPCRouter({
