@@ -216,7 +216,7 @@ export default function ContentFooter({ nextLocked }: { nextLocked: boolean }) {
   const url = `https://app.blockfirst.io${pathname}`;
 
   return (
-    <div className="border-accent flex flex-row border-b px-16 pt-21.5 pb-10">
+    <div className="border-accent flex flex-row border-b px-5 sm:px-16 pt-21.5 pb-10 justify-between">
       <Button>
         <svg
           width="20"
