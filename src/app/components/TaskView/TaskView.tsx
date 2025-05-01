@@ -23,7 +23,7 @@ export default function TaskView({
   const [activeTab, setActiveTab] = useState<'info' | 'ai-mentor'>('info');
   const [isAiMentorActive, setIsAiMentorActive] = useState(false);
   const [isMentorPopoverShown, setIsMentorPopoverShown] = useState(false);
-  const [collapsed, setCollapsed] = useState(true);
+  const [collapsed, setCollapsed] = useState(false);
 
   const labels = ['Глава 1', 'Глава 2', 'Глава 3'];
 
