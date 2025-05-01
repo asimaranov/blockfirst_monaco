@@ -241,18 +241,12 @@ export function TaskCard({
   description = '',
   completionCount = '0',
   rating = '0',
-  regularTasksSolved = false,
-  advancedTasksSolved = false,
   onExecute,
 }: TaskCardProps) {
-  const router = useRouter();
   const { courseId } = useParams();
 
-  const handleOpenTask = () => {
-    if (task?.id) {
-      router.push(`/lesson/${courseId}/task/${task.id}`);
-    }
-  };
+  const regularTasksSolved = task?.status == 'completed';
+  const advancedTasksSolved = regularTasksSolved && task?.advancedTasksSolved;
 
   return (
     <div
@@ -340,7 +334,7 @@ export function TaskCard({
                       className={cn(
                         'border-primary/50 rounded-[8px] border-[calc(0.25*var(--spacing))] px-2 py-1.25 sm:rounded-[0.4167vw] sm:px-3.25',
                         regularTasksSolved
-                          ? 'bg-primary'
+                          ? 'bg-primary cursor-pointer'
                           : 'hover:bg-primary/10 cursor-pointer'
                       )}
                     >
@@ -373,7 +367,7 @@ export function TaskCard({
                       className={cn(
                         'rounded-[8px] border-[calc(0.25*var(--spacing))] border-[#F48E19]/50 px-2 py-1.25 sm:rounded-[0.4167vw] sm:px-3.25',
                         advancedTasksSolved
-                          ? 'bg-[#F48E19]'
+                          ? 'cursor-pointer bg-[#F48E19]'
                           : 'cursor-pointer hover:bg-[#F48E19]/10'
                       )}
                     >
@@ -435,7 +429,7 @@ export function TaskCard({
             </div>
 
             <div className="mt-6 flex flex-col sm:mt-auto sm:flex-row sm:items-center">
-              <div className="grid grid-cols-2 gap-4 sm:gap-8 sm:flex sm:flex-row">
+              <div className="grid grid-cols-2 gap-4 sm:flex sm:flex-row sm:gap-8">
                 <div className="flex flex-col gap-3.5">
                   <span className="text-secondary text-xxs rounded-[6px] bg-[#14171C] px-3 py-1.75 whitespace-nowrap uppercase sm:w-fit sm:rounded-[0.3125vw]">
                     Выполнили задачу
@@ -495,10 +489,19 @@ export function TaskCard({
               <div className="mt-5 flex w-full sm:mt-0">
                 <Link
                   href={`/task/${courseId}/${task.id}`}
-                  className="bg-primary flex w-full cursor-pointer flex-row items-center justify-center rounded-[5.2083vw] px-15.75 py-3 text-sm hover:bg-[#1242B2] sm:ml-auto sm:w-auto"
+                  className={cn(
+                    'flex w-full cursor-pointer flex-row items-center justify-center rounded-[5.2083vw] px-15.75 py-3 text-sm sm:ml-auto sm:w-auto',
+                    regularTasksSolved
+                      ? 'border-primary hover:bg-primary border'
+                      : 'bg-primary hover:bg-[#1242B2]'
+                  )}
                   prefetch={true}
                 >
-                  Выполнить
+                  {!regularTasksSolved
+                    ? 'Выполнить'
+                    : !advancedTasksSolved
+                      ? 'Дорешать'
+                      : 'Посмотреть'}
                   <svg
                     width="21"
                     height="20"
@@ -534,8 +537,6 @@ export function TaskCardGridItem({
   description = '',
   completionCount = '0',
   rating = '0',
-  regularTasksSolved = false,
-  advancedTasksSolved = false,
   onExecute,
 }: TaskCardProps) {
   const router = useRouter();
@@ -546,6 +547,9 @@ export function TaskCardGridItem({
       router.push(`/lesson/${courseId}/task/${task.id}`);
     }
   };
+
+  const regularTasksSolved = task?.status == 'completed';
+  const advancedTasksSolved = regularTasksSolved && task?.advancedTasksSolved;
 
   return (
     <div
@@ -633,7 +637,7 @@ export function TaskCardGridItem({
                       className={cn(
                         'border-primary/50 rounded-[8px] border-[calc(0.25*var(--spacing))] px-2 py-1.25 sm:rounded-[0.4167vw]',
                         regularTasksSolved
-                          ? 'bg-primary'
+                          ? 'bg-primary cursor-pointer'
                           : 'hover:bg-primary/10 cursor-pointer'
                       )}
                     >
@@ -666,7 +670,7 @@ export function TaskCardGridItem({
                       className={cn(
                         'rounded-[8px] border-[calc(0.25*var(--spacing))] border-[#F48E19]/50 px-2 py-1.25 sm:rounded-[0.4167vw]',
                         advancedTasksSolved
-                          ? 'bg-[#F48E19]'
+                          ? 'bg-[#F48E19] cursor-pointer'
                           : 'cursor-pointer hover:bg-[#F48E19]/10'
                       )}
                     >
@@ -794,10 +798,20 @@ export function TaskCardGridItem({
               <div className="mt-5 flex w-full sm:mt-0">
                 <Link
                   href={`/task/${courseId}/${task.id}`}
-                  className="bg-primary flex w-full cursor-pointer flex-row items-center justify-center rounded-[5.2083vw] px-8.25 py-3 text-sm hover:bg-[#1242B2] sm:ml-auto sm:w-auto"
+                  className={cn(
+                    'flex w-full cursor-pointer flex-row items-center justify-center rounded-[5.2083vw] px-8.25 py-3 text-sm sm:ml-auto sm:w-auto',
+                    regularTasksSolved
+                      ? 'border-primary hover:bg-primary border'
+                      : 'bg-primary hover:bg-[#1242B2]'
+                  )}
                   prefetch={true}
                 >
-                  Выполнить
+                  {!regularTasksSolved
+                    ? 'Выполнить'
+                    : !advancedTasksSolved
+                      ? 'Дорешать'
+                      : 'Посмотреть'}
+
                   <svg
                     width="21"
                     height="20"
