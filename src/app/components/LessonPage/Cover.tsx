@@ -247,7 +247,7 @@ const Cover = () => {
 
       <div className="relative z-10 flex h-full flex-col justify-between px-5 py-8 sm:px-16">
         {/* Top Row */}
-        <div className="flex items-start justify-between">
+        <div className="hidden sm:flex items-start justify-between">
           {/* Left Section: Last Updated */}
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
@@ -451,6 +451,7 @@ const Cover = () => {
             </div>
           </div>
         </div>
+        <div className='flex sm:hidden'></div>
 
         {/* Bottom Row */}
         <div className="flex items-start justify-between  sm:items-center">
