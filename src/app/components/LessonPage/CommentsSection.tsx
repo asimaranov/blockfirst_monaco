@@ -9,9 +9,9 @@ export default async function CommentsSection() {
   return (
     <div className="flex flex-col">
       {session ? (
-        <div className="flex w-full px-16 pt-16 pb-16">
-          <div className="flex flex-grow flex-row gap-3">
-            <UserAvatar />
+        <div className="flex w-full px-5 pt-16 pb-16 sm:px-16">
+          <div className="flex w-full flex-row gap-3">
+            <UserAvatar className="hidden sm:flex shrink-0" />
             <CommentsEditor />
           </div>
         </div>

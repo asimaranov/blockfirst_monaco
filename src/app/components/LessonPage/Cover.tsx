@@ -100,8 +100,6 @@ interface Stat {
   label: string;
 }
 
-
-
 interface Action {
   id: string;
   type: 'button' | 'icon';
@@ -113,7 +111,11 @@ interface Action {
 // Define actions - adjust content/icons as needed
 const actions: Action[] = [
   // { id: 'theme', type: 'icon', content: <MoonIcon />, onClick: () => {} },
-  { id: 'share', type: 'icon', content: <ShareIcon />, onClick: () => {
+  {
+    id: 'share',
+    type: 'icon',
+    content: <ShareIcon />,
+    onClick: () => {
       navigator.share({
         title: document.title,
         url: window.location.href,
@@ -213,11 +215,21 @@ const Cover = () => {
   const { data: session } = authClient.useSession();
 
   const stats: Stat[] = [
-    { icon: FireIcon, alt: 'Fire', value: session?.user ? 300 : 0, label: 'Стрик' },
-    { icon: SparklesIcon, alt: 'Sparkles', value: session?.user ? 300 : 0, label: 'XP' },
+    {
+      icon: FireIcon,
+      alt: 'Fire',
+      value: session?.user ? 300 : 0,
+      label: 'Стрик',
+    },
+    {
+      icon: SparklesIcon,
+      alt: 'Sparkles',
+      value: session?.user ? 300 : 0,
+      label: 'XP',
+    },
   ];
 
-  const activeDay = session ? 3 : 0 as number;
+  const activeDay = session ? 3 : (0 as number);
 
   // Initialize refs for stat items
   useEffect(() => {
@@ -233,7 +245,7 @@ const Cover = () => {
         <div className="from-background/0 via-background/50 to-background absolute inset-0 bg-gradient-to-t"></div>
       </div>
 
-      <div className="relative z-10 flex h-full flex-col justify-between px-16 py-8">
+      <div className="relative z-10 flex h-full flex-col justify-between px-5 py-8 sm:px-16">
         {/* Top Row */}
         <div className="flex items-start justify-between">
           {/* Left Section: Last Updated */}
@@ -441,7 +453,7 @@ const Cover = () => {
         </div>
 
         {/* Bottom Row */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-start justify-between  sm:items-center">
           {/* User Info */}
           <div className="flex items-center gap-5">
             <div className="relative h-12 w-12 flex-shrink-0">
@@ -479,7 +491,7 @@ const Cover = () => {
           </div>
 
           {/* Tags */}
-          <div className="flex items-center gap-2">
+          <div className="items-center gap-2 hidden sm:flex">
             {tags.map((tag) => (
               <span
                 key={tag}

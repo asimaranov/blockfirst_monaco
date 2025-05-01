@@ -79,7 +79,7 @@ const Button = ({
   disabled?: boolean;
 }) => (
   <button
-    className="border-accent not-disabled:hover:bg-foreground not-disabled:hover:text-background group flex h-11 not-disabled:cursor-pointer items-center gap-2 rounded-[100px] border px-6"
+    className="border-accent not-disabled:hover:bg-foreground not-disabled:hover:text-background group flex h-11 items-center gap-2 rounded-[100px] border px-6 not-disabled:cursor-pointer"
     disabled={disabled}
   >
     {children}
@@ -237,7 +237,7 @@ export default function ContentFooter({ nextLocked }: { nextLocked: boolean }) {
         <span className="text-sm">Назад</span>
       </Button>
 
-      <div className="mr-auto ml-auto flex flex-row items-center">
+      <div className="mr-auto ml-auto hidden flex-row items-center sm:flex">
         <DropDownAction
           direction="top"
           button={
@@ -294,20 +294,23 @@ export default function ContentFooter({ nextLocked }: { nextLocked: boolean }) {
           )}
           onClick={() => {
             if (!session.data?.user) {
-              return
+              return;
             }
             rating && setRating(undefined);
           }}
         >
           {rating || !session.data?.user ? (
-            <button className={cn(
-              'relative flex flex-row items-center justify-center gap-2',
-              session.data?.user && 'cursor-pointer'
-            )}
+            <button
+              className={cn(
+                'relative flex flex-row items-center justify-center gap-2',
+                session.data?.user && 'cursor-pointer'
+              )}
             >
               <StarIconFilled className="" />
 
-              <span className="text-sm leading-5">{totalRating.toFixed(2)}</span>
+              <span className="text-sm leading-5">
+                {totalRating.toFixed(2)}
+              </span>
             </button>
           ) : (
             <>

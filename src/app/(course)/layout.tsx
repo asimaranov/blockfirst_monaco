@@ -30,7 +30,7 @@ export default async function Layout({
           className="bg-dark-bg w-full overflow-visible px-0 sm:overflow-scroll "
           id="content-view"
         >
-          <div className='px-16'>
+          <div className='px-0 sm:px-16'>
             {children}
           </div>
         </div>

@@ -65,7 +65,7 @@ export function TaskElement({
       data-plate-open-context-menu
       {...props}
     >
-      <div className="border-accent -mx-16 flex w-[calc(100%*var(--spacing)*32)] flex-row items-center justify-center gap-10 border-t">
+      <div className="border-accent mx-0 sm:-mx-16 flex w-[calc(100%*var(--spacing)*32)] flex-row items-center justify-center gap-10 border-t">
         <span className="text-secondary/50 py-2.5 text-xs uppercase leading-5">
           Практические задания
         </span>

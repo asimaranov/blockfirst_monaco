@@ -8,7 +8,7 @@ import DropDownAction from '../shared/DropDownAction';
 import CommentsEditor from './CommentsEditor';
 import { PlateController } from '@udecode/plate/react';
 import Image from 'next/image';
-import {  } from 'better-auth/react';
+import {} from 'better-auth/react';
 import { authClient } from '~/server/auth/client';
 import { redirect } from 'next/navigation';
 
@@ -347,7 +347,7 @@ function CommentItem({
           </span>{' '}
         </div>
       </div>
-      <div className="flex flex-grow flex-col px-15">
+      <div className="flex flex-grow flex-col px-15 pr-0 sm:pr-15">
         <p className="text-foreground mb-3 py-1 text-sm">{comment.text}</p>
         {comment.images && comment.images.length > 0 && (
           <div className="flex flex-row gap-3 pb-4">
@@ -483,72 +483,75 @@ function CommentItem({
             </span>
           </button>
           {session && (
-          <DropDownAction
-            header={comment.isSelf ? undefined : 'Пожаловаться'}
-            button={
-              <div className="text-secondary flex w-6.5 cursor-pointer items-center justify-center rounded-[0.2083vw] group-data-[active=true]/button:bg-[#1D2026] hover:bg-[#1D2026]">
-                <MoreIcon />
-              </div>
-            }
-            options={
-              comment.isSelf
-                ? [
-                    {
-                      label: 'Редактировать',
-                      value: 'edit',
-                      icon: <EditIcon />,
-                    },
-                    {
-                      label: 'Удалить',
-                      value: 'delete',
-                      icon: <DeleteIcon />,
-                      className: 'text-error',
-                    },
-                  ]
-                : [
-                    { label: 'Спам & Фишинг', value: 'spam' },
-                    { label: 'Порнография', value: 'nsfw' },
-                    { label: 'Политические высказывания', value: 'political' },
-                    { label: 'Оскорбление религии', value: 'religious' },
-                    { label: 'Оскорбительное высказывание', value: 'other' },
-                  ]
-            }
-            successBlock={
-              comment.isSelf ? undefined : (
-                <div className="flex flex-col items-center justify-center gap-2 pt-9 pb-14">
-                  <svg
-                    width="33"
-                    height="32"
-                    viewBox="0 0 33 32"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-8 w-8.25"
-                  >
-                    <rect
-                      x="1"
-                      y="0.5"
-                      width="31"
-                      height="31"
-                      rx="15.5"
-                      stroke="#195AF4"
-                    />
-                    <path
-                      d="M11.043 16.7855L14.163 19.9055L21.963 12.1055"
-                      stroke="#F2F2F2"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                  <div className="flex flex-col gap-3 px-5 text-center">
-                    <p className="text-base font-medium">Жалоба принята</p>
-                    <p className="text-secondary text-xs">
-                      Мы проверим этот комментарий на наличие нарушений
-                    </p>
-                  </div>
+            <DropDownAction
+              header={comment.isSelf ? undefined : 'Пожаловаться'}
+              button={
+                <div className="text-secondary flex w-6.5 cursor-pointer items-center justify-center rounded-[0.2083vw] group-data-[active=true]/button:bg-[#1D2026] hover:bg-[#1D2026]">
+                  <MoreIcon />
                 </div>
-              )
-            }
+              }
+              options={
+                comment.isSelf
+                  ? [
+                      {
+                        label: 'Редактировать',
+                        value: 'edit',
+                        icon: <EditIcon />,
+                      },
+                      {
+                        label: 'Удалить',
+                        value: 'delete',
+                        icon: <DeleteIcon />,
+                        className: 'text-error',
+                      },
+                    ]
+                  : [
+                      { label: 'Спам & Фишинг', value: 'spam' },
+                      { label: 'Порнография', value: 'nsfw' },
+                      {
+                        label: 'Политические высказывания',
+                        value: 'political',
+                      },
+                      { label: 'Оскорбление религии', value: 'religious' },
+                      { label: 'Оскорбительное высказывание', value: 'other' },
+                    ]
+              }
+              successBlock={
+                comment.isSelf ? undefined : (
+                  <div className="flex flex-col items-center justify-center gap-2 pt-9 pb-14">
+                    <svg
+                      width="33"
+                      height="32"
+                      viewBox="0 0 33 32"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-8 w-8.25"
+                    >
+                      <rect
+                        x="1"
+                        y="0.5"
+                        width="31"
+                        height="31"
+                        rx="15.5"
+                        stroke="#195AF4"
+                      />
+                      <path
+                        d="M11.043 16.7855L14.163 19.9055L21.963 12.1055"
+                        stroke="#F2F2F2"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                    <div className="flex flex-col gap-3 px-5 text-center">
+                      <p className="text-base font-medium">Жалоба принята</p>
+                      <p className="text-secondary text-xs">
+                        Мы проверим этот комментарий на наличие нарушений
+                      </p>
+                    </div>
+                  </div>
+                )
+              }
             />
           )}
         </div>
@@ -568,7 +571,7 @@ export default function CommentsList() {
   const [modalImage, setModalImage] = useState<string | null>(null);
 
   return (
-    <div className="w-full px-16 pb-16">
+    <div className="w-full px-5 pb-16 sm:px-16">
       {/* Image Modal */}
       <ImageModal
         imageUrl={modalImage || ''}
@@ -675,7 +678,7 @@ export default function CommentsList() {
       <div className="flex items-center justify-center">
         <button
           className={cn(
-            'border-primary hover:bg-primary flex w-55 cursor-pointer items-center justify-center gap-2 rounded-full border px-5 py-3 text-sm leading-5',
+            'border-primary hover:bg-primary flex w-full sm:w-55 cursor-pointer items-center justify-center gap-2 rounded-full border px-5 py-3 text-sm leading-5',
             loading &&
               'cursor-default border-[#1242B2] bg-[#1242B2] hover:bg-[#1242B2]'
           )}

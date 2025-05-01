@@ -51,7 +51,7 @@ export default function CommentsEditor({
   return (
     <div
       className={cn(
-        'border-border relative w-190 rounded-[0.625vw] border-[0.026vw] flex-grow',
+        'border-border relative rounded-[0.625vw] border-[0.026vw] w-full',
         className,
         editorFocused && 'border-secondary/50'
       )}
