@@ -71,7 +71,7 @@ export function TaskElement({
         </span>
       </div>
       {taskIds.length < 3 ? (
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-8">
           {taskIds.map((taskId) => (
             <TaskCard
               key={taskId}

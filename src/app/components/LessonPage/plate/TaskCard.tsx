@@ -670,7 +670,7 @@ export function TaskCardGridItem({
                       className={cn(
                         'rounded-[8px] border-[calc(0.25*var(--spacing))] border-[#F48E19]/50 px-2 py-1.25 sm:rounded-[0.4167vw]',
                         advancedTasksSolved
-                          ? 'bg-[#F48E19] cursor-pointer'
+                          ? 'cursor-pointer bg-[#F48E19]'
                           : 'cursor-pointer hover:bg-[#F48E19]/10'
                       )}
                     >
@@ -726,15 +726,15 @@ export function TaskCardGridItem({
                 />
               </div>
             </div>
-            <div className="flex flex-col gap-4 pb-10">
+            <div className="flex flex-col gap-4 sm:pb-10">
               <span className="text-2xl">{title}</span>
               <span className="text-secondary text-sm">{description}</span>
             </div>
 
             <div className="mt-6 flex flex-col sm:mt-auto sm:flex-row sm:items-center">
-              <div className="grid grid-cols-2 gap-5 sm:flex sm:flex-row">
+              <div className="grid grid-cols-2 gap-5">
                 <div className="flex flex-col gap-3">
-                  <span className="text-secondary text-xxs hidden w-fit rounded-[0.3125vw] bg-[#14171C] px-3 py-1.75 whitespace-nowrap uppercase sm:block">
+                  <span className="text-secondary text-xxs hidden w-fit min-w-25 rounded-[0.3125vw] bg-[#14171C] px-3 py-1.75 whitespace-nowrap uppercase sm:block">
                     Выполнили
                   </span>
                   <span className="text-secondary text-xxs rounded-[6px] bg-[#14171C] px-3 py-1.75 whitespace-nowrap uppercase sm:hidden sm:w-fit sm:rounded-[0.3125vw]">
@@ -766,7 +766,7 @@ export function TaskCardGridItem({
                 </div>
 
                 <div className="flex flex-col gap-3.5">
-                  <span className="text-secondary text-xxs hidden w-fit rounded-[0.3125vw] bg-[#14171C] px-3 py-1.75 whitespace-nowrap uppercase sm:block">
+                  <span className="text-secondary text-xxs hidden w-fit min-w-25 rounded-[0.3125vw] bg-[#14171C] px-3 py-1.75 whitespace-nowrap uppercase sm:block">
                     Рейтинг
                   </span>
                   <span className="text-secondary text-xxs block rounded-[6px] bg-[#14171C] px-3 py-1.75 whitespace-nowrap uppercase sm:hidden sm:w-fit">
@@ -795,11 +795,11 @@ export function TaskCardGridItem({
                 <span className="text-secondary/50 text-xs">Статус:</span>
                 <MobileTaskStatusBadge status={task.status} />
               </div>
-              <div className="mt-5 flex w-full sm:mt-0">
+              <div className="mt-5 flex w-full sm:mt-0 sm:ml-auto sm:w-auto">
                 <Link
                   href={`/task/${courseId}/${task.id}`}
                   className={cn(
-                    'flex w-full cursor-pointer flex-row items-center justify-center rounded-[5.2083vw] px-8.25 py-3 text-sm sm:ml-auto sm:w-auto',
+                    'flex w-full cursor-pointer flex-row items-center justify-center justify-self-end rounded-[5.2083vw] px-8.25 py-3 text-sm sm:w-auto',
                     regularTasksSolved
                       ? 'border-primary hover:bg-primary border'
                       : 'bg-primary hover:bg-[#1242B2]'
