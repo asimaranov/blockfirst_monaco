@@ -208,7 +208,7 @@ export default function ContentFooter({ nextLocked }: { nextLocked: boolean }) {
   const [rating, setRating] = useState<number | undefined>(undefined);
   const pathname = usePathname();
 
-  const totalRating = rating ?? 4.5;
+  const totalRating = rating ? rating : 4.5;
   const session = authClient.useSession();
 
   const title = 'Изучи блокчейн разработку с blockfirst';
@@ -216,7 +216,7 @@ export default function ContentFooter({ nextLocked }: { nextLocked: boolean }) {
   const url = `https://app.blockfirst.io${pathname}`;
 
   return (
-    <div className="border-accent flex flex-row border-b px-5 sm:px-16 pt-21.5 pb-10 justify-between">
+    <div className="border-accent flex flex-row justify-between border-b px-5 pt-21.5 pb-10 sm:px-16">
       <Button>
         <svg
           width="20"
@@ -313,7 +313,7 @@ export default function ContentFooter({ nextLocked }: { nextLocked: boolean }) {
               </span>
             </button>
           ) : (
-            <>
+            <div className="flex items-center justify-center">
               {Array.from({ length: 5 }).map((_, index) => (
                 <button
                   className="group cursor-pointer"
@@ -326,7 +326,7 @@ export default function ContentFooter({ nextLocked }: { nextLocked: boolean }) {
                   <StarIconFilled className="hidden group-hover:block group-has-[~button:hover]:block" />
                 </button>
               ))}
-            </>
+            </div>
           )}
         </div>
 
