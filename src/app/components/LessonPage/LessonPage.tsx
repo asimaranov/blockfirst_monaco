@@ -30,8 +30,8 @@ export default async function LessonPage({
   return (
     <div>
       <Cover />
-      <div className="border-accent flex min-h-screen flex-row border-x sm:justify-self-end">
-        <div className="w-full sm:w-239 flex-1">
+      <div className="border-accent flex min-h-screen flex-row border-x">
+        <div className="w-full sm:w-238 flex-1">
           <div className="px-5 sm:px-16">
             <PlateEditor richText={document?.contentRich as Value} />
           </div>

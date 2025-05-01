@@ -554,7 +554,7 @@ export function TaskCardGridItem({
   return (
     <div
       className={cn(
-        'bg-muted border-accent relative flex h-auto w-auto flex-col border-b nth-[2n+1]:border-r'
+        'bg-muted border-accent relative flex h-auto w-auto flex-col border-b nth-[2n+1]:border-r sm:h-123.5'
       )}
     >
       {loading ? (
@@ -629,7 +629,10 @@ export function TaskCardGridItem({
 
               <div className="flex flex-row items-center gap-2">
                 <InfoPopover
+                  offsetSide={60.5}
+                  position="left"
                   title="Выполнение задач"
+                  popoverClassName='w-119.5'
                   content={`1. Синяя галочка — обозначает, что все основные задачи или тесты успешно выполнены.
                     2. Оранжевая галочка — указывает на то, что выполнены сложные задачи или тесты.`}
                   icon={
@@ -662,6 +665,7 @@ export function TaskCardGridItem({
                   }
                 />
                 <InfoPopover
+                  offsetSide={-42}
                   title="Выполнение задач"
                   content={`1. Синяя галочка — обозначает, что все основные задачи или тесты успешно выполнены.
                     2. Оранжевая галочка — указывает на то, что выполнены сложные задачи или тесты.`}
@@ -799,7 +803,7 @@ export function TaskCardGridItem({
                 <Link
                   href={`/task/${courseId}/${task.id}`}
                   className={cn(
-                    'flex w-full cursor-pointer flex-row items-center justify-center justify-self-end rounded-[5.2083vw] px-8.25 py-3 text-sm sm:w-auto',
+                    'flex w-full cursor-pointer flex-row items-center justify-center rounded-[5.2083vw] px-8.25 py-3 text-sm sm:w-auto',
                     regularTasksSolved
                       ? 'border-primary hover:bg-primary border'
                       : 'bg-primary hover:bg-[#1242B2]'
