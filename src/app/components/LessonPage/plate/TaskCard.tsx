@@ -554,7 +554,7 @@ export function TaskCardGridItem({
   return (
     <div
       className={cn(
-        'bg-muted border-accent relative flex h-auto w-auto flex-col border-b nth-[2n+1]:border-r sm:h-123.5'
+        'bg-muted border-accent relative flex h-auto w-auto flex-col border-b nth-[2n+1]:border-r sm:min-h-123.5'
       )}
     >
       {loading ? (
