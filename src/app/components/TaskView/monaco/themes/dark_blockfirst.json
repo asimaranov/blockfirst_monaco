@@ -10,6 +10,10 @@
     "list.inactiveSelectionBackground": "#1D2127",
     "editor.lineHighlightBorder": "#1D2127",
 
+
+    "tree.indentGuidesStroke": "#46535D",
+    "tree.inactiveIndentGuidesStroke": "#232932",
+
     "list.dropBackground": "#383B3D",
     "menu.foreground": "#CCCCCC",
     "menu.separatorBackground": "#282d33",
