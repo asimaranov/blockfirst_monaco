@@ -424,7 +424,7 @@ export function TaskCard({
                 />
 
                 <TaskStatusBadge
-                  status={'in-progress'}
+                  status={task.status}
                   className="hidden sm:flex"
                 />
               </div>
