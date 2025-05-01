@@ -33,7 +33,7 @@ export interface TaskCardProps {
   onExecute?: () => void;
 }
 
-export const TaskNavigation = ({ labels }: { labels: string[] }) => {
+export const TaskNavigation = ({ labels, task }: { labels: string[], task: TaskData }) => {
   return (
     <div className="flex flex-row items-center gap-2">
       <svg
@@ -49,6 +49,7 @@ export const TaskNavigation = ({ labels }: { labels: string[] }) => {
           fill="#F2F2F2"
         />
       </svg>
+      <span className='text-xs'>Задача:</span>
       <div className="flex">
         {labels.map((x, i) => (
           <React.Fragment key={i}>
@@ -121,7 +122,7 @@ export function TaskStatusBadge({
             />
           </svg>
 
-          <span className="text-xs leading-4 text-[#195AF4]">В процессе</span>
+          <span className="text-xs leading-4 text-[#195AF4] whitespace-nowrap">В процессе</span>
         </div>
       ) : (
         <svg
@@ -322,7 +323,7 @@ export function TaskCard({
           </div>
           <div className="flex w-full flex-col p-5 sm:p-8">
             <div className="flex flex-row justify-between pb-8">
-              <TaskNavigation labels={labels} />
+              <TaskNavigation labels={labels} task={task} />
 
               <div className="flex flex-row items-center gap-2">
                 <InfoPopover
@@ -625,7 +626,7 @@ export function TaskCardGridItem({
           </div>
           <div className="flex w-full flex-col p-5 sm:p-8">
             <div className="flex flex-row justify-between pb-8">
-              <TaskNavigation labels={labels} />
+              <TaskNavigation labels={labels} task={task} />
 
               <div className="flex flex-row items-center gap-2">
                 <InfoPopover

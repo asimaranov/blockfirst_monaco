@@ -362,7 +362,7 @@ const FloatingActionBar = ({ setIsAiMentorActive }: { setIsAiMentorActive: (isAc
                     viewBox="0 0 20 20"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 cursor-pointer"
+                    className="h-5 w-5 cursor-pointer hover:opacity-50"
                     onClick={() => {
                       setError(undefined);
                       setErrorPanelHeight(null); // Reset height on close
@@ -441,7 +441,7 @@ const FloatingActionBar = ({ setIsAiMentorActive }: { setIsAiMentorActive: (isAc
                     viewBox="0 0 20 20"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 cursor-pointer"
+                    className="h-5 w-5 cursor-pointer hover:opacity-50"
                     onClick={() => {
                       setSuccess(undefined);
                       setSuccessPanelHeight(null); // Reset height on close
@@ -618,7 +618,7 @@ const FloatingActionBar = ({ setIsAiMentorActive }: { setIsAiMentorActive: (isAc
                   )}
                 </div>
                 <div className="flex w-full flex-col items-center gap-5">
-                  <div className="grid w-full grid-cols-5 gap-3">
+                  <div className="grid w-full grid-cols-4 gap-3">
                     {[
                       {
                         name: 'Вконтакте',
@@ -644,30 +644,30 @@ const FloatingActionBar = ({ setIsAiMentorActive }: { setIsAiMentorActive: (isAc
                           </svg>
                         ),
                       },
-                      {
-                        name: 'Facebook',
-                        icon: (
-                          <svg
-                            width="16"
-                            height="16"
-                            viewBox="0 0 16 16"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-4 w-4"
-                          >
-                            <rect
-                              width="16"
-                              height="16"
-                              rx="8"
-                              fill="#0B84EE"
-                            />
-                            <path
-                              d="M8.66439 8.14905H10.1533L10.387 6.62734H8.66409V5.79566C8.66409 5.16352 8.86939 4.60297 9.45713 4.60297H10.4016V3.27502C10.2356 3.25248 9.88468 3.20312 9.22155 3.20312C7.83684 3.20312 7.02503 3.93884 7.02503 5.61501V6.62734H5.60156V8.14905H7.02503V12.3315C7.30694 12.3742 7.59248 12.4031 7.88559 12.4031C8.15054 12.4031 8.40913 12.3788 8.66439 12.344V8.14905Z"
-                              fill="#F2F2F2"
-                            />
-                          </svg>
-                        ),
-                      },
+                      // {
+                      //   name: 'Facebook',
+                      //   icon: (
+                      //     <svg
+                      //       width="16"
+                      //       height="16"
+                      //       viewBox="0 0 16 16"
+                      //       fill="none"
+                      //       xmlns="http://www.w3.org/2000/svg"
+                      //       className="h-4 w-4"
+                      //     >
+                      //       <rect
+                      //         width="16"
+                      //         height="16"
+                      //         rx="8"
+                      //         fill="#0B84EE"
+                      //       />
+                      //       <path
+                      //         d="M8.66439 8.14905H10.1533L10.387 6.62734H8.66409V5.79566C8.66409 5.16352 8.86939 4.60297 9.45713 4.60297H10.4016V3.27502C10.2356 3.25248 9.88468 3.20312 9.22155 3.20312C7.83684 3.20312 7.02503 3.93884 7.02503 5.61501V6.62734H5.60156V8.14905H7.02503V12.3315C7.30694 12.3742 7.59248 12.4031 7.88559 12.4031C8.15054 12.4031 8.40913 12.3788 8.66439 12.344V8.14905Z"
+                      //         fill="#F2F2F2"
+                      //       />
+                      //     </svg>
+                      //   ),
+                      // },
                       {
                         name: 'Twitter (X)',
                         icon: (
@@ -972,7 +972,7 @@ export default function MonacoView({
 }) {
   const [showActionBar, setShowActionBar] = useState(true);
   return (
-    <div className="h-full w-272">
+    <div className="h-full pl-10">
       <button
         onClick={() => setShowActionBar(!showActionBar)}
         className="absolute top-0 right-0 z-1000 h-10 w-10 bg-red-500"

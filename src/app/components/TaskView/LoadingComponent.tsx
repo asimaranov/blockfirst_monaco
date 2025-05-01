@@ -61,7 +61,7 @@ export default function LoadingComponent() {
   const stageCircumference = 2 * Math.PI * stageRadius;
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-between pt-6 pb-5">
+    <div className="flex w-272 h-full flex-col items-center justify-between pt-6 pb-5">
       <Image src={BfBadge} alt="logo" className="h-10 w-36.25" />
       <div className="flex flex-col items-center gap-10">
         <div className="relative h-fit w-fit">
