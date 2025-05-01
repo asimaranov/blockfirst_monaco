@@ -57,7 +57,7 @@ const StarIconFilled = ({ className }: { className?: string }) => {
   );
 };
 
-const FloatingActionBar = () => {
+const FloatingActionBar = ({ setIsAiMentorActive }: { setIsAiMentorActive: (isActive: boolean) => void }) => {
   const [position, setPosition] = useState({
     bottom: 0,
     left: 0,
@@ -869,6 +869,7 @@ const FloatingActionBar = () => {
     1 error generated.`,
                       tests: ['Требование 2', 'Требование 3', 'Требование 4'],
                     });
+                    setIsAiMentorActive(true);
                   } else {
                     setError(undefined);
                     setSuccess(undefined);
@@ -965,7 +966,11 @@ const FloatingActionBar = () => {
   );
 };
 
-export default function MonacoView() {
+export default function MonacoView({
+  setIsAiMentorActive,
+}: {
+  setIsAiMentorActive: (isActive: boolean) => void;
+}) {
   const [showActionBar, setShowActionBar] = useState(true);
   return (
     <div className="h-full w-272">
@@ -976,7 +981,7 @@ export default function MonacoView() {
         {showActionBar ? 'hide' : 'show'}
       </button>
       {showActionBar && <DynamicMonacoEditorReact />}
-      {showActionBar && <FloatingActionBar />}
+      {showActionBar && <FloatingActionBar setIsAiMentorActive={setIsAiMentorActive} />}
     </div>
   );
 }

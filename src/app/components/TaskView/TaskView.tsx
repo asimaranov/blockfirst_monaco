@@ -92,7 +92,10 @@ export default function TaskView({
                 'relative',
                 activeTab === 'ai-mentor' && 'bg-foreground'
               )}
-              onClick={() => setActiveTab('ai-mentor')}
+              onClick={() => {
+                setActiveTab('ai-mentor');
+                setIsAiMentorActive(false);
+              }}
             >
               {isMentorPopoverShown && (
                 <Image
@@ -140,7 +143,7 @@ export default function TaskView({
         {activeTab === 'ai-mentor' && <AiMentor task={task} />}
       </div>
       <div className="flex flex-col">
-        <MonacoView />
+        <MonacoView setIsAiMentorActive={setIsAiMentorActive} />
         <div className="w-full flex-1 bg-blue-300"></div>
       </div>
     </div>
