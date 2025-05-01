@@ -49,7 +49,7 @@ export const TaskNavigation = ({ labels }: { labels: string[] }) => {
           fill="#F2F2F2"
         />
       </svg>
-      <span className="text-xs">Задача:</span>
+      <span className="hidden text-xs sm:block">Задача:</span>
       <div className="flex">
         {labels.map((x, i) => (
           <React.Fragment key={i}>
@@ -68,13 +68,20 @@ export const TaskNavigation = ({ labels }: { labels: string[] }) => {
 
 export function TaskStatusBadge({
   status,
+  className,
 }: {
   status: 'available' | 'in-progress' | 'completed';
+  className?: string;
 }) {
   return (
     <>
       {status == 'available' ? (
-        <div className="flex cursor-default flex-row gap-1 rounded-[0.4167vw] bg-[#33CF8E]/10 px-3.5 py-2">
+        <div
+          className={cn(
+            'flex cursor-default flex-row gap-1 rounded-[0.4167vw] bg-[#33CF8E]/10 px-3.5 py-2',
+            className
+          )}
+        >
           <svg
             width="16"
             height="16"
@@ -91,7 +98,12 @@ export function TaskStatusBadge({
           <span className="text-xs leading-4 text-[#33CF8E]">Доступна</span>
         </div>
       ) : status == 'in-progress' ? (
-        <div className="flex cursor-default flex-row gap-1 rounded-[0.4167vw] bg-[#195AF4]/10 px-3.5 py-2">
+        <div
+          className={cn(
+            'flex cursor-default flex-row gap-1 rounded-[0.4167vw] bg-[#195AF4]/10 px-3.5 py-2',
+            className
+          )}
+        >
           <svg
             width="16"
             height="16"
@@ -119,7 +131,7 @@ export function TaskStatusBadge({
           viewBox="0 0 109 32"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className='w-27.25 h-8.0'
+          className={cn('h-8.0 w-27.25', className)}
         >
           <rect
             width="109"
@@ -173,7 +185,7 @@ export function TaskCard({
   return (
     <div
       className={cn(
-        'bg-muted border-accent relative -mx-16 flex h-83 w-[calc(100%*var(--spacing)*32)] flex-row border-y'
+        'bg-muted border-accent relative -mx-5 flex h-auto w-auto flex-col border-y sm:-mx-16 sm:h-83 sm:w-[calc(100%*var(--spacing)*32)] sm:flex-row'
       )}
     >
       {loading ? (
@@ -185,7 +197,7 @@ export function TaskCard({
         </div>
       ) : (
         <>
-          <div className="h-full w-83 shrink-0 bg-[#01050D]">
+          <div className="h-full shrink-0 bg-[#01050D] sm:w-83">
             <div className="flex h-full flex-col bg-[url('/images/grids/task-grid.svg')] bg-contain bg-bottom p-8">
               <div className="text-secondary/50 flex flex-row justify-between text-xs">
                 <span>Обновление задачи</span>
@@ -195,14 +207,14 @@ export function TaskCard({
                 </div>
               </div>
 
-              <div className="relative mt-auto flex flex-col items-center">
+              <div className="relative mt-auto flex flex-row items-center sm:flex-col">
                 <div className="relative">
                   <Image
                     src={heroImageSrc}
                     alt={heroName}
                     width={110}
                     height={110}
-                    className="h-27.5 w-27.5"
+                    className="h-12 w-12 sm:h-27.5 sm:w-27.5"
                   />
                   <svg
                     width="20"
@@ -242,7 +254,7 @@ export function TaskCard({
               </div>
             </div>
           </div>
-          <div className="flex w-full flex-col p-8">
+          <div className="flex w-full flex-col p-5 sm:p-8">
             <div className="flex flex-row justify-between pb-8">
               <TaskNavigation labels={labels} />
 
@@ -254,7 +266,7 @@ export function TaskCard({
                   icon={
                     <div
                       className={cn(
-                        'border-primary/50 rounded-[0.4167vw] border-[calc(0.25*var(--spacing))] px-3.25 py-1.25',
+                        'border-primary/50 rounded-[8px] border-[calc(0.25*var(--spacing))] px-2 py-1.25 sm:rounded-[0.4167vw] sm:px-3.25',
                         regularTasksSolved
                           ? 'bg-primary'
                           : 'hover:bg-primary/10 cursor-pointer'
@@ -287,7 +299,7 @@ export function TaskCard({
                   icon={
                     <div
                       className={cn(
-                        'rounded-[0.4167vw] border-[calc(0.25*var(--spacing))] border-[#F48E19]/50 px-3.25 py-1.25',
+                        'rounded-[8px] border-[calc(0.25*var(--spacing))] border-[#F48E19]/50 px-2 py-1.25 sm:rounded-[0.4167vw] sm:px-3.25',
                         advancedTasksSolved
                           ? 'bg-[#F48E19]'
                           : 'cursor-pointer hover:bg-[#F48E19]/10'
@@ -339,7 +351,10 @@ export function TaskCard({
                   }
                 />
 
-                <TaskStatusBadge status={'in-progress'} />
+                <TaskStatusBadge
+                  status={'in-progress'}
+                  className="hidden sm:flex"
+                />
               </div>
             </div>
             <div className="flex flex-col gap-4">
@@ -347,78 +362,82 @@ export function TaskCard({
               <span className="text-secondary text-sm">{description}</span>
             </div>
 
-            <div className="mt-auto flex flex-row items-center gap-4">
-              <div className="flex flex-col gap-3.5">
-                <span className="text-secondary text-xxs w-fit rounded-[0.3125vw] bg-[#14171C] px-3 py-1.75 uppercase">
-                  Выполнили задачу
-                </span>
-                <div className="flex flex-row items-center gap-2">
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                  >
-                    <rect width="24" height="24" rx="12" fill="#01050D" />
-                    <path
-                      d="M11.9987 12.0013C13.6095 12.0013 14.9154 10.6955 14.9154 9.08464C14.9154 7.4738 13.6095 6.16797 11.9987 6.16797C10.3879 6.16797 9.08203 7.4738 9.08203 9.08464C9.08203 10.6955 10.3879 12.0013 11.9987 12.0013Z"
-                      fill="#F2F2F2"
-                    />
-                    <path
-                      d="M12.0017 13.457C9.07922 13.457 6.69922 15.417 6.69922 17.832C6.69922 17.9954 6.82755 18.1237 6.99089 18.1237H17.0125C17.1759 18.1237 17.3042 17.9954 17.3042 17.832C17.3042 15.417 14.9242 13.457 12.0017 13.457Z"
-                      fill="#F2F2F2"
-                    />
-                  </svg>
-                  <span className="text-base font-medium">
-                    {completionCount}
+            <div className="mt-6 flex flex-col sm:mt-auto sm:flex-row sm:items-center">
+              <div className="flex flex-row gap-8">
+                <div className="flex flex-col gap-3.5">
+                  <span className="text-secondary text-xxs w-fit rounded-[0.3125vw] bg-[#14171C] px-3 py-1.75 whitespace-nowrap uppercase">
+                    Выполнили задачу
                   </span>
+                  <div className="flex flex-row items-center gap-2">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                    >
+                      <rect width="24" height="24" rx="12" fill="#01050D" />
+                      <path
+                        d="M11.9987 12.0013C13.6095 12.0013 14.9154 10.6955 14.9154 9.08464C14.9154 7.4738 13.6095 6.16797 11.9987 6.16797C10.3879 6.16797 9.08203 7.4738 9.08203 9.08464C9.08203 10.6955 10.3879 12.0013 11.9987 12.0013Z"
+                        fill="#F2F2F2"
+                      />
+                      <path
+                        d="M12.0017 13.457C9.07922 13.457 6.69922 15.417 6.69922 17.832C6.69922 17.9954 6.82755 18.1237 6.99089 18.1237H17.0125C17.1759 18.1237 17.3042 17.9954 17.3042 17.832C17.3042 15.417 14.9242 13.457 12.0017 13.457Z"
+                        fill="#F2F2F2"
+                      />
+                    </svg>
+                    <span className="text-base font-medium">
+                      {completionCount}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-3.5">
+                  <span className="text-secondary text-xxs w-fit rounded-[0.3125vw] bg-[#14171C] px-3 py-1.75 whitespace-nowrap uppercase">
+                    Рейтинг задачи
+                  </span>
+                  <div className="flex flex-row items-center gap-2">
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                    >
+                      <rect width="24" height="24" rx="12" fill="#01050D" />
+                      <path
+                        d="M11.4124 6.49587C11.7853 6.31909 12.2173 6.31909 12.5902 6.49587C12.8481 6.61823 13.0315 6.84937 13.1937 7.1111C13.3568 7.37444 13.5362 7.73277 13.7591 8.17849L13.9476 8.55544C14.1004 8.8611 14.1447 8.94137 14.2005 8.99977C14.2581 9.05999 14.3272 9.1082 14.4036 9.14138C14.4777 9.17349 14.5683 9.18767 14.9075 9.22536L15.0706 9.24294L15.0902 9.24587C15.6255 9.30535 16.0534 9.35287 16.3773 9.41872C16.6967 9.48368 16.9951 9.57919 17.2034 9.79177C17.5015 10.0959 17.6417 10.5214 17.5833 10.9431C17.5425 11.238 17.3599 11.4928 17.1419 11.7351C16.921 11.9808 16.6059 12.274 16.2113 12.6404L16.1966 12.6531L16.0247 12.8133C15.7257 13.091 15.6487 13.17 15.6058 13.2537C15.5616 13.3399 15.5375 13.4351 15.5364 13.532C15.5355 13.6259 15.5675 13.7335 15.7044 14.1238L15.7113 14.1424C15.9133 14.7182 16.0735 15.1742 16.1644 15.5291C16.2527 15.8738 16.3019 16.2125 16.1868 16.5056C16.0249 16.9181 15.674 17.2269 15.2445 17.3357C14.9401 17.4128 14.6133 17.3234 14.2855 17.1941C13.9488 17.0613 13.5221 16.8486 12.9847 16.5799L12.9671 16.5701L12.5491 16.3611C12.2676 16.2203 12.1904 16.1865 12.1165 16.1726C12.0404 16.1583 11.9622 16.1583 11.8861 16.1726C11.8122 16.1865 11.735 16.2203 11.4534 16.3611L11.0355 16.5701L11.0179 16.5799C10.4805 16.8486 10.0537 17.0613 9.71711 17.1941C9.38923 17.3234 9.06251 17.4128 8.75813 17.3357C8.32857 17.2269 7.97768 16.9181 7.81574 16.5056C7.70067 16.2125 7.74992 15.8738 7.8382 15.5291C7.92907 15.1742 8.08927 14.7182 8.29133 14.1424L8.29816 14.1238C8.43512 13.7335 8.46712 13.6259 8.46613 13.532C8.46508 13.4351 8.441 13.3399 8.3968 13.2537C8.35384 13.17 8.27692 13.091 7.97785 12.8133L7.80598 12.6531L7.79133 12.6404C7.3967 12.274 7.08163 11.9808 6.86066 11.7351C6.64272 11.4928 6.4601 11.238 6.41926 10.9431C6.36086 10.5214 6.50112 10.0959 6.79914 9.79177C7.0075 9.57919 7.30592 9.48368 7.62531 9.41872C7.94914 9.35287 8.37706 9.30535 8.91242 9.24587L8.93195 9.24294L9.09504 9.22536C9.43427 9.18767 9.5249 9.17349 9.59895 9.14138C9.67535 9.1082 9.74452 9.05999 9.80207 8.99977C9.85787 8.94137 9.90217 8.8611 10.055 8.55544L10.2435 8.17849C10.4663 7.73277 10.6458 7.37444 10.8089 7.1111C10.9711 6.84937 11.1544 6.61823 11.4124 6.49587Z"
+                        fill="#FEF360"
+                      />
+                    </svg>
+                    <span className="text-base font-medium">{rating}</span>
+                  </div>
                 </div>
               </div>
-
-              <div className="flex flex-col gap-3.5">
-                <span className="text-secondary text-xxs w-fit rounded-[0.3125vw] bg-[#14171C] px-3 py-1.75 uppercase">
-                  Рейтинг задачи
-                </span>
-                <div className="flex flex-row items-center gap-2">
+              <div className="mt-8 flex w-full sm:mt-0">
+                <Link
+                  href={`/task/${courseId}/${task.id}`}
+                  className="bg-primary flex w-full cursor-pointer flex-row items-center justify-center rounded-[5.2083vw] px-15.75 py-3 text-sm hover:bg-[#1242B2] sm:ml-auto sm:w-auto"
+                  prefetch={true}
+                >
+                  Выполнить
                   <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
+                    width="21"
+                    height="20"
+                    viewBox="0 0 21 20"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
+                    className="h-5 w-5"
                   >
-                    <rect width="24" height="24" rx="12" fill="#01050D" />
                     <path
-                      d="M11.4124 6.49587C11.7853 6.31909 12.2173 6.31909 12.5902 6.49587C12.8481 6.61823 13.0315 6.84937 13.1937 7.1111C13.3568 7.37444 13.5362 7.73277 13.7591 8.17849L13.9476 8.55544C14.1004 8.8611 14.1447 8.94137 14.2005 8.99977C14.2581 9.05999 14.3272 9.1082 14.4036 9.14138C14.4777 9.17349 14.5683 9.18767 14.9075 9.22536L15.0706 9.24294L15.0902 9.24587C15.6255 9.30535 16.0534 9.35287 16.3773 9.41872C16.6967 9.48368 16.9951 9.57919 17.2034 9.79177C17.5015 10.0959 17.6417 10.5214 17.5833 10.9431C17.5425 11.238 17.3599 11.4928 17.1419 11.7351C16.921 11.9808 16.6059 12.274 16.2113 12.6404L16.1966 12.6531L16.0247 12.8133C15.7257 13.091 15.6487 13.17 15.6058 13.2537C15.5616 13.3399 15.5375 13.4351 15.5364 13.532C15.5355 13.6259 15.5675 13.7335 15.7044 14.1238L15.7113 14.1424C15.9133 14.7182 16.0735 15.1742 16.1644 15.5291C16.2527 15.8738 16.3019 16.2125 16.1868 16.5056C16.0249 16.9181 15.674 17.2269 15.2445 17.3357C14.9401 17.4128 14.6133 17.3234 14.2855 17.1941C13.9488 17.0613 13.5221 16.8486 12.9847 16.5799L12.9671 16.5701L12.5491 16.3611C12.2676 16.2203 12.1904 16.1865 12.1165 16.1726C12.0404 16.1583 11.9622 16.1583 11.8861 16.1726C11.8122 16.1865 11.735 16.2203 11.4534 16.3611L11.0355 16.5701L11.0179 16.5799C10.4805 16.8486 10.0537 17.0613 9.71711 17.1941C9.38923 17.3234 9.06251 17.4128 8.75813 17.3357C8.32857 17.2269 7.97768 16.9181 7.81574 16.5056C7.70067 16.2125 7.74992 15.8738 7.8382 15.5291C7.92907 15.1742 8.08927 14.7182 8.29133 14.1424L8.29816 14.1238C8.43512 13.7335 8.46712 13.6259 8.46613 13.532C8.46508 13.4351 8.441 13.3399 8.3968 13.2537C8.35384 13.17 8.27692 13.091 7.97785 12.8133L7.80598 12.6531L7.79133 12.6404C7.3967 12.274 7.08163 11.9808 6.86066 11.7351C6.64272 11.4928 6.4601 11.238 6.41926 10.9431C6.36086 10.5214 6.50112 10.0959 6.79914 9.79177C7.0075 9.57919 7.30592 9.48368 7.62531 9.41872C7.94914 9.35287 8.37706 9.30535 8.91242 9.24587L8.93195 9.24294L9.09504 9.22536C9.43427 9.18767 9.5249 9.17349 9.59895 9.14138C9.67535 9.1082 9.74452 9.05999 9.80207 8.99977C9.85787 8.94137 9.90217 8.8611 10.055 8.55544L10.2435 8.17849C10.4663 7.73277 10.6458 7.37444 10.8089 7.1111C10.9711 6.84937 11.1544 6.61823 11.4124 6.49587Z"
-                      fill="#FEF360"
+                      d="M14.2305 4.43162C14.5292 4.14484 15.0042 4.15441 15.291 4.45311L19.9062 9.2617C20.1848 9.55191 20.1848 10.0106 19.9062 10.3008L15.291 15.1094C15.0042 15.4082 14.5293 15.4177 14.2305 15.1308C13.9319 14.844 13.9222 14.369 14.209 14.0703L18.3262 9.78123L14.209 5.49217C13.9222 5.19338 13.9317 4.71846 14.2305 4.43162Z"
+                      fill="#F2F2F2"
                     />
                   </svg>
-                  <span className="text-base font-medium">{rating}</span>
-                </div>
+                </Link>
               </div>
-              <Link
-                href={`/task/${courseId}/${task.id}`}
-                className="bg-primary ml-auto flex cursor-pointer flex-row items-center rounded-[5.2083vw] px-15.75 py-3 text-sm hover:bg-[#1242B2]"
-                prefetch={true}
-              >
-                Выполнить
-                <svg
-                  width="21"
-                  height="20"
-                  viewBox="0 0 21 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                >
-                  <path
-                    d="M14.2305 4.43162C14.5292 4.14484 15.0042 4.15441 15.291 4.45311L19.9062 9.2617C20.1848 9.55191 20.1848 10.0106 19.9062 10.3008L15.291 15.1094C15.0042 15.4082 14.5293 15.4177 14.2305 15.1308C13.9319 14.844 13.9222 14.369 14.209 14.0703L18.3262 9.78123L14.209 5.49217C13.9222 5.19338 13.9317 4.71846 14.2305 4.43162Z"
-                    fill="#F2F2F2"
-                  />
-                </svg>
-              </Link>
             </div>
           </div>
         </>
