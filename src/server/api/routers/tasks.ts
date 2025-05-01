@@ -41,6 +41,7 @@ export interface TaskData {
   problemStatement: TElement[];
   completionCount: string;
   rating: string;
+  status: 'available' | 'in-progress' | 'completed';
 }
 
 export const tasksRouter = createTRPCRouter({
@@ -158,6 +159,9 @@ export const tasksRouter = createTRPCRouter({
         problemStatement: problemStatementElements,
         completionCount: '5+',
         rating: '4.9',
+        status: ['available', 'in-progress', 'completed'][
+          Math.floor(Math.random() * 3)
+        ],
       } as TaskData;
     }),
 
@@ -290,6 +294,9 @@ export const tasksRouter = createTRPCRouter({
           problemStatement: problemStatementElements,
           completionCount: '5+',
           rating: '4.9',
+          status: ['available', 'in-progress', 'completed'][
+            Math.floor(Math.random() * 3)
+          ],
         } as TaskData;
       });
     }),

@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 import { cn } from '@udecode/cn';
 import { PlateElement } from '@udecode/plate/react';
-import { TaskCard, TaskCardProps } from './TaskCard';
+import { TaskCard, TaskCardGridItem, TaskCardProps } from './TaskCard';
 import { api } from '~/trpc/react';
 import { TaskData } from '~/server/api/routers/tasks';
 
@@ -65,22 +65,39 @@ export function TaskElement({
       data-plate-open-context-menu
       {...props}
     >
-      <div className="border-accent mx-0 sm:-mx-16 flex w-[calc(100%*var(--spacing)*32)] flex-row items-center justify-center gap-10 border-t">
-        <span className="text-secondary/50 py-2.5 text-xs uppercase leading-5">
+      <div className="border-accent -mx-5 flex w-[calc(100%*var(--spacing)*32)] flex-row items-center justify-center gap-10 border-t sm:-mx-16">
+        <span className="text-secondary/50 py-2.5 text-xs leading-5 uppercase">
           Практические задания
         </span>
       </div>
-      <div className="flex flex-col gap-10">
-        {taskIds.map((taskId) => (
-          <TaskCard
-            key={taskId}
-            {...(taskData[taskId])}
-            id={taskId}
-            loading={isLoading}
-            task={taskData[taskId]}
-          />
-        ))}
-      </div>
+      {taskIds.length < 3 ? (
+        <div className="flex flex-col gap-10">
+          {taskIds.map((taskId) => (
+            <TaskCard
+              key={taskId}
+              {...taskData[taskId]}
+              id={taskId}
+              loading={isLoading}
+              task={taskData[taskId]}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="divide-accent border-accent vor -mx-5 grid grid-cols-1 border-t sm:-mx-16 sm:grid-cols-2">
+          {taskIds.map((taskId, i) => (
+            <TaskCardGridItem
+              key={i}
+              {...taskData[taskId]}
+              id={taskId}
+              loading={isLoading}
+              task={taskData[taskId]}
+            />
+          ))}
+          {taskIds.length % 2 != 0 && (
+            <div className="border-accent h-full w-full border-b"></div>
+          )}
+        </div>
+      )}
     </PlateElement>
   );
 }
