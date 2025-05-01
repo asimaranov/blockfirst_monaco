@@ -56,7 +56,11 @@ const StarIconFilled = ({ className }: { className?: string }) => {
   );
 };
 
-const FloatingActionBar = ({ setIsAiMentorActive }: { setIsAiMentorActive: (isActive: boolean) => void }) => {
+const FloatingActionBar = ({
+  setIsAiMentorActive,
+}: {
+  setIsAiMentorActive: (isActive: boolean) => void;
+}) => {
   const [position, setPosition] = useState({
     bottom: 0,
     left: 0,
@@ -850,8 +854,8 @@ const FloatingActionBar = ({ setIsAiMentorActive }: { setIsAiMentorActive: (isAc
               </div>
               <button
                 className={cn(
-                  'not-disabled:border-primary group/run-button ml-auto flex not-disabled:cursor-pointer gap-2 rounded-[5.2083vw] border px-6 py-3 text-sm not-disabled:hover:bg-primary',
-                  checkCode && 'bg-[#1242B2] border-[#1242B2]'
+                  'not-disabled:border-primary group/run-button not-disabled:hover:bg-primary ml-auto flex gap-2 rounded-[5.2083vw] border px-6 py-3 text-sm not-disabled:cursor-pointer',
+                  checkCode && 'border-[#1242B2] bg-[#1242B2]'
                 )}
                 disabled={checkCode}
                 onClick={() => {
@@ -967,12 +971,14 @@ const FloatingActionBar = ({ setIsAiMentorActive }: { setIsAiMentorActive: (isAc
 
 export default function MonacoView({
   setIsAiMentorActive,
+  isCollapsed,
 }: {
   setIsAiMentorActive: (isActive: boolean) => void;
+  isCollapsed: boolean;
 }) {
   const [showActionBar, setShowActionBar] = useState(true);
   return (
-    <div className="h-full pl-10">
+    <div className={cn('h-full w-272', isCollapsed && 'w-396')}>
       <button
         onClick={() => setShowActionBar(!showActionBar)}
         className="absolute top-0 right-0 z-1000 h-10 w-10 bg-red-500"
@@ -980,7 +986,9 @@ export default function MonacoView({
         {showActionBar ? 'hide' : 'show'}
       </button>
       {showActionBar && <DynamicMonacoEditorReact />}
-      {showActionBar && <FloatingActionBar setIsAiMentorActive={setIsAiMentorActive} />}
+      {showActionBar && (
+        <FloatingActionBar setIsAiMentorActive={setIsAiMentorActive} />
+      )}
     </div>
   );
 }

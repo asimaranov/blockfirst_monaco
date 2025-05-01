@@ -50,7 +50,7 @@ export default function TaskView({
   };
 
   return (
-    <div className="fixed top-0 left-0 z-1000 flex h-full shrink-0 flex-row justify-between bg-[#0F1217]">
+    <div className="fixed top-0 left-0 z-1000 flex h-full shrink-0 flex-row justify-between bg-[#0F1217] w-full">
       {!collapsed ? (
         <div className="border-accent flex h-full w-150 flex-col border-r">
           <div className="flex flex-row items-center px-8 py-6">
@@ -231,7 +231,7 @@ export default function TaskView({
       )}
 
       <div className="flex flex-col">
-        <MonacoView setIsAiMentorActive={setIsAiMentorActive} />
+        <MonacoView setIsAiMentorActive={setIsAiMentorActive} isCollapsed={collapsed} />
         <div className="w-full flex-1 bg-blue-300"></div>
       </div>
     </div>
