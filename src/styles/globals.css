@@ -1172,3 +1172,12 @@
   padding-left: 22px !important;
   padding-right: 15px !important;
 } 
+
+
+#sidebarRightDiv {
+  display: none;
+}
+
+#editors {
+  border-right: 0 !important;
+}

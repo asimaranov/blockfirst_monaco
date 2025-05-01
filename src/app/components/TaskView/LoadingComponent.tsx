@@ -43,18 +43,26 @@ export default function LoadingComponent() {
     return () => clearInterval(interval);
   }, [currentStage]);
 
+  // useEffect(() => {
+  //   if (progress === 100) {
+  //     setProgress(0);
+  //     setCurrentStage(0);
+  //     setStageProgress([0, 0, 0]);
+  //   }
+  // }, [progress]);
+
   // Calculate the progress arc parameters for main progressbar
   const radius = 50;
   const circumference = 2 * Math.PI * radius;
   const dashOffset = circumference * (1 - progress / 100);
 
   // Calculate the progress arc parameters for stage icons
-  const stageRadius = 9.25;
+  const stageRadius = 7.5;
   const stageCircumference = 2 * Math.PI * stageRadius;
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-between pt-6 pb-5">
-      <Image src={BfBadge} alt="logo" />
+      <Image src={BfBadge} alt="logo" className="h-10 w-36.25" />
       <div className="flex flex-col items-center gap-10">
         <div className="relative h-fit w-fit">
           <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center">
@@ -132,7 +140,7 @@ export default function LoadingComponent() {
                   cy="10"
                   r={stageRadius}
                   fill="none"
-                  stroke={currentStage === 0 ? '#195AF4' : '#9AA6B5'}
+                  stroke={currentStage === 0 ? '#9AA6B5' : '#9AA6B5'}
                   strokeWidth="1.5"
                   strokeDasharray={stageCircumference}
                   strokeDashoffset={
@@ -183,7 +191,7 @@ export default function LoadingComponent() {
                   cy="10"
                   r={stageRadius}
                   fill="none"
-                  stroke={currentStage === 1 ? '#195AF4' : '#9AA6B5'}
+                  stroke={currentStage === 1 ? '#9AA6B5' : '#9AA6B5'}
                   strokeWidth="1.5"
                   strokeDasharray={stageCircumference}
                   strokeDashoffset={
@@ -234,7 +242,7 @@ export default function LoadingComponent() {
                   cy="10"
                   r={stageRadius}
                   fill="none"
-                  stroke={currentStage === 2 ? '#195AF4' : '#9AA6B5'}
+                  stroke={currentStage === 2 ? '#9AA6B5' : '#9AA6B5'}
                   strokeWidth="1.5"
                   strokeDasharray={stageCircumference}
                   strokeDashoffset={

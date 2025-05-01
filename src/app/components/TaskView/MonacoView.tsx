@@ -4,7 +4,6 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import BfLogo from './assets/bf-logo.svg';
-import BfBadge from './assets/bf-badge.svg';
 import { InfoPopover, InfoPopoverIcon } from '../shared/InfoPopover';
 import LoadingComponent from './LoadingComponent';
 import Confetti from 'react-confetti';
@@ -923,7 +922,7 @@ const FloatingActionBar = ({ setIsAiMentorActive }: { setIsAiMentorActive: (isAc
               </button>
             </div>
 
-            <div className="border-accent flex justify-center gap-1 border-x bg-[#14171C] py-2.25 text-xs">
+            <div className="border-accent flex justify-center gap-1 border-l bg-[#14171C] py-2.25 text-xs">
               <div className="flex flex-row gap-2">
                 <svg
                   width="14"
