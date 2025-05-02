@@ -140,11 +140,11 @@ export default function AiTokensInfo() {
             <div className="flex flex-col gap-3">
               <div className="flex flex-row justify-between">
                 <span className="text-xl">AI токены</span>
-                <div className="flex flex-row gap-0.5">
+                <div className="flex flex-row gap-0.5 items-center">
                   <span className="text-secondary/50 text-xs">
                     До ресета —{' '}
                   </span>
-                  <div className="flex flex-row gap-1">
+                  <div className="flex flex-row gap-1 items-center">
                     <Image
                       src={Clock}
                       alt="Clock"
