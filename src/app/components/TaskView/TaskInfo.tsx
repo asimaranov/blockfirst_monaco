@@ -124,8 +124,8 @@ export default function TaskInfo({ task }: { task: any }) {
             </div>
 
             <div className="flex flex-col gap-5">
-              {tests.map((x) => (
-                <div className="flex flex-row gap-4">
+              {tests.map((x, i) => (
+                <div className="flex flex-row gap-4" key={i}>
                   {isLoading ? (
                     <svg
                       width="20"

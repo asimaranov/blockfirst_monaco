@@ -146,7 +146,7 @@ export default function AiMentor({ task }: { task: any }) {
                 key={`user-${index}`}
               >
                 <div className="flex flex-col gap-2">
-                  <span className="w-fit self-end rounded-[0.4167vw] bg-[#14171C] px-4 py-2">
+                  <span className="w-fit self-end rounded-[0.4167vw] bg-[#14171C] px-4 py-2 text-sm max-w-93">
                     {x.content}
                   </span>
                   <span className="text-secondary/50 self-end text-xs">

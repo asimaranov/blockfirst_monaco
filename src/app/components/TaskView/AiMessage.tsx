@@ -248,7 +248,7 @@ const AiMessage = ({ richText }: { richText: Value }) => {
         italic: withProps(PlateLeaf, { as: 'em' }),
         p: withProps(PlateElement, {
           as: 'div',
-          className: 'mb-6 text-base leading-6 text-foreground/90 font-light',
+          className: 'mb-6 text-base leading-6 text-foreground/90 font-light text-sm',
         }),
         underline: withProps(PlateLeaf, { as: 'u' }),
         img: ImageElementStatic,
@@ -264,6 +264,7 @@ const AiMessage = ({ richText }: { richText: Value }) => {
         [BaseCodeSyntaxPlugin.key]: CodeSyntaxLeafStatic,
         [BaseCalloutPlugin.key]: CalloutElementStatic,
         [BaseVideoPlugin.key]: MediaVideoElement,
+        
       },
     },
   });
