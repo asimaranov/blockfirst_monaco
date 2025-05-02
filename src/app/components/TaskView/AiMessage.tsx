@@ -276,7 +276,7 @@ const AiMessage = ({ richText }: { richText: Value }) => {
 
   return (
       <Plate editor={editor}>
-        <PlateContent readOnly className="group overflow-y-scroll" />
+        <PlateContent readOnly className="group overflow-y-scroll [&>*]:last:mb-0" />
       </Plate>
   );
 };
