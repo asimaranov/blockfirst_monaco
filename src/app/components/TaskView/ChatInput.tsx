@@ -33,7 +33,7 @@ export default function ChatInput({ onSendMessage, isGenerating }: ChatInputProp
       <textarea
         ref={textareaRef}
         className="placeholder:text-secondary flex w-full resize-none items-center justify-center text-sm outline-hidden"
-        placeholder={`Введите сообщение.\nShift + Enter для переноса строки`}
+        placeholder={`Введите сообщение.`}
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         onInput={(e) => {
