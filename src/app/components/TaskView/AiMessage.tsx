@@ -275,7 +275,7 @@ const AiMessage = ({ richText }: { richText: Value }) => {
 
   return (
       <Plate editor={editor}>
-        <PlateContent readOnly className="group w-121" />
+        <PlateContent readOnly className="group max-w-121" />
       </Plate>
   );
 };

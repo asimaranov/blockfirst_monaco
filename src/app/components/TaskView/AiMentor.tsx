@@ -132,7 +132,7 @@ export default function AiMentor({ task }: { task: any }) {
                 />
 
                 <div className="flex flex-col gap-2">
-                  <div className="px-4 py-2">
+                  <div className="px-4 py-2 pr-8">
                     <AiMessage richText={(x as any).md} />
                   </div>
                   <span className="text-secondary/50 text-xs">
