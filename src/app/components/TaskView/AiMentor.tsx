@@ -17,6 +17,7 @@ import Link from 'next/link';
 export default function AiMentor({ task }: { task: any }) {
   const [message, setMessage] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
+  const [loadingText, setLoadingText] = useState('Generating');
   const canWrite = message.length > 0 && !isGenerating;
 
   const [messages, setMessages] = useState<
@@ -24,6 +25,26 @@ export default function AiMentor({ task }: { task: any }) {
   >([]);
 
   console.log('Chat id', task);
+
+  // Animation for generating text
+  useEffect(() => {
+    if (!isGenerating) return;
+
+    const loadingStates = [
+      'Generating',
+      'Generating.',
+      'Generating..',
+      'Generating...',
+    ];
+    let currentState = 0;
+
+    const interval = setInterval(() => {
+      setLoadingText(loadingStates[currentState]);
+      currentState = (currentState + 1) % loadingStates.length;
+    }, 400);
+
+    return () => clearInterval(interval);
+  }, [isGenerating]);
 
   // Load chat history from API
   const { data: chatHistory, isLoading } = api.ai.getChatHistory.useQuery(
@@ -204,7 +225,7 @@ export default function AiMentor({ task }: { task: any }) {
                     </span>
                     <div className="bg-primary h-9 w-9 shrink-0 self-end rounded-full"></div>
                   </div>
-                  <span className="text-secondary/50 self-end text-xs mr-12">
+                  <span className="text-secondary/50 mr-12 self-end text-xs">
                     {formatMessageDate(x.timestamp)}
                   </span>
                 </div>
@@ -224,7 +245,7 @@ export default function AiMentor({ task }: { task: any }) {
               className="h-5 w-5 shrink-0"
             />
             <span className="font-delight bg-[linear-gradient(98deg,#FF20A2_1.97%,#FF5B20_104.5%)] bg-clip-text leading-5 text-transparent">
-              Generating...
+              {loadingText}
             </span>
           </div>
         )}
