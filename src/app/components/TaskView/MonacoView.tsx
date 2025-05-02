@@ -401,7 +401,7 @@ const FloatingActionBar = ({
                 viewBox="0 0 32 12"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className=""
+                className="h-3 w-8"
               >
                 <rect
                   x="0.5"
@@ -809,7 +809,7 @@ const FloatingActionBar = ({
                 viewBox="0 0 32 12"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className=""
+                className="h-3 w-8"
               >
                 <rect
                   x="0.5"
