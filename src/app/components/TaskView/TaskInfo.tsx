@@ -233,8 +233,8 @@ export default function TaskInfo({ task }: { task: any }) {
           </div>
           <div className="ml-auto flex flex-row items-center gap-1">
             <div className="bg-success h-1 w-1 rounded-full" />
-            <span className="text-sm">32</span>
-            <span className="text-secondary/50 text-sm">— Online</span>
+            <span className="text-sm leading-4">32</span>
+            <span className="text-secondary/50 text-sm leading-4">— Online</span>
           </div>
         </div>
       </div>
