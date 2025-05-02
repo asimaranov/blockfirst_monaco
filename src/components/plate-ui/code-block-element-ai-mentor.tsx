@@ -54,7 +54,7 @@ export const CodeBlockElementAiMentor = withRef<typeof PlateElement>(
               value={() => NodeApi.string(element)}
             />
           </div>
-          <pre className="overflow-x-auto p-8 pr-4 font-mono text-sm leading-[normal] [tab-size:2] print:break-inside-avoid border-accent border-b border-r border-l rounded-b-[0.4167vw]">
+          <pre className="border-accent overflow-x-auto rounded-b-[0.4167vw] border-r border-b border-l p-8 pr-4 font-mono text-sm leading-[normal] [tab-size:2] print:break-inside-avoid">
             <code>{children}</code>
           </pre>
         </div>
@@ -90,6 +90,7 @@ function CopyButton({
       {...props}
       className={cn(
         'group/button flex cursor-pointer flex-row items-center gap-2 opacity-50 hover:opacity-100',
+        hasCopied && 'opacity-100',
         props.className
       )}
     >

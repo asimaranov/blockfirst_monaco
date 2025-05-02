@@ -198,14 +198,14 @@ export default function AiMentor({ task }: { task: any }) {
                 key={`user-${index}`}
               >
                 <div className="flex flex-col gap-2">
-                  <span className="w-fit max-w-93 self-end rounded-[0.4167vw] bg-[#14171C] px-4 py-2 text-sm">
+                  <span className="w-fit self-end rounded-[0.4167vw] bg-[#14171C] px-4 py-2 text-sm ml-20">
                     {x.content}
                   </span>
                   <span className="text-secondary/50 self-end text-xs">
                     {formatMessageDate(x.timestamp)}
                   </span>
                 </div>
-                <div className="bg-primary h-9 w-9 rounded-full"></div>
+                <div className="bg-primary h-9 w-9 rounded-full shrink-0 self-end"></div>
               </div>
             )
           )}
