@@ -61,7 +61,7 @@ export default function LoadingComponent() {
   const stageCircumference = 2 * Math.PI * stageRadius;
 
   return (
-    <div className="flex w-272 h-full flex-col items-center justify-between pt-6 pb-5">
+    <div className="flex h-full w-272 flex-col items-center justify-between pt-6 pb-5">
       <Image src={BfBadge} alt="logo" className="h-10 w-36.25" />
       <div className="flex flex-col items-center gap-10">
         <div className="relative h-fit w-fit">
@@ -113,6 +113,7 @@ export default function LoadingComponent() {
                 viewBox="0 0 20 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
               >
                 <path
                   d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
@@ -129,6 +130,7 @@ export default function LoadingComponent() {
                 viewBox="0 0 20 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className="h-5 w-5"
               >
                 <path
                   opacity="0.5"
@@ -164,6 +166,8 @@ export default function LoadingComponent() {
                 viewBox="0 0 20 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className='w-5 h-5'
+
               >
                 <path
                   d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
@@ -180,6 +184,8 @@ export default function LoadingComponent() {
                 viewBox="0 0 20 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className='w-5 h-5'
+
               >
                 <path
                   opacity="0.5"
@@ -215,6 +221,8 @@ export default function LoadingComponent() {
                 viewBox="0 0 20 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className='w-5 h-5'
+
               >
                 <path
                   d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
@@ -231,6 +239,8 @@ export default function LoadingComponent() {
                 viewBox="0 0 20 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className='w-5 h-5'
+
               >
                 <path
                   opacity="0.5"

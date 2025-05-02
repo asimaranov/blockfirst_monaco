@@ -126,7 +126,7 @@ export const InfoPopover = ({
           }
         }}
       >
-        {icon || <InfoPopoverIcon empty={!title && !content} />}
+        {icon || <InfoPopoverIcon empty={!title && !content && !children} />}
       </div>
       {typeof document !== 'undefined' &&
         createPortal(

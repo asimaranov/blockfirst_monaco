@@ -9,18 +9,92 @@ import { format } from 'date-fns';
 import PlateEditor from '../LessonPage/PlateEditor';
 import { createEditor } from '@udecode/plate';
 import AiMessage from './AiMessage';
-import Token10K from './assets/token-10k.svg';
-import Clock from './assets/clock.svg';
-import { TARIFFS } from '~/app/lib/constants/tariff';
-import Link from 'next/link';
 import ChatInput from './ChatInput';
+import AiTokensInfo from './AiTokensInfo';
+
+const ErrorSvg = () => {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-5 w-5"
+    >
+      <path
+        d="M9.99609 1C14.9665 1 18.9959 5.02962 18.9961 10C18.9961 14.9706 14.9667 19 9.99609 19C5.02571 18.9998 0.996094 14.9704 0.996094 10C0.996305 5.02975 5.02584 1.00021 9.99609 1Z"
+        fill="#CF3336"
+      />
+      <path
+        d="M7.5 12.5L12.5 7.5M7.5 7.5L12.5 12.5"
+        stroke="#F2F2F2"
+        stroke-width="1.25"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+};
+
+const SuccessSvg = () => {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-5 w-5"
+    >
+      <path
+        d="M9.99609 0.996094C14.9665 0.996094 18.9959 5.02571 18.9961 9.99609C18.9961 14.9667 14.9667 18.9961 9.99609 18.9961C5.02571 18.9959 0.996094 14.9665 0.996094 9.99609C0.996305 5.02584 5.02584 0.996305 9.99609 0.996094Z"
+        fill="#33CF8E"
+      />
+      <path
+        d="M6.36328 10.2273L8.63601 12.5L13.636 7.5"
+        stroke="#01050D"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+};
+
+const ServiceMessage = ({
+  header,
+  content,
+  type,
+}: {
+  header: string;
+  content: string;
+  type: 'error' | 'success';
+}) => {
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-row gap-3">
+        {type == 'error' ? <ErrorSvg /> : <SuccessSvg />}
+        <ErrorSvg />
+        <span className="text-error text-base">{header}</span>
+      </div>
+      <span className="text-sm">{content}</span>
+    </div>
+  );
+};
 
 export default function AiMentor({ task }: { task: any }) {
   const [isGenerating, setIsGenerating] = useState(false);
   const [loadingText, setLoadingText] = useState('Generating');
 
   const [messages, setMessages] = useState<
-    { role: string; content: string; timestamp: Date }[]
+    {
+      role: string;
+      content: string;
+      timestamp: Date;
+      feedback?: 'upvote' | 'downvote' | null;
+      // serviceType: 'error' | 'success';
+    }[]
   >([]);
 
   console.log('Chat id', task);
@@ -85,6 +159,36 @@ export default function AiMentor({ task }: { task: any }) {
       console.error('Error sending message:', error);
     },
   });
+
+  // Feedback mutation
+  const updateFeedbackMutation = api.ai.updateMessageFeedback.useMutation({
+    onSuccess: (data) => {
+      setMessages((prev) => {
+        const newMessages = [...prev];
+        if (newMessages[data.messageIndex]) {
+          newMessages[data.messageIndex].feedback = data.feedback;
+        }
+        return newMessages;
+      });
+    },
+    onError: (error) => {
+      console.error('Error updating message feedback:', error);
+    },
+  });
+
+  // Handle message feedback
+  const handleFeedback = (
+    messageIndex: number,
+    feedback: 'upvote' | 'downvote' | 'none'
+  ) => {
+    if (!task?.id) return;
+
+    updateFeedbackMutation.mutateAsync({
+      taskId: task.id,
+      messageIndex,
+      feedback,
+    });
+  };
 
   const handleSendMessage = async (messageContent: string) => {
     if (!messageContent.trim()) return;
@@ -156,53 +260,131 @@ export default function AiMentor({ task }: { task: any }) {
                   </div>
                   <div className="flex flex-row gap-6">
                     <div className="flex flex-row gap-2">
-                      <button className="group/upvote-button cursor-pointer">
-                        <svg
-                          width="16"
-                          height="16"
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-4 w-4"
-                        >
-                          <path
-                            d="M4.98828 12.2336L7.05495 13.8336C7.32161 14.1003 7.92161 14.2336 8.32161 14.2336H10.8549C11.6549 14.2336 12.5216 13.6336 12.7216 12.8336L14.3216 7.96697C14.6549 7.03364 14.0549 6.23364 13.0549 6.23364H10.3883C9.98828 6.23364 9.65495 5.9003 9.72161 5.43364L10.0549 3.3003C10.1883 2.7003 9.78828 2.03364 9.18828 1.83364C8.65495 1.63364 7.98828 1.9003 7.72161 2.3003L4.98828 6.36697"
-                            stroke="#9AA6B5"
-                            stroke-miterlimit="10"
-                            className="group-hover/upvote-button:stroke-foreground"
-                          />
-                          <path
-                            d="M1.58594 12.2297V5.69635C1.58594 4.76302 1.98594 4.42969 2.91927 4.42969H3.58594C4.51927 4.42969 4.91927 4.76302 4.91927 5.69635V12.2297C4.91927 13.163 4.51927 13.4964 3.58594 13.4964H2.91927C1.98594 13.4964 1.58594 13.163 1.58594 12.2297Z"
-                            stroke="#9AA6B5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            className="group-hover/upvote-button:stroke-foreground"
-                          />
-                        </svg>
+                      <button
+                        className="group/upvote-button cursor-pointer"
+                        onClick={() => {
+                          const newFeedback =
+                            x.feedback === 'upvote' ? 'none' : 'upvote';
+                          handleFeedback(index, newFeedback);
+                        }}
+                      >
+                        {x.feedback !== 'upvote' ? (
+                          <InfoPopover
+                            title={''}
+                            content={''}
+                            position="left"
+                            offsetSide={10}
+                            popoverClassName="w-fit px-3 py-2 rounded-[0.4167vw]"
+                            className="!block"
+                            icon={
+                              <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 16 16"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-4 w-4"
+                              >
+                                <path
+                                  d="M4.98828 12.2336L7.05495 13.8336C7.32161 14.1003 7.92161 14.2336 8.32161 14.2336H10.8549C11.6549 14.2336 12.5216 13.6336 12.7216 12.8336L14.3216 7.96697C14.6549 7.03364 14.0549 6.23364 13.0549 6.23364H10.3883C9.98828 6.23364 9.65495 5.9003 9.72161 5.43364L10.0549 3.3003C10.1883 2.7003 9.78828 2.03364 9.18828 1.83364C8.65495 1.63364 7.98828 1.9003 7.72161 2.3003L4.98828 6.36697"
+                                  stroke="#9AA6B5"
+                                  stroke-miterlimit="10"
+                                  className="group-hover/upvote-button:stroke-foreground"
+                                />
+                                <path
+                                  d="M1.58594 12.2297V5.69635C1.58594 4.76302 1.98594 4.42969 2.91927 4.42969H3.58594C4.51927 4.42969 4.91927 4.76302 4.91927 5.69635V12.2297C4.91927 13.163 4.51927 13.4964 3.58594 13.4964H2.91927C1.98594 13.4964 1.58594 13.163 1.58594 12.2297Z"
+                                  stroke="#9AA6B5"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  className="group-hover/upvote-button:stroke-foreground"
+                                />
+                              </svg>
+                            }
+                          >
+                            <span className="text-xs">Хороший ответ</span>
+                          </InfoPopover>
+                        ) : (
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 16 16"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-4 w-4"
+                          >
+                            <path
+                              d="M5.59375 12.3245V5.5512C5.59375 5.28453 5.67375 5.02453 5.82042 4.80453L7.64042 2.09787C7.92708 1.66453 8.64042 1.35787 9.24708 1.58453C9.90042 1.80453 10.3337 2.53787 10.1937 3.1912L9.84708 5.3712C9.82042 5.5712 9.87375 5.7512 9.98708 5.8912C10.1004 6.01787 10.2671 6.09787 10.4471 6.09787H13.1871C13.7138 6.09787 14.1671 6.3112 14.4338 6.68453C14.6871 7.04453 14.7338 7.5112 14.5671 7.98453L12.9271 12.9779C12.7204 13.8045 11.8204 14.4779 10.9271 14.4779H8.32708C7.88042 14.4779 7.25375 14.3245 6.96708 14.0379L6.11375 13.3779C5.78708 13.1312 5.59375 12.7379 5.59375 12.3245Z"
+                              fill="#F2F2F2"
+                            />
+                            <path
+                              d="M3.47203 4.25H2.78536C1.75203 4.25 1.33203 4.65 1.33203 5.63667V12.3433C1.33203 13.33 1.75203 13.73 2.78536 13.73H3.47203C4.50536 13.73 4.92536 13.33 4.92536 12.3433V5.63667C4.92536 4.65 4.50536 4.25 3.47203 4.25Z"
+                              fill="#F2F2F2"
+                            />
+                          </svg>
+                        )}
                       </button>
-                      <button className="group/downvote-button cursor-pointer">
-                        <svg
-                          width="16"
-                          height="16"
-                          viewBox="0 0 16 16"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="h-4 w-4 cursor-pointer"
-                        >
-                          <path
-                            d="M11.0158 3.76563L8.94909 2.16562C8.68243 1.89896 8.08243 1.76562 7.68243 1.76562H5.14909C4.34909 1.76562 3.48243 2.36562 3.28243 3.16562L1.68243 8.03229C1.34909 8.96562 1.94909 9.76563 2.94909 9.76563H5.61576C6.01576 9.76563 6.34909 10.099 6.28243 10.5656L5.94909 12.699C5.81576 13.299 6.21576 13.9656 6.81576 14.1656C7.34909 14.3656 8.01576 14.099 8.28243 13.699L11.0158 9.63229"
-                            stroke="#9AA6B5"
-                            stroke-miterlimit="10"
-                            className="group-hover/downvote-button:stroke-foreground"
-                          />
-                          <path
-                            d="M14.4154 3.76667V10.3C14.4154 11.2333 14.0154 11.5667 13.082 11.5667H12.4154C11.482 11.5667 11.082 11.2333 11.082 10.3V3.76667C11.082 2.83333 11.482 2.5 12.4154 2.5H13.082C14.0154 2.5 14.4154 2.83333 14.4154 3.76667Z"
-                            stroke="#9AA6B5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            className="group-hover/downvote-button:stroke-foreground"
-                          />
-                        </svg>
+                      <button
+                        className="group/downvote-button cursor-pointer"
+                        onClick={() => {
+                          const newFeedback =
+                            x.feedback === 'downvote' ? 'none' : 'downvote';
+                          handleFeedback(index, newFeedback);
+                        }}
+                      >
+                        {x.feedback !== 'downvote' ? (
+                          <InfoPopover
+                            title={''}
+                            content={''}
+                            position="left"
+                            offsetSide={10}
+                            popoverClassName="w-fit px-3 py-2 rounded-[0.4167vw]"
+                            className="!block"
+                            icon={
+                              <svg
+                                width="16"
+                                height="16"
+                                viewBox="0 0 16 16"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-4 w-4 cursor-pointer"
+                              >
+                                <path
+                                  d="M11.0158 3.76563L8.94909 2.16562C8.68243 1.89896 8.08243 1.76562 7.68243 1.76562H5.14909C4.34909 1.76562 3.48243 2.36562 3.28243 3.16562L1.68243 8.03229C1.34909 8.96562 1.94909 9.76563 2.94909 9.76563H5.61576C6.01576 9.76563 6.34909 10.099 6.28243 10.5656L5.94909 12.699C5.81576 13.299 6.21576 13.9656 6.81576 14.1656C7.34909 14.3656 8.01576 14.099 8.28243 13.699L11.0158 9.63229"
+                                  stroke="#9AA6B5"
+                                  stroke-miterlimit="10"
+                                  className="group-hover/downvote-button:stroke-foreground"
+                                />
+                                <path
+                                  d="M14.4154 3.76667V10.3C14.4154 11.2333 14.0154 11.5667 13.082 11.5667H12.4154C11.482 11.5667 11.082 11.2333 11.082 10.3V3.76667C11.082 2.83333 11.482 2.5 12.4154 2.5H13.082C14.0154 2.5 14.4154 2.83333 14.4154 3.76667Z"
+                                  stroke="#9AA6B5"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                  className="group-hover/downvote-button:stroke-foreground"
+                                />
+                              </svg>
+                            }
+                          >
+                            <span className="text-xs">Плохой ответ</span>
+                          </InfoPopover>
+                        ) : (
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 16 16"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-4 w-4 shrink-0"
+                          >
+                            <path
+                              d="M10.4062 3.67547V10.4488C10.4062 10.7155 10.3263 10.9755 10.1796 11.1955L8.35958 13.9021C8.07292 14.3355 7.35958 14.6421 6.75292 14.4155C6.09958 14.1955 5.66625 13.4621 5.80625 12.8088L6.15292 10.6288C6.17958 10.4288 6.12625 10.2488 6.01292 10.1088C5.89958 9.98213 5.73292 9.90213 5.55292 9.90213H2.81292C2.28625 9.90213 1.83292 9.6888 1.56625 9.31547C1.31292 8.95547 1.26625 8.4888 1.43292 8.01547L3.07292 3.02213C3.27958 2.19547 4.17958 1.52213 5.07292 1.52213H7.67292C8.11958 1.52213 8.74625 1.67547 9.03292 1.96213L9.88625 2.62213C10.2129 2.8688 10.4062 3.26213 10.4062 3.67547Z"
+                              fill="#F2F2F2"
+                            />
+                            <path
+                              d="M12.528 11.75H13.2146C14.248 11.75 14.668 11.35 14.668 10.3633V3.65667C14.668 2.67 14.248 2.27 13.2146 2.27H12.528C11.4946 2.27 11.0746 2.67 11.0746 3.65667V10.3633C11.0746 11.35 11.4946 11.75 12.528 11.75Z"
+                              fill="#F2F2F2"
+                            />
+                          </svg>
+                        )}
                       </button>
                     </div>
                     <span className="text-secondary/50 text-xs">
@@ -223,7 +405,7 @@ export default function AiMentor({ task }: { task: any }) {
                     </span>
                     <div className="bg-primary h-9 w-9 shrink-0 self-end rounded-full"></div>
                   </div>
-                  <span className="text-secondary/50 mr-12 self-end text-xs">
+                  <span className="text-secondary/50 mr-13 self-end text-xs">
                     {formatMessageDate(x.timestamp)}
                   </span>
                 </div>
@@ -247,7 +429,10 @@ export default function AiMentor({ task }: { task: any }) {
             </span>
           </div>
         )}
-        <ChatInput onSendMessage={handleSendMessage} isGenerating={isGenerating} />
+        <ChatInput
+          onSendMessage={handleSendMessage}
+          isGenerating={isGenerating}
+        />
       </div>
 
       <div className="border-accent sticky bottom-0 border-t px-8 py-4">
@@ -280,154 +465,7 @@ export default function AiMentor({ task }: { task: any }) {
           </div>
 
           <div className="ml-auto flex flex-row items-center gap-2">
-            <InfoPopover
-              // className="h-4 w-4"
-              popoverClassName="w-150"
-              offsetTop={0}
-              offsetSide={-58.5}
-              title=""
-              position="top"
-              content=""
-            >
-              <div className="flex flex-col gap-10">
-                <div className="flex flex-row gap-6">
-                  <Image
-                    src={Token10K}
-                    alt="Token"
-                    width={75}
-                    height={75}
-                    className="h-18.75 w-18.75"
-                  />
-                  <div className="flex flex-col gap-3">
-                    <div className="flex flex-row justify-between">
-                      <span className="text-xl">AI токены</span>
-                      <div className="flex flex-row gap-0.5">
-                        <span className="text-secondary/50 text-xs">
-                          До ресета —{' '}
-                        </span>
-                        <div className="flex flex-row gap-1">
-                          <Image
-                            src={Clock}
-                            alt="Clock"
-                            width={16}
-                            height={17}
-                            className="h-4.25 w-4"
-                          />
-                          <span className="text-foreground text-xs">
-                            16ч 48м
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <span className="text-secondary text-xs">
-                      Каждая буква в вашем запросе учитывается как отдельный
-                      токен. Количество доступных токенов обновляется
-                      автоматически ежедневно.
-                    </span>
-                  </div>
-                </div>
-                <div className="grid grid-cols-3 gap-8">
-                  <div className="flex flex-col gap-6">
-                    <span className="text-success bg-success/10 rounded-[0.4167vw] py-2.25 pl-3 text-sm">
-                      Активный тариф
-                    </span>
-                    <div className="flex flex-row gap-4">
-                      <Image
-                        src={TARIFFS[0].bigIcon}
-                        alt="Tariff"
-                        width={40}
-                        height={40}
-                        className="h-10 w-10"
-                      />
-                      <div className="flex flex-col gap-1.5">
-                        <span>10K /день</span>
-                        <span className="text-secondary/50 text-xs">Free</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex flex-col gap-6">
-                    <Link
-                      href="/tariffs"
-                      className="flex items-center justify-between rounded-[0.4167vw] bg-[#195AF4]/10 px-3 py-2.25 text-sm"
-                    >
-                      Апгрейд
-                      <svg
-                        width="14"
-                        height="14"
-                        viewBox="0 0 14 14"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-3.5 w-3.5"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          clip-rule="evenodd"
-                          d="M7.73278 2.48409C7.97198 2.24489 8.35979 2.24489 8.59899 2.48408L12.6823 6.56737C12.7972 6.68224 12.8617 6.83803 12.8617 7.00048C12.8617 7.16292 12.7972 7.31872 12.6823 7.43358L8.59899 11.5169C8.35979 11.7561 7.97198 11.7561 7.73278 11.5169C7.49359 11.2777 7.49359 10.8899 7.73278 10.6507L10.7705 7.61298H1.74922C1.41094 7.61298 1.13672 7.33875 1.13672 7.00048C1.13672 6.66221 1.41094 6.38798 1.74922 6.38798H10.7705L7.73278 3.35029C7.49359 3.1111 7.49359 2.72328 7.73278 2.48409Z"
-                          fill="#195AF4"
-                        />
-                      </svg>
-                    </Link>
-                    <div className="flex flex-row gap-4">
-                      <Image
-                        src={TARIFFS[1].bigIcon}
-                        alt="Tariff"
-                        width={40}
-                        height={40}
-                        className="h-10 w-10"
-                      />
-                      <div className="flex flex-col gap-1.5">
-                        <span>100K /день</span>
-                        <span className="text-secondary/50 text-xs">
-                          Starter
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex flex-col gap-6">
-                    <Link
-                      href="/tariffs"
-                      className="flex items-center justify-between rounded-[0.4167vw] bg-[#195AF4]/10 px-3 py-2.25 text-sm"
-                    >
-                      Апгрейд
-                      <svg
-                        width="14"
-                        height="14"
-                        viewBox="0 0 14 14"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-3.5 w-3.5"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          clip-rule="evenodd"
-                          d="M7.73278 2.48409C7.97198 2.24489 8.35979 2.24489 8.59899 2.48408L12.6823 6.56737C12.7972 6.68224 12.8617 6.83803 12.8617 7.00048C12.8617 7.16292 12.7972 7.31872 12.6823 7.43358L8.59899 11.5169C8.35979 11.7561 7.97198 11.7561 7.73278 11.5169C7.49359 11.2777 7.49359 10.8899 7.73278 10.6507L10.7705 7.61298H1.74922C1.41094 7.61298 1.13672 7.33875 1.13672 7.00048C1.13672 6.66221 1.41094 6.38798 1.74922 6.38798H10.7705L7.73278 3.35029C7.49359 3.1111 7.49359 2.72328 7.73278 2.48409Z"
-                          fill="#195AF4"
-                        />
-                      </svg>
-                    </Link>
-                    <div className="flex flex-row gap-4">
-                      <Image
-                        src={TARIFFS[2].bigIcon}
-                        alt="Tariff"
-                        width={40}
-                        height={40}
-                        className="h-10 w-10"
-                      />
-                      <div className="flex flex-col gap-1.5">
-                        <span>1М /день</span>
-                        <span className="text-secondary/50 text-xs">Pro</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </InfoPopover>
-            <span className="text-secondary/50 text-sm leading-4">
-              AI токены –{' '}
-              <span className="font-delight bg-[linear-gradient(98deg,#FF20A2_1.97%,#FF5B20_104.5%)] bg-clip-text leading-4 text-transparent">
-                10k
-              </span>
-            </span>
+            <AiTokensInfo />
           </div>
         </div>
       </div>

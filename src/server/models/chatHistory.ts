@@ -5,6 +5,7 @@ export interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;
   timestamp: Date;
+  feedback?: 'upvote' | 'downvote' | null;
 }
 
 export interface ChatHistory extends Document {
@@ -30,6 +31,11 @@ const chatMessageSchema = new Schema<ChatMessage>(
       type: Date,
       default: Date.now,
       get: (value: any) => new Date(value),
+    },
+    feedback: {
+      type: String,
+      enum: ['upvote', 'downvote', null],
+      default: null,
     },
   },
   { _id: false, toJSON: { getters: true }, toObject: { getters: true } }

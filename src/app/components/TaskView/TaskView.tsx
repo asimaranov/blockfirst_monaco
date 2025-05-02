@@ -9,6 +9,7 @@ import YourAssistant from './assets/your-assistant.png';
 import Image from 'next/image';
 import React from 'react';
 import { TaskStatusBadge } from '../LessonPage/plate/TaskCard';
+import Link from 'next/link';
 
 export default function TaskView({
   task,
@@ -50,11 +51,12 @@ export default function TaskView({
   };
 
   return (
-    <div className="fixed top-0 left-0 z-1000 flex h-full shrink-0 flex-row justify-between bg-[#0F1217] w-full">
+    <div className="fixed top-0 left-0 z-1000 flex h-full w-full shrink-0 flex-row justify-between bg-[#0F1217]">
       {!collapsed ? (
         <div className="border-accent flex h-full w-150 flex-col border-r">
           <div className="flex flex-row items-center px-8 py-6">
-            <div
+            <Link
+              href={`/lesson/${courseId}`}
               className="group/back-button cursor-pointer p-2.5"
               onClick={handleClose}
             >
@@ -74,7 +76,7 @@ export default function TaskView({
                   className="group-hover/back-button:fill-foreground/50"
                 />
               </svg>
-            </div>
+            </Link>
             <div className="mr-auto ml-auto flex h-10 w-71.5 flex-row rounded-[5.2083vw] bg-[#01050D]">
               <button
                 className={cn(
@@ -157,7 +159,10 @@ export default function TaskView({
         </div>
       ) : (
         <div className="border-accent flex h-full w-26 shrink-0 flex-col items-center gap-8 border-r">
-          <div className="flex flex-row gap-8 pt-6">
+          <Link
+            href={`/lesson/${courseId}`}
+            className="flex flex-row gap-8 pt-6"
+          >
             <svg
               width="40"
               height="40"
@@ -173,7 +178,7 @@ export default function TaskView({
                 fill="#F2F2F2"
               />
             </svg>
-          </div>
+          </Link>
           <div className="relative">
             <div className="absolute bottom-0 left-0 flex origin-left rotate-90 flex-row items-center justify-center gap-2">
               <svg
@@ -231,7 +236,10 @@ export default function TaskView({
       )}
 
       <div className="flex flex-col">
-        <MonacoView setIsAiMentorActive={setIsAiMentorActive} isCollapsed={collapsed} />
+        <MonacoView
+          setIsAiMentorActive={setIsAiMentorActive}
+          isCollapsed={collapsed}
+        />
         <div className="w-full flex-1 bg-blue-300"></div>
       </div>
     </div>

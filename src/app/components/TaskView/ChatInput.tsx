@@ -51,7 +51,7 @@ export default function ChatInput({ onSendMessage, isGenerating }: ChatInputProp
       />
 
       <button
-        className="border-primary h-fit self-end rounded-full border p-2.5 not-disabled:cursor-pointer disabled:opacity-50"
+        className="border-primary h-fit self-end rounded-full border p-2.5 not-disabled:cursor-pointer disabled:opacity-50 not-disabled:hover:bg-primary"
         onClick={handleSendMessage}
         disabled={!canWrite}
       >

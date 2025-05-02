@@ -565,6 +565,7 @@ const FloatingActionBar = ({
                           viewBox="0 0 16 16"
                           fill="none"
                           xmlns="http://www.w3.org/2000/svg"
+                          className="h-4 w-4"
                         >
                           <path
                             fill-rule="evenodd"
@@ -877,7 +878,7 @@ const FloatingActionBar = ({
                     setError(undefined);
                     setSuccess(undefined);
                     setSuccess({
-                      advancedTasksCompleted: true,
+                      advancedTasksCompleted: Math.random() > 0.5,
                     });
                   }
                 }}
@@ -956,7 +957,7 @@ const FloatingActionBar = ({
               </div>
 
               <span
-                className="cursor-pointer underline"
+                className="cursor-pointer underline hover:opacity-50"
                 onClick={() => setIsTaskReportFormOpen(true)}
               >
                 Написать нам

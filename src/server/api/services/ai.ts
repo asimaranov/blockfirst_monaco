@@ -10,6 +10,7 @@ export const messageSchema = z.object({
     .date()
     .optional()
     .default(() => new Date()),
+  feedback: z.enum(['upvote', 'downvote']).nullable().optional(),
 });
 
 export type Message = z.infer<typeof messageSchema>;

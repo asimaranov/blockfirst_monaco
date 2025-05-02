@@ -7,13 +7,42 @@ import {
 } from '~/server/api/trpc';
 import { getAiCompletion, messageSchema, Message } from '../services/ai';
 import { TRPCError } from '@trpc/server';
-import { BaseParagraphPlugin, createEditor, createSlateEditor } from '@udecode/plate';
-import { MarkdownPlugin, remarkMdx, remarkMention } from '@udecode/plate-markdown';
-import { BaseEquationPlugin, BaseInlineEquationPlugin } from '@udecode/plate-math';
+import {
+  BaseParagraphPlugin,
+  createEditor,
+  createSlateEditor,
+} from '@udecode/plate';
+import {
+  MarkdownPlugin,
+  remarkMdx,
+  remarkMention,
+} from '@udecode/plate-markdown';
+import {
+  BaseEquationPlugin,
+  BaseInlineEquationPlugin,
+} from '@udecode/plate-math';
 import { BaseColumnItemPlugin, BaseColumnPlugin } from '@udecode/plate-layout';
-import { BaseHeadingPlugin, BaseTocPlugin, HEADING_LEVELS } from '@udecode/plate-heading';
-import { BaseAudioPlugin, BaseFilePlugin, BaseImagePlugin, BaseMediaEmbedPlugin, BaseVideoPlugin } from '@udecode/plate-media';
-import { BaseBoldPlugin, BaseCodePlugin, BaseItalicPlugin, BaseStrikethroughPlugin, BaseSubscriptPlugin, BaseSuperscriptPlugin, BaseUnderlinePlugin } from '@udecode/plate-basic-marks';
+import {
+  BaseHeadingPlugin,
+  BaseTocPlugin,
+  HEADING_LEVELS,
+} from '@udecode/plate-heading';
+import {
+  BaseAudioPlugin,
+  BaseFilePlugin,
+  BaseImagePlugin,
+  BaseMediaEmbedPlugin,
+  BaseVideoPlugin,
+} from '@udecode/plate-media';
+import {
+  BaseBoldPlugin,
+  BaseCodePlugin,
+  BaseItalicPlugin,
+  BaseStrikethroughPlugin,
+  BaseSubscriptPlugin,
+  BaseSuperscriptPlugin,
+  BaseUnderlinePlugin,
+} from '@udecode/plate-basic-marks';
 import { BaseBlockquotePlugin } from '@udecode/plate-block-quote';
 import { BaseDatePlugin } from '@udecode/plate-date';
 import { BaseCalloutPlugin } from '@udecode/plate-callout';
@@ -23,9 +52,17 @@ import { BaseIndentPlugin } from '@udecode/plate-indent';
 import { BaseIndentListPlugin } from '@udecode/plate-indent-list';
 import { BaseTogglePlugin } from '@udecode/plate-toggle';
 import { BaseLinkPlugin } from '@udecode/plate-link';
-import { BaseTableCellPlugin, BaseTablePlugin, BaseTableRowPlugin } from '@udecode/plate-table';
+import {
+  BaseTableCellPlugin,
+  BaseTablePlugin,
+  BaseTableRowPlugin,
+} from '@udecode/plate-table';
 import { BaseHorizontalRulePlugin } from '@udecode/plate-horizontal-rule';
-import { BaseFontBackgroundColorPlugin, BaseFontColorPlugin, BaseFontSizePlugin } from '@udecode/plate-font';
+import {
+  BaseFontBackgroundColorPlugin,
+  BaseFontColorPlugin,
+  BaseFontSizePlugin,
+} from '@udecode/plate-font';
 import remarkMath from 'remark-math';
 import remarkGfm from 'remark-gfm';
 
@@ -74,10 +111,8 @@ const editor = createSlateEditor({
           BaseCodeBlockPlugin.key,
           BaseTogglePlugin.key,
         ],
-        
       },
-     
-  
+
       // options: {
       //   listStyleTypes: {
       //     todo: {
@@ -132,6 +167,7 @@ export const aiRouter = createTRPCRouter({
                 content:
                   'Привет! Я ваш персональный AI-ментор. Как я могу помочь?',
                 timestamp: new Date(),
+                feedback: null,
               },
             ],
           };
@@ -142,6 +178,7 @@ export const aiRouter = createTRPCRouter({
           ...msg,
           md: editor.getApi(MarkdownPlugin).markdown.deserialize(msg.content),
           timestamp: new Date(msg.timestamp),
+          feedback: msg.feedback || null,
         }));
 
         return {
@@ -214,8 +251,8 @@ export const aiRouter = createTRPCRouter({
         const assistantMessage: Message = {
           role: 'assistant' as const,
           content: aiResponse,
-
           timestamp: new Date(),
+          feedback: null,
         };
 
         chatHistory.messages.push(assistantMessage);
@@ -235,6 +272,60 @@ export const aiRouter = createTRPCRouter({
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: 'Failed to get AI response',
+        });
+      }
+    }),
+
+  // Update message feedback (upvote/downvote)
+  updateMessageFeedback: protectedProcedure
+    .input(
+      z.object({
+        taskId: z.string(),
+        messageIndex: z.number(),
+        feedback: z.enum(['upvote', 'downvote', 'none']),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const userId = ctx.session.user.id;
+
+        // Find chat history
+        const chatHistory = await ctx.mongo.models.chatHistory
+          .findOne({
+            userId,
+            taskId: input.taskId,
+          })
+          .exec();
+
+        if (
+          !chatHistory ||
+          !chatHistory.messages ||
+          chatHistory.messages.length <= input.messageIndex
+        ) {
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: 'Message not found',
+          });
+        }
+
+        // Update the feedback on the specific message
+        // Convert 'none' to null to remove feedback
+        const feedbackValue = input.feedback === 'none' ? null : input.feedback;
+        chatHistory.messages[input.messageIndex].feedback = feedbackValue;
+
+        // Save the updated chat history
+        await chatHistory.save();
+
+        return {
+          success: true,
+          messageIndex: input.messageIndex,
+          feedback: feedbackValue,
+        };
+      } catch (error) {
+        console.error('Error updating message feedback:', error);
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to update message feedback',
         });
       }
     }),
