@@ -222,7 +222,7 @@ const AiMessage = ({ richText }: { richText: Value }) => {
   const editorStore = useEditorStore();
 
   const editor = usePlateEditor({
-    id: 'content',
+    id: 'ai-message',
     value: richText,
     plugins: plugins,
     override: {

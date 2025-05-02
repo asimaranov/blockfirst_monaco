@@ -7,15 +7,88 @@ import {
 } from '~/server/api/trpc';
 import { getAiCompletion, messageSchema, Message } from '../services/ai';
 import { TRPCError } from '@trpc/server';
-import { createEditor, createSlateEditor } from '@udecode/plate';
-import { MarkdownPlugin, remarkMention } from '@udecode/plate-markdown';
+import { BaseParagraphPlugin, createEditor, createSlateEditor } from '@udecode/plate';
+import { MarkdownPlugin, remarkMdx, remarkMention } from '@udecode/plate-markdown';
+import { BaseEquationPlugin, BaseInlineEquationPlugin } from '@udecode/plate-math';
+import { BaseColumnItemPlugin, BaseColumnPlugin } from '@udecode/plate-layout';
+import { BaseHeadingPlugin, BaseTocPlugin, HEADING_LEVELS } from '@udecode/plate-heading';
+import { BaseAudioPlugin, BaseFilePlugin, BaseImagePlugin, BaseMediaEmbedPlugin, BaseVideoPlugin } from '@udecode/plate-media';
+import { BaseBoldPlugin, BaseCodePlugin, BaseItalicPlugin, BaseStrikethroughPlugin, BaseSubscriptPlugin, BaseSuperscriptPlugin, BaseUnderlinePlugin } from '@udecode/plate-basic-marks';
+import { BaseBlockquotePlugin } from '@udecode/plate-block-quote';
+import { BaseDatePlugin } from '@udecode/plate-date';
+import { BaseCalloutPlugin } from '@udecode/plate-callout';
+import { BaseCodeBlockPlugin } from '@udecode/plate-code-block';
+import { createLowlight } from 'lowlight';
+import { BaseIndentPlugin } from '@udecode/plate-indent';
+import { BaseIndentListPlugin } from '@udecode/plate-indent-list';
+import { BaseTogglePlugin } from '@udecode/plate-toggle';
+import { BaseLinkPlugin } from '@udecode/plate-link';
+import { BaseTableCellPlugin, BaseTablePlugin, BaseTableRowPlugin } from '@udecode/plate-table';
+import { BaseHorizontalRulePlugin } from '@udecode/plate-horizontal-rule';
+import { BaseFontBackgroundColorPlugin, BaseFontColorPlugin, BaseFontSizePlugin } from '@udecode/plate-font';
 import remarkMath from 'remark-math';
 import remarkGfm from 'remark-gfm';
-import remarkMdx from 'remark-mdx';
 
 const editor = createSlateEditor({
   plugins: [
-    // MarkdownPlugin(),
+    BaseEquationPlugin,
+    BaseColumnPlugin,
+    BaseColumnItemPlugin,
+    BaseTocPlugin,
+    BaseVideoPlugin,
+    BaseAudioPlugin,
+    BaseParagraphPlugin,
+    BaseHeadingPlugin,
+    BaseMediaEmbedPlugin,
+    BaseInlineEquationPlugin,
+    BaseBoldPlugin,
+    BaseCodePlugin,
+    BaseItalicPlugin,
+    BaseStrikethroughPlugin,
+    BaseSubscriptPlugin,
+    BaseSuperscriptPlugin,
+    BaseUnderlinePlugin,
+    BaseBlockquotePlugin,
+    BaseDatePlugin,
+    BaseCalloutPlugin,
+    BaseCodeBlockPlugin.configure({
+      options: {
+        // lowlight: createLowlight(all),
+      },
+    }),
+    BaseIndentPlugin.extend({
+      inject: {
+        targetPlugins: [
+          BaseParagraphPlugin.key,
+          BaseBlockquotePlugin.key,
+          BaseCodeBlockPlugin.key,
+        ],
+      },
+    }),
+    BaseIndentListPlugin.extend({
+      inject: {
+        targetPlugins: [
+          BaseParagraphPlugin.key,
+          ...HEADING_LEVELS,
+          BaseBlockquotePlugin.key,
+          BaseCodeBlockPlugin.key,
+          BaseTogglePlugin.key,
+        ],
+        
+      },
+     
+  
+      // options: {
+      //   listStyleTypes: {
+      //     todo: {
+      //       liComponent: TodoLiStatic,
+      //       markerComponent: TodoMarkerStatic,
+      //       type: 'todo',
+      //     },
+      //   },
+      // },
+    }),
+
     MarkdownPlugin.configure({
       options: {
         remarkPlugins: [remarkMath, remarkGfm, remarkMdx, remarkMention],
