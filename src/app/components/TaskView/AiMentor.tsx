@@ -131,8 +131,8 @@ export default function AiMentor({ task }: { task: any }) {
                   className="h-9 w-9"
                 />
 
-                <div className="flex flex-col gap-2 max-w-121">
-                  <div className="px-4 py-2 pr-8">
+                <div className="flex flex-col gap-2 flex-[0_1_auto] max-w-[calc(100%-(5+8)*var(--spacing))]">
+                  <div className="px-4 py-2 pr-0">
                     <AiMessage richText={(x as any).md} />
                   </div>
                   <span className="text-secondary/50 text-xs">

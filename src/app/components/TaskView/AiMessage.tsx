@@ -100,6 +100,7 @@ import { MediaVideoElement } from '../LessonPage/plate/media-video-element';
 import { TaskElement } from '../LessonPage/plate/task-element';
 import { BaseTaskPlugin } from '../LessonPage/plate/plugins/task-plugins';
 import { TableCellHeaderStaticElement } from '../LessonPage/plate/table';
+import { CodeBlockElementAiMentor } from '~/components/plate-ui/code-block-element-ai-mentor';
 
 export function ImageElementStatic({
   children,
@@ -258,7 +259,7 @@ const AiMessage = ({ richText }: { richText: Value }) => {
         [BaseTablePlugin.key]: TableElementStatic,
         [BaseTableRowPlugin.key]: TableRowElementStatic,
         [BaseTaskPlugin.key]: TaskElement,
-        [BaseCodeBlockPlugin.key]: CodeBlockElement,
+        [BaseCodeBlockPlugin.key]: CodeBlockElementAiMentor,
         [BaseCodeLinePlugin.key]: CodeLineElementStatic,
         [BaseCodePlugin.key]: CodeLeafStatic,
         [BaseCodeSyntaxPlugin.key]: CodeSyntaxLeafStatic,
