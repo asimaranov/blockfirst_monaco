@@ -18,7 +18,6 @@ import ChatInput from './ChatInput';
 export default function AiMentor({ task }: { task: any }) {
   const [isGenerating, setIsGenerating] = useState(false);
   const [loadingText, setLoadingText] = useState('Generating');
-  const canWrite = true;
 
   const [messages, setMessages] = useState<
     { role: string; content: string; timestamp: Date }[]
@@ -248,7 +247,7 @@ export default function AiMentor({ task }: { task: any }) {
             </span>
           </div>
         )}
-        <ChatInput onSendMessage={handleSendMessage} canWrite={canWrite} />
+        <ChatInput onSendMessage={handleSendMessage} isGenerating={isGenerating} />
       </div>
 
       <div className="border-accent sticky bottom-0 border-t px-8 py-4">
