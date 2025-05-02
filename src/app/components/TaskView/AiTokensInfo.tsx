@@ -12,6 +12,13 @@ import { planTypeToSubscriptionType } from '~/app/lib/utils';
 export default function AiTokensInfo() {
   const [timeToReset, setTimeToReset] = useState<string>('--ч --м --с');
   const { data: userData } = api.userData.getUserData.useQuery();
+  const { data: tokenData, isLoading: isLoadingTokens } =
+    api.ai.getRemainingTokens.useQuery(undefined, {
+      refetchInterval: 10000, // Refetch every 10 seconds instead of 60
+      refetchOnWindowFocus: true,
+      staleTime: 0, // Don't cache data
+    });
+
   const userSubscription = userData
     ? planTypeToSubscriptionType(userData.plan)
     : SubscriptionType.Free;
@@ -52,6 +59,29 @@ export default function AiTokensInfo() {
     return () => clearInterval(intervalId);
   }, []);
 
+  // Format token numbers for display
+  const formatTokenNumber = (num: number) => {
+    if (num >= 1000000) {
+      return `${(num / 1000000).toFixed(1)}M`;
+    } else if (num >= 1000) {
+      return `${(num / 1000).toFixed(0)}k`;
+    }
+    return num.toString();
+  };
+
+  // Function to get displayable token value
+  const getTokenValue = () => {
+    if (isLoadingTokens || !tokenData) {
+      return userSubscription === SubscriptionType.Free
+        ? '10k'
+        : userSubscription === SubscriptionType.Starter
+          ? '100k'
+          : '1M';
+    }
+
+    return formatTokenNumber(tokenData.remaining);
+  };
+
   // Determine which tariff should be active and which should show the upgrade button
   const tariffData = [
     {
@@ -85,9 +115,9 @@ export default function AiTokensInfo() {
   return (
     <div className="flex flex-row items-center gap-2">
       <InfoPopover
-        popoverClassName="w-150 p-8"
+        popoverClassName="w-150 p-8 !left-0"
         offsetTop={4}
-        offsetSide={-56}
+        offsetSide={-58}
         title=""
         position="top"
         content=""
@@ -103,12 +133,8 @@ export default function AiTokensInfo() {
                 className="h-18.75 w-18.75"
               />
               {/* Centered block */}
-              <div className="font-delight absolute inset-0 flex items-center justify-center bg-[linear-gradient(98deg,#FF20A2_1.97%,#FF5B20_104.5%)] bg-clip-text leading-8 text-transparent text-2xl">
-                {userSubscription === SubscriptionType.Free
-                  ? '10k'
-                  : userSubscription === SubscriptionType.Starter
-                    ? '100k'
-                    : '1М'}
+              <div className="font-delight absolute inset-0 flex items-center justify-center bg-[linear-gradient(98deg,#FF20A2_1.97%,#FF5B20_104.5%)] bg-clip-text text-2xl leading-8 text-transparent">
+                {getTokenValue()}
               </div>
             </div>
             <div className="flex flex-col gap-3">
@@ -137,6 +163,26 @@ export default function AiTokensInfo() {
                 Количество доступных токенов обновляется автоматически
                 ежедневно.
               </span>
+              {/* {tokenData && (
+                <div className="mt-2 flex flex-col gap-1">
+                  <div className="h-1.5 w-full overflow-hidden rounded-full bg-gray-700">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-[#FF20A2] to-[#FF5B20]"
+                      style={{
+                        width: `${Math.min(100, (tokenData.remaining / tokenData.total) * 100)}%`,
+                      }}
+                    ></div>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-secondary/50 text-xs">
+                      Использовано: {formatTokenNumber(tokenData.used)}
+                    </span>
+                    <span className="text-secondary/50 text-xs">
+                      Всего: {formatTokenNumber(tokenData.total)}
+                    </span>
+                  </div>
+                </div>
+              )} */}
             </div>
           </div>
           <div className="grid grid-cols-3 gap-8">
@@ -196,11 +242,7 @@ export default function AiTokensInfo() {
       <span className="text-secondary/50 text-sm leading-4">
         AI токены –{' '}
         <span className="font-delight bg-[linear-gradient(98deg,#FF20A2_1.97%,#FF5B20_104.5%)] bg-clip-text leading-4 text-transparent">
-          {userSubscription === SubscriptionType.Free
-            ? '10k'
-            : userSubscription === SubscriptionType.Starter
-              ? '100k'
-              : '1М'}
+          {getTokenValue()}
         </span>
       </span>
     </div>

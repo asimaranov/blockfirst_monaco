@@ -40,6 +40,10 @@ export interface IUserData {
     activatedAt?: Date;
     promoCodeId?: string;
   };
+  aiTokens: {
+    tokensUsedToday: number;
+    lastResetDate: Date;
+  };
   premiumStartDate?: Date;
   premiumEndDate?: Date;
   createdAt: Date;
@@ -139,6 +143,16 @@ const UserDataSchema = new mongoose.Schema<IUserData>(
       },
       promoCodeId: {
         type: String,
+      },
+    },
+    aiTokens: {
+      tokensUsedToday: {
+        type: Number,
+        default: 0,
+      },
+      lastResetDate: {
+        type: Date,
+        default: Date.now,
       },
     },
     premiumStartDate: {

@@ -11,6 +11,7 @@ import { createEditor } from '@udecode/plate';
 import AiMessage from './AiMessage';
 import ChatInput from './ChatInput';
 import AiTokensInfo from './AiTokensInfo';
+import { cn } from '~/helpers';
 
 const ErrorSvg = () => {
   return (
@@ -76,7 +77,14 @@ const ServiceMessage = ({
       <div className="flex flex-row gap-3">
         {type == 'error' ? <ErrorSvg /> : <SuccessSvg />}
         <ErrorSvg />
-        <span className="text-error text-base">{header}</span>
+        <span
+          className={cn(
+            'text-base',
+            type == 'error' ? 'text-error' : 'text-success'
+          )}
+        >
+          {header}
+        </span>
       </div>
       <span className="text-sm">{content}</span>
     </div>
@@ -96,6 +104,9 @@ export default function AiMentor({ task }: { task: any }) {
       // serviceType: 'error' | 'success';
     }[]
   >([]);
+
+  // Add a reference to the token query to manually invalidate it
+  const utils = api.useUtils();
 
   console.log('Chat id', task);
 
@@ -153,10 +164,16 @@ export default function AiMentor({ task }: { task: any }) {
     onSuccess: (data) => {
       setIsGenerating(false);
       setMessages((prev) => [...prev, data.message]);
+
+      // Invalidate token data to refresh token count
+      utils.ai.getRemainingTokens.invalidate();
     },
     onError: (error) => {
       setIsGenerating(false);
       console.error('Error sending message:', error);
+
+      // Still invalidate token data in case tokens were used
+      utils.ai.getRemainingTokens.invalidate();
     },
   });
 

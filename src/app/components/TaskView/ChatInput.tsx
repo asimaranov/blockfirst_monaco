@@ -5,7 +5,10 @@ interface ChatInputProps {
   isGenerating: boolean;
 }
 
-export default function ChatInput({ onSendMessage, isGenerating }: ChatInputProps) {
+export default function ChatInput({
+  onSendMessage,
+  isGenerating,
+}: ChatInputProps) {
   const [message, setMessage] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const canWrite = message.length > 0 && !isGenerating;
@@ -51,7 +54,7 @@ export default function ChatInput({ onSendMessage, isGenerating }: ChatInputProp
       />
 
       <button
-        className="border-primary h-fit self-end rounded-full border p-2.5 not-disabled:cursor-pointer disabled:opacity-50 not-disabled:hover:bg-primary"
+        className="border-primary not-disabled:hover:bg-primary h-fit self-end rounded-full border p-2.5 not-disabled:cursor-pointer disabled:opacity-50"
         onClick={handleSendMessage}
         disabled={!canWrite}
       >

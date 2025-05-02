@@ -5,7 +5,13 @@ import {
   protectedProcedure,
   publicProcedure,
 } from '~/server/api/trpc';
-import { getAiCompletion, messageSchema, Message } from '../services/ai';
+import {
+  getAiCompletion,
+  messageSchema,
+  Message,
+  getRemainingTokens,
+  TOKEN_LIMITS,
+} from '../services/ai';
 import { TRPCError } from '@trpc/server';
 import {
   BaseParagraphPlugin,
@@ -194,6 +200,34 @@ export const aiRouter = createTRPCRouter({
       }
     }),
 
+  // Get remaining tokens for the current user
+  getRemainingTokens: protectedProcedure.query(async ({ ctx }) => {
+    try {
+      const userId = ctx.session.user.id;
+
+      // Get user data to determine plan
+      const userData = await ctx.mongo.models.userData.findOne({ userId });
+      const plan = userData?.plan || 'free';
+
+      // Get remaining tokens
+      const remainingTokens = await getRemainingTokens(userId);
+      const totalLimit = TOKEN_LIMITS[plan];
+
+      return {
+        remaining: remainingTokens,
+        total: totalLimit,
+        used: totalLimit - remainingTokens,
+        plan,
+      };
+    } catch (error) {
+      console.error('Error getting remaining tokens:', error);
+      throw new TRPCError({
+        code: 'INTERNAL_SERVER_ERROR',
+        message: 'Failed to get token information',
+      });
+    }
+  }),
+
   // Send a message to the AI and get a response
   sendMessage: protectedProcedure
     .input(
@@ -245,7 +279,7 @@ export const aiRouter = createTRPCRouter({
         chatHistory.messages.push(userMessage);
 
         // Get AI response
-        const aiResponse = await getAiCompletion(chatHistory.messages);
+        const aiResponse = await getAiCompletion(chatHistory.messages, userId);
 
         // Add AI response to history
         const assistantMessage: Message = {
