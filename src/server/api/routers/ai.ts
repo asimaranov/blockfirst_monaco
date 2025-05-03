@@ -167,15 +167,7 @@ export const aiRouter = createTRPCRouter({
 
         if (!chatHistory) {
           return {
-            messages: [
-              {
-                role: 'assistant' as const,
-                content:
-                  'Привет! Я ваш персональный AI-ментор. Как я могу помочь?',
-                timestamp: new Date(),
-                feedback: null,
-              },
-            ],
+            messages: [],
           };
         }
 
@@ -258,14 +250,7 @@ export const aiRouter = createTRPCRouter({
           chatHistory = new ctx.mongo.models.chatHistory({
             userId,
             taskId: input.taskId,
-            messages: [
-              {
-                role: 'assistant' as const,
-                content:
-                  'Привет! Я ваш персональный AI-ментор. Как я могу помочь?',
-                timestamp: new Date(),
-              },
-            ],
+            messages: [],
           });
         }
 
