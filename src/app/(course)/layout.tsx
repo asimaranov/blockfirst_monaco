@@ -7,6 +7,7 @@ import { Suspense } from 'react';
 import { cookies } from 'next/headers';
 import { getServerSession } from '~/server/auth';
 import { redirect } from 'next/navigation';
+import ExamComponent from '../components/ExamComponent/ExamComponent';
 
 export default async function Layout({
   children,
@@ -23,6 +24,7 @@ export default async function Layout({
   return (
     <div className="bg-dark-bg relative flex max-h-screen flex-col sm:flex-row">
       <MobileNavbar />
+      <ExamComponent />
       <LessonSidebar />
       <NotificationsModal />
       <Suspense>

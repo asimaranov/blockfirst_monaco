@@ -10,7 +10,7 @@ import { TakeTestButton } from './TakeTestButton';
 import ToggleMinus from '../shared/ToggleMinus/ToggleMinus';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '~/helpers';
-
+import { useExamStore } from '@/store/examStore';
 interface CourseSectionProps {
   title: string;
   status: 'available' | 'upcoming' | 'locked' | 'completed';
@@ -37,6 +37,7 @@ export function CourseSection({
   expanded,
 }: CourseSectionProps) {
   const [isExpanded, setIsExpanded] = useState(!!expanded);
+  const { open } = useExamStore();
 
   // Calculate overall section progress
   let totalLessons = 0;
@@ -166,7 +167,9 @@ export function CourseSection({
                 />
               ))}
               <TakeTestButton
-                onClick={() => {}}
+                onClick={() => {
+                  open(title);
+                }}
                 isCompleted={finalTestStatus === 'completed'}
               />
             </div>

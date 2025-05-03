@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
 import { api } from '~/trpc/react';
-import ChatInput from './ChatInput';
+import ChatInput from '../TaskView/ChatInput';
 import { authClient } from '~/server/auth/client';
 
 // Import new components
-import ServiceMessage from './AiMentor/ServiceMessage';
-import AiMessageItem from './AiMentor/AiMessageItem';
-import UserMessageItem from './AiMentor/UserMessageItem';
-import ChatFooter from './AiMentor/ChatFooter';
-import LoadingIndicator from './AiMentor/LoadingIndicator';
-import EmptyState from './AiMentor/EmptyState';
-import ChatLoading from './AiMentor/ChatLoading';
+import ServiceMessage from '../TaskView/AiMentor/ServiceMessage';
+import AiMessageItem from '../TaskView/AiMentor/AiMessageItem';
+import UserMessageItem from '../TaskView/AiMentor/UserMessageItem';
+import ChatFooter from '../TaskView/AiMentor/ChatFooter';
+import LoadingIndicator from '../TaskView/AiMentor/LoadingIndicator';
+import EmptyState from '../TaskView/AiMentor/EmptyState';
+import ChatLoading from '../TaskView/AiMentor/ChatLoading';
 
-export default function AiMentor({ task }: { task: any }) {
+export default function ExamChat({ task }: { task: any }) {
   const [isGenerating, setIsGenerating] = useState(false);
   const [messages, setMessages] = useState<
     {
@@ -28,12 +28,12 @@ export default function AiMentor({ task }: { task: any }) {
   // Add a reference to the token query to manually invalidate it
   const utils = api.useUtils();
 
-  const { data: session } = authClient.useSession();
+  // const { data: session } = authClient.useSession();
 
   // Load chat history from API
   const { data: chatHistory, isLoading } = api.ai.getChatHistory.useQuery(
     {
-      taskId: task?.id,
+      taskId: 'lakndf',
     },
     {
       // Ensure the query is refetched when the task ID changes
@@ -129,20 +129,47 @@ export default function AiMentor({ task }: { task: any }) {
     }
   };
 
+  useEffect(() => {
+    if (messages.length === 0) {
+      (async () => {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: 'assistant',
+            content: 'Приветсвую! Рад видеть тебя на зачете!',
+            timestamp: new Date(),
+          },
+        ]);
+
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: 'assistant',
+            content:
+              'Объясните, что такое смарт-контракт в Solidity и опишите основные типы данных, которые используются при его разработке. Приведите пример простого смарт-контракта, который хранит и возвращает значение типа uint.',
+            timestamp: new Date(),
+          },
+        ]);
+      })();
+    }
+  }, []);
+
   return (
     <>
       {isLoading ? (
         <ChatLoading />
-      ) : messages.length === 0 ? (
-        <EmptyState />
       ) : (
-        <div className="mb-auto flex flex-col-reverse gap-8 overflow-y-scroll px-8 pt-6 pb-5">
+        <div className="flex h-177 flex-col-reverse gap-8 overflow-y-scroll px-8 pt-6 pb-5">
           {[...messages]
             .reverse()
             .map((message, index) =>
               message.role === 'assistant' && !message.serviceType ? (
                 <AiMessageItem
-                  key={`assistant-${index}`}
+                  key={`assistant-${index}-${message.content}`}
                   message={message}
                   index={messages.length - 1 - index}
                   handleFeedback={handleFeedback}
@@ -176,7 +203,7 @@ export default function AiMentor({ task }: { task: any }) {
         />
       </div>
 
-      <ChatFooter />
+      {/* <ChatFooter /> */}
     </>
   );
 }
