@@ -278,13 +278,28 @@ export const aiRouter = createTRPCRouter({
 
         chatHistory.messages.push(userMessage);
 
-        // Get AI response
-        const aiResponse = await getAiCompletion(chatHistory.messages, userId);
+        let aiResponse;
 
+        try {
+          // Get AI response
+          aiResponse = await getAiCompletion(chatHistory.messages, userId);
+        } catch (error) {
+          if (error instanceof Error && error.message === 'NO_TOKENS_LEFT') {
+            return {
+              message: {
+                role: 'assistant' as const,
+                content: 'NO_TOKENS',
+                timestamp: new Date(),
+                feedback: null,
+                serviceType: 'error' as 'error',
+              },
+            };
+          }
+        }
         // Add AI response to history
         const assistantMessage: Message = {
           role: 'assistant' as const,
-          content: aiResponse,
+          content: aiResponse!,
           timestamp: new Date(),
           feedback: null,
         };
@@ -296,7 +311,7 @@ export const aiRouter = createTRPCRouter({
 
         const md = editor
           .getApi(MarkdownPlugin)
-          .markdown.deserialize(aiResponse);
+          .markdown.deserialize(aiResponse!);
 
         return {
           message: { ...assistantMessage, md: md },

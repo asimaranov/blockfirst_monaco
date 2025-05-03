@@ -73,10 +73,9 @@ const ServiceMessage = ({
   type: 'error' | 'success';
 }) => {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 bg-[#191419] p-4 rounded-[0.4167vw]">
       <div className="flex flex-row gap-3">
         {type == 'error' ? <ErrorSvg /> : <SuccessSvg />}
-        <ErrorSvg />
         <span
           className={cn(
             'text-base',
@@ -101,7 +100,7 @@ export default function AiMentor({ task }: { task: any }) {
       content: string;
       timestamp: Date;
       feedback?: 'upvote' | 'downvote' | null;
-      // serviceType: 'error' | 'success';
+      serviceType?: 'error' | 'success';
     }[]
   >([]);
 
@@ -261,7 +260,7 @@ export default function AiMentor({ task }: { task: any }) {
       ) : (
         <div className="mb-auto flex flex-col gap-8 overflow-y-scroll px-8 pt-6 pb-5">
           {messages.map((x, index) =>
-            x.role == 'assistant' ? (
+            x.role == 'assistant' && !x.serviceType ? (
               <div className="flex flex-row gap-4" key={`assistant-${index}`}>
                 <Image
                   src={RobotImage}
@@ -410,6 +409,20 @@ export default function AiMentor({ task }: { task: any }) {
                   </div>
                 </div>
               </div>
+            ) : x.role == 'assistant' && x.serviceType ? (
+              <ServiceMessage
+                header={
+                  x.content == 'NO_TOKENS'
+                    ? 'Недостаточно AI токенов'
+                    : 'Неизвестная ошибка'
+                }
+                content={
+                  x.content == 'NO_TOKENS'
+                    ? 'У вас исчерпаны AI-токены или недостаточно токенов для запроса. Пожалуйста, дождитесь обновления лимита или измените тарифный план.'
+                    : 'Произошла неизвестная ошибка'
+                }
+                type={x.serviceType}
+              />
             ) : (
               <div
                 className="flex flex-row gap-4 self-end"

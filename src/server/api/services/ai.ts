@@ -155,7 +155,7 @@ export async function getAiCompletion(
     );
 
     if (remainingTokens <= 0) {
-      return 'Вы исчерпали лимит токенов на сегодня. Лимит обновится завтра или вы можете перейти на более высокий тарифный план.';
+      throw new Error('NO_TOKENS_LEFT');
     }
 
     const client = createAnthropicClient();
