@@ -201,8 +201,8 @@ importers:
         specifier: ^47.3.1
         version: 47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1))
       '@udecode/plate-ai':
-        specifier: ^47.3.1
-        version: 47.3.1(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^47.4.1
+        version: 47.4.1(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@udecode/plate-alignment':
         specifier: ^44.0.0
         version: 44.0.0(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -222,8 +222,8 @@ importers:
         specifier: ^44.0.0
         version: 44.0.0(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@udecode/plate-caption':
-        specifier: ^44.0.0
-        version: 44.0.0(@types/react@18.3.20)(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^47.3.1
+        version: 47.3.1(@types/react@18.3.20)(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@udecode/plate-code-block':
         specifier: ^47.0.0
         version: 47.0.0(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -252,8 +252,8 @@ importers:
         specifier: ^44.0.0
         version: 44.0.0(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@udecode/plate-floating':
-        specifier: ^44.0.0
-        version: 44.0.0(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^47.3.1
+        version: 47.3.1(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@udecode/plate-font':
         specifier: ^44.0.0
         version: 44.0.0(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -291,11 +291,11 @@ importers:
         specifier: ^44.0.5
         version: 44.0.5(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@udecode/plate-markdown':
+        specifier: ^47.4.1
+        version: 47.4.1(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@udecode/plate-math':
         specifier: ^47.3.1
         version: 47.3.1(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@udecode/plate-math':
-        specifier: ^44.0.0
-        version: 44.0.0(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@udecode/plate-media':
         specifier: ^44.0.6
         version: 44.0.6(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -315,8 +315,8 @@ importers:
         specifier: ^44.0.0
         version: 44.0.0(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@udecode/plate-selection':
-        specifier: ^46.0.4
-        version: 46.0.4(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^47.0.8
+        version: 47.0.8(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@udecode/plate-slash-command':
         specifier: ^44.0.0
         version: 44.0.0(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -334,7 +334,7 @@ importers:
         version: 44.0.0(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@uploadthing/react':
         specifier: 7.1.0
-        version: 7.1.0(next@15.4.0-canary.18(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(uploadthing@7.2.0(express@4.21.2)(next@15.4.0-canary.18(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@4.1.5))
+        version: 7.1.0(next@15.4.0-canary.19(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(uploadthing@7.2.0(express@4.21.2)(next@15.4.0-canary.19(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@4.1.5))
       ai:
         specifier: ^4.3.9
         version: 4.3.13(react@18.3.1)(zod@3.24.3)
@@ -342,8 +342,8 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2
       better-auth:
-        specifier: '=v1.2.6-beta.6'
-        version: 1.2.6-beta.6
+        specifier: '=v1.2.8-beta.3'
+        version: 1.2.8-beta.3
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -376,7 +376,7 @@ importers:
         version: 2.4.6(react@18.3.1)
       geist:
         specifier: ^1.3.0
-        version: 1.4.1(next@15.4.0-canary.18(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        version: 1.4.1(next@15.4.0-canary.19(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
       html2canvas-pro:
         specifier: ^1.5.8
         version: 1.5.10
@@ -414,11 +414,11 @@ importers:
         specifier: ^5.1.5
         version: 5.1.5
       next:
-        specifier: ^15.4.0-canary.12
-        version: 15.4.0-canary.18(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^v15.4.0-canary.19
+        version: 15.4.0-canary.19(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       next-intl:
         specifier: ^4.0.2
-        version: 4.1.0(next@15.4.0-canary.18(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(typescript@5.8.3)
+        version: 4.1.0(next@15.4.0-canary.19(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(typescript@5.8.3)
       pdf-lib:
         specifier: ^1.17.1
         version: 1.17.1
@@ -505,7 +505,7 @@ importers:
         version: 5.3.4
       uploadthing:
         specifier: 7.2.0
-        version: 7.2.0(express@4.21.2)(next@15.4.0-canary.18(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@4.1.5)
+        version: 7.2.0(express@4.21.2)(next@15.4.0-canary.19(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@4.1.5)
       use-file-picker:
         specifier: ^2.1.2
         version: 2.1.2(react@18.3.1)
@@ -1597,56 +1597,56 @@ packages:
   '@next/bundle-analyzer@15.3.1':
     resolution: {integrity: sha512-NqUZrjVruGbdQaPE3OSEXP+ZuULqumeHVTuU9pOX1V0/9BWY9FOck3jgQGFdBtG41nOYuO8+CoHKDQAVIPQJrw==}
 
-  '@next/env@15.4.0-canary.18':
-    resolution: {integrity: sha512-BFGioHoYhB409WM66kLXCSiZuBaz2rQcMjg8tLGQVRiqDvWJD/8k7oloyqUnWD7OMjubhstFEleozzfh5SUbaw==}
+  '@next/env@15.4.0-canary.19':
+    resolution: {integrity: sha512-5ONUlPoJsg/K3hJ4yVpDFxX+f1Ex4cP/IIbwONNyUmUTxvoZ8Oy8JQgmJf+Vy4oJp1qSxN2cxv6naz78bIc7xw==}
 
   '@next/eslint-plugin-next@15.3.1':
     resolution: {integrity: sha512-oEs4dsfM6iyER3jTzMm4kDSbrQJq8wZw5fmT6fg2V3SMo+kgG+cShzLfEV20senZzv8VF+puNLheiGPlBGsv2A==}
 
-  '@next/swc-darwin-arm64@15.4.0-canary.18':
-    resolution: {integrity: sha512-1u0Xt44VL4SRmxvX1miDEPETRrQ50GVSk95oWc9pQYdtLN3P54hMrTqcizXZLK2vwWyjf05JXVn75Eha1NNBhg==}
+  '@next/swc-darwin-arm64@15.4.0-canary.19':
+    resolution: {integrity: sha512-6xvPBORKTL6A7kDdrOqEyuEPR8Ch5IS5nefTLz/bB+h9qEkaY1ZS6tEyc1uZJmnu8SKyMWVhJitLDz7DMxjiEA==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
 
-  '@next/swc-darwin-x64@15.4.0-canary.18':
-    resolution: {integrity: sha512-fpt+t9tM1cBXuT1rBkFuawnav6uByBGOZLBr9RuV2+U1kOl2NpVa3J1eYE/Juq0B9ZQG5lIYPFM9a9cvELxXiw==}
+  '@next/swc-darwin-x64@15.4.0-canary.19':
+    resolution: {integrity: sha512-/tSRU/H6kYVFOtCtbFg2IaoYK4FROV5Dwac9fLW/CNmz+Aw6KvaCBxLjuPV3ebqRNAAOvRzyiiCXefNJofqD8w==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
 
-  '@next/swc-linux-arm64-gnu@15.4.0-canary.18':
-    resolution: {integrity: sha512-/bq7ng86IGtubJT4RhXCL958nOV7gM8CcBnaYeZ/orBoZm0Fp2/Xc6YcAvxd/FnqGrIGP2X71eBg5UizwRuvWg==}
+  '@next/swc-linux-arm64-gnu@15.4.0-canary.19':
+    resolution: {integrity: sha512-ak7HPzhhff7WQMRRJN8XasFNPWfxXQ7AAt+oRL/zz+DXvmUqPXPQ97vgzYXU9Z2046Vd58Tu2OdRpKQnQFBhIQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
 
-  '@next/swc-linux-arm64-musl@15.4.0-canary.18':
-    resolution: {integrity: sha512-zV0VVEorX7XQg9IiWAnyXI9t24jIs6UYQk/jS1XdCw+FStSsP7tQ+NS6DVctyELh3ofWbtzzoI0KDMLkI8Ht0w==}
+  '@next/swc-linux-arm64-musl@15.4.0-canary.19':
+    resolution: {integrity: sha512-Rk704RseoSbZIm91SJ/lfzyi2c+XG2rr0vW96JCdhgTpT9I5MQFO1g3O8yEmHbaWtL4iV3xUHK0wyFuVz0L0Aw==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
 
-  '@next/swc-linux-x64-gnu@15.4.0-canary.18':
-    resolution: {integrity: sha512-xaxSv7ZyhuDB/oaUQemmbphKx9lkQv5+sLSFm7zgKMtph/R1uFPryDuk1QbHUmzjeL4Ol8tr8VpXm+yPQtc1+A==}
+  '@next/swc-linux-x64-gnu@15.4.0-canary.19':
+    resolution: {integrity: sha512-ZYMV3CoXcAtJSFdtIfLfjhUZgTJN5nuHxaNb4fMnis0Qaoy0VZM4ZZhPFb9+CLP2Q64MTnrRhm3+/3VxAEMqHA==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
 
-  '@next/swc-linux-x64-musl@15.4.0-canary.18':
-    resolution: {integrity: sha512-K5p6CuaRk4hZRiYrM3oEomFu5tbLhwf3tkanGw5XHHmOiC6BuTvTuk+Qa172Up5GDHlqTBwqlI9qPEYyb0vxxQ==}
+  '@next/swc-linux-x64-musl@15.4.0-canary.19':
+    resolution: {integrity: sha512-FzjW6/45ZY2N3AedzyN5rn43Uv9LGq4M8bbM3GLRMKsHH/rkvoJvX9vb/CFk+6gR/t6prEZ7BsztF8PgpND1PQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
 
-  '@next/swc-win32-arm64-msvc@15.4.0-canary.18':
-    resolution: {integrity: sha512-3eG9I97ZPIH3MFcqvXyUuRQj9MHaTn6IPaV9izslmxuw9mlzjrteav1ssvbV/9KEuuwOrA3s1AwQ2RSJiirAwg==}
+  '@next/swc-win32-arm64-msvc@15.4.0-canary.19':
+    resolution: {integrity: sha512-T9KZQqpRINZtIK/K/sB9K9kV+D+ITd4B1rfkkxVAuxCPNYOTmZQzu+9M6fYtPmRcWybkkjrUqy6q0MY1tkLI+Q==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
 
-  '@next/swc-win32-x64-msvc@15.4.0-canary.18':
-    resolution: {integrity: sha512-1lSUmpTftPIOR01TARDfjUDVRL8Z13l/t2c/b8e7xjNiHUGwZ7bFZoYy/T2afd/1Hx7bBiNKd47X0Dk2OrUx2A==}
+  '@next/swc-win32-x64-msvc@15.4.0-canary.19':
+    resolution: {integrity: sha512-HIv02VaDYF5YEB0USPkpUS9RkM4z7M/c+usYa46amVO5CGQ+8tRxT8srlvPZ4HdTP0Y+IDFNy17HDkyomYlcQQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
@@ -2698,8 +2698,8 @@ packages:
       react-dom: '>=18.0.0'
       tailwind-merge: '>=2.2.0'
 
-  '@udecode/plate-ai@47.3.1':
-    resolution: {integrity: sha512-uBw+trMkNlSlmvD/x9ibUAPdetTW3Oy7cZWSB7NYAOlqKRol3dWHi+72VWsSh7d7EnZydiUdu+wieEmfI6Qa3g==}
+  '@udecode/plate-ai@47.4.1':
+    resolution: {integrity: sha512-kguU9hDW8cBTPH8YiCt4VwShP4fsFPclPCXCWUi09uVQ33mDWrQxmB+5dlMx0ZJD34t+ZhnefjXQ3y4CY5+RBA==}
     peerDependencies:
       '@udecode/plate': '>=47.3.1'
       react: '>=18.0.0'
@@ -2747,10 +2747,10 @@ packages:
       react: '>=18.0.0'
       react-dom: '>=18.0.0'
 
-  '@udecode/plate-caption@44.0.0':
-    resolution: {integrity: sha512-BRR2cZfskEL2N8cylO9IJh105P4fcQ2yH3DXOVZO5Wr7UADnkjHykfaNgx+oeaYECXvLlCWcygpZKupqHth9LA==}
+  '@udecode/plate-caption@47.3.1':
+    resolution: {integrity: sha512-KO1WhAgRFZQnPk/BHDITuJD5DVKp+EH4FBSrZFVcgra/FeTxpIWA7LZFP7865mlAHmlo2xuS9Tkbk1gJ+Yp4iQ==}
     peerDependencies:
-      '@udecode/plate': '>=44.0.0'
+      '@udecode/plate': '>=47.3.1'
       react: '>=18.0.0'
       react-dom: '>=18.0.0'
 
@@ -2821,13 +2821,6 @@ packages:
 
   '@udecode/plate-excalidraw@44.0.0':
     resolution: {integrity: sha512-LgaXdROzMaa+mYfriIJPnKjpLWqLO4nhUyknVW6eh+4nktC/mFaGD0hSIiaLD14InOzJVyvze8daQkD79YG6Kw==}
-    peerDependencies:
-      '@udecode/plate': '>=44.0.0'
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
-
-  '@udecode/plate-floating@44.0.0':
-    resolution: {integrity: sha512-BRmDOS8o6FPC6SdxHuYcHUn4Y2cfhdehjg+BfeTlfXvkaqbPCivZz0gghzIdbW+xKdmHVihZu+IlSvMuB+8g2g==}
     peerDependencies:
       '@udecode/plate': '>=44.0.0'
       react: '>=18.0.0'
@@ -2924,17 +2917,17 @@ packages:
       react: '>=18.0.0'
       react-dom: '>=18.0.0'
 
-  '@udecode/plate-markdown@47.3.1':
-    resolution: {integrity: sha512-+F9+fMnUYvxIhVZOZp2Zn4u1pp0/9xWov8EkYTzj1+N5NO9v66cBSIyySZfhnAq7Y5Nq8EMDnhwvf8u/Wo3Kjw==}
+  '@udecode/plate-markdown@47.4.1':
+    resolution: {integrity: sha512-C+B3ZV4GG4gkqCDf9nQ/3/rzAR41VTHN7Pj/W2fvd1CJ7oSg71i8qMAgnYYQlLzjISShpZ7k9/nRRnFLzSu7bA==}
     peerDependencies:
       '@udecode/plate': '>=47.3.1'
       react: '>=18.0.0'
       react-dom: '>=18.0.0'
 
-  '@udecode/plate-math@44.0.0':
-    resolution: {integrity: sha512-stSslQbjZiU8er2/i6v9rpLnmxTuYFozpIQEAOnpXfx7A5sMlqCtvayN4wJWx/mw2/iTO6VPH0dijseyPndzfw==}
+  '@udecode/plate-math@47.3.1':
+    resolution: {integrity: sha512-Lu6gfGfmFRIYynjzN7dFjG4zpRzAL6BmrHJfj6mLC6G24ZGSIh/jEkh7s46HjGfg/PIhspiOOY2bYR6XwycFOg==}
     peerDependencies:
-      '@udecode/plate': '>=44.0.0'
+      '@udecode/plate': '>=47.3.1'
       react: '>=18.0.0'
       react-dom: '>=18.0.0'
 
@@ -2984,13 +2977,6 @@ packages:
     resolution: {integrity: sha512-qcKsTRdkDKEkC132RACZo4nDSBq5kWy3NxtX1eFy4vsiVwgPwJzoFvmATwulsotuu5C7Qrrl3b5teYo+DUDs3A==}
     peerDependencies:
       '@udecode/plate': '>=44.0.0'
-      react: '>=18.0.0'
-      react-dom: '>=18.0.0'
-
-  '@udecode/plate-selection@46.0.4':
-    resolution: {integrity: sha512-ubvGNr5fxePCd5ko8RMzPDR4/s6aodr7mncOHqlVPpMT7GZkbOTPGXEFd5AHFYcSr/kZMX+MohWmlFIv2WGgng==}
-    peerDependencies:
-      '@udecode/plate': '>=46.0.4'
       react: '>=18.0.0'
       react-dom: '>=18.0.0'
 
@@ -3366,8 +3352,8 @@ packages:
     resolution: {integrity: sha512-k38b3XOZKv60C4E2hVsXTolJWfkGRMbILBIe2IBITXciy5bOsTKot5kDrf3ZfufQtQOUN5mXceUEpU1rTl9Uog==}
     hasBin: true
 
-  better-auth@1.2.6-beta.6:
-    resolution: {integrity: sha512-dVTMV5fBdbNolUZkBhYuv+cFwia62bbTjxvDCkxgrVgr52TDOH1ngYEvcaWDTD2WC/ll9gmY8jGzUkOw5ftm6Q==}
+  better-auth@1.2.8-beta.3:
+    resolution: {integrity: sha512-bVNGS1nDF3WwuhjE0YFhNV6dc+KOiFmrElo/x48fIlDJxMuGClpMCZHZPzWGHVQeAcir3VdpxBPcJlBXIsMSLg==}
 
   better-call@1.0.9:
     resolution: {integrity: sha512-Qfm0gjk0XQz0oI7qvTK1hbqTsBY4xV2hsHAxF8LZfUYl3RaECCIifXuVqtPpZJWvlCCMlQSvkvhhyuApGUba6g==}
@@ -4567,10 +4553,6 @@ packages:
     resolution: {integrity: sha512-C3iHfuGUXK2u8/ipq9LfjFfXFxAZMQJJq7vLS45r3D9Y2xQ/m4S8zaR4zMLFWh9AsNPXmcFfUDhTEO8UIC/V6Q==}
     engines: {node: '>=12.0.0'}
 
-  katex@0.16.21:
-    resolution: {integrity: sha512-XvqR7FgOHtWupfMiigNzmh+MgUVmDGU2kXZm899ZkPfcuoPuFxyHmXsgATDpFZDAXCI8tvinaVcDo8PIIJSo4A==}
-    hasBin: true
-
   katex@0.16.22:
     resolution: {integrity: sha512-XCHRdUw4lf3SKBaJe4EvgqIuWwkPSo9XoeO8GjQW94Bp7TWv9hNhzZjZ+OH9yf1UmLygb7DIT5GSFQiyt16zYg==}
     hasBin: true
@@ -4586,9 +4568,9 @@ packages:
       '@types/node': '>=18'
       typescript: '>=5.0.4'
 
-  kysely@0.27.6:
-    resolution: {integrity: sha512-FIyV/64EkKhJmjgC0g2hygpBv5RNWVPyNCqSAD7eTCv6eFWNIi4PN1UvdSJGicN/o35bnevgis4Y0UDC0qi8jQ==}
-    engines: {node: '>=14.0.0'}
+  kysely@0.28.2:
+    resolution: {integrity: sha512-4YAVLoF0Sf0UTqlhgQMFU9iQECdah7n+13ANkiuVfRvlK+uI0Etbgd7bVP36dKlG+NXWbhGua8vnGt+sdhvT7A==}
+    engines: {node: '>=18.0.0'}
 
   langium@3.4.0:
     resolution: {integrity: sha512-7xufsaF5jYGFMXHOTka8bN48b9FHn2vZGL2R+PGgyi+JY/xgimUFDKYcz/h4gm5m8p3sSRtZDh+sK2U63K0MNg==}
@@ -5114,8 +5096,8 @@ packages:
       typescript:
         optional: true
 
-  next@15.4.0-canary.18:
-    resolution: {integrity: sha512-xb+P5RWO2CJheXoNeeVYGbAFwUxxZ6o8VTIbKdK3FSWQ9aKgXUDZ1b2dD2RNlTY6HBNcaFw4QYpPt8GVUabzUw==}
+  next@15.4.0-canary.19:
+    resolution: {integrity: sha512-JUayAmXc87yE7ohGRKX1cELig/rxBIOySgIb0IjiA2VAzR6wrjd+mHouvOrISEybTIBnUviP0rRGDRUjWFa/lQ==}
     engines: {node: ^18.18.0 || ^19.8.0 || >= 20.0.0}
     hasBin: true
     peerDependencies:
@@ -8120,34 +8102,34 @@ snapshots:
       - bufferutil
       - utf-8-validate
 
-  '@next/env@15.4.0-canary.18': {}
+  '@next/env@15.4.0-canary.19': {}
 
   '@next/eslint-plugin-next@15.3.1':
     dependencies:
       fast-glob: 3.3.1
 
-  '@next/swc-darwin-arm64@15.4.0-canary.18':
+  '@next/swc-darwin-arm64@15.4.0-canary.19':
     optional: true
 
-  '@next/swc-darwin-x64@15.4.0-canary.18':
+  '@next/swc-darwin-x64@15.4.0-canary.19':
     optional: true
 
-  '@next/swc-linux-arm64-gnu@15.4.0-canary.18':
+  '@next/swc-linux-arm64-gnu@15.4.0-canary.19':
     optional: true
 
-  '@next/swc-linux-arm64-musl@15.4.0-canary.18':
+  '@next/swc-linux-arm64-musl@15.4.0-canary.19':
     optional: true
 
-  '@next/swc-linux-x64-gnu@15.4.0-canary.18':
+  '@next/swc-linux-x64-gnu@15.4.0-canary.19':
     optional: true
 
-  '@next/swc-linux-x64-musl@15.4.0-canary.18':
+  '@next/swc-linux-x64-musl@15.4.0-canary.19':
     optional: true
 
-  '@next/swc-win32-arm64-msvc@15.4.0-canary.18':
+  '@next/swc-win32-arm64-msvc@15.4.0-canary.19':
     optional: true
 
-  '@next/swc-win32-x64-msvc@15.4.0-canary.18':
+  '@next/swc-win32-x64-msvc@15.4.0-canary.19':
     optional: true
 
   '@noble/ciphers@0.6.0': {}
@@ -9206,10 +9188,10 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@udecode/plate-ai@47.3.1(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@udecode/plate-ai@47.4.1(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@udecode/plate': 47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1))
-      '@udecode/plate-markdown': 47.3.1(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@udecode/plate-markdown': 47.4.1(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@udecode/plate-selection': 47.0.8(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       lodash: 4.17.21
       react: 18.3.1
@@ -9254,7 +9236,7 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@udecode/plate-caption@44.0.0(@types/react@18.3.20)(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@udecode/plate-caption@47.3.1(@types/react@18.3.20)(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@udecode/plate': 47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1))
       react: 18.3.1
@@ -9364,14 +9346,6 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@udecode/plate-floating@44.0.0(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@floating-ui/core': 1.6.9
-      '@floating-ui/react': 0.27.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@udecode/plate': 47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1))
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-
   '@udecode/plate-floating@47.3.1(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@floating-ui/core': 1.6.9
@@ -9461,7 +9435,7 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@udecode/plate-markdown@47.3.1(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@udecode/plate-markdown@47.4.1(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@udecode/plate': 47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1))
       marked: 15.0.11
@@ -9477,10 +9451,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@udecode/plate-math@44.0.0(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@udecode/plate-math@47.3.1(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@udecode/plate': 47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1))
-      katex: 0.16.21
+      katex: 0.16.22
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
@@ -9527,13 +9501,6 @@ snapshots:
   '@udecode/plate-select@44.0.0(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@udecode/plate': 47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1))
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-
-  '@udecode/plate-selection@46.0.4(@udecode/plate@47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1)))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      '@udecode/plate': 47.3.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(scheduler@0.25.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@18.3.1))
-      copy-to-clipboard: 3.3.3
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
@@ -9703,14 +9670,14 @@ snapshots:
 
   '@uploadthing/mime-types@0.3.1': {}
 
-  '@uploadthing/react@7.1.0(next@15.4.0-canary.18(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(uploadthing@7.2.0(express@4.21.2)(next@15.4.0-canary.18(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@4.1.5))':
+  '@uploadthing/react@7.1.0(next@15.4.0-canary.19(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(uploadthing@7.2.0(express@4.21.2)(next@15.4.0-canary.19(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@4.1.5))':
     dependencies:
       '@uploadthing/shared': 7.1.0
       file-selector: 0.6.0
       react: 18.3.1
-      uploadthing: 7.2.0(express@4.21.2)(next@15.4.0-canary.18(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@4.1.5)
+      uploadthing: 7.2.0(express@4.21.2)(next@15.4.0-canary.19(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@4.1.5)
     optionalDependencies:
-      next: 15.4.0-canary.18(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      next: 15.4.0-canary.19(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
   '@uploadthing/shared@7.1.0':
     dependencies:
@@ -9924,7 +9891,7 @@ snapshots:
 
   bcryptjs@3.0.2: {}
 
-  better-auth@1.2.6-beta.6:
+  better-auth@1.2.8-beta.3:
     dependencies:
       '@better-auth/utils': 0.2.4
       '@better-fetch/fetch': 1.1.18
@@ -9935,7 +9902,7 @@ snapshots:
       better-call: 1.0.9
       defu: 6.1.4
       jose: 5.10.0
-      kysely: 0.27.6
+      kysely: 0.28.2
       nanostores: 0.11.4
       zod: 3.24.3
 
@@ -10923,9 +10890,9 @@ snapshots:
 
   functions-have-names@1.2.3: {}
 
-  geist@1.4.1(next@15.4.0-canary.18(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
+  geist@1.4.1(next@15.4.0-canary.19(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)):
     dependencies:
-      next: 15.4.0-canary.18(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      next: 15.4.0-canary.19(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
 
   get-intrinsic@1.3.0:
     dependencies:
@@ -11363,10 +11330,6 @@ snapshots:
 
   kareem@2.6.3: {}
 
-  katex@0.16.21:
-    dependencies:
-      commander: 8.3.0
-
   katex@0.16.22:
     dependencies:
       commander: 8.3.0
@@ -11393,7 +11356,7 @@ snapshots:
       zod: 3.24.3
       zod-validation-error: 3.4.0(zod@3.24.3)
 
-  kysely@0.27.6: {}
+  kysely@0.28.2: {}
 
   langium@3.4.0:
     dependencies:
@@ -12187,19 +12150,19 @@ snapshots:
 
   negotiator@1.0.0: {}
 
-  next-intl@4.1.0(next@15.4.0-canary.18(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(typescript@5.8.3):
+  next-intl@4.1.0(next@15.4.0-canary.19(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(typescript@5.8.3):
     dependencies:
       '@formatjs/intl-localematcher': 0.5.10
       negotiator: 1.0.0
-      next: 15.4.0-canary.18(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      next: 15.4.0-canary.19(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
       use-intl: 4.1.0(react@18.3.1)
     optionalDependencies:
       typescript: 5.8.3
 
-  next@15.4.0-canary.18(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  next@15.4.0-canary.19(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@next/env': 15.4.0-canary.18
+      '@next/env': 15.4.0-canary.19
       '@swc/helpers': 0.5.15
       caniuse-lite: 1.0.30001716
       postcss: 8.4.31
@@ -12207,14 +12170,14 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       styled-jsx: 5.1.6(react@18.3.1)
     optionalDependencies:
-      '@next/swc-darwin-arm64': 15.4.0-canary.18
-      '@next/swc-darwin-x64': 15.4.0-canary.18
-      '@next/swc-linux-arm64-gnu': 15.4.0-canary.18
-      '@next/swc-linux-arm64-musl': 15.4.0-canary.18
-      '@next/swc-linux-x64-gnu': 15.4.0-canary.18
-      '@next/swc-linux-x64-musl': 15.4.0-canary.18
-      '@next/swc-win32-arm64-msvc': 15.4.0-canary.18
-      '@next/swc-win32-x64-msvc': 15.4.0-canary.18
+      '@next/swc-darwin-arm64': 15.4.0-canary.19
+      '@next/swc-darwin-x64': 15.4.0-canary.19
+      '@next/swc-linux-arm64-gnu': 15.4.0-canary.19
+      '@next/swc-linux-arm64-musl': 15.4.0-canary.19
+      '@next/swc-linux-x64-gnu': 15.4.0-canary.19
+      '@next/swc-linux-x64-musl': 15.4.0-canary.19
+      '@next/swc-win32-arm64-msvc': 15.4.0-canary.19
+      '@next/swc-win32-x64-msvc': 15.4.0-canary.19
       '@opentelemetry/api': 1.9.0
       sharp: 0.34.1
     transitivePeerDependencies:
@@ -13307,7 +13270,7 @@ snapshots:
       '@unrs/resolver-binding-win32-ia32-msvc': 1.7.2
       '@unrs/resolver-binding-win32-x64-msvc': 1.7.2
 
-  uploadthing@7.2.0(express@4.21.2)(next@15.4.0-canary.18(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@4.1.5):
+  uploadthing@7.2.0(express@4.21.2)(next@15.4.0-canary.19(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(tailwindcss@4.1.5):
     dependencies:
       '@effect/platform': 0.69.8(effect@3.10.3)
       '@uploadthing/mime-types': 0.3.1
@@ -13315,7 +13278,7 @@ snapshots:
       effect: 3.10.3
     optionalDependencies:
       express: 4.21.2
-      next: 15.4.0-canary.18(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      next: 15.4.0-canary.19(@opentelemetry/api@1.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       tailwindcss: 4.1.5
 
   uri-js@4.4.1:
