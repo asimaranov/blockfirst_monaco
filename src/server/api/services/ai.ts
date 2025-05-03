@@ -39,6 +39,16 @@ export const TOKEN_LIMITS = {
   pro: 1000000, // 1M
 };
 
+// Token scaling factor - tokens are reduced by this factor before counting against the limit
+// Lower values make tokens deplete more slowly (e.g., 0.5 means half the tokens are counted)
+export const TOKEN_SCALING_FACTOR = 0.05;
+
+// Function to scale token usage (makes tokens deplete more slowly)
+export function scaleTokenUsage(tokenCount: number): number {
+  const scaledTokens = Math.ceil(tokenCount * TOKEN_SCALING_FACTOR);
+  return scaledTokens;
+}
+
 // Function to get remaining tokens for user
 export async function getRemainingTokens(userId: string): Promise<number> {
   try {
@@ -108,34 +118,41 @@ export async function trackTokenUsage(
   tokenCount: number
 ): Promise<void> {
   try {
-    console.log(`[AI Token] Tracking ${tokenCount} tokens for user ${userId}`);
+    // Apply token scaling to make tokens deplete more slowly
+    const scaledTokenCount = scaleTokenUsage(tokenCount);
+
+    console.log(
+      `[AI Token] Original tokens: ${tokenCount}, Scaled tokens: ${scaledTokenCount} for user ${userId}`
+    );
 
     // First check if user exists
     const userData = await UserDataModel.findOne({ userId });
 
     if (userData) {
-      // Update existing user's token usage
+      // Update existing user's token usage with scaled token count
       const result = await UserDataModel.updateOne(
         { userId },
         {
-          $inc: { 'aiTokens.tokensUsedToday': tokenCount },
+          $inc: { 'aiTokens.tokensUsedToday': scaledTokenCount },
         }
       );
 
       console.log(`[AI Token] Update result for existing user:`, result);
     } else {
-      // Create new user with token usage
+      // Create new user with scaled token usage
       const newUser = new UserDataModel({
         userId,
         plan: 'free' as PlanType,
         aiTokens: {
-          tokensUsedToday: tokenCount,
+          tokensUsedToday: scaledTokenCount,
           lastResetDate: new Date(),
         },
       });
 
       await newUser.save();
-      console.log(`[AI Token] Created new user with ${tokenCount} tokens used`);
+      console.log(
+        `[AI Token] Created new user with ${scaledTokenCount} tokens used (scaled from ${tokenCount})`
+      );
     }
   } catch (err) {
     console.error('[AI Token] Error tracking token usage:', err);
