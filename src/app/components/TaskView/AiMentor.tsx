@@ -11,6 +11,7 @@ import AiMessage from './AiMessage';
 import ChatInput from './ChatInput';
 import AiTokensInfo from './AiTokensInfo';
 import { cn } from '~/helpers';
+import { authClient } from '~/server/auth/client';
 
 const ErrorSvg = () => {
   return (
@@ -107,7 +108,7 @@ export default function AiMentor({ task }: { task: any }) {
   // Add a reference to the token query to manually invalidate it
   const utils = api.useUtils();
 
-  console.log('Chat id', task);
+  const { data: session } = authClient.useSession();
 
   // Animation for generating text
   useEffect(() => {
@@ -235,7 +236,16 @@ export default function AiMentor({ task }: { task: any }) {
 
   return (
     <>
-      {messages.length == 0 ? (
+      {isLoading ? (
+        <div className="mt-auto mb-auto flex flex-col items-center justify-center gap-8">
+          <div className="flex h-full w-full items-center justify-center">
+            <div className="flex flex-col items-center gap-4">
+              <div className="border-primary h-16 w-16 animate-spin rounded-full border-t-2 border-b-2"></div>
+              <p className="text-lg font-medium text-gray-600">Loading...</p>
+            </div>
+          </div>
+        </div>
+      ) : messages.length == 0 ? (
         <div className="mt-auto mb-auto flex flex-col items-center justify-center gap-8">
           <div className="relative">
             <Image
@@ -433,7 +443,9 @@ export default function AiMentor({ task }: { task: any }) {
                     <span className="ml-20 w-fit self-end rounded-[0.4167vw] bg-[#14171C] px-4 py-2 text-sm">
                       {x.content}
                     </span>
-                    <div className="bg-primary h-9 w-9 shrink-0 self-end rounded-full"></div>
+                    <div className="bg-primary flex h-9 w-9 shrink-0 items-center justify-center self-end rounded-full text-base">
+                      {session?.user?.name?.slice(0, 1)}
+                    </div>
                   </div>
                   <span className="text-secondary/50 mr-13 self-end text-xs">
                     {formatMessageDate(x.timestamp)}
