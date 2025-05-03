@@ -3,7 +3,6 @@ import BfRobot from './assets/bf-robot.png';
 import BfRobotBadge from './assets/bf-robot-badge.svg';
 import { InfoPopover } from '../shared/InfoPopover';
 import { useEffect, useState } from 'react';
-import RobotImage from './assets/bf-robot.png';
 import { api } from '~/trpc/react';
 import { format } from 'date-fns';
 import PlateEditor from '../LessonPage/PlateEditor';
@@ -73,7 +72,7 @@ const ServiceMessage = ({
   type: 'error' | 'success';
 }) => {
   return (
-    <div className="flex flex-col gap-4 bg-[#191419] p-4 rounded-[0.4167vw]">
+    <div className="flex flex-col gap-4 rounded-[0.4167vw] bg-[#191419] p-4">
       <div className="flex flex-row gap-3">
         {type == 'error' ? <ErrorSvg /> : <SuccessSvg />}
         <span
@@ -100,7 +99,8 @@ export default function AiMentor({ task }: { task: any }) {
       content: string;
       timestamp: Date;
       feedback?: 'upvote' | 'downvote' | null;
-      serviceType?: 'error' | 'success';
+      serviceType?: 'error' | 'success' | null;
+      md?: any;
     }[]
   >([]);
 
@@ -263,7 +263,7 @@ export default function AiMentor({ task }: { task: any }) {
             x.role == 'assistant' && !x.serviceType ? (
               <div className="flex flex-row gap-4" key={`assistant-${index}`}>
                 <Image
-                  src={RobotImage}
+                  src={BfRobot}
                   alt="Robot"
                   width={36}
                   height={36}

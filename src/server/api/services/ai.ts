@@ -14,6 +14,7 @@ export const messageSchema = z.object({
     .optional()
     .default(() => new Date()),
   feedback: z.enum(['upvote', 'downvote']).nullable().optional(),
+  serviceType: z.enum(['error', 'success']).nullable().optional(),
 });
 
 export type Message = z.infer<typeof messageSchema>;
@@ -198,6 +199,9 @@ export async function getAiCompletion(
       throw new Error('Unexpected response format from Claude API');
     }
   } catch (error: unknown) {
+    if (error instanceof Error && error.message === 'NO_TOKENS_LEFT') {
+      throw new Error('NO_TOKENS_LEFT');
+    }
     console.error('Error getting AI completion:', error);
     // Try to log token usage even if there's an error in response processing
     try {

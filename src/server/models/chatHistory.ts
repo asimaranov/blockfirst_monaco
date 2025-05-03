@@ -6,6 +6,7 @@ export interface ChatMessage {
   content: string;
   timestamp: Date;
   feedback?: 'upvote' | 'downvote' | null;
+  serviceType?: 'error' | 'success' | null;
 }
 
 export interface ChatHistory extends Document {
@@ -35,6 +36,11 @@ const chatMessageSchema = new Schema<ChatMessage>(
     feedback: {
       type: String,
       enum: ['upvote', 'downvote', null],
+      default: null,
+    },
+    serviceType: {
+      type: String,
+      enum: ['error', 'success', null],
       default: null,
     },
   },

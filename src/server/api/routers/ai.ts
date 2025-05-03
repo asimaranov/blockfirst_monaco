@@ -279,31 +279,37 @@ export const aiRouter = createTRPCRouter({
         chatHistory.messages.push(userMessage);
 
         let aiResponse;
+        let assistantMessage: Message;
 
         try {
           // Get AI response
           aiResponse = await getAiCompletion(chatHistory.messages, userId);
+          // Add AI response to history
+          assistantMessage = {
+            role: 'assistant' as const,
+            content: aiResponse!,
+            timestamp: new Date(),
+            feedback: null,
+          };
         } catch (error) {
           if (error instanceof Error && error.message === 'NO_TOKENS_LEFT') {
-            return {
-              message: {
-                role: 'assistant' as const,
-                content: 'NO_TOKENS',
-                timestamp: new Date(),
-                feedback: null,
-                serviceType: 'error' as 'error',
-              },
-            };
+            assistantMessage = {
+              role: 'assistant' as const,
+              content: 'NO_TOKENS',
+              timestamp: new Date(),
+              feedback: null,
+              serviceType: 'error',
+            } as Message;
+          } else {
+            assistantMessage = {
+              role: 'assistant' as const,
+              content: 'UNKNOWN_ERROR',
+              timestamp: new Date(),
+              feedback: null,
+              serviceType: 'error',
+            } as Message;
           }
         }
-        // Add AI response to history
-        const assistantMessage: Message = {
-          role: 'assistant' as const,
-          content: aiResponse!,
-          timestamp: new Date(),
-          feedback: null,
-        };
-
         chatHistory.messages.push(assistantMessage);
 
         // Save to database
