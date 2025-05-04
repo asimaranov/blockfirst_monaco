@@ -463,9 +463,13 @@ export const examAiRouter = createTRPCRouter({
             content: 'У вас закончились попытки. Экзамен завершен.',
             timestamp: new Date(),
             feedback: null,
-            serviceType: 'error' as const,
+            messageType: 'error' as const,
+            messageTypeExplanation: 'NO_LIVES_LEFT',
           };
         } else {
+          let messageType: 'error' | 'success' = 'success';
+          let messageTypeExplanation: string | null = null;
+
           try {
             // Get the current question being answered
             const currentQuestionId = chatHistory.currentQuestionId;
@@ -517,15 +521,23 @@ export const examAiRouter = createTRPCRouter({
                   const nextQuestionNumber = currentQuestionId + 1;
                   const formattedNextQuestion = `Вопрос ${nextQuestionNumber}: ${nextQuestion}`;
                   aiResponse = `Верно! ${answerFeedback.explanation}\n\nПереходим к следующему вопросу:\n\n${formattedNextQuestion}`;
+                  messageType = 'success';
+                  messageTypeExplanation = 'CORRECT_ANSWER';
                 } else {
                   aiResponse = `Верно! ${answerFeedback.explanation}\n\nПоздравляю! Вы успешно завершили все вопросы экзамена.`;
+                  messageType = 'success';
+                  messageTypeExplanation = 'CORRECT_ANSWER';
                 }
               } else {
                 if (chatHistory.currentLives > 0) {
                   const formattedCurrentQuestion = `Вопрос ${currentQuestionId}: ${currentQuestion || ''}`;
                   aiResponse = `Ответ неверный. ${answerFeedback.explanation}\n\nУ вас осталось ${chatHistory.currentLives} попыток. Попробуйте еще раз:\n\n${formattedCurrentQuestion}`;
+                  messageType = 'error';
+                  messageTypeExplanation = 'INCORRECT_ANSWER';
                 } else {
                   aiResponse = `Ответ неверный. ${answerFeedback.explanation}\n\nУ вас закончились попытки. Экзамен завершен.`;
+                  messageType = 'error';
+                  messageTypeExplanation = 'INCORRECT_ANSWER';
                 }
               }
             } else {
@@ -544,6 +556,8 @@ export const examAiRouter = createTRPCRouter({
             assistantMessage = {
               role: 'assistant' as const,
               content: aiResponse,
+              messageType: messageType,
+              messageTypeExplanation: messageTypeExplanation,
               timestamp: new Date(),
               feedback: null,
             };
@@ -555,7 +569,8 @@ export const examAiRouter = createTRPCRouter({
                 content: 'NO_TOKENS',
                 timestamp: new Date(),
                 feedback: null,
-                serviceType: 'error' as const,
+                messageType: 'error' as const,
+                messageTypeExplanation: 'NO_TOKENS',
               };
             } else {
               assistantMessage = {
@@ -563,7 +578,8 @@ export const examAiRouter = createTRPCRouter({
                 content: 'UNKNOWN_ERROR',
                 timestamp: new Date(),
                 feedback: null,
-                serviceType: 'error' as const,
+                messageType: 'error' as const,
+                messageTypeExplanation: 'UNKNOWN_ERROR',
               };
             }
           }

@@ -28,7 +28,8 @@ export default function ExamChat({ examId }: { examId: string }) {
       content: string;
       timestamp: Date;
       feedback?: 'upvote' | 'downvote' | null;
-      serviceType?: 'error' | 'success' | null;
+      messageType?: 'error' | 'success' | null;
+      messageTypeExplanation?: string | null;
       md?: any;
     }[]
   >([]);
@@ -191,36 +192,59 @@ export default function ExamChat({ examId }: { examId: string }) {
         <ChatLoading />
       ) : (
         <div className="flex h-177 flex-col-reverse gap-8 overflow-y-scroll px-8 pt-6 pb-5">
-          {[...messages]
-            .reverse()
-            .map((message, index) =>
-              message.role === 'assistant' && !message.serviceType ? (
-                <AiMessageItem
-                  key={`assistant-${index}-${message.content}`}
-                  message={message}
-                  index={messages.length - 1 - index}
-                  showFeedback={false}
-                  handleFeedback={() => {}}
-                />
-              ) : message.role === 'assistant' && message.serviceType ? (
-                <ServiceMessage
-                  key={`service-${index}`}
-                  header={
-                    message.content === 'NO_TOKENS'
-                      ? 'Недостаточно AI токенов'
-                      : 'Неизвестная ошибка'
-                  }
-                  content={
-                    message.content === 'NO_TOKENS'
-                      ? 'У вас исчерпаны AI-токены или недостаточно токенов для запроса. Пожалуйста, дождитесь обновления лимита или измените тарифный план.'
-                      : 'Произошла неизвестная ошибка'
-                  }
-                  type={message.serviceType}
-                />
-              ) : (
-                <UserMessageItem key={`user-${index}`} message={message} />
-              )
-            )}
+          {[...messages].reverse().map((message, index) =>
+            message.role === 'assistant' && !message.messageType ? (
+              <AiMessageItem
+                key={`assistant-${index}-${message.content}`}
+                message={message}
+                index={messages.length - 1 - index}
+                showFeedback={false}
+                handleFeedback={() => {}}
+              />
+            ) : message.role === 'assistant' && message.messageType ? (
+              <ServiceMessage
+                key={`service-${index}`}
+                header={
+                  message.messageTypeExplanation === 'NO_TOKENS'
+                    ? 'Недостаточно AI токенов'
+                    : message.messageTypeExplanation === 'NO_LIVES_LEFT'
+                      ? 'Недостаточно попыток'
+                      : message.messageTypeExplanation === 'CORRECT_ANSWER'
+                        ? 'Верно!'
+                        : message.messageTypeExplanation === 'INCORRECT_ANSWER'
+                          ? 'Неверно!'
+                          : message.messageTypeExplanation === 'UNKNOWN_ERROR'
+                            ? 'Неизвестная ошибка'
+                            : 'Неизвестная ошибка'
+                }
+                message={
+                  message.messageTypeExplanation === 'NO_TOKENS'
+                    ? {
+                        content:
+                          'У вас исчерпаны AI-токены или недостаточно токенов для запроса. Пожалуйста, дождитесь обновления лимита или измените тарифный план.',
+                      }
+                    : message.messageTypeExplanation === 'NO_LIVES_LEFT'
+                      ? {
+                          content: message.content,
+                        }
+                      : message.messageTypeExplanation === 'CORRECT_ANSWER'
+                        ? {
+                            md: message.md,
+                          }
+                        : message.messageTypeExplanation === 'INCORRECT_ANSWER'
+                          ? {
+                              md: message.md,
+                            }
+                          : {
+                              content: `Произошла неизвестная ошибка: ${message.messageTypeExplanation}`,
+                            }
+                }
+                type={message.messageType}
+              />
+            ) : (
+              <UserMessageItem key={`user-${index}`} message={message} />
+            )
+          )}
         </div>
       )}
       <div className="flex flex-col">

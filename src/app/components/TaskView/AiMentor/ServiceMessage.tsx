@@ -1,5 +1,6 @@
 import React from 'react';
 import { cn } from '~/helpers';
+import AiMessage from '../AiMessage';
 
 const ErrorSvg = () => {
   return (
@@ -53,31 +54,38 @@ const SuccessSvg = () => {
 
 interface ServiceMessageProps {
   header: string;
-  content: string;
+  message: {
+    content: string;
+    md?: any;
+  };
   type: 'error' | 'success';
 }
 
 const ServiceMessage: React.FC<ServiceMessageProps> = ({
   header,
-  content,
+  message,
   type,
-}) => {
-  return (
-    <div className="flex flex-col gap-4 rounded-[0.4167vw] bg-[#191419] p-4">
-      <div className="flex flex-row gap-3">
-        {type == 'error' ? <ErrorSvg /> : <SuccessSvg />}
-        <span
-          className={cn(
-            'text-base',
-            type == 'error' ? 'text-error' : 'text-success'
-          )}
-        >
-          {header}
-        </span>
-      </div>
-      <span className="text-sm">{content}</span>
+}) => (
+  <div className={cn(
+      'flex flex-col gap-4 rounded-[0.4167vw] bg-[#191419] p-4',
+      type == 'error' ? 'bg-[error]' : 'bg-[#111B1D]'
+    )}
+  >
+    <div className="flex flex-row gap-3">
+      {type == 'error' ? <ErrorSvg /> : <SuccessSvg />}
+      <span
+        className={cn(
+          'text-base',
+          type == 'error' ? 'text-error' : 'text-success'
+        )}
+      >
+        {header}
+      </span>
     </div>
-  );
-};
+    <AiMessage richText={message.md || message.content} />
+
+    {/* <span className="text-sm">{content}</span> */}
+  </div>
+);
 
 export default ServiceMessage;

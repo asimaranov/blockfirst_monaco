@@ -14,7 +14,8 @@ export const messageSchema = z.object({
     .optional()
     .default(() => new Date()),
   feedback: z.enum(['upvote', 'downvote']).nullable().optional(),
-  serviceType: z.enum(['error', 'success']).nullable().optional(),
+  messageType: z.enum(['error', 'success']).nullable().optional(),
+  messageTypeExplanation: z.string().nullable().optional(),
 });
 
 export type Message = z.infer<typeof messageSchema>;

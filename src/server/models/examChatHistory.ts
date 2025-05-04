@@ -5,7 +5,8 @@ export interface ExamChatMessage {
   role: 'user' | 'assistant';
   content: string;
   timestamp: Date;
-  serviceType?: 'error' | 'success' | null;
+  messageType?: 'error' | 'success' | null;
+  messageTypeExplanation?: string | null;
   feedback?: {
     isCorrect?: boolean;
     explanation?: string;
@@ -39,9 +40,13 @@ const examChatMessageSchema = new Schema<ExamChatMessage>(
       default: Date.now,
       get: (value: any) => new Date(value),
     },
-    serviceType: {
+    messageType: {
       type: String,
       enum: ['error', 'success', null],
+      default: null,
+    },
+    messageTypeExplanation: {
+      type: String,
       default: null,
     },
     feedback: {
