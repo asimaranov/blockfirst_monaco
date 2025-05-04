@@ -33,8 +33,10 @@ export function TaskElement({
   useEffect(() => {
     if (tasksData) {
       const newTaskData: Record<string, TaskData> = {};
-      tasksData.forEach((task: TaskData) => {
-        newTaskData[task.id] = task;
+      tasksData.forEach((task) => {
+        if (task !== null) {
+          newTaskData[task.id] = task;
+        }
       });
       setTaskData(newTaskData);
       setIsLoading(false);
