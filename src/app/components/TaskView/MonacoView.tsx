@@ -11,6 +11,7 @@ import { cn } from '~/helpers';
 import { Modal } from '../shared/Modal';
 import { TaskReportForm } from './TaskReportForm';
 import { useParams } from 'next/navigation';
+import { createPortal } from 'react-dom';
 
 const DynamicMonacoEditorReact = dynamic(() => import('./MonacoViewDynamic'), {
   ssr: false,
@@ -977,15 +978,28 @@ export default function MonacoView({
   setIsAiMentorActive: (isActive: boolean) => void;
   isCollapsed: boolean;
 }) {
+
+  // useEffect(() => {
+  //   createPortal(
+  //     <button
+  //       onClick={() => setShowActionBar(!showActionBar)}
+  //       className="absolute top-0 right-0 z-1000 h-10 w-10 bg-red-500"
+  //     >
+  //       {showActionBar ? 'hide' : 'show'}
+  //     </button>, 
+  //     document.body
+  //   );
+  // }, []);
+
   const [showActionBar, setShowActionBar] = useState(true);
   return (
     <div className={cn('h-full w-272', isCollapsed && 'w-396')}>
-      {/* <button
+      <button
         onClick={() => setShowActionBar(!showActionBar)}
         className="absolute top-0 right-0 z-1000 h-10 w-10 bg-red-500"
       >
         {showActionBar ? 'hide' : 'show'}
-      </button> */}
+      </button>
       {showActionBar && <DynamicMonacoEditorReact />}
       {showActionBar && (
         <FloatingActionBar setIsAiMentorActive={setIsAiMentorActive} />

@@ -3,15 +3,17 @@ import React, { useState, useRef, useEffect } from 'react';
 interface ChatInputProps {
   onSendMessage: (message: string) => void;
   isGenerating: boolean;
+  disabled?: boolean;
 }
 
 export default function ChatInput({
   onSendMessage,
   isGenerating,
+  disabled = false,
 }: ChatInputProps) {
   const [message, setMessage] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const canWrite = message.length > 0 && !isGenerating;
+  const canWrite = message.length > 0 && !isGenerating && !disabled;
 
   // Set initial height to ensure it's a single line and centered
   useEffect(() => {
@@ -21,7 +23,7 @@ export default function ChatInput({
   }, []);
 
   const handleSendMessage = () => {
-    if (!message.trim()) return;
+    if (!message.trim() || disabled) return;
     onSendMessage(message);
     setMessage('');
 
@@ -36,7 +38,9 @@ export default function ChatInput({
       <textarea
         ref={textareaRef}
         className="placeholder:text-secondary flex w-full resize-none items-center justify-center text-sm outline-hidden"
-        placeholder={`Введите сообщение.`}
+        placeholder={
+          disabled ? 'Вы не можете отправлять сообщения' : 'Введите сообщение.'
+        }
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         onInput={(e) => {
@@ -51,6 +55,7 @@ export default function ChatInput({
           }
         }}
         rows={1}
+        disabled={disabled}
       />
 
       <button

@@ -214,7 +214,25 @@ const IntroPage = ({
   );
 };
 
-const ExamPage = ({ close }: { close: () => void }) => {
+const ExamPage = ({
+  close,
+  examId,
+}: {
+  close: () => void;
+  examId: string;
+}) => {
+  const {
+    totalLives,
+    currentLives,
+    currentQuestionId,
+    updateLives,
+    updateCurrentQuestion,
+  } = useExamStore();
+
+  const totalQuestionsNum = 20;
+
+  console.log('Current lives:', currentLives);
+
   return (
     <div className="flex h-200 w-175 flex-col justify-center bg-[#0F1217]">
       <div className="border-b-accent flex flex-row items-center justify-between border-b px-4 py-3">
@@ -239,11 +257,13 @@ const ExamPage = ({ close }: { close: () => void }) => {
           </svg>
         </button>
       </div>
-      <ExamChat task={null}></ExamChat>
+      <ExamChat examId={examId}></ExamChat>
       <div className="border-t-accent flex flex-row justify-between border-t px-8 py-3.5">
         <div>
-          <span className="text-xl leading-5">1</span>
-          <span className="text-secondary text-sm leading-5">/20</span>
+          <span className="text-xl leading-5">{currentQuestionId}</span>
+          <span className="text-secondary text-sm leading-5">
+            / {totalQuestionsNum}
+          </span>
         </div>
         <div className="flex items-center justify-center gap-2">
           <InfoPopover
@@ -256,7 +276,7 @@ const ExamPage = ({ close }: { close: () => void }) => {
             </span>
 
             <div className="flex flex-row justify-center gap-0.5">
-              {Array.from({ length: 5 }).map((_, index) => (
+              {Array.from({ length: currentLives }).map((_, index) => (
                 <Image
                   src={HeartIconSmall}
                   alt=""
@@ -273,7 +293,7 @@ const ExamPage = ({ close }: { close: () => void }) => {
 };
 
 export default function ExamComponent() {
-  const { isOpen: open, close } = useExamStore();
+  const { isOpen: open, close, examId } = useExamStore();
   const [page, setPage] = useState<'intro' | 'exam'>('intro');
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -305,7 +325,7 @@ export default function ExamComponent() {
             {page === 'intro' ? (
               <IntroPage close={close} setPage={setPage} />
             ) : (
-              <ExamPage close={close} />
+              <ExamPage close={close} examId={examId} />
             )}
           </motion.div>
         </motion.div>

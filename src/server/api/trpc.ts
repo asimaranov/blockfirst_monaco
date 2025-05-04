@@ -20,6 +20,7 @@ import TronWalletModel from '../models/tronWallet';
 import VacancyModel from '../models/vacancy';
 import ChatHistoryModel from '../models/chatHistory';
 import dbConnect from '../mongodb';
+import ExamChatHistoryModel from '../models/examChatHistory';
 
 /**
  * 1. CONTEXT
@@ -52,6 +53,7 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
         tronWallet: TronWalletModel,
         vacancy: VacancyModel,
         chatHistory: ChatHistoryModel,
+        examChatHistory: ExamChatHistoryModel,
       },
     },
     ...opts,

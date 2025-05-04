@@ -27,6 +27,7 @@ interface CourseSectionProps {
   }[];
   finalTestStatus: 'locked' | 'available' | 'completed';
   expanded?: boolean;
+  finalTestId: string | undefined;
 }
 
 export function CourseSection({
@@ -35,6 +36,7 @@ export function CourseSection({
   modules,
   finalTestStatus,
   expanded,
+  finalTestId,
 }: CourseSectionProps) {
   const [isExpanded, setIsExpanded] = useState(!!expanded);
   const { open } = useExamStore();
@@ -72,9 +74,7 @@ export function CourseSection({
         <div
           className={cn(
             'flex cursor-pointer flex-row justify-between gap-4',
-            status === 'locked' || status === 'upcoming'
-              ? 'cursor-default'
-              : ''
+            status === 'locked' || status === 'upcoming' ? 'cursor-default' : ''
           )}
           onClick={() => {
             if (status === 'available' || status === 'completed') {
@@ -166,12 +166,16 @@ export function CourseSection({
                   total={module.lessons.length}
                 />
               ))}
-              <TakeTestButton
-                onClick={() => {
-                  open(title);
-                }}
-                isCompleted={finalTestStatus === 'completed'}
-              />
+              {finalTestId && (
+                <TakeTestButton
+                  onClick={() => {
+                    if (finalTestId) {
+                      open(finalTestId);
+                    }
+                  }}
+                  isCompleted={finalTestStatus === 'completed'}
+                />
+              )}
             </div>
           </motion.div>
         )}

@@ -10,6 +10,7 @@ import { vacanciesRouter } from '~/server/api/routers/vacancies';
 import { tasksRouter } from '~/server/api/routers/tasks';
 import { aiRouter } from '~/server/api/routers/ai';
 import { createCallerFactory, createTRPCRouter } from '~/server/api/trpc';
+import { examAiRouter } from './routers/examAi';
 
 /**
  * This is the primary router for your server.
@@ -28,6 +29,7 @@ export const appRouter = createTRPCRouter({
   vacancies: vacanciesRouter,
   tasks: tasksRouter,
   ai: aiRouter,
+  examAi: examAiRouter,
 });
 
 // export type definition of API

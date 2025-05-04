@@ -204,6 +204,16 @@ export const configurePostStart = async (
   ]);
 
   console.log('Application Playground started');
+
+  const target = document.getElementsByClassName('actions-container highlight-toggled')[1];
+  console.log('target---', target);
+
+  target.innerHTML = '';
+
+  const div = document.createElement('li');
+  div.className = 'action-item menu-entry';
+  target.appendChild(div);
+
 };
 export type ConfigResult = {
   wrapperConfig: WrapperConfig;

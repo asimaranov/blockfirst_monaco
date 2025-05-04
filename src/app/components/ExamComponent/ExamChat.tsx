@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { api } from '~/trpc/react';
 import ChatInput from '../TaskView/ChatInput';
 import { authClient } from '~/server/auth/client';
+import { useExamStore } from '@/store/examStore';
 
 // Import new components
 import ServiceMessage from '../TaskView/AiMentor/ServiceMessage';
@@ -12,8 +13,15 @@ import LoadingIndicator from '../TaskView/AiMentor/LoadingIndicator';
 import EmptyState from '../TaskView/AiMentor/EmptyState';
 import ChatLoading from '../TaskView/AiMentor/ChatLoading';
 
-export default function ExamChat({ task }: { task: any }) {
+export default function ExamChat({ examId }: { examId: string }) {
   const [isGenerating, setIsGenerating] = useState(false);
+  const {
+    totalLives,
+    currentLives,
+    currentQuestionId,
+    updateLives,
+    updateCurrentQuestion,
+  } = useExamStore();
   const [messages, setMessages] = useState<
     {
       role: string;
@@ -28,12 +36,15 @@ export default function ExamChat({ task }: { task: any }) {
   // Add a reference to the token query to manually invalidate it
   const utils = api.useUtils();
 
-  // const { data: session } = authClient.useSession();
+  // Debug current state
+  useEffect(() => {
+    console.log('Current lives in store:', currentLives);
+  }, [currentLives]);
 
   // Load chat history from API
-  const { data: chatHistory, isLoading } = api.ai.getChatHistory.useQuery(
+  const { data: chatHistory, isLoading } = api.examAi.getChatHistory.useQuery(
     {
-      taskId: 'lakndf',
+      examId: examId,
     },
     {
       // Ensure the query is refetched when the task ID changes
@@ -50,62 +61,106 @@ export default function ExamChat({ task }: { task: any }) {
       chatHistory.messages &&
       chatHistory.messages.length > 0
     ) {
-      // Ensure messages are properly parsed with date objects
-      const parsedMessages = chatHistory.messages.map((msg) => ({
-        ...msg,
-        timestamp: new Date(msg.timestamp),
-      }));
-      setMessages(parsedMessages);
+      // Debug chatHistory data
+      console.log('Chat history loaded:', {
+        totalLives: chatHistory.totalLives,
+        currentLives: chatHistory.currentLives,
+        currentQuestionId: chatHistory.currentQuestionId,
+      });
+
+      if (chatHistory.messages.every((msg) => msg.role === 'assistant')) {
+        for (const [i, msg] of chatHistory.messages.entries()) {
+          if (msg.delay) {
+            setIsGenerating(true);
+            setTimeout(() => {
+              if (i === chatHistory.messages.length - 1) {
+                setIsGenerating(false);
+              }
+
+              setMessages((prev) => [
+                ...prev,
+                { ...msg, timestamp: new Date(msg.timestamp) },
+              ]);
+            }, msg.delay);
+          } else {
+            setMessages((prev) => [
+              ...prev,
+              { ...msg, timestamp: new Date(msg.timestamp) },
+            ]);
+          }
+        }
+      } else {
+        const parsedMessages = chatHistory.messages.map((msg) => ({
+          ...msg,
+          timestamp: new Date(msg.timestamp),
+        }));
+        setMessages(parsedMessages);
+      }
+
+      // Set lives and current question ID from chat history
+      if (
+        chatHistory.totalLives !== undefined &&
+        chatHistory.currentLives !== undefined
+      ) {
+        console.log(
+          'Updating lives from chat history:',
+          chatHistory.currentLives,
+          chatHistory.totalLives
+        );
+        updateLives(chatHistory.currentLives, chatHistory.totalLives);
+      }
+
+      if (chatHistory.currentQuestionId !== undefined) {
+        updateCurrentQuestion(chatHistory.currentQuestionId);
+      }
     }
-  }, [chatHistory]);
+  }, [chatHistory, updateLives, updateCurrentQuestion]);
 
   // Send message mutation
-  const sendMessageMutation = api.ai.sendMessage.useMutation({
+  const sendMessageMutation = api.examAi.sendMessage.useMutation({
     onSuccess: (data) => {
       setIsGenerating(false);
+      console.log('Message response data:', data);
       setMessages((prev) => [...prev, data.message]);
 
+      // Update lives and current question ID in the store
+      if (data.currentLives !== undefined) {
+        const currentLivesValue = Number(data.currentLives);
+        console.log(
+          'Updating lives from response:',
+          currentLivesValue,
+          data.totalLives || totalLives
+        );
+
+        if (!isNaN(currentLivesValue)) {
+          updateLives(
+            currentLivesValue,
+            data.totalLives !== undefined ? Number(data.totalLives) : totalLives
+          );
+        }
+      }
+
+      if (data.currentQuestionId !== undefined) {
+        const questionIdValue = Number(data.currentQuestionId);
+        if (!isNaN(questionIdValue)) {
+          updateCurrentQuestion(questionIdValue);
+        }
+      }
+
+      // Invalidate the chat history query to refresh the data
+      utils.examAi.getChatHistory.invalidate({ examId });
+
       // Invalidate token data to refresh token count
-      utils.ai.getRemainingTokens.invalidate();
+      utils.examAi.getRemainingTokens.invalidate();
     },
     onError: (error) => {
       setIsGenerating(false);
       console.error('Error sending message:', error);
 
       // Still invalidate token data in case tokens were used
-      utils.ai.getRemainingTokens.invalidate();
+      utils.examAi.getRemainingTokens.invalidate();
     },
   });
-
-  // Feedback mutation
-  const updateFeedbackMutation = api.ai.updateMessageFeedback.useMutation({
-    onSuccess: (data) => {
-      setMessages((prev) => {
-        const newMessages = [...prev];
-        if (newMessages[data.messageIndex]) {
-          newMessages[data.messageIndex].feedback = data.feedback;
-        }
-        return newMessages;
-      });
-    },
-    onError: (error) => {
-      console.error('Error updating message feedback:', error);
-    },
-  });
-
-  // Handle message feedback
-  const handleFeedback = (
-    messageIndex: number,
-    feedback: 'upvote' | 'downvote' | 'none'
-  ) => {
-    if (!task?.id) return;
-
-    updateFeedbackMutation.mutateAsync({
-      taskId: task.id,
-      messageIndex,
-      feedback,
-    });
-  };
 
   const handleSendMessage = async (messageContent: string) => {
     if (!messageContent.trim()) return;
@@ -120,43 +175,15 @@ export default function ExamChat({ task }: { task: any }) {
     setIsGenerating(true);
 
     try {
+      console.log('Sending message with current lives:', currentLives);
       await sendMessageMutation.mutateAsync({
         content: messageContent,
-        taskId: task?.id,
+        examId: examId,
       });
     } catch (error) {
       // Error handling is done in the onError callback
     }
   };
-
-  useEffect(() => {
-    if (messages.length === 0) {
-      (async () => {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-
-        setMessages((prev) => [
-          ...prev,
-          {
-            role: 'assistant',
-            content: 'Приветсвую! Рад видеть тебя на зачете!',
-            timestamp: new Date(),
-          },
-        ]);
-
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-
-        setMessages((prev) => [
-          ...prev,
-          {
-            role: 'assistant',
-            content:
-              'Объясните, что такое смарт-контракт в Solidity и опишите основные типы данных, которые используются при его разработке. Приведите пример простого смарт-контракта, который хранит и возвращает значение типа uint.',
-            timestamp: new Date(),
-          },
-        ]);
-      })();
-    }
-  }, []);
 
   return (
     <>
@@ -172,7 +199,8 @@ export default function ExamChat({ task }: { task: any }) {
                   key={`assistant-${index}-${message.content}`}
                   message={message}
                   index={messages.length - 1 - index}
-                  handleFeedback={handleFeedback}
+                  showFeedback={false}
+                  handleFeedback={() => {}}
                 />
               ) : message.role === 'assistant' && message.serviceType ? (
                 <ServiceMessage
@@ -200,6 +228,7 @@ export default function ExamChat({ task }: { task: any }) {
         <ChatInput
           onSendMessage={handleSendMessage}
           isGenerating={isGenerating}
+          disabled={currentLives <= 0}
         />
       </div>
 

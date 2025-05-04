@@ -13,6 +13,7 @@ type Module = {
   total: number;
   status: 'available' | 'upcoming' | 'locked';
   finalTestStatus: 'available' | 'upcoming' | 'locked';
+  finalTestId: string;
 };
 
 const CodeIcon = () => {
@@ -102,6 +103,7 @@ const mockCourseSections = [
     icon: <CodeIcon />,
     status: 'completed',
     finalTestStatus: 'completed',
+    finalTestId: 'azmzpv56z3pftvc',
     modules: [
       {
         title: 'Основы блокчейна',
@@ -136,6 +138,7 @@ const mockCourseSections = [
     status: 'available',
     expanded: true,
     finalTestStatus: 'locked',
+    finalTestId: 'azmzpv56z3pftvc',
     modules: [
       {
         title: 'txs, ноды, консенсус, mempool',
@@ -251,6 +254,7 @@ export function CourseSections() {
             modules={section.modules as Module[]}
             finalTestStatus={section.finalTestStatus as 'available' | 'locked' | 'completed'}
             expanded={section.expanded}
+            finalTestId={section.finalTestId}
           />
         ))}
       </div>
