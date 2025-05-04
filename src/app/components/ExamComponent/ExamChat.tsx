@@ -229,10 +229,12 @@ export default function ExamChat({ examId }: { examId: string }) {
                         }
                       : message.messageTypeExplanation === 'CORRECT_ANSWER'
                         ? {
+                            content: '',
                             md: message.md,
                           }
                         : message.messageTypeExplanation === 'INCORRECT_ANSWER'
                           ? {
+                              content: '',
                               md: message.md,
                             }
                           : {

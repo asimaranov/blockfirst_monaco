@@ -20,7 +20,7 @@ const DynamicMonacoEditorReact = dynamic(() => import('./MonacoViewDynamic'), {
 
 // const DynamicMonacoEditorReact = LoadingComponent;
 
-const StarIcon = ({ className }: { className?: string }) => {
+export const StarIcon = ({ className }: { className?: string }) => {
   return (
     <svg
       width="32"
@@ -39,7 +39,7 @@ const StarIcon = ({ className }: { className?: string }) => {
   );
 };
 
-const StarIconFilled = ({ className }: { className?: string }) => {
+export const StarIconFilled = ({ className }: { className?: string }) => {
   return (
     <svg
       width="32"

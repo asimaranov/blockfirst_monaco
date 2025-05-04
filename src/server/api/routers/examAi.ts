@@ -237,6 +237,8 @@ const getNextQuestion = (
   const nextQuestionKey = `Question ${currentQuestionId + 1}`;
   const nextQuestion = data[nextQuestionKey];
 
+  console.log('nextQuestion data', data);
+
   // Add logging for debugging purposes
   console.log(
     `Getting next question: currentQuestionId=${currentQuestionId}, nextQuestionKey=${nextQuestionKey}, found=${nextQuestion ? 'yes' : 'no'}`
@@ -537,7 +539,7 @@ export const examAiRouter = createTRPCRouter({
                 } else {
                   aiResponse = `Ответ неверный. ${answerFeedback.explanation}\n\nУ вас закончились попытки. Экзамен завершен.`;
                   messageType = 'error';
-                  messageTypeExplanation = 'INCORRECT_ANSWER';
+                  messageTypeExplanation = 'NO_LIVES_LEFT';
                 }
               }
             } else {
@@ -605,6 +607,76 @@ export const examAiRouter = createTRPCRouter({
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: 'Failed to get AI response',
+        });
+      }
+    }),
+
+  // Add a new endpoint to restart an exam
+  restartExam: protectedProcedure
+    .input(
+      z.object({
+        examId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const userId = ctx.session.user.id;
+        const { examId } = input;
+
+        // Generate field names for all questions and answers
+        const fields = generateQuestionAnswerFields(MAX_QUESTIONS);
+
+        const { document, data, headings } = await getDocumentWithFields<{
+          'First message': string;
+          [key: string]: string;
+        }>(examId, fields);
+
+        // Generate initial messages for the restarted exam
+        const initialMessages = await getInitialMessages(data);
+
+        // Find and update the exam chat history
+        const chatHistory =
+          await ctx.mongo.models.examChatHistory.findOneAndUpdate(
+            { userId, examId },
+            {
+              userId,
+              examId,
+              messages: initialMessages,
+              totalLives: 5,
+              currentLives: 5,
+              currentQuestionId: 1,
+            },
+            {
+              upsert: true,
+              new: true,
+              setDefaultsOnInsert: true,
+            }
+          );
+
+        if (!chatHistory) {
+          throw new TRPCError({
+            code: 'INTERNAL_SERVER_ERROR',
+            message: 'Failed to restart exam',
+          });
+        }
+
+        return {
+          success: true,
+          messages: chatHistory.messages.map((msg: any) => ({
+            ...msg,
+            md: editor.getApi(MarkdownPlugin).markdown.deserialize(msg.content),
+            timestamp: new Date(msg.timestamp),
+            feedback: msg.feedback || null,
+          })),
+          currentLives: chatHistory.currentLives,
+          totalLives: chatHistory.totalLives,
+          currentQuestionId: chatHistory.currentQuestionId,
+        };
+      } catch (error) {
+        console.error('Error restarting exam:', error);
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to restart exam',
         });
       }
     }),

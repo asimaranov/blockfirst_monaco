@@ -19,6 +19,8 @@ import { InfoPopover } from '../shared/InfoPopover';
 import AiMentor from '../TaskView/AiMentor';
 import ExamChat from './ExamChat';
 import { useExamStore } from '@/store/examStore';
+import ChatSuccess from './ChatSuccess';
+import ChatFail from './ChatFail';
 
 const IntroPage = ({
   close,
@@ -214,13 +216,7 @@ const IntroPage = ({
   );
 };
 
-const ExamPage = ({
-  close,
-  examId,
-}: {
-  close: () => void;
-  examId: string;
-}) => {
+const ExamPage = ({ close, examId }: { close: () => void; examId: string }) => {
   const {
     totalLives,
     currentLives,
@@ -229,9 +225,22 @@ const ExamPage = ({
     updateCurrentQuestion,
   } = useExamStore();
 
+  const [currentState, setCurrentState] = useState<
+    'chat' | 'completed' | 'failed'
+  >('chat');
+
   const totalQuestionsNum = 20;
 
   console.log('Current lives:', currentLives);
+
+  useEffect(() => {
+    (async () => {
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      if (currentLives <= 0) {
+        setCurrentState('failed');
+      }
+    })();
+  }, [currentLives]);
 
   return (
     <div className="flex h-200 w-175 flex-col justify-center bg-[#0F1217]">
@@ -257,37 +266,43 @@ const ExamPage = ({
           </svg>
         </button>
       </div>
-      <ExamChat examId={examId}></ExamChat>
-      <div className="border-t-accent flex flex-row justify-between border-t px-8 py-3.5">
-        <div>
-          <span className="text-xl leading-5">{currentQuestionId}</span>
-          <span className="text-secondary text-sm leading-5">
-            / {totalQuestionsNum}
-          </span>
-        </div>
-        <div className="flex items-center justify-center gap-2">
-          <InfoPopover
-            title="Очки «жизни»"
-            content="При прохождении зачета вам разрешается сделать 5 неверных ответов. Превышение данного количества потребует повторной сдачи зачета."
-          />
-          <div className="flex flex-row items-center gap-1">
-            <span className="text-secondary/50 text-sm leading-4">
-              Очки «жизни» —
+      {currentState === 'chat' && <ExamChat examId={examId}></ExamChat>}
+      {currentState === 'completed' && <ChatSuccess />}
+      {currentState === 'failed' && (
+        <ChatFail onRetry={() => setCurrentState('chat')} examId={examId} />
+      )}
+      {currentState === 'chat' && (
+        <div className="border-t-accent flex flex-row justify-between border-t px-8 py-3.5">
+          <div>
+            <span className="text-xl leading-5">{currentQuestionId}</span>
+            <span className="text-secondary text-sm leading-5">
+              / {totalQuestionsNum}
             </span>
+          </div>
+          <div className="flex items-center justify-center gap-2">
+            <InfoPopover
+              title="Очки «жизни»"
+              content="При прохождении зачета вам разрешается сделать 5 неверных ответов. Превышение данного количества потребует повторной сдачи зачета."
+            />
+            <div className="flex flex-row items-center gap-1">
+              <span className="text-secondary/50 text-sm leading-4">
+                Очки «жизни» —
+              </span>
 
-            <div className="flex flex-row justify-center gap-0.5">
-              {Array.from({ length: currentLives }).map((_, index) => (
-                <Image
-                  src={HeartIconSmall}
-                  alt=""
-                  className="h-4 w-4"
-                  key={index}
-                ></Image>
-              ))}
+              <div className="flex flex-row justify-center gap-0.5">
+                {Array.from({ length: currentLives }).map((_, index) => (
+                  <Image
+                    src={HeartIconSmall}
+                    alt=""
+                    className="h-4 w-4"
+                    key={index}
+                  ></Image>
+                ))}
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
