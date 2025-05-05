@@ -24,20 +24,20 @@ export default function AiTokensInfo() {
     : SubscriptionType.Free;
 
   useEffect(() => {
-    function calculateTimeToNoon() {
+    function calculateTimeToMidnight() {
       const now = new Date();
-      const target = new Date(now);
+      const midnight = new Date(now);
 
       // Set target to midnight today
-      target.setHours(0, 0, 0, 0);
+      midnight.setHours(0, 0, 0, 0);
 
       // If it's already past midnight, set target to midnight tomorrow
-      if (now > target) {
-        target.setDate(target.getDate() + 1);
+      if (now > midnight) {
+        midnight.setDate(midnight.getDate() + 1);
       }
 
       // Calculate the difference in milliseconds
-      const diff = target.getTime() - now.getTime();
+      const diff = midnight.getTime() - now.getTime();
 
       // Convert to hours, minutes and seconds
       const hours = Math.floor(diff / (1000 * 60 * 60));
@@ -48,11 +48,11 @@ export default function AiTokensInfo() {
     }
 
     // Update the time immediately
-    setTimeToReset(calculateTimeToNoon());
+    setTimeToReset(calculateTimeToMidnight());
 
     // Set up an interval to update every second
     const intervalId = setInterval(() => {
-      setTimeToReset(calculateTimeToNoon());
+      setTimeToReset(calculateTimeToMidnight());
     }, 1000);
 
     // Clean up the interval on component unmount
@@ -140,11 +140,11 @@ export default function AiTokensInfo() {
             <div className="flex flex-col gap-3">
               <div className="flex flex-row justify-between">
                 <span className="text-xl">AI токены</span>
-                <div className="flex flex-row gap-0.5 items-center">
+                <div className="flex flex-row items-center gap-0.5">
                   <span className="text-secondary/50 text-xs">
-                    До ресета —{' '}
+                    Ресет в полночь —{' '}
                   </span>
-                  <div className="flex flex-row gap-1 items-center">
+                  <div className="flex flex-row items-center gap-1">
                     <Image
                       src={Clock}
                       alt="Clock"

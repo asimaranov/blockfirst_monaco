@@ -10,6 +10,7 @@ import {
   messageSchema,
   Message,
   getRemainingTokens,
+  resetUserTokens,
   TOKEN_LIMITS,
 } from '../services/ai';
 import { TRPCError } from '@trpc/server';
@@ -216,6 +217,40 @@ export const aiRouter = createTRPCRouter({
       throw new TRPCError({
         code: 'INTERNAL_SERVER_ERROR',
         message: 'Failed to get token information',
+      });
+    }
+  }),
+
+  // Reset tokens manually for the current user (useful for testing or troubleshooting)
+  resetTokens: protectedProcedure.mutation(async ({ ctx }) => {
+    try {
+      const userId = ctx.session.user.id;
+      const success = await resetUserTokens(userId);
+
+      if (!success) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to reset tokens',
+        });
+      }
+
+      // Return updated token info after reset
+      const userData = await ctx.mongo.models.userData.findOne({ userId });
+      const plan = userData?.plan || 'free';
+      const totalLimit = TOKEN_LIMITS[plan];
+
+      return {
+        success: true,
+        remaining: totalLimit,
+        total: totalLimit,
+        used: 0,
+        plan,
+      };
+    } catch (error) {
+      console.error('Error resetting tokens:', error);
+      throw new TRPCError({
+        code: 'INTERNAL_SERVER_ERROR',
+        message: 'Failed to reset tokens',
       });
     }
   }),

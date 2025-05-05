@@ -72,12 +72,14 @@ export async function getRemainingTokens(userId: string): Promise<number> {
       `[AI Token] Last reset date: ${lastReset.toISOString()}, today: ${today.toISOString()}`
     );
 
-    // Reset if date has changed
-    if (
-      lastReset.getDate() !== today.getDate() ||
-      lastReset.getMonth() !== today.getMonth() ||
-      lastReset.getFullYear() !== today.getFullYear()
-    ) {
+    // Reset if date has changed - compare only the date parts
+    const lastResetDay = new Date(lastReset);
+    lastResetDay.setHours(0, 0, 0, 0);
+
+    const todayDay = new Date(today);
+    todayDay.setHours(0, 0, 0, 0);
+
+    if (lastResetDay.getTime() !== todayDay.getTime()) {
       console.log(
         `[AI Token] Resetting tokens for user ${userId} - new day detected`
       );
@@ -248,5 +250,35 @@ export async function getAiCompletion(
       );
     }
     throw error;
+  }
+}
+
+// Function to manually reset tokens for a user
+export async function resetUserTokens(userId: string): Promise<boolean> {
+  try {
+    console.log(`[AI Token] Manually resetting tokens for user ${userId}`);
+
+    const userData = await UserDataModel.findOne({ userId });
+
+    if (!userData) {
+      console.log(`[AI Token] User ${userId} not found for manual reset`);
+      return false;
+    }
+
+    const result = await UserDataModel.updateOne(
+      { userId },
+      {
+        $set: {
+          'aiTokens.tokensUsedToday': 0,
+          'aiTokens.lastResetDate': new Date(),
+        },
+      }
+    );
+
+    console.log(`[AI Token] Manual reset result:`, result);
+    return result.modifiedCount > 0;
+  } catch (err) {
+    console.error('[AI Token] Error manually resetting tokens:', err);
+    return false;
   }
 }
