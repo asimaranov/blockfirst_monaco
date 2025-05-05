@@ -11,6 +11,7 @@ import { tasksRouter } from '~/server/api/routers/tasks';
 import { aiRouter } from '~/server/api/routers/ai';
 import { createCallerFactory, createTRPCRouter } from '~/server/api/trpc';
 import { examAiRouter } from './routers/examAi';
+import { commentsRouter } from './routers/comments';
 
 /**
  * This is the primary router for your server.
@@ -30,6 +31,7 @@ export const appRouter = createTRPCRouter({
   tasks: tasksRouter,
   ai: aiRouter,
   examAi: examAiRouter,
+  comments: commentsRouter,
 });
 
 // export type definition of API

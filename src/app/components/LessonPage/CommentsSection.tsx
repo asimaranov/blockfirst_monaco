@@ -3,7 +3,11 @@ import CommentsEditor from './CommentsEditor';
 import CommentsList from './CommentsList';
 import { getServerSession } from '~/server/auth';
 
-export default async function CommentsSection() {
+export default async function CommentsSection({
+  lessonId,
+}: {
+  lessonId: string;
+}) {
   const session = await getServerSession();
 
   return (
@@ -12,7 +16,7 @@ export default async function CommentsSection() {
         <div className="flex w-full px-5 pt-16 pb-16 sm:px-16">
           <div className="flex w-full flex-row gap-3">
             <UserAvatar className="hidden sm:flex shrink-0" />
-            <CommentsEditor />
+            <CommentsEditor lessonId={lessonId} />
           </div>
         </div>
       ) : (

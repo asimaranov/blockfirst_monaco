@@ -36,7 +36,7 @@ export default async function LessonPage({
             <PlateEditor richText={document?.contentRich as Value} />
           </div>
           <ContentFooter nextLocked={true} />
-          <CommentsSection />
+          <CommentsSection lessonId={courseId} />
         </div>
         <RightSidebar />
       </div>

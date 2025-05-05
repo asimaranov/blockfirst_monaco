@@ -3,14 +3,15 @@
 import { cn } from '@udecode/cn';
 import { AnimatePresence, motion } from 'motion/react';
 import { DropDownSelector } from '../shared/DropDownSelector';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import DropDownAction from '../shared/DropDownAction';
 import CommentsEditor from './CommentsEditor';
 import { PlateController } from '@udecode/plate/react';
 import Image from 'next/image';
-import {} from 'better-auth/react';
+import { api } from '~/trpc/react';
 import { authClient } from '~/server/auth/client';
-import { redirect } from 'next/navigation';
+import { redirect, useParams, useRouter } from 'next/navigation';
+import { formatRelativeTime } from '~/app/lib/utils';
 
 const HeartIcon = () => (
   <svg
@@ -113,85 +114,10 @@ interface Comment {
     id: string;
     url: string;
   }[];
+  _id?: string;
+  __v?: number;
+  [key: string]: any; // Allow additional properties from server
 }
-
-// Dummy Data for Comments
-const commentsData: Comment[] = [
-  {
-    id: '1',
-    author: 'Андрей',
-    avatarInitial: 'А',
-    timestamp: '17 Апреля, 13:59',
-    text: 'Поздравляю с успешным завершением курсов по Solidity на платформе BlockFirst! Это отличный шаг в мир разработки смарт-контрактов и блокчейн-технологий.',
-    likes: 481,
-    replies: 21,
-    isLiked: false,
-    answers: [
-      {
-        id: '1-1',
-        author: 'Виталий',
-        isSelf: true,
-        avatarInitial: 'В',
-        timestamp: '18 Апреля, 15:30',
-        text: 'Спасибо!',
-        likes: 481,
-        replies: 21,
-        isLiked: false,
-      },
-      {
-        id: '1-2',
-        author: 'Андрей',
-        avatarInitial: 'А',
-        timestamp: '17 Апреля, 13:59',
-        text: 'Спасибо за спасибо!',
-        likes: 481,
-        replies: 21,
-        isLiked: false,
-      },
-    ],
-  },
-  {
-    id: '2',
-    author: 'Елена',
-    avatarInitial: 'Е',
-    timestamp: '18 Апреля, 09:15',
-    text: 'Отличный курс! Много полезной информации и практических заданий.',
-    likes: 123,
-    replies: 5,
-    isLiked: true,
-  },
-  {
-    id: '3',
-    author: 'Максим',
-    avatarInitial: 'М',
-    timestamp: '18 Апреля, 11:02',
-    text: 'Присоединяюсь к поздравлениям! Курс действительно стоящий.',
-    likes: 98,
-    replies: 2,
-    isLiked: false,
-    images: [
-      {
-        id: '1',
-        url: 'https://images.unsplash.com/photo-1722778610349-e3c02e277ec2?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      },
-      {
-        id: '2',
-        url: 'https://images.unsplash.com/photo-1669026219505-0545ae1dabf5?q=80&w=2400&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      },
-    ],
-  },
-  {
-    id: '4',
-    author: 'Виталий',
-    isSelf: true,
-    avatarInitial: 'В',
-    timestamp: '18 Апреля, 11:33',
-    text: 'Спасибо за поздравление!',
-    likes: 98,
-    replies: 2,
-    isLiked: false,
-  },
-];
 
 const DeleteIcon = () => (
   <svg
@@ -312,17 +238,34 @@ function CommentItem({
   setReplyFormAfterId,
   setIsThreadOpened: setIsThreadOpenedExternal,
   className,
+  onToggleLike,
+  onDeleteComment,
 }: {
   comment: Comment;
   replyFormAfterId: string | null;
   setReplyFormAfterId: (id: string | null) => void;
   setIsThreadOpened: (isOpened: boolean) => void;
   className?: string;
+  onToggleLike: (commentId: string) => void;
+  onDeleteComment: (commentId: string) => void;
 }) {
   const [isThreadOpened, setIsThreadOpened] = useState(false);
   const [modalImage, setModalImage] = useState<string | null>(null);
-
   const { data: session } = authClient.useSession();
+
+  const handleLikeToggle = useCallback(() => {
+    if (!session) {
+      redirect('/signin');
+      return;
+    }
+    onToggleLike(comment.id);
+  }, [comment.id, session, onToggleLike]);
+
+  const handleDeleteComment = useCallback(() => {
+    if (confirm('Are you sure you want to delete this comment?')) {
+      onDeleteComment(comment.id);
+    }
+  }, [comment.id, onDeleteComment]);
 
   return (
     <div className={cn(className)}>
@@ -375,30 +318,30 @@ function CommentItem({
                     <path
                       d="M7.66406 9.75H11.8307"
                       stroke="#F2F2F2"
-                      stroke-width="1.25"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="1.25"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M9.75 11.8307V7.66406"
                       stroke="#F2F2F2"
-                      stroke-width="1.25"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="1.25"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M9.58464 17.5013C13.9569 17.5013 17.5013 13.9569 17.5013 9.58464C17.5013 5.21238 13.9569 1.66797 9.58464 1.66797C5.21238 1.66797 1.66797 5.21238 1.66797 9.58464C1.66797 13.9569 5.21238 17.5013 9.58464 17.5013Z"
                       stroke="#F2F2F2"
-                      stroke-width="1.25"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="1.25"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M18.3346 18.3346L16.668 16.668"
                       stroke="#F2F2F2"
-                      stroke-width="1.25"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="1.25"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                   </svg>
                 </div>
@@ -410,6 +353,7 @@ function CommentItem({
         <div className="flex items-center gap-6 text-sm">
           <button
             className={cn('group flex cursor-pointer items-center gap-1')}
+            onClick={handleLikeToggle}
           >
             {comment.isLiked ? <HeartFilledIcon /> : <HeartIcon />}
             <span
@@ -439,8 +383,8 @@ function CommentItem({
                 className="h-4 w-4 opacity-80 group-hover:opacity-100"
               >
                 <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
+                  fillRule="evenodd"
+                  clipRule="evenodd"
                   d="M3.05602 10.7977C3.33876 11.0728 3.79098 11.0666 4.06608 10.7838L8.00201 6.73856L11.9379 10.7838C12.213 11.0666 12.6653 11.0728 12.948 10.7977C13.2307 10.5226 13.2369 10.0703 12.9618 9.7876L8.51395 5.21617C8.37948 5.07797 8.19484 5 8.00201 5C7.80917 5 7.62453 5.07797 7.49006 5.21617L3.04218 9.7876C2.76708 10.0703 2.77328 10.5226 3.05602 10.7977Z"
                   fill="#195AF4"
                 />
@@ -503,6 +447,7 @@ function CommentItem({
                         value: 'delete',
                         icon: <DeleteIcon />,
                         className: 'text-error',
+                        onClick: handleDeleteComment,
                       },
                     ]
                   : [
@@ -538,9 +483,9 @@ function CommentItem({
                       <path
                         d="M11.043 16.7855L14.163 19.9055L21.963 12.1055"
                         stroke="#F2F2F2"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                     </svg>
                     <div className="flex flex-col gap-3 px-5 text-center">
@@ -560,15 +505,211 @@ function CommentItem({
   );
 }
 
+// Format comments to ensure they match the expected format
+const formatComments = (session: any, comments: any[]): Comment[] => {
+  return comments.map((comment: any) => {
+    // Convert author object to string if needed
+    const authorName =
+      typeof comment.author === 'object' ? comment.author.name : comment.author;
+    const avatarInitial =
+      typeof comment.author === 'object'
+        ? comment.author.avatarInitial
+        : authorName?.[0]?.toUpperCase() || '';
+
+    // Format answers if they exist
+    let answers: Comment[] = [];
+
+    if (
+      comment.answers &&
+      Array.isArray(comment.answers) &&
+      comment.answers.length > 0
+    ) {
+      answers = formatComments(session, comment.answers);
+    }
+
+    return {
+      ...comment,
+      id: comment.id || comment._id?.toString(),
+      author: authorName,
+      avatarInitial: avatarInitial,
+      timestamp: formatRelativeTime(
+        comment.timestamp ||
+          new Date(comment.createdAt || Date.now()).toLocaleDateString()
+      ),
+      likes: comment.likes?.length || 0,
+      replies: answers.length,
+      isLiked:
+        Array.isArray(comment.likes) &&
+        comment.likes.includes(session?.user?.id || ''),
+      answers,
+      isSelf: comment.author.id === session?.user?.id,
+    } as Comment;
+  });
+};
+
 export default function CommentsList() {
-  // Use the dummy data count for the header
-  const commentCount = commentsData.length;
+  // Use params to get lessonId from the URL
+  const params = useParams();
+  // Ensure lessonId is always a string
+  const lessonId = params.courseId ? String(params.courseId) : 'default-lesson';
+
   const [sort, setSort] = useState('new');
+  const [cursor, setCursor] = useState<string | null>(null);
+  const [allComments, setAllComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(false);
   const [replyToUser, setReplyToUser] = useState<string | null>(null);
   const [replyFormAfterId, setReplyFormAfterId] = useState<string | null>(null);
   const [openedComments, setOpenedComments] = useState<string[]>([]);
   const [modalImage, setModalImage] = useState<string | null>(null);
+  const router = useRouter();
+
+  const { data: session } = authClient.useSession();
+
+  // TRPC queries and mutations
+  const commentsQuery = api.comments.getByLessonId.useQuery(
+    { lessonId, sort: sort as 'new' | 'popular' | 'old', cursor },
+    { enabled: !!lessonId }
+  );
+
+  const createCommentMutation = api.comments.create.useMutation({
+    onSuccess: () => {
+      // Refresh comments
+      void commentsQuery.refetch();
+      // Reset form
+      setReplyFormAfterId(null);
+      setReplyToUser(null);
+    },
+  });
+
+  const toggleLikeMutation = api.comments.toggleLike.useMutation({
+    onSuccess: (result, variables) => {
+      // Update the comments state directly for an instant UI update
+      setAllComments((prevComments) =>
+        prevComments.map((c) => {
+          // If this is the comment that was liked/unliked
+          if (c.id === variables.commentId) {
+            return {
+              ...c,
+              isLiked: result.isLiked,
+              likes: result.isLiked ? c.likes + 1 : c.likes - 1,
+            };
+          }
+          // Check if the comment is in the answers of another comment
+          if (c.answers && c.answers.length > 0) {
+            return {
+              ...c,
+              answers: c.answers.map((answer) =>
+                answer.id === variables.commentId
+                  ? {
+                      ...answer,
+                      isLiked: result.isLiked,
+                      likes: result.isLiked
+                        ? answer.likes + 1
+                        : answer.likes - 1,
+                    }
+                  : answer
+              ),
+            };
+          }
+          return c;
+        })
+      );
+    },
+  });
+
+  const deleteCommentMutation = api.comments.delete.useMutation({
+    onSuccess: () => {
+      // Refresh comments after deletion
+      void commentsQuery.refetch();
+    },
+  });
+
+  // Handle like toggle
+  const handleToggleLike = useCallback(
+    (commentId: string) => {
+      if (!session) {
+        redirect('/signin');
+        return;
+      }
+      toggleLikeMutation.mutate({ commentId });
+    },
+    [session, toggleLikeMutation]
+  );
+
+  // Handle delete comment
+  const handleDeleteComment = useCallback(
+    (commentId: string) => {
+      if (confirm('Are you sure you want to delete this comment?')) {
+        deleteCommentMutation.mutate({ commentId });
+      }
+    },
+    [deleteCommentMutation]
+  );
+
+  // Update comments when data changes
+  useEffect(() => {
+    if (commentsQuery.data) {
+      if (cursor === null) {
+        // First load or sort change - replace all comments
+        setAllComments(
+          formatComments(session || '', commentsQuery.data.comments || [])
+        );
+      } else {
+        // Pagination - append new comments
+        setAllComments((prev) => [
+          ...prev,
+          ...formatComments(session, commentsQuery.data.comments || []),
+        ]);
+      }
+      // Update loading state
+      setLoading(false);
+    }
+  }, [commentsQuery.data, cursor, session]);
+
+  // Reset data when sort changes
+  useEffect(() => {
+    setCursor(null);
+    setAllComments([]);
+  }, [sort]);
+
+  // Handle load more
+  const handleLoadMore = useCallback(() => {
+    if (commentsQuery.data?.nextCursor) {
+      setLoading(true);
+      setCursor(commentsQuery.data.nextCursor);
+    }
+  }, [commentsQuery.data?.nextCursor]);
+
+  // Handle submit comment
+  const handleSubmitComment = useCallback(
+    (text: string, images?: { id: string; url: string }[]) => {
+      if (!session) {
+        redirect('/signin');
+        return;
+      }
+
+      if (replyFormAfterId) {
+        // Reply to a comment
+        createCommentMutation.mutate({
+          lessonId,
+          parentId: replyFormAfterId,
+          text,
+          images,
+        });
+      } else {
+        // New comment
+        createCommentMutation.mutate({
+          lessonId,
+          text,
+          images,
+        });
+      }
+    },
+    [lessonId, replyFormAfterId, session, createCommentMutation]
+  );
+
+  const commentCount = allComments.length;
+  const hasMoreComments = !!commentsQuery.data?.nextCursor;
 
   return (
     <div className="w-full px-5 pb-16 sm:px-16">
@@ -600,13 +741,100 @@ export default function CommentsList() {
       </div>
       {/* Comments Container */}
       <div className="flex flex-col gap-8 pb-16">
-        {/* Spacing between comment items, estimating 32px -> gap-8 */}
-        {commentsData.map((comment) => (
+        {/* Loading state */}
+        {commentsQuery.isLoading && !allComments.length && (
+          <div className="flex justify-center py-8">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 animate-spin"
+            >
+              <path
+                d="M12 2V6"
+                stroke="#9AA6B5"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M12 18V22"
+                stroke="#9AA6B5"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="opacity-40"
+              />
+              <path
+                d="M4.93 4.93L7.76 7.76"
+                stroke="#9AA6B5"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="opacity-60"
+              />
+              <path
+                d="M16.24 16.24L19.07 19.07"
+                stroke="#9AA6B5"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="opacity-20"
+              />
+              <path
+                d="M2 12H6"
+                stroke="#9AA6B5"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="opacity-80"
+              />
+              <path
+                d="M18 12H22"
+                stroke="#9AA6B5"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="opacity-0"
+              />
+              <path
+                d="M4.93 19.07L7.76 16.24"
+                stroke="#9AA6B5"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="opacity-10"
+              />
+              <path
+                d="M16.24 7.76L19.07 4.93"
+                stroke="#9AA6B5"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="opacity-70"
+              />
+            </svg>
+          </div>
+        )}
+
+        {/* Empty state */}
+        {!commentsQuery.isLoading && !allComments.length && (
+          <div className="flex flex-col items-center justify-center py-10 text-center">
+            <div className="text-secondary mb-2">Нет комментариев</div>
+            <div className="text-secondary text-sm">
+              Будьте первым, кто оставит комментарий!
+            </div>
+          </div>
+        )}
+
+        {/* Comments List */}
+        {allComments.map((comment) => (
           <div key={comment.id} className="">
             <CommentItem
               comment={comment}
               setReplyFormAfterId={(id) => {
-                console.log('Settingg', id);
                 setReplyToUser(null);
                 setReplyFormAfterId(id);
               }}
@@ -620,6 +848,8 @@ export default function CommentsList() {
                   );
                 }
               }}
+              onToggleLike={handleToggleLike}
+              onDeleteComment={handleDeleteComment}
             />
             <AnimatePresence>
               {replyFormAfterId === comment.id && (
@@ -631,15 +861,28 @@ export default function CommentsList() {
                   className="overflow-hidden"
                 >
                   <div className="flex flex-row gap-5 overflow-hidden pt-8 pl-15">
-                    <UserAvatar avatarInitial={'В'} isSelf={true} />
-
+                    <UserAvatar
+                      avatarInitial={
+                        session?.user?.name?.[0]?.toUpperCase() || 'U'
+                      }
+                      isSelf={true}
+                    />
                     <CommentsEditor
                       className="w-175"
                       value={replyToUser ? `@${replyToUser}, ` : ''}
                       id="sub-editor"
+                      lessonId={lessonId}
+                      replyFormAfterId={replyFormAfterId}
                       onCancel={() => {
                         setReplyToUser(null);
                         setReplyFormAfterId(null);
+                      }}
+                      onSubmit={() => {
+                        // Refresh the data after submission
+                        commentsQuery.refetch();
+                        // Close the reply form
+                        setReplyFormAfterId(null);
+                        setReplyToUser(null);
                       }}
                     />
                   </div>
@@ -655,57 +898,80 @@ export default function CommentsList() {
                   transition={{ duration: 0.3, ease: 'easeInOut' }}
                   className="flex flex-col overflow-hidden pl-15"
                 >
-                  {comment.answers.map((answer, index) => (
-                    <div key={answer.id} className="pt-8">
-                      <CommentItem
-                        comment={answer}
-                        setReplyFormAfterId={() => {
-                          setReplyToUser(answer.author);
-                          setReplyFormAfterId(comment.id);
-                        }}
-                        replyFormAfterId={replyFormAfterId}
-                        setIsThreadOpened={(isOpened: boolean) => {}}
-                        className=""
-                      />
-                    </div>
-                  ))}
+                  {comment.answers.map((answer: any) => {
+                    // Ensure answer has proper structure
+                    const formattedAnswer: Comment = {
+                      ...answer,
+                      author:
+                        typeof answer.author === 'object'
+                          ? answer.author.name
+                          : answer.author,
+                      avatarInitial:
+                        typeof answer.author === 'object'
+                          ? answer.author.avatarInitial
+                          : typeof answer.author === 'string'
+                            ? answer.author[0].toUpperCase()
+                            : 'U',
+                    };
+
+                    return (
+                      <div key={formattedAnswer.id} className="pt-8">
+                        <CommentItem
+                          comment={formattedAnswer}
+                          setReplyFormAfterId={() => {
+                            setReplyToUser(formattedAnswer.author);
+                            setReplyFormAfterId(comment.id);
+                          }}
+                          replyFormAfterId={replyFormAfterId}
+                          setIsThreadOpened={(isOpened: boolean) => {}}
+                          className=""
+                          onToggleLike={handleToggleLike}
+                          onDeleteComment={handleDeleteComment}
+                        />
+                      </div>
+                    );
+                  })}
                 </motion.div>
               )}
             </AnimatePresence>
           </div>
         ))}
       </div>
-      <div className="flex items-center justify-center">
-        <button
-          className={cn(
-            'border-primary hover:bg-primary flex w-full sm:w-55 cursor-pointer items-center justify-center gap-2 rounded-full border px-5 py-3 text-sm leading-5',
-            loading &&
-              'cursor-default border-[#1242B2] bg-[#1242B2] hover:bg-[#1242B2]'
-          )}
-          disabled={loading}
-          onClick={() => setLoading(true)}
-        >
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className={cn('h-5 w-5', loading && 'animate-spin')}
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M3 10C3 6.13516 6.11172 3 10 3C12.3136 3 14.0468 3.96629 15.1909 4.91968C15.4687 5.15117 15.7127 5.38261 15.9231 5.60053V3.89744C15.9231 3.60005 16.1642 3.35897 16.4615 3.35897C16.7589 3.35897 17 3.60005 17 3.89744V7.1282C17 7.42559 16.7589 7.66667 16.4615 7.66667H13.5897C13.2924 7.66667 13.0513 7.42559 13.0513 7.1282C13.0513 6.83082 13.2924 6.58974 13.5897 6.58974H15.372C15.1431 6.33271 14.8528 6.0398 14.5014 5.74699C13.4917 4.90551 11.9941 4.07692 10 4.07692C6.70879 4.07692 4.07692 6.72763 4.07692 10C4.07692 10.2974 3.83585 10.5385 3.53846 10.5385C3.24108 10.5385 3 10.2974 3 10ZM16.4615 9.46154C16.7589 9.46154 17 9.70262 17 10C17 13.866 13.866 17 10 17C8.02888 17 6.46913 16.0093 5.4283 15.0656C5.1927 14.852 4.98122 14.6386 4.79487 14.4362V16.1026C4.79487 16.3999 4.55379 16.641 4.25641 16.641C3.95903 16.641 3.71795 16.3999 3.71795 16.1026V12.8718C3.71795 12.5744 3.95903 12.3333 4.25641 12.3333H7.1745C7.47188 12.3333 7.71296 12.5744 7.71296 12.8718C7.71296 13.1692 7.47188 13.4103 7.1745 13.4103H5.32582C5.54647 13.6717 5.82328 13.97 6.15166 14.2678C7.09047 15.1189 8.40251 15.9231 10 15.9231C13.2712 15.9231 15.9231 13.2712 15.9231 10C15.9231 9.70262 16.1642 9.46154 16.4615 9.46154Z"
-              fill="#F2F2F2"
-            />
-          </svg>
 
-          <span className="text-sm leading-5 whitespace-nowrap">
-            {loading ? 'Загружаем' : 'Больше комментариев'}
-          </span>
-        </button>
-      </div>
+      {/* Load more button */}
+      {hasMoreComments && (
+        <div className="flex items-center justify-center">
+          <button
+            className={cn(
+              'border-primary hover:bg-primary flex w-full cursor-pointer items-center justify-center gap-2 rounded-full border px-5 py-3 text-sm leading-5 sm:w-55',
+              loading &&
+                'cursor-default border-[#1242B2] bg-[#1242B2] hover:bg-[#1242B2]'
+            )}
+            disabled={loading || commentsQuery.isLoading}
+            onClick={handleLoadMore}
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className={cn('h-5 w-5', loading && 'animate-spin')}
+            >
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M3 10C3 6.13516 6.11172 3 10 3C12.3136 3 14.0468 3.96629 15.1909 4.91968C15.4687 5.15117 15.7127 5.38261 15.9231 5.60053V3.89744C15.9231 3.60005 16.1642 3.35897 16.4615 3.35897C16.7589 3.35897 17 3.60005 17 3.89744V7.1282C17 7.42559 16.7589 7.66667 16.4615 7.66667H13.5897C13.2924 7.66667 13.0513 7.42559 13.0513 7.1282C13.0513 6.83082 13.2924 6.58974 13.5897 6.58974H15.372C15.1431 6.33271 14.8528 6.0398 14.5014 5.74699C13.4917 4.90551 11.9941 4.07692 10 4.07692C6.70879 4.07692 4.07692 6.72763 4.07692 10C4.07692 10.2974 3.83585 10.5385 3.53846 10.5385C3.24108 10.5385 3 10.2974 3 10ZM16.4615 9.46154C16.7589 9.46154 17 9.70262 17 10C17 13.866 13.866 17 10 17C8.02888 17 6.46913 16.0093 5.4283 15.0656C5.1927 14.852 4.98122 14.6386 4.79487 14.4362V16.1026C4.79487 16.3999 4.55379 16.641 4.25641 16.641C3.95903 16.641 3.71795 16.3999 3.71795 16.1026V12.8718C3.71795 12.5744 3.95903 12.3333 4.25641 12.3333H7.1745C7.47188 12.3333 7.71296 12.5744 7.71296 12.8718C7.71296 13.1692 7.47188 13.4103 7.1745 13.4103H5.32582C5.54647 13.6717 5.82328 13.97 6.15166 14.2678C7.09047 15.1189 8.40251 15.9231 10 15.9231C13.2712 15.9231 15.9231 13.2712 15.9231 10C15.9231 9.70262 16.1642 9.46154 16.4615 9.46154Z"
+                fill="#F2F2F2"
+              />
+            </svg>
+
+            <span className="text-sm leading-5 whitespace-nowrap">
+              {loading ? 'Загружаем' : 'Больше комментариев'}
+            </span>
+          </button>
+        </div>
+      )}
     </div>
   );
 }
