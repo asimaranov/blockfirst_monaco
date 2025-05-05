@@ -216,16 +216,39 @@ export const configurePostStart = async (
     ).setAsDefaultApi();
   }
 
-  vscode.commands.registerCommand('myExtension.reset', () => {
-    vscode.window.showInformationMessage('Reset button clicked!');
-    // Add any additional reset functionality here
+  vscode.commands.registerCommand('myExtension.reset', (event) => {
+    // Find the reset button element
+    const resetButtonElement = document.querySelector(
+      '[aria-label="Reset code"]'
+    );
+    let position = null;
+
+    if (resetButtonElement instanceof HTMLElement) {
+      const rect = resetButtonElement.getBoundingClientRect();
+      position = {
+        top: rect.bottom,
+        left: rect.right, // Position at right edge of button
+      };
+    }
+
+    // Send a message to the browser window
+    const message = {
+      command: 'resetButtonClicked',
+      position,
+    };
+
+    // Use postMessage to communicate with the parent window
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage(message, '*');
+    } else {
+      window.postMessage(message, '*');
+    }
   });
 
   vscode.commands.registerCommand('myExtension.toolbox', () => {
     vscode.window.showInformationMessage('Toolbox button clicked!');
     // Add any additional reset functionality here
   });
-
 
   // WA: Force show explorer and not search
   await vscode.commands.executeCommand('workbench.view.explorer');
@@ -286,7 +309,7 @@ export const configure = (htmlContainer?: HTMLElement): ConfigResult => {
         windowIndicator: {
           label: 'mlc-app-playground',
           tooltip: '',
-          command: '',
+          command: 'workbench.action.webview.openDeveloperTools',
         },
         workspaceProvider: {
           trusted: true,
