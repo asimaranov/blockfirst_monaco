@@ -48,6 +48,7 @@ export default function CommentsEditor({
       ]);
     }
   }, [value, editor]);
+  const utils = api.useUtils();
 
   const createCommentMutation = api.comments.create.useMutation({
     onSuccess: () => {
@@ -57,6 +58,7 @@ export default function CommentsEditor({
       // setReplyFormAfterId(null);
       // setReplyToUser(null);
       onSubmit?.();
+      utils.comments.getByLessonId.reset({ lessonId });
     },
   });
 
