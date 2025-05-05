@@ -507,9 +507,9 @@ export const examAiRouter = createTRPCRouter({
                 );
               }
 
-              // Get next question if answer is correct
+              // Get next question regardless of whether the answer is correct or not
               let nextQuestion = null;
-              if (answerFeedback.isCorrect) {
+              if (answerFeedback.isCorrect || chatHistory.currentLives > 0) {
                 nextQuestion = getNextQuestion(currentQuestionId, data);
                 if (nextQuestion) {
                   chatHistory.currentQuestionId = currentQuestionId + 1;
@@ -532,10 +532,17 @@ export const examAiRouter = createTRPCRouter({
                 }
               } else {
                 if (chatHistory.currentLives > 0) {
-                  const formattedCurrentQuestion = `Вопрос ${currentQuestionId}: ${currentQuestion || ''}`;
-                  aiResponse = `Ответ неверный. ${answerFeedback.explanation}\n\nУ вас осталось ${chatHistory.currentLives} попыток. Попробуйте еще раз:\n\n${formattedCurrentQuestion}`;
-                  messageType = 'error';
-                  messageTypeExplanation = 'INCORRECT_ANSWER';
+                  if (nextQuestion) {
+                    const nextQuestionNumber = currentQuestionId + 1;
+                    const formattedNextQuestion = `Вопрос ${nextQuestionNumber}: ${nextQuestion}`;
+                    aiResponse = `Ответ неверный. ${answerFeedback.explanation}\n\nУ вас осталось ${chatHistory.currentLives} попыток.\n\nПереходим к следующему вопросу:\n\n${formattedNextQuestion}`;
+                    messageType = 'error';
+                    messageTypeExplanation = 'INCORRECT_ANSWER';
+                  } else {
+                    aiResponse = `Ответ неверный. ${answerFeedback.explanation}\n\nУ вас осталось ${chatHistory.currentLives} попыток.\n\nПоздравляю! Вы дошли до конца экзамена.`;
+                    messageType = 'error';
+                    messageTypeExplanation = 'INCORRECT_ANSWER';
+                  }
                 } else {
                   aiResponse = `Ответ неверный. ${answerFeedback.explanation}\n\nУ вас закончились попытки. Экзамен завершен.`;
                   messageType = 'error';
