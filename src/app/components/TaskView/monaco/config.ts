@@ -13,7 +13,9 @@ import {
 } from '@codingame/monaco-vscode-files-service-override';
 import getKeybindingsServiceOverride from '@codingame/monaco-vscode-keybindings-service-override';
 import getLifecycleServiceOverride from '@codingame/monaco-vscode-lifecycle-service-override';
-import getLocalizationServiceOverride, { LocalizationOptions } from '@codingame/monaco-vscode-localization-service-override';
+import getLocalizationServiceOverride, {
+  LocalizationOptions,
+} from '@codingame/monaco-vscode-localization-service-override';
 import getBannerServiceOverride from '@codingame/monaco-vscode-view-banner-service-override';
 import getStatusBarServiceOverride from '@codingame/monaco-vscode-view-status-bar-service-override';
 import getTitleBarServiceOverride from '@codingame/monaco-vscode-view-title-bar-service-override';
@@ -53,88 +55,87 @@ import type { RegisterLocalProcessExtensionResult } from '@codingame/monaco-vsco
 import { MonacoEditorLanguageClientWrapper } from 'monaco-editor-wrapper';
 import { defaultViewsInit } from './viewsService';
 
-
 export const createDefaultLocaleConfiguration = (): LocalizationOptions => {
-    return {
-      async clearLocale() {
-        const url = new URL(window.location.href);
-        url.searchParams.delete('locale');
-        window.history.pushState(null, '', url.toString());
+  return {
+    async clearLocale() {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('locale');
+      window.history.pushState(null, '', url.toString());
+    },
+    async setLocale(id: string) {
+      const url = new URL(window.location.href);
+      url.searchParams.set('locale', id);
+      window.history.pushState(null, '', url.toString());
+    },
+    availableLanguages: [
+      {
+        locale: 'en',
+        languageName: 'English',
       },
-      async setLocale(id: string) {
-        const url = new URL(window.location.href);
-        url.searchParams.set('locale', id);
-        window.history.pushState(null, '', url.toString());
+      {
+        locale: 'cs',
+        languageName: 'Czech',
       },
-      availableLanguages: [
-        {
-          locale: 'en',
-          languageName: 'English',
-        },
-        {
-          locale: 'cs',
-          languageName: 'Czech',
-        },
-        {
-          locale: 'de',
-          languageName: 'German',
-        },
-        {
-          locale: 'es',
-          languageName: 'Spanish',
-        },
-        {
-          locale: 'fr',
-          languageName: 'French',
-        },
-        {
-          locale: 'it',
-          languageName: 'Italian',
-        },
-        {
-          locale: 'ja',
-          languageName: 'Japanese',
-        },
-        {
-          locale: 'ko',
-          languageName: 'Korean',
-        },
-        {
-          locale: 'pl',
-          languageName: 'Polish',
-        },
-        {
-          locale: 'pt-br',
-          languageName: 'Portuguese (Brazil)',
-        },
-        {
-          locale: 'qps-ploc',
-          languageName: 'Pseudo Language',
-        },
-        {
-          locale: 'ru',
-          languageName: 'Russian',
-        },
-        {
-          locale: 'tr',
-          languageName: 'Turkish',
-        },
-        {
-          locale: 'zh-hans',
-          languageName: 'Chinese (Simplified)',
-        },
-        {
-          locale: 'zh-hant',
-          languageName: 'Chinese (Traditional)',
-        },
-        {
-          locale: 'en',
-          languageName: 'English',
-        },
-      ],
-    };
+      {
+        locale: 'de',
+        languageName: 'German',
+      },
+      {
+        locale: 'es',
+        languageName: 'Spanish',
+      },
+      {
+        locale: 'fr',
+        languageName: 'French',
+      },
+      {
+        locale: 'it',
+        languageName: 'Italian',
+      },
+      {
+        locale: 'ja',
+        languageName: 'Japanese',
+      },
+      {
+        locale: 'ko',
+        languageName: 'Korean',
+      },
+      {
+        locale: 'pl',
+        languageName: 'Polish',
+      },
+      {
+        locale: 'pt-br',
+        languageName: 'Portuguese (Brazil)',
+      },
+      {
+        locale: 'qps-ploc',
+        languageName: 'Pseudo Language',
+      },
+      {
+        locale: 'ru',
+        languageName: 'Russian',
+      },
+      {
+        locale: 'tr',
+        languageName: 'Turkish',
+      },
+      {
+        locale: 'zh-hans',
+        languageName: 'Chinese (Simplified)',
+      },
+      {
+        locale: 'zh-hant',
+        languageName: 'Chinese (Traditional)',
+      },
+      {
+        locale: 'en',
+        languageName: 'English',
+      },
+    ],
   };
-  
+};
+
 var manifest = {
   name: 'theme-defaults',
   displayName: '%displayName%',
@@ -191,6 +192,25 @@ export const configurePostStart = async (
   ) as RegisterLocalProcessExtensionResult;
   result.setAsDefaultApi();
 
+  const extensionFilesOrContents = new Map<string, string | URL>();
+  extensionFilesOrContents.set(`images/vscode/reset.svg`, '/images/vscode/reset.svg');
+
+
+  // Activate the blockfirst extension
+  const blockfirstExtension = wrapper.getExtensionRegisterResult(
+    'BlockFirst.blockfirst'
+  );
+  if (blockfirstExtension) {
+    (
+      blockfirstExtension as RegisterLocalProcessExtensionResult
+    ).setAsDefaultApi();
+  }
+
+  // Register the custom button command
+  vscode.commands.registerCommand('myExtension.myCommand', () => {
+    vscode.window.showInformationMessage('Custom button clicked!');
+  });
+
   // WA: Force show explorer and not search
   await vscode.commands.executeCommand('workbench.view.explorer');
 
@@ -205,15 +225,18 @@ export const configurePostStart = async (
 
   console.log('Application Playground started');
 
-  const target = document.getElementsByClassName('actions-container highlight-toggled')[1];
-  console.log('target---', target);
+  // setInterval(() => {
+  //   const target = document.getElementsByClassName(
+  //     'actions-container highlight-toggled'
+  //   )[1];
+  //   console.log('target---', target);
 
-  target.innerHTML = '';
+  //   target.innerHTML = '';
 
-  const div = document.createElement('li');
-  div.className = 'action-item menu-entry';
-  target.appendChild(div);
-
+  //   const div = document.createElement('li');
+  //   div.className = 'action-item menu-entry';
+  //   target.appendChild(div);
+  // }, 1000);
 };
 export type ConfigResult = {
   wrapperConfig: WrapperConfig;
@@ -227,6 +250,9 @@ export const configure = (htmlContainer?: HTMLElement): ConfigResult => {
   const workspaceFile = vscode.Uri.file(
     '/workspace/.vscode/workspace.code-workspace'
   );
+  const extensionFilesOrContents = new Map<string, string | URL>();
+  extensionFilesOrContents.set(`images/vscode/reset.svg`, '/images/vscode/reset.svg');
+
 
   const wrapperConfig: WrapperConfig = {
     $type: 'extended',
@@ -304,6 +330,41 @@ export const configure = (htmlContainer?: HTMLElement): ConfigResult => {
             vscode: '*',
           },
         },
+      },
+      {
+        config: {
+          name: 'blockfirst',
+          publisher: 'BlockFirst',
+          version: '1.0.0',
+          engines: {
+            vscode: '*',
+          },
+          contributes: {
+            
+            menus: {
+              'editor/title': [
+                {
+                  command: 'myExtension.myCommand',
+                  when: 'editorIsOpen',
+                  group: 'navigation',
+                },
+              ],
+            },
+            commands: [
+              {
+                command: 'myExtension.myCommand',
+                title: 'My Custom Button',
+                icon: {
+                  light: 'images/vscode/reset.svg',
+                  dark: 'images/vscode/reset.svg',
+                },
+              },
+            ],
+
+          },
+        },
+        filesOrContents: extensionFilesOrContents
+
       },
     ],
     editorAppConfig: {
