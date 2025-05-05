@@ -240,6 +240,7 @@ function CommentItem({
   className,
   onToggleLike,
   onDeleteComment,
+  onEditComment,
 }: {
   comment: Comment;
   replyFormAfterId: string | null;
@@ -248,6 +249,7 @@ function CommentItem({
   className?: string;
   onToggleLike: (commentId: string) => void;
   onDeleteComment: (commentId: string) => void;
+  onEditComment: (commentId: string) => void;
 }) {
   const [isThreadOpened, setIsThreadOpened] = useState(false);
   const [modalImage, setModalImage] = useState<string | null>(null);
@@ -262,10 +264,12 @@ function CommentItem({
   }, [comment.id, session, onToggleLike]);
 
   const handleDeleteComment = useCallback(() => {
-    if (confirm('Are you sure you want to delete this comment?')) {
-      onDeleteComment(comment.id);
-    }
+    onDeleteComment(comment.id);
   }, [comment.id, onDeleteComment]);
+
+  const handleEditComment = useCallback(() => {
+    onEditComment(comment.id);
+  }, [comment.id, onEditComment]);
 
   return (
     <div className={cn(className)}>
@@ -441,6 +445,7 @@ function CommentItem({
                         label: 'Редактировать',
                         value: 'edit',
                         icon: <EditIcon />,
+                        onClick: handleEditComment,
                       },
                       {
                         label: 'Удалить',
@@ -861,6 +866,7 @@ export default function CommentsList() {
               }}
               onToggleLike={handleToggleLike}
               onDeleteComment={handleDeleteComment}
+              onEditComment={() => {}}
             />
             <AnimatePresence>
               {replyFormAfterId === comment.id && (
@@ -938,6 +944,7 @@ export default function CommentsList() {
                           className=""
                           onToggleLike={handleToggleLike}
                           onDeleteComment={handleDeleteComment}
+                          onEditComment={() => {}}
                         />
                       </div>
                     );

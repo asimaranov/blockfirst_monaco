@@ -283,7 +283,7 @@ const FloatingActionBar = ({
   return (
     <div
       ref={actionBarRef}
-      className="z-1000 flex flex-col"
+      className="z-1000 flex flex-col bg-[#0F1217] border-accent border-l"
       style={{
         position: 'fixed',
         bottom: position.bottom,
@@ -994,12 +994,12 @@ export default function MonacoView({
   const [showActionBar, setShowActionBar] = useState(true);
   return (
     <div className={cn('h-full w-272', isCollapsed && 'w-396')}>
-      <button
+      {/* <button
         onClick={() => setShowActionBar(!showActionBar)}
         className="absolute top-0 right-0 z-1000 h-10 w-10 bg-red-500"
       >
         {showActionBar ? 'hide' : 'show'}
-      </button>
+      </button> */}
       {showActionBar && <DynamicMonacoEditorReact />}
       {showActionBar && (
         <FloatingActionBar setIsAiMentorActive={setIsAiMentorActive} />

@@ -24,8 +24,10 @@ export default function ChatInput({
 
   const handleSendMessage = () => {
     if (!message.trim() || disabled) return;
-    onSendMessage(message);
+    const messagesToSend = message;
     setMessage('');
+
+    onSendMessage(messagesToSend);
 
     // Reset height after sending message
     if (textareaRef.current) {

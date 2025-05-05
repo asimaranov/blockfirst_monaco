@@ -280,7 +280,7 @@ export const aiRouter = createTRPCRouter({
           if (error instanceof Error && error.message === 'NO_TOKENS_LEFT') {
             assistantMessage = {
               role: 'assistant' as const,
-              content: '',
+              content: 'NO_TOKENS',
               timestamp: new Date(),
               feedback: null,
               messageType: 'error',
@@ -289,7 +289,7 @@ export const aiRouter = createTRPCRouter({
           } else {
             assistantMessage = {
               role: 'assistant' as const,
-              content: '',
+              content: 'UNKNOWN_ERROR',
               timestamp: new Date(),
               feedback: null,
               messageType: 'error',

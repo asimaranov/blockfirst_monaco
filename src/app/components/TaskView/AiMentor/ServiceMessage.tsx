@@ -1,6 +1,8 @@
 import React from 'react';
 import { cn } from '~/helpers';
 import AiMessage from '../AiMessage';
+import BfRobot from '../assets/bf-robot.png';
+import Image from 'next/image';
 
 const ErrorSvg = () => {
   return (
@@ -66,25 +68,49 @@ const ServiceMessage: React.FC<ServiceMessageProps> = ({
   message,
   type,
 }) => (
-  <div className={cn(
-      'flex flex-col gap-4 rounded-[0.4167vw] bg-[#191419] p-4',
-      type == 'error' ? 'bg-[error]' : 'bg-[#111B1D]'
-    )}
-  >
-    <div className="flex flex-row gap-3">
-      {type == 'error' ? <ErrorSvg /> : <SuccessSvg />}
-      <span
-        className={cn(
-          'text-base',
-          type == 'error' ? 'text-error' : 'text-success'
-        )}
-      >
-        {header}
-      </span>
-    </div>
-    <AiMessage richText={message.md || message.content} />
+  <div className="flex flex-row gap-4">
+    <Image
+      src={BfRobot}
+      alt="Robot"
+      width={36}
+      height={36}
+      className="h-9 w-9"
+    />
 
-    {/* <span className="text-sm">{content}</span> */}
+    <div
+      className={cn(
+        'flex flex-col gap-4 rounded-[0.4167vw] bg-[#191419] p-4',
+        type == 'error' ? 'bg-[#191419]' : 'bg-[#111B1D]'
+      )}
+    >
+      <div className="flex flex-row gap-3">
+        {type == 'error' ? <ErrorSvg /> : <SuccessSvg />}
+        <span
+          className={cn(
+            'text-base',
+            type == 'error' ? 'text-error' : 'text-success'
+          )}
+        >
+          {header}
+        </span>
+      </div>
+      <AiMessage
+        richText={
+          message.md || [
+            {
+              children: [
+                {
+                  text: message.content,
+                },
+              ],
+              type: 'p',
+            },
+          ]
+        }
+      />
+
+      {/* <span className="text-sm">{content}</span> */}
+    </div>
   </div>
 );
 

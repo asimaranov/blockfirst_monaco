@@ -83,6 +83,22 @@ export default function DropDownAction({
     };
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      window.addEventListener('scroll', handleScroll, true); // Use capture phase
+    }
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll, true);
+    };
+  }, [isOpen]);
+
   const handleOpenMobileFilter = () => {
     // If there's a mobile filter component, we'll show it
     // Otherwise, we'll just open the dropdown
