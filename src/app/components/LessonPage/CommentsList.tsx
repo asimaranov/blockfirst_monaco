@@ -567,7 +567,13 @@ export default function CommentsList() {
 
   // TRPC queries and mutations
   const commentsQuery = api.comments.getByLessonId.useQuery(
-    { lessonId, sort: sort as 'new' | 'popular' | 'old', cursor },
+    { lessonId, sort: sort as 'new' | 'popular' | 'old', cursor, limit: 10 },
+    { enabled: !!lessonId }
+  );
+
+  // Get total comment count
+  const totalCountQuery = api.comments.getTotalCount.useQuery(
+    { lessonId },
     { enabled: !!lessonId }
   );
 
@@ -575,6 +581,8 @@ export default function CommentsList() {
     onSuccess: () => {
       // Refresh comments
       void commentsQuery.refetch();
+      // Refresh total count
+      void totalCountQuery.refetch();
       // Reset form
       setReplyFormAfterId(null);
       setReplyToUser(null);
@@ -621,6 +629,8 @@ export default function CommentsList() {
     onSuccess: () => {
       // Refresh comments after deletion
       void commentsQuery.refetch();
+      // Refresh total count
+      void totalCountQuery.refetch();
     },
   });
 
@@ -708,7 +718,8 @@ export default function CommentsList() {
     [lessonId, replyFormAfterId, session, createCommentMutation]
   );
 
-  const commentCount = allComments.length;
+  // Use total count if available, otherwise fall back to allComments.length
+  const commentCount = totalCountQuery.data?.totalCount ?? allComments.length;
   const hasMoreComments = !!commentsQuery.data?.nextCursor;
 
   return (
@@ -939,7 +950,7 @@ export default function CommentsList() {
       </div>
 
       {/* Load more button */}
-      {hasMoreComments && (
+      {hasMoreComments && (totalCountQuery.data?.totalCount ?? 0) > 10 && (
         <div className="flex items-center justify-center">
           <button
             className={cn(

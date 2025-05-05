@@ -276,4 +276,23 @@ export const commentsRouter = createTRPCRouter({
         isLiked: updatedComment?.likes?.includes(userId) || false,
       };
     }),
+
+  getTotalCount: publicProcedure
+    .input(
+      z.object({
+        lessonId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const { lessonId } = input;
+
+      // Count all comments (both parent and child) for the lesson
+      const totalCount = await ctx.mongo.models.comment.countDocuments({
+        lessonId,
+      });
+
+      return {
+        totalCount,
+      };
+    }),
 });
