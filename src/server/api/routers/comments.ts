@@ -1,11 +1,39 @@
 import { z } from 'zod';
 import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc';
 import { TRPCError } from '@trpc/server';
+import { type SortOrder } from 'mongoose';
 
 const commentImageSchema = z.object({
   id: z.string(),
   url: z.string().url(),
 });
+
+// Define types for our app's usage
+interface CommentImage {
+  id: string;
+  url: string;
+}
+
+interface CommentAuthor {
+  id: string;
+  name: string;
+  avatarInitial: string;
+}
+
+// Simple type for formatted comment
+interface FormattedComment {
+  id: string;
+  lessonId: string;
+  parentId: string | null;
+  author: CommentAuthor;
+  text: string;
+  images?: CommentImage[];
+  likes: string[];
+  createdAt: Date;
+  isLiked: boolean;
+  replies: number;
+  answers?: FormattedComment[];
+}
 
 export const commentsRouter = createTRPCRouter({
   getByLessonId: publicProcedure
@@ -22,12 +50,12 @@ export const commentsRouter = createTRPCRouter({
       const userId = ctx.session?.user?.id;
 
       // Get root comments
-      const query = { lessonId, parentId: null };
+      const query: any = { lessonId, parentId: null };
       if (cursor) {
         query._id = { $lt: cursor };
       }
 
-      let sortOptions = {};
+      let sortOptions: { [key: string]: SortOrder } = {};
       switch (sort) {
         case 'new':
           sortOptions = { createdAt: -1 };
@@ -49,38 +77,38 @@ export const commentsRouter = createTRPCRouter({
       let nextCursor: string | null = null;
       if (comments.length > limit) {
         const nextItem = comments.pop();
-        nextCursor = nextItem?._id.toString() || null;
+        nextCursor = nextItem?._id?.toString() || null;
       }
 
       // Get all child comments for these parent comments
-      const parentIds = comments.map((comment) => comment._id.toString());
+      const parentIds = comments.map((comment: any) => comment._id.toString());
       const childComments = await ctx.mongo.models.comment
         .find({ parentId: { $in: parentIds } })
         .sort({ createdAt: 1 })
         .lean();
 
       // Group child comments by parent
-      const childCommentsByParent = {};
-      childComments.forEach((comment) => {
-        const parentId = comment.parentId.toString();
+      const childCommentsByParent: Record<string, any[]> = {};
+      childComments.forEach((comment: any) => {
+        const parentId = comment.parentId?.toString() || '';
         if (!childCommentsByParent[parentId]) {
           childCommentsByParent[parentId] = [];
         }
         childCommentsByParent[parentId].push({
           ...comment,
           id: comment._id.toString(),
-          isLiked: comment.likes.includes(userId),
+          isLiked: comment.likes?.includes(userId || ''),
           replies: 0, // Child comments don't have replies in this implementation
         });
       });
 
       // Format the response
-      const formattedComments = comments.map((comment) => {
+      const formattedComments = comments.map((comment: any) => {
         const commentId = comment._id.toString();
         return {
           ...comment,
           id: commentId,
-          isLiked: comment.likes.includes(userId),
+          isLiked: comment.likes?.includes(userId || ''),
           replies: (childCommentsByParent[commentId] || []).length,
           answers: childCommentsByParent[commentId] || [],
         };
@@ -155,7 +183,7 @@ export const commentsRouter = createTRPCRouter({
         });
       }
 
-      const isLiked = comment.likes.includes(userId);
+      const isLiked = comment.likes?.includes(userId);
       let updateOperation;
 
       if (isLiked) {
@@ -174,7 +202,7 @@ export const commentsRouter = createTRPCRouter({
 
       return {
         isLiked: !isLiked,
-        likes: updatedComment.likes.length,
+        likes: updatedComment?.likes?.length || 0,
       };
     }),
 
@@ -193,7 +221,7 @@ export const commentsRouter = createTRPCRouter({
       }
 
       // Only allow users to delete their own comments
-      if (comment.author.id !== userId) {
+      if (comment.author?.id !== userId) {
         throw new TRPCError({
           code: 'FORBIDDEN',
           message: 'You can only delete your own comments',
@@ -229,7 +257,7 @@ export const commentsRouter = createTRPCRouter({
       }
 
       // Only allow users to update their own comments
-      if (comment.author.id !== userId) {
+      if (comment.author?.id !== userId) {
         throw new TRPCError({
           code: 'FORBIDDEN',
           message: 'You can only update your own comments',
@@ -243,9 +271,9 @@ export const commentsRouter = createTRPCRouter({
       );
 
       return {
-        ...updatedComment.toObject(),
-        id: updatedComment._id.toString(),
-        isLiked: updatedComment.likes.includes(userId),
+        ...updatedComment?.toObject(),
+        id: updatedComment?._id.toString(),
+        isLiked: updatedComment?.likes?.includes(userId) || false,
       };
     }),
 });
