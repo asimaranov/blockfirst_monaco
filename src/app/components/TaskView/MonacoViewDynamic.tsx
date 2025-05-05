@@ -26,7 +26,6 @@ export default function MonacoViewDynamic() {
       style={{ backgroundColor: '#0F1217' }}
       className="relative h-full w-full"
       wrapperConfig={configResult.wrapperConfig}
-      
       onLoad={async (wrapper: any) => {
         await configResult.configurePostStart(wrapper, configResult);
 
@@ -34,7 +33,6 @@ export default function MonacoViewDynamic() {
         //   wrapper.dispose();
         // }, 10000);
       }}
-
       onError={(e) => {
         console.error(e);
       }}
