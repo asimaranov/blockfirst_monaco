@@ -14,6 +14,7 @@ import { motion, AnimatePresence } from 'motion/react';
 
 import { InfoPopover, InfoPopoverIcon } from '../shared/InfoPopover';
 import { authClient } from '~/server/auth/client';
+import { api } from '~/trpc/react';
 
 // Helper Icon Components (moved from LessonPage.tsx)
 const ChevronRightIcon = () => (
@@ -214,22 +215,43 @@ const Cover = () => {
 
   const { data: session } = authClient.useSession();
 
+  // Use tRPC to get streak and XP data
+  const { data: streakAndXp, isLoading: isLoadingStats } =
+    api.userData.getStreakAndXp.useQuery(undefined, {
+      enabled: !!session?.user,
+      // Don't refetch while user is on the page
+      refetchOnWindowFocus: false,
+    });
+
+  // tRPC mutation for updating streak
+  const updateStreakMutation = api.userData.updateStreak.useMutation();
+
+  // Update streak when component mounts (user visits the page)
+  useEffect(() => {
+    if (session?.user) {
+      updateStreakMutation.mutate();
+    }
+  }, [session?.user]);
+
   const stats: Stat[] = [
     {
       icon: FireIcon,
       alt: 'Fire',
-      value: session?.user ? 300 : 0,
+      value: session?.user ? streakAndXp?.streak.count || 0 : 0,
       label: 'Стрик',
     },
     {
       icon: SparklesIcon,
       alt: 'Sparkles',
-      value: session?.user ? 300 : 0,
+      value: session?.user ? streakAndXp?.xp.total || 0 : 0,
       label: 'XP',
     },
   ];
 
-  const activeDay = session ? 3 : (0 as number);
+  // Calculate active day based on streak count
+  const activeDay = session
+    ? Math.min(5, streakAndXp?.streak.count || 0)
+    : (0 as number);
 
   // Initialize refs for stat items
   useEffect(() => {
@@ -247,7 +269,7 @@ const Cover = () => {
 
       <div className="relative z-10 flex h-full flex-col justify-between px-5 py-8 sm:px-16">
         {/* Top Row */}
-        <div className="hidden sm:flex items-start justify-between">
+        <div className="hidden items-start justify-between sm:flex">
           {/* Left Section: Last Updated */}
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
@@ -451,10 +473,10 @@ const Cover = () => {
             </div>
           </div>
         </div>
-        <div className='flex sm:hidden'></div>
+        <div className="flex sm:hidden"></div>
 
         {/* Bottom Row */}
-        <div className="flex items-start justify-between  sm:items-center">
+        <div className="flex items-start justify-between sm:items-center">
           {/* User Info */}
           <div className="flex items-center gap-5">
             <div className="relative h-12 w-12 flex-shrink-0">
@@ -492,7 +514,7 @@ const Cover = () => {
           </div>
 
           {/* Tags */}
-          <div className="items-center gap-2 hidden sm:flex">
+          <div className="hidden items-center gap-2 sm:flex">
             {tags.map((tag) => (
               <span
                 key={tag}

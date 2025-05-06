@@ -44,6 +44,21 @@ export interface IUserData {
     tokensUsedToday: number;
     lastResetDate: Date;
   };
+  // Add streak and XP tracking
+  streak: {
+    count: number; // Current streak count
+    lastLoginDate: Date; // Last login date to track streak
+    maxCount: number; // All-time max streak
+  };
+  xp: {
+    total: number; // Total XP accumulated
+    history: {
+      // History of XP earned
+      date: Date;
+      amount: number;
+      source: string; // Where XP was earned from (login, lesson, etc)
+    }[];
+  };
   premiumStartDate?: Date;
   premiumEndDate?: Date;
   createdAt: Date;
@@ -93,6 +108,25 @@ const CourseProgressSchema = new mongoose.Schema(
         },
       },
     ],
+  },
+  { _id: false }
+);
+
+// Schema for XP history entries
+const XpHistoryEntrySchema = new mongoose.Schema(
+  {
+    date: {
+      type: Date,
+      default: Date.now,
+    },
+    amount: {
+      type: Number,
+      required: true,
+    },
+    source: {
+      type: String,
+      required: true,
+    },
   },
   { _id: false }
 );
@@ -154,6 +188,29 @@ const UserDataSchema = new mongoose.Schema<IUserData>(
         type: Date,
         default: Date.now,
       },
+    },
+    // Add streak tracking
+    streak: {
+      count: {
+        type: Number,
+        default: 0,
+      },
+      lastLoginDate: {
+        type: Date,
+        default: Date.now,
+      },
+      maxCount: {
+        type: Number,
+        default: 0,
+      },
+    },
+    // Add XP tracking
+    xp: {
+      total: {
+        type: Number,
+        default: 0,
+      },
+      history: [XpHistoryEntrySchema],
     },
     premiumStartDate: {
       type: Date,
