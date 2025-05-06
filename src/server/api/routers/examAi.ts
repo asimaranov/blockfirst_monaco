@@ -261,6 +261,20 @@ const getDataField = (
   return typeof value === 'string' ? value : null;
 };
 
+// Function to determine total number of questions in a document
+const getTotalQuestions = (data: Record<string, any>): number => {
+  let count = 0;
+  for (let i = 1; i <= MAX_QUESTIONS; i++) {
+    const questionKey = `Question ${i}`;
+    if (data[questionKey] && typeof data[questionKey] === 'string') {
+      count = i;
+    } else {
+      break;
+    }
+  }
+  return count;
+};
+
 export const examAiRouter = createTRPCRouter({
   // Get chat history for a task or user
   getChatHistory: protectedProcedure
@@ -282,6 +296,17 @@ export const examAiRouter = createTRPCRouter({
           filter.examId = input.examId;
         }
 
+        // Generate field names for all questions and answers
+        const fields = generateQuestionAnswerFields(MAX_QUESTIONS);
+
+        const { document, data, headings } = await getDocumentWithFields<{
+          'First message': string;
+          [key: string]: string;
+        }>(input.examId, fields);
+
+        // Calculate total questions in the document
+        const totalQuestions = getTotalQuestions(data);
+
         // Find existing chat history with the specified user and exam
         const chatHistory = await ctx.mongo.models.examChatHistory
           .findOne(filter)
@@ -289,14 +314,6 @@ export const examAiRouter = createTRPCRouter({
           .exec();
 
         if (!chatHistory) {
-          // Generate field names for all questions and answers
-          const fields = generateQuestionAnswerFields(MAX_QUESTIONS);
-
-          const { document, data, headings } = await getDocumentWithFields<{
-            'First message': string;
-            [key: string]: string;
-          }>(input.examId, fields);
-
           const messages = await getInitialMessages(data);
 
           // Find or create
@@ -310,6 +327,7 @@ export const examAiRouter = createTRPCRouter({
                 totalLives: 5,
                 currentLives: 5,
                 currentQuestionId: 1,
+                totalQuestions,
               },
               {
                 upsert: true,
@@ -323,6 +341,7 @@ export const examAiRouter = createTRPCRouter({
             totalLives: 5,
             currentLives: 5,
             currentQuestionId: 1,
+            totalQuestions,
           };
         }
 
@@ -337,6 +356,7 @@ export const examAiRouter = createTRPCRouter({
         return {
           ...chatHistory,
           messages: parsedMessages,
+          totalQuestions,
         };
       } catch (error) {
         console.error('Error fetching chat history:', error);
@@ -401,6 +421,9 @@ export const examAiRouter = createTRPCRouter({
           [key: string]: any;
         }>(examId, fields);
 
+        // Calculate total questions in the document
+        const totalQuestions = getTotalQuestions(data);
+
         const filter = {
           userId,
           examId,
@@ -430,6 +453,7 @@ export const examAiRouter = createTRPCRouter({
               totalLives: 5,
               currentLives: 5,
               currentQuestionId: 1,
+              totalQuestions,
             },
             {
               upsert: true,
@@ -608,6 +632,7 @@ export const examAiRouter = createTRPCRouter({
           currentLives: chatHistory.currentLives,
           totalLives: chatHistory.totalLives,
           currentQuestionId: chatHistory.currentQuestionId,
+          totalQuestions,
         };
       } catch (error) {
         console.error('Error sending message to AI:', error);
@@ -638,6 +663,9 @@ export const examAiRouter = createTRPCRouter({
           [key: string]: string;
         }>(examId, fields);
 
+        // Calculate total questions in the document
+        const totalQuestions = getTotalQuestions(data);
+
         // Generate initial messages for the restarted exam
         const initialMessages = await getInitialMessages(data);
 
@@ -652,6 +680,7 @@ export const examAiRouter = createTRPCRouter({
               totalLives: 5,
               currentLives: 5,
               currentQuestionId: 1,
+              totalQuestions,
             },
             {
               upsert: true,
@@ -678,6 +707,7 @@ export const examAiRouter = createTRPCRouter({
           currentLives: chatHistory.currentLives,
           totalLives: chatHistory.totalLives,
           currentQuestionId: chatHistory.currentQuestionId,
+          totalQuestions,
         };
       } catch (error) {
         console.error('Error restarting exam:', error);

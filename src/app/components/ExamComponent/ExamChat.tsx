@@ -21,6 +21,8 @@ export default function ExamChat({ examId }: { examId: string }) {
     currentQuestionId,
     updateLives,
     updateCurrentQuestion,
+    updateTotalQuestions,
+    totalQuestions,
   } = useExamStore();
   const [messages, setMessages] = useState<
     {
@@ -113,6 +115,10 @@ export default function ExamChat({ examId }: { examId: string }) {
 
       if (chatHistory.currentQuestionId !== undefined) {
         updateCurrentQuestion(chatHistory.currentQuestionId);
+      }
+
+      if (chatHistory.totalQuestions !== undefined) {
+        updateTotalQuestions(chatHistory.totalQuestions);
       }
     }
   }, [chatHistory, updateLives, updateCurrentQuestion]);

@@ -4,6 +4,7 @@ interface ExamStore {
   isOpen: boolean;
   examId: string;
   totalLives: number;
+  totalQuestions: number;
   currentLives: number;
   currentQuestionId: number;
   open: (examId: string) => void;
@@ -11,6 +12,7 @@ interface ExamStore {
   toggle: () => void;
   updateLives: (current: number, total: number) => void;
   updateCurrentQuestion: (questionId: number) => void;
+  updateTotalQuestions: (totalQuestions: number) => void;
 }
 
 export const useExamStore = create<ExamStore>((set) => ({
@@ -19,6 +21,7 @@ export const useExamStore = create<ExamStore>((set) => ({
   totalLives: 5,
   currentLives: 5,
   currentQuestionId: 1,
+  totalQuestions: 20,
   open: (examId: string) => set({ isOpen: true, examId }),
   close: () => set({ isOpen: false }),
   toggle: () => set((state) => ({ isOpen: !state.isOpen })),
@@ -26,4 +29,6 @@ export const useExamStore = create<ExamStore>((set) => ({
     set({ currentLives: current, totalLives: total }),
   updateCurrentQuestion: (questionId: number) =>
     set({ currentQuestionId: questionId }),
+  updateTotalQuestions: (totalQuestions: number) =>
+    set({ totalQuestions: totalQuestions }),
 }));

@@ -223,13 +223,12 @@ const ExamPage = ({ close, examId }: { close: () => void; examId: string }) => {
     currentQuestionId,
     updateLives,
     updateCurrentQuestion,
+    totalQuestions,
   } = useExamStore();
 
   const [currentState, setCurrentState] = useState<
     'chat' | 'completed' | 'failed'
   >('chat');
-
-  const totalQuestionsNum = 20;
 
   console.log('Current lives:', currentLives);
 
@@ -276,7 +275,7 @@ const ExamPage = ({ close, examId }: { close: () => void; examId: string }) => {
           <div>
             <span className="text-xl leading-5">{currentQuestionId}</span>
             <span className="text-secondary text-sm leading-5">
-              / {totalQuestionsNum}
+              / {totalQuestions}
             </span>
           </div>
           <div className="flex items-center justify-center gap-2">
