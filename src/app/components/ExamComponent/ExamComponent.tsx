@@ -242,7 +242,7 @@ const ExamPage = ({ close, examId }: { close: () => void; examId: string }) => {
   }, [currentLives]);
 
   return (
-    <div className="flex h-200 w-175 flex-col justify-center bg-[#0F1217]">
+    <div className="flex h-200 w-175 flex-col justify-center bg-[#0F1217] rounded-[0.4167vw]">
       <div className="border-b-accent flex flex-row items-center justify-between border-b px-4 py-3">
         <div className="flex-1"></div>
         <div className="flex items-center justify-center">
