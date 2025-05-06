@@ -22,7 +22,9 @@ export default function ExamChat({ examId }: { examId: string }) {
     updateLives,
     updateCurrentQuestion,
     updateTotalQuestions,
+    updateCorrectAnswers,
     totalQuestions,
+    updateCompletionStatus,
   } = useExamStore();
   const [messages, setMessages] = useState<
     {
@@ -69,6 +71,9 @@ export default function ExamChat({ examId }: { examId: string }) {
         totalLives: chatHistory.totalLives,
         currentLives: chatHistory.currentLives,
         currentQuestionId: chatHistory.currentQuestionId,
+        correctAnswers: chatHistory.correctAnswers,
+        isCompleted: chatHistory.isCompleted,
+        isFailed: chatHistory.isFailed,
       });
 
       if (chatHistory.messages.every((msg) => msg.role === 'assistant')) {
@@ -120,8 +125,31 @@ export default function ExamChat({ examId }: { examId: string }) {
       if (chatHistory.totalQuestions !== undefined) {
         updateTotalQuestions(chatHistory.totalQuestions);
       }
+
+      // Update correct answers count
+      if (chatHistory.correctAnswers !== undefined) {
+        updateCorrectAnswers(chatHistory.correctAnswers);
+      }
+
+      // Update completion status
+      if (
+        chatHistory.isCompleted !== undefined ||
+        chatHistory.isFailed !== undefined
+      ) {
+        updateCompletionStatus(
+          !!chatHistory.isCompleted,
+          !!chatHistory.isFailed
+        );
+      }
     }
-  }, [chatHistory, updateLives, updateCurrentQuestion]);
+  }, [
+    chatHistory,
+    updateLives,
+    updateCurrentQuestion,
+    updateTotalQuestions,
+    updateCorrectAnswers,
+    updateCompletionStatus,
+  ]);
 
   // Send message mutation
   const sendMessageMutation = api.examAi.sendMessage.useMutation({
@@ -152,6 +180,16 @@ export default function ExamChat({ examId }: { examId: string }) {
         if (!isNaN(questionIdValue)) {
           updateCurrentQuestion(questionIdValue);
         }
+      }
+
+      // Update correct answers count if present
+      if (data.correctAnswers !== undefined) {
+        updateCorrectAnswers(data.correctAnswers);
+      }
+
+      // Update completion status if present in response
+      if (data.isCompleted !== undefined || data.isFailed !== undefined) {
+        updateCompletionStatus(!!data.isCompleted, !!data.isFailed);
       }
 
       // Invalidate the chat history query to refresh the data
@@ -217,11 +255,15 @@ export default function ExamChat({ examId }: { examId: string }) {
                       ? 'Недостаточно попыток'
                       : message.messageTypeExplanation === 'CORRECT_ANSWER'
                         ? 'Верно!'
-                        : message.messageTypeExplanation === 'INCORRECT_ANSWER'
-                          ? 'Неверно!'
-                          : message.messageTypeExplanation === 'UNKNOWN_ERROR'
-                            ? 'Неизвестная ошибка'
-                            : 'Неизвестная ошибка'
+                        : message.messageTypeExplanation ===
+                              'EXAM_COMPLETED'
+                            ? 'Вы успешно прошли экзамен!'
+                            : message.messageTypeExplanation ===
+                              'INCORRECT_ANSWER'
+                            ? 'Неверно!'
+                            : message.messageTypeExplanation === 'UNKNOWN_ERROR'
+                              ? 'Неизвестная ошибка'
+                              : 'Неизвестная ошибка'
                 }
                 message={
                   message.messageTypeExplanation === 'NO_TOKENS'
@@ -229,23 +271,29 @@ export default function ExamChat({ examId }: { examId: string }) {
                         content:
                           'У вас исчерпаны AI-токены или недостаточно токенов для запроса. Пожалуйста, дождитесь обновления лимита или измените тарифный план.',
                       }
-                    : message.messageTypeExplanation === 'NO_LIVES_LEFT'
+                    : message.messageTypeExplanation === 'EXAM_COMPLETED'
                       ? {
-                          content: message.content,
+                          content: '',
+                          md: message.md,
                         }
-                      : message.messageTypeExplanation === 'CORRECT_ANSWER'
+                      : message.messageTypeExplanation === 'NO_LIVES_LEFT'
                         ? {
-                            content: '',
-                            md: message.md,
+                            content: message.content,
                           }
-                        : message.messageTypeExplanation === 'INCORRECT_ANSWER'
+                        : message.messageTypeExplanation === 'CORRECT_ANSWER'
                           ? {
                               content: '',
                               md: message.md,
                             }
-                          : {
-                              content: `Произошла неизвестная ошибка: ${message.messageTypeExplanation}`,
-                            }
+                          : message.messageTypeExplanation ===
+                              'INCORRECT_ANSWER'
+                            ? {
+                                content: '',
+                                md: message.md,
+                              }
+                            : {
+                                content: `Произошла неизвестная ошибка: ${message.messageTypeExplanation}`,
+                              }
                 }
                 type={message.messageType}
               />

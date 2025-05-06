@@ -328,6 +328,9 @@ export const examAiRouter = createTRPCRouter({
                 currentLives: 5,
                 currentQuestionId: 1,
                 totalQuestions,
+                isCompleted: false,
+                isFailed: false,
+                correctAnswers: 0,
               },
               {
                 upsert: true,
@@ -342,6 +345,9 @@ export const examAiRouter = createTRPCRouter({
             currentLives: 5,
             currentQuestionId: 1,
             totalQuestions,
+            isCompleted: false,
+            isFailed: false,
+            correctAnswers: 0,
           };
         }
 
@@ -357,6 +363,9 @@ export const examAiRouter = createTRPCRouter({
           ...chatHistory,
           messages: parsedMessages,
           totalQuestions,
+          isCompleted: chatHistory.isCompleted || false,
+          isFailed: chatHistory.isFailed || false,
+          correctAnswers: chatHistory.correctAnswers || 0,
         };
       } catch (error) {
         console.error('Error fetching chat history:', error);
@@ -454,6 +463,9 @@ export const examAiRouter = createTRPCRouter({
               currentLives: 5,
               currentQuestionId: 1,
               totalQuestions,
+              isCompleted: false,
+              isFailed: false,
+              correctAnswers: 0,
             },
             {
               upsert: true,
@@ -529,6 +541,10 @@ export const examAiRouter = createTRPCRouter({
                   0,
                   chatHistory.currentLives - 1
                 );
+              } else {
+                // If answer is correct, increment the correctAnswers count
+                chatHistory.correctAnswers =
+                  (chatHistory.correctAnswers || 0) + 1;
               }
 
               // Get next question regardless of whether the answer is correct or not
@@ -552,7 +568,9 @@ export const examAiRouter = createTRPCRouter({
                 } else {
                   aiResponse = `Верно! ${answerFeedback.explanation}\n\nПоздравляю! Вы успешно завершили все вопросы экзамена.`;
                   messageType = 'success';
-                  messageTypeExplanation = 'CORRECT_ANSWER';
+                  messageTypeExplanation = 'EXAM_COMPLETED';
+                  // Mark exam as completed
+                  chatHistory.isCompleted = true;
                 }
               } else {
                 if (chatHistory.currentLives > 0) {
@@ -566,11 +584,16 @@ export const examAiRouter = createTRPCRouter({
                     aiResponse = `Ответ неверный. ${answerFeedback.explanation}\n\nУ вас осталось ${chatHistory.currentLives} попыток.\n\nПоздравляю! Вы дошли до конца экзамена.`;
                     messageType = 'error';
                     messageTypeExplanation = 'INCORRECT_ANSWER';
+                    // Mark exam as completed even with wrong answers at the end
+                    chatHistory.isCompleted = true;
                   }
                 } else {
                   aiResponse = `Ответ неверный. ${answerFeedback.explanation}\n\nУ вас закончились попытки. Экзамен завершен.`;
                   messageType = 'error';
                   messageTypeExplanation = 'NO_LIVES_LEFT';
+                  // Mark exam as failed
+                  chatHistory.isCompleted = true;
+                  chatHistory.isFailed = true;
                 }
               }
             } else {
@@ -633,6 +656,9 @@ export const examAiRouter = createTRPCRouter({
           totalLives: chatHistory.totalLives,
           currentQuestionId: chatHistory.currentQuestionId,
           totalQuestions,
+          isCompleted: chatHistory.isCompleted || false,
+          isFailed: chatHistory.isFailed || false,
+          correctAnswers: chatHistory.correctAnswers || 0,
         };
       } catch (error) {
         console.error('Error sending message to AI:', error);
@@ -681,6 +707,9 @@ export const examAiRouter = createTRPCRouter({
               currentLives: 5,
               currentQuestionId: 1,
               totalQuestions,
+              isCompleted: false,
+              isFailed: false,
+              correctAnswers: 0,
             },
             {
               upsert: true,
@@ -708,6 +737,9 @@ export const examAiRouter = createTRPCRouter({
           totalLives: chatHistory.totalLives,
           currentQuestionId: chatHistory.currentQuestionId,
           totalQuestions,
+          isCompleted: chatHistory.isCompleted || false,
+          isFailed: chatHistory.isFailed || false,
+          correctAnswers: chatHistory.correctAnswers || 0,
         };
       } catch (error) {
         console.error('Error restarting exam:', error);

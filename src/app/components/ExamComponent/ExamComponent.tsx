@@ -224,25 +224,39 @@ const ExamPage = ({ close, examId }: { close: () => void; examId: string }) => {
     updateLives,
     updateCurrentQuestion,
     totalQuestions,
+    correctAnswers,
+    isCompleted,
+    isFailed,
   } = useExamStore();
 
   const [currentState, setCurrentState] = useState<
     'chat' | 'completed' | 'failed'
   >('chat');
 
-  console.log('Current lives:', currentLives);
+  console.log('Current status:', {
+    isCompleted,
+    isFailed,
+    currentLives,
+    correctAnswers,
+  });
 
+  // Update the current state based on completion status or lives
   useEffect(() => {
-    (async () => {
-      await new Promise((resolve) => setTimeout(resolve, 3000));
-      if (currentLives <= 0) {
+    if (isCompleted) {
+      if (isFailed) {
         setCurrentState('failed');
+      } else {
+        setCurrentState('completed');
       }
-    })();
-  }, [currentLives]);
+    } else if (currentLives <= 0) {
+      setCurrentState('failed');
+    } else {
+      setCurrentState('chat');
+    }
+  }, [isCompleted, isFailed, currentLives]);
 
   return (
-    <div className="flex h-200 w-175 flex-col justify-center bg-[#0F1217] rounded-[0.4167vw]">
+    <div className="flex h-200 w-175 flex-col justify-center rounded-[0.4167vw] bg-[#0F1217]">
       <div className="border-b-accent flex flex-row items-center justify-between border-b px-4 py-3">
         <div className="flex-1"></div>
         <div className="flex items-center justify-center">
@@ -266,7 +280,7 @@ const ExamPage = ({ close, examId }: { close: () => void; examId: string }) => {
         </button>
       </div>
       {currentState === 'chat' && <ExamChat examId={examId}></ExamChat>}
-      {currentState === 'completed' && <ChatSuccess />}
+      {currentState === 'completed' && <ChatSuccess examId={examId} />}
       {currentState === 'failed' && (
         <ChatFail onRetry={() => setCurrentState('chat')} examId={examId} />
       )}

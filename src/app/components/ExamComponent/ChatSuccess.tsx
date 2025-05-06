@@ -1,8 +1,44 @@
 import React, { useState } from 'react';
 import { StarIcon, StarIconFilled } from '../TaskView/MonacoView';
+import { api } from '~/trpc/react';
+import { useExamStore } from '@/store/examStore';
 
-const ChatSuccess = () => {
+interface ChatSuccessProps {
+  examId?: string;
+}
+
+const ChatSuccess = ({ examId }: ChatSuccessProps) => {
   const [rating, setRating] = useState<number | null>(null);
+  const utils = api.useUtils();
+  const { updateCompletionStatus } = useExamStore();
+
+  // Fetch chat history to get correctAnswers and totalQuestions
+  const { data: chatHistoryData } = api.examAi.getChatHistory.useQuery(
+    { examId: examId || '' },
+    { enabled: !!examId }
+  );
+
+  const correctAnswers = chatHistoryData?.correctAnswers || 0;
+  const totalQuestions = chatHistoryData?.totalQuestions || 0;
+
+  const restartExamMutation = api.examAi.restartExam.useMutation({
+    onSuccess: () => {
+      // Reset completion status in the store
+      updateCompletionStatus(false, false);
+
+      // Reset the chat history query to trigger a refetch
+      if (examId) {
+        utils.examAi.getChatHistory.reset({ examId });
+      }
+    },
+  });
+
+  const handleRestartExam = () => {
+    if (examId) {
+      restartExamMutation.mutate({ examId });
+    }
+  };
+
   return (
     <div className="mt-auto mb-auto flex flex-col items-center gap-12 p-8">
       <div className="flex flex-col items-center gap-10">
@@ -40,6 +76,34 @@ const ChatSuccess = () => {
               материалам курса. Вы уверенно приближаетесь к достижению цели!
             </span>
           </div>
+
+          {examId && (
+            <button
+              onClick={handleRestartExam}
+              disabled={restartExamMutation.isPending}
+              className="border-primary hover:bg-primary flex cursor-pointer flex-row rounded-[5.2083vw] border px-10 py-3.5 text-sm"
+            >
+              {restartExamMutation.isPending
+                ? 'Перезапуск...'
+                : 'Пройти зачет снова'}
+              {!restartExamMutation.isPending && (
+                <svg
+                  width="21"
+                  height="20"
+                  viewBox="0 0 21 20"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="ml-2 h-5 w-5"
+                >
+                  <path
+                    d="M14.7305 4.43173C15.0107 4.16285 15.4458 4.15427 15.7354 4.40048L15.7911 4.45321L20.4063 9.26181C20.6848 9.55201 20.6848 10.0107 20.4063 10.3009L15.7911 15.1095C15.5042 15.4083 15.0294 15.4178 14.7305 15.1309C14.432 14.8441 14.4223 14.3691 14.709 14.0704L18.8252 9.78134L14.709 5.49228L14.6583 5.43368C14.4245 5.1343 14.4506 4.7005 14.7305 4.43173Z"
+                    fill="#F2F2F2"
+                  />
+                </svg>
+              )}
+            </button>
+          )}
+
           <div className="flex h-fit w-fit flex-row items-center gap-2 rounded-[0.4167vw] bg-white/5 px-5 py-3">
             <svg
               width="17"
@@ -60,7 +124,11 @@ const ChatSuccess = () => {
             </svg>
 
             <span className="text-xs leading-4">
-              Количество правильных ответов — 16 из 20. Отличный результат!
+              Количество правильных ответов — {correctAnswers} из{' '}
+              {totalQuestions}.{' '}
+              {correctAnswers >= Math.floor(totalQuestions * 0.7)
+                ? 'Отличный результат!'
+                : 'Хороший результат!'}
             </span>
           </div>
         </div>

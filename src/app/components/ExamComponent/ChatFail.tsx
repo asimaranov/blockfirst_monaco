@@ -1,5 +1,6 @@
 import React from 'react';
 import { api } from '~/trpc/react';
+import { useExamStore } from '@/store/examStore';
 
 interface ChatFailProps {
   onRetry: () => void;
@@ -8,9 +9,17 @@ interface ChatFailProps {
 
 const ChatFail = ({ onRetry, examId }: ChatFailProps) => {
   const utils = api.useUtils();
+  const { updateCompletionStatus } = useExamStore();
+
   const restartExamMutation = api.examAi.restartExam.useMutation({
     onSuccess: () => {
+      // Reset completion status in the store
+      updateCompletionStatus(false, false);
+
+      // Reset the chat history query to trigger a refetch
       utils.examAi.getChatHistory.reset({ examId });
+
+      // Switch back to chat mode
       onRetry();
     },
   });

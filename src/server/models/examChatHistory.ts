@@ -20,6 +20,10 @@ export interface ExamChatHistory extends Document {
   totalLives: number;
   currentLives: number;
   currentQuestionId: number;
+  totalQuestions: number;
+  correctAnswers: number;
+  isCompleted: boolean;
+  isFailed: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -90,6 +94,22 @@ const examChatHistorySchema = new Schema<ExamChatHistory>(
     currentQuestionId: {
       type: Number,
       default: 1,
+    },
+    totalQuestions: {
+      type: Number,
+      default: 0,
+    },
+    correctAnswers: {
+      type: Number,
+      default: 0,
+    },
+    isCompleted: {
+      type: Boolean,
+      default: false,
+    },
+    isFailed: {
+      type: Boolean,
+      default: false,
     },
   },
   {
