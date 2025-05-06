@@ -1,10 +1,10 @@
 'use client';
 
-import { useResetStore } from '../store/reset-store';
+import { useResetStore } from '~/store/monaco-actions/reset-store';
+
 import { useEffect, useRef } from 'react';
 import { cn } from '~/helpers';
 
-// Placeholder Icon (replace with actual SVG if needed)
 const ScrollIcon = () => (
   <svg
     width="42"
@@ -108,13 +108,13 @@ export const ResetConfirmationModal = () => {
         <div className="flex items-center justify-between space-x-4">
           <button
             onClick={closeResetModal}
-            className="border-secondary/20 text-secondary hover:border-foreground flex-1 rounded-full border py-2.5 text-center text-sm cursor-pointer"
+            className="border-secondary/20 text-secondary hover:border-foreground flex-1 cursor-pointer rounded-full border py-2.5 text-center text-sm"
           >
             Отменить
           </button>
           <button
             onClick={resetCode}
-            className="bg-primary text-foreground flex-1 rounded-full py-2.5 text-center text-sm hover:bg-[#1242B2] cursor-pointer"
+            className="bg-primary text-foreground flex-1 cursor-pointer rounded-full py-2.5 text-center text-sm hover:bg-[#1242B2]"
           >
             Сбросить
           </button>

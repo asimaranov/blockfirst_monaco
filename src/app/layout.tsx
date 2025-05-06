@@ -7,7 +7,6 @@ import { TRPCReactProvider } from '~/trpc/react';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale } from 'next-intl/server';
 import { ResetConfirmationModal } from './components/ResetConfirmationModal';
-import ResetListener from './components/ResetListener';
 
 export const metadata: Metadata = {
   title: 'Blockfirst - образовательная блокчейн платформа',
@@ -43,8 +42,6 @@ export default async function RootLayout({
         <TRPCReactProvider>
           <NextIntlClientProvider>
             {children}
-            <ResetConfirmationModal />
-            <ResetListener />
           </NextIntlClientProvider>
         </TRPCReactProvider>
       </body>

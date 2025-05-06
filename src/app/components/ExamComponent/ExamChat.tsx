@@ -255,10 +255,9 @@ export default function ExamChat({ examId }: { examId: string }) {
                       ? 'Недостаточно попыток'
                       : message.messageTypeExplanation === 'CORRECT_ANSWER'
                         ? 'Верно!'
-                        : message.messageTypeExplanation ===
-                              'EXAM_COMPLETED'
-                            ? 'Вы успешно прошли экзамен!'
-                            : message.messageTypeExplanation ===
+                        : message.messageTypeExplanation === 'EXAM_COMPLETED'
+                          ? 'Вы успешно прошли экзамен!'
+                          : message.messageTypeExplanation ===
                               'INCORRECT_ANSWER'
                             ? 'Неверно!'
                             : message.messageTypeExplanation === 'UNKNOWN_ERROR'

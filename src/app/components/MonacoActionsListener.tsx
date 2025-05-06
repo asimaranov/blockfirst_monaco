@@ -1,10 +1,12 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useResetStore } from '../store/reset-store';
+import { useResetStore } from '~/store/monaco-actions/reset-store';
+import { useToolboxStore } from '~/store/monaco-actions/toolbox-store';
 
-export const ResetListener = () => {
+export const MonacoActionsListener = () => {
   const { openResetModal } = useResetStore();
+  const { openToolboxModal } = useToolboxStore();
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
@@ -17,14 +19,17 @@ export const ResetListener = () => {
 
         openResetModal(position);
       }
+      if (event.data?.command === 'toolboxButtonClicked') {
+        openToolboxModal();
+      }
     };
 
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
-  }, [openResetModal]);
+  }, [openResetModal, openToolboxModal]);
 
   // This component doesn't render anything
   return null;
 };
 
-export default ResetListener;
+export default MonacoActionsListener;

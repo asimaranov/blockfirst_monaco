@@ -2,14 +2,17 @@
 
 import { motion, AnimatePresence } from 'motion/react';
 import { ReactNode, useEffect, useState } from 'react';
+import { cn } from '~/helpers';
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
+  className?: string;
+  overlayClassName?: string;
 }
 
-export function Modal({ isOpen, onClose, children }: ModalProps) {
+export function Modal({ isOpen, onClose, children, className, overlayClassName }: ModalProps) {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -41,7 +44,10 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={onClose}
-            className="fixed inset-0 z-50 bg-black/50"
+            className={cn(
+              'fixed inset-0 z-50 bg-black/50',
+              overlayClassName
+            )}
           />
           <motion.div
             initial="initial"
@@ -49,11 +55,13 @@ export function Modal({ isOpen, onClose, children }: ModalProps) {
             exit="exit"
             variants={variants}
             transition={{ type: 'tween', duration: 0.3 }}
-            className={`fixed z-[10000000000000000] overflow-hidden sm:z-50 ${
+            className={cn(
+              'fixed z-[10000000000000000] overflow-hidden sm:z-50',
               isMobile
                 ? 'right-0 bottom-0 left-0 h-[calc(100dvh-64px)] max-h-[calc(100dvh-64px)] w-full transition-[height,max-height] duration-300 ease-in-out'
-                : 'top-0 right-0 h-screen w-auto'
-            }`}
+                : 'top-0 right-0 h-screen w-auto',
+              className
+            )}
           >
             <div className="flex h-full w-full flex-col overflow-y-auto bg-[#0F1115]">
               {children}

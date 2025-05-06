@@ -245,9 +245,17 @@ export const configurePostStart = async (
     }
   });
 
-  vscode.commands.registerCommand('myExtension.toolbox', () => {
-    vscode.window.showInformationMessage('Toolbox button clicked!');
-    // Add any additional reset functionality here
+  vscode.commands.registerCommand('myExtension.toolbox', () => {    // Send a message to the browser window
+    const message = {
+      command: 'toolboxButtonClicked',
+    };
+
+    // Use postMessage to communicate with the parent window
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage(message, '*');
+    } else {
+      window.postMessage(message, '*');
+    }
   });
 
   // WA: Force show explorer and not search

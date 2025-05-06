@@ -2,6 +2,9 @@ import { api } from '~/trpc/server';
 import TaskView from '~/app/components/TaskView/TaskView';
 import { getServerSession } from '~/server/auth';
 import { redirect } from 'next/navigation';
+import MonacoActionsListener from '~/app/components/MonacoActionsListener';
+import { ResetConfirmationModal } from '~/app/components/ResetConfirmationModal';
+import { ToolboxModal } from '~/app/components/ToolboxModal';
 
 export default async function TaskPage({
   params,
@@ -37,5 +40,12 @@ export default async function TaskPage({
     );
   }
 
-  return <TaskView task={taskData} courseId={courseId} />;
+  return (
+    <>
+      <TaskView task={taskData} courseId={courseId} />
+      <MonacoActionsListener />
+      <ResetConfirmationModal />
+      <ToolboxModal />
+    </>
+  );
 }
