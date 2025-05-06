@@ -4,7 +4,7 @@ import { getServerSession } from '~/server/auth';
 import { redirect } from 'next/navigation';
 import MonacoActionsListener from '~/app/components/MonacoActionsListener';
 import { ResetConfirmationModal } from '~/app/components/ResetConfirmationModal';
-import { ToolboxModal } from '~/app/components/ToolboxModal';
+import { ToolboxModal } from '~/app/components/ToolboxModal/ToolboxModal';
 
 export default async function TaskPage({
   params,
