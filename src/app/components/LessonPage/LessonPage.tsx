@@ -27,6 +27,8 @@ export default async function LessonPage({
 
   const session = await authClient.getSession();
 
+  console.log('documentttt', document?.contentRich );
+
   return (
     <div>
       <Cover />

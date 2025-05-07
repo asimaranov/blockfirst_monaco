@@ -76,7 +76,6 @@ export const UTILITIES_ITEMS: ToolboxItemData[] = [
     applyFunction: (input: string, input2?: string) => {
       if (!input2) return '';
       return ecrecover(input, input2);
-      
     },
   },
 ];

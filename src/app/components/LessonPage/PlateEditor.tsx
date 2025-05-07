@@ -101,6 +101,9 @@ import { CalloutElementStatic } from './plate/callout-element-static';
 import { MediaVideoElement } from './plate/media-video-element';
 import { TaskElement } from './plate/task-element';
 import { BaseTaskPlugin } from './plate/plugins/task-plugins';
+import { ColumnGroupElementStatic } from '~/components/plate-ui/column-group-element-static';
+import { ColumnGroupElement } from './plate/column-group-element';
+import { ColumnElement } from './plate/column-element';
 
 export function ImageElementStatic({
   children,
@@ -266,6 +269,8 @@ const PlateEditor = ({ richText }: { richText: Value }) => {
         [BaseCodeSyntaxPlugin.key]: CodeSyntaxLeafStatic,
         [BaseCalloutPlugin.key]: CalloutElementStatic,
         [BaseVideoPlugin.key]: MediaVideoElement,
+        [BaseColumnPlugin.key]: ColumnGroupElement,
+        [BaseColumnItemPlugin.key]: ColumnElement,
       },
     },
   });
