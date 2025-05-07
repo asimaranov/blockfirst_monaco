@@ -138,7 +138,7 @@ const mockCourseSections = [
     status: 'available',
     expanded: true,
     finalTestStatus: 'locked',
-    finalTestId: 'azmzpv56z3pftvc',
+    finalTestId: 'h8vr5l9h2rgzhw2',
     modules: [
       {
         title: 'txs, ноды, консенсус, mempool',
