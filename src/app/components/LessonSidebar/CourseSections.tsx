@@ -103,7 +103,7 @@ const mockCourseSections = [
     icon: <CodeIcon />,
     status: 'completed',
     finalTestStatus: 'completed',
-    finalTestId: 'azmzpv56z3pftvc',
+    finalTestId: 'h8vr5l9h2rgzhw2',
     modules: [
       {
         title: 'Основы блокчейна',
