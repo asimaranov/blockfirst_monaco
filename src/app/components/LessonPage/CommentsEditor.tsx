@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import type { Value } from '@udecode/plate';
 import { cn } from '~/lib/utils';
 import { api } from '~/trpc/react';
+import { MarkdownPlugin } from '@udecode/plate-markdown';
 
 export default function CommentsEditor({
   onSubmit,
@@ -37,7 +38,7 @@ export default function CommentsEditor({
   const [commentDisabled, setCommentDisabled] = useState(true);
   const [editorFocused, setEditorFocused] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-
+  const [editorValue, setEditorValue] = useState('');
   const editor = useCreateEditor({
     id: id || 'comments',
   });
@@ -75,8 +76,8 @@ export default function CommentsEditor({
 
     try {
       // Get the text content from the editor
-      const value = editor.tf.value;
-      const text = editor.api.markdown.serialize(value as any);
+      const value = editorValue;
+      const text = editor.getApi(MarkdownPlugin).markdown.serialize(value as any);
 
       if (isEditing && commentId) {
         // Update existing comment
@@ -141,6 +142,9 @@ export default function CommentsEditor({
             } else {
               setCommentDisabled(false);
             }
+          }}
+          onValueChange={({ value }) => {
+            console.log('value', value);
           }}
         >
           <EditorContainer

@@ -519,8 +519,6 @@
   --vscode-editorGutter-background: #0f1217 !important;
   --vscode-editorWidget-border: #282d33 !important;
 
-
-
 /* 
   --vscode-foreground: #cccccc;
     --vscode-disabledForeground: rgba(204, 204, 204, 0.5);
@@ -1159,7 +1157,6 @@
 
 }
 
-
 #activityBar > div > .content > div:last-child > .monaco-action-bar.vertical {
   display: none;
 }
@@ -1172,7 +1169,6 @@
   padding-left: 22px !important;
   padding-right: 15px !important;
 } 
-
 
 #sidebarRightDiv {
   display: none;
