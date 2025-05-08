@@ -1,7 +1,62 @@
-import { redirect } from 'next/navigation';
-import { CourseSection } from './CourseSection';
-import prisma from '~/lib/prisma';
+'use client';
 
+import { redirect, usePathname } from 'next/navigation';
+import { CourseSection } from './CourseSection';
+import { cache } from 'react';
+import { unstable_cache } from 'next/cache';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  createContext,
+  useContext,
+  useState,
+} from 'react';
+
+// Type definitions for pre-loaded course data
+type LessonType = {
+  id: string;
+  title: string;
+  status?: 'available' | 'skipped' | 'completed' | 'completedNoExtra';
+  parentId: string;
+};
+
+type ModuleType = {
+  id: string;
+  title: string;
+  icon?: React.ReactNode;
+  progress: number;
+  total: number;
+  status: 'available' | 'upcoming' | 'locked';
+  parentId: string;
+  lessons: LessonType[];
+};
+
+type SectionType = {
+  id: string;
+  title: string;
+  icon?: React.ReactNode;
+  status: 'available' | 'locked' | 'upcoming';
+  finalTestStatus: 'available' | 'locked' | 'completed';
+  finalTestId: string;
+  parentId: string;
+  modules: ModuleType[];
+};
+
+type CourseType = {
+  id: string;
+  sections: SectionType[];
+  // Map to quickly look up document information
+  documentsMap: {
+    [id: string]: {
+      type: 'lesson' | 'module' | 'section';
+      parentId: string;
+      title: string;
+    };
+  };
+};
+
+// Module type for component props
 type Module = {
   title: string;
   icon: React.ReactNode;
@@ -14,10 +69,29 @@ type Module = {
   progress: number;
   total: number;
   status: 'available' | 'upcoming' | 'locked';
-  finalTestStatus: 'available' | 'upcoming' | 'locked';
-  finalTestId: string;
 };
 
+// Create context to store and share course data across renders
+type CourseContextType = {
+  courseData: CourseType | null;
+  loading: boolean;
+  setCourseData: (data: CourseType) => void;
+  getHierarchy: (lessonId: string) => {
+    lessonId: string;
+    moduleId: string;
+    sectionId: string;
+    courseId: string;
+  } | null;
+};
+
+const CourseContext = createContext<CourseContextType>({
+  courseData: null,
+  loading: true,
+  setCourseData: () => {},
+  getHierarchy: () => null,
+});
+
+// Icons remain unchanged
 const CodeIcon = () => {
   return (
     <svg
@@ -98,247 +172,173 @@ const MultiSigIcon = () => {
   );
 };
 
-// Mock data for testing, this would be fetched from the API in a real scenario
-const mockCourseSections = [
-  {
-    title: 'Мир токенов',
-    icon: <CodeIcon />,
-    status: 'completed',
-    finalTestStatus: 'completed',
-    finalTestId: 'h8vr5l9h2rgzhw2',
-    modules: [
-      {
-        title: 'Основы блокчейна',
-        icon: <CodeIcon />,
-        progress: 2,
-        total: 4,
-        status: 'available',
-        lessons: [
-          { title: 'События', status: 'completed' },
-          { title: 'Десятичные числа', status: 'completedNoExtra' },
-          { title: 'Изучите openzeppelin, Erc20', status: 'locked' },
-          { title: 'Утверждения и видимость', status: 'available' },
-        ],
-      },
-      {
-        title: 'мультисиг и НФТ',
-        icon: <MultiSigIcon />,
-        progress: 2,
-        total: 4,
-        status: 'available',
-        lessons: [
-          { title: 'Лекция как работает блокчейн', status: 'skipped' },
-          { title: 'Изучаем openzeppelin', status: 'skipped' },
-        ],
-      },
-    ],
-  },
+// Provider component to manage course data
+export function CourseDataProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const [courseData, setCourseData] = useState<CourseType | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  {
-    title: 'Основы блокчейна',
-    icon: <CodeIcon />,
-    status: 'available',
-    expanded: true,
-    finalTestStatus: 'locked',
-    finalTestId: 'h8vr5l9h2rgzhw2',
-    modules: [
-      {
-        title: 'txs, ноды, консенсус, mempool',
-        icon: <CodeIcon />,
-        progress: 2,
-        total: 4,
-        status: 'available',
-        lessons: [
-          { title: 'Изучаем транзакции', status: 'completed' },
-          { title: 'Изучаем ноды', status: 'completed' },
-          { title: 'Изучаем консенсус', status: 'completed' },
-          { title: 'Изучаем mempool', status: 'available' },
-        ],
-      },
-      {
-        title: 'Учимся работать со временем',
-        icon: <CodeIcon />,
-        progress: 2,
-        total: 4,
-        status: 'available',
-        lessons: [
-          { title: 'Изучаем хеши', status: 'completed' },
-          { title: 'Изучаем хеши', status: 'completed' },
-          { title: 'Изучаем хеши', status: 'completed' },
-          { title: 'Изучаем хеши', status: 'available' },
-        ],
-      },
-    ],
-  },
-  {
-    title: 'Блокчейн и мультисиг',
-    icon: <CodeIcon />,
-    status: 'upcoming',
-    finalTestStatus: 'locked',
-    modules: [],
-  },
-  {
-    title: 'Основы блокчейна и НФТ',
-    icon: <CodeIcon />,
-    status: 'locked',
-    finalTestStatus: 'locked',
-    modules: [],
-  },
-  {
-    title: 'Основы блокчейна и НФТ',
-    icon: <CodeIcon />,
-    status: 'locked',
-    finalTestStatus: 'locked',
-    modules: [],
-  },
-  {
-    title: 'Основы блокчейна и НФТ',
-    icon: <CodeIcon />,
-    status: 'locked',
-    finalTestStatus: 'locked',
-    modules: [],
-  },
-  {
-    title: 'Основы блокчейна и НФТ',
-    icon: <CodeIcon />,
-    status: 'locked',
-    finalTestStatus: 'locked',
-    modules: [],
-  },
-  {
-    title: 'Основы блокчейна и НФТ',
-    icon: <CodeIcon />,
-    status: 'locked',
-    finalTestStatus: 'locked',
-    modules: [],
-  },
-  {
-    title: 'Основы блокчейна и НФТ',
-    icon: <CodeIcon />,
-    status: 'locked',
-    finalTestStatus: 'locked',
-    modules: [],
-  },
-  {
-    title: 'Основы блокчейна и НФТ',
-    icon: <CodeIcon />,
-    status: 'locked',
-    finalTestStatus: 'locked',
-    modules: [],
-  },
-];
+  const getHierarchy = useCallback(
+    (lessonId: string) => {
+      if (!courseData || !courseData.documentsMap[lessonId]) return null;
 
-export async function CourseSections({ lessonId }: { lessonId: string }) {
-  const lessonDocument = await prisma.document.findUnique({
-    where: {
-      id: lessonId,
-    },
-  });
+      const lesson = courseData.documentsMap[lessonId];
+      const moduleId = lesson.parentId;
+      const module = courseData.documentsMap[moduleId];
+      const sectionId = module.parentId;
 
-  const moduleDocument = await prisma.document.findUnique({
-    where: {
-      id: lessonDocument?.parentDocumentId!,
-    },
-  });
-
-  const sectionDocument = await prisma.document.findUnique({
-    where: {
-      id: moduleDocument?.parentDocumentId!,
-    },
-  });
-
-  const couseDocumentId = sectionDocument?.parentDocumentId;
-
-  // find all children of courseDocumentId
-  const courseSections = await prisma.document.findMany({
-    where: {
-      parentDocumentId: couseDocumentId!,
-    },
-  });
-
-  console.log('courseSections', courseSections);
-
-  const course = await Promise.all(
-    courseSections.map(async (section) => {
       return {
-        title: section.title,
-        icon: undefined,
-        status: 'available',
-        finalTestStatus: 'available',
-        finalTestId: section.id,
-        modules: await (async () => {
-          const modules = await prisma.document.findMany({
-            where: {
-              parentDocumentId: section.id,
-            },
-            orderBy: [
-              { sortOrder: 'asc' },
-              { createdAt: 'asc' }, // Fallback for documents without sortOrder
-            ],
-          });
-          return await Promise.all(
-            modules.map(async (module) => {
-              return {
-                title: module.title,
-                icon: undefined,
-                progress: 0,
-                total: 0,
-                status: 'available',
-                lessons: await (async () => {
-                  const lessons = await prisma.document.findMany({
-                    where: {
-                      parentDocumentId: module.id,
-                    },
-                    orderBy: [
-                      { sortOrder: 'asc' },
-                      { createdAt: 'asc' }, // Fallback for documents without sortOrder
-                    ],
-                  });
-                  return await Promise.all(
-                    lessons.map(async (lesson) => {
-                      return {
-                        id: lesson.id,
-                        title: lesson.title,
-                        status: 'available',
-                      };
-                    })
-                  );
-                })(),
-              };
-            })
-          );
-        })(),
+        lessonId,
+        moduleId,
+        sectionId,
+        courseId: courseData.id,
       };
-    })
+    },
+    [courseData]
   );
+
+  const value = useMemo(
+    () => ({
+      courseData,
+      loading,
+      setCourseData: (data: CourseType) => {
+        setCourseData(data);
+        setLoading(false);
+
+        // Cache in localStorage for persistence across refreshes
+        try {
+          localStorage.setItem('courseData', JSON.stringify(data));
+        } catch (e) {
+          console.error('Failed to cache course data:', e);
+        }
+      },
+      getHierarchy,
+    }),
+    [courseData, loading, getHierarchy]
+  );
+
+  // Try to load from localStorage on initial mount
+  useEffect(() => {
+    try {
+      const cached = localStorage.getItem('courseData');
+      if (cached) {
+        console.log('Uncaching course data', cached);
+        setCourseData(JSON.parse(cached));
+      }
+    } catch (e) {
+      console.error('Failed to load cached course data:', e);
+    }
+    setLoading(false);
+  }, []);
+
+  return (
+    <CourseContext.Provider value={value}>{children}</CourseContext.Provider>
+  );
+}
+
+// Hook to use course data
+export function useCourseData() {
+  return useContext(CourseContext);
+}
+
+// Update the fetchCourseData function to determine courseId from lessonId first
+async function fetchCourseData(lessonId: string): Promise<CourseType> {
+  // First, get the course ID from the lesson ID
+  const courseIdResponse = await fetch(`/api/lessons/${lessonId}/course`, {
+    next: { tags: ['lesson-hierarchy'] },
+  });
+
+  if (!courseIdResponse.ok) {
+    throw new Error('Failed to determine course ID from lesson');
+  }
+
+  const { courseId, hierarchy } = await courseIdResponse.json();
+
+  // Then, fetch the course data using that ID
+  const courseResponse = await fetch(`/api/courses/${courseId}`, {
+    next: { tags: ['course-data'], revalidate: 3600 },
+  });
+
+  if (!courseResponse.ok) {
+    throw new Error('Failed to fetch course data');
+  }
+
+  const courseData = await courseResponse.json();
+
+  // Store the hierarchy information for the current lesson
+  localStorage.setItem(
+    `lesson-hierarchy-${lessonId}`,
+    JSON.stringify(hierarchy)
+  );
+
+  return courseData;
+}
+
+// Main component for course sections sidebar
+export function CourseSections({ lessonId }: { lessonId: string }) {
+  const { courseData, loading, setCourseData, getHierarchy } = useCourseData();
+  const pathname = usePathname();
+  const [activeLessonId, setActiveLessonId] = useState(lessonId);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Update active lesson ID when URL changes
+  useEffect(() => {
+    setActiveLessonId(lessonId);
+  }, [lessonId]);
+
+  // Load course data if needed
+  useEffect(() => {
+    if (!loading && !courseData) {
+      setIsLoading(true);
+      fetchCourseData(lessonId)
+        .then((data) => {
+          setCourseData(data);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          console.error('Error loading course data:', err);
+          setIsLoading(false);
+        });
+    }
+  }, [courseData, loading, lessonId, setCourseData]);
+
+  // Determine hierarchy for current lesson
+  const hierarchy = useMemo(() => {
+    return getHierarchy(activeLessonId);
+  }, [activeLessonId, getHierarchy]);
+
+  if (!courseData) {
+    return <div className="p-4">Loading course content...</div>;
+  }
 
   return (
     <div className="flex flex-col">
       <div className="flex-1">
-        {course.map((section, index) => (
+        {courseData.sections.map((section) => (
           <CourseSection
-            key={index}
-            title={section.title!}
-            status={section.status as 'available' | 'locked' | 'upcoming'}
+            key={section.id}
+            title={section.title}
+            status={section.status}
             modules={
               section.modules.map((module) => ({
-                title: module.title!,
-                icon: module.icon,
+                title: module.title,
+                icon: module.icon || <CodeIcon />,
                 progress: module.progress,
                 total: module.total,
                 status: module.status,
                 lessons: module.lessons.map((lesson) => ({
                   id: lesson.id,
-                  title: lesson.title!,
+                  title: lesson.title,
                   status: lesson.status,
-                  isActive: lesson.id == lessonDocument?.id,
+                  isActive: lesson.id === activeLessonId,
                 })),
               })) as Module[]
             }
-            finalTestStatus={
-              section.finalTestStatus as 'available' | 'locked' | 'completed'
-            }
-            expanded={section.title == sectionDocument?.title}
+            finalTestStatus={section.finalTestStatus}
+            expanded={hierarchy ? section.id === hierarchy.sectionId : false}
             finalTestId={section.finalTestId}
           />
         ))}

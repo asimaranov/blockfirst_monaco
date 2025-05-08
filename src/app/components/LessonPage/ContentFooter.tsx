@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import DropDownAction from '../shared/DropDownAction';
 import { usePathname } from 'next/navigation';
 import { authClient } from '~/server/auth/client';
+import Link from 'next/link';
 
 const ShareIcon = () => {
   return (
@@ -204,7 +205,15 @@ const CopyIcon = () => {
   );
 };
 
-export default function ContentFooter({ nextLocked }: { nextLocked: boolean }) {
+export default function ContentFooter({
+  nextLocked,
+  nextLessonId,
+  prevLessonId,
+}: {
+  nextLocked: boolean;
+  nextLessonId: string | null;
+  prevLessonId: string | null;
+}) {
   const [rating, setRating] = useState<number | undefined>(undefined);
   const pathname = usePathname();
 
@@ -217,25 +226,29 @@ export default function ContentFooter({ nextLocked }: { nextLocked: boolean }) {
 
   return (
     <div className="border-accent flex flex-row justify-between border-b px-5 pt-21.5 pb-10 sm:px-16">
-      <Button>
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 20 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M8.77528 3.72212C8.5312 3.47804 8.13547 3.47804 7.89139 3.72212L2.05806 9.55539C1.94085 9.6726 1.875 9.83158 1.875 9.99734C1.875 10.1631 1.94085 10.3221 2.05806 10.4393L7.89139 16.2726C8.13547 16.5167 8.5312 16.5167 8.77528 16.2726C9.01935 16.0285 9.01935 15.6328 8.77528 15.3887L4.00888 10.6223H17.5C17.8452 10.6223 18.125 10.3425 18.125 9.99734C18.125 9.65216 17.8452 9.37234 17.5 9.37234H4.00889L8.77527 4.60601C9.01935 4.36193 9.01935 3.9662 8.77528 3.72212Z"
-            fill="#F2F2F2"
-            className="group-hover:fill-background"
-          />
-        </svg>
-        <span className="text-sm">Назад</span>
-      </Button>
+      {prevLessonId && (
+        <Link href={`/lesson/${prevLessonId}`}>
+          <Button>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M8.77528 3.72212C8.5312 3.47804 8.13547 3.47804 7.89139 3.72212L2.05806 9.55539C1.94085 9.6726 1.875 9.83158 1.875 9.99734C1.875 10.1631 1.94085 10.3221 2.05806 10.4393L7.89139 16.2726C8.13547 16.5167 8.5312 16.5167 8.77528 16.2726C9.01935 16.0285 9.01935 15.6328 8.77528 15.3887L4.00888 10.6223H17.5C17.8452 10.6223 18.125 10.3425 18.125 9.99734C18.125 9.65216 17.8452 9.37234 17.5 9.37234H4.00889L8.77527 4.60601C9.01935 4.36193 9.01935 3.9662 8.77528 3.72212Z"
+                fill="#F2F2F2"
+                className="group-hover:fill-background"
+              />
+            </svg>
+            <span className="text-sm">Назад</span>
+          </Button>
+        </Link>
+      )}
 
       <div className="mr-auto ml-auto hidden flex-row items-center sm:flex">
         <DropDownAction
@@ -380,48 +393,49 @@ export default function ContentFooter({ nextLocked }: { nextLocked: boolean }) {
           </div>
         </div>
       </div>
-
-      <Button disabled={nextLocked}>
-        <span className={cn('text-sm', nextLocked && 'text-secondary/50')}>
-          Вперед
-        </span>
-        {nextLocked ? (
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-          >
-            <path
-              d="M10.0007 13.5679C10.6009 13.5679 11.0874 13.0813 11.0874 12.4812C11.0874 11.881 10.6009 11.3945 10.0007 11.3945C9.40058 11.3945 8.91406 11.881 8.91406 12.4812C8.91406 13.0813 9.40058 13.5679 10.0007 13.5679Z"
-              fill="#9AA6B5"
-              fillOpacity="0.5"
-            />
-            <path
-              d="M14.1854 8.35594V7.5226C14.1854 5.7226 13.752 3.33594 9.9987 3.33594C6.24536 3.33594 5.81203 5.7226 5.81203 7.5226V8.35594C3.94536 8.58927 3.33203 9.53594 3.33203 11.8626V13.1026C3.33203 15.8359 4.16536 16.6693 6.8987 16.6693H13.0987C15.832 16.6693 16.6654 15.8359 16.6654 13.1026V11.8626C16.6654 9.53594 16.052 8.58927 14.1854 8.35594ZM9.9987 14.4959C8.88536 14.4959 7.98536 13.5893 7.98536 12.4826C7.98536 11.3693 8.89203 10.4693 9.9987 10.4693C11.1054 10.4693 12.012 11.3759 12.012 12.4826C12.012 13.5959 11.112 14.4959 9.9987 14.4959ZM6.8987 8.29594C6.84536 8.29594 6.7987 8.29594 6.74536 8.29594V7.5226C6.74536 5.56927 7.2987 4.26927 9.9987 4.26927C12.6987 4.26927 13.252 5.56927 13.252 7.5226V8.3026C13.1987 8.3026 13.152 8.3026 13.0987 8.3026H6.8987V8.29594Z"
-              fill="#9AA6B5"
-              fillOpacity="0.5"
-            />
-          </svg>
-        ) : (
-          <svg
-            width="21"
-            height="20"
-            viewBox="0 0 21 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5"
-          >
-            <path
-              d="M14.2305 4.43162C14.5292 4.14484 15.0042 4.15441 15.291 4.45311L19.9062 9.2617C20.1848 9.55191 20.1848 10.0106 19.9062 10.3008L15.291 15.1094C15.0042 15.4082 14.5293 15.4177 14.2305 15.1308C13.9319 14.844 13.9222 14.369 14.209 14.0703L18.3262 9.78123L14.209 5.49217C13.9222 5.19338 13.9317 4.71846 14.2305 4.43162Z"
-              fill="#F2F2F2"
-              className="group-hover:fill-background"
-            />
-          </svg>
-        )}
-      </Button>
+      <Link href={nextLocked ? '#' : `/lesson/${nextLessonId}`}>
+        <Button disabled={nextLocked}>
+          <span className={cn('text-sm', nextLocked && 'text-secondary/50')}>
+            Вперед
+          </span>
+          {nextLocked ? (
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+            >
+              <path
+                d="M10.0007 13.5679C10.6009 13.5679 11.0874 13.0813 11.0874 12.4812C11.0874 11.881 10.6009 11.3945 10.0007 11.3945C9.40058 11.3945 8.91406 11.881 8.91406 12.4812C8.91406 13.0813 9.40058 13.5679 10.0007 13.5679Z"
+                fill="#9AA6B5"
+                fillOpacity="0.5"
+              />
+              <path
+                d="M14.1854 8.35594V7.5226C14.1854 5.7226 13.752 3.33594 9.9987 3.33594C6.24536 3.33594 5.81203 5.7226 5.81203 7.5226V8.35594C3.94536 8.58927 3.33203 9.53594 3.33203 11.8626V13.1026C3.33203 15.8359 4.16536 16.6693 6.8987 16.6693H13.0987C15.832 16.6693 16.6654 15.8359 16.6654 13.1026V11.8626C16.6654 9.53594 16.052 8.58927 14.1854 8.35594ZM9.9987 14.4959C8.88536 14.4959 7.98536 13.5893 7.98536 12.4826C7.98536 11.3693 8.89203 10.4693 9.9987 10.4693C11.1054 10.4693 12.012 11.3759 12.012 12.4826C12.012 13.5959 11.112 14.4959 9.9987 14.4959ZM6.8987 8.29594C6.84536 8.29594 6.7987 8.29594 6.74536 8.29594V7.5226C6.74536 5.56927 7.2987 4.26927 9.9987 4.26927C12.6987 4.26927 13.252 5.56927 13.252 7.5226V8.3026C13.1987 8.3026 13.152 8.3026 13.0987 8.3026H6.8987V8.29594Z"
+                fill="#9AA6B5"
+                fillOpacity="0.5"
+              />
+            </svg>
+          ) : (
+            <svg
+              width="21"
+              height="20"
+              viewBox="0 0 21 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+            >
+              <path
+                d="M14.2305 4.43162C14.5292 4.14484 15.0042 4.15441 15.291 4.45311L19.9062 9.2617C20.1848 9.55191 20.1848 10.0106 19.9062 10.3008L15.291 15.1094C15.0042 15.4082 14.5293 15.4177 14.2305 15.1308C13.9319 14.844 13.9222 14.369 14.209 14.0703L18.3262 9.78123L14.209 5.49217C13.9222 5.19338 13.9317 4.71846 14.2305 4.43162Z"
+                fill="#F2F2F2"
+                className="group-hover:fill-background"
+              />
+            </svg>
+          )}
+        </Button>
+      </Link>
     </div>
   );
 }

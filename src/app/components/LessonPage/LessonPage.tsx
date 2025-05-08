@@ -12,6 +12,137 @@ import prisma from '@/lib/prisma';
 import { Value } from '@udecode/plate';
 import { authClient } from '~/server/auth/client';
 import { redirect } from 'next/navigation';
+import { unstable_cache } from 'next/cache';
+import superjson from 'superjson';
+
+// Helper function to create cached functions with proper serialization
+const createCachedFunction = <T, P extends unknown[]>(
+  fn: (...params: P) => Promise<T>,
+  keyParts: string[],
+  options?: { tags?: string[]; revalidate?: number | false }
+) => {
+  const wrap = async (...params: P): Promise<string> => {
+    const result = await fn(...params);
+    return superjson.stringify(result);
+  };
+
+  const cachedFn = unstable_cache(wrap, keyParts, options);
+
+  return async (...params: P): Promise<T> => {
+    const result = await cachedFn(...params);
+    return superjson.parse(result);
+  };
+};
+
+// Cached database queries
+const getDocument = createCachedFunction(
+  async (lessonId: string) => {
+    return prisma.document.findUnique({
+      where: {
+        id: lessonId,
+        isArchived: false,
+      },
+      include: {
+        children: {
+          where: {
+            isArchived: false,
+          },
+          orderBy: [
+            {
+              sortOrder: 'asc',
+            },
+            {
+              createdAt: 'asc',
+            },
+          ],
+        },
+      },
+    });
+  },
+  ['document-by-id'],
+  { tags: ['document'] }
+);
+
+const getParentDocument = createCachedFunction(
+  async (parentDocumentId: string) => {
+    return prisma.document.findUnique({
+      where: {
+        id: parentDocumentId,
+        isArchived: false,
+      },
+      include: {
+        children: {
+          where: {
+            isArchived: false,
+          },
+          orderBy: [
+            {
+              sortOrder: 'asc',
+            },
+            {
+              createdAt: 'asc',
+            },
+          ],
+        },
+        parentDocument: {
+          include: {
+            children: {
+              where: {
+                isArchived: false,
+              },
+              orderBy: [
+                {
+                  sortOrder: 'asc',
+                },
+                {
+                  createdAt: 'asc',
+                },
+              ],
+              include: {
+                children: {
+                  where: {
+                    isArchived: false,
+                  },
+                  orderBy: [
+                    {
+                      sortOrder: 'asc',
+                    },
+                    {
+                      createdAt: 'asc',
+                    },
+                  ],
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+  },
+  ['parent-document-with-children'],
+  { tags: ['document', 'document-children'] }
+);
+
+const getChildrenByDocId = createCachedFunction(
+  async (documentId: string) => {
+    return prisma.document.findMany({
+      where: {
+        parentDocumentId: documentId,
+        isArchived: false,
+      },
+      orderBy: [
+        {
+          sortOrder: 'asc',
+        },
+        {
+          createdAt: 'asc',
+        },
+      ],
+    });
+  },
+  ['children-by-document-id'],
+  { tags: ['document', 'document-children'] }
+);
 
 const CodeIcon = () => {
   return (
@@ -93,30 +224,79 @@ const MultiSigIcon = () => {
   );
 };
 
-export default async function LessonPage({
-  lessonId,
-}: {
-  lessonId: string;
-}) {
-  const document = await prisma.document.findUnique({
-    where: {
-      id: lessonId,
-    },
-  });
+export default async function LessonPage({ lessonId }: { lessonId: string }) {
+  const document = await getDocument(lessonId);
 
-  const session = await authClient.getSession();
+  // const session = await authClient.getSession();
 
-  console.log('documentttt', document?.contentRich );
+  // console.log('documentttt', document?.contentRich);
+
+  let prevLessonId: string | null = null;
+  let nextLessonId: string | null = null;
+
+  if (document?.parentDocumentId) {
+    const parentDocument = await getParentDocument(document.parentDocumentId);
+
+    if (parentDocument) {
+      const siblings = parentDocument.children.filter(
+        (sibling) => sibling.isArchived === false
+      );
+      const currentIndex = siblings.findIndex(
+        (sibling) => sibling.id === lessonId
+      );
+
+      if (currentIndex > 0) {
+        prevLessonId = siblings[currentIndex - 1].id;
+      }
+
+      if (currentIndex < siblings.length - 1) {
+        nextLessonId = siblings[currentIndex + 1].id;
+      } else {
+        // If this is the last lesson in the module, try to find the next module and its first lesson
+        if (parentDocument.parentDocumentId) {
+          const grandparentDocument = (await getParentDocument(
+            parentDocument.parentDocumentId
+          ))!;
+
+          const moduleIndex = grandparentDocument.children.findIndex(
+            (child) => child.id === parentDocument.id
+          );
+
+          // Check if there is a next module
+          if (
+            moduleIndex >= 0 &&
+            moduleIndex < grandparentDocument.children.length - 1
+          ) {
+            const nextModule = (await getChildrenByDocId(
+              grandparentDocument.children[moduleIndex + 1]!.id
+            ))!;
+
+            // Get the first lesson of the next module
+            if (nextModule.length > 0) {
+              nextLessonId = nextModule[0].id;
+            }
+          }
+        }
+      }
+
+      console.log('prevLessonId', prevLessonId);
+      console.log('nextLessonId', nextLessonId);
+    }
+  }
 
   return (
     <div>
       <Cover />
       <div className="border-accent flex min-h-screen flex-row border-x">
-        <div className="w-full sm:w-238 flex-1">
+        <div className="w-full flex-1 sm:w-238">
           <div className="px-5 sm:px-16">
             <PlateEditor richText={document?.contentRich as Value} />
           </div>
-          <ContentFooter nextLocked={true} />
+          <ContentFooter
+            nextLocked={false}
+            nextLessonId={nextLessonId}
+            prevLessonId={prevLessonId}
+          />
           <CommentsSection lessonId={lessonId} />
         </div>
         <RightSidebar />

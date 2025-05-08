@@ -1,12 +1,15 @@
+'use client';
+
 import LessonSidebarHeader from './SidebarHeader';
 import { Suspense } from 'react';
 import { CourseSections } from './CourseSections';
+import { SidebarProvider } from './SidebarProvider';
 
-export default async function LessonSidebar({ lessonId }: { lessonId: string }) {
+export default function LessonSidebar({ lessonId }: { lessonId: string }) {
   return (
-    <>
+    <SidebarProvider>
       <section className="bg-background relative z-10 hidden h-screen w-full max-w-86 flex-col overflow-y-scroll [scrollbar-width:none] sm:flex [&::-webkit-scrollbar]:hidden">
-        <nav className="">
+        <nav>
           <LessonSidebarHeader />
           <Suspense
             fallback={
@@ -19,6 +22,6 @@ export default async function LessonSidebar({ lessonId }: { lessonId: string }) 
           </Suspense>
         </nav>
       </section>
-    </>
+    </SidebarProvider>
   );
 }
