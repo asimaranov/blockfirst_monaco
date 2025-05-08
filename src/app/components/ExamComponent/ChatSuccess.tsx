@@ -9,6 +9,7 @@ interface ChatSuccessProps {
 
 const ChatSuccess = ({ examId }: ChatSuccessProps) => {
   const [rating, setRating] = useState<number | null>(null);
+  const [linkCopied, setLinkCopied] = useState(false);
   const utils = api.useUtils();
   const { updateCompletionStatus } = useExamStore();
 
@@ -17,6 +18,45 @@ const ChatSuccess = ({ examId }: ChatSuccessProps) => {
     { examId: examId || '' },
     { enabled: !!examId }
   );
+
+  // Fetch existing rating if available
+  const { data: ratingData } = api.examAi.getUserExamRating.useQuery(
+    { examId: examId || '' },
+    {
+      enabled: !!examId,
+    }
+  );
+
+  // Set rating if we have data from the API
+  React.useEffect(() => {
+    if (ratingData?.rating) {
+      setRating(ratingData.rating);
+    }
+  }, [ratingData]);
+
+  // Rating mutation
+  const rateExamMutation = api.examAi.rateExam.useMutation({
+    onSuccess: () => {
+      // No need to invalidate anything, as the rating doesn't affect displayed data
+    },
+  });
+
+  const handleRating = (newRating: number) => {
+    if (rating === newRating) {
+      // Clicking the same rating again clears it
+      setRating(null);
+    } else {
+      setRating(newRating);
+
+      // Submit the rating if we have an examId
+      if (examId) {
+        rateExamMutation.mutate({
+          examId,
+          rating: newRating,
+        });
+      }
+    }
+  };
 
   const correctAnswers = chatHistoryData?.correctAnswers || 0;
   const totalQuestions = chatHistoryData?.totalQuestions || 0;
@@ -37,6 +77,39 @@ const ChatSuccess = ({ examId }: ChatSuccessProps) => {
     if (examId) {
       restartExamMutation.mutate({ examId });
     }
+  };
+
+  const shareText = `Я успешно прошел зачет с результатом ${correctAnswers} из ${totalQuestions} правильных ответов!`;
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
+
+  const handleShare = (network: string) => {
+    let shareLink = '';
+
+    switch (network) {
+      case 'Вконтакте':
+        shareLink = `https://vk.com/share.php?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(shareText)}`;
+        break;
+      case 'Facebook':
+        shareLink = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`;
+        break;
+      case 'Twitter (X)':
+        shareLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+        break;
+      case 'Telegram':
+        shareLink = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`;
+        break;
+      default:
+        return;
+    }
+
+    window.open(shareLink, '_blank', 'width=600,height=400');
+  };
+
+  const copyLinkToClipboard = () => {
+    navigator.clipboard.writeText(shareUrl).then(() => {
+      setLinkCopied(true);
+      setTimeout(() => setLinkCopied(false), 2000);
+    });
   };
 
   return (
@@ -139,13 +212,7 @@ const ChatSuccess = ({ examId }: ChatSuccessProps) => {
             <button
               className="group cursor-pointer"
               key={index}
-              onClick={() => {
-                if (rating) {
-                  setRating(0);
-                } else {
-                  setRating(index + 1);
-                }
-              }}
+              onClick={() => handleRating(index + 1)}
             >
               {rating ? (
                 <> {index < rating ? <StarIconFilled /> : <StarIcon />}</>
@@ -187,6 +254,7 @@ const ChatSuccess = ({ examId }: ChatSuccessProps) => {
                   />
                 </svg>
               ),
+              onClick: () => handleShare('Вконтакте'),
             },
             {
               name: 'Facebook',
@@ -206,6 +274,7 @@ const ChatSuccess = ({ examId }: ChatSuccessProps) => {
                   />
                 </svg>
               ),
+              onClick: () => handleShare('Facebook'),
             },
             {
               name: 'Twitter (X)',
@@ -232,8 +301,8 @@ const ChatSuccess = ({ examId }: ChatSuccessProps) => {
                   </defs>
                 </svg>
               ),
+              onClick: () => handleShare('Twitter (X)'),
             },
-
             {
               name: 'Telegram',
               icon: (
@@ -252,9 +321,10 @@ const ChatSuccess = ({ examId }: ChatSuccessProps) => {
                   />
                 </svg>
               ),
+              onClick: () => handleShare('Telegram'),
             },
             {
-              name: 'Ссылка',
+              name: linkCopied ? 'Скопировано!' : 'Ссылка',
               icon: (
                 <svg
                   width="16"
@@ -287,10 +357,15 @@ const ChatSuccess = ({ examId }: ChatSuccessProps) => {
                   </defs>
                 </svg>
               ),
+              onClick: copyLinkToClipboard,
             },
           ].map((x) => (
-            <div className="flex flex-row items-center justify-center gap-2 rounded-[5.2083vw] border border-[#F2F2F2]/20 py-3 hover:border-[#F2F2F2]">
-              <div className="flex cursor-pointer flex-row items-center gap-2">
+            <div
+              key={x.name.replace(' ', '-')}
+              onClick={x.onClick}
+              className="flex cursor-pointer flex-row items-center justify-center gap-2 rounded-[5.2083vw] border border-[#F2F2F2]/20 py-3 transition-colors hover:border-[#F2F2F2]"
+            >
+              <div className="flex flex-row items-center gap-2">
                 {x.icon}
                 <span className="text-sm leading-4">{x.name}</span>
               </div>

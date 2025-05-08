@@ -21,6 +21,7 @@ import ExamChat from './ExamChat';
 import { useExamStore } from '@/store/examStore';
 import ChatSuccess from './ChatSuccess';
 import ChatFail from './ChatFail';
+import EmptyHeartSmallIcon from './assets/empty-heart-small-icon.svg';
 
 const IntroPage = ({
   close,
@@ -309,6 +310,14 @@ const ExamPage = ({ close, examId }: { close: () => void; examId: string }) => {
                     alt=""
                     className="h-4 w-4"
                     key={index}
+                  ></Image>
+                ))}
+                {Array.from({ length: totalLives - currentLives }).map((_, index) => (
+                  <Image
+                    src={EmptyHeartSmallIcon}
+                    alt=""
+                    className="h-4 w-4"
+                    key={currentLives + 1 + index}
                   ></Image>
                 ))}
               </div>

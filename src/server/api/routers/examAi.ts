@@ -61,6 +61,7 @@ import { BaseTogglePlugin } from '@udecode/plate-toggle';
 import remarkMath from 'remark-math';
 import remarkGfm from 'remark-gfm';
 import { getDocumentWithFields } from '~/server/utils/document';
+import ExamRatingModel from '~/server/models/examRating';
 
 const editor = createSlateEditor({
   plugins: [
@@ -746,6 +747,111 @@ export const examAiRouter = createTRPCRouter({
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: 'Failed to restart exam',
+        });
+      }
+    }),
+
+  // Add endpoint to save exam rating
+  rateExam: protectedProcedure
+    .input(
+      z.object({
+        examId: z.string(),
+        rating: z.number().min(1).max(5),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const userId = ctx.session.user.id;
+        const { examId, rating } = input;
+
+        // Find any existing rating from this user for this exam
+        const existingRating = await ExamRatingModel.findOne({
+          userId,
+          examId,
+        });
+
+        if (existingRating) {
+          // Update existing rating
+          existingRating.rating = rating;
+          await existingRating.save();
+          return { success: true, updated: true };
+        } else {
+          // Create new rating
+          await ExamRatingModel.create({
+            userId,
+            examId,
+            rating,
+          });
+          return { success: true, updated: false };
+        }
+      } catch (error) {
+        console.error('Error saving exam rating:', error);
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to save rating',
+        });
+      }
+    }),
+
+  // Get exam rating for the current user
+  getUserExamRating: protectedProcedure
+    .input(
+      z.object({
+        examId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      try {
+        const userId = ctx.session.user.id;
+        const { examId } = input;
+
+        // Find any existing rating from this user for this exam
+        const existingRating = await ExamRatingModel.findOne({
+          userId,
+          examId,
+        });
+
+        if (existingRating) {
+          return { rating: existingRating.rating };
+        } else {
+          return { rating: null };
+        }
+      } catch (error) {
+        console.error('Error fetching exam rating:', error);
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to fetch rating',
+        });
+      }
+    }),
+
+  // Delete existing exam rating
+  deleteExamRating: protectedProcedure
+    .input(
+      z.object({
+        examId: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const userId = ctx.session.user.id;
+        const { examId } = input;
+
+        // Delete the rating document
+        const result = await ExamRatingModel.deleteOne({
+          userId,
+          examId,
+        });
+
+        return {
+          success: true,
+          deleted: result.deletedCount > 0,
+        };
+      } catch (error) {
+        console.error('Error deleting exam rating:', error);
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to delete rating',
         });
       }
     }),
