@@ -1,13 +1,15 @@
-'use client';
-
+import { redirect } from 'next/navigation';
 import { CourseSection } from './CourseSection';
+import prisma from '~/lib/prisma';
 
 type Module = {
   title: string;
   icon: React.ReactNode;
   lessons: {
+    id: string;
     title: string;
     status?: 'available' | 'skipped' | 'completed' | 'completedNoExtra';
+    isActive: boolean;
   }[];
   progress: number;
   total: number;
@@ -131,7 +133,7 @@ const mockCourseSections = [
       },
     ],
   },
-  
+
   {
     title: 'Основы блокчейна',
     icon: <CodeIcon />,
@@ -147,10 +149,10 @@ const mockCourseSections = [
         total: 4,
         status: 'available',
         lessons: [
-          {title: 'Изучаем транзакции', status: 'completed'},
-          {title: 'Изучаем ноды', status: 'completed'},
-          {title: 'Изучаем консенсус', status: 'completed'},
-          {title: 'Изучаем mempool', status: 'available'},
+          { title: 'Изучаем транзакции', status: 'completed' },
+          { title: 'Изучаем ноды', status: 'completed' },
+          { title: 'Изучаем консенсус', status: 'completed' },
+          { title: 'Изучаем mempool', status: 'available' },
         ],
       },
       {
@@ -160,10 +162,10 @@ const mockCourseSections = [
         total: 4,
         status: 'available',
         lessons: [
-          {title: 'Изучаем хеши', status: 'completed'},
-          {title: 'Изучаем хеши', status: 'completed'},
-          {title: 'Изучаем хеши', status: 'completed'},
-          {title: 'Изучаем хеши', status: 'available'},
+          { title: 'Изучаем хеши', status: 'completed' },
+          { title: 'Изучаем хеши', status: 'completed' },
+          { title: 'Изучаем хеши', status: 'completed' },
+          { title: 'Изучаем хеши', status: 'available' },
         ],
       },
     ],
@@ -173,87 +175,170 @@ const mockCourseSections = [
     icon: <CodeIcon />,
     status: 'upcoming',
     finalTestStatus: 'locked',
-    modules: [
-      
-    ],
+    modules: [],
   },
   {
     title: 'Основы блокчейна и НФТ',
     icon: <CodeIcon />,
     status: 'locked',
     finalTestStatus: 'locked',
-    modules: [
-      
-    ],
+    modules: [],
   },
   {
     title: 'Основы блокчейна и НФТ',
     icon: <CodeIcon />,
     status: 'locked',
     finalTestStatus: 'locked',
-    modules: [
-      
-    ],
+    modules: [],
   },
   {
     title: 'Основы блокчейна и НФТ',
     icon: <CodeIcon />,
     status: 'locked',
     finalTestStatus: 'locked',
-    modules: [
-      
-    ],
+    modules: [],
   },
   {
     title: 'Основы блокчейна и НФТ',
     icon: <CodeIcon />,
     status: 'locked',
     finalTestStatus: 'locked',
-    modules: [
-      
-    ],
+    modules: [],
   },
   {
     title: 'Основы блокчейна и НФТ',
     icon: <CodeIcon />,
     status: 'locked',
     finalTestStatus: 'locked',
-    modules: [
-      
-    ],
+    modules: [],
   },
   {
     title: 'Основы блокчейна и НФТ',
     icon: <CodeIcon />,
     status: 'locked',
     finalTestStatus: 'locked',
-    modules: [
-      
-    ],
+    modules: [],
   },
   {
     title: 'Основы блокчейна и НФТ',
     icon: <CodeIcon />,
     status: 'locked',
     finalTestStatus: 'locked',
-    modules: [
-      
-    ],
+    modules: [],
   },
 ];
 
-export function CourseSections() {
+export async function CourseSections({ lessonId }: { lessonId: string }) {
+  const lessonDocument = await prisma.document.findUnique({
+    where: {
+      id: lessonId,
+    },
+  });
+
+  const moduleDocument = await prisma.document.findUnique({
+    where: {
+      id: lessonDocument?.parentDocumentId!,
+    },
+  });
+
+  const sectionDocument = await prisma.document.findUnique({
+    where: {
+      id: moduleDocument?.parentDocumentId!,
+    },
+  });
+
+  const couseDocumentId = sectionDocument?.parentDocumentId;
+
+  // find all children of courseDocumentId
+  const courseSections = await prisma.document.findMany({
+    where: {
+      parentDocumentId: couseDocumentId!,
+    },
+  });
+
+  console.log('courseSections', courseSections);
+
+  const course = await Promise.all(
+    courseSections.map(async (section) => {
+      return {
+        title: section.title,
+        icon: undefined,
+        status: 'available',
+        finalTestStatus: 'available',
+        finalTestId: section.id,
+        modules: await (async () => {
+          const modules = await prisma.document.findMany({
+            where: {
+              parentDocumentId: section.id,
+            },
+            orderBy: [
+              { sortOrder: 'asc' },
+              { createdAt: 'asc' }, // Fallback for documents without sortOrder
+            ],
+          });
+          return await Promise.all(
+            modules.map(async (module) => {
+              return {
+                title: module.title,
+                icon: undefined,
+                progress: 0,
+                total: 0,
+                status: 'available',
+                lessons: await (async () => {
+                  const lessons = await prisma.document.findMany({
+                    where: {
+                      parentDocumentId: module.id,
+                    },
+                    orderBy: [
+                      { sortOrder: 'asc' },
+                      { createdAt: 'asc' }, // Fallback for documents without sortOrder
+                    ],
+                  });
+                  return await Promise.all(
+                    lessons.map(async (lesson) => {
+                      return {
+                        id: lesson.id,
+                        title: lesson.title,
+                        status: 'available',
+                      };
+                    })
+                  );
+                })(),
+              };
+            })
+          );
+        })(),
+      };
+    })
+  );
+
   return (
     <div className="flex flex-col">
       <div className="flex-1">
-        {mockCourseSections.map((section, index) => (
+        {course.map((section, index) => (
           <CourseSection
             key={index}
-            title={section.title}
+            title={section.title!}
             status={section.status as 'available' | 'locked' | 'upcoming'}
-            modules={section.modules as Module[]}
-            finalTestStatus={section.finalTestStatus as 'available' | 'locked' | 'completed'}
-            expanded={section.expanded}
+            modules={
+              section.modules.map((module) => ({
+                title: module.title!,
+                icon: module.icon,
+                progress: module.progress,
+                total: module.total,
+                status: module.status,
+                lessons: module.lessons.map((lesson) => ({
+                  id: lesson.id,
+                  title: lesson.title!,
+                  status: lesson.status,
+                  isActive: lesson.id == lessonDocument?.id,
+                })),
+              })) as Module[]
+            }
+            finalTestStatus={
+              section.finalTestStatus as 'available' | 'locked' | 'completed'
+            }
+            expanded={section.title == sectionDocument?.title}
             finalTestId={section.finalTestId}
           />
         ))}

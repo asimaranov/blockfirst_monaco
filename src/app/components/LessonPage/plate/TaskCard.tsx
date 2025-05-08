@@ -148,7 +148,7 @@ export function TaskStatusBadge({
             height="32"
             rx="8"
             fill="#33CF8E"
-            fill-opacity="0.1"
+            fillOpacity="0.1"
           />
           <path
             d="M16.3594 16.5184L18.4394 18.5984L23.6394 13.3984"
@@ -254,7 +254,7 @@ export function TaskCard({
   rating = '0',
   onExecute,
 }: TaskCardProps) {
-  const { courseId } = useParams();
+  const { lessonId } = useParams();
 
   const regularTasksSolved = task?.status == 'completed';
   const advancedTasksSolved = regularTasksSolved && task?.advancedTasksSolved;
@@ -390,7 +390,7 @@ export function TaskCard({
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-5 w-5"
                       >
-                        <g clip-path="url(#clip0_3557_29169)">
+                        <g clipPath="url(#clip0_3557_29169)">
                           <path
                             d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
                             stroke="#F48E19"
@@ -499,7 +499,7 @@ export function TaskCard({
               </div>
               <div className="mt-5 flex w-full sm:mt-0">
                 <Link
-                  href={`/task/${courseId}/${task.id}`}
+                  href={`/task/${lessonId}/${task.id}`}
                   className={cn(
                     'flex w-full cursor-pointer flex-row items-center justify-center rounded-[5.2083vw] px-15.75 py-3 text-sm sm:ml-auto sm:w-auto',
                     regularTasksSolved
@@ -551,11 +551,11 @@ export function TaskCardGridItem({
   onExecute,
 }: TaskCardProps) {
   const router = useRouter();
-  const { courseId } = useParams();
+  const { lessonId } = useParams();
 
   const handleOpenTask = () => {
     if (task?.id) {
-      router.push(`/lesson/${courseId}/task/${task.id}`);
+      router.push(`/lesson/${lessonId}/task/${task.id}`);
     }
   };
 
@@ -697,7 +697,7 @@ export function TaskCardGridItem({
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-5 w-5"
                       >
-                        <g clip-path="url(#clip0_3557_29169)">
+                        <g clipPath="url(#clip0_3557_29169)">
                           <path
                             d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
                             stroke="#F48E19"
@@ -812,7 +812,7 @@ export function TaskCardGridItem({
               </div>
               <div className="mt-5 flex w-full sm:mt-0 sm:ml-auto sm:w-auto">
                 <Link
-                  href={`/task/${courseId}/${task.id}`}
+                  href={`/task/${lessonId}/${task.id}`}
                   className={cn(
                     'flex w-full cursor-pointer flex-row items-center justify-center rounded-[5.2083vw] px-8.25 py-3 text-sm sm:w-auto',
                     regularTasksSolved

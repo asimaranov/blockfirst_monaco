@@ -232,12 +232,12 @@ export default function MentorPage({ session }: { session: Session }) {
                         <path
                           d="M8.00161 11.1204C8.52675 11.1204 8.95245 10.6947 8.95245 10.1696C8.95245 9.64445 8.52675 9.21875 8.00161 9.21875C7.47648 9.21875 7.05078 9.64445 7.05078 10.1696C7.05078 10.6947 7.47648 11.1204 8.00161 11.1204Z"
                           fill="#9AA6B5"
-                          fill-opacity="0.5"
+                          fillOpacity="0.5"
                         />
                         <path
                           d="M11.6607 6.55949V5.83033C11.6607 4.25533 11.2816 2.16699 7.9974 2.16699C4.71323 2.16699 4.33406 4.25533 4.33406 5.83033V6.55949C2.70073 6.76366 2.16406 7.59199 2.16406 9.62783V10.7128C2.16406 13.1045 2.89323 13.8337 5.2849 13.8337H10.7099C13.1016 13.8337 13.8307 13.1045 13.8307 10.7128V9.62783C13.8307 7.59199 13.2941 6.76366 11.6607 6.55949ZM7.9974 11.932C7.02323 11.932 6.23573 11.1387 6.23573 10.1703C6.23573 9.19616 7.02906 8.40866 7.9974 8.40866C8.96573 8.40866 9.75906 9.20199 9.75906 10.1703C9.75906 11.1445 8.97156 11.932 7.9974 11.932ZM5.2849 6.50699C5.23823 6.50699 5.1974 6.50699 5.15073 6.50699V5.83033C5.15073 4.12116 5.6349 2.98366 7.9974 2.98366C10.3599 2.98366 10.8441 4.12116 10.8441 5.83033V6.51283C10.7974 6.51283 10.7566 6.51283 10.7099 6.51283H5.2849V6.50699Z"
                           fill="#9AA6B5"
-                          fill-opacity="0.5"
+                          fillOpacity="0.5"
                         />
                       </svg>
                     </div>
@@ -429,7 +429,7 @@ export default function MentorPage({ session }: { session: Session }) {
 
             <div className="flex flex-1 flex-col gap-5 pt-10 sm:gap-6 sm:pt-0">
               <div className="mx-5 mt-auto sm:mx-8">
-                <div className="bg-success/10 flex items-center justify-center gap-1 rounded-full py-3.5 ">
+                <div className="bg-success/10 flex items-center justify-center gap-1 rounded-full py-3.5">
                   <div className="flex h-5 w-5 items-center justify-center rounded-full">
                     <svg
                       width="20"
@@ -833,7 +833,7 @@ export default function MentorPage({ session }: { session: Session }) {
                       viewBox="0 0 24 24"
                       strokeWidth={1}
                       stroke="currentColor"
-                      className='size-4 sm:size-3.5'
+                      className="size-4 sm:size-3.5"
                     >
                       <path
                         strokeLinecap="round"

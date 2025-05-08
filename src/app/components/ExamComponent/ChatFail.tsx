@@ -125,7 +125,7 @@ const ChatFail = ({ onRetry, examId }: ChatFailProps) => {
           xmlns="http://www.w3.org/2000/svg"
           className="h-3.5 w-18.5"
         >
-          <g clip-path="url(#clip0_4430_43329)">
+          <g clipPath="url(#clip0_4430_43329)">
             <rect width="14" height="14" rx="2.8" fill="#195AF4" />
             <path
               d="M6.20801 8.30762L10.6309 11.21V9.65625L8.60059 8.38281L8.4834 8.30957L8.59961 8.23535L10.6309 6.93945V5.34277L6.20801 8.30762Z"

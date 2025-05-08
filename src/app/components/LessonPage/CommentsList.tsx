@@ -556,7 +556,7 @@ export default function CommentsList() {
   // Use params to get lessonId from the URL
   const params = useParams();
   // Ensure lessonId is always a string
-  const lessonId = params.courseId ? String(params.courseId) : 'default-lesson';
+  const lessonId = params.lessonId ? String(params.lessonId) : 'default-lesson';
 
   const [sort, setSort] = useState('new');
   const [cursor, setCursor] = useState<string | null>(null);

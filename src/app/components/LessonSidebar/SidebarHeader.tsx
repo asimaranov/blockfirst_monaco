@@ -17,7 +17,7 @@ const NotificationButton = ({ className }: { className: string }) => {
     xmlns="http://www.w3.org/2000/svg"
     className="h-9 w-9"
   >
-    <g clip-path="url(#clip0_3635_45745)">
+    <g clipPath="url(#clip0_3635_45745)">
       <rect width="36" height="36" rx="18" fill="#F2F2F2" />
       <circle cx="23.5992" cy="12.4" r="2.4" fill="#CF3336" />
       <path
@@ -45,7 +45,7 @@ const NotificationButton = ({ className }: { className: string }) => {
         xmlns="http://www.w3.org/2000/svg"
         className="h-9 w-9"
       >
-        <g clip-path="url(#clip0_3635_46750)">
+        <g clipPath="url(#clip0_3635_46750)">
           <rect
             width="36"
             height="36"
@@ -103,7 +103,7 @@ const NotificationButton = ({ className }: { className: string }) => {
   fill="none"
   xmlns="http://www.w3.org/2000/svg"
 >
-  <g clip-path="url(#clip0_3635_46856)">
+  <g clipPath="url(#clip0_3635_46856)">
     <rect width="36" height="36" rx="18" fill="#F2F2F2" />
     <path
       fill-rule="evenodd"
@@ -143,7 +143,10 @@ export default function LessonSidebarHeader() {
   return (
     <>
       <div className="bg-background sticky top-0 z-10 flex flex-row items-center px-8 pt-8 pb-5 text-base font-medium">
-        <Link href="/dashboard" className="hover:opacity-50 flex items-center justify-center gap-2">
+        <Link
+          href="/dashboard"
+          className="flex items-center justify-center gap-2 hover:opacity-50"
+        >
           <BackButton />
           <span className="line-clamp-1 flex-1 overflow-hidden wrap-break-word text-ellipsis">
             Путешествие Solidity & DeFi

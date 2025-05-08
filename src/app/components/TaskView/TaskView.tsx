@@ -14,11 +14,11 @@ import Link from 'next/link';
 export default function TaskView({
   task,
   onClose,
-  courseId,
+  lessonId,
 }: {
   task: any;
   onClose?: () => void;
-  courseId?: string;
+  lessonId?: string;
 }) {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<'info' | 'ai-mentor'>('info');
@@ -42,8 +42,8 @@ export default function TaskView({
     if (onClose) {
       onClose();
     } else {
-      if (courseId) {
-        router.push(`/lesson/${courseId}`);
+      if (lessonId) {
+        router.push(`/lesson/${lessonId}`);
       } else {
         router.back();
       }
@@ -56,7 +56,7 @@ export default function TaskView({
         <div className="border-accent flex h-full w-150 flex-col border-r">
           <div className="flex flex-row items-center px-8 py-6">
             <Link
-              href={`/lesson/${courseId}`}
+              href={`/lesson/${lessonId}`}
               className="group/back-button cursor-pointer p-2.5"
               onClick={handleClose}
             >
@@ -160,7 +160,7 @@ export default function TaskView({
       ) : (
         <div className="border-accent flex h-full w-26 shrink-0 flex-col items-center gap-8 border-r">
           <Link
-            href={`/lesson/${courseId}`}
+            href={`/lesson/${lessonId}`}
             className="flex flex-row gap-8 pt-6"
           >
             <svg

@@ -347,8 +347,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.7.0-integration-push-sunrovnkrkpv.1
-   * Query Engine version: f676762280b54cd07c770017ed3711ddde35f37a
+   * Prisma Client JS version: 6.7.0
+   * Query Engine version: 3cff47a7f5d65c3ea74883f1d736e41d68ce91ed
    */
   export type PrismaVersion = {
     client: string
@@ -5229,8 +5229,18 @@ export namespace Prisma {
 
   export type AggregateDocument = {
     _count: DocumentCountAggregateOutputType | null
+    _avg: DocumentAvgAggregateOutputType | null
+    _sum: DocumentSumAggregateOutputType | null
     _min: DocumentMinAggregateOutputType | null
     _max: DocumentMaxAggregateOutputType | null
+  }
+
+  export type DocumentAvgAggregateOutputType = {
+    sortOrder: number | null
+  }
+
+  export type DocumentSumAggregateOutputType = {
+    sortOrder: number | null
   }
 
   export type DocumentMinAggregateOutputType = {
@@ -5251,6 +5261,7 @@ export namespace Prisma {
     toc: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    sortOrder: number | null
   }
 
   export type DocumentMaxAggregateOutputType = {
@@ -5271,6 +5282,7 @@ export namespace Prisma {
     toc: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
+    sortOrder: number | null
   }
 
   export type DocumentCountAggregateOutputType = {
@@ -5292,9 +5304,18 @@ export namespace Prisma {
     toc: number
     createdAt: number
     updatedAt: number
+    sortOrder: number
     _all: number
   }
 
+
+  export type DocumentAvgAggregateInputType = {
+    sortOrder?: true
+  }
+
+  export type DocumentSumAggregateInputType = {
+    sortOrder?: true
+  }
 
   export type DocumentMinAggregateInputType = {
     id?: true
@@ -5314,6 +5335,7 @@ export namespace Prisma {
     toc?: true
     createdAt?: true
     updatedAt?: true
+    sortOrder?: true
   }
 
   export type DocumentMaxAggregateInputType = {
@@ -5334,6 +5356,7 @@ export namespace Prisma {
     toc?: true
     createdAt?: true
     updatedAt?: true
+    sortOrder?: true
   }
 
   export type DocumentCountAggregateInputType = {
@@ -5355,6 +5378,7 @@ export namespace Prisma {
     toc?: true
     createdAt?: true
     updatedAt?: true
+    sortOrder?: true
     _all?: true
   }
 
@@ -5396,6 +5420,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: DocumentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DocumentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: DocumentMinAggregateInputType
@@ -5426,6 +5462,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: DocumentCountAggregateInputType | true
+    _avg?: DocumentAvgAggregateInputType
+    _sum?: DocumentSumAggregateInputType
     _min?: DocumentMinAggregateInputType
     _max?: DocumentMaxAggregateInputType
   }
@@ -5449,7 +5487,10 @@ export namespace Prisma {
     toc: boolean
     createdAt: Date
     updatedAt: Date
+    sortOrder: number | null
     _count: DocumentCountAggregateOutputType | null
+    _avg: DocumentAvgAggregateOutputType | null
+    _sum: DocumentSumAggregateOutputType | null
     _min: DocumentMinAggregateOutputType | null
     _max: DocumentMaxAggregateOutputType | null
   }
@@ -5487,6 +5528,7 @@ export namespace Prisma {
     toc?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    sortOrder?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     parentDocument?: boolean | Document$parentDocumentArgs<ExtArgs>
     children?: boolean | Document$childrenArgs<ExtArgs>
@@ -5515,6 +5557,7 @@ export namespace Prisma {
     toc?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    sortOrder?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     parentDocument?: boolean | Document$parentDocumentArgs<ExtArgs>
   }, ExtArgs["result"]["document"]>
@@ -5538,6 +5581,7 @@ export namespace Prisma {
     toc?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    sortOrder?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     parentDocument?: boolean | Document$parentDocumentArgs<ExtArgs>
   }, ExtArgs["result"]["document"]>
@@ -5561,9 +5605,10 @@ export namespace Prisma {
     toc?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    sortOrder?: boolean
   }
 
-  export type DocumentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "templateId" | "userId" | "parentDocumentId" | "title" | "content" | "contentRich" | "coverImage" | "icon" | "isPublished" | "isArchived" | "textStyle" | "smallText" | "fullWidth" | "lockPage" | "toc" | "createdAt" | "updatedAt", ExtArgs["result"]["document"]>
+  export type DocumentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "templateId" | "userId" | "parentDocumentId" | "title" | "content" | "contentRich" | "coverImage" | "icon" | "isPublished" | "isArchived" | "textStyle" | "smallText" | "fullWidth" | "lockPage" | "toc" | "createdAt" | "updatedAt" | "sortOrder", ExtArgs["result"]["document"]>
   export type DocumentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     parentDocument?: boolean | Document$parentDocumentArgs<ExtArgs>
@@ -5611,6 +5656,7 @@ export namespace Prisma {
       toc: boolean
       createdAt: Date
       updatedAt: Date
+      sortOrder: number | null
     }, ExtArgs["result"]["document"]>
     composites: {}
   }
@@ -6058,6 +6104,7 @@ export namespace Prisma {
     readonly toc: FieldRef<"Document", 'Boolean'>
     readonly createdAt: FieldRef<"Document", 'DateTime'>
     readonly updatedAt: FieldRef<"Document", 'DateTime'>
+    readonly sortOrder: FieldRef<"Document", 'Int'>
   }
     
 
@@ -11152,7 +11199,8 @@ export namespace Prisma {
     lockPage: 'lockPage',
     toc: 'toc',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    sortOrder: 'sortOrder'
   };
 
   export type DocumentScalarFieldEnum = (typeof DocumentScalarFieldEnum)[keyof typeof DocumentScalarFieldEnum]
@@ -11715,6 +11763,7 @@ export namespace Prisma {
     toc?: BoolFilter<"Document"> | boolean
     createdAt?: DateTimeFilter<"Document"> | Date | string
     updatedAt?: DateTimeFilter<"Document"> | Date | string
+    sortOrder?: IntNullableFilter<"Document"> | number | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     parentDocument?: XOR<DocumentNullableScalarRelationFilter, DocumentWhereInput> | null
     children?: DocumentListRelationFilter
@@ -11742,6 +11791,7 @@ export namespace Prisma {
     toc?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    sortOrder?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
     parentDocument?: DocumentOrderByWithRelationInput
     children?: DocumentOrderByRelationAggregateInput
@@ -11774,6 +11824,7 @@ export namespace Prisma {
     toc?: BoolFilter<"Document"> | boolean
     createdAt?: DateTimeFilter<"Document"> | Date | string
     updatedAt?: DateTimeFilter<"Document"> | Date | string
+    sortOrder?: IntNullableFilter<"Document"> | number | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     parentDocument?: XOR<DocumentNullableScalarRelationFilter, DocumentWhereInput> | null
     children?: DocumentListRelationFilter
@@ -11801,9 +11852,12 @@ export namespace Prisma {
     toc?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    sortOrder?: SortOrderInput | SortOrder
     _count?: DocumentCountOrderByAggregateInput
+    _avg?: DocumentAvgOrderByAggregateInput
     _max?: DocumentMaxOrderByAggregateInput
     _min?: DocumentMinOrderByAggregateInput
+    _sum?: DocumentSumOrderByAggregateInput
   }
 
   export type DocumentScalarWhereWithAggregatesInput = {
@@ -11828,6 +11882,7 @@ export namespace Prisma {
     toc?: BoolWithAggregatesFilter<"Document"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Document"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Document"> | Date | string
+    sortOrder?: IntNullableWithAggregatesFilter<"Document"> | number | null
   }
 
   export type DocumentVersionWhereInput = {
@@ -12405,6 +12460,7 @@ export namespace Prisma {
     toc?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    sortOrder?: number | null
     user: UserCreateNestedOneWithoutDocumentsInput
     parentDocument?: DocumentCreateNestedOneWithoutChildrenInput
     children?: DocumentCreateNestedManyWithoutParentDocumentInput
@@ -12432,6 +12488,7 @@ export namespace Prisma {
     toc?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    sortOrder?: number | null
     children?: DocumentUncheckedCreateNestedManyWithoutParentDocumentInput
     discussions?: DiscussionUncheckedCreateNestedManyWithoutDocumentInput
     documentVersions?: DocumentVersionUncheckedCreateNestedManyWithoutDocumentInput
@@ -12455,6 +12512,7 @@ export namespace Prisma {
     toc?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sortOrder?: NullableIntFieldUpdateOperationsInput | number | null
     user?: UserUpdateOneRequiredWithoutDocumentsNestedInput
     parentDocument?: DocumentUpdateOneWithoutChildrenNestedInput
     children?: DocumentUpdateManyWithoutParentDocumentNestedInput
@@ -12482,6 +12540,7 @@ export namespace Prisma {
     toc?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sortOrder?: NullableIntFieldUpdateOperationsInput | number | null
     children?: DocumentUncheckedUpdateManyWithoutParentDocumentNestedInput
     discussions?: DiscussionUncheckedUpdateManyWithoutDocumentNestedInput
     documentVersions?: DocumentVersionUncheckedUpdateManyWithoutDocumentNestedInput
@@ -12507,6 +12566,7 @@ export namespace Prisma {
     toc?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    sortOrder?: number | null
   }
 
   export type DocumentUpdateManyMutationInput = {
@@ -12526,6 +12586,7 @@ export namespace Prisma {
     toc?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sortOrder?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DocumentUncheckedUpdateManyInput = {
@@ -12547,6 +12608,7 @@ export namespace Prisma {
     toc?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sortOrder?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DocumentVersionCreateInput = {
@@ -13264,6 +13326,17 @@ export namespace Prisma {
     not?: NestedEnumTextStyleFilter<$PrismaModel> | $Enums.TextStyle
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type DocumentNullableScalarRelationFilter = {
     is?: DocumentWhereInput | null
     isNot?: DocumentWhereInput | null
@@ -13299,6 +13372,11 @@ export namespace Prisma {
     toc?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    sortOrder?: SortOrder
+  }
+
+  export type DocumentAvgOrderByAggregateInput = {
+    sortOrder?: SortOrder
   }
 
   export type DocumentMaxOrderByAggregateInput = {
@@ -13319,6 +13397,7 @@ export namespace Prisma {
     toc?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    sortOrder?: SortOrder
   }
 
   export type DocumentMinOrderByAggregateInput = {
@@ -13339,6 +13418,11 @@ export namespace Prisma {
     toc?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    sortOrder?: SortOrder
+  }
+
+  export type DocumentSumOrderByAggregateInput = {
+    sortOrder?: SortOrder
   }
   export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -13383,6 +13467,22 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumTextStyleFilter<$PrismaModel>
     _max?: NestedEnumTextStyleFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type DocumentScalarRelationFilter = {
@@ -13979,6 +14079,14 @@ export namespace Prisma {
     set?: $Enums.TextStyle
   }
 
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type UserUpdateOneRequiredWithoutDocumentsNestedInput = {
     create?: XOR<UserCreateWithoutDocumentsInput, UserUncheckedCreateWithoutDocumentsInput>
     connectOrCreate?: UserCreateOrConnectWithoutDocumentsInput
@@ -14500,6 +14608,33 @@ export namespace Prisma {
     _max?: NestedEnumTextStyleFilter<$PrismaModel>
   }
 
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type UserCreateWithoutSessionsInput = {
     id: string
     username: string
@@ -14787,6 +14922,7 @@ export namespace Prisma {
     toc?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    sortOrder?: number | null
     parentDocument?: DocumentCreateNestedOneWithoutChildrenInput
     children?: DocumentCreateNestedManyWithoutParentDocumentInput
     discussions?: DiscussionCreateNestedManyWithoutDocumentInput
@@ -14812,6 +14948,7 @@ export namespace Prisma {
     toc?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    sortOrder?: number | null
     children?: DocumentUncheckedCreateNestedManyWithoutParentDocumentInput
     discussions?: DiscussionUncheckedCreateNestedManyWithoutDocumentInput
     documentVersions?: DocumentVersionUncheckedCreateNestedManyWithoutDocumentInput
@@ -15041,6 +15178,7 @@ export namespace Prisma {
     toc?: BoolFilter<"Document"> | boolean
     createdAt?: DateTimeFilter<"Document"> | Date | string
     updatedAt?: DateTimeFilter<"Document"> | Date | string
+    sortOrder?: IntNullableFilter<"Document"> | number | null
   }
 
   export type CommentUpsertWithWhereUniqueWithoutUserInput = {
@@ -15233,6 +15371,7 @@ export namespace Prisma {
     toc?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    sortOrder?: number | null
     user: UserCreateNestedOneWithoutDocumentsInput
     parentDocument?: DocumentCreateNestedOneWithoutChildrenInput
     discussions?: DiscussionCreateNestedManyWithoutDocumentInput
@@ -15259,6 +15398,7 @@ export namespace Prisma {
     toc?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    sortOrder?: number | null
     discussions?: DiscussionUncheckedCreateNestedManyWithoutDocumentInput
     documentVersions?: DocumentVersionUncheckedCreateNestedManyWithoutDocumentInput
     files?: FileUncheckedCreateNestedManyWithoutDocumentInput
@@ -15286,6 +15426,7 @@ export namespace Prisma {
     toc?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    sortOrder?: number | null
     user: UserCreateNestedOneWithoutDocumentsInput
     children?: DocumentCreateNestedManyWithoutParentDocumentInput
     discussions?: DiscussionCreateNestedManyWithoutDocumentInput
@@ -15311,6 +15452,7 @@ export namespace Prisma {
     toc?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    sortOrder?: number | null
     children?: DocumentUncheckedCreateNestedManyWithoutParentDocumentInput
     discussions?: DiscussionUncheckedCreateNestedManyWithoutDocumentInput
     documentVersions?: DocumentVersionUncheckedCreateNestedManyWithoutDocumentInput
@@ -15506,6 +15648,7 @@ export namespace Prisma {
     toc?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sortOrder?: NullableIntFieldUpdateOperationsInput | number | null
     user?: UserUpdateOneRequiredWithoutDocumentsNestedInput
     parentDocument?: DocumentUpdateOneWithoutChildrenNestedInput
     discussions?: DiscussionUpdateManyWithoutDocumentNestedInput
@@ -15532,6 +15675,7 @@ export namespace Prisma {
     toc?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sortOrder?: NullableIntFieldUpdateOperationsInput | number | null
     discussions?: DiscussionUncheckedUpdateManyWithoutDocumentNestedInput
     documentVersions?: DocumentVersionUncheckedUpdateManyWithoutDocumentNestedInput
     files?: FileUncheckedUpdateManyWithoutDocumentNestedInput
@@ -15618,6 +15762,7 @@ export namespace Prisma {
     toc?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    sortOrder?: number | null
     user: UserCreateNestedOneWithoutDocumentsInput
     parentDocument?: DocumentCreateNestedOneWithoutChildrenInput
     children?: DocumentCreateNestedManyWithoutParentDocumentInput
@@ -15644,6 +15789,7 @@ export namespace Prisma {
     toc?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    sortOrder?: number | null
     children?: DocumentUncheckedCreateNestedManyWithoutParentDocumentInput
     discussions?: DiscussionUncheckedCreateNestedManyWithoutDocumentInput
     files?: FileUncheckedCreateNestedManyWithoutDocumentInput
@@ -15735,6 +15881,7 @@ export namespace Prisma {
     toc?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sortOrder?: NullableIntFieldUpdateOperationsInput | number | null
     user?: UserUpdateOneRequiredWithoutDocumentsNestedInput
     parentDocument?: DocumentUpdateOneWithoutChildrenNestedInput
     children?: DocumentUpdateManyWithoutParentDocumentNestedInput
@@ -15761,6 +15908,7 @@ export namespace Prisma {
     toc?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sortOrder?: NullableIntFieldUpdateOperationsInput | number | null
     children?: DocumentUncheckedUpdateManyWithoutParentDocumentNestedInput
     discussions?: DiscussionUncheckedUpdateManyWithoutDocumentNestedInput
     files?: FileUncheckedUpdateManyWithoutDocumentNestedInput
@@ -15842,6 +15990,7 @@ export namespace Prisma {
     toc?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    sortOrder?: number | null
     user: UserCreateNestedOneWithoutDocumentsInput
     parentDocument?: DocumentCreateNestedOneWithoutChildrenInput
     children?: DocumentCreateNestedManyWithoutParentDocumentInput
@@ -15868,6 +16017,7 @@ export namespace Prisma {
     toc?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    sortOrder?: number | null
     children?: DocumentUncheckedCreateNestedManyWithoutParentDocumentInput
     documentVersions?: DocumentVersionUncheckedCreateNestedManyWithoutDocumentInput
     files?: FileUncheckedCreateNestedManyWithoutDocumentInput
@@ -15989,6 +16139,7 @@ export namespace Prisma {
     toc?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sortOrder?: NullableIntFieldUpdateOperationsInput | number | null
     user?: UserUpdateOneRequiredWithoutDocumentsNestedInput
     parentDocument?: DocumentUpdateOneWithoutChildrenNestedInput
     children?: DocumentUpdateManyWithoutParentDocumentNestedInput
@@ -16015,6 +16166,7 @@ export namespace Prisma {
     toc?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sortOrder?: NullableIntFieldUpdateOperationsInput | number | null
     children?: DocumentUncheckedUpdateManyWithoutParentDocumentNestedInput
     documentVersions?: DocumentVersionUncheckedUpdateManyWithoutDocumentNestedInput
     files?: FileUncheckedUpdateManyWithoutDocumentNestedInput
@@ -16337,6 +16489,7 @@ export namespace Prisma {
     toc?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    sortOrder?: number | null
     user: UserCreateNestedOneWithoutDocumentsInput
     parentDocument?: DocumentCreateNestedOneWithoutChildrenInput
     children?: DocumentCreateNestedManyWithoutParentDocumentInput
@@ -16363,6 +16516,7 @@ export namespace Prisma {
     toc?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    sortOrder?: number | null
     children?: DocumentUncheckedCreateNestedManyWithoutParentDocumentInput
     discussions?: DiscussionUncheckedCreateNestedManyWithoutDocumentInput
     documentVersions?: DocumentVersionUncheckedCreateNestedManyWithoutDocumentInput
@@ -16460,6 +16614,7 @@ export namespace Prisma {
     toc?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sortOrder?: NullableIntFieldUpdateOperationsInput | number | null
     user?: UserUpdateOneRequiredWithoutDocumentsNestedInput
     parentDocument?: DocumentUpdateOneWithoutChildrenNestedInput
     children?: DocumentUpdateManyWithoutParentDocumentNestedInput
@@ -16486,6 +16641,7 @@ export namespace Prisma {
     toc?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sortOrder?: NullableIntFieldUpdateOperationsInput | number | null
     children?: DocumentUncheckedUpdateManyWithoutParentDocumentNestedInput
     discussions?: DiscussionUncheckedUpdateManyWithoutDocumentNestedInput
     documentVersions?: DocumentVersionUncheckedUpdateManyWithoutDocumentNestedInput
@@ -16522,6 +16678,7 @@ export namespace Prisma {
     toc?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    sortOrder?: number | null
   }
 
   export type CommentCreateManyUserInput = {
@@ -16620,6 +16777,7 @@ export namespace Prisma {
     toc?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sortOrder?: NullableIntFieldUpdateOperationsInput | number | null
     parentDocument?: DocumentUpdateOneWithoutChildrenNestedInput
     children?: DocumentUpdateManyWithoutParentDocumentNestedInput
     discussions?: DiscussionUpdateManyWithoutDocumentNestedInput
@@ -16645,6 +16803,7 @@ export namespace Prisma {
     toc?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sortOrder?: NullableIntFieldUpdateOperationsInput | number | null
     children?: DocumentUncheckedUpdateManyWithoutParentDocumentNestedInput
     discussions?: DiscussionUncheckedUpdateManyWithoutDocumentNestedInput
     documentVersions?: DocumentVersionUncheckedUpdateManyWithoutDocumentNestedInput
@@ -16669,6 +16828,7 @@ export namespace Prisma {
     toc?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sortOrder?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type CommentUpdateWithoutUserInput = {
@@ -16811,6 +16971,7 @@ export namespace Prisma {
     toc?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    sortOrder?: number | null
   }
 
   export type DiscussionCreateManyDocumentInput = {
@@ -16860,6 +17021,7 @@ export namespace Prisma {
     toc?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sortOrder?: NullableIntFieldUpdateOperationsInput | number | null
     user?: UserUpdateOneRequiredWithoutDocumentsNestedInput
     children?: DocumentUpdateManyWithoutParentDocumentNestedInput
     discussions?: DiscussionUpdateManyWithoutDocumentNestedInput
@@ -16885,6 +17047,7 @@ export namespace Prisma {
     toc?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sortOrder?: NullableIntFieldUpdateOperationsInput | number | null
     children?: DocumentUncheckedUpdateManyWithoutParentDocumentNestedInput
     discussions?: DiscussionUncheckedUpdateManyWithoutDocumentNestedInput
     documentVersions?: DocumentVersionUncheckedUpdateManyWithoutDocumentNestedInput
@@ -16909,6 +17072,7 @@ export namespace Prisma {
     toc?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sortOrder?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DiscussionUpdateWithoutDocumentInput = {

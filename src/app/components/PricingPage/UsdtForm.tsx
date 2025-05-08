@@ -207,7 +207,7 @@ export default function UsdtForm({
             xmlns="http://www.w3.org/2000/svg"
             className="h-4 w-4"
           >
-            <g clip-path="url(#clip0_1444_21002)">
+            <g clipPath="url(#clip0_1444_21002)">
               <circle cx="8" cy="8" r="8" fill="#26C5A8" />
               <path
                 fill-rule="evenodd"

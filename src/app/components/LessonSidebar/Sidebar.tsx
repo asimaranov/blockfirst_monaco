@@ -2,7 +2,7 @@ import LessonSidebarHeader from './SidebarHeader';
 import { Suspense } from 'react';
 import { CourseSections } from './CourseSections';
 
-export default async function LessonSidebar() {
+export default async function LessonSidebar({ lessonId }: { lessonId: string }) {
   return (
     <>
       <section className="bg-background relative z-10 hidden h-screen w-full max-w-86 flex-col overflow-y-scroll [scrollbar-width:none] sm:flex [&::-webkit-scrollbar]:hidden">
@@ -15,7 +15,7 @@ export default async function LessonSidebar() {
               </div>
             }
           >
-            <CourseSections />
+            <CourseSections lessonId={lessonId} />
           </Suspense>
         </nav>
       </section>

@@ -97,6 +97,7 @@ model Document {
   discussions      Discussion[]
   documentVersions DocumentVersion[]
   files            File[]
+  sortOrder        Int?              @default(0)
 
   @@unique([userId, templateId])
 }

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { cn } from '~/helpers';
 import { InfoPopover } from '../shared/InfoPopover';
+import Link from 'next/link';
 
 const LessonStates = {
   completed: (
@@ -32,7 +33,7 @@ const LessonStates = {
       xmlns="http://www.w3.org/2000/svg"
       className="h-5 w-5"
     >
-      <g clip-path="url(#clip0_3422_12315)">
+      <g clipPath="url(#clip0_3422_12315)">
         <path
           d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
           stroke="#195AF4"
@@ -84,8 +85,10 @@ interface CourseModuleProps {
   title: string;
   icon: React.ReactNode;
   lessons: {
+    id: string;
     title: string;
     status?: 'available' | 'skipped' | 'completed' | 'completedNoExtra';
+    isActive: boolean;
   }[];
   progress: number;
   status: 'available' | 'upcoming' | 'locked' | 'completed';
@@ -117,7 +120,7 @@ export function CourseModule({
               {title}
             </span>
           </div>
-          <div className='flex items-center justify-center'>
+          <div className="flex items-center justify-center">
             <span className="text-foreground text-sm">{progress}</span>
             <span className="text-secondary text-xs">/{total}</span>
           </div>
@@ -132,14 +135,16 @@ export function CourseModule({
           {lessons.map((lesson, idx) => (
             <div key={idx} className="flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <span
+                <Link
                   className={cn(
                     'text-secondary hover:text-foreground cursor-pointer text-sm',
-                    lesson.status === 'available' && 'text-foreground'
+                    lesson.status === 'available' && 'text-secondary',
+                    lesson.isActive && 'text-foreground'
                   )}
+                  href={`/lesson/${lesson.id}`}
                 >
                   {lesson.title}
-                </span>
+                </Link>
               </div>
               {lesson.status === 'completed' && <>{LessonStates.completed}</>}
               {lesson.status === 'completedNoExtra' && (

@@ -79,11 +79,11 @@ export default function LoadingComponent() {
             xmlns="http://www.w3.org/2000/svg"
             className="h-25 w-25"
           >
-            <g clip-path="url(#clip0_4374_33182)">
+            <g clipPath="url(#clip0_4374_33182)">
               <path
                 d="M0 50C0 77.6142 22.3858 100 50 100C77.6142 100 100 77.6142 100 50C100 22.3858 77.6142 0 50 0C22.3858 0 0 22.3858 0 50ZM98.5 50C98.5 76.7858 76.7858 98.5 50 98.5C23.2142 98.5 1.5 76.7858 1.5 50C1.5 23.2142 23.2142 1.5 50 1.5C76.7858 1.5 98.5 23.2142 98.5 50Z"
                 fill="#195AF4"
-                fill-opacity="0.5"
+                fillOpacity="0.5"
               />
               <circle
                 cx="50"
@@ -166,8 +166,7 @@ export default function LoadingComponent() {
                 viewBox="0 0 20 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className='w-5 h-5'
-
+                className="h-5 w-5"
               >
                 <path
                   d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
@@ -184,8 +183,7 @@ export default function LoadingComponent() {
                 viewBox="0 0 20 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className='w-5 h-5'
-
+                className="h-5 w-5"
               >
                 <path
                   opacity="0.5"
@@ -221,8 +219,7 @@ export default function LoadingComponent() {
                 viewBox="0 0 20 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className='w-5 h-5'
-
+                className="h-5 w-5"
               >
                 <path
                   d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
@@ -239,8 +236,7 @@ export default function LoadingComponent() {
                 viewBox="0 0 20 20"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className='w-5 h-5'
-
+                className="h-5 w-5"
               >
                 <path
                   opacity="0.5"

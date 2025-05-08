@@ -3,7 +3,10 @@ import Image from 'next/image';
 import { cn } from '~/helpers';
 import { PromoNotification } from './types';
 import noNotificationsImage from './assets/no-notifications.png';
-import { INotification, IPromoNotification } from '~/server/models/notification';
+import {
+  INotification,
+  IPromoNotification,
+} from '~/server/models/notification';
 export function NotificationContent({
   className,
   notification,
@@ -14,7 +17,12 @@ export function NotificationContent({
   className?: string;
 }) {
   return (
-    <div className={cn("group relative flex flex-col px-8 py-5 first:pt-8 hover:bg-[#282D33]/30 nth-[2]:pt-8", className)}>
+    <div
+      className={cn(
+        'group relative flex flex-col px-8 py-5 first:pt-8 hover:bg-[#282D33]/30 nth-[2]:pt-8',
+        className
+      )}
+    >
       <button
         className="absolute top-0 right-0 m-2 hidden h-4 w-4 cursor-pointer group-hover:block"
         onClick={(e) => {
@@ -132,7 +140,7 @@ export function NotificationContentPromo({
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"></div>
-        <div className="relative z-20 flex h-full flex-col justify-between p-5 sm:p-8 pb-4">
+        <div className="relative z-20 flex h-full flex-col justify-between p-5 pb-4 sm:p-8">
           <div className="flex flex-col">
             <div>
               <span className="border-secondary/50 text-secondary h-6 rounded-full border px-3 py-1 text-xs backdrop-blur-sm">
@@ -240,7 +248,7 @@ export function ArchievedNotificationContent({
 
 export const NoNotifications = () => {
   return (
-    <div className="flex w-full justify-center h-full pt-56">
+    <div className="flex h-full w-full justify-center pt-56">
       <div className="flex flex-col items-center gap-5 text-center">
         <div className="bg-accent flex h-15 w-15 items-center justify-center rounded-full">
           <Image src={noNotificationsImage} alt="No notifications" />
@@ -253,10 +261,9 @@ export const NoNotifications = () => {
   );
 };
 
-
 export const NoArchievedNotifications = () => {
   return (
-    <div className="flex w-full justify-center flex-grow items-center">
+    <div className="flex w-full flex-grow items-center justify-center">
       <div className="flex flex-col items-center gap-5 text-center">
         <div className="bg-accent flex h-15 w-15 items-center justify-center rounded-full">
           <Image src={noNotificationsImage} alt="No notifications" />

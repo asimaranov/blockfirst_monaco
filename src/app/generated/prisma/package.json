@@ -1,5 +1,5 @@
 {
-  "name": "prisma-client-099967982b2409e0e58e925d77a58ebb63e0cfa50d300dcff73b35d1c7ee8626",
+  "name": "prisma-client-3ac8da04d8badccfbe05629bb9b7044617b0180cdf231d1a674d043503805022",
   "main": "index.js",
   "types": "index.d.ts",
   "browser": "default.js",
@@ -135,7 +135,7 @@
     },
     "./*": "./*"
   },
-  "version": "6.7.0-integration-push-sunrovnkrkpv.1",
+  "version": "6.7.0",
   "sideEffects": false,
   "imports": {
     "#wasm-engine-loader": {
