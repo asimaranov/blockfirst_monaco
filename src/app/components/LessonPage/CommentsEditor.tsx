@@ -21,6 +21,8 @@ export default function CommentsEditor({
   id,
   onCancel,
   replyFormAfterId,
+  isEditing,
+  commentId,
 }: {
   className?: string;
   value?: string;
@@ -29,6 +31,8 @@ export default function CommentsEditor({
   replyFormAfterId?: string | null;
   lessonId: string;
   onSubmit?: () => void;
+  isEditing?: boolean;
+  commentId?: string;
 }) {
   const [commentDisabled, setCommentDisabled] = useState(true);
   const [editorFocused, setEditorFocused] = useState(false);
@@ -52,11 +56,13 @@ export default function CommentsEditor({
 
   const createCommentMutation = api.comments.create.useMutation({
     onSuccess: () => {
-      // Refresh comments
-      // void commentsQuery.refetch();
-      // Reset form
-      // setReplyFormAfterId(null);
-      // setReplyToUser(null);
+      onSubmit?.();
+      utils.comments.getByLessonId.reset({ lessonId });
+    },
+  });
+
+  const updateCommentMutation = api.comments.update.useMutation({
+    onSuccess: () => {
       onSubmit?.();
       utils.comments.getByLessonId.reset({ lessonId });
     },
@@ -70,21 +76,26 @@ export default function CommentsEditor({
     try {
       // Get the text content from the editor
       const value = editor.tf.value;
+      const text = editor.api.markdown.serialize(value as any);
 
-      console.log('text5', value);
-
-      console.log('Md', editor.api.markdown.serialize(value as any));
-
-      if (replyFormAfterId) {
+      if (isEditing && commentId) {
+        // Update existing comment
+        updateCommentMutation.mutate({
+          commentId,
+          text,
+        });
+      } else if (replyFormAfterId) {
+        // Create a reply
         createCommentMutation.mutate({
           lessonId,
           parentId: replyFormAfterId,
-          text: editor.api.markdown.serialize(value as any),
+          text,
         });
       } else {
+        // Create a new comment
         createCommentMutation.mutate({
           lessonId,
-          text: editor.api.markdown.serialize(value as any),
+          text,
         });
       }
 
@@ -146,7 +157,7 @@ export default function CommentsEditor({
       </DndProvider>
 
       <div className="absolute right-5 bottom-5 flex flex-grow flex-row gap-3">
-        {id === 'sub-editor' && (
+        {(id === 'sub-editor' || isEditing) && (
           <button
             className="text-error cursor-pointer px-4 py-2 text-xs hover:opacity-50"
             onClick={() => {
@@ -161,7 +172,11 @@ export default function CommentsEditor({
           disabled={commentDisabled || submitting}
           onClick={handleSubmit}
         >
-          {submitting ? 'Отправка...' : 'Опубликовать'}
+          {submitting
+            ? 'Отправка...'
+            : isEditing
+              ? 'Сохранить'
+              : 'Опубликовать'}
         </button>
       </div>
     </div>

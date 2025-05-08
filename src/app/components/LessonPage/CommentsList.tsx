@@ -566,6 +566,7 @@ export default function CommentsList() {
   const [replyFormAfterId, setReplyFormAfterId] = useState<string | null>(null);
   const [openedComments, setOpenedComments] = useState<string[]>([]);
   const [modalImage, setModalImage] = useState<string | null>(null);
+  const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const router = useRouter();
 
   const { data: session } = authClient.useSession();
@@ -591,6 +592,15 @@ export default function CommentsList() {
       // Reset form
       setReplyFormAfterId(null);
       setReplyToUser(null);
+    },
+  });
+
+  const updateCommentMutation = api.comments.update.useMutation({
+    onSuccess: () => {
+      // Refresh comments
+      void commentsQuery.refetch();
+      // Reset editing state
+      setEditingCommentId(null);
     },
   });
 
@@ -661,6 +671,16 @@ export default function CommentsList() {
     [deleteCommentMutation]
   );
 
+  // Handle edit comment
+  const handleEditComment = useCallback((commentId: string) => {
+    setEditingCommentId(commentId);
+  }, []);
+
+  // Cancel editing
+  const handleCancelEdit = useCallback(() => {
+    setEditingCommentId(null);
+  }, []);
+
   // Update comments when data changes
   useEffect(() => {
     if (commentsQuery.data) {
@@ -721,6 +741,25 @@ export default function CommentsList() {
       }
     },
     [lessonId, replyFormAfterId, session, createCommentMutation]
+  );
+
+  // Find comment by ID (either in main comments or in answers)
+  const findCommentById = useCallback(
+    (commentId: string): Comment | undefined => {
+      // Check in main comments
+      const mainComment = allComments.find((c) => c.id === commentId);
+      if (mainComment) return mainComment;
+
+      // Check in answers
+      for (const comment of allComments) {
+        if (comment.answers && comment.answers.length > 0) {
+          const answer = comment.answers.find((a) => a.id === commentId);
+          if (answer) return answer;
+        }
+      }
+      return undefined;
+    },
+    [allComments]
   );
 
   // Use total count if available, otherwise fall back to allComments.length
@@ -848,26 +887,48 @@ export default function CommentsList() {
         {/* Comments List */}
         {allComments.map((comment) => (
           <div key={comment.id} className="">
-            <CommentItem
-              comment={comment}
-              setReplyFormAfterId={(id) => {
-                setReplyToUser(null);
-                setReplyFormAfterId(id);
-              }}
-              replyFormAfterId={replyFormAfterId}
-              setIsThreadOpened={(isOpened: boolean) => {
-                if (isOpened) {
-                  setOpenedComments((prev) => [...prev, comment.id]);
-                } else {
-                  setOpenedComments((prev) =>
-                    prev.filter((id) => id !== comment.id)
-                  );
-                }
-              }}
-              onToggleLike={handleToggleLike}
-              onDeleteComment={handleDeleteComment}
-              onEditComment={() => {}}
-            />
+            {editingCommentId === comment.id ? (
+              <div className="flex flex-row gap-5">
+                <UserAvatar
+                  avatarInitial={comment.avatarInitial}
+                  isSelf={!!comment.isSelf}
+                />
+                <CommentsEditor
+                  className="w-175"
+                  value={comment.text}
+                  id={`edit-comment-${comment.id}`}
+                  lessonId={lessonId}
+                  onCancel={handleCancelEdit}
+                  onSubmit={() => {
+                    void commentsQuery.refetch();
+                    setEditingCommentId(null);
+                  }}
+                  isEditing={true}
+                  commentId={comment.id}
+                />
+              </div>
+            ) : (
+              <CommentItem
+                comment={comment}
+                setReplyFormAfterId={(id) => {
+                  setReplyToUser(null);
+                  setReplyFormAfterId(id);
+                }}
+                replyFormAfterId={replyFormAfterId}
+                setIsThreadOpened={(isOpened: boolean) => {
+                  if (isOpened) {
+                    setOpenedComments((prev) => [...prev, comment.id]);
+                  } else {
+                    setOpenedComments((prev) =>
+                      prev.filter((id) => id !== comment.id)
+                    );
+                  }
+                }}
+                onToggleLike={handleToggleLike}
+                onDeleteComment={handleDeleteComment}
+                onEditComment={handleEditComment}
+              />
+            )}
             <AnimatePresence>
               {replyFormAfterId === comment.id && (
                 <motion.div
@@ -933,19 +994,41 @@ export default function CommentsList() {
 
                     return (
                       <div key={formattedAnswer.id} className="pt-8">
-                        <CommentItem
-                          comment={formattedAnswer}
-                          setReplyFormAfterId={() => {
-                            setReplyToUser(formattedAnswer.author);
-                            setReplyFormAfterId(comment.id);
-                          }}
-                          replyFormAfterId={replyFormAfterId}
-                          setIsThreadOpened={(isOpened: boolean) => {}}
-                          className=""
-                          onToggleLike={handleToggleLike}
-                          onDeleteComment={handleDeleteComment}
-                          onEditComment={() => {}}
-                        />
+                        {editingCommentId === formattedAnswer.id ? (
+                          <div className="flex flex-row gap-5">
+                            <UserAvatar
+                              avatarInitial={formattedAnswer.avatarInitial}
+                              isSelf={!!formattedAnswer.isSelf}
+                            />
+                            <CommentsEditor
+                              className="w-175"
+                              value={formattedAnswer.text}
+                              id={`edit-reply-${formattedAnswer.id}`}
+                              lessonId={lessonId}
+                              onCancel={handleCancelEdit}
+                              onSubmit={() => {
+                                void commentsQuery.refetch();
+                                setEditingCommentId(null);
+                              }}
+                              isEditing={true}
+                              commentId={formattedAnswer.id}
+                            />
+                          </div>
+                        ) : (
+                          <CommentItem
+                            comment={formattedAnswer}
+                            setReplyFormAfterId={() => {
+                              setReplyToUser(formattedAnswer.author);
+                              setReplyFormAfterId(comment.id);
+                            }}
+                            replyFormAfterId={replyFormAfterId}
+                            setIsThreadOpened={(isOpened: boolean) => {}}
+                            className=""
+                            onToggleLike={handleToggleLike}
+                            onDeleteComment={handleDeleteComment}
+                            onEditComment={handleEditComment}
+                          />
+                        )}
                       </div>
                     );
                   })}
