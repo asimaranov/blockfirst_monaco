@@ -88,6 +88,9 @@ const FloatingActionBar = ({
   // Add state to control confetti visibility
   const [showConfetti, setShowConfetti] = useState(false);
 
+  // State for copy link functionality
+  const [linkCopied, setLinkCopied] = useState(false);
+
   // State for dragging/resizing
   const [isDragging, setIsDragging] = useState(false);
   const dragStartY = useRef(0);
@@ -102,6 +105,55 @@ const FloatingActionBar = ({
   const errorPanelRef = useRef<HTMLDivElement>(null);
   const successPanelRef = useRef<HTMLDivElement>(null);
   const [isTaskReportFormOpen, setIsTaskReportFormOpen] = useState(false);
+
+  // Get current route params for sharing
+  const params = useParams();
+
+  // Function to handle social sharing
+  const handleShare = useCallback(
+    (platform: string) => {
+      // Base sharing data
+      const shareTitle = 'Я решил задачу на BlockFirst!';
+      const shareMessage = success?.advancedTasksCompleted
+        ? 'Я успешно выполнил все требования задачи, включая продвинутые. Попробуй свои силы!'
+        : 'Я успешно выполнил все ключевые требования задачи. Попробуй свои силы!';
+      const shareUrl =
+        typeof window !== 'undefined' ? window.location.href : '';
+
+      // Create sharing URLs for different platforms
+      let shareLink = '';
+
+      switch (platform) {
+        case 'vk':
+          shareLink = `https://vk.com/share.php?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(shareTitle)}&description=${encodeURIComponent(shareMessage)}`;
+          break;
+        case 'twitter':
+          shareLink = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareMessage)}&url=${encodeURIComponent(shareUrl)}`;
+          break;
+        case 'telegram':
+          shareLink = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareTitle + '\n\n' + shareMessage)}`;
+          break;
+        case 'copy':
+          // Copy current URL to clipboard
+          if (navigator.clipboard) {
+            navigator.clipboard
+              .writeText(shareUrl)
+              .then(() => {
+                setLinkCopied(true);
+                setTimeout(() => setLinkCopied(false), 2000);
+              })
+              .catch((err) => console.error('Failed to copy URL: ', err));
+          }
+          return; // Don't open a window for copy action
+      }
+
+      // Open sharing window for all platforms except copy
+      if (shareLink) {
+        window.open(shareLink, '_blank', 'width=600,height=400');
+      }
+    },
+    [success, params]
+  );
 
   useEffect(() => {
     //     setError({
@@ -430,7 +482,7 @@ const FloatingActionBar = ({
           <div className="relative">
             <div
               ref={successPanelRef}
-              className="border-t-success border-x-accent relative flex flex-grow flex-col gap-16 border-x border-t bg-[#111B1D] px-8 py-6"
+              className="border-t-success relative flex flex-grow flex-col gap-16 border-t bg-[#111B1D] px-8 py-6"
               style={{
                 height: successPanelHeight
                   ? `${successPanelHeight}px`
@@ -628,6 +680,7 @@ const FloatingActionBar = ({
                     {[
                       {
                         name: 'Вконтакте',
+                        id: 'vk',
                         icon: (
                           <svg
                             width="16"
@@ -650,32 +703,9 @@ const FloatingActionBar = ({
                           </svg>
                         ),
                       },
-                      // {
-                      //   name: 'Facebook',
-                      //   icon: (
-                      //     <svg
-                      //       width="16"
-                      //       height="16"
-                      //       viewBox="0 0 16 16"
-                      //       fill="none"
-                      //       xmlns="http://www.w3.org/2000/svg"
-                      //       className="h-4 w-4"
-                      //     >
-                      //       <rect
-                      //         width="16"
-                      //         height="16"
-                      //         rx="8"
-                      //         fill="#0B84EE"
-                      //       />
-                      //       <path
-                      //         d="M8.66439 8.14905H10.1533L10.387 6.62734H8.66409V5.79566C8.66409 5.16352 8.86939 4.60297 9.45713 4.60297H10.4016V3.27502C10.2356 3.25248 9.88468 3.20312 9.22155 3.20312C7.83684 3.20312 7.02503 3.93884 7.02503 5.61501V6.62734H5.60156V8.14905H7.02503V12.3315C7.30694 12.3742 7.59248 12.4031 7.88559 12.4031C8.15054 12.4031 8.40913 12.3788 8.66439 12.344V8.14905Z"
-                      //         fill="#F2F2F2"
-                      //       />
-                      //     </svg>
-                      //   ),
-                      // },
                       {
                         name: 'Twitter (X)',
+                        id: 'twitter',
                         icon: (
                           <svg
                             width="16"
@@ -710,9 +740,9 @@ const FloatingActionBar = ({
                           </svg>
                         ),
                       },
-
                       {
                         name: 'Telegram',
+                        id: 'telegram',
                         icon: (
                           <svg
                             width="16"
@@ -737,7 +767,30 @@ const FloatingActionBar = ({
                       },
                       {
                         name: 'Ссылка',
-                        icon: (
+                        id: 'copy',
+                        icon: linkCopied ? (
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 16 16"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-4 w-4"
+                          >
+                            <path
+                              d="M11.3998 1.33594H8.59984C6.54446 1.33594 5.5805 2.06533 5.37967 3.82861C5.33766 4.1975 5.64317 4.5026 6.01445 4.5026H7.39984C10.1998 4.5026 11.4998 5.8026 11.4998 8.6026V9.988C11.4998 10.3593 11.8049 10.6648 12.1738 10.6228C13.9371 10.422 14.6665 9.45799 14.6665 7.4026V4.6026C14.6665 2.26927 13.7332 1.33594 11.3998 1.33594Z"
+                              fill="#195AF4"
+                            />
+                            <path
+                              d="M7.4026 5.33594H4.6026C2.26927 5.33594 1.33594 6.26927 1.33594 8.6026V11.4026C1.33594 13.7359 2.26927 14.6693 4.6026 14.6693H7.4026C9.73594 14.6693 10.6693 13.7359 10.6693 11.4026V8.6026C10.6693 6.26927 9.73594 5.33594 7.4026 5.33594ZM8.19594 9.1026L5.7226 11.5759C5.62927 11.6693 5.50927 11.7159 5.3826 11.7159C5.25594 11.7159 5.13594 11.6693 5.0426 11.5759L3.8026 10.3359C3.61594 10.1493 3.61594 9.84927 3.8026 9.6626C3.98927 9.47594 4.28927 9.47594 4.47594 9.6626L5.37594 10.5626L7.51594 8.4226C7.7026 8.23594 8.0026 8.23594 8.18927 8.4226C8.37594 8.60927 8.3826 8.91594 8.19594 9.1026Z"
+                              fill="#195AF4"
+                            />
+                            <path
+                              d="M5.72406 11.5785L8.1974 9.10516C8.38406 8.91849 8.3774 8.61182 8.19073 8.42516C8.00406 8.23849 7.70406 8.23849 7.5174 8.42516L5.3774 10.5652L4.4774 9.66516C4.29073 9.47849 3.99073 9.47849 3.80406 9.66516C3.6174 9.85182 3.6174 10.1518 3.80406 10.3385L5.04406 11.5785C5.1374 11.6718 5.2574 11.7185 5.38406 11.7185C5.51073 11.7185 5.63073 11.6718 5.72406 11.5785Z"
+                              fill="#F2F2F2"
+                            />
+                          </svg>
+                        ) : (
                           <svg
                             width="16"
                             height="16"
@@ -771,8 +824,12 @@ const FloatingActionBar = ({
                         ),
                       },
                     ].map((x) => (
-                      <div className="flex flex-row items-center justify-center gap-2 rounded-[5.2083vw] border border-[#F2F2F2]/20 py-3 hover:border-[#F2F2F2]">
-                        <div className="flex cursor-pointer flex-row items-center gap-2">
+                      <div
+                        key={x.id}
+                        className="flex cursor-pointer flex-row items-center justify-center gap-2 rounded-[5.2083vw] border border-[#F2F2F2]/20 py-3 hover:border-[#F2F2F2]"
+                        onClick={() => handleShare(x.id)}
+                      >
+                        <div className="flex flex-row items-center gap-2">
                           {x.icon}
                           <span className="text-sm leading-4">{x.name}</span>
                         </div>

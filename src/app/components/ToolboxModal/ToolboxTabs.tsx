@@ -58,7 +58,7 @@ export default function NotificationsTabs({
             'opacity-50 hover:opacity-100',
             'flex cursor-pointer flex-row items-center justify-center gap-1 px-5 py-4 text-sm sm:px-8',
             activeTab == 'utils' && 'opacity-100',
-            'w-38.75'
+            'w-38.75 text-sm'
           )}
           onClick={() => setActive('utils')}
         >

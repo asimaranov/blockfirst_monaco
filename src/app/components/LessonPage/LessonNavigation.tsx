@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react';
 import { useEditorSelector } from '@udecode/plate/react';
 import { useScrollRef } from '@udecode/plate/react';
 import { useEditorRef } from '@udecode/plate/react';
+import { cn } from '~/lib/utils';
 
 type NavigationItemType = 'completed' | 'active' | 'upcoming';
 
@@ -214,7 +215,13 @@ export default function LessonNavigation() {
               )}
             </div>
 
-            <span className="text-secondary text-sm">{item.title}</span>
+            <span className={cn(
+                'text-secondary text-sm',
+                item.type === 'active' && 'text-foreground'
+              )}
+            >
+              {item.title}
+            </span>
           </div>
         ))}
       </div>

@@ -92,9 +92,7 @@ export const ResetConfirmationModal = () => {
         {/* Top Section: Icon + Text */}
         <div className="flex items-center space-x-5">
           {/* Icon Circle */}
-          <div className="bg-success/10 flex h-[42px] w-[42px] flex-shrink-0 items-center justify-center rounded-full">
-            <ScrollIcon />
-          </div>
+          <ScrollIcon />
           {/* Text Content */}
           <div className="flex flex-col space-y-2">
             <span className="text-foreground text-xl">Сбросить код</span>

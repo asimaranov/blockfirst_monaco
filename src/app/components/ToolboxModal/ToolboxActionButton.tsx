@@ -18,7 +18,7 @@ const ToolboxActionButton: React.FC<ToolboxActionButtonProps> = ({
     <button
       onClick={onClick}
       className={cn(
-        'border-primary text-foreground hover:bg-primary/10 flex w-full cursor-pointer items-center justify-center gap-2 rounded-full border py-3 text-[14px] transition-colors',
+        'border-primary text-foreground hover:bg-primary/10 flex w-full cursor-pointer items-center justify-center gap-2 rounded-full border py-3 text-sm transition-colors',
         className
       )}
     >

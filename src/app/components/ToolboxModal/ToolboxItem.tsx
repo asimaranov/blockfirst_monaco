@@ -59,8 +59,8 @@ const ToolboxItem: React.FC<ToolboxItemProps> = ({
         className="flex w-full cursor-pointer items-center justify-between text-left"
       >
         <div className="flex flex-col gap-2">
-          <h3 className="text-foreground text-[16px]">{title}</h3>
-          <p className="text-secondary text-[14px]">{description}</p>
+          <h3 className="text-foreground text-base">{title}</h3>
+          <p className="text-secondary text-sm">{description}</p>
         </div>
         <ChevronDownIcon
           className={cn(

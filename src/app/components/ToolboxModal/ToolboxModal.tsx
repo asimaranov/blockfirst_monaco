@@ -34,7 +34,7 @@ export const ToolboxModal = () => {
       className="sm:z-[10000000000000000]"
       overlayClassName="z-[10000000000000000]"
     >
-      <div className="bg-dark-bg border-accent/40 relative flex h-full w-full flex-col border-l-0 sm:max-w-[420px] sm:border-l">
+      <div className="bg-dark-bg border-accent/40 relative flex h-full flex-col border-l-0 max-w-105 sm:border-l">
         <FormMobileControls
           showBackButton={false}
           onBackClick={() => {}}
@@ -55,10 +55,10 @@ export const ToolboxModal = () => {
               className="hidden w-38 sm:flex"
             />
             <div className="flex flex-col items-center gap-4 text-center">
-              <h2 className="text-foreground text-[20px] sm:text-[28px]">
+              <h2 className="text-foreground text-3xl">
                 Утилиты & Константы
               </h2>
-              <p className="text-secondary text-[14px]">
+              <p className="text-secondary text-sm">
                 В процессе прохождения курса будут предоставлены новые утилиты и
                 константы.
               </p>
