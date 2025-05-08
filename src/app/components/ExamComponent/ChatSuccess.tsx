@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StarIcon, StarIconFilled } from '../TaskView/MonacoView';
 import { api } from '~/trpc/react';
 import { useExamStore } from '@/store/examStore';
+import Confetti from 'react-confetti';
 
 interface ChatSuccessProps {
   examId?: string;
@@ -10,8 +11,43 @@ interface ChatSuccessProps {
 const ChatSuccess = ({ examId }: ChatSuccessProps) => {
   const [rating, setRating] = useState<number | null>(null);
   const [linkCopied, setLinkCopied] = useState(false);
+  const [windowDimensions, setWindowDimensions] = useState<{
+    width: number;
+    height: number;
+  }>({
+    width: 0,
+    height: 0,
+  });
+  const [confettiActive, setConfettiActive] = useState(true);
   const utils = api.useUtils();
   const { updateCompletionStatus } = useExamStore();
+
+  // Set window dimensions for confetti
+  useEffect(() => {
+    const updateWindowDimensions = () => {
+      setWindowDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    // Initialize dimensions
+    updateWindowDimensions();
+
+    // Add event listener
+    window.addEventListener('resize', updateWindowDimensions);
+
+    // Auto-disable confetti after 5 seconds
+    const timer = setTimeout(() => {
+      setConfettiActive(false);
+    }, 9000);
+
+    // Clean up
+    return () => {
+      window.removeEventListener('resize', updateWindowDimensions);
+      clearTimeout(timer);
+    };
+  }, []);
 
   // Fetch chat history to get correctAnswers and totalQuestions
   const { data: chatHistoryData } = api.examAi.getChatHistory.useQuery(
@@ -114,6 +150,17 @@ const ChatSuccess = ({ examId }: ChatSuccessProps) => {
 
   return (
     <div className="mt-auto mb-auto flex flex-col items-center gap-12 p-8">
+      {confettiActive && (
+        <Confetti
+          width={windowDimensions.width}
+          height={windowDimensions.height}
+          recycle={false}
+          numberOfPieces={500}
+          gravity={0.2}
+          run
+        />
+      )}
+
       <div className="flex flex-col items-center gap-10">
         <svg
           width="120"
