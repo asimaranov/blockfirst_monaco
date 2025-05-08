@@ -11,9 +11,10 @@ import {
   useReadOnly,
   withHOC,
 } from '@udecode/plate/react';
+import { ResizableProvider } from '@udecode/plate-resizable';
 
 export const ColumnElement = withHOC(
-  React.Fragment,
+  ResizableProvider,
   function ColumnElement({
     children,
     className,
