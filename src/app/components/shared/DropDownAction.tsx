@@ -195,8 +195,9 @@ export default function DropDownAction({
                             />
                           </svg>
                         )}
-
-                        {option.label}
+                        <span className="leading-3.5">
+                          {option.label}
+                        </span>
                       </button>
                     ) : (
                       <Link
