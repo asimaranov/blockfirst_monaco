@@ -15,7 +15,7 @@ const bundleAnalyzer = withBundleAnalyzer({
 /** @type {import("next").NextConfig} */
 const config = {
   experimental: {
-    dynamicIO: true,
+    useCache: true,
   },
   webpack: (config, { isServer }) => {
     if (!isServer) {
