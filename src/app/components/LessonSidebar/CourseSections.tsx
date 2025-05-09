@@ -171,9 +171,7 @@ const MultiSigIcon = () => {
 
 // Main component for course sections sidebar
 export function CourseSections({ lessonId, courseInfo: courseData }: { lessonId: string, courseInfo: any }) {
-  const pathname = usePathname();
   const [activeLessonId, setActiveLessonId] = useState(lessonId);
-  const [isLoading, setIsLoading] = useState(false);
 
   const getHierarchy = useCallback(
     (lessonId: string) => {
