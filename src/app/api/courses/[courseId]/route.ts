@@ -1,4 +1,5 @@
-import { NextResponse } from 'next/server';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { NextRequest, NextResponse } from 'next/server';
 import prisma from '~/lib/prisma';
 
 // Function to get document children
@@ -13,10 +14,9 @@ async function getDocumentChildren(parentId: string) {
 }
 
 export async function GET(
-  request: Request,
-  params: Promise<{ params: { courseId: string } }>
+  request: NextRequest
 ) {
-  const { courseId } = (await params).params;
+  const courseId = request.nextUrl.searchParams.get('courseId') as string;
 
   try {
     const courseSections = await getDocumentChildren(courseId);

@@ -377,6 +377,9 @@ importers:
       install:
         specifier: ^0.13.0
         version: 0.13.0
+      kysely:
+        specifier: ^0.28.2
+        version: 0.28.2
       lowlight:
         specifier: ^3.3.0
         version: 3.3.0

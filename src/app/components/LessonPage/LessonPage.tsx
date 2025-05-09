@@ -1,4 +1,4 @@
-'use server';
+// \'use server\'; // Removed this line
 import React from 'react';
 import Cover from './Cover'; // Import the extracted Cover component
 
@@ -14,6 +14,7 @@ import { authClient } from '~/server/auth/client';
 import { redirect } from 'next/navigation';
 import { unstable_cache } from 'next/cache';
 import superjson from 'superjson';
+import { cacheTag } from 'next/dist/server/use-cache/cache-tag';
 
 // Helper function to create cached functions with proper serialization
 const createCachedFunction = <T, P extends unknown[]>(
@@ -35,33 +36,36 @@ const createCachedFunction = <T, P extends unknown[]>(
 };
 
 // Cached database queries
-const getDocument = createCachedFunction(
-  async (lessonId: string) => {
-    return prisma.document.findUnique({
-      where: {
-        id: lessonId,
-        isArchived: false,
-      },
-      include: {
-        children: {
-          where: {
-            isArchived: false,
-          },
-          orderBy: [
-            {
-              sortOrder: 'asc',
-            },
-            {
-              createdAt: 'asc',
-            },
-          ],
+const getDocument = async (lessonId: string) => {
+  'use cache';
+
+  const document = await prisma.document.findUnique({
+    where: {
+      id: lessonId,
+      isArchived: false,
+    },
+    include: {
+      children: {
+        where: {
+          isArchived: false,
         },
+        orderBy: [
+          {
+            sortOrder: 'asc',
+          },
+          {
+            createdAt: 'asc',
+          },
+        ],
       },
-    });
-  },
-  ['document-by-id'],
-  { tags: ['document'] }
-);
+    },
+  });
+
+  cacheTag('document-by-id', lessonId);
+
+  console.log('documenttttlsjknflkjn', document);
+  return document;
+};
 
 const getParentDocument = createCachedFunction(
   async (parentDocumentId: string) => {
@@ -228,8 +232,8 @@ export default async function LessonPage({ lessonId }: { lessonId: string }) {
   const document = await getDocument(lessonId);
 
   // const session = await authClient.getSession();
-
-  // console.log('documentttt', document?.contentRich);
+  console.log('documentttt id', lessonId);
+  console.log('documentttt', document?.contentRich);
 
   let prevLessonId: string | null = null;
   let nextLessonId: string | null = null;

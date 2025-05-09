@@ -1,3 +1,4 @@
+'use server';
 import { UserAvatar } from './UserAvatar';
 import CommentsEditor from './CommentsEditor';
 import CommentsList from './CommentsList';
