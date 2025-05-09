@@ -150,7 +150,7 @@ const ChatSuccess = ({ examId }: ChatSuccessProps) => {
   };
 
   return (
-    <div className="mt-auto mb-auto flex flex-col items-center gap-12 p-8">
+    <div className="mt-auto flex flex-col items-center gap-12 p-8">
       {confettiActive && (
         <Confetti
           width={windowDimensions.width}
