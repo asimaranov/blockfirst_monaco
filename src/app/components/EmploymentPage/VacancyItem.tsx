@@ -158,7 +158,7 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
           <ToggleMinus
             isExpanded={isExpanded}
             onToggle={() => {}}
-            className="group-hover:opacity-50"
+            className="group-hover:opacity-70"
           />
         </div>
       </div>
@@ -181,7 +181,11 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
           </span>
         </div>
         <div className="my-auto size-5">
-          <ToggleMinus isExpanded={isExpanded} onToggle={() => {}} />
+          <ToggleMinus
+            isExpanded={isExpanded}
+            onToggle={() => {}}
+            className="group-hover:opacity-70"
+          />
         </div>
       </div>
 

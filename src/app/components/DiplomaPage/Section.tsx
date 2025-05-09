@@ -140,7 +140,7 @@ export function Section({
           <ToggleMinus
             isExpanded={isExpanded}
             onToggle={onToggle}
-            className="h-10 w-10 group-hover:opacity-50"
+            className="h-10 w-10 group-hover:opacity-70"
           />
         )}
       </div>

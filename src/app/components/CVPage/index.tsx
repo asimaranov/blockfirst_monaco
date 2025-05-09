@@ -262,7 +262,7 @@ const FAQItem = ({
           <ToggleMinus
             isExpanded={isOpen}
             onToggle={onClick}
-            className="ml-6 h-5 w-5 shrink-0 group-hover:opacity-50"
+            className="ml-6 h-5 w-5 shrink-0 group-hover:opacity-70"
           ></ToggleMinus>
         </div>
         <AnimatePresence>

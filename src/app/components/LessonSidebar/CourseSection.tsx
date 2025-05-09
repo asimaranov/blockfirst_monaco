@@ -143,7 +143,7 @@ export function CourseSection({
             isExpanded={isExpanded}
             onToggle={() => setIsExpanded(!isExpanded)}
             disabled={status === 'locked' || status === 'upcoming'}
-            className="group-hover:opacity-50"
+            className="group-hover:opacity-70"
           />
         </div>
       </div>
