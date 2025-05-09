@@ -43,6 +43,7 @@ import { skipMarkPlugin } from './skip-mark-plugin';
 import { softBreakPlugin } from './soft-break-plugin';
 import { tablePlugin } from './table-plugin';
 import { tocPlugin } from './toc-plugin';
+import { MarkdownPlugin } from '@udecode/plate-markdown';
 
 export const viewPlugins = [
   ...basicNodesPlugins,
@@ -113,5 +114,6 @@ export const editorPlugins = [
 
   // UI
   FixedToolbarPlugin,
+  MarkdownPlugin,
   // FloatingToolbarPlugin,
 ];

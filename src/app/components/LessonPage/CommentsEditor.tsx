@@ -38,7 +38,7 @@ export default function CommentsEditor({
   const [commentDisabled, setCommentDisabled] = useState(true);
   const [editorFocused, setEditorFocused] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [editorValue, setEditorValue] = useState('');
+  const [editorValue, setEditorValue] = useState<Value>([]);
   const editor = useCreateEditor({
     id: id || 'comments',
   });
@@ -77,6 +77,10 @@ export default function CommentsEditor({
     try {
       // Get the text content from the editor
       const value = editorValue;
+
+      console.log('value', value);
+
+      // Serialize the value to markdown
       const text = editor.getApi(MarkdownPlugin).markdown.serialize(value as any);
 
       if (isEditing && commentId) {
@@ -144,8 +148,9 @@ export default function CommentsEditor({
             }
           }}
           onValueChange={({ value }) => {
-            console.log('value', value);
+            setEditorValue(value);
           }}
+          
         >
           <EditorContainer
             className="dark rounded-[0.625vw]"
