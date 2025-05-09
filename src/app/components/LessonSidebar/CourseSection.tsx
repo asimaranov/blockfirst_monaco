@@ -75,7 +75,7 @@ export function CourseSection({
         </div>
         <div
           className={cn(
-            'flex cursor-pointer flex-row justify-between gap-4',
+            'flex cursor-pointer flex-row justify-between gap-4 group',
             status === 'locked' || status === 'upcoming' ? 'cursor-default' : ''
           )}
           onClick={() => {
@@ -136,13 +136,14 @@ export function CourseSection({
               )}
             </div>
 
-            <span className="text-base leading-5 text-white">{title}</span>
+            <span className="text-base leading-5 group-hover:text-foreground/50">{title}</span>
           </div>
           {/* Toggle expand/collapse */}
           <ToggleMinus
             isExpanded={isExpanded}
             onToggle={() => setIsExpanded(!isExpanded)}
             disabled={status === 'locked' || status === 'upcoming'}
+            className="group-hover:opacity-50"
           />
         </div>
       </div>

@@ -252,17 +252,17 @@ const FAQItem = ({
   onClick: () => void;
 }) => {
   return (
-    <div className="border-accent border-b last:border-b-0">
+    <div
+      className="border-accent group cursor-pointer border-b last:border-b-0"
+      onClick={onClick}
+    >
       <div className="px-5 py-6 sm:px-8">
-        <div
-          className="flex cursor-pointer items-center justify-between"
-          onClick={onClick}
-        >
+        <div className="flex cursor-pointer items-center justify-between">
           <h3 className="text-foreground text-sm">{question}</h3>
           <ToggleMinus
             isExpanded={isOpen}
             onToggle={onClick}
-            className="ml-6 h-5 w-5 shrink-0"
+            className="ml-6 h-5 w-5 shrink-0 group-hover:opacity-50"
           ></ToggleMinus>
         </div>
         <AnimatePresence>

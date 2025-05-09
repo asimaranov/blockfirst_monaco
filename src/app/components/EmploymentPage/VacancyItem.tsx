@@ -85,7 +85,7 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
         'border-accent relative transition-colors duration-200 not-last:border-b hover:bg-[#14171C]',
         isExpanded && 'bg-dark-bg sm:bg-[#14171C]',
         'lg:grid lg:grid-cols-[calc(50*var(--spacing))_calc(35*var(--spacing))_calc(28*var(--spacing))_calc(19.75*var(--spacing))_1fr] lg:items-center lg:gap-x-9 lg:px-8 lg:py-6',
-        'flex flex-col px-5 py-8'
+        'flex flex-col px-5 py-8 group cursor-pointer'
       )}
     >
       {/* Desktop Layout */}
@@ -155,7 +155,11 @@ export const VacancyItem = ({ vacancy, onApply }: VacancyItemProps) => {
         )}
 
         <div className="my-auto size-5">
-          <ToggleMinus isExpanded={isExpanded} onToggle={() => {}} />
+          <ToggleMinus
+            isExpanded={isExpanded}
+            onToggle={() => {}}
+            className="group-hover:opacity-50"
+          />
         </div>
       </div>
 

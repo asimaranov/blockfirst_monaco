@@ -30,7 +30,7 @@ export function Section({
       <div
         className={cn(
           'border-accent flex items-center justify-between border-b px-5 py-5 sm:px-8',
-          status !== 'coming_soon' && 'cursor-pointer hover:bg-[#14171C]'
+          status !== 'coming_soon' ? 'cursor-pointer hover:bg-[#14171C] group' : 'cursor-default'
         )}
         onClick={onToggle}
       >
@@ -140,7 +140,7 @@ export function Section({
           <ToggleMinus
             isExpanded={isExpanded}
             onToggle={onToggle}
-            className="h-10 w-10"
+            className="h-10 w-10 group-hover:opacity-50"
           />
         )}
       </div>
