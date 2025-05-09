@@ -13,11 +13,12 @@ export const LinkElement = withRef<typeof PlateElement>(
     const element = props.element as TLinkElement;
     const { props: linkProps } = useLink({ element });
 
+    element.target = '_blank';
+
     return (
       <PlateElement
         ref={ref}
         as="a"
-        target="_blank"
         className={cn(
           className,
           'font-medium underline decoration-foreground underline-offset-4'
