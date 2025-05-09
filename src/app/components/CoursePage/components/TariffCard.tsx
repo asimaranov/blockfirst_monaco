@@ -9,36 +9,36 @@ export default function TariffCard({ tariff }: { tariff: Tariff }) {
     <div className="flex-1" key={tariff.name}>
       <div className="flex flex-col">
         {/* Dark header */}
-        <div className="relative h-20 bg-[#01050D]">
-          <div className="pointer-events-none absolute inset-0 z-[1] opacity-50 mix-blend-soft-light">
-            <div className="bg-gradient-radial h-full w-full from-gray-100 to-transparent" />
-          </div>
-          <div className="relative z-[2] px-8 py-5">
-            <div className="flex flex-row items-center justify-between">
-              <div className="flex flex-row items-center gap-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#01050D]">
-                  <Image
-                    src={tariff.bigIcon}
-                    alt=""
-                    className="h-10 w-10 rounded-full"
-                    width={40}
-                    height={40}
-                  />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center gap-3">
-                    <span className="text-base">{tariff.name}</span>
-                    {!!tariff.sale && (
-                      <span className="bg-error rounded-full px-2 py-1 text-xs uppercase">
-                        Sale {tariff.sale.percent}%
-                      </span>
-                    )}
+        <Link href="/pricing">
+          <div className="relative h-20 bg-[#01050D] group">
+            <div className="absolute inset-0 z-[1] opacity-50 mix-blend-soft-light">
+              <div className="bg-gradient-radial h-full w-full from-gray-100 to-transparent" />
+            </div>
+            <div className="relative z-[2] px-8 py-5">
+              <div className="flex flex-row items-center justify-between">
+                <div className="flex flex-row items-center gap-4">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#01050D]">
+                    <Image
+                      src={tariff.bigIcon}
+                      alt=""
+                      className="h-10 w-10 rounded-full"
+                      width={40}
+                      height={40}
+                    />
                   </div>
-                  <div className="text-secondary text-xs">Платный тариф</div>
+                  <div className="flex flex-col gap-2">
+                    <div className="flex items-center gap-3">
+                      <span className="text-base">{tariff.name}</span>
+                      {!!tariff.sale && (
+                        <span className="bg-error rounded-full px-2 py-1 text-xs uppercase">
+                          Sale {tariff.sale.percent}%
+                        </span>
+                      )}
+                    </div>
+                    <div className="text-secondary text-xs">Платный тариф</div>
+                  </div>
                 </div>
-              </div>
-              <Link href="/pricing">
-                <div className="h-6 w-6 cursor-pointer hover:opacity-50">
+                <div className="h-6 w-6 cursor-pointer group-hover:opacity-50">
                   <svg
                     width="24"
                     height="25"
@@ -55,15 +55,16 @@ export default function TariffCard({ tariff }: { tariff: Tariff }) {
                     />
                   </svg>
                 </div>
-              </Link>
+              </div>
             </div>
+            <Image
+              className="absolute inset-0 right-0 bottom-0 z-[0] h-20.25 w-78.5"
+              src={GridSvg}
+              alt=""
+            />
           </div>
-          <Image
-            className="absolute inset-0 right-0 bottom-0 z-[0] h-20.25 w-78.5"
-            src={GridSvg}
-            alt=""
-          />
-        </div>
+        </Link>
+
         {/* Features list */}
         <div className="flex flex-col">
           {tariff.shortFeatures.map((feature) => (

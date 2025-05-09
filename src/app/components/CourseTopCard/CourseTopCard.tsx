@@ -70,7 +70,7 @@ export function CourseTopCard({ course }: { course: ICourse }) {
         <CourseProgress progress={4} className="mt-8 sm:mt-6" />
         <div className="mt-8 flex flex-row items-center justify-between gap-4">
           <Link
-            href={`/lesson/${course.id}`}
+            href={`/lesson/${course.firstLessonId}`}
             className={
               'bg-primary border-primary flex w-full flex-col items-center justify-center rounded-full border py-3 duration-300 hover:bg-transparent'
             }

@@ -12,36 +12,36 @@ export default function TariffSection({
   showFeatures?: boolean;
 }) {
   return (
-    <div className="flex flex-col">
-      <div className="relative h-20 border-t border-[#282D33] bg-[#01050D] bg-[url(/images/misc/tariff-section-grid.svg)] bg-cover bg-right-bottom bg-no-repeat">
-        <div className="pointer-events-none absolute inset-0 z-[1] opacity-50 mix-blend-soft-light">
-          <div className="bg-gradient-radial h-full w-full from-gray-100 to-transparent" />
-        </div>
-        <div className="relative z-[2] px-5 py-5 sm:px-8">
-          <div className="flex flex-row items-center justify-between">
-            <div className="flex flex-row items-center gap-4">
-              <div className="h-10 w-10 overflow-hidden rounded-full bg-[#01050D]">
-                <Image
-                  src={tariff.bigIcon}
-                  alt={tariff.name}
-                  width={40}
-                  height={40}
-                  className="h-10 w-10 object-cover"
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-3">
-                  <span className="text-base font-medium">{tariff.name}</span>
-                  {tariff.sale && (
-                    <span className="bg-error rounded-full px-2 py-1 text-xs uppercase">
-                      Sale {tariff.sale.percent}%
-                    </span>
-                  )}
+    <Link href="/pricing">
+      <div className="group flex cursor-pointer flex-col">
+        <div className="relative h-20 border-t border-[#282D33] bg-[#01050D] bg-[url(/images/misc/tariff-section-grid.svg)] bg-cover bg-right-bottom bg-no-repeat">
+          <div className="absolute inset-0 z-[1] opacity-50 mix-blend-soft-light">
+            <div className="bg-gradient-radial h-full w-full from-gray-100 to-transparent" />
+          </div>
+          <div className="relative z-[2] px-5 py-5 sm:px-8">
+            <div className="flex flex-row items-center justify-between">
+              <div className="flex flex-row items-center gap-4">
+                <div className="h-10 w-10 overflow-hidden rounded-full bg-[#01050D]">
+                  <Image
+                    src={tariff.bigIcon}
+                    alt={tariff.name}
+                    width={40}
+                    height={40}
+                    className="h-10 w-10 object-cover"
+                  />
                 </div>
-                <div className="text-secondary text-xs">Платный тариф</div>
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-3">
+                    <span className="text-base font-medium">{tariff.name}</span>
+                    {tariff.sale && (
+                      <span className="bg-error rounded-full px-2 py-1 text-xs uppercase">
+                        Sale {tariff.sale.percent}%
+                      </span>
+                    )}
+                  </div>
+                  <div className="text-secondary text-xs">Платный тариф</div>
+                </div>
               </div>
-            </div>
-            <Link href="/pricing">
               <svg
                 width="20"
                 height="20"
@@ -56,11 +56,11 @@ export default function TariffSection({
                   fill="#F2F2F2"
                 />
               </svg>
-            </Link>
+            </div>
           </div>
         </div>
+        {showFeatures && <TariffFeatureList features={tariff.shortFeatures} />}
       </div>
-      {showFeatures && <TariffFeatureList features={tariff.shortFeatures} />}
-    </div>
+    </Link>
   );
 }

@@ -214,7 +214,7 @@ export function CourseSections({ lessonId, courseInfo: courseData }: { lessonId:
           <CourseSection
             key={section.id}
             title={section.title}
-            status={section.status}
+            status={'available'}
             modules={
               section.modules.map((module: any) => ({
                 title: module.title,

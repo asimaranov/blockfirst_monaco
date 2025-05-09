@@ -15,6 +15,7 @@ export interface ICourseBageInfo {
 }
 export interface ICourse {
   id: string;
+  firstLessonId?: string;
   title: string;
   description: string;
   aboutText?: string;
@@ -28,6 +29,7 @@ export interface ICourse {
 export const COURSES: ICourse[] = [
   {
     id: 'solidity',
+    firstLessonId: 'g6wz95skvzwc3z9',
     title: 'Путешествие по Solidity & DeFi',
     description:
       'Помогите Алексу создать свой собственный токен, продать его инвесторам, внедрить стейкинг, управление правами, мультисиги...',
