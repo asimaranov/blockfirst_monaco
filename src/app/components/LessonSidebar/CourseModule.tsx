@@ -121,8 +121,8 @@ export function CourseModule({
             </span>
           </div>
           <div className="flex items-center justify-center">
-            <span className="text-foreground text-sm">{progress}</span>
-            <span className="text-secondary text-xs">/{total}</span>
+            <span className="text-foreground text-sm leading-4">{progress}</span>
+            <span className="text-secondary text-xs leading-3.5">/{total}</span>
           </div>
         </div>
       </div>
