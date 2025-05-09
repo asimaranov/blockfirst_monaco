@@ -104,6 +104,7 @@ import { BaseTaskPlugin } from './plate/plugins/task-plugins';
 import { ColumnGroupElementStatic } from '~/components/plate-ui/column-group-element-static';
 import { ColumnGroupElement } from './plate/column-group-element';
 import { ColumnElement } from './plate/column-element';
+import { LinkElement } from '~/components/plate-ui/link-element';
 
 export function ImageElementStatic({
   children,
@@ -270,6 +271,7 @@ const PlateEditor = ({ richText }: { richText: Value }) => {
         [BaseVideoPlugin.key]: MediaVideoElement,
         [BaseColumnPlugin.key]: ColumnGroupElement,
         [BaseColumnItemPlugin.key]: ColumnElement,
+        [BaseLinkPlugin.key]: LinkElement,
       },
     },
   });
