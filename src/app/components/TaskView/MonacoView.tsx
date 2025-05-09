@@ -375,7 +375,7 @@ const FloatingActionBar = ({
           <div className="relative">
             <div
               ref={errorPanelRef}
-              className="border-t-error border-x-accent flex flex-col gap-8 border-x border-t bg-[#191419] px-8 py-6"
+              className="border-t-error flex flex-col gap-8 border-t bg-[#191419] px-8 py-6"
               style={{
                 height: errorPanelHeight ? `${errorPanelHeight}px` : undefined,
                 overflow: 'auto',
@@ -390,7 +390,7 @@ const FloatingActionBar = ({
                       viewBox="0 0 20 20"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5"
+                      className="h-5 w-5 shrink-0"
                     >
                       <path
                         d="M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z"

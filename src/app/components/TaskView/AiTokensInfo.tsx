@@ -139,7 +139,7 @@ export default function AiTokensInfo() {
             </div>
             <div className="flex flex-col gap-3">
               <div className="flex flex-row justify-between">
-                <span className="text-xl">AI токены</span>
+                <span className="text-xl leading-5.75">AI токены</span>
                 <div className="flex flex-row items-center gap-0.5">
                   <span className="text-secondary/50 text-xs">
                     Ресет в полночь —{' '}
@@ -158,7 +158,7 @@ export default function AiTokensInfo() {
                   </div>
                 </div>
               </div>
-              <span className="text-secondary text-xs">
+              <span className="text-secondary text-xs leading-5">
                 Каждая буква в вашем запросе учитывается как отдельный токен.
                 Количество доступных токенов обновляется автоматически
                 ежедневно.

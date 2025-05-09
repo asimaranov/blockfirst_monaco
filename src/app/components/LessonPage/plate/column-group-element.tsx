@@ -56,7 +56,7 @@ export function ColumnGroupElement({
   );
 
   return (
-    <PlateElement className={cn(className, 'relative mb-4')} {...props}>
+    <PlateElement className={cn(className, 'relative my-16')} {...props}>
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex items-center [&_.inline-block]:block [&_.slate-img]:mt-0 [&_.slate-img]:mb-0">
           {children}

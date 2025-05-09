@@ -181,7 +181,7 @@ export default function TaskInfo({ task }: { task: any }) {
             </div>
             <div className="flex flex-col gap-5">
               <span className="text-secondary text-sm">
-                <PlateEditor richText={task.problemStatement} />
+                <PlateEditor richText={task.problemStatement} isTask={true} />
               </span>
             </div>
           </div>

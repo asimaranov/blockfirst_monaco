@@ -73,14 +73,19 @@ const StarIconFilled = ({ className }: { className: string }) => {
 };
 
 const Button = ({
+  className,
   children,
   disabled,
 }: {
+  className: string;
   children: React.ReactNode;
   disabled?: boolean;
 }) => (
   <button
-    className="border-accent not-disabled:hover:bg-foreground not-disabled:hover:text-background group flex h-11 items-center gap-2 rounded-[100px] border px-6 not-disabled:cursor-pointer"
+    className={cn(
+      'border-accent not-disabled:hover:bg-foreground not-disabled:hover:text-background group flex h-11 items-center rounded-[100px] border px-6 not-disabled:cursor-pointer',
+      className
+    )}
     disabled={disabled}
   >
     {children}
@@ -225,10 +230,10 @@ export default function ContentFooter({
   const url = `https://app.blockfirst.io${pathname}`;
 
   return (
-    <div className="border-accent flex flex-row justify-between border-b px-5 pt-21.5 pb-10 sm:px-16">
+    <div className="border-accent flex flex-row justify-between border-b px-5 mt-20 pb-10 sm:px-16">
       {prevLessonId && (
         <Link href={`/lesson/${prevLessonId}`}>
-          <Button>
+          <Button className="gap-2">
             <svg
               width="20"
               height="20"

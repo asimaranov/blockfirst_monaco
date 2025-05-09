@@ -85,7 +85,7 @@ export function TaskElement({
           ))}
         </div>
       ) : (
-        <div className="divide-accent border-accent vor -mx-5 grid grid-cols-1 border-t sm:-mx-16 sm:grid-cols-2">
+        <div className="divide-accent border-accent vor -mx-5 grid grid-cols-1 border-t sm:-mx-16 sm:grid-cols-2 gap-y-10">
           {taskIds.map((taskId, i) => (
             <TaskCardGridItem
               key={i}
@@ -96,7 +96,7 @@ export function TaskElement({
             />
           ))}
           {taskIds.length % 2 != 0 && (
-            <div className="border-accent h-full w-full border-b"></div>
+            <div className="border-accent h-full w-full border-b nth-[n+3]:border-t"></div>
           )}
         </div>
       )}

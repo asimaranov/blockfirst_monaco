@@ -91,7 +91,7 @@ import { TableCellHeaderStaticElement } from './plate/table';
 import { TableRowElementStatic } from './plate/table';
 import { TableCellElementStatic } from './plate/table';
 import { TableElementStatic } from './plate/table';
-import { CodeBlockElement } from '~/components/plate-ui/code-block-element';
+import { CodeBlockElement, CodeBlockElementTask } from '~/components/plate-ui/code-block-element';
 import { CodeLineElementStatic } from '~/components/plate-ui/code-line-element-static';
 import { CodeLeafStatic } from '~/components/plate-ui/code-leaf-static';
 import { CodeSyntaxLeafStatic } from '~/components/plate-ui/code-syntax-leaf-static';
@@ -221,7 +221,7 @@ const plugins = [
   BaseTaskPlugin,
 ];
 
-const PlateEditor = ({ richText }: { richText: Value }) => {
+const PlateEditor = ({ richText, isTask = false }: { richText: Value, isTask?: boolean }) => {
   // console.log('richText', r/ );
   const editorStore = useEditorStore();
 
@@ -263,7 +263,7 @@ const PlateEditor = ({ richText }: { richText: Value }) => {
         [BaseTablePlugin.key]: TableElementStatic,
         [BaseTableRowPlugin.key]: TableRowElementStatic,
         [BaseTaskPlugin.key]: TaskElement,
-        [BaseCodeBlockPlugin.key]: CodeBlockElement,
+        [BaseCodeBlockPlugin.key]: isTask ? CodeBlockElementTask : CodeBlockElement,
         [BaseCodeLinePlugin.key]: CodeLineElementStatic,
         [BaseCodePlugin.key]: CodeLeafStatic,
         [BaseCodeSyntaxPlugin.key]: CodeSyntaxLeafStatic,

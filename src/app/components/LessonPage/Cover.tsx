@@ -291,7 +291,7 @@ const Cover = () => {
                 <div
                   key={stat.alt}
                   ref={statRefs.current[stat.alt]}
-                  className={`flex cursor-pointer items-center gap-2 rounded-full px-4 py-2.5 ${glassStyle} hover:border-foreground hover:bg-foreground/10 z-10 border`}
+                  className={`flex cursor-pointer items-center gap-2 rounded-full px-4 py-2.5 pr-5 ${glassStyle} hover:border-foreground hover:bg-foreground/10 z-10 border`}
                   onClick={() =>
                     setStatPopoverOpen(
                       statPopoverOpen === stat.alt ? null : stat.alt
@@ -321,7 +321,7 @@ const Cover = () => {
                         {Array.from({ length: 6 }).map((_, i) => (
                           <div
                             className={cn(
-                              'group relative flex flex-col items-center justify-center gap-2 rounded-[0.4167vw] px-4 py-5',
+                              'group relative flex flex-col items-center justify-center gap-2 rounded-[0.4167vw] px-4 py-5 ',
                               i < activeDay
                                 ? 'not-last:bg-success/10 last:bg-[linear-gradient(98deg,_rgba(255,_32,_162,_0.10)_1.97%,_rgba(255,_91,_32,_0.10)_104.5%)]'
                                 : i != 5 &&
@@ -413,17 +413,20 @@ const Cover = () => {
                               alt="fire"
                               className="h-5 w-5"
                             />
-                            <span
-                              className={cn(
-                                i < activeDay
-                                  ? 'text-success group-last:text-[#FE20A2]'
-                                  : '',
-                                'text-sm leading-4'
-                              )}
-                            >
-                              {50 * (i + 1)}
+                            <div className="flex flex-row w-15.75 items-center justify-center">
                               <span
                                 className={cn(
+                                  i < activeDay
+                                    ? 'text-success group-last:text-[#FE20A2]'
+                                    : '',
+                                  'text-sm leading-4'
+                                )}
+                              >
+                                {50 * (i + 1)}&nbsp;
+                              </span>
+                              <span
+                                className={cn(
+                                  'text-sm leading-4',
                                   i < activeDay
                                     ? 'text-success/50 group-last:text-[#FE20A2]/50'
                                     : 'text-secondary/50'
@@ -432,14 +435,14 @@ const Cover = () => {
                                 {' '}
                                 – XP
                               </span>
-                            </span>
+                            </div>
                           </div>
                         ))}
                       </div>
                       <div className="flex items-center justify-center gap-2 pt-6 text-xs leading-3.5">
                         <InfoPopoverIcon empty={true} />
                         {/* <InfoPopover title={''} content={''}></InfoPopover> */}
-                        <span className="text-secondary">
+                        <span className="text-secondary text-xs">
                           Лидерборд в разработке, поинты сохранятся
                         </span>
                       </div>

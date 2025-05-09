@@ -82,8 +82,7 @@ export const ResetConfirmationModal = () => {
     <div
       ref={modalRef}
       className={cn(
-        'bg-accent rounded-lg p-8',
-        'w-94'
+        'bg-accent rounded-lg p-8 w-94 py-7'
         // Adjust width/height based on content via padding
       )}
       style={modalStyle as React.CSSProperties}
@@ -97,8 +96,8 @@ export const ResetConfirmationModal = () => {
           </div>
           {/* Text Content */}
           <div className="flex flex-col space-y-2">
-            <span className="text-foreground text-xl">Сбросить код</span>
-            <span className="text-secondary text-xs">
+            <span className="text-foreground text-xl leading-5">Сбросить код</span>
+            <span className="text-secondary text-xs leading-3.5">
               Хотите сбросить код задачи по умолчанию?
             </span>
           </div>

@@ -154,7 +154,7 @@ export default function CommentsEditor({
             <Editor
               variant="none"
               className="bg-background min-h-40 rounded-t-none rounded-b-[0.625vw] p-5 pb-17"
-              placeholder="Введите текст комментария "
+              placeholder="Введите текст комментария..."
               onFocus={() => setEditorFocused(true)}
               onBlur={() => setEditorFocused(false)}
             />
