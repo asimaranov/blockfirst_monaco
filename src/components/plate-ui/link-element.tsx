@@ -17,6 +17,7 @@ export const LinkElement = withRef<typeof PlateElement>(
       <PlateElement
         ref={ref}
         as="a"
+        target="_blank"
         className={cn(
           className,
           'font-medium underline decoration-foreground underline-offset-4'

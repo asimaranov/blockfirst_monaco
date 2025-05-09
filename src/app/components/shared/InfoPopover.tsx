@@ -36,14 +36,17 @@ export const InfoPopoverIcon = ({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={cn(
-        'text-secondary h-5 w-5 cursor-pointer transition delay-100 duration-300 ease-in-out hover:text-[#F2F2F2] sm:h-4 sm:w-4',
+        'text-secondary h-5 w-5 cursor-pointer transition delay-100 duration-300   hover:text-[#F2F2F2] sm:h-4 sm:w-4',
         empty && 'hover:text-secondary cursor-default',
         className
       )}
     >
-      <circle cx="8" cy="8" r="6.66667" stroke="currentColor" />
-      <path d="M8 7.33333V10.6667" stroke="currentColor" />
-      <circle cx="8" cy="5.33333" r="0.666667" fill="currentColor" />
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M8.0026 1.83594C4.59685 1.83594 1.83594 4.59685 1.83594 8.0026C1.83594 11.4084 4.59685 14.1693 8.0026 14.1693C11.4084 14.1693 14.1693 11.4084 14.1693 8.0026C14.1693 4.59685 11.4084 1.83594 8.0026 1.83594ZM0.835938 8.0026C0.835938 4.04456 4.04456 0.835938 8.0026 0.835938C11.9606 0.835938 15.1693 4.04456 15.1693 8.0026C15.1693 11.9606 11.9606 15.1693 8.0026 15.1693C4.04456 15.1693 0.835938 11.9606 0.835938 8.0026ZM8.0026 6.83594C8.27875 6.83594 8.5026 7.05979 8.5026 7.33594V10.6693C8.5026 10.9454 8.27875 11.1693 8.0026 11.1693C7.72646 11.1693 7.5026 10.9454 7.5026 10.6693V7.33594C7.5026 7.05979 7.72646 6.83594 8.0026 6.83594ZM8.0026 6.0026C8.37079 6.0026 8.66927 5.70413 8.66927 5.33594C8.66927 4.96775 8.37079 4.66927 8.0026 4.66927C7.63441 4.66927 7.33594 4.96775 7.33594 5.33594C7.33594 5.70413 7.63441 6.0026 8.0026 6.0026Z"
+        fill="currentColor"
+      />
     </svg>
   );
 };
