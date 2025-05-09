@@ -1,15 +1,12 @@
 'use client';
 
-import { redirect, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { CourseSection } from './CourseSection';
-import { cache } from 'react';
-import { unstable_cache } from 'next/cache';
 import {
   useCallback,
   useEffect,
   useMemo,
   createContext,
-  useContext,
   useState,
 } from 'react';
 
@@ -172,14 +169,11 @@ const MultiSigIcon = () => {
   );
 };
 
-// Provider component to manage course data
-export function CourseDataProvider({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  const [courseData, setCourseData] = useState<CourseType | null>(null);
-  const [loading, setLoading] = useState(true);
+// Main component for course sections sidebar
+export function CourseSections({ lessonId, courseInfo: courseData }: { lessonId: string, courseInfo: any }) {
+  const pathname = usePathname();
+  const [activeLessonId, setActiveLessonId] = useState(lessonId);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getHierarchy = useCallback(
     (lessonId: string) => {
@@ -200,110 +194,11 @@ export function CourseDataProvider({
     [courseData]
   );
 
-  const value = useMemo(
-    () => ({
-      courseData,
-      loading,
-      setCourseData: (data: CourseType) => {
-        setCourseData(data);
-        setLoading(false);
-
-        // Cache in localStorage for persistence across refreshes
-        try {
-          localStorage.setItem('courseData', JSON.stringify(data));
-        } catch (e) {
-          console.error('Failed to cache course data:', e);
-        }
-      },
-      getHierarchy,
-    }),
-    [courseData, loading, getHierarchy]
-  );
-
-  // Try to load from localStorage on initial mount
-  useEffect(() => {
-    try {
-      const cached = localStorage.getItem('courseData');
-      if (cached) {
-        console.log('Uncaching course data', cached);
-        setCourseData(JSON.parse(cached));
-      }
-    } catch (e) {
-      console.error('Failed to load cached course data:', e);
-    }
-    setLoading(false);
-  }, []);
-
-  return (
-    <CourseContext.Provider value={value}>{children}</CourseContext.Provider>
-  );
-}
-
-// Hook to use course data
-export function useCourseData() {
-  return useContext(CourseContext);
-}
-
-// Update the fetchCourseData function to determine courseId from lessonId first
-async function fetchCourseData(lessonId: string): Promise<CourseType> {
-  // First, get the course ID from the lesson ID
-  const courseIdResponse = await fetch(`/api/lessons/${lessonId}/course`, {
-    next: { tags: ['lesson-hierarchy'] },
-  });
-
-  if (!courseIdResponse.ok) {
-    throw new Error('Failed to determine course ID from lesson');
-  }
-
-  const { courseId, hierarchy } = await courseIdResponse.json();
-
-  // Then, fetch the course data using that ID
-  const courseResponse = await fetch(`/api/courses/${courseId}`, {
-    next: { tags: ['course-data'], revalidate: 3600 },
-  });
-
-  if (!courseResponse.ok) {
-    throw new Error('Failed to fetch course data');
-  }
-
-  const courseData = await courseResponse.json();
-
-  // Store the hierarchy information for the current lesson
-  localStorage.setItem(
-    `lesson-hierarchy-${lessonId}`,
-    JSON.stringify(hierarchy)
-  );
-
-  return courseData;
-}
-
-// Main component for course sections sidebar
-export function CourseSections({ lessonId }: { lessonId: string }) {
-  const { courseData, loading, setCourseData, getHierarchy } = useCourseData();
-  const pathname = usePathname();
-  const [activeLessonId, setActiveLessonId] = useState(lessonId);
-  const [isLoading, setIsLoading] = useState(false);
 
   // Update active lesson ID when URL changes
   useEffect(() => {
     setActiveLessonId(lessonId);
   }, [lessonId]);
-
-  // Load course data if needed
-  useEffect(() => {
-    if (!loading && !courseData) {
-      setIsLoading(true);
-      fetchCourseData(lessonId)
-        .then((data) => {
-          setCourseData(data);
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          console.error('Error loading course data:', err);
-          setIsLoading(false);
-        });
-    }
-  }, [courseData, loading, lessonId, setCourseData]);
 
   // Determine hierarchy for current lesson
   const hierarchy = useMemo(() => {
@@ -317,19 +212,19 @@ export function CourseSections({ lessonId }: { lessonId: string }) {
   return (
     <div className="flex flex-col">
       <div className="flex-1">
-        {courseData.sections.map((section) => (
+        {courseData.sections.map((section: any) => (
           <CourseSection
             key={section.id}
             title={section.title}
             status={section.status}
             modules={
-              section.modules.map((module) => ({
+              section.modules.map((module: any) => ({
                 title: module.title,
                 icon: module.icon || <CodeIcon />,
                 progress: module.progress,
                 total: module.total,
                 status: module.status,
-                lessons: module.lessons.map((lesson) => ({
+                lessons: module.lessons.map((lesson: any) => ({
                   id: lesson.id,
                   title: lesson.title,
                   status: lesson.status,

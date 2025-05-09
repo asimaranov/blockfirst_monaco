@@ -3,11 +3,9 @@
 import LessonSidebarHeader from './SidebarHeader';
 import { Suspense } from 'react';
 import { CourseSections } from './CourseSections';
-import { SidebarProvider } from './SidebarProvider';
 
-export default function LessonSidebar({ lessonId }: { lessonId: string }) {
+export default function LessonSidebar({ lessonId, courseInfo }: { lessonId: string, courseInfo: any }) {
   return (
-    <SidebarProvider>
       <section className="bg-background relative z-10 hidden h-screen w-full max-w-86 flex-col overflow-y-scroll [scrollbar-width:none] sm:flex [&::-webkit-scrollbar]:hidden">
         <nav>
           <LessonSidebarHeader />
@@ -18,10 +16,9 @@ export default function LessonSidebar({ lessonId }: { lessonId: string }) {
               </div>
             }
           >
-            <CourseSections lessonId={lessonId} />
+            <CourseSections lessonId={lessonId} courseInfo={courseInfo} />
           </Suspense>
         </nav>
       </section>
-    </SidebarProvider>
   );
 }

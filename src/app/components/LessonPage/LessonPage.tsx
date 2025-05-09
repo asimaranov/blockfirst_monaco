@@ -4,36 +4,13 @@ import Cover from './Cover'; // Import the extracted Cover component
 
 import PlateEditor from './PlateEditor';
 import RightSidebar from './RightSidebar';
-import { PlateController } from '@udecode/plate/react';
 import ContentFooter from './ContentFooter';
 import CommentsSection from './CommentsSection';
 import Footer from '../Footer';
 import prisma from '@/lib/prisma';
 import { Value } from '@udecode/plate';
-import { authClient } from '~/server/auth/client';
-import { redirect } from 'next/navigation';
-import { unstable_cache } from 'next/cache';
-import superjson from 'superjson';
 import { cacheTag } from 'next/dist/server/use-cache/cache-tag';
 
-// Helper function to create cached functions with proper serialization
-const createCachedFunction = <T, P extends unknown[]>(
-  fn: (...params: P) => Promise<T>,
-  keyParts: string[],
-  options?: { tags?: string[]; revalidate?: number | false }
-) => {
-  const wrap = async (...params: P): Promise<string> => {
-    const result = await fn(...params);
-    return superjson.stringify(result);
-  };
-
-  const cachedFn = unstable_cache(wrap, keyParts, options);
-
-  return async (...params: P): Promise<T> => {
-    const result = await cachedFn(...params);
-    return superjson.parse(result);
-  };
-};
 
 // Cached database queries
 const getDocument = async (lessonId: string) => {
@@ -228,10 +205,19 @@ const MultiSigIcon = () => {
   );
 };
 
+
+const fetchLesson = async (lessonId: string) => {
+  "use cache"
+
+  cacheTag('lesson-by-id', lessonId);
+
+  const document = await getDocument(lessonId);
+  return document;
+};
+
 export default async function LessonPage({ lessonId }: { lessonId: string }) {
   const document = await getDocument(lessonId);
 
-  // const session = await authClient.getSession();
   console.log('documentttt id', lessonId);
   console.log('documentttt', document?.contentRich);
 
