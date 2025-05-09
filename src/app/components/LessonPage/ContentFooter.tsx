@@ -306,7 +306,7 @@ export default function ContentFooter({
 
         <div
           className={cn(
-            'group/rating z-1000 mx-2 flex h-8 items-center rounded-[0.3125vw] px-5',
+            'group/rating z-1000 mx-2 flex h-8 items-center rounded-[0.3472vw] px-5',
             !!rating && 'hover:bg-secondary/10 relative',
             session.data?.user && 'cursor-pointer'
           )}

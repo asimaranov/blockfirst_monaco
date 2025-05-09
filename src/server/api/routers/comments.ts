@@ -125,12 +125,12 @@ export const commentsRouter = createTRPCRouter({
       z.object({
         lessonId: z.string(),
         parentId: z.string().optional(),
-        text: z.string().min(1),
+        content: z.array(z.any()),
         images: z.array(commentImageSchema).optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const { lessonId, parentId, text, images } = input;
+      const { lessonId, parentId, content, images } = input;
       const userId = ctx.session.user.id;
       const userName = ctx.session.user.name || 'User';
 
@@ -156,7 +156,7 @@ export const commentsRouter = createTRPCRouter({
           name: userName,
           avatarInitial,
         },
-        text,
+        content,
         images,
         likes: [],
       });
@@ -240,12 +240,12 @@ export const commentsRouter = createTRPCRouter({
     .input(
       z.object({
         commentId: z.string(),
-        text: z.string().min(1),
+        content: z.array(z.any()),
         images: z.array(commentImageSchema).optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const { commentId, text, images } = input;
+      const { commentId, content, images } = input;
       const userId = ctx.session.user.id;
 
       const comment = await ctx.mongo.models.comment.findById(commentId);
@@ -266,7 +266,7 @@ export const commentsRouter = createTRPCRouter({
 
       const updatedComment = await ctx.mongo.models.comment.findByIdAndUpdate(
         commentId,
-        { text, images },
+        { content, images },
         { new: true }
       );
 

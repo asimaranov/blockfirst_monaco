@@ -12,6 +12,7 @@ import { api } from '~/trpc/react';
 import { authClient } from '~/server/auth/client';
 import { redirect, useParams, useRouter } from 'next/navigation';
 import { formatRelativeTime } from '~/app/lib/utils';
+import PlateEditor from './PlateEditor';
 
 const HeartIcon = () => (
   <svg
@@ -295,7 +296,12 @@ function CommentItem({
         </div>
       </div>
       <div className="flex flex-grow flex-col px-15 pr-0 sm:pr-15">
-        <p className="text-foreground mb-3 py-1 text-sm">{comment.text}</p>
+        <p className="text-foreground mb-3 py-1 text-sm break-all">
+          <PlateEditor
+            richText={comment.content}
+            id={`comment-${comment.id}`}
+          />
+        </p>
         {comment.images && comment.images.length > 0 && (
           <div className="flex flex-row gap-3 pb-4">
             {comment.images.map((image, i) => (
@@ -717,7 +723,7 @@ export default function CommentsList() {
 
   // Handle submit comment
   const handleSubmitComment = useCallback(
-    (text: string, images?: { id: string; url: string }[]) => {
+    (content: any[], images?: { id: string; url: string }[]) => {
       if (!session) {
         redirect('/signin');
         return;
@@ -728,14 +734,14 @@ export default function CommentsList() {
         createCommentMutation.mutate({
           lessonId,
           parentId: replyFormAfterId,
-          text,
+          content,
           images,
         });
       } else {
         // New comment
         createCommentMutation.mutate({
           lessonId,
-          text,
+          content,
           images,
         });
       }
@@ -895,7 +901,7 @@ export default function CommentsList() {
                 />
                 <CommentsEditor
                   className="w-175"
-                  value={comment.text}
+                  value={comment.content}
                   id={`edit-comment-${comment.id}`}
                   lessonId={lessonId}
                   onCancel={handleCancelEdit}

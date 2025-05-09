@@ -445,7 +445,7 @@ export function TaskCard({
             <div className="mt-6 flex flex-col sm:mt-auto sm:flex-row sm:items-center">
               <div className="grid grid-cols-2 gap-4 sm:flex sm:flex-row sm:gap-8">
                 <div className="flex flex-col gap-3.5">
-                  <span className="text-secondary text-xxs rounded-[6px] bg-[#14171C] px-3 py-1.75 whitespace-nowrap uppercase sm:w-fit sm:rounded-[0.3125vw]">
+                  <span className="text-secondary text-xxs rounded-[6px] bg-[#14171C] px-3 py-1.75 whitespace-nowrap uppercase sm:w-fit sm:rounded-[0.3472vw] leading-2.5">
                     Выполнили задачу
                   </span>
                   <div className="flex flex-row items-center gap-2">
@@ -474,7 +474,7 @@ export function TaskCard({
                 </div>
 
                 <div className="flex flex-col gap-3.5">
-                  <span className="text-secondary text-xxs rounded-[6px] bg-[#14171C] px-3 py-1.75 whitespace-nowrap uppercase sm:w-fit sm:rounded-[0.3125vw]">
+                  <span className="text-secondary text-xxs rounded-[6px] bg-[#14171C] px-3 py-1.75 whitespace-nowrap uppercase sm:w-fit sm:rounded-[0.3472vw] leading-2.5">
                     Рейтинг задачи
                   </span>
                   <div className="flex flex-row items-center gap-2">
@@ -752,10 +752,10 @@ export function TaskCardGridItem({
             <div className="mt-6 flex flex-col sm:mt-auto sm:flex-row sm:items-center">
               <div className="grid grid-cols-2 gap-5">
                 <div className="flex flex-col gap-3">
-                  <span className="text-secondary text-xxs hidden w-fit min-w-25 rounded-[0.3125vw] bg-[#14171C] px-3 py-1.75 whitespace-nowrap uppercase sm:block">
+                  <span className="text-secondary text-xxs hidden w-fit min-w-25 rounded-[0.3472vw] bg-[#14171C] px-3 py-1.75 whitespace-nowrap uppercase sm:block leading-2.5">
                     Выполнили
                   </span>
-                  <span className="text-secondary text-xxs rounded-[6px] bg-[#14171C] px-3 py-1.75 whitespace-nowrap uppercase sm:hidden sm:w-fit sm:rounded-[0.3125vw]">
+                  <span className="text-secondary text-xxs rounded-[0.3472vw] bg-[#14171C] px-3 py-1.75 whitespace-nowrap uppercase sm:hidden sm:w-fit sm:rounded-[0.3472vw] leading-2.5">
                     Выполнили задачу
                   </span>
                   <div className="flex flex-row items-center gap-2">
@@ -784,7 +784,7 @@ export function TaskCardGridItem({
                 </div>
 
                 <div className="flex flex-col gap-3.5">
-                  <span className="text-secondary text-xxs hidden w-fit min-w-25 rounded-[0.3125vw] bg-[#14171C] px-3 py-1.75 whitespace-nowrap uppercase sm:block">
+                  <span className="text-secondary text-xxs hidden w-fit min-w-25 rounded-[0.3472vw] bg-[#14171C] px-3 py-1.75 whitespace-nowrap uppercase sm:block leading-2.5">
                     Рейтинг
                   </span>
                   <span className="text-secondary text-xxs block rounded-[6px] bg-[#14171C] px-3 py-1.75 whitespace-nowrap uppercase sm:hidden sm:w-fit">

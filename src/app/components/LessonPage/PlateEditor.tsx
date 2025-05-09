@@ -91,7 +91,10 @@ import { TableCellHeaderStaticElement } from './plate/table';
 import { TableRowElementStatic } from './plate/table';
 import { TableCellElementStatic } from './plate/table';
 import { TableElementStatic } from './plate/table';
-import { CodeBlockElement, CodeBlockElementTask } from '~/components/plate-ui/code-block-element';
+import {
+  CodeBlockElement,
+  CodeBlockElementTask,
+} from '~/components/plate-ui/code-block-element';
 import { CodeLineElementStatic } from '~/components/plate-ui/code-line-element-static';
 import { CodeLeafStatic } from '~/components/plate-ui/code-leaf-static';
 import { CodeSyntaxLeafStatic } from '~/components/plate-ui/code-syntax-leaf-static';
@@ -221,12 +224,20 @@ const plugins = [
   BaseTaskPlugin,
 ];
 
-const PlateEditor = ({ richText, isTask = false }: { richText: Value, isTask?: boolean }) => {
+const PlateEditor = ({
+  richText,
+  isTask = false,
+  id,
+}: {
+  richText: Value;
+  isTask?: boolean;
+  id?: string;
+}) => {
   // console.log('richText', r/ );
   const editorStore = useEditorStore();
 
   const editor = usePlateEditor({
-    id: 'content',
+    id: id || 'content',
     value: richText || ARTICLE_DATA,
     plugins: plugins,
     override: {
@@ -263,7 +274,9 @@ const PlateEditor = ({ richText, isTask = false }: { richText: Value, isTask?: b
         [BaseTablePlugin.key]: TableElementStatic,
         [BaseTableRowPlugin.key]: TableRowElementStatic,
         [BaseTaskPlugin.key]: TaskElement,
-        [BaseCodeBlockPlugin.key]: isTask ? CodeBlockElementTask : CodeBlockElement,
+        [BaseCodeBlockPlugin.key]: isTask
+          ? CodeBlockElementTask
+          : CodeBlockElement,
         [BaseCodeLinePlugin.key]: CodeLineElementStatic,
         [BaseCodePlugin.key]: CodeLeafStatic,
         [BaseCodeSyntaxPlugin.key]: CodeSyntaxLeafStatic,
@@ -277,7 +290,9 @@ const PlateEditor = ({ richText, isTask = false }: { richText: Value, isTask?: b
   });
 
   useEffect(() => {
-    editorStore.setEditor(editor);
+    if (!id) {
+      editorStore.setEditor(editor);
+    }
   }, [editor]);
 
   return (

@@ -147,7 +147,7 @@
   }
   :root {
     @media (width >= theme(--breakpoint-sm)) {
-      --spacing: 0.2315vw;
+      --spacing: 0.231481481vw;
       --text-xxs: 0.58vw;
       --text-xs: 0.69vw;
       --text-sm: 0.81vw;

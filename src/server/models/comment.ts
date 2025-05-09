@@ -13,7 +13,7 @@ export interface IComment extends Document {
     name: string;
     avatarInitial: string;
   };
-  text: string;
+  content: any[];
   timestamp: Date;
   likes: string[]; // Array of user IDs who liked the comment
   images?: CommentImage[];
@@ -30,7 +30,7 @@ const CommentSchema = new Schema<IComment>(
       name: { type: String, required: true },
       avatarInitial: { type: String, required: true },
     },
-    text: { type: String, required: true },
+    content: [Schema.Types.Mixed],
     timestamp: { type: Date, default: Date.now },
     likes: [{ type: String }], // Array of user IDs
     images: [
@@ -43,6 +43,7 @@ const CommentSchema = new Schema<IComment>(
   { timestamps: true }
 );
 
-const CommentModel = models.Comment || model<IComment>('Comment', CommentSchema);
+const CommentModel =
+  models.Comment || model<IComment>('Comment', CommentSchema);
 
-export default CommentModel; 
+export default CommentModel;

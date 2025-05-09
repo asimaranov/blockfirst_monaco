@@ -38,7 +38,6 @@ export default function CommentsEditor({
   const [commentDisabled, setCommentDisabled] = useState(true);
   const [editorFocused, setEditorFocused] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [editorValue, setEditorValue] = useState<Value>([]);
   const editor = useCreateEditor({
     id: id || 'comments',
   });
@@ -75,32 +74,30 @@ export default function CommentsEditor({
     setSubmitting(true);
 
     try {
-      // Get the text content from the editor
-      const value = editorValue;
+      const value = editor.children;
+
 
       console.log('value', value);
-
-      // Serialize the value to markdown
-      const text = editor.getApi(MarkdownPlugin).markdown.serialize(value as any);
+      
 
       if (isEditing && commentId) {
         // Update existing comment
         updateCommentMutation.mutate({
           commentId,
-          text,
+          content: value,
         });
       } else if (replyFormAfterId) {
         // Create a reply
         createCommentMutation.mutate({
           lessonId,
           parentId: replyFormAfterId,
-          text,
+          content: value,
         });
       } else {
         // Create a new comment
         createCommentMutation.mutate({
           lessonId,
-          text,
+          content: value,
         });
       }
 
@@ -148,9 +145,8 @@ export default function CommentsEditor({
             }
           }}
           onValueChange={({ value }) => {
-            setEditorValue(value);
+            console.log('value', value);
           }}
-          
         >
           <EditorContainer
             className="dark rounded-[0.625vw]"
