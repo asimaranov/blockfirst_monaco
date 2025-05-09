@@ -87,7 +87,7 @@ export default function TaskInfo({ task }: { task: any }) {
             <div className="flex flex-row gap-2">
               <span className="text-xl leading-6">{task.heroName}</span>
               <span className="font-delight border-accent rounded-[100px] border-[0.5px] px-3 pt-1 pb-1.25 text-xs leading-3.75">
-                BF heroes
+                BF Heroes
               </span>
               <div className="ml-auto flex flex-row items-center gap-1">
                 <div className="bg-success h-1 w-1 rounded-full" />

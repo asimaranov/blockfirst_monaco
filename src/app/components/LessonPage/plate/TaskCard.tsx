@@ -326,7 +326,7 @@ export function TaskCard({
                   <div className="flex flex-row items-center gap-2">
                     <span className="text-xl leading-6">{heroName}</span>
                     <span className="font-delight border-accent rounded-[100px] border-[0.5px] px-3 pt-1 pb-1.25 text-xs leading-3.75">
-                      BF heroes
+                      BF Heroes
                     </span>
                   </div>
                   <span className="text-secondary text-xs">{heroTagline}</span>
@@ -629,7 +629,7 @@ export function TaskCardGridItem({
                   <div className="flex flex-row items-center gap-2">
                     <span className="text-xl leading-6">{heroName}</span>
                     <span className="font-delight border-accent rounded-[100px] border-[0.5px] px-3 pt-1 pb-1.25 text-xs leading-3.75">
-                      BF heroes
+                      BF Heroes
                     </span>
                   </div>
                   <span className="text-secondary text-xs">{heroTagline}</span>
