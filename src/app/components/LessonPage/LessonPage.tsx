@@ -67,70 +67,73 @@ const getDocument = async (lessonId: string) => {
   return document;
 };
 
-const getParentDocument = createCachedFunction(
-  async (parentDocumentId: string) => {
-    return prisma.document.findUnique({
-      where: {
-        id: parentDocumentId,
-        isArchived: false,
-      },
-      include: {
-        children: {
-          where: {
-            isArchived: false,
-          },
-          orderBy: [
-            {
-              sortOrder: 'asc',
-            },
-            {
-              createdAt: 'asc',
-            },
-          ],
-        },
-        parentDocument: {
-          include: {
-            children: {
-              where: {
-                isArchived: false,
-              },
-              orderBy: [
-                {
-                  sortOrder: 'asc',
-                },
-                {
-                  createdAt: 'asc',
-                },
-              ],
-              include: {
-                children: {
-                  where: {
-                    isArchived: false,
-                  },
-                  orderBy: [
-                    {
-                      sortOrder: 'asc',
-                    },
-                    {
-                      createdAt: 'asc',
-                    },
-                  ],
-                },
-              },
-            },
-          },
-        },
-      },
-    });
-  },
-  ['parent-document-with-children'],
-  { tags: ['document', 'document-children'] }
-);
+const getParentDocument = async (parentDocumentId: string) => {
+  'use cache';
 
-const getChildrenByDocId = createCachedFunction(
-  async (documentId: string) => {
-    return prisma.document.findMany({
-      where: {
+  cacheTag('parent-document-by-id', parentDocumentId);
+
+  return await prisma.document.findUnique({
+    where: {
+      id: parentDocumentId,
+      isArchived: false,
+    },
+    include: {
+      children: {
+        where: {
+          isArchived: false,
+        },
+        orderBy: [
+          {
+            sortOrder: 'asc',
+          },
+          {
+            createdAt: 'asc',
+          },
+        ],
+      },
+      parentDocument: {
+        include: {
+          children: {
+            where: {
+              isArchived: false,
+            },
+            orderBy: [
+              {
+                sortOrder: 'asc',
+              },
+              {
+                createdAt: 'asc',
+              },
+            ],
+            include: {
+              children: {
+                where: {
+                  isArchived: false,
+                },
+                orderBy: [
+                  {
+                    sortOrder: 'asc',
+                  },
+                  {
+                    createdAt: 'asc',
+                  },
+                ],
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+};
+
+const getChildrenByDocId = async (documentId: string) => {
+  'use cache';
+
+  cacheTag('children-by-document-id', documentId);
+
+  return await prisma.document.findMany({
+    where: {
         parentDocumentId: documentId,
         isArchived: false,
       },
@@ -142,11 +145,8 @@ const getChildrenByDocId = createCachedFunction(
           createdAt: 'asc',
         },
       ],
-    });
-  },
-  ['children-by-document-id'],
-  { tags: ['document', 'document-children'] }
-);
+  });
+};
 
 const CodeIcon = () => {
   return (
