@@ -16,7 +16,7 @@ export function UserInfoClient() {
   }
 
   return (
-    <div className={'flex flex-row border-t border-r border-[#282D33] px-8 py-4.5 sticky bottom-0 mt-auto justify-between bg-[#14171C] z-10000'}>
+    <div className={'flex flex-row border-t border-r border-[#282D33] px-8 py-4 sticky bottom-0 mt-auto justify-between bg-[#14171C] z-10000'}>
       {session?.data?.user?.name?.[0] ? (
         <div
           className={
@@ -32,7 +32,7 @@ export function UserInfoClient() {
       ) : (
         <Skeleton className="h-6 w-6 rounded-full" />
       )}
-      <div className={'ml-3 flex flex-col gap-2'}>
+      <div className={'ml-3 flex flex-col gap-3'}>
         {session?.data?.user?.name ? (
           <span
             className={
