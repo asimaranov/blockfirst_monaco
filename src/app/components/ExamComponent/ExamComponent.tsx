@@ -64,7 +64,7 @@ const IntroPage = ({
               После успешной сдачи вам откроется доступ к следующим материалам
             </span>
           </div>
-          <div className="flex flex-row items-center justify-center gap-2 rounded-[5.2083vw] border-[0.026vw] border-[#FF5D70]/20 bg-[#F2F2F2]/1 px-3 py-1 backdrop-blur-[20px]">
+          <div className="flex flex-row items-center justify-center gap-2 rounded-[5.2083vw] border-[0.026vw] border-[#FF5D70]/20 bg-[#F2F2F2]/1 pl-1 pr-3 py-1 backdrop-blur-[20px]">
             <div className="relative shrink-0">
               <Image
                 src={'/heroes/Alex.png'}
@@ -110,7 +110,7 @@ const IntroPage = ({
 
       <div className="flex flex-col gap-6 p-8">
         <div className="border-b-accent/50 flex flex-row gap-12 border-b">
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-2">
             <div className="flex flex-row items-center gap-5">
               <Image src={TaskIcon} alt="" className="h-8 w-8" />
               <div className="flex flex-row items-center gap-3">
@@ -131,7 +131,7 @@ const IntroPage = ({
           ></Image>
         </div>
         <div className="border-b-accent/50 flex flex-row gap-12 border-b">
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-2">
             <div className="flex flex-row items-center gap-5">
               <Image src={HeartIcon} className="h-8 w-8" alt="" />
               <div className="flex flex-row items-center gap-3">
@@ -151,7 +151,7 @@ const IntroPage = ({
           ></Image>
         </div>
         <div className="border-b-accent/50 flex flex-row gap-12 border-b">
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-2">
             <div className="flex flex-row items-center gap-5">
               <Image src={FlagIcon} className="h-8 w-8" alt="" />
               <div className="flex flex-row items-center gap-3">

@@ -180,7 +180,7 @@ export default function TaskView({
             </svg>
           </Link>
           <div className="relative">
-            <div className="absolute bottom-0 left-0 flex origin-left rotate-90 flex-row items-center justify-center gap-2">
+            <div className="absolute bottom-0 left-0 flex origin-left rotate-90 flex-row items-center justify-center gap-2 pl-4">
               <svg
                 width="16"
                 height="16"

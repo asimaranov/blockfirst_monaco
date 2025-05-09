@@ -19,17 +19,16 @@ import { api } from '~/trpc/react';
 // Helper Icon Components (moved from LessonPage.tsx)
 const ChevronRightIcon = () => (
   <svg
-    className="text-foreground h-5 w-5"
+    width="21"
+    height="20"
+    viewBox="0 0 21 20"
     fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
     xmlns="http://www.w3.org/2000/svg"
+    className="h-5 w-5"
   >
     <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M9 5l7 7-7 7"
+      d="M14.2305 4.43162C14.5292 4.14484 15.0042 4.15441 15.291 4.45311L19.9062 9.2617C20.1848 9.55191 20.1848 10.0106 19.9062 10.3008L15.291 15.1094C15.0042 15.4082 14.5293 15.4177 14.2305 15.1308C13.9319 14.844 13.9222 14.369 14.209 14.0703L18.3262 9.78123L14.209 5.49217C13.9222 5.19338 13.9317 4.71846 14.2305 4.43162Z"
+      fill="#F2F2F2"
     />
   </svg>
 );
@@ -454,7 +453,7 @@ const Cover = () => {
             <div className="flex items-center gap-3">
               {/* Premium Button (kept separate due to unique styling/content) */}
               <Link href="/premium" target="_blank">
-                <button className="bg-primary flex cursor-pointer items-center gap-1 rounded-full px-6 py-2.5 text-sm transition-colors hover:bg-[#1242B2]">
+                <button className="bg-primary flex cursor-pointer items-center rounded-full px-6 py-2.5 text-sm transition-colors hover:bg-[#1242B2]">
                   Премиум тариф
                   <ChevronRightIcon />
                 </button>
@@ -493,7 +492,7 @@ const Cover = () => {
                   {user.name}
                 </span>
                 <span
-                  className={`border-foreground/20 font-delight rounded-full border px-3 pt-1 pb-1.25 text-xs leading-3.75 ${glassStyle}`}
+                  className={`border-foreground/20 font-delight rounded-full border px-3 pt-1 pb-1 text-xs leading-3.75 ${glassStyle}`}
                 >
                   {user.badge}
                 </span>

@@ -156,13 +156,13 @@ const getInitialMessages = async (data: {
     },
     {
       role: 'assistant' as const,
-      content: data['First message'],
+      content: data['First message'] || '',
       timestamp: new Date(),
       delay: 3000,
     },
     {
       role: 'assistant' as const,
-      content: `Вопрос 1: ${data['Question 1']}`,
+      content: `Вопрос 1: ${data['Question 1'] || ''}`,
       timestamp: new Date(),
       delay: 5000,
     },
@@ -662,7 +662,11 @@ export const examAiRouter = createTRPCRouter({
           correctAnswers: chatHistory.correctAnswers || 0,
         };
       } catch (error) {
-        console.error('Error sending message to AI:', error);
+        console.error(
+          'Error sending message to AI:',
+          error,
+          error instanceof Error ? error.stack : undefined
+        );
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: 'Failed to get AI response',

@@ -985,7 +985,7 @@ const FloatingActionBar = ({
               </button>
             </div>
 
-            <div className="border-accent flex justify-center gap-1 border-l bg-[#14171C] py-2.25 text-xs">
+            <div className="border-accent flex justify-center gap-1 bg-[#14171C] py-2.25 text-xs">
               <div className="flex flex-row gap-2">
                 <svg
                   width="14"
