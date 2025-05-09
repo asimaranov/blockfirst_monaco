@@ -77,7 +77,7 @@ const Button = ({
   children,
   disabled,
 }: {
-  className: string;
+  className?: string;
   children: React.ReactNode;
   disabled?: boolean;
 }) => (
