@@ -5,14 +5,14 @@ import { useResetStore } from '~/store/monaco-actions/reset-store';
 import { useEffect, useRef } from 'react';
 import { cn } from '~/helpers';
 
-const ScrollIcon = () => (
+const ScrollIcon = ({ className }: { className?: string }) => (
   <svg
     width="42"
     height="42"
     viewBox="0 0 42 42"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="h-10.5 w-10.5"
+    className={cn('h-10.5 w-10.5', className)}
   >
     <rect width="42" height="42" rx="21" fill="#33CF8E" fillOpacity="0.1" />
     <path
@@ -90,13 +90,15 @@ export const ResetConfirmationModal = () => {
     >
       <div className="flex flex-col space-y-7">
         {/* Top Section: Icon + Text */}
-        <div className="flex items-center space-x-5">
+        <div className="flex shrink-0 items-center gap-5">
           {/* Icon Circle */}
-          <ScrollIcon />
+          <div className="shrink-0">
+            <ScrollIcon className="shrink-0" />
+          </div>
           {/* Text Content */}
           <div className="flex flex-col space-y-2">
             <span className="text-foreground text-xl">Сбросить код</span>
-            <span className="text-secondary text-sm">
+            <span className="text-secondary text-xs">
               Хотите сбросить код задачи по умолчанию?
             </span>
           </div>

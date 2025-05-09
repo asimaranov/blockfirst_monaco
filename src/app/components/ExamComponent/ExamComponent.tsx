@@ -218,6 +218,7 @@ const IntroPage = ({
 };
 
 const ExamPage = ({ close, examId }: { close: () => void; examId: string }) => {
+  console.log('examId', examId);
   const {
     totalLives,
     currentLives,
@@ -287,7 +288,7 @@ const ExamPage = ({ close, examId }: { close: () => void; examId: string }) => {
       )}
       {currentState === 'chat' && (
         <div className="border-t-accent flex flex-row justify-between border-t px-8 py-3.5">
-          <div>
+          <div className="flex flex-row">
             <span className="text-xl leading-5">{currentQuestionId}</span>
             <span className="text-secondary text-sm leading-5">
               / {totalQuestions}
