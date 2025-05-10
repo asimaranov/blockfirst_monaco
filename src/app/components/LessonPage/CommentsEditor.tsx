@@ -44,12 +44,7 @@ export default function CommentsEditor({
 
   useEffect(() => {
     if (value) {
-      editor?.tf.setValue([
-        {
-          type: 'p',
-          children: [{ text: value }],
-        },
-      ]);
+      editor?.tf.setValue(value);
     }
   }, [value, editor]);
   const utils = api.useUtils();
