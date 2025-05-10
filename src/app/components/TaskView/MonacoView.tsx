@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import BfLogo from './assets/bf-logo.svg';
 import { InfoPopover, InfoPopoverIcon } from '../shared/InfoPopover';
@@ -13,10 +12,6 @@ import { TaskReportForm } from './TaskReportForm';
 import { useParams } from 'next/navigation';
 import { createPortal } from 'react-dom';
 
-const DynamicMonacoEditorReact = dynamic(() => import('./MonacoViewDynamic'), {
-  ssr: false,
-  loading: () => <LoadingComponent />,
-});
 
 export const StarIcon = ({ className }: { className?: string }) => {
   return (

@@ -1,10 +1,15 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import MonacoViewDynamic from '../components/TaskView/MonacoViewDynamic';
+import dynamic from 'next/dynamic';
+
+
+const DynamicMonacoEditorReact = dynamic(
+  () => import('../components/TaskView/MonacoViewDynamic'), {
+  ssr: false,
+});
 
 export default function MonacoIframePage() {
-  const [editorMounted, setEditorMounted] = useState(false);
 
   // Notify parent when iframe is initially loaded
   useEffect(() => {
@@ -45,7 +50,7 @@ export default function MonacoIframePage() {
         flexDirection: 'column',
       }}
     >
-      <MonacoViewDynamic />
+      <DynamicMonacoEditorReact />
     </div>
   );
 }
