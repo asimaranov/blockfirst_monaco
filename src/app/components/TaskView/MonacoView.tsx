@@ -18,8 +18,6 @@ const DynamicMonacoEditorReact = dynamic(() => import('./MonacoViewDynamic'), {
   loading: () => <LoadingComponent />,
 });
 
-// const DynamicMonacoEditorReact = LoadingComponent;
-
 export const StarIcon = ({ className }: { className?: string }) => {
   return (
     <svg
@@ -1035,6 +1033,55 @@ export default function MonacoView({
   setIsAiMentorActive: (isActive: boolean) => void;
   isCollapsed: boolean;
 }) {
+  const [showActionBar, setShowActionBar] = useState(true);
+  const [iframeLoaded, setIframeLoaded] = useState(false);
+  const [editorReady, setEditorReady] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  // Function to handle iframe load event
+  const handleIframeLoad = () => {
+    setIframeLoaded(true);
+    // Note: This only indicates the iframe has loaded, not that the Monaco editor is ready
+  };
+
+  // Set up message listener for communication with iframe
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      // Make sure the message is from our iframe
+      if (
+        iframeRef.current &&
+        event.source === iframeRef.current.contentWindow
+      ) {
+        // Handle messages from iframe
+        if (event.data.type === 'monaco-editor-ready') {
+          console.log('Monaco editor is ready in iframe');
+          setEditorReady(true);
+        } else if (event.data.type === 'monaco-editor-error') {
+          console.error('Error in Monaco editor:', event.data.error);
+          // Show error state or try to reload
+        } else if (event.data.type === 'iframe-loaded') {
+          console.log(
+            'Iframe loaded, waiting for Monaco editor to initialize...'
+          );
+          // The iframe is loaded but Monaco editor might not be ready yet
+        }
+        // Add more message handlers as needed
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, []);
+
+  // Function to send messages to iframe
+  const sendMessageToIframe = useCallback((message: any) => {
+    if (iframeRef.current && iframeRef.current.contentWindow) {
+      iframeRef.current.contentWindow.postMessage(message, '*');
+    }
+  }, []);
+
   // useEffect(() => {
   //   createPortal(
   //     <button
@@ -1047,16 +1094,20 @@ export default function MonacoView({
   //   );
   // }, []);
 
-  const [showActionBar, setShowActionBar] = useState(true);
   return (
     <div className={cn('h-full w-272', isCollapsed && 'w-396')}>
-      {/* <button
-        onClick={() => setShowActionBar(!showActionBar)}
-        className="absolute top-0 right-0 z-1000 h-10 w-10 bg-red-500"
-      >
-        {showActionBar ? 'hide' : 'show'}
-      </button> */}
-      {showActionBar && <DynamicMonacoEditorReact />}
+      {/* Editor container with iframe */}
+      <div id="editorsDiv" className="relative h-full w-full">
+        <iframe
+          ref={iframeRef}
+          src="/monaco-iframe"
+          className={cn('h-full w-full border-0', !editorReady && 'opacity-0')}
+          onLoad={handleIframeLoad}
+          title="Monaco Editor"
+        />
+        {!editorReady && <LoadingComponent />}
+      </div>
+
       {showActionBar && (
         <FloatingActionBar setIsAiMentorActive={setIsAiMentorActive} />
       )}

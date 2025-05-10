@@ -11,15 +11,42 @@ import { buildJsonClientUserConfig } from 'monaco-languageclient-examples/json-c
 import { MonacoEditorReactComp } from './monaco/MonacoEditorReact';
 
 export default function MonacoViewDynamic() {
-  // console.log('ggg 2')
+  const editorRef = useRef<any>(null);
+  const [isEditorReady, setIsEditorReady] = useState(false);
 
+  // Configure Monaco editor
   const wrapperConfig = buildJsonClientUserConfig();
-
-  // console.log('ggg 3')
-
-  // const wrapperConfig = buildJsonClientUserConfig();
   const configResult = configure();
-  // console.log('ggg 4')
+
+  // Notify parent window when editor is fully loaded and ready
+  useEffect(() => {
+    if (isEditorReady && window.parent !== window) {
+      // Small delay to ensure everything is rendered properly
+      setTimeout(() => {
+        window.parent.postMessage({ type: 'monaco-editor-ready' }, '*');
+        console.log('Monaco editor fully loaded and ready - notifying parent');
+      }, 500);
+    }
+  }, [isEditorReady]);
+
+  // Listen for messages from parent window
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      // Make sure message is from parent window
+      if (event.source === window.parent) {
+        // Handle commands from parent
+        if (event.data.type === 'get-content') {
+          const content = editorRef.current?.getEditor()?.getValue();
+          window.parent.postMessage({ type: 'content', content }, '*');
+        }
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, []);
 
   return (
     <MonacoEditorReactComp
@@ -27,14 +54,26 @@ export default function MonacoViewDynamic() {
       className="relative h-full w-full"
       wrapperConfig={configResult.wrapperConfig}
       onLoad={async (wrapper: any) => {
-        await configResult.configurePostStart(wrapper, configResult);
-
-        // setTimeout(() => {
-        //   wrapper.dispose();
-        // }, 10000);
+        editorRef.current = wrapper;
+        try {
+          await configResult.configurePostStart(wrapper, configResult);
+          console.log('Monaco editor loaded successfully');
+          setIsEditorReady(true);
+        } catch (error) {
+          console.error('Error loading Monaco editor:', error);
+          // Still notify parent, but with error
+          window.parent.postMessage(
+            { type: 'monaco-editor-error', error: String(error) },
+            '*'
+          );
+        }
       }}
       onError={(e) => {
-        console.error(e);
+        console.error('Monaco editor error:', e);
+        window.parent.postMessage(
+          { type: 'monaco-editor-error', error: String(e) },
+          '*'
+        );
       }}
     />
   );
