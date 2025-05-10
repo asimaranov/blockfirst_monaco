@@ -1,10 +1,6 @@
-import { cn } from "~/helpers";
+import { cn } from '~/helpers';
 
-export default function MentorIcon({
-  className,
-}: {
-  className?: string;
-}) {
+export default function MentorIcon({ className }: { className?: string }) {
   return (
     <svg
       width="16"
@@ -23,8 +19,8 @@ export default function MentorIcon({
       <path
         d="M13.7268 14.6667C13.7268 12.0867 11.1601 10 8.0001 10C4.8401 10 2.27344 12.0867 2.27344 14.6667M11.3333 4.66668C11.3333 6.50763 9.84095 8.00001 8 8.00001C6.15905 8.00001 4.66667 6.50763 4.66667 4.66668C4.66667 2.82573 6.15905 1.33334 8 1.33334C9.84095 1.33334 11.3333 2.82573 11.3333 4.66668Z"
         stroke="#9AA6B5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M8.0013 8.00001C9.84225 8.00001 11.3346 6.50763 11.3346 4.66668C11.3346 2.82573 9.84225 1.33334 8.0013 1.33334C6.16035 1.33334 4.66797 2.82573 4.66797 4.66668C4.66797 6.50763 6.16035 8.00001 8.0013 8.00001Z"
@@ -36,4 +32,4 @@ export default function MentorIcon({
       />
     </svg>
   );
-};
+}

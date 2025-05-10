@@ -61,7 +61,7 @@ export default function LoadingComponent() {
   const stageCircumference = 2 * Math.PI * stageRadius;
 
   return (
-    <div className="flex h-full w-272 flex-col items-center justify-between pt-6 pb-5 absolute top-0 left-0">
+    <div className="absolute top-0 left-0 flex h-full w-272 flex-col items-center justify-between pt-6 pb-5">
       <Image src={BfBadge} alt="logo" className="h-10 w-36.25" />
       <div className="flex flex-col items-center gap-10">
         <div className="relative h-fit w-fit">
@@ -118,9 +118,9 @@ export default function LoadingComponent() {
                 <path
                   d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
                   stroke="#33CF8E"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             ) : (
@@ -171,9 +171,9 @@ export default function LoadingComponent() {
                 <path
                   d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
                   stroke="#33CF8E"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             ) : (
@@ -224,9 +224,9 @@ export default function LoadingComponent() {
                 <path
                   d="M5.44922 10.65L8.04922 13.25L14.5492 6.75"
                   stroke="#33CF8E"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             ) : (

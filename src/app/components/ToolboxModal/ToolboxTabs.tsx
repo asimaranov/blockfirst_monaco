@@ -97,23 +97,23 @@ export default function NotificationsTabs({
             <path
               d="M5.74219 7.5C6.55885 7.90833 7.25885 8.525 7.76719 9.29167C8.05885 9.725 8.05885 10.2833 7.76719 10.7167C7.25885 11.475 6.55885 12.0917 5.74219 12.5"
               stroke="#9AA6B5"
-              stroke-width="1.25"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.25"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
               d="M10.832 12.5H14.1654"
               stroke="#9AA6B5"
-              stroke-width="1.25"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.25"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
               d="M7.5013 18.3346H12.5013C16.668 18.3346 18.3346 16.668 18.3346 12.5013V7.5013C18.3346 3.33464 16.668 1.66797 12.5013 1.66797H7.5013C3.33464 1.66797 1.66797 3.33464 1.66797 7.5013V12.5013C1.66797 16.668 3.33464 18.3346 7.5013 18.3346Z"
               stroke="#9AA6B5"
-              stroke-width="1.25"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.25"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </div>

@@ -189,16 +189,16 @@ const CopyIcon = () => {
         <path
           d="M10.4 8.53766V11.0577C10.4 13.1577 9.56 13.9977 7.46 13.9977H4.94C2.84 13.9977 2 13.1577 2 11.0577V8.53766C2 6.43766 2.84 5.59766 4.94 5.59766H7.46C9.56 5.59766 10.4 6.43766 10.4 8.53766Z"
           stroke="#F2F2F2"
-          stroke-width="0.8"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="0.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           d="M14.0016 4.93609V7.45609C14.0016 9.55609 13.1616 10.3961 11.0616 10.3961H10.4016V8.53609C10.4016 6.43609 9.56156 5.59609 7.46156 5.59609H5.60156V4.93609C5.60156 2.83609 6.44156 1.99609 8.54156 1.99609H11.0616C13.1616 1.99609 14.0016 2.83609 14.0016 4.93609Z"
           stroke="#F2F2F2"
-          stroke-width="0.8"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="0.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </g>
       <defs>
@@ -230,7 +230,7 @@ export default function ContentFooter({
   const url = `https://app.blockfirst.io${pathname}`;
 
   return (
-    <div className="border-accent flex flex-row justify-between border-b px-5 mt-20 pb-10 sm:px-16">
+    <div className="border-accent mt-20 flex flex-row justify-between border-b px-5 pb-10 sm:px-16">
       {prevLessonId && (
         <Link href={`/lesson/${prevLessonId}`}>
           <Button className="gap-2">
@@ -243,8 +243,8 @@ export default function ContentFooter({
               className="h-5 w-5"
             >
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M8.77528 3.72212C8.5312 3.47804 8.13547 3.47804 7.89139 3.72212L2.05806 9.55539C1.94085 9.6726 1.875 9.83158 1.875 9.99734C1.875 10.1631 1.94085 10.3221 2.05806 10.4393L7.89139 16.2726C8.13547 16.5167 8.5312 16.5167 8.77528 16.2726C9.01935 16.0285 9.01935 15.6328 8.77528 15.3887L4.00888 10.6223H17.5C17.8452 10.6223 18.125 10.3425 18.125 9.99734C18.125 9.65216 17.8452 9.37234 17.5 9.37234H4.00889L8.77527 4.60601C9.01935 4.36193 9.01935 3.9662 8.77528 3.72212Z"
                 fill="#F2F2F2"
                 className="group-hover:fill-background"
@@ -366,8 +366,8 @@ export default function ContentFooter({
               className="hidden h-5 w-5 group-hover:block"
             >
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M3.53906 10C3.53906 9.65482 3.81888 9.375 4.16406 9.375H9.9974H15.8307C16.1759 9.375 16.4557 9.65482 16.4557 10C16.4557 10.3452 16.1759 10.625 15.8307 10.625H9.9974H4.16406C3.81888 10.625 3.53906 10.3452 3.53906 10Z"
                 fill="#F2F2F2"
               />
@@ -389,8 +389,8 @@ export default function ContentFooter({
               className="hidden h-5 w-5 group-hover:block"
             >
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M9.9974 3.41406C10.4116 3.41406 10.7474 3.74985 10.7474 4.16406V9.2474H15.8307C16.2449 9.2474 16.5807 9.58318 16.5807 9.9974C16.5807 10.4116 16.2449 10.7474 15.8307 10.7474H10.7474V15.8307C10.7474 16.2449 10.4116 16.5807 9.9974 16.5807C9.58318 16.5807 9.2474 16.2449 9.2474 15.8307V10.7474H4.16406C3.74985 10.7474 3.41406 10.4116 3.41406 9.9974C3.41406 9.58318 3.74985 9.2474 4.16406 9.2474H9.2474V4.16406C9.2474 3.74985 9.58318 3.41406 9.9974 3.41406Z"
                 fill="#F2F2F2"
               />

@@ -107,9 +107,9 @@ export const FilterModal = ({
                       <path
                         d="M17.5 10C17.5 14.1421 14.1421 17.5 10 17.5C5.85786 17.5 2.5 14.1421 2.5 10C2.5 5.85786 5.85786 2.5 10 2.5C14.1421 2.5 17.5 5.85786 17.5 10Z"
                         stroke="#9AA6B5"
-                        stroke-opacity="0.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeOpacity="0.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                     </svg>
                   )}

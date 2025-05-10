@@ -18,25 +18,25 @@ const ScrollIcon = ({ className }: { className?: string }) => (
     <path
       d="M18.5013 29.3346H23.5013C27.668 29.3346 29.3346 27.668 29.3346 23.5013V18.5013C29.3346 14.3346 27.668 12.668 23.5013 12.668H18.5013C14.3346 12.668 12.668 14.3346 12.668 18.5013V23.5013C12.668 27.668 14.3346 29.3346 18.5013 29.3346Z"
       stroke="#33CF8E"
-      stroke-width="1.25"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="1.25"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M18.9984 18.4727L16.9234 20.5477C16.6818 20.7893 16.6818 21.1977 16.9234 21.4393L18.9984 23.5143"
       stroke="#33CF8E"
-      stroke-width="1.25"
-      stroke-miterlimit="10"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="1.25"
+      strokeMiterlimit="10"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M23 18.4727L25.075 20.5477C25.3167 20.7893 25.3167 21.1977 25.075 21.4393L23 23.5143"
       stroke="#33CF8E"
-      stroke-width="1.25"
-      stroke-miterlimit="10"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="1.25"
+      strokeMiterlimit="10"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );
@@ -82,7 +82,7 @@ export const ResetConfirmationModal = () => {
     <div
       ref={modalRef}
       className={cn(
-        'bg-accent rounded-lg p-8 w-94 py-7'
+        'bg-accent w-94 rounded-lg p-8 py-7'
         // Adjust width/height based on content via padding
       )}
       style={modalStyle as React.CSSProperties}
@@ -96,7 +96,9 @@ export const ResetConfirmationModal = () => {
           </div>
           {/* Text Content */}
           <div className="flex flex-col space-y-2">
-            <span className="text-foreground text-xl leading-5">Сбросить код</span>
+            <span className="text-foreground text-xl leading-5">
+              Сбросить код
+            </span>
             <span className="text-secondary text-xs leading-3.5">
               Хотите сбросить код задачи по умолчанию?
             </span>

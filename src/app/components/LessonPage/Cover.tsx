@@ -321,7 +321,7 @@ const Cover = () => {
                         {Array.from({ length: 6 }).map((_, i) => (
                           <div
                             className={cn(
-                              'group relative flex flex-col items-center justify-center gap-2 rounded-[0.4167vw] px-4 py-5 ',
+                              'group relative flex flex-col items-center justify-center gap-2 rounded-[0.4167vw] px-4 py-5',
                               i < activeDay
                                 ? 'not-last:bg-success/10 last:bg-[linear-gradient(98deg,_rgba(255,_32,_162,_0.10)_1.97%,_rgba(255,_91,_32,_0.10)_104.5%)]'
                                 : i != 5 &&
@@ -357,9 +357,9 @@ const Cover = () => {
                                     <path
                                       d="M5.26953 8.39078L6.82953 9.95078L10.7295 6.05078"
                                       stroke="#01050D"
-                                      stroke-width="1.5"
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
+                                      strokeWidth="1.5"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
                                     />
                                   </svg>
                                 ) : (
@@ -380,9 +380,9 @@ const Cover = () => {
                                     <path
                                       d="M5.26953 8.39078L6.82953 9.95078L10.7295 6.05078"
                                       stroke="#01050D"
-                                      stroke-width="1.5"
-                                      stroke-linecap="round"
-                                      stroke-linejoin="round"
+                                      strokeWidth="1.5"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
                                     />
                                     <defs>
                                       <linearGradient
@@ -413,7 +413,7 @@ const Cover = () => {
                               alt="fire"
                               className="h-5 w-5"
                             />
-                            <div className="flex flex-row w-15.75 items-center justify-center">
+                            <div className="flex w-15.75 flex-row items-center justify-center">
                               <span
                                 className={cn(
                                   i < activeDay

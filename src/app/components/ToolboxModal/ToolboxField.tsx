@@ -79,14 +79,14 @@ export default function ToolboxField({
                 <path
                   d="M13.0039 10.675V13.825C13.0039 16.45 11.9539 17.5 9.32891 17.5H6.17891C3.55391 17.5 2.50391 16.45 2.50391 13.825V10.675C2.50391 8.05 3.55391 7 6.17891 7H9.32891C11.9539 7 13.0039 8.05 13.0039 10.675Z"
                   stroke="#F2F2F2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
                 <path
                   d="M17.5039 6.175V9.325C17.5039 11.95 16.4539 13 13.8289 13H13.0039V10.675C13.0039 8.05 11.9539 7 9.32891 7H7.00391V6.175C7.00391 3.55 8.05391 2.5 10.6789 2.5H13.8289C16.4539 2.5 17.5039 3.55 17.5039 6.175Z"
                   stroke="#F2F2F2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             ) : (
@@ -161,15 +161,15 @@ export default function ToolboxField({
               <path
                 d="M4.35938 8.51844L6.43937 10.5984L11.6394 5.39844"
                 stroke="#33CF8E"
-                stroke-width="1.2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="1.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
             Connected
           </button>
         ) : (
-          <button className="border-primary ml-2 flex h-fit cursor-pointer items-center rounded-full border px-4 py-2.25 text-xs leading-3.5 text-nowrap hover:bg-primary">
+          <button className="border-primary hover:bg-primary ml-2 flex h-fit cursor-pointer items-center rounded-full border px-4 py-2.25 text-xs leading-3.5 text-nowrap">
             Connect Wallet
           </button>
         ))}

@@ -131,16 +131,16 @@ function CopyButton({
             <path
               d="M10.4 8.54156V11.0616C10.4 13.1616 9.56 14.0016 7.46 14.0016H4.94C2.84 14.0016 2 13.1616 2 11.0616V8.54156C2 6.44156 2.84 5.60156 4.94 5.60156H7.46C9.56 5.60156 10.4 6.44156 10.4 8.54156Z"
               stroke="#9AA6B5"
-              stroke-width="0.8"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="0.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
             <path
               d="M14.0016 4.94781V7.46781C14.0016 9.56781 13.1616 10.4078 11.0616 10.4078H10.4016V8.54781C10.4016 6.44781 9.56156 5.60781 7.46156 5.60781H5.60156V4.94781C5.60156 2.84781 6.44156 2.00781 8.54156 2.00781H11.0616C13.1616 2.00781 14.0016 2.84781 14.0016 4.94781Z"
               stroke="#9AA6B5"
-              stroke-width="0.8"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="0.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </g>
           <defs>

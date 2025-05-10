@@ -156,9 +156,9 @@ export default function TaskInfo({ task }: { task: any }) {
                       <path
                         d="M10 2.5C14.1421 2.5 17.5 5.85786 17.5 10C17.5 14.1421 14.1421 17.5 10 17.5C5.85786 17.5 2.5 14.1421 2.5 10C2.5 5.85786 5.85786 2.5 10 2.5Z"
                         stroke="#195AF4"
-                        stroke-opacity="0.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeOpacity="0.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                     </svg>
                   )}
@@ -233,7 +233,9 @@ export default function TaskInfo({ task }: { task: any }) {
           <div className="ml-auto flex flex-row items-center gap-1">
             <div className="bg-success h-1 w-1 rounded-full" />
             <span className="text-sm leading-4">32</span>
-            <span className="text-secondary/50 text-sm leading-4">— Online</span>
+            <span className="text-secondary/50 text-sm leading-4">
+              — Online
+            </span>
           </div>
         </div>
       </div>

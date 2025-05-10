@@ -11,9 +11,9 @@ export default function LightningIcon() {
       <path
         d="M4.06072 8.85335H6.12072V13.6533C6.12072 14.7733 6.72739 15 7.46739 14.16L12.5141 8.42668C13.1341 7.72668 12.8741 7.14668 11.9341 7.14668H9.87405V2.34668C9.87405 1.22668 9.26739 1.00001 8.52739 1.84001L3.48072 7.57335C2.86739 8.28001 3.12739 8.85335 4.06072 8.85335Z"
         stroke="#9AA6B5"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         className="group-data-[active=true]:fill-[#F2F2F2] group-data-[active=true]:stroke-none group-hover:fill-[#F2F2F2] group-hover:stroke-none"
       />
     </svg>

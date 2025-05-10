@@ -54,7 +54,7 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
       </Modal>
       <UnifiedTopbar
         showBorder={false}
-        className="relative bg-[#01050d] bg-[url('/images/misc/referral-header-bg-mobile.png')] bg-cover bg-center sm:bg-[url('/images/misc/header-bg.png')] py-6"
+        className="relative bg-[#01050d] bg-[url('/images/misc/referral-header-bg-mobile.png')] bg-cover bg-center py-6 sm:bg-[url('/images/misc/header-bg.png')]"
         leftContent={
           <div className="flex flex-col">
             <div className="flex flex-row space-x-5">
@@ -99,8 +99,8 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
+                      fillRule="evenodd"
+                      clipRule="evenodd"
                       d="M14.7307 4.43156C15.0295 4.14474 15.5043 4.15448 15.7911 4.45332L20.4065 9.26205C20.685 9.55226 20.685 10.0105 20.4065 10.3007L15.7911 15.1095C15.5043 15.4083 15.0295 15.418 14.7307 15.1312C14.4318 14.8444 14.4221 14.3696 14.7089 14.0708L18.8258 9.78139L14.7089 5.492C14.4221 5.19316 14.4318 4.71838 14.7307 4.43156Z"
                       fill="#F2F2F2"
                     />
@@ -119,9 +119,9 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
                     <path
                       d="M5.44922 11.15L8.04922 13.75L14.5492 7.25"
                       stroke="#33CF8E"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                   </svg>
                   Аккаунт блогера
@@ -157,9 +157,9 @@ export function Topbar({ lastestUpdate }: { lastestUpdate: string }) {
                   <path
                     d="M5.44922 11.15L8.04922 13.75L14.5492 7.25"
                     stroke="#33CF8E"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
                 Аккаунт блогера

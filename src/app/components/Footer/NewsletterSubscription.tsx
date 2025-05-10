@@ -27,8 +27,9 @@ export default function NewsletterSubscription() {
     },
     onError: (error) => {
       setMessage({
-        text:
-          error.message.includes('validation') ? 'Указан неверный ардес почты. Исправьте его и попробуйте снова.' : 'Произошла ошибка. Пожалуйста, попробуйте позже.',
+        text: error.message.includes('validation')
+          ? 'Указан неверный ардес почты. Исправьте его и попробуйте снова.'
+          : 'Произошла ошибка. Пожалуйста, попробуйте позже.',
         type: 'error',
       });
       setIsSubmitting(false);
@@ -90,7 +91,7 @@ export default function NewsletterSubscription() {
 
       {message && (
         <div
-          className={`text-xs flex flex-row items-center gap-2 ${message.type === 'success' ? 'text-success' : 'text-error'}`}
+          className={`flex flex-row items-center gap-2 text-xs ${message.type === 'success' ? 'text-success' : 'text-error'}`}
         >
           {message.type === 'success' && (
             <svg
@@ -99,14 +100,14 @@ export default function NewsletterSubscription() {
               viewBox="0 0 14 14"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-            className='w-3.5 h-3.5'
-          >
-            <path
-              d="M3 7.00009L5.5 9.50009L11 4.00009"
-              stroke="#33CF8E"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              className="h-3.5 w-3.5"
+            >
+              <path
+                d="M3 7.00009L5.5 9.50009L11 4.00009"
+                stroke="#33CF8E"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               />
             </svg>
           )}

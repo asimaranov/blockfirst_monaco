@@ -111,8 +111,8 @@ const CourseItem = ({
         <path
           d="M6.625 10.2124L8.73396 12.3214L13.3737 7.68164"
           stroke="#F2F2F2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </svg>
     ) : opened ? (
@@ -127,7 +127,7 @@ const CourseItem = ({
         <path
           d="M18.5 10C18.5 14.6944 14.6944 18.5 10 18.5C5.30558 18.5 1.5 14.6944 1.5 10C1.5 5.30558 5.30558 1.5 10 1.5C14.6944 1.5 18.5 5.30558 18.5 10Z"
           stroke="#195AF4"
-          stroke-linecap="round"
+          strokeLinecap="round"
         />
       </svg>
     ) : (
@@ -142,8 +142,8 @@ const CourseItem = ({
         <path
           d="M18.5 10C18.5 14.6944 14.6944 18.5 10 18.5C5.30558 18.5 1.5 14.6944 1.5 10C1.5 5.30558 5.30558 1.5 10 1.5C14.6944 1.5 18.5 5.30558 18.5 10Z"
           stroke="#9AA6B5"
-          stroke-opacity="0.5"
-          stroke-linecap="round"
+          strokeOpacity="0.5"
+          strokeLinecap="round"
         />
       </svg>
     )}
@@ -505,8 +505,8 @@ export default function CVPage({ session }: { session: Session }) {
                           className="ml-auto self-end"
                         >
                           <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
+                            fillRule="evenodd"
+                            clipRule="evenodd"
                             d="M10.901 4.46967C11.1939 4.17678 11.6688 4.17678 11.9617 4.46967L16.9617 9.46962C17.1023 9.61027 17.1814 9.80104 17.1814 9.99995C17.1814 10.1989 17.1023 10.3896 16.9617 10.5303L11.9617 15.5303C11.6688 15.8232 11.1939 15.8232 10.901 15.5303C10.6081 15.2374 10.6081 14.7625 10.901 14.4696L14.6207 10.75H3.57422C3.16001 10.75 2.82422 10.4142 2.82422 9.99995C2.82422 9.58574 3.16001 9.24995 3.57422 9.24995H14.6207L10.901 5.53033C10.6081 5.23744 10.6081 4.76257 10.901 4.46967Z"
                             fill="#F2F2F2"
                           />

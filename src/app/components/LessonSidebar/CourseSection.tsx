@@ -75,7 +75,7 @@ export function CourseSection({
         </div>
         <div
           className={cn(
-            'flex cursor-pointer flex-row justify-between gap-4 group',
+            'group flex cursor-pointer flex-row justify-between gap-4',
             status === 'locked' || status === 'upcoming' ? 'cursor-default' : ''
           )}
           onClick={() => {
@@ -129,14 +129,16 @@ export function CourseSection({
                   <path
                     d="M6.625 10.2104L8.73396 12.3194L13.3737 7.67969"
                     stroke="#F2F2F2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
               )}
             </div>
 
-            <span className="text-base leading-5 group-hover:text-foreground/50">{title}</span>
+            <span className="group-hover:text-foreground/50 text-base leading-5">
+              {title}
+            </span>
           </div>
           {/* Toggle expand/collapse */}
           <ToggleMinus

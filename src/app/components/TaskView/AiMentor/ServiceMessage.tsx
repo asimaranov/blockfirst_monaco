@@ -21,9 +21,9 @@ const ErrorSvg = () => {
       <path
         d="M7.5 12.5L12.5 7.5M7.5 7.5L12.5 12.5"
         stroke="#F2F2F2"
-        stroke-width="1.25"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.25"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
@@ -46,9 +46,9 @@ const SuccessSvg = () => {
       <path
         d="M6.36328 10.2273L8.63601 12.5L13.636 7.5"
         stroke="#01050D"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

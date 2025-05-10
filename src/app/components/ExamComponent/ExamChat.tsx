@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { api } from '~/trpc/react';
 import ChatInput from '../TaskView/ChatInput';
 import { authClient } from '~/server/auth/client';
@@ -37,6 +37,8 @@ export default function ExamChat({ examId }: { examId: string }) {
       md?: any;
     }[]
   >([]);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+  const [isAtBottom, setIsAtBottom] = useState(true);
 
   // Add a reference to the token query to manually invalidate it
   const utils = api.useUtils();
@@ -45,6 +47,38 @@ export default function ExamChat({ examId }: { examId: string }) {
   useEffect(() => {
     console.log('Current lives in store:', currentLives);
   }, [currentLives]);
+
+  // Handle scroll position
+  useEffect(() => {
+    const chatContainer = chatContainerRef.current;
+    if (!chatContainer) return;
+
+    // Check if user is at the bottom (or close to it)
+    const handleScroll = () => {
+      if (!chatContainer) return;
+
+      // In a reversed container, we need to check if scrollTop is close to 0 to determine if at the "bottom"
+      const isAtBottom = chatContainer.scrollTop <= 10;
+      setIsAtBottom(isAtBottom);
+    };
+
+    chatContainer.addEventListener('scroll', handleScroll);
+
+    return () => {
+      chatContainer.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  // Scroll handling when messages change
+  useEffect(() => {
+    const chatContainer = chatContainerRef.current;
+    if (!chatContainer) return;
+
+    // If user was at the bottom before new messages, scroll back to bottom
+    if (isAtBottom) {
+      chatContainer.scrollTop = 0;
+    }
+  }, [messages, isAtBottom]);
 
   // Load chat history from API
   const { data: chatHistory, isLoading } = api.examAi.getChatHistory.useQuery(
@@ -235,7 +269,10 @@ export default function ExamChat({ examId }: { examId: string }) {
       {isLoading ? (
         <ChatLoading />
       ) : (
-        <div className="flex h-177 flex-col-reverse gap-8 overflow-y-scroll px-8 pt-6 pb-5">
+        <div
+          ref={chatContainerRef}
+          className="flex h-177 flex-col-reverse gap-8 overflow-y-scroll px-8 pt-6 pb-5"
+        >
           {[...messages].reverse().map((message, index) =>
             message.role === 'assistant' && !message.messageType ? (
               <AiMessageItem

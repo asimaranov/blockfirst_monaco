@@ -183,9 +183,9 @@ const ChatSuccess = ({ examId }: ChatSuccessProps) => {
           <path
             d="M45.5 60.9091L54.5625 70L74.5 50"
             stroke="#33CF8E"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
 
@@ -408,16 +408,16 @@ const ChatSuccess = ({ examId }: ChatSuccessProps) => {
                     <path
                       d="M10.4 8.53375V11.0538C10.4 13.1538 9.56 13.9938 7.46 13.9938H4.94C2.84 13.9938 2 13.1538 2 11.0538V8.53375C2 6.43375 2.84 5.59375 4.94 5.59375H7.46C9.56 5.59375 10.4 6.43375 10.4 8.53375Z"
                       stroke="#F2F2F2"
-                      stroke-width="0.8"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="0.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                     <path
                       d="M14.0016 4.94V7.46C14.0016 9.56 13.1616 10.4 11.0616 10.4H10.4016V8.54C10.4016 6.44 9.56156 5.6 7.46156 5.6H5.60156V4.94C5.60156 2.84 6.44156 2 8.54156 2H11.0616C13.1616 2 14.0016 2.84 14.0016 4.94Z"
                       stroke="#F2F2F2"
-                      stroke-width="0.8"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeWidth="0.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     />
                   </g>
                   <defs>

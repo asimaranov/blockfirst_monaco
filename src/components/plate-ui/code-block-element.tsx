@@ -36,7 +36,6 @@ export const CodeBlockElement = withRef<typeof PlateElement>(
           '**:[.hljs-addition]:bg-[#f0fff4] **:[.hljs-addition]:text-[#22863a]',
           '**:[.hljs-deletion]:bg-[#ffeef0] **:[.hljs-deletion]:text-[#b31d28]',
           'my-16'
-
         )}
         {...props}
       >
@@ -66,7 +65,6 @@ export const CodeBlockElement = withRef<typeof PlateElement>(
   }
 );
 
-
 export const CodeBlockElementTask = withRef<typeof PlateElement>(
   ({ children, className, ...props }, ref) => {
     const { editor, element } = props;
@@ -92,7 +90,6 @@ export const CodeBlockElementTask = withRef<typeof PlateElement>(
           '**:[.hljs-addition]:bg-[#f0fff4] **:[.hljs-addition]:text-[#22863a]',
           '**:[.hljs-deletion]:bg-[#ffeef0] **:[.hljs-deletion]:text-[#b31d28]',
           'my-8'
-
         )}
         {...props}
       >
@@ -186,15 +183,15 @@ function CopyButton({
           <path
             d="M13.0039 10.675V13.825C13.0039 16.45 11.9539 17.5 9.32891 17.5H6.17891C3.55391 17.5 2.50391 16.45 2.50391 13.825V10.675C2.50391 8.05 3.55391 7 6.17891 7H9.32891C11.9539 7 13.0039 8.05 13.0039 10.675Z"
             stroke="#9AA6B5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             className="group-hover/button:stroke-foreground"
           />
           <path
             d="M17.5039 6.175V9.325C17.5039 11.95 16.4539 13 13.8289 13H13.0039V10.675C13.0039 8.05 11.9539 7 9.32891 7H7.00391V6.175C7.00391 3.55 8.05391 2.5 10.6789 2.5H13.8289C16.4539 2.5 17.5039 3.55 17.5039 6.175Z"
             stroke="#9AA6B5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             className="group-hover/button:stroke-foreground"
           />
         </svg>

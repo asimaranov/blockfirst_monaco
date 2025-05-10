@@ -26,9 +26,9 @@ export function TakeTestButton({
             <path
               d="M5.94922 10.65L8.54922 13.25L15.0492 6.75"
               stroke="#33CF8E"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
 

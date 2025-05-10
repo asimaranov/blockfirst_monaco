@@ -56,23 +56,23 @@ export const MobileHeader = ({
                 <path
                   d="M5.83594 10.8334H10.0026"
                   stroke="#F2F2F2"
-                  stroke-width="1.25"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.25"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
                 <path
                   d="M5.83594 14.1666H13.3359"
                   stroke="#F2F2F2"
-                  stroke-width="1.25"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.25"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
                 <path
                   d="M11.6641 1.66663H7.4974C3.33073 1.66663 1.66406 3.33329 1.66406 7.49996V12.5C1.66406 16.6666 3.33073 18.3333 7.4974 18.3333H12.4974C16.6641 18.3333 18.3307 16.6666 18.3307 12.5V8.33329"
                   stroke="#F2F2F2"
-                  stroke-width="1.25"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.25"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
                 <circle
                   cx="17"

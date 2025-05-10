@@ -76,14 +76,14 @@ const AiMessageItem: React.FC<AiMessageItemProps> = ({
                         <path
                           d="M4.98828 12.2336L7.05495 13.8336C7.32161 14.1003 7.92161 14.2336 8.32161 14.2336H10.8549C11.6549 14.2336 12.5216 13.6336 12.7216 12.8336L14.3216 7.96697C14.6549 7.03364 14.0549 6.23364 13.0549 6.23364H10.3883C9.98828 6.23364 9.65495 5.9003 9.72161 5.43364L10.0549 3.3003C10.1883 2.7003 9.78828 2.03364 9.18828 1.83364C8.65495 1.63364 7.98828 1.9003 7.72161 2.3003L4.98828 6.36697"
                           stroke="#9AA6B5"
-                          stroke-miterlimit="10"
+                          strokeMiterlimit="10"
                           className="group-hover/upvote-button:stroke-foreground"
                         />
                         <path
                           d="M1.58594 12.2297V5.69635C1.58594 4.76302 1.98594 4.42969 2.91927 4.42969H3.58594C4.51927 4.42969 4.91927 4.76302 4.91927 5.69635V12.2297C4.91927 13.163 4.51927 13.4964 3.58594 13.4964H2.91927C1.98594 13.4964 1.58594 13.163 1.58594 12.2297Z"
                           stroke="#9AA6B5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                           className="group-hover/upvote-button:stroke-foreground"
                         />
                       </svg>
@@ -139,14 +139,14 @@ const AiMessageItem: React.FC<AiMessageItemProps> = ({
                         <path
                           d="M11.0158 3.76563L8.94909 2.16562C8.68243 1.89896 8.08243 1.76562 7.68243 1.76562H5.14909C4.34909 1.76562 3.48243 2.36562 3.28243 3.16562L1.68243 8.03229C1.34909 8.96562 1.94909 9.76563 2.94909 9.76563H5.61576C6.01576 9.76563 6.34909 10.099 6.28243 10.5656L5.94909 12.699C5.81576 13.299 6.21576 13.9656 6.81576 14.1656C7.34909 14.3656 8.01576 14.099 8.28243 13.699L11.0158 9.63229"
                           stroke="#9AA6B5"
-                          stroke-miterlimit="10"
+                          strokeMiterlimit="10"
                           className="group-hover/downvote-button:stroke-foreground"
                         />
                         <path
                           d="M14.4154 3.76667V10.3C14.4154 11.2333 14.0154 11.5667 13.082 11.5667H12.4154C11.482 11.5667 11.082 11.2333 11.082 10.3V3.76667C11.082 2.83333 11.482 2.5 12.4154 2.5H13.082C14.0154 2.5 14.4154 2.83333 14.4154 3.76667Z"
                           stroke="#9AA6B5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                           className="group-hover/downvote-button:stroke-foreground"
                         />
                       </svg>

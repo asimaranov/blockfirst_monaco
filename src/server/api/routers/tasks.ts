@@ -64,7 +64,7 @@ export const tasksRouter = createTRPCRouter({
           'Problem StatementElements': TElement[];
         }>(taskId, ['Title', 'Hero', 'Description', 'Problem Statement']);
 
-        console.log('Found doc by id', taskId, document);
+        // console.log('Found doc by id', taskId, document);
 
         return {
           id: document.id,

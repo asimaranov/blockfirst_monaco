@@ -24,7 +24,7 @@ export const NotificationsTopbar = ({
           </div>
           <div className="flex items-center">
             <button
-              className="border-primary/50 hover:border-primary flex cursor-pointer items-center gap-1 rounded-full border-[0.5px] py-2.5 sm:py-1.5 pr-3 pl-3 sm:pl-2 leading-4"
+              className="border-primary/50 hover:border-primary flex cursor-pointer items-center gap-1 rounded-full border-[0.5px] py-2.5 pr-3 pl-3 leading-4 sm:py-1.5 sm:pl-2"
               onClick={archiveAll}
             >
               <div className="h-4 w-4">
@@ -39,16 +39,16 @@ export const NotificationsTopbar = ({
                   <path
                     d="M4.35938 8.52039L6.43937 10.6004L11.6394 5.40039"
                     stroke="#195AF4"
-                    stroke-width="1.2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                 </svg>
               </div>
               <span
                 className={cn(
-                  'text-foreground text-sm sm:text-xs leading-4',
-                  inArchived && 'text-primary '
+                  'text-foreground text-sm leading-4 sm:text-xs',
+                  inArchived && 'text-primary'
                 )}
               >
                 {inArchived ? 'В архиве' : 'Все в архив'}
