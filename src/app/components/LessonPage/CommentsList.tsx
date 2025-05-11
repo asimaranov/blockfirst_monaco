@@ -558,11 +558,12 @@ const formatComments = (session: any, comments: any[]): Comment[] => {
   });
 };
 
-export default function CommentsList() {
-  // Use params to get lessonId from the URL
+export default function CommentsList({ lessonId }: { lessonId?: string }) {
+  // Use params to get lessonId from the URL if not provided as prop
   const params = useParams();
   // Ensure lessonId is always a string
-  const lessonId = params.lessonId ? String(params.lessonId) : 'default-lesson';
+  const commentLessonId =
+    lessonId || (params.lessonId ? String(params.lessonId) : 'default-lesson');
 
   const [sort, setSort] = useState('new');
   const [cursor, setCursor] = useState<string | null>(null);
@@ -579,14 +580,19 @@ export default function CommentsList() {
 
   // TRPC queries and mutations
   const commentsQuery = api.comments.getByLessonId.useQuery(
-    { lessonId, sort: sort as 'new' | 'popular' | 'old', cursor, limit: 10 },
-    { enabled: !!lessonId }
+    {
+      lessonId: commentLessonId,
+      sort: sort as 'new' | 'popular' | 'old',
+      cursor,
+      limit: 10,
+    },
+    { enabled: !!commentLessonId }
   );
 
   // Get total comment count
   const totalCountQuery = api.comments.getTotalCount.useQuery(
-    { lessonId },
-    { enabled: !!lessonId }
+    { lessonId: commentLessonId },
+    { enabled: !!commentLessonId }
   );
 
   const createCommentMutation = api.comments.create.useMutation({
@@ -733,7 +739,7 @@ export default function CommentsList() {
       if (replyFormAfterId) {
         // Reply to a comment
         createCommentMutation.mutate({
-          lessonId,
+          lessonId: commentLessonId,
           parentId: replyFormAfterId,
           content,
           images,
@@ -741,13 +747,13 @@ export default function CommentsList() {
       } else {
         // New comment
         createCommentMutation.mutate({
-          lessonId,
+          lessonId: commentLessonId,
           content,
           images,
         });
       }
     },
-    [lessonId, replyFormAfterId, session, createCommentMutation]
+    [commentLessonId, replyFormAfterId, session, createCommentMutation]
   );
 
   // Find comment by ID (either in main comments or in answers)
@@ -770,7 +776,7 @@ export default function CommentsList() {
   );
 
   // Use total count if available, otherwise fall back to allComments.length
-  const commentCount = totalCountQuery.data?.totalCount ?? allComments.length;
+  const commentCount = totalCountQuery.data?.totalCount ?? '...';
   const hasMoreComments = !!commentsQuery.data?.nextCursor;
 
   return (
@@ -904,7 +910,7 @@ export default function CommentsList() {
                   className="w-175"
                   value={comment.content}
                   id={`edit-comment-${comment.id}`}
-                  lessonId={lessonId}
+                  lessonId={commentLessonId}
                   onCancel={handleCancelEdit}
                   onSubmit={() => {
                     void commentsQuery.refetch();
@@ -956,7 +962,7 @@ export default function CommentsList() {
                       className="w-175"
                       value={replyToUser ? `@${replyToUser}, ` : ''}
                       id="sub-editor"
-                      lessonId={lessonId}
+                      lessonId={commentLessonId}
                       replyFormAfterId={replyFormAfterId}
                       onCancel={() => {
                         setReplyToUser(null);
@@ -1011,7 +1017,7 @@ export default function CommentsList() {
                               className="w-175"
                               value={formattedAnswer.content}
                               id={`edit-reply-${formattedAnswer.id}`}
-                              lessonId={lessonId}
+                              lessonId={commentLessonId}
                               onCancel={handleCancelEdit}
                               onSubmit={() => {
                                 void commentsQuery.refetch();

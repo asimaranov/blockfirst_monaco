@@ -15,15 +15,15 @@ export default async function CommentsSection({
     <div className="flex flex-col">
       {session ? (
         <div className="flex w-full px-5 pt-16 pb-16 sm:px-16">
-          <div className="flex w-full flex-row gap-5 max-w-full grow-0">
-            <UserAvatar className="hidden sm:flex shrink-0" />
+          <div className="flex w-full max-w-full grow-0 flex-row gap-5">
+            <UserAvatar className="hidden shrink-0 sm:flex" />
             <CommentsEditor lessonId={lessonId} />
           </div>
         </div>
       ) : (
         <div className="h-16"></div>
       )}
-      <CommentsList />
+      <CommentsList lessonId={lessonId} />
     </div>
   );
 }

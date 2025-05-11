@@ -53,6 +53,7 @@ export default function CommentsEditor({
     onSuccess: () => {
       onSubmit?.();
       utils.comments.getByLessonId.reset({ lessonId });
+      utils.comments.getTotalCount.reset({ lessonId });
     },
   });
 
