@@ -11,9 +11,7 @@ import { PlateElement } from '@udecode/plate/react';
 export const LinkElement = withRef<typeof PlateElement>(
   ({ children, className, ...props }, ref) => {
     const element = props.element as TLinkElement;
-    const { props: linkProps } = useLink({ element });
-
-    element.target = '_blank';
+    const { props: linkProps } = useLink({ element: {...element, target: '_blank'} });
 
     return (
       <PlateElement

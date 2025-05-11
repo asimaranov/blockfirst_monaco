@@ -71,9 +71,7 @@ export default function CommentsEditor({
     try {
       const value = editor.children;
 
-
       console.log('value', value);
-      
 
       if (isEditing && commentId) {
         // Update existing comment
@@ -124,11 +122,12 @@ export default function CommentsEditor({
       <DndProvider backend={HTML5Backend}>
         <Plate
           editor={editor}
-          
           onChange={({ value }) => {
+            console.log('value', value);
             const commentDisabled =
               value?.length === 0 ||
               (value?.length == 1 &&
+                value?.[0]?.children.length <= 1 &&
                 (!value?.[0]?.children ||
                   value?.[0]?.children.length == 0 ||
                   !value?.[0]?.children[0].text));
