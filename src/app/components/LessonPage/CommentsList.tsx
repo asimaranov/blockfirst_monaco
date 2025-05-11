@@ -707,10 +707,11 @@ export default function CommentsList() {
     }
   }, [commentsQuery.data, cursor, session]);
 
-  // Reset data when sort changes
+  // Reset cursor when sort changes, but don't clear comments immediately
   useEffect(() => {
     setCursor(null);
-    setAllComments([]);
+    setLoading(true);
+    // Don't reset allComments here, wait for new data to arrive
   }, [sort]);
 
   // Handle load more
