@@ -300,6 +300,7 @@ function CommentItem({
           <PlateEditor
             richText={comment.content}
             id={`comment-${comment.id}`}
+            isComments={true}
           />
         </div>
         {comment.images && comment.images.length > 0 && (
@@ -775,7 +776,6 @@ export default function CommentsList({ lessonId }: { lessonId?: string }) {
     [allComments]
   );
 
-  // Use total count if available, otherwise fall back to allComments.length
   const commentCount = totalCountQuery.data?.totalCount ?? '...';
   const hasMoreComments = !!commentsQuery.data?.nextCursor;
 

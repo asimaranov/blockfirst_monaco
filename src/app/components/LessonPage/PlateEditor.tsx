@@ -227,10 +227,12 @@ const plugins = [
 const PlateEditor = ({
   richText,
   isTask = false,
+  isComments = false,
   id,
 }: {
   richText: Value;
   isTask?: boolean;
+  isComments?: boolean;
   id?: string;
 }) => {
   // console.log('richText', r/ );
@@ -264,7 +266,10 @@ const PlateEditor = ({
         italic: withProps(PlateLeaf, { as: 'em' }),
         p: withProps(PlateElement, {
           as: 'div',
-          className: 'mb-6 text-base leading-6 text-foreground/90 font-light',
+          className: cn(
+            'mb-6 text-base leading-6 text-foreground/90 font-light',
+            isComments && 'mb-0'
+          ),
         }),
         underline: withProps(PlateLeaf, { as: 'u' }),
         img: ImageElementStatic,

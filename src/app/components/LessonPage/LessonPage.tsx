@@ -40,7 +40,7 @@ const getDocument = async (lessonId: string) => {
 
   cacheTag('document-by-id', lessonId);
 
-  console.log('documenttttlsjknflkjn', document);
+  // console.log('documenttttlsjknflkjn', document);
   return document;
 };
 

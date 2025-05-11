@@ -308,7 +308,7 @@ export default function ContentFooter({
           className={cn(
             'group/rating z-1000 mx-2 flex h-8 items-center rounded-[0.3472vw] px-5',
             !!rating && 'hover:bg-secondary/10 relative',
-            session.data?.user && 'cursor-pointer'
+            !!session.data?.user && 'cursor-pointer'
           )}
           onClick={() => {
             if (!session.data?.user) {
@@ -321,7 +321,7 @@ export default function ContentFooter({
             <button
               className={cn(
                 'relative flex flex-row items-center justify-center gap-2',
-                session.data?.user && 'cursor-pointer'
+                !!session.data?.user && 'cursor-pointer'
               )}
             >
               <StarIconFilled className="" />

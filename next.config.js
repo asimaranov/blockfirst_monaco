@@ -58,6 +58,13 @@ const config = {
       {
         hostname: 'images.unsplash.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'utfs.io',
+        port: '',
+        pathname: '/**',
+        search: '',
+      },
     ],
   },
 };
