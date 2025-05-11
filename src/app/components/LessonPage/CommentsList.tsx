@@ -1008,7 +1008,7 @@ export default function CommentsList() {
                             />
                             <CommentsEditor
                               className="w-175"
-                              value={formattedAnswer.text}
+                              value={formattedAnswer.content}
                               id={`edit-reply-${formattedAnswer.id}`}
                               lessonId={lessonId}
                               onCancel={handleCancelEdit}
