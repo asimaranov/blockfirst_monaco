@@ -1,28 +1,13 @@
 'use client';
 
-import React, { useEffect, useState, useRef } from 'react';
-import dynamic from 'next/dynamic';
-import { MonacoEditorLanguageClientWrapper } from 'monaco-editor-wrapper';
-import Image from 'next/image';
-import BfLogo from './assets/bf-logo.svg';
-import ReactDOM from 'react-dom/client';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { configure } from './monaco/config';
-import { buildJsonClientUserConfig } from 'monaco-languageclient-examples/json-client';
 import { MonacoEditorReactComp } from './monaco/MonacoEditorReact';
 
-export default function MonacoViewDynamic({
-  taskData,
-}: {
-  taskData: any;
-}) {
-
-  console.log('Task data in iframe', taskData)
+export default function MonacoViewDynamic({ taskData }: { taskData: any }) {
   const editorRef = useRef<any>(null);
-  const [isEditorReady, setIsEditorReady] = useState(false);
 
-  // Configure Monaco editor
-  const wrapperConfig = buildJsonClientUserConfig();
-  const configResult = configure(taskData);
+  const configResult = useMemo(() => configure(taskData), [taskData]);
 
   // Notify parent when iframe is initially loaded
   useEffect(() => {
@@ -51,17 +36,6 @@ export default function MonacoViewDynamic({
       window.removeEventListener('message', handleMessage);
     };
   }, []);
-
-  // Notify parent window when editor is fully loaded and ready
-  useEffect(() => {
-    if (isEditorReady && window.parent !== window) {
-      // Small delay to ensure everything is rendered properly
-      setTimeout(() => {
-        window.parent.postMessage({ type: 'monaco-editor-ready' }, '*');
-        console.log('Monaco editor fully loaded and ready - notifying parent');
-      }, 500);
-    }
-  }, [isEditorReady]);
 
   // Listen for messages from parent window
   useEffect(() => {
@@ -92,7 +66,15 @@ export default function MonacoViewDynamic({
         try {
           await configResult.configurePostStart(wrapper, configResult);
           console.log('Monaco editor loaded successfully');
-          setIsEditorReady(true);
+          if (window.parent !== window) {
+            // Small delay to ensure everything is rendered properly
+            setTimeout(() => {
+              window.parent.postMessage({ type: 'monaco-editor-ready' }, '*');
+              console.log(
+                'Monaco editor fully loaded and ready - notifying parent'
+              );
+            }, 500);
+          }
         } catch (error) {
           console.error('Error loading Monaco editor:', error);
           // Still notify parent, but with error

@@ -25,7 +25,7 @@ import getEnvironmentServiceOverride from '@codingame/monaco-vscode-environment-
 import getSecretStorageServiceOverride from '@codingame/monaco-vscode-secret-storage-service-override';
 import getStorageServiceOverride from '@codingame/monaco-vscode-storage-service-override';
 import getSearchServiceOverride from '@codingame/monaco-vscode-search-service-override';
-
+// import './solidity-extension';
 // this is required syntax highlighting
 import '@codingame/monaco-vscode-typescript-basics-default-extension';
 import '@codingame/monaco-vscode-typescript-language-features-default-extension';
@@ -61,6 +61,7 @@ import {
 } from 'vscode-ws-jsonrpc';
 import { createUrl } from 'monaco-languageclient/tools';
 import { MonacoLanguageClient } from 'monaco-languageclient';
+import { solidityManifest } from './solidity-extension';
 
 export const createDefaultLocaleConfiguration = (): LocalizationOptions => {
   return {
@@ -189,6 +190,31 @@ registerFileUrl(
   new URL('./themes/dark_blockfirst.json', import.meta.url).toString()
 );
 
+
+const { registerFileUrl: registerFileUrlSolidity, whenReady: whenReadySolidity } = registerExtension(solidityManifest as any, undefined, {
+  system: true,
+}) as RegisterLocalExtensionResult;
+
+registerFileUrlSolidity(
+  './syntaxes/solidity.json',
+  new URL('./solidity/syntaxes/solidity.json', import.meta.url).toString()
+);
+
+registerFileUrlSolidity(
+  './syntaxes/solidity-markdown-injection.json',
+  new URL('./solidity/syntaxes/solidity-markdown-injection.json', import.meta.url).toString()
+);
+
+registerFileUrlSolidity(
+  './snippets/solidity.json',
+  new URL('./solidity/snippets/solidity.json', import.meta.url).toString()
+);
+
+registerFileUrlSolidity(
+  './solidity.configuration.json',
+  new URL('./solidity/solidity.configuration.json', import.meta.url).toString()
+);
+
 const toolboxSvgIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M14.6667 12.168H10C9.72667 12.168 9.5 11.9413 9.5 11.668C9.5 11.3946 9.72667 11.168 10 11.168H14.6667C14.94 11.168 15.1667 11.3946 15.1667 11.668C15.1667 11.9413 14.94 12.168 14.6667 12.168Z" fill="#33CF8E"/>
 <path d="M3.33203 12.168H1.33203C1.0587 12.168 0.832031 11.9413 0.832031 11.668C0.832031 11.3946 1.0587 11.168 1.33203 11.168H3.33203C3.60536 11.168 3.83203 11.3946 3.83203 11.668C3.83203 11.9413 3.60536 12.168 3.33203 12.168Z" fill="#33CF8E"/>
@@ -208,6 +234,7 @@ export const configurePostStart = async (
   wrapper: MonacoEditorLanguageClientWrapper,
   configResult: ConfigResult
 ) => {
+  console.log('configurePostStart');
   const result = wrapper.getExtensionRegisterResult(
     'mlc-app-playground'
   ) as RegisterLocalProcessExtensionResult;
@@ -270,12 +297,14 @@ export const configurePostStart = async (
   await vscode.commands.executeCommand('workbench.view.explorer');
 
   // taskdata is an object
-  for (const [fileName, fileContent] of Object.entries(configResult.taskData.filesCode)) {
+  for (const [fileName, fileContent] of Object.entries(
+    configResult.taskData.filesCode
+  )) {
     const uri = vscode.Uri.file(`/workspace/${fileName}`);
     await vscode.workspace.openTextDocument(uri);
-    await vscode.window.showTextDocument(uri, {
-      preview: false,
-    });
+    // await vscode.window.showTextDocument(uri, {
+    //   preview: false,
+    // });
   }
 
   // await Promise.all([
@@ -302,6 +331,7 @@ export const configure = (
   taskData: any,
   htmlContainer?: HTMLElement
 ): ConfigResult => {
+  console.log('Calling configure');
   const webSocket = new WebSocket(
     'wss://story.blindzone.org/lserver?authorization=UserAuth'
   );
@@ -449,51 +479,51 @@ export const configure = (
         },
       },
     },
-    languageClientConfigs: {
-      configs: {
-        python: {
-          name: 'Python Language Server Example',
-          connection: {
-            options: {
-              $type: 'WebSocketDirect',
-              webSocket: webSocket,
-              startOptions: {
-                onCall: (languageClient?: MonacoLanguageClient) => {
-                  console.log('Oncall', languageClient);
+    // languageClientConfigs: {
+    //   configs: {
+    //     python: {
+    //       name: 'Python Language Server Example',
+    //       connection: {
+    //         options: {
+    //           $type: 'WebSocketDirect',
+    //           webSocket: webSocket,
+    //           startOptions: {
+    //             onCall: (languageClient?: MonacoLanguageClient) => {
+    //               console.log('Oncall', languageClient);
 
-                  // setTimeout(() => {
-                  //   [
-                  //     'pyright.restartserver',
-                  //     'pyright.organizeimports',
-                  //   ].forEach((cmdName) => {
-                  //     vscode.commands.registerCommand(
-                  //       cmdName,
-                  //       (...args: unknown[]) => {
-                  //         languageClient?.sendRequest(
-                  //           'workspace/executeCommand',
-                  //           { command: cmdName, arguments: args }
-                  //         );
-                  //       }
-                  //     );
-                  //   });
-                  // }, 250);
-                },
-                reportStatus: true,
-              },
-            },
-            messageTransports: { reader, writer },
-          },
-          clientOptions: {
-            documentSelector: ['solidity'],
-            workspaceFolder: {
-              index: 0,
-              name: 'workspace',
-              uri: 'playground/workspace' as unknown as vscode.Uri,
-            },
-          },
-        },
-      },
-    },
+    //               // setTimeout(() => {
+    //               //   [
+    //               //     'pyright.restartserver',
+    //               //     'pyright.organizeimports',
+    //               //   ].forEach((cmdName) => {
+    //               //     vscode.commands.registerCommand(
+    //               //       cmdName,
+    //               //       (...args: unknown[]) => {
+    //               //         languageClient?.sendRequest(
+    //               //           'workspace/executeCommand',
+    //               //           { command: cmdName, arguments: args }
+    //               //         );
+    //               //       }
+    //               //     );
+    //               //   });
+    //               // }, 250);
+    //             },
+    //             reportStatus: true,
+    //           },
+    //         },
+    //         messageTransports: { reader, writer },
+    //       },
+    //       clientOptions: {
+    //         documentSelector: ['solidity'],
+    //         workspaceFolder: {
+    //           index: 0,
+    //           name: 'workspace',
+    //           uri: 'playground/workspace' as unknown as vscode.Uri,
+    //         },
+    //       },
+    //     },
+    //   },
+    // },
   };
 
   const fileSystemProvider = new RegisteredFileSystemProvider(false);
