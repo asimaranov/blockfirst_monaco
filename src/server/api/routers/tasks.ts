@@ -22,6 +22,7 @@ import { json } from 'stream/consumers';
 import {
   getContentBetweenHeadings,
   getDocumentWithFields,
+  extractCodeFromElements,
 } from '~/server/utils/document';
 
 const headingDepth: Record<string, number> = {
@@ -61,8 +62,49 @@ export const tasksRouter = createTRPCRouter({
           Hero: string;
           Description: string;
           'Problem Statement': string;
-          'Problem StatementElements': TElement[];
-        }>(taskId, ['Title', 'Hero', 'Description', 'Problem Statement']);
+          'Problem Statement-Elements': TElement[];
+          'Files list': string;
+          'Files list-Elements': TElement[];
+        }>(taskId, [
+          'Title',
+          'Hero',
+          'Description',
+          { field: 'Problem Statement', includeElements: true },
+          { field: 'Files list', includeElements: true },
+        ]);
+
+        const filesList = data['Files list-Elements'].map(
+          (x) => x.children[0].text
+        );
+
+        const {
+          document: document2,
+          data: data2,
+          headings: headings2,
+        } = await getDocumentWithFields<any>(
+          taskId,
+          filesList.map((x) => ({ field: x, includeElements: true })) as {
+            field: string;
+            includeElements?: boolean;
+          }[]
+        );
+
+        console.log(
+          'Found doc2222',
+          JSON.stringify(data2, null, 2),
+          JSON.stringify(headings2, null, 2)
+        );
+
+        // Extract code from elements
+        const filesCode: Record<string, string> = {};
+        for (const fileName of filesList) {
+          const elements = data2[`${fileName}-Elements`];
+          if (elements) {
+            filesCode[fileName as string] = extractCodeFromElements(elements);
+          }
+        }
+
+        console.log('Files code', filesCode);
 
         // console.log('Found doc by id', taskId, document);
 
@@ -79,7 +121,9 @@ export const tasksRouter = createTRPCRouter({
           labels: ['Глава 1', 'Тема 2', 'Урок 2'],
           title: data.Title || document.title || 'Без названия',
           description: data.Description || document.content || '',
-          problemStatement: data['Problem StatementElements'] || [],
+          problemStatement: data['Problem Statement-Elements'] || [],
+          filesList: filesList || [],
+          filesCode: filesCode,
           completionCount: '5+',
           rating: '4.9',
           status: ['available', 'in-progress', 'completed'][
@@ -107,7 +151,17 @@ export const tasksRouter = createTRPCRouter({
               Description: string;
               'Problem Statement': string;
               'Problem StatementElements': TElement[];
-            }>(taskId, ['Title', 'Hero', 'Description', 'Problem Statement']);
+              'Files list': string;
+              'Files listElements': TElement[];
+            }>(taskId, [
+              'Title',
+              'Hero',
+              'Description',
+              'Problem Statement',
+              'Files list',
+            ]);
+
+            console.log('Files list', data['Files listElements']);
 
             return {
               id: document.id,
@@ -120,6 +174,7 @@ export const tasksRouter = createTRPCRouter({
               title: data.Title || 'Без названия',
               description: data.Description || '',
               problemStatement: data['Problem StatementElements'] || [],
+              filesList: data['Files listElements'] || [],
               completionCount: '5+',
               rating: '4.9',
               status: ['available', 'in-progress', 'completed'][

@@ -122,7 +122,7 @@ export function getHeadingContent(
  */
 export async function getDocumentWithFields<T extends Record<string, any>>(
   documentId: string,
-  fields: string[]
+  fields: (string | { field: string; includeElements?: boolean })[]
 ): Promise<{
   document: any;
   editor: SlateEditor;
@@ -171,25 +171,72 @@ export async function getDocumentWithFields<T extends Record<string, any>>(
   const data = {} as T;
 
   for (const field of fields) {
+    let fieldTitle = field;
+    let includeElements = false;
+    if (typeof field === 'object') {
+      fieldTitle = field.field;
+      includeElements = field.includeElements || false;
+    } else {
+      fieldTitle = field;
+    }
     const heading = headings.find(
-      (h) => h.title.toLowerCase() === field.toLowerCase()
+      (h) => h.title.toLowerCase() === fieldTitle.toLowerCase()
     );
 
     if (heading) {
       // Get text content for this heading
       const content = getHeadingContent(editor, heading);
-      (data as any)[field] = content;
+      (data as any)[fieldTitle] = content;
 
       // Also get content between headings if needed
-      if (field.includes('Statement')) {
-        const sectionContent = getContentBetweenHeadings(editor, field);
+      if (includeElements) {
+        const sectionContent = getContentBetweenHeadings(editor, fieldTitle);
         const elements = sectionContent
           ? Array.from(sectionContent, ([node]) => node as TElement)
           : [];
-        (data as any)[`${field}Elements`] = elements;
+        (data as any)[`${fieldTitle}-Elements`] = elements;
       }
     }
   }
 
   return { document, editor, data, headings };
+}
+
+/**
+ * Extracts code content from element structure
+ * @param elements - Array of elements containing code
+ * @returns The extracted code as a string
+ */
+export function extractCodeFromElements(elements: TElement[]): string {
+  if (!elements || !Array.isArray(elements)) return '';
+
+  let code = '';
+
+  // Process each element
+  for (const element of elements) {
+    if (element.type === 'code_block') {
+      // Process code block element
+      if (Array.isArray(element.children)) {
+        for (const line of element.children) {
+          if (line.type === 'code_line' && Array.isArray(line.children)) {
+            for (const textNode of line.children) {
+              if (typeof textNode.text === 'string') {
+                code += textNode.text;
+              }
+            }
+            // Add newline after each code line
+            code += '\n';
+          }
+        }
+      }
+    } else if (Array.isArray(element.children)) {
+      // Recursively process other elements with children
+      code += extractCodeFromElements(element.children as TElement[]);
+    } else if (typeof element.text === 'string') {
+      // Handle direct text nodes
+      code += element.text;
+    }
+  }
+
+  return code;
 }

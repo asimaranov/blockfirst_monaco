@@ -1023,9 +1023,11 @@ const FloatingActionBar = ({
 export default function MonacoView({
   setIsAiMentorActive,
   isCollapsed,
+  taskId,
 }: {
   setIsAiMentorActive: (isActive: boolean) => void;
   isCollapsed: boolean;
+  taskId: string;
 }) {
   const [showActionBar, setShowActionBar] = useState(true);
   const [iframeLoaded, setIframeLoaded] = useState(false);
@@ -1094,7 +1096,7 @@ export default function MonacoView({
       <div id="editorsDiv" className="relative h-full w-full">
         <iframe
           ref={iframeRef}
-          src="/monaco-iframe"
+          src={`/monaco-iframe/${taskId}`}
           className={cn('h-full w-full border-0', !editorReady && 'opacity-0')}
           onLoad={handleIframeLoad}
           title="Monaco Editor"

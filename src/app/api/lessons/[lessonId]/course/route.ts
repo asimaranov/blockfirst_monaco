@@ -1,12 +1,5 @@
 import { NextResponse } from 'next/server';
-import prisma from '~/lib/prisma';
-
-// Helper function to get document by ID
-async function getDocumentById(id: string) {
-  return prisma.document.findUnique({
-    where: { id },
-  });
-}
+import { getDocumentById } from '~/lib/documents';
 
 // API route to get course ID from lesson ID
 export async function GET(

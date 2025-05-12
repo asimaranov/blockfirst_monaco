@@ -239,6 +239,7 @@ export default function TaskView({
         <MonacoView
           setIsAiMentorActive={setIsAiMentorActive}
           isCollapsed={collapsed}
+          taskId={task.id}
         />
         <div className="w-full flex-1 bg-blue-300"></div>
       </div>

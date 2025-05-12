@@ -54,6 +54,13 @@ import type { WrapperConfig } from 'monaco-editor-wrapper';
 import type { RegisterLocalProcessExtensionResult } from '@codingame/monaco-vscode-api/extensions';
 import { MonacoEditorLanguageClientWrapper } from 'monaco-editor-wrapper';
 import { defaultViewsInit } from './viewsService';
+import {
+  toSocket,
+  WebSocketMessageReader,
+  WebSocketMessageWriter,
+} from 'vscode-ws-jsonrpc';
+import { createUrl } from 'monaco-languageclient/tools';
+import { MonacoLanguageClient } from 'monaco-languageclient';
 
 export const createDefaultLocaleConfiguration = (): LocalizationOptions => {
   return {
@@ -245,7 +252,8 @@ export const configurePostStart = async (
     }
   });
 
-  vscode.commands.registerCommand('myExtension.toolbox', () => {    // Send a message to the browser window
+  vscode.commands.registerCommand('myExtension.toolbox', () => {
+    // Send a message to the browser window
     const message = {
       command: 'toolboxButtonClicked',
     };
@@ -261,26 +269,47 @@ export const configurePostStart = async (
   // WA: Force show explorer and not search
   await vscode.commands.executeCommand('workbench.view.explorer');
 
-  await Promise.all([
-    await vscode.workspace.openTextDocument(configResult.helloTsUri),
-    await vscode.workspace.openTextDocument(configResult.testerTsUri),
-  ]);
+  // taskdata is an object
+  for (const [fileName, fileContent] of Object.entries(configResult.taskData.filesCode)) {
+    const uri = vscode.Uri.file(`/workspace/${fileName}`);
+    await vscode.workspace.openTextDocument(uri);
+    await vscode.window.showTextDocument(uri, {
+      preview: false,
+    });
+  }
 
-  await Promise.all([
-    await vscode.window.showTextDocument(configResult.helloTsUri),
-  ]);
+  // await Promise.all([
+  //   await vscode.workspace.openTextDocument(configResult.helloTsUri),
+  //   // await vscode.workspace.openTextDocument(configResult.testerTsUri),
+  // ]);
+
+  // await Promise.all([
+  //   await vscode.window.showTextDocument(configResult.helloTsUri),
+  // ]);
 
   console.log('Application Playground started');
 };
 export type ConfigResult = {
+  taskData: any;
   wrapperConfig: WrapperConfig;
   workspaceFile: vscode.Uri;
-  helloTsUri: vscode.Uri;
-  testerTsUri: vscode.Uri;
+  // helloTsUri: vscode.Uri;
+  // testerTsUri: vscode.Uri;
   configurePostStart: typeof configurePostStart;
 };
 
-export const configure = (htmlContainer?: HTMLElement): ConfigResult => {
+export const configure = (
+  taskData: any,
+  htmlContainer?: HTMLElement
+): ConfigResult => {
+  const webSocket = new WebSocket(
+    'wss://story.blindzone.org/lserver?authorization=UserAuth'
+  );
+
+  const iWebSocket = toSocket(webSocket);
+  const reader = new WebSocketMessageReader(iWebSocket);
+  const writer = new WebSocketMessageWriter(iWebSocket);
+
   const workspaceFile = vscode.Uri.file(
     '/workspace/.vscode/workspace.code-workspace'
   );
@@ -413,18 +442,78 @@ export const configure = (htmlContainer?: HTMLElement): ConfigResult => {
     ],
     editorAppConfig: {
       monacoWorkerFactory: configureDefaultWorkerFactory,
+      codeResources: {
+        modified: {
+          text: 'code',
+          uri: '/workspace/test.groovy',
+        },
+      },
+    },
+    languageClientConfigs: {
+      configs: {
+        python: {
+          name: 'Python Language Server Example',
+          connection: {
+            options: {
+              $type: 'WebSocketDirect',
+              webSocket: webSocket,
+              startOptions: {
+                onCall: (languageClient?: MonacoLanguageClient) => {
+                  console.log('Oncall', languageClient);
+
+                  // setTimeout(() => {
+                  //   [
+                  //     'pyright.restartserver',
+                  //     'pyright.organizeimports',
+                  //   ].forEach((cmdName) => {
+                  //     vscode.commands.registerCommand(
+                  //       cmdName,
+                  //       (...args: unknown[]) => {
+                  //         languageClient?.sendRequest(
+                  //           'workspace/executeCommand',
+                  //           { command: cmdName, arguments: args }
+                  //         );
+                  //       }
+                  //     );
+                  //   });
+                  // }, 250);
+                },
+                reportStatus: true,
+              },
+            },
+            messageTransports: { reader, writer },
+          },
+          clientOptions: {
+            documentSelector: ['solidity'],
+            workspaceFolder: {
+              index: 0,
+              name: 'workspace',
+              uri: 'playground/workspace' as unknown as vscode.Uri,
+            },
+          },
+        },
+      },
     },
   };
 
-  const helloTsUri = vscode.Uri.file('/workspace/hello.ts');
-  const testerTsUri = vscode.Uri.file('/workspace/tester.ts');
   const fileSystemProvider = new RegisteredFileSystemProvider(false);
-  fileSystemProvider.registerFile(
-    new RegisteredMemoryFile(helloTsUri, `console.log('Hello, world!');`)
-  );
-  fileSystemProvider.registerFile(
-    new RegisteredMemoryFile(testerTsUri, `console.log('Hello, world!');`)
-  );
+
+  for (const [fileName, fileContent] of Object.entries(taskData.filesCode)) {
+    const uri = vscode.Uri.file(`/workspace/${fileName}`);
+    fileSystemProvider.registerFile(
+      new RegisteredMemoryFile(uri, fileContent as string)
+    );
+  }
+
+  // const helloTsUri = vscode.Uri.file('playground/workspace/contracts/Lock.sol');
+  // const testerTsUri = vscode.Uri.file('/workspace/tester.ts');
+  // const fileSystemProvider = new RegisteredFileSystemProvider(false);
+  // fileSystemProvider.registerFile(
+  //   new RegisteredMemoryFile(helloTsUri, `console.log('Hello, world!');`)
+  // );
+  // fileSystemProvider.registerFile(
+  //   new RegisteredMemoryFile(testerTsUri, `console.log('Hello, world!');`)
+  // );
   fileSystemProvider.registerFile(
     createDefaultWorkspaceFile(workspaceFile, '/workspace')
   );
@@ -433,8 +522,9 @@ export const configure = (htmlContainer?: HTMLElement): ConfigResult => {
   return {
     wrapperConfig,
     workspaceFile,
-    helloTsUri,
-    testerTsUri,
+    taskData,
+    // helloTsUri,
+    // testerTsUri,
     configurePostStart,
   };
 };

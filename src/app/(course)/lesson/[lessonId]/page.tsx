@@ -9,51 +9,12 @@ import { redirect } from 'next/navigation';
 import { ExamComponent } from '~/app/components/ExamComponent';
 import { NotificationsModal } from '~/app/components/Notifications/NotificationsModal';
 import LessonPage from '~/app/components/LessonPage/LessonPage';
-import prisma from '~/lib/prisma';
+import {
+  getDocumentById,
+  getDocumentChildren,
+  getCourseById,
+} from '~/lib/documents';
 import { cacheTag } from 'next/dist/server/use-cache/cache-tag';
-
-async function getDocumentChildren(parentId: string) {
-  'use cache';
-  cacheTag('children-by-document-id', parentId);
-  return prisma.document.findMany({
-    where: { parentDocumentId: parentId },
-    orderBy: [
-      { sortOrder: 'asc' },
-      { createdAt: 'asc' }, // Fallback for documents without sortOrder
-    ],
-  });
-}
-
-async function getDocumentById(id: string) {
-  'use cache';
-  cacheTag('document-by-id', id);
-  return prisma.document.findUnique({
-    where: { id },
-  });
-}
-
-const getCourseById = async (lessonId: string) => {
-  'use cache';
-  cacheTag('course-id', lessonId);
-  const lessonDocument = await getDocumentById(lessonId);
-  
-
-  // Get module
-  const moduleDocument = await getDocumentById(lessonDocument!.parentDocumentId!);
-  
-
-  // Get section
-  const sectionDocument = await getDocumentById(
-    moduleDocument!.parentDocumentId!
-  );
-
-  return {
-    courseId: sectionDocument!.parentDocumentId!,
-    sectionId: sectionDocument!.id,
-    moduleId: moduleDocument!.id,
-    lessonId: lessonDocument!.id,
-  };
-};
 
 const getCourseInfo = async (courseId: string) => {
   'use cache';
