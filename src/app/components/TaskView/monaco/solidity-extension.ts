@@ -1,47 +1,22 @@
-import {
-  registerExtension,
-  RegisterLocalExtensionResult,
-} from '@codingame/monaco-vscode-api/extensions';
 import { IMenu } from '@codingame/monaco-vscode-api/vscode/vs/platform/actions/common/actions';
 
 export const solidityManifest = {
   "name": "solidity",
+  displayName:"%displayName%",
   "description": "Ethereum Solidity Language for Visual Studio Code",
-  "keywords": [
-    "solidity",
-    "ethereum",
-    "blockchain",
-    "compiler",
-    "solium",
-    "nethereum",
-    "solhint"
-  ],
   "version": "0.0.184",
   "publisher": "JuanBlanco",
   "license": "MIT",
   "engines": {
-    "vscode": "^1.77.0"
+    "vscode": "*"
   },
-  "files": [
-    "/dist/cli"
-  ],
-  "activationEvents": [],
   "contributors": [
     "Juan Blanco"
   ],
-  "bugs": {
-    "url": "https://github.com/juanfranblanco/vscode-solidity/issues"
-  },
-  "icon": "images/icon.png",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/juanfranblanco/vscode-solidity"
-  },
   "categories": [
     "Programming Languages",
     "Snippets"
   ],
-  "main": "./out/src/extension",
   "bin": {
     "vscode-solidity-server": "./dist/cli/server.js"
   },
