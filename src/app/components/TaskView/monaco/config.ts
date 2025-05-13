@@ -300,7 +300,7 @@ export const configurePostStart = async (
   for (const [fileName, fileContent] of Object.entries(
     configResult.taskData.filesCode
   )) {
-    const uri = vscode.Uri.file(`/workspace/${fileName}`);
+    const uri = vscode.Uri.file(`/workspace/contracts/${fileName}`);
     await vscode.workspace.openTextDocument(uri);
     // await vscode.window.showTextDocument(uri, {
     //   preview: false,
@@ -333,7 +333,7 @@ export const configure = (
 ): ConfigResult => {
   console.log('Calling configure');
   const webSocket = new WebSocket(
-    'wss://story.blindzone.org/lserver?authorization=UserAuth'
+    'ws://localhost:30001/lserver?authorization=UserAuth'
   );
 
   const iWebSocket = toSocket(webSocket);
@@ -479,57 +479,57 @@ export const configure = (
         },
       },
     },
-    // languageClientConfigs: {
-    //   configs: {
-    //     python: {
-    //       name: 'Python Language Server Example',
-    //       connection: {
-    //         options: {
-    //           $type: 'WebSocketDirect',
-    //           webSocket: webSocket,
-    //           startOptions: {
-    //             onCall: (languageClient?: MonacoLanguageClient) => {
-    //               console.log('Oncall', languageClient);
+    languageClientConfigs: {
+      configs: {
+        python: {
+          name: 'Python Language Server Example',
+          connection: {
+            options: {
+              $type: 'WebSocketDirect',
+              webSocket: webSocket,
+              startOptions: {
+                onCall: (languageClient?: MonacoLanguageClient) => {
+                  console.log('Oncall', languageClient);
 
-    //               // setTimeout(() => {
-    //               //   [
-    //               //     'pyright.restartserver',
-    //               //     'pyright.organizeimports',
-    //               //   ].forEach((cmdName) => {
-    //               //     vscode.commands.registerCommand(
-    //               //       cmdName,
-    //               //       (...args: unknown[]) => {
-    //               //         languageClient?.sendRequest(
-    //               //           'workspace/executeCommand',
-    //               //           { command: cmdName, arguments: args }
-    //               //         );
-    //               //       }
-    //               //     );
-    //               //   });
-    //               // }, 250);
-    //             },
-    //             reportStatus: true,
-    //           },
-    //         },
-    //         messageTransports: { reader, writer },
-    //       },
-    //       clientOptions: {
-    //         documentSelector: ['solidity'],
-    //         workspaceFolder: {
-    //           index: 0,
-    //           name: 'workspace',
-    //           uri: 'playground/workspace' as unknown as vscode.Uri,
-    //         },
-    //       },
-    //     },
-    //   },
-    // },
+                  // setTimeout(() => {
+                  //   [
+                  //     'pyright.restartserver',
+                  //     'pyright.organizeimports',
+                  //   ].forEach((cmdName) => {
+                  //     vscode.commands.registerCommand(
+                  //       cmdName,
+                  //       (...args: unknown[]) => {
+                  //         languageClient?.sendRequest(
+                  //           'workspace/executeCommand',
+                  //           { command: cmdName, arguments: args }
+                  //         );
+                  //       }
+                  //     );
+                  //   });
+                  // }, 250);
+                },
+                reportStatus: true,
+              },
+            },
+            messageTransports: { reader, writer },
+          },
+          clientOptions: {
+            documentSelector: ['solidity'],
+            workspaceFolder: {
+              index: 0,
+              name: 'workspace',
+              uri: '/workspace' as unknown as vscode.Uri,
+            },
+          },
+        },
+      },
+    },
   };
 
   const fileSystemProvider = new RegisteredFileSystemProvider(false);
 
   for (const [fileName, fileContent] of Object.entries(taskData.filesCode)) {
-    const uri = vscode.Uri.file(`/workspace/${fileName}`);
+    const uri = vscode.Uri.file(`/workspace/contracts/${fileName}`);
     fileSystemProvider.registerFile(
       new RegisteredMemoryFile(uri, fileContent as string)
     );
