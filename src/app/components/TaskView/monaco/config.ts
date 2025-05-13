@@ -307,9 +307,9 @@ export const configurePostStart = async (
   )) {
     const uri = vscode.Uri.file(`/workspace/contracts/${fileName}`);
     await vscode.workspace.openTextDocument(uri);
-    // await vscode.window.showTextDocument(uri, {
-    //   preview: false,
-    // });
+    await vscode.window.showTextDocument(uri, {
+      preview: false,
+    });
   }
 
   // await Promise.all([
