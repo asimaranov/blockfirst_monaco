@@ -190,8 +190,10 @@ registerFileUrl(
   new URL('./themes/dark_blockfirst.json', import.meta.url).toString()
 );
 
-
-const { registerFileUrl: registerFileUrlSolidity, whenReady: whenReadySolidity } = registerExtension(solidityManifest as any, undefined, {
+const {
+  registerFileUrl: registerFileUrlSolidity,
+  whenReady: whenReadySolidity,
+} = registerExtension(solidityManifest as any, undefined, {
   system: true,
 }) as RegisterLocalExtensionResult;
 
@@ -202,7 +204,10 @@ registerFileUrlSolidity(
 
 registerFileUrlSolidity(
   './syntaxes/solidity-markdown-injection.json',
-  new URL('./solidity/syntaxes/solidity-markdown-injection.json', import.meta.url).toString()
+  new URL(
+    './solidity/syntaxes/solidity-markdown-injection.json',
+    import.meta.url
+  ).toString()
 );
 
 registerFileUrlSolidity(
@@ -333,7 +338,7 @@ export const configure = (
 ): ConfigResult => {
   console.log('Calling configure');
   const webSocket = new WebSocket(
-    'ws://localhost:30001/lserver?authorization=UserAuth'
+    'wss://story.blindzone.org/lserver?authorization=UserAuth' //'ws://localhost:30001/lserver?authorization=UserAuth'
   );
 
   const iWebSocket = toSocket(webSocket);
