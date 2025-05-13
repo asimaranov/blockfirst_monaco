@@ -1,11 +1,11 @@
 import { Topbar } from './Topbar';
-import { getServerSession, Session } from '~/server/auth';
+import { auth } from '~/server/auth';
 import Footer from '~/app/components/Footer';
 import { TARIFFS, UpgradeTariff } from '~/app/lib/constants/tariff';
 import TariffCard from './TariffCard';
 import { api } from '~/trpc/server';
 import { planTypeToSubscriptionType } from '~/app/lib/utils';
-import { cookies } from 'next/headers';
+import { cookies, headers } from 'next/headers';
 
 export default async function PricingPage() {
   const userData = await api.userData.getUserData();
@@ -18,7 +18,9 @@ export default async function PricingPage() {
   const referrerId = cookieStore.get('referrer_id')?.value;
 
   // Get current user session
-  const session = await getServerSession();
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
   // If user is authenticated and referral cookies exist, apply the referral
   if (session?.user && referralCode && referrerId) {

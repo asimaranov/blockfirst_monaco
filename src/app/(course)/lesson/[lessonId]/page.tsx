@@ -4,7 +4,6 @@ import { api } from '~/trpc/server';
 import { HydrateClient } from '~/trpc/server';
 import { Suspense } from 'react';
 import { cookies } from 'next/headers';
-import { getServerSession } from '~/server/auth';
 import { redirect } from 'next/navigation';
 import { ExamComponent } from '~/app/components/ExamComponent';
 import { NotificationsModal } from '~/app/components/Notifications/NotificationsModal';

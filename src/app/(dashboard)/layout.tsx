@@ -4,8 +4,8 @@ import { api } from '~/trpc/server';
 import { HydrateClient } from '~/trpc/server';
 import { NotificationsModal } from '../components/Notifications/NotificationsModal';
 import { Suspense } from 'react';
-import { cookies } from 'next/headers';
-import { getServerSession } from '~/server/auth';
+import { cookies, headers } from 'next/headers';
+import { auth } from '~/server/auth';
 import { redirect } from 'next/navigation';
 
 export default async function Layout({
@@ -19,7 +19,11 @@ export default async function Layout({
   // await api.userData.getUserData.prefetch();
   // await api.notifications.getSettings.prefetch();
 
-  const session = await getServerSession();
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  // const session = await getServerSession();
   if (!session) {
     redirect('/signin');
   }

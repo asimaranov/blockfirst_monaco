@@ -3,8 +3,7 @@ import { auth } from './config';
 import { redirect } from 'next/navigation';
 import { cache } from 'react';
 
-export const getServerSession = cache(async () => {
-  'use server';
+export const getServerSession = async () => {
   try {
     return await auth.api.getSession({
       headers: await headers(),
@@ -14,7 +13,7 @@ export const getServerSession = cache(async () => {
     redirect('/signin');
     return null;
   }
-});
+};
 
 export { auth };
 export type Session = typeof auth.$Infer.Session;

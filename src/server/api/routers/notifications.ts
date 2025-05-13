@@ -16,7 +16,6 @@ import {
 import NotificationModel, { INotification } from '~/server/models/notification';
 import NotificationSettingModel from '~/server/models/notificationSetting';
 import dbConnect from '~/server/mongodb';
-import { getServerSession } from '~/server/auth';
 import { formatRelativeTime } from '~/app/lib/utils';
 
 export const notificationsRouter = createTRPCRouter({

@@ -1,10 +1,11 @@
 import { api } from '~/trpc/server';
 import TaskView from '~/app/components/TaskView/TaskView';
-import { getServerSession } from '~/server/auth';
+import { auth } from '~/server/auth';
 import { redirect } from 'next/navigation';
 import MonacoActionsListener from '~/app/components/MonacoActionsListener';
 import { ResetConfirmationModal } from '~/app/components/ResetConfirmationModal';
 import { ToolboxModal } from '~/app/components/ToolboxModal/ToolboxModal';
+import { headers } from 'next/headers';
 
 export default async function TaskPage({
   params,
@@ -13,7 +14,9 @@ export default async function TaskPage({
 }) {
   const { taskId, lessonId } = await params;
 
-  const session = await getServerSession();
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
   if (!session) {
     redirect('/signin');
   }

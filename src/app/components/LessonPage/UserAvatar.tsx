@@ -1,10 +1,13 @@
 // 'use server';
-import { getServerSession } from '~/server/auth';
+import { auth } from '~/server/auth';
 import { Skeleton } from '../shared/Skeleton';
 import { cn } from '~/helpers';
+import { headers } from 'next/headers';
 
 export async function UserAvatar({ className }: { className?: string }) {
-  const session = await getServerSession();
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
   const user = {
     name: session?.user?.name ?? '',

@@ -2,14 +2,17 @@
 import { UserAvatar } from './UserAvatar';
 import CommentsEditor from './CommentsEditor';
 import CommentsList from './CommentsList';
-import { getServerSession } from '~/server/auth';
+import { auth } from '~/server/auth';
+import { headers } from 'next/headers';
 
 export default async function CommentsSection({
   lessonId,
 }: {
   lessonId: string;
 }) {
-  const session = await getServerSession();
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
   return (
     <div className="flex flex-col">

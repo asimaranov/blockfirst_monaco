@@ -10,7 +10,8 @@ import { useNotificationsModalStore } from '~/store/notificationsModal';
 import { api } from '~/trpc/server';
 import { getSidebarSectionsData } from './SidebarSectionsData';
 import { authClient } from '~/server/auth/client';
-import { getServerSession } from '~/server/auth';
+import { auth } from '~/server/auth';
+import { headers } from 'next/headers';
 
 export interface SidebarSection {
   title: string;
@@ -39,7 +40,9 @@ async function SidebarSection({
 }) {
   // TODO: it fails if no auth
   const unreadCount = await api.notifications.getUnreadCount();
-  const session = await getServerSession();
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
   return (
     <MenuItem
