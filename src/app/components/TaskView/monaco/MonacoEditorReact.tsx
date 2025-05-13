@@ -54,6 +54,7 @@ export const MonacoEditorReactComp: React.FC<MonacoEditorProps> = (props) => {
         const startMonaco = async () => {
             if (containerRef.current) {
                 try {
+                    console.log('onTextChanged', onTextChanged);
                     wrapperRef.current.registerTextChangeCallback(onTextChanged);
                     console.log('Starting monaco');
                     await wrapperRef.current.start();

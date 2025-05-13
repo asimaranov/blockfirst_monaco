@@ -91,6 +91,9 @@ export default function MonacoViewDynamic({ taskData }: { taskData: any }) {
           '*'
         );
       }}
+      onTextChanged={(textChanges) => {
+        console.log('Text changed:', textChanges);
+      }}
     />
   );
 }
