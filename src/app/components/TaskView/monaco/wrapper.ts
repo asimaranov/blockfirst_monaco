@@ -481,7 +481,9 @@ export class MonacoEditorLanguageClientWrapper {
         if (textModels.modified !== undefined) {
           this.disposableStoreMonaco?.add(
             textModels.modified.onDidChangeContent(() => {
-              didModelContentChange(textModels, onTextChanged);
+              didModelContentChange(textModels, () => {
+                console.log('textModels', textModels);
+              });
             })
           );
         }
@@ -489,12 +491,16 @@ export class MonacoEditorLanguageClientWrapper {
         if (textModels.original !== undefined) {
           this.disposableStoreMonaco?.add(
             textModels.original.onDidChangeContent(() => {
-              didModelContentChange(textModels, onTextChanged);
+                didModelContentChange(textModels, () => {
+                  console.log('textModels', textModels);
+              });
             })
           );
         }
         // do it initially
-        didModelContentChange(textModels, onTextChanged);
+        didModelContentChange(textModels, () => {
+          console.log('textModels', textModels);
+        });
       }
     });
   }
