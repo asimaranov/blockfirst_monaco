@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 export default function TaskInfo({ task }: { task: any }) {
   console.log('Task tests', task.tests);
-  const tests = task.tests.map((x: any) => ({
+  const tests = (task.tests as any[]).map((x: any) => ({
     title: x.Name,
     progress: 0,
     isAdvanced: false,
