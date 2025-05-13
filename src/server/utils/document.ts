@@ -14,7 +14,7 @@ const headingDepth: Record<string, number> = {
 };
 
 /**
- * Gets content elements between a heading with the specified title and the next heading
+ * Gets content elements between a heading with the specified title and the next heading of the same level
  */
 export function getContentBetweenHeadings(
   editor: SlateEditor,
@@ -42,14 +42,16 @@ export function getContentBetweenHeadings(
 
   if (!startHeading) return null;
 
-  // Find the next heading after the start heading
+  // Find the next heading after the start heading with the same depth
   const nextHeadingIndex = headingList.findIndex(
-    (heading) => heading.path[0] > startHeading.path[0]
+    (heading) =>
+      heading.path[0] > startHeading.path[0] &&
+      heading.depth === startHeading.depth
   );
   const nextHeading =
     nextHeadingIndex !== -1 ? headingList[nextHeadingIndex] : null;
 
-  // Get all nodes between the start heading and next heading
+  // Get all nodes between the start heading and next heading of the same level
   const nodesBetween = editor.api.nodes<TElement>({
     at: [],
     match: (n, path) => {
@@ -122,7 +124,16 @@ export function getHeadingContent(
  */
 export async function getDocumentWithFields<T extends Record<string, any>>(
   documentId: string,
-  fields: (string | { field: string; includeElements?: boolean })[]
+  fields: (
+    | string
+    | {
+        field: string;
+        includeElements?: boolean;
+        includeSubHeadings?:
+          | string[]
+          | { field: string; includeElements?: boolean }[];
+      }
+  )[]
 ): Promise<{
   document: any;
   editor: SlateEditor;
@@ -173,12 +184,19 @@ export async function getDocumentWithFields<T extends Record<string, any>>(
   for (const field of fields) {
     let fieldTitle = field;
     let includeElements = false;
+    let includeSubHeadings:
+      | string[]
+      | { field: string; includeElements?: boolean }[]
+      | undefined;
+
     if (typeof field === 'object') {
       fieldTitle = field.field;
       includeElements = field.includeElements || false;
+      includeSubHeadings = field.includeSubHeadings;
     } else {
       fieldTitle = field;
     }
+
     const heading = headings.find(
       (h) => h.title.toLowerCase() === fieldTitle.toLowerCase()
     );
@@ -195,6 +213,160 @@ export async function getDocumentWithFields<T extends Record<string, any>>(
           ? Array.from(sectionContent, ([node]) => node as TElement)
           : [];
         (data as any)[`${fieldTitle}-Elements`] = elements;
+      }
+
+      // Extract subheadings if specified
+      if (includeSubHeadings && includeSubHeadings.length > 0) {
+        // Get the depth of the main heading
+        const mainHeadingDepth = heading.depth;
+
+        // Find the next heading of the same or lower depth to determine the section's end
+        const nextMainHeadingIndex = headings.findIndex(
+          (h) => h.path[0] > heading.path[0] && h.depth <= mainHeadingDepth
+        );
+
+        // Determine the end path index (use end of document if no next main heading found)
+        const endPathIndex =
+          nextMainHeadingIndex !== -1
+            ? headings[nextMainHeadingIndex].path[0]
+            : Infinity;
+
+        // Check if includeSubHeadings is an array of strings or objects
+        const isSubheadingsObjects =
+          includeSubHeadings.length > 0 &&
+          typeof includeSubHeadings[0] !== 'string';
+
+        // Process subheadings based on format
+        if (isSubheadingsObjects) {
+          // Handle object format with potential includeElements
+          const subheadingConfigs = includeSubHeadings as {
+            field: string;
+            includeElements?: boolean;
+          }[];
+          const subheadingTitles = subheadingConfigs.map(
+            (config) => config.field
+          );
+
+          // Find all subheadings within this section
+          const sectionSubheadings = headings.filter(
+            (h) =>
+              h.path[0] > heading.path[0] &&
+              h.path[0] < endPathIndex &&
+              h.depth === mainHeadingDepth + 1 &&
+              subheadingTitles.some(
+                (subTitle) => h.title.toLowerCase() === subTitle.toLowerCase()
+              )
+          );
+
+          // Process and group subheadings
+          const subheadingGroups: any[] = [];
+          let currentGroup: Record<string, any> = {};
+
+          for (const subheading of sectionSubheadings) {
+            const subConfig = subheadingConfigs.find(
+              (c) => c.field.toLowerCase() === subheading.title.toLowerCase()
+            );
+
+            if (!subConfig) continue;
+
+            // Get text content
+            const subheadingContent = getHeadingContent(editor, subheading);
+
+            // If we encounter the first subheading in the pattern again, start a new group
+            if (
+              subheading.title.toLowerCase() ===
+                subheadingTitles[0].toLowerCase() &&
+              Object.keys(currentGroup).length > 0
+            ) {
+              subheadingGroups.push({ ...currentGroup });
+              currentGroup = {};
+            }
+
+            // Add this subheading's content to the current group
+            currentGroup[subheading.title] = subheadingContent;
+
+            // If includeElements is specified for this subheading, get elements too
+            if (subConfig.includeElements) {
+              const sectionContent = getContentBetweenHeadings(
+                editor,
+                subheading.title
+              );
+              const elements = sectionContent
+                ? Array.from(sectionContent, ([node]) => node as TElement)
+                : [];
+              currentGroup[`${subheading.title}-Elements`] = elements;
+            }
+
+            // If this is the last subheading in the pattern, complete the group
+            if (
+              subheading.title.toLowerCase() ===
+              subheadingTitles[subheadingTitles.length - 1].toLowerCase()
+            ) {
+              subheadingGroups.push({ ...currentGroup });
+              currentGroup = {};
+            }
+          }
+
+          // Add any remaining items in the current group
+          if (Object.keys(currentGroup).length > 0) {
+            subheadingGroups.push(currentGroup);
+          }
+
+          // Add the extracted subheadings to the data
+          (data as any)[`${fieldTitle}-SubHeadings`] = subheadingGroups;
+        } else {
+          // Handle simple string array format (original implementation)
+          const subheadingTitles = includeSubHeadings as string[];
+
+          // Find all subheadings within this section
+          const sectionSubheadings = headings.filter(
+            (h) =>
+              h.path[0] > heading.path[0] &&
+              h.path[0] < endPathIndex &&
+              h.depth === mainHeadingDepth + 1 &&
+              subheadingTitles.some(
+                (subTitle) => h.title.toLowerCase() === subTitle.toLowerCase()
+              )
+          );
+
+          // Process and group subheadings
+          const subheadingGroups: any[] = [];
+          let currentGroup: Record<string, any> = {};
+
+          for (const subheading of sectionSubheadings) {
+            const subheadingContent = getHeadingContent(editor, subheading);
+
+            // If we encounter the first subheading in the pattern again, start a new group
+            if (
+              subheading.title.toLowerCase() ===
+                subheadingTitles[0].toLowerCase() &&
+              Object.keys(currentGroup).length > 0
+            ) {
+              subheadingGroups.push({ ...currentGroup });
+              currentGroup = {};
+            }
+
+            // Add this subheading's content to the current group
+            currentGroup[subheading.title] = subheadingContent;
+
+            // If this is the last subheading in the pattern, complete the group
+            if (
+              subheading.title.toLowerCase() ===
+              subheadingTitles[subheadingTitles.length - 1].toLowerCase()
+            ) {
+              subheadingGroups.push({ ...currentGroup });
+              currentGroup = {};
+            }
+          }
+
+          // Add any remaining items in the current group
+          if (Object.keys(currentGroup).length > 0) {
+            subheadingGroups.push(currentGroup);
+          }
+
+          // Add the extracted subheadings to the data
+          (data as any)[`${fieldTitle}-SubHeadings`] = subheadingGroups;
+        }
       }
     }
   }

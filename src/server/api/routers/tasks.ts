@@ -65,12 +65,26 @@ export const tasksRouter = createTRPCRouter({
           'Problem Statement-Elements': TElement[];
           'Files list': string;
           'Files list-Elements': TElement[];
+          Tests: string;
+          'Tests-Elements': TElement[];
+          'Tests-SubHeadings': {
+            Name: string;
+            'Content-Elements': TElement[];
+          }[];
         }>(taskId, [
           'Title',
           'Hero',
           'Description',
           { field: 'Problem Statement', includeElements: true },
           { field: 'Files list', includeElements: true },
+          {
+            field: 'Tests',
+            includeElements: true,
+            includeSubHeadings: [
+              { field: 'Name', includeElements: false },
+              { field: 'Content', includeElements: true },
+            ],
+          },
         ]);
 
         const filesList = data['Files list-Elements'].map(
@@ -126,6 +140,10 @@ export const tasksRouter = createTRPCRouter({
           filesCode: filesCode,
           completionCount: '5+',
           rating: '4.9',
+          tests: data['Tests-SubHeadings'].map((x) => ({
+            ...x,
+            content: extractCodeFromElements(x['Content-Elements']),
+          })),
           status: ['available', 'in-progress', 'completed'][
             Math.floor(Math.random() * 3)
           ],
@@ -153,12 +171,21 @@ export const tasksRouter = createTRPCRouter({
               'Problem StatementElements': TElement[];
               'Files list': string;
               'Files listElements': TElement[];
+              'Tests-SubHeadings': {
+                name: string;
+                'Content-Elements': TElement[];
+              }[];
             }>(taskId, [
               'Title',
               'Hero',
               'Description',
               'Problem Statement',
               'Files list',
+              {
+                field: 'Tests',
+                includeElements: true,
+                includeSubHeadings: ['Name', 'Content'],
+              },
             ]);
 
             console.log('Files list', data['Files listElements']);
@@ -181,6 +208,10 @@ export const tasksRouter = createTRPCRouter({
                 Math.floor(Math.random() * 3)
               ],
               advancedTasksSolved: Math.random() > 0.5,
+              tests: data['Tests-SubHeadings'].map((x) => ({
+                name: x.name,
+                content: extractCodeFromElements(x['Content-Elements']),
+              })),
             } as TaskData;
           } catch (error) {
             console.error(`Error fetching task ${taskId}:`, error);

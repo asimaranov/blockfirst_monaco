@@ -8,10 +8,10 @@ export default async function MonacoIframePage({
 }) {
   const { taskId } = await params;
 
-  console.log('taskId', taskId);
+  // console.log('taskId', taskId);
 
   const taskData = await api.tasks.getById({ taskId });
-  console.log('taskData', taskData);
+  // console.log('taskData', taskData);
 
   return (
     <MonacoViewDynamicWrapper taskData={taskData} />

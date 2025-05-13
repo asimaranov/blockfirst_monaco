@@ -5,44 +5,45 @@ import PlateEditor from '../LessonPage/PlateEditor';
 import { useState } from 'react';
 
 export default function TaskInfo({ task }: { task: any }) {
-  const tests = [
-    {
-      title: 'Программа должна содержать только две переменные типа int.',
-      progress: 0,
-      isAdvanced: false,
-      result: true,
-    },
-    {
-      title: 'Нельзя изменять строки отвечающие за вывод в консоль.',
-      progress: 10,
-      isAdvanced: false,
-      result: true,
-    },
-    {
-      title: 'Нельзя изменять строки с объявленными переменными int a и int b',
-      progress: 100,
-      isAdvanced: false,
-      result: false,
-    },
-    {
-      title: 'Нужно написать подробные комментарии к коду',
-      progress: 0,
-      isAdvanced: true,
-      result: false,
-    },
-    {
-      title: 'Нужно сделать чистый код',
-      progress: 50,
-      isAdvanced: true,
-      result: true,
-    },
-    {
-      title: 'Нужно использовать только простые переменные',
-      progress: 100,
-      isAdvanced: true,
-      result: true,
-    },
-  ];
+  console.log('Task tests', task.tests);
+  const tests = task.tests.map((x: any) => ({
+    title: x.Name,
+    progress: 0,
+    isAdvanced: false,
+    result: true,
+  }));
+  // const tests = [
+  //   {
+  //     title: 'Нельзя изменять строки отвечающие за вывод в консоль.',
+  //     progress: 10,
+  //     isAdvanced: false,
+  //     result: true,
+  //   },
+  //   {
+  //     title: 'Нельзя изменять строки с объявленными переменными int a и int b',
+  //     progress: 100,
+  //     isAdvanced: false,
+  //     result: false,
+  //   },
+  //   {
+  //     title: 'Нужно написать подробные комментарии к коду',
+  //     progress: 0,
+  //     isAdvanced: true,
+  //     result: false,
+  //   },
+  //   {
+  //     title: 'Нужно сделать чистый код',
+  //     progress: 50,
+  //     isAdvanced: true,
+  //     result: true,
+  //   },
+  //   {
+  //     title: 'Нужно использовать только простые переменные',
+  //     progress: 100,
+  //     isAdvanced: true,
+  //     result: true,
+  //   },
+  // ];
 
   const [isLoading, setIsLoading] = useState(true);
 
