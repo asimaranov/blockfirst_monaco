@@ -39,7 +39,7 @@ export default function ChatInput({
     <div className="border-accent flex flex-row items-center gap-8 border-t px-8 py-6">
       <textarea
         ref={textareaRef}
-        className="placeholder:text-secondary flex w-full resize-none items-center justify-center text-sm outline-hidden"
+        className="placeholder:text-secondary flex w-full resize-none items-center justify-center text-sm outline-hidden max-h-153"
         placeholder={
           disabled ? 'Вы не можете отправлять сообщения' : 'Введите сообщение...'
         }
