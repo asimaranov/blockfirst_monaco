@@ -3,7 +3,7 @@ import { revalidateTag } from 'next/cache';
 
 export async function POST(request: NextRequest) {
   try {
-    const { data } = await request.json();
+    const data = await request.json();
 
     console.log('Payment data', data);
 
