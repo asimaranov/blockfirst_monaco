@@ -68,12 +68,14 @@ export const ResetConfirmationModal = () => {
 
   if (!isResetModalOpen || !buttonPosition) return null;
 
-  // Calculate position to show near the button
-  // Position it to the right of the button with a small offset
+  const editorsDivRect = document
+    .getElementById('editorsDiv')
+    ?.getBoundingClientRect();
+
   const modalStyle = {
     position: 'fixed',
     top: `${buttonPosition.top}px`,
-    left: `${buttonPosition.left}px`, // Position to the right of the button
+    left: `${(editorsDivRect?.left || 0) + buttonPosition.left}px`, // Position to the right of the button
     transform: 'translateX(-100%)', // Align bottom edge with buttonPosition.top
     zIndex: 9999,
   };
