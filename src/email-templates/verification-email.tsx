@@ -135,7 +135,7 @@ const VerificationEmailTemplate = ({
                     </Link>
                   </Column>
                   <Column className="px-[16px]">
-                    <Link href="https://youtube.com/blockfirst">
+                    <Link href="https://www.youtube.com/@blockfirst_ru">
                       <Img
                         src={youtubeIconUrl}
                         width="40"
@@ -145,7 +145,7 @@ const VerificationEmailTemplate = ({
                     </Link>
                   </Column>
                   <Column className="px-[16px]">
-                    <Link href="https://medium.com/blockfirst">
+                    <Link href="https://medium.com/@blockfirst">
                       <Img
                         src={mediumIconUrl}
                         width="40"
@@ -155,7 +155,7 @@ const VerificationEmailTemplate = ({
                     </Link>
                   </Column>
                   <Column className="px-[16px]">
-                    <Link href="https://twitter.com/blockfirst">
+                    <Link href="https://x.com/blockfirst_ru">
                       <Img
                         src={twitterIconUrl}
                         width="40"

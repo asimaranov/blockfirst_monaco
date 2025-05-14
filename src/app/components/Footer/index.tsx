@@ -18,9 +18,9 @@ export default function Footer({ className }: { className?: string }) {
     {
       title: 'Сообщество',
       links: [
-        { label: 'Youtube', href: '#' },
-        { label: 'Twitter', href: '#' },
-        { label: 'Medium', href: '#' },
+        { label: 'Youtube', href: 'https://www.youtube.com/@blockfirst_ru' },
+        { label: 'Twitter', href: 'https://x.com/blockfirst_ru' },
+        { label: 'Medium', href: 'https://medium.com/@blockfirst_ru' },
         { label: 'Telegram', href: 'https://t.me/blockfirst_edu' },
       ],
     },
@@ -29,9 +29,9 @@ export default function Footer({ className }: { className?: string }) {
     {
       title: 'Медиа',
       links: [
-        { label: 'Youtube', href: '#' },
-        { label: 'Twitter', href: '#' },
-        { label: 'Medium', href: '#' },
+        { label: 'Youtube', href: 'https://www.youtube.com/@blockfirst_ru' },
+        { label: 'Twitter', href: 'https://x.com/blockfirst_ru' },
+        { label: 'Medium', href: 'https://medium.com/@blockfirst_ru' },
         { label: 'Telegram', href: 'https://t.me/blockfirst_edu' },
       ],
     },

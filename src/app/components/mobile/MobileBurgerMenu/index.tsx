@@ -24,9 +24,9 @@ const menuSections = [
   {
     title: 'сообщество',
     links: [
-      { href: 'https://youtube.com/blockfirst', label: 'Youtube' },
-      { href: 'https://twitter.com/blockfirst', label: 'Twitter' },
-      { href: 'https://medium.com/blockfirst', label: 'Medium' },
+      { href: 'https://www.youtube.com/@blockfirst_ru', label: 'Youtube' },
+      { href: 'https://x.com/blockfirst_ru', label: 'Twitter' },
+      { href: 'https://medium.com/@blockfirst', label: 'Medium' },
       { href: 'https://t.me/blockfirst_edu', label: 'Telegram' },
     ],
   },
