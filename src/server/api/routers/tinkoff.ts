@@ -7,8 +7,9 @@ import {
   protectedProcedure,
   publicProcedure,
 } from '~/server/api/trpc';
+import { authClient } from '~/server/auth/client';
 
-const password = 'G!o$hU_X1%PlAA4S';
+const password = 'LX7M5^EHSF8N7fkQ';
 
 export const tinkoffRouter = createTRPCRouter({
   hello: publicProcedure
@@ -25,10 +26,12 @@ export const tinkoffRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       console.log('input input', input);
 
+      const session = ctx.session;
+
       const tariff = ALL_TARIFFS.find((t) => t.id === input.tariff);
 
       const request = {
-        TerminalKey: '1741879511517DEMO',
+        TerminalKey: '1746107725696DEMO',
         Amount: (tariff?.price?.total || 0) * 100,
         OrderId: randomUUID(),
         Description: tariff?.id || '',
@@ -37,7 +40,7 @@ export const tinkoffRouter = createTRPCRouter({
         FailURL: 'https://app.blockfirst.io/pricing',
         Receipt: {
           FfdVersion: '1.05',
-          Phone: '+79265828690',
+          Email: session?.user?.email || 'test@test.com',
           Taxation: 'usn_income',
           Items: [
             {
