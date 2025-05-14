@@ -3,11 +3,21 @@
 import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { configure } from './monaco/config';
 import { MonacoEditorReactComp } from './monaco/MonacoEditorReact';
+import { useLanguageClientStore } from '~/app/store/languageClientStore';
 
 export default function MonacoViewDynamic({ taskData }: { taskData: any }) {
   const editorRef = useRef<any>(null);
 
-  const configResult = useMemo(() => configure(taskData), [taskData]);
+  const languageClientStore = useLanguageClientStore();
+
+  const configResult = useMemo(
+    () => configure(taskData, languageClientStore.setLanguageClient),
+    [taskData, languageClientStore.setLanguageClient]
+  );
+
+  useEffect(() => {
+    console.log('Language client ===>>>', languageClientStore.languageClient);
+  }, [languageClientStore.languageClient]);
 
   // Notify parent when iframe is initially loaded
   useEffect(() => {
@@ -43,8 +53,28 @@ export default function MonacoViewDynamic({ taskData }: { taskData: any }) {
       // Make sure message is from parent window
       if (event.source === window.parent) {
         // Handle commands from parent
-        if (event.data.type === 'get-content') {
+        if (event.data.type === 'check-code') {
           const content = editorRef.current?.getEditor()?.getValue();
+          const client = languageClientStore.languageClient;
+
+          const syncedDocuments = client
+            ? // Access private field through reflection - avoids TypeScript error
+              Object.getOwnPropertyDescriptor(
+                Object.getPrototypeOf(client),
+                '_syncedDocuments'
+              )?.get?.call(client) ||
+              // Fallback to direct access if reflection fails
+              (client as any)._syncedDocuments
+            : undefined;
+
+          console.log(
+            'Synced documents ===>>>',
+            Array.from(syncedDocuments as Map<string, any>).map(([key, value]) => ({
+              key,
+              value: (value as any).getText(),
+            }))
+          );
+
           window.parent.postMessage({ type: 'content', content }, '*');
         }
       }
@@ -54,46 +84,51 @@ export default function MonacoViewDynamic({ taskData }: { taskData: any }) {
     return () => {
       window.removeEventListener('message', handleMessage);
     };
-  }, []);
+  }, [languageClientStore.languageClient]);
 
-  return (
-    <MonacoEditorReactComp
-      style={{ backgroundColor: '#0F1217' }}
-      className="relative h-full w-full"
-      wrapperConfig={configResult.wrapperConfig}
-      onLoad={async (wrapper: any) => {
-        editorRef.current = wrapper;
-        try {
-          await configResult.configurePostStart(wrapper, configResult);
-          console.log('Monaco editor loaded successfully');
-          if (window.parent !== window) {
-            // Small delay to ensure everything is rendered properly
-            setTimeout(() => {
-              window.parent.postMessage({ type: 'monaco-editor-ready' }, '*');
-              console.log(
-                'Monaco editor fully loaded and ready - notifying parent'
-              );
-            }, 500);
+  const memoizedEditor = useMemo(
+    () => (
+      <MonacoEditorReactComp
+        style={{ backgroundColor: '#0F1217' }}
+        className="relative h-full w-full"
+        wrapperConfig={configResult.wrapperConfig}
+        onLoad={async (wrapper: any) => {
+          editorRef.current = wrapper;
+          try {
+            await configResult.configurePostStart(wrapper, configResult);
+            console.log('Monaco editor loaded successfully');
+            if (window.parent !== window) {
+              // Small delay to ensure everything is rendered properly
+              setTimeout(() => {
+                window.parent.postMessage({ type: 'monaco-editor-ready' }, '*');
+                console.log(
+                  'Monaco editor fully loaded and ready - notifying parent'
+                );
+              }, 500);
+            }
+          } catch (error) {
+            console.error('Error loading Monaco editor:', error);
+            // Still notify parent, but with error
+            window.parent.postMessage(
+              { type: 'monaco-editor-error', error: String(error) },
+              '*'
+            );
           }
-        } catch (error) {
-          console.error('Error loading Monaco editor:', error);
-          // Still notify parent, but with error
+        }}
+        onError={(e) => {
+          console.error('Monaco editor error:', e);
           window.parent.postMessage(
-            { type: 'monaco-editor-error', error: String(error) },
+            { type: 'monaco-editor-error', error: String(e) },
             '*'
           );
-        }
-      }}
-      onError={(e) => {
-        console.error('Monaco editor error:', e);
-        window.parent.postMessage(
-          { type: 'monaco-editor-error', error: String(e) },
-          '*'
-        );
-      }}
-      onTextChanged={(textChanges) => {
-        console.log('Text changed:', textChanges);
-      }}
-    />
+        }}
+        onTextChanged={(textChanges) => {
+          console.log('Text changed:', textChanges);
+        }}
+      />
+    ),
+    []
   );
+
+  return memoizedEditor;
 }

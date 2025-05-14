@@ -334,6 +334,7 @@ export type ConfigResult = {
 
 export const configure = (
   taskData: any,
+  setLanguageClient: (languageClient: MonacoLanguageClient | null) => void,
   htmlContainer?: HTMLElement
 ): ConfigResult => {
   console.log('Calling configure');
@@ -486,8 +487,8 @@ export const configure = (
     },
     languageClientConfigs: {
       configs: {
-        python: {
-          name: 'Python Language Server Example',
+        solidity: {
+          name: 'Solidity Language Server',
           connection: {
             options: {
               $type: 'WebSocketDirect',
@@ -495,6 +496,7 @@ export const configure = (
               startOptions: {
                 onCall: (languageClient?: MonacoLanguageClient) => {
                   console.log('Oncall', languageClient);
+                  setLanguageClient(languageClient || null);
 
                   // setTimeout(() => {
                   //   [

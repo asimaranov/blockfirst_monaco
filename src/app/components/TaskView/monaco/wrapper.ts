@@ -82,7 +82,7 @@ export class MonacoEditorLanguageClientWrapper {
     new Map();
   private disposableStoreExtensions?: DisposableStore = new DisposableStore();
   private disposableStoreMonaco?: DisposableStore = new DisposableStore();
-  private languageClientWrappers: Map<string, LanguageClientWrapper> =
+   languageClientWrappers: Map<string, LanguageClientWrapper> =
     new Map();
   private wrapperConfig?: WrapperConfig;
   private logger: Logger = new ConsoleLogger();
