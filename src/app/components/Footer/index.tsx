@@ -47,7 +47,7 @@ export default function Footer({ className }: { className?: string }) {
       title: 'Компания',
       links: [
         { label: 'Стоимость', href: 'https://app.blockfirst.io/pricing' },
-        { label: 'F.A.Q', href: 'https://app.blockfirst.io/course/solidity' },
+        { label: 'F.A.Q', href: 'https://blockfirst.io/faq' },
         {
           label: 'Курс Solidity',
           href: 'https://app.blockfirst.io/course/solidity',
