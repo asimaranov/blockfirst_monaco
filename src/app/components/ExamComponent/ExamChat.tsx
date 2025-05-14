@@ -13,6 +13,18 @@ import LoadingIndicator from '../TaskView/AiMentor/LoadingIndicator';
 import EmptyState from '../TaskView/AiMentor/EmptyState';
 import ChatLoading from '../TaskView/AiMentor/ChatLoading';
 
+// Define message type interface
+interface ChatMessage {
+  role: string;
+  content: string;
+  timestamp: Date;
+  feedback?: 'upvote' | 'downvote' | null;
+  messageType?: 'error' | 'success' | null;
+  messageTypeExplanation?: string | null;
+  md?: any;
+  delay?: number;
+}
+
 export default function ExamChat({ examId }: { examId: string }) {
   const [isGenerating, setIsGenerating] = useState(false);
   const {
@@ -26,17 +38,7 @@ export default function ExamChat({ examId }: { examId: string }) {
     totalQuestions,
     updateCompletionStatus,
   } = useExamStore();
-  const [messages, setMessages] = useState<
-    {
-      role: string;
-      content: string;
-      timestamp: Date;
-      feedback?: 'upvote' | 'downvote' | null;
-      messageType?: 'error' | 'success' | null;
-      messageTypeExplanation?: string | null;
-      md?: any;
-    }[]
-  >([]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const [isAtBottom, setIsAtBottom] = useState(true);
 
@@ -190,7 +192,30 @@ export default function ExamChat({ examId }: { examId: string }) {
     onSuccess: (data) => {
       setIsGenerating(false);
       console.log('Message response data:', data);
-      setMessages((prev) => [...prev, data.message]);
+
+      // Handle multiple messages with potential delays
+      if (data.messages && Array.isArray(data.messages)) {
+        // Process each message with its delay if present
+        data.messages.forEach((message, index) => {
+          const typedMessage: ChatMessage = {
+            ...message,
+            timestamp: new Date(message.timestamp),
+          };
+
+          if (message.delay && index > 0) {
+            // Set timeout for delayed messages
+            setTimeout(() => {
+              setMessages((prev) => [...prev, typedMessage]);
+            }, message.delay);
+          } else {
+            // Add message immediately
+            setMessages((prev) => [...prev, typedMessage]);
+          }
+        });
+      } else {
+        // No messages array found
+        console.warn('No messages array found in response');
+      }
 
       // Update lives and current question ID in the store
       if (data.currentLives !== undefined) {

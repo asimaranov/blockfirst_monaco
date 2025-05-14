@@ -292,8 +292,8 @@ const ExamPage = ({ close, examId }: { close: () => void; examId: string }) => {
         <div className="border-t-accent flex flex-row justify-between border-t px-8 py-3.5">
           <div className="flex flex-row">
             <span className="text-xl leading-5">{currentQuestionId}</span>
-            <span className="text-secondary text-sm leading-5">
-              / {totalQuestions}
+            <span className="text-secondary text-sm leading-5 opacity-50">
+              /{totalQuestions}
             </span>
           </div>
           <div className="flex items-center justify-center gap-2">

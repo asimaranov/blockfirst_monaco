@@ -492,19 +492,18 @@ export const examAiRouter = createTRPCRouter({
 
         chatHistory.messages.push(userMessage);
 
-        let aiResponse;
-        let assistantMessage;
+        let assistantMessages = [];
 
         // Check if we still have lives left
         if (chatHistory.currentLives <= 0) {
-          assistantMessage = {
+          assistantMessages.push({
             role: 'assistant' as const,
             content: 'У вас закончились попытки. Экзамен завершен.',
             timestamp: new Date(),
             feedback: null,
             messageType: 'error' as const,
             messageTypeExplanation: 'NO_LIVES_LEFT',
-          };
+          });
         } else {
           let messageType: 'error' | 'success' = 'success';
           let messageTypeExplanation: string | null = null;
@@ -559,39 +558,88 @@ export const examAiRouter = createTRPCRouter({
 
               // Generate AI response based on answer correctness
               if (answerFeedback.isCorrect) {
+                // First message for correct answer
+                assistantMessages.push({
+                  role: 'assistant' as const,
+                  content: `Верно! ${answerFeedback.explanation}`,
+                  messageType: 'success' as const,
+                  messageTypeExplanation: 'CORRECT_ANSWER',
+                  timestamp: new Date(),
+                  feedback: null,
+                });
+
                 if (nextQuestion) {
-                  // Format with "Вопрос N: " prefix to make it clearer this is a new question
+                  // Second message with next question after delay
                   const nextQuestionNumber = currentQuestionId + 1;
                   const formattedNextQuestion = `Вопрос ${nextQuestionNumber}: ${nextQuestion}`;
-                  aiResponse = `Верно! ${answerFeedback.explanation}\n\nПереходим к следующему вопросу:\n\n${formattedNextQuestion}`;
-                  messageType = 'success';
-                  messageTypeExplanation = 'CORRECT_ANSWER';
+                  assistantMessages.push({
+                    role: 'assistant' as const,
+                    content: formattedNextQuestion,
+                    timestamp: new Date(Date.now() + 2000), // Add 2 second delay
+                    delay: 2000, // Add delay property for client handling
+                    feedback: null,
+                  });
                 } else {
-                  aiResponse = `Верно! ${answerFeedback.explanation}\n\nПоздравляю! Вы успешно завершили все вопросы экзамена.`;
-                  messageType = 'success';
-                  messageTypeExplanation = 'EXAM_COMPLETED';
+                  // No more questions, add completion message
+                  assistantMessages.push({
+                    role: 'assistant' as const,
+                    content:
+                      'Поздравляю! Вы успешно завершили все вопросы экзамена.',
+                    messageType: 'success' as const,
+                    messageTypeExplanation: 'EXAM_COMPLETED',
+                    timestamp: new Date(Date.now() + 2000),
+                    delay: 2000,
+                    feedback: null,
+                  });
                   // Mark exam as completed
                   chatHistory.isCompleted = true;
                 }
               } else {
+                // Incorrect answer flow
                 if (chatHistory.currentLives > 0) {
+                  // First message for incorrect answer
+                  assistantMessages.push({
+                    role: 'assistant' as const,
+                    content: `Ответ неверный. ${answerFeedback.explanation}\n\nУ вас осталось ${chatHistory.currentLives} попыток.`,
+                    messageType: 'error' as const,
+                    messageTypeExplanation: 'INCORRECT_ANSWER',
+                    timestamp: new Date(),
+                    feedback: null,
+                  });
+
                   if (nextQuestion) {
+                    // Second message with next question after delay
                     const nextQuestionNumber = currentQuestionId + 1;
                     const formattedNextQuestion = `Вопрос ${nextQuestionNumber}: ${nextQuestion}`;
-                    aiResponse = `Ответ неверный. ${answerFeedback.explanation}\n\nУ вас осталось ${chatHistory.currentLives} попыток.\n\nПереходим к следующему вопросу:\n\n${formattedNextQuestion}`;
-                    messageType = 'error';
-                    messageTypeExplanation = 'INCORRECT_ANSWER';
+                    assistantMessages.push({
+                      role: 'assistant' as const,
+                      content: formattedNextQuestion,
+                      timestamp: new Date(Date.now() + 2000),
+                      delay: 2000,
+                      feedback: null,
+                    });
                   } else {
-                    aiResponse = `Ответ неверный. ${answerFeedback.explanation}\n\nУ вас осталось ${chatHistory.currentLives} попыток.\n\nПоздравляю! Вы дошли до конца экзамена.`;
-                    messageType = 'error';
-                    messageTypeExplanation = 'INCORRECT_ANSWER';
+                    // No more questions, add completion message
+                    assistantMessages.push({
+                      role: 'assistant' as const,
+                      content: 'Вы дошли до конца экзамена.',
+                      timestamp: new Date(Date.now() + 2000),
+                      delay: 2000,
+                      feedback: null,
+                    });
                     // Mark exam as completed even with wrong answers at the end
                     chatHistory.isCompleted = true;
                   }
                 } else {
-                  aiResponse = `Ответ неверный. ${answerFeedback.explanation}\n\nУ вас закончились попытки. Экзамен завершен.`;
-                  messageType = 'error';
-                  messageTypeExplanation = 'NO_LIVES_LEFT';
+                  // No more lives left
+                  assistantMessages.push({
+                    role: 'assistant' as const,
+                    content: `Ответ неверный. ${answerFeedback.explanation}\n\nУ вас закончились попытки. Экзамен завершен.`,
+                    messageType: 'error' as const,
+                    messageTypeExplanation: 'NO_LIVES_LEFT',
+                    timestamp: new Date(),
+                    feedback: null,
+                  });
                   // Mark exam as failed
                   chatHistory.isCompleted = true;
                   chatHistory.isFailed = true;
@@ -606,53 +654,62 @@ export const examAiRouter = createTRPCRouter({
                 timestamp: new Date(msg.timestamp),
               }));
 
-              aiResponse = await getAiCompletion(aiMessages, userId);
+              const aiResponse = await getAiCompletion(aiMessages, userId);
+
+              // Add AI response to messages array
+              assistantMessages.push({
+                role: 'assistant' as const,
+                content: aiResponse,
+                timestamp: new Date(),
+                feedback: null,
+              });
             }
 
-            // Add AI response to history
-            assistantMessage = {
-              role: 'assistant' as const,
-              content: aiResponse,
-              messageType: messageType,
-              messageTypeExplanation: messageTypeExplanation,
-              timestamp: new Date(),
-              feedback: null,
-            };
+            // Add all assistant messages to chat history
+            chatHistory.messages = [
+              ...chatHistory.messages,
+              ...assistantMessages,
+            ];
           } catch (error) {
             console.error('Error getting AI response:', error);
             if (error instanceof Error && error.message === 'NO_TOKENS_LEFT') {
-              assistantMessage = {
+              assistantMessages.push({
                 role: 'assistant' as const,
                 content: 'NO_TOKENS',
                 timestamp: new Date(),
                 feedback: null,
                 messageType: 'error' as const,
                 messageTypeExplanation: 'NO_TOKENS',
-              };
+              });
             } else {
-              assistantMessage = {
+              assistantMessages.push({
                 role: 'assistant' as const,
                 content: 'UNKNOWN_ERROR',
                 timestamp: new Date(),
                 feedback: null,
                 messageType: 'error' as const,
                 messageTypeExplanation: 'UNKNOWN_ERROR',
-              };
+              });
             }
+
+            // Add error message to chat history
+            chatHistory.messages.push(assistantMessages[0]);
           }
         }
-
-        chatHistory.messages.push(assistantMessage);
 
         // Save to database
         await chatHistory.save();
 
-        const md = editor
-          .getApi(MarkdownPlugin)
-          .markdown.deserialize(assistantMessage.content);
+        // Process messages for return (add MD conversion)
+        const processedMessages = assistantMessages.map((message) => ({
+          ...message,
+          md: editor
+            .getApi(MarkdownPlugin)
+            .markdown.deserialize(message.content),
+        }));
 
         return {
-          message: { ...assistantMessage, md },
+          messages: processedMessages,
           currentLives: chatHistory.currentLives,
           totalLives: chatHistory.totalLives,
           currentQuestionId: chatHistory.currentQuestionId,
