@@ -35,7 +35,7 @@ export const tinkoffRouter = createTRPCRouter({
         Amount: (tariff?.price?.total || 0) * 100,
         OrderId: randomUUID(),
         Description: tariff?.id || '',
-        NotificationURL: 'https://sanyawebapp.ddns.net/notification_tinkoff',
+        NotificationURL: 'https://app.blockfirst.io/api/tinkoff/confirm-payment',
         SuccessURL: 'https://app.blockfirst.io/pricing',
         FailURL: 'https://app.blockfirst.io/pricing',
         Receipt: {
