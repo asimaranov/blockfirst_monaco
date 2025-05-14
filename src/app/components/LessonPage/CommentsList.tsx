@@ -296,13 +296,20 @@ function CommentItem({
         </div>
       </div>
       <div className="flex flex-grow flex-col px-15 pr-0 sm:pr-15">
-        <div className="text-foreground mb-3 py-1 text-sm break-all">
-          <PlateEditor
-            richText={comment.content}
-            id={`comment-${comment.id}`}
-            isComments={true}
-          />
-        </div>
+        {!(
+          comment.content.length == 0 ||
+          (comment.content.length == 1 &&
+            comment.content[0].type == 'p' &&
+            comment.content[0].children[0].text == '')
+        ) && (
+          <div className="text-foreground mb-3 py-1 text-sm break-all">
+            <PlateEditor
+              richText={comment.content}
+              id={`comment-${comment.id}`}
+              isComments={true}
+            />
+          </div>
+        )}
         {comment.images && comment.images.length > 0 && (
           <div className="flex flex-row gap-3 pb-4">
             {comment.images.map((image, i) => (
