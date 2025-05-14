@@ -71,8 +71,8 @@ export default function Footer({ className }: { className?: string }) {
     },
     {
       title: 'Телеграм бот для быстрых ответов',
-      link: 't.me/blockfirst_edu/app',
-      href: 'https://t.me/blockfirst_edu/app',
+      link: 't.me/blockfirst_support_bot',
+      href: 'https://t.me/blockfirst_support_bot',
       icon: 'telegram',
       hasArrow: true,
     },

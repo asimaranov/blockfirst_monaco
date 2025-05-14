@@ -35,7 +35,7 @@ const menuSections = [
 const contactSections = [
   {
     title: 'Телеграм бот для быстрых ответов',
-    content: 't.me/blockfirst_edu/app',
+    content: 't.me/blockfirst_support_bot',
     icon: (
       <svg
         width="16"
@@ -52,7 +52,7 @@ const contactSections = [
         />
       </svg>
     ),
-    href: 'https://t.me/blockfirst_edu/app',
+    href: 'https://t.me/blockfirst_support_bot',
     type: 'link',
   },
   {

@@ -484,7 +484,7 @@ export default function CVPage({ session }: { session: Session }) {
                       </div>
                     </div>
                     <Link
-                      href="https://t.me/blockfirst_edu/app"
+                      href="https://t.me/blockfirst_support_bot"
                       className="flex w-full flex-row items-center justify-between"
                     >
                       <div className="flex flex-col gap-1">
@@ -492,7 +492,7 @@ export default function CVPage({ session }: { session: Session }) {
                           Телеграм бот
                         </span>
                         <span className="text-foreground text-sm">
-                          t.me/blockfirst_edu/app
+                          t.me/blockfirst_support_bot
                         </span>
                       </div>
                       <div className="flex sm:hidden">
