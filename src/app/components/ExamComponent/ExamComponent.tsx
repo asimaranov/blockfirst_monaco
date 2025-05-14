@@ -11,6 +11,8 @@ import FlagIcon from './assets/flag-icon.svg';
 import { motion, AnimatePresence } from 'motion/react';
 
 import HeartsIllustration from './assets/hearts-illustration.png';
+import HeartsBanner from './assets/hearts-banner.svg';
+
 import ExamIllustration from './assets/exam-illustration.svg';
 import TaskFormatIllustration from './assets/task-format-illustration.png';
 import HumanIcon from './assets/human-icon.svg';
@@ -64,7 +66,7 @@ const IntroPage = ({
               После успешной сдачи вам откроется доступ к следующим материалам
             </span>
           </div>
-          <div className="flex flex-row items-center justify-center gap-2 rounded-[5.2083vw] border-[0.026vw] border-[#FF5D70]/20 bg-[#F2F2F2]/1 pl-1 pr-3 py-1 backdrop-blur-[20px]">
+          <div className="flex flex-row items-center justify-center gap-2 rounded-[5.2083vw] border-[0.026vw] border-[#FF5D70]/20 bg-[#F2F2F2]/1 py-1 pr-3 pl-1 backdrop-blur-[20px]">
             <div className="relative shrink-0">
               <Image
                 src={'/heroes/Alex.png'}
@@ -296,9 +298,36 @@ const ExamPage = ({ close, examId }: { close: () => void; examId: string }) => {
           </div>
           <div className="flex items-center justify-center gap-2">
             <InfoPopover
-              title="Очки «жизни»"
-              content="При прохождении зачета вам разрешается сделать 5 неверных ответов. Превышение данного количества потребует повторной сдачи зачета."
-            />
+              // popoverClassName="w-150 p-8 !left-0"
+              offsetTop={4}
+              offsetSide={-59.25}
+              position="top"
+              popoverClassName="w-175 p-8"
+              title=""
+              content=""
+            >
+              <div className="flex flex-row gap-6">
+                <div className="relative h-18.75 w-18.75 shrink-0">
+                  <Image
+                    src={HeartsBanner}
+                    alt="Token"
+                    width={75}
+                    height={75}
+                    className="h-18.75 w-18.75"
+                  />
+                </div>
+                <div className="flex flex-col gap-3">
+                  <div className="flex flex-row justify-between">
+                    <span className="text-xl leading-5.75">Очки «жизни»</span>
+                  </div>
+                  <span className="text-secondary text-xs leading-5">
+                    При прохождении зачета вам разрешается сделать 5 неверных
+                    ответов. Превышение данного количества потребует повторной
+                    сдачи зачета.
+                  </span>
+                </div>
+              </div>
+            </InfoPopover>
             <div className="flex flex-row items-center gap-1">
               <span className="text-secondary/50 text-sm leading-4">
                 Очки «жизни» —
@@ -313,14 +342,16 @@ const ExamPage = ({ close, examId }: { close: () => void; examId: string }) => {
                     key={index}
                   ></Image>
                 ))}
-                {Array.from({ length: totalLives - currentLives }).map((_, index) => (
-                  <Image
-                    src={EmptyHeartSmallIcon}
-                    alt=""
-                    className="h-4 w-4"
-                    key={currentLives + 1 + index}
-                  ></Image>
-                ))}
+                {Array.from({ length: totalLives - currentLives }).map(
+                  (_, index) => (
+                    <Image
+                      src={EmptyHeartSmallIcon}
+                      alt=""
+                      className="h-4 w-4"
+                      key={currentLives + 1 + index}
+                    ></Image>
+                  )
+                )}
               </div>
             </div>
           </div>

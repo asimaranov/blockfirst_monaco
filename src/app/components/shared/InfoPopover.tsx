@@ -19,6 +19,7 @@ interface InfoPopoverProps {
   position?: PopoverPosition;
   icon?: ReactNode;
   hideOnHover?: boolean;
+  debugNotHide?: boolean;
 }
 
 export const InfoPopoverIcon = ({
@@ -62,6 +63,7 @@ export const InfoPopover = ({
   offsetSide = -8,
   position = 'right',
   hideOnHover = false,
+  debugNotHide = false,
 }: InfoPopoverProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const infoRef = useRef<HTMLDivElement>(null);
@@ -115,7 +117,11 @@ export const InfoPopover = ({
           setIsHovered(true);
         }
       }}
-      onMouseLeave={() => setIsHovered(false)}
+      onMouseLeave={() => {
+        if (!debugNotHide) {
+          setIsHovered(false);
+        }
+      }}
     >
       <div
         onMouseEnter={() => {
@@ -124,7 +130,7 @@ export const InfoPopover = ({
           }
         }}
         onMouseLeave={() => {
-          if (hideOnHover) {
+          if (hideOnHover && !debugNotHide) {
             setIsHovered(false);
           }
         }}
@@ -137,7 +143,7 @@ export const InfoPopover = ({
             {isHovered && isMobile && (
               // Mobile popover that slides from bottom
               <motion.div
-                className="fixed inset-x-0 bottom-0 z-[100000000000000] flex w-full flex-col bg-[#1D2026] p-5"
+                className="fixed inset-x-0 bottom-0 z-[100000000000000000000000000000] flex w-full flex-col bg-[#1D2026] p-5"
                 initial="hidden"
                 animate="visible"
                 exit="hidden"
@@ -170,12 +176,12 @@ export const InfoPopover = ({
               // Desktop popover with original positioning
               <motion.div
                 className={cn(
-                  'flex w-112 flex-col bg-[#1D2026] p-6',
+                  'flex w-112 flex-col bg-[#1D2026] p-6 z-[100000000000000000000000000000]',
                   popoverClassName
                 )}
                 style={{
                   position: 'fixed',
-                  zIndex: 100000,
+                  zIndex: 100000000000000000000000000000,
                   ...(position === 'top'
                     ? {
                         bottom: `calc(100vh - ${popoverPosition.top}px + ${offsetTop || 0} * var(--spacing))`,
