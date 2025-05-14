@@ -5,6 +5,13 @@ export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
 
+    // Get IP address from request
+    const ip =
+      request.headers.get('x-forwarded-for') ||
+      request.headers.get('x-real-ip') ||
+      'IP not available';
+
+    console.log('Payment IP:', ip);
     console.log('Payment data', data);
 
     return NextResponse.json({ message: 'Payment confirmed' }, { status: 200 });
