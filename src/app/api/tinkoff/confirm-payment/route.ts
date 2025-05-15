@@ -59,10 +59,11 @@ export async function POST(request: NextRequest) {
 
     // If payment is successful and token matches, update user tariff in MongoDB
     if (
-      data.Success === 'true' &&
+      data.Success === true &&
       token === data.Token &&
       data.Status === 'CONFIRMED'
     ) {
+      console.log('Acquiring payment data...');
       await dbConnect();
 
       // Extract the user's email from the Receipt data
