@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
       // Find Auth.js user by email
       // Here we directly query the MongoDB users collection from authjs
       const authUser = await mongoose.connection.db
-        ?.collection('users')
+        ?.collection('user')
         .findOne({ email: email.toLowerCase() });
 
       if (!authUser || !authUser._id) {
