@@ -7,9 +7,7 @@ export async function POST(request: NextRequest) {
     const data = await request.json();
 
     // Get IP address from request
-    const ip =
-      request.headers.get('x-real-ip') ||
-      'IP not available';
+    const ip = request.headers.get('x-real-ip') || 'IP not available';
 
     console.log('Payment IP:', ip);
     console.log('Payment data', data);
@@ -35,7 +33,7 @@ export async function POST(request: NextRequest) {
     const sorted_data = Object.keys(dataForToken)
       .sort()
       .reduce<Record<string, string | number>>((obj, key) => {
-        obj[key] = data[key as keyof typeof dataForToken];
+        obj[key] = dataForToken[key as keyof typeof dataForToken];
         return obj;
       }, {});
 
@@ -54,7 +52,6 @@ export async function POST(request: NextRequest) {
 
     // text response with string ok and status 200
     return new Response('ok', { status: 200 });
-
   } catch (error) {
     console.error('Error confirming payment:', error);
     return NextResponse.json(
