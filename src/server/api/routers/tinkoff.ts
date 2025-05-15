@@ -41,7 +41,7 @@ export const tinkoffRouter = createTRPCRouter({
         Receipt: {
           FfdVersion: '1.05',
           Email: session?.user?.email || 'test@test.com',
-          Taxation: 'usn_income',
+          Taxation: 'patent',
           Items: [
             {
               Name: tariff?.name || '',
