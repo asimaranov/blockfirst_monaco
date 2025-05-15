@@ -36,8 +36,8 @@ export const tinkoffRouter = createTRPCRouter({
         OrderId: `${session?.user?.email}-${tariff?.id}-${new Date().getTime()}`,
         Description: 'Покупка тарифа',
         NotificationURL: 'https://app.blockfirst.io/api/tinkoff/confirm-payment',
-        // SuccessURL: 'https://app.blockfirst.io/pricing',
-        // FailURL: 'https://app.blockfirst.io/pricing',
+        SuccessURL: 'https://app.blockfirst.io/pricing?success=true',
+        FailURL: 'https://app.blockfirst.io/pricing?error',
         Receipt: {
           FfdVersion: '1.05',
           Email: session?.user?.email || 'test@test.com',
@@ -61,11 +61,11 @@ export const tinkoffRouter = createTRPCRouter({
       const data = {
         Amount: request.Amount,
         Description: request.Description,
-        // FailURL: request.FailURL,
+        FailURL: request.FailURL,
         NotificationURL: request.NotificationURL,
         OrderId: request.OrderId,
         Password: password,
-        // SuccessURL: request.SuccessURL,
+        SuccessURL: request.SuccessURL,
         TerminalKey: request.TerminalKey,
       };
 
