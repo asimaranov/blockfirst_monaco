@@ -33,8 +33,8 @@ export const tinkoffRouter = createTRPCRouter({
       const request = {
         TerminalKey: '1746107725696DEMO',
         Amount: (tariff?.price?.total || 0) * 100,
-        OrderId: randomUUID(),
-        Description: tariff?.id || '',
+        OrderId: `${session?.user?.email}-${tariff?.id}-${new Date().getTime()}`,
+        Description: 'Покупка тарифа',
         NotificationURL: 'https://app.blockfirst.io/api/tinkoff/confirm-payment',
         SuccessURL: 'https://app.blockfirst.io/pricing',
         FailURL: 'https://app.blockfirst.io/pricing',
