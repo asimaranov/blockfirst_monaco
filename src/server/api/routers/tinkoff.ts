@@ -9,7 +9,7 @@ import {
 } from '~/server/api/trpc';
 import { authClient } from '~/server/auth/client';
 
-const password = 'LX7M5^EHSF8N7fkQ';
+const password = process.env.TINKOFF_PASSWORD!;
 
 export const tinkoffRouter = createTRPCRouter({
   hello: publicProcedure
