@@ -66,19 +66,11 @@ export async function POST(request: NextRequest) {
       console.log('Acquiring payment data...');
       await dbConnect();
 
-      // Extract the user's email from the Receipt data
-      const email = data.Receipt?.Email;
-
-      if (!email) {
-        console.error('No email found in payment data, cannot identify user');
-        return new Response('ok', { status: 200 });
-      }
-
       // Extract tariff info from OrderId
       // In tinkoff.ts, OrderId format is: email-tariffId-timestamp
       const orderIdParts = data.OrderId.split('-');
       // The tariff ID is the second element in the split array
-      const tariffId = orderIdParts.length >= 2 ? orderIdParts[1] : '';
+      const [email, tariffId, timestamp] = orderIdParts;
       console.log(`Extracted tariffId from OrderId: ${tariffId}`);
       let tariffPlan = tariffId;
 
