@@ -46,9 +46,12 @@ export async function POST(request: NextRequest) {
       .map((key) => `${sorted_data[key]}`)
       .join('');
 
-    // In python it's like this: token = hashlib.sha256(token_string.encode('utf-8')).hexdigest()
-    // so we need to do the same in javascript
     const token = createHash('sha256').update(signature).digest('hex');
+
+    if (token !== data.Token) {
+      console.error('Token mismatch:', token, data.Token);
+      return new Response('Invalid token', { status: 400 });
+    }
 
     console.log('Check payment token:', token);
     console.log('Request token:', data.Token);
