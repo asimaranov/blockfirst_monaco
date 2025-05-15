@@ -6,7 +6,7 @@ import Link from 'next/link';
 import InfoIcon from 'public/misc/info-icon.svg';
 import FormMobileControls from './FormMobileControls';
 
-type FormState = 'input' | 'success';
+type FormState = 'input' | 'success' | 'error';
 
 const CheckIcon = () => (
   <svg
@@ -150,6 +150,109 @@ export default function FormContainer({
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
+                    />
+                  </svg>
+                </motion.div>
+              </div>
+
+              <div className="flex flex-col items-center gap-4">
+                <motion.h2
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.5 }}
+                  className="text-foreground text-center text-xl sm:text-2xl"
+                >
+                  {successTitle}
+                </motion.h2>
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 }}
+                  className="text-secondary text-center text-sm"
+                >
+                  {successDescription}
+                </motion.p>
+              </div>
+            </motion.div>
+          </div>
+
+          <motion.button
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+            onClick={onClose}
+            className="bg-primary text-foreground flex h-13 w-full cursor-pointer items-center justify-center rounded-full text-sm transition-colors duration-300 hover:bg-[#1242B2]"
+          >
+            <span>{successButtonText}</span>
+            <CheckIcon />
+          </motion.button>
+        </div>
+      </div>
+    );
+  } else if (formState === 'error') {
+    return (
+      <div className="bg-dark-bg border-accent/40 z-[10000000000000000] flex h-full w-auto flex-col border-l-0 sm:z-0 sm:w-105 sm:border-l">
+        <FormMobileControls
+          showBackButton={showBackButton}
+          onBackClick={onBackClick}
+          onClose={onClose}
+        />
+        <div className="flex flex-1 flex-col gap-8 px-5 py-8 md:px-10">
+          <div className="flex flex-1 flex-col gap-8">
+            <div className="hidden flex-col items-center gap-8 sm:flex">
+              <Image
+                src={'/images/logo/form-logo.svg'}
+                alt="Logo"
+                width={152}
+                height={44}
+                className="w-38"
+              />
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="flex flex-1 flex-col items-center justify-center gap-10"
+            >
+              <div className="relative flex items-center justify-center">
+                <div className="h-37.5 w-37.5 rounded-full" />
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.3, duration: 0.5 }}
+                  className="absolute"
+                >
+                  <svg
+                    width="150"
+                    height="150"
+                    viewBox="0 0 150 150"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-37.5 w-37.5"
+                  >
+                    <path
+                      d="M0 75C0 116.421 33.5786 150 75 150C116.421 150 150 116.421 150 75C150 33.5786 116.421 0 75 0C33.5786 0 0 33.5786 0 75ZM148.5 75C148.5 115.593 115.593 148.5 75 148.5C34.4071 148.5 1.5 115.593 1.5 75C1.5 34.4071 34.4071 1.5 75 1.5C115.593 1.5 148.5 34.4071 148.5 75Z"
+                      fill="#CF3336"
+                    />
+                    <path
+                      d="M88.7162 87C85.5887 82.8362 80.6092 80.1429 75.0007 80.1429C69.3922 80.1429 64.4127 82.8362 61.2852 87"
+                      stroke="#F2F2F2"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <circle
+                      cx="65.0945"
+                      cy="65.2859"
+                      r="2.28589"
+                      fill="#F2F2F2"
+                    />
+                    <circle
+                      cx="85.6648"
+                      cy="65.2859"
+                      r="2.28589"
+                      fill="#F2F2F2"
                     />
                   </svg>
                 </motion.div>

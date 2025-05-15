@@ -8,6 +8,7 @@ import { Modal } from '~/app/components/shared/Modal';
 import { StudentForm } from '~/app/components/PricingPage/StudentForm';
 import { Topbar as UnifiedTopbar, PricingSection } from './';
 import { cn } from '~/helpers';
+import PaymentStatusModal from '../../PricingPage/PaymentStatusModal';
 
 /**
  * PricingPage Topbar component
@@ -86,6 +87,9 @@ export function PricingTopbar() {
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <StudentForm onClose={() => setIsModalOpen(false)} />
       </Modal>
+
+      <PaymentStatusModal
+      />
     </>
   );
 }
