@@ -27,6 +27,7 @@ export async function POST(request: NextRequest) {
       Pan: data.Pan,
       ExpDate: data.ExpDate,
       Password: password,
+      ...(data.RebillId ? { RebillId: data.RebillId } : {}),
     };
 
     // sort data by keys
