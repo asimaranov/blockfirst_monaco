@@ -1055,6 +1055,8 @@ export const FloatingActionBar = ({
                 )}
                 disabled={checkCode}
                 onClick={async () => {
+                  setError(undefined);
+                  setSuccess(undefined);
                   setCheckCode(true);
                   sendMessageToIframe({
                     type: 'check-code',
