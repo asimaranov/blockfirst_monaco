@@ -69,13 +69,26 @@ export default function MonacoViewDynamic({ taskData }: { taskData: any }) {
 
           console.log(
             'Synced documents ===>>>',
-            Array.from(syncedDocuments as Map<string, any>).map(([key, value]) => ({
-              key,
-              value: (value as any).getText(),
-            }))
+            Array.from(syncedDocuments as Map<string, any>).map(
+              ([key, value]) => ({
+                key,
+                value: (value as any).getText(),
+              })
+            )
           );
 
-          window.parent.postMessage({ type: 'content', content }, '*');
+          window.parent.postMessage(
+            {
+              type: 'check-code-result',
+              syncedDocuments: Array.from(
+                syncedDocuments as Map<string, any>
+              ).map(([key, value]) => ({
+                key,
+                value: (value as any).getText(),
+              })),
+            },
+            '*'
+          );
         }
       }
     };

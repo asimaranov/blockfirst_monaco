@@ -240,6 +240,7 @@ export default function TaskView({
           setIsAiMentorActive={setIsAiMentorActive}
           isCollapsed={collapsed}
           taskId={task.id}
+          taskData={task}
         />
         <div className="w-full flex-1 bg-blue-300"></div>
       </div>

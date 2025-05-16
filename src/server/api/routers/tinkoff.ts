@@ -31,7 +31,7 @@ export const tinkoffRouter = createTRPCRouter({
       const tariff = ALL_TARIFFS.find((t) => t.id === input.tariff);
 
       const request = {
-        TerminalKey: '1746107725696DEMO',
+        TerminalKey: process.env.TINKOFF_TERMINAL_KEY!,
         Amount: (tariff?.price?.total || 0) * 100,
         OrderId: `${session?.user?.email}-${tariff?.id}-${new Date().getTime()}`,
         Description: 'Покупка тарифа',

@@ -55,10 +55,12 @@ export default function MonacoView({
   setIsAiMentorActive,
   isCollapsed,
   taskId,
+  taskData,
 }: {
   setIsAiMentorActive: (isActive: boolean) => void;
   isCollapsed: boolean;
   taskId: string;
+  taskData: any;
 }) {
   const [showActionBar, setShowActionBar] = useState(true);
   const [iframeLoaded, setIframeLoaded] = useState(false);
@@ -130,7 +132,11 @@ export default function MonacoView({
       </div>
 
       {showActionBar && (
-        <FloatingActionBar setIsAiMentorActive={setIsAiMentorActive} iframeRef={iframeRef} />
+        <FloatingActionBar
+          setIsAiMentorActive={setIsAiMentorActive}
+          iframeRef={iframeRef}
+          taskData={taskData}
+        />
       )}
     </div>
   );

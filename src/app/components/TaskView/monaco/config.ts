@@ -339,7 +339,7 @@ export const configure = (
 ): ConfigResult => {
   console.log('Calling configure');
   const webSocket = new WebSocket(
-    'wss://story.blindzone.org/lserver?authorization=UserAuth' //'ws://localhost:30001/lserver?authorization=UserAuth'
+    'wss://lserver.blockfirst.io/lserver?authorization=UserAuth' //'ws://localhost:30001/lserver?authorization=UserAuth'
   );
 
   const iWebSocket = toSocket(webSocket);

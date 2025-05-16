@@ -13,9 +13,11 @@ import { StarIcon, StarIconFilled } from './MonacoView';
 export const FloatingActionBar = ({
   setIsAiMentorActive,
   iframeRef,
+  taskData,
 }: {
   setIsAiMentorActive: (isActive: boolean) => void;
   iframeRef: React.RefObject<HTMLIFrameElement>;
+  taskData: any;
 }) => {
   const [position, setPosition] = useState({
     bottom: 0,
@@ -286,13 +288,83 @@ export const FloatingActionBar = ({
 
   const [checkCode, setCheckCode] = useState(false);
 
+  const [eServerSocket, setEServerSocket] = useState<WebSocket | null>(null);
+
+  const [eServerOutput, setEServerOutput] = useState<string>('');
+
+  // Listen for messages from parent window
   useEffect(() => {
-    if (checkCode) {
-      setTimeout(() => {
-        setCheckCode(false);
-      }, 4000);
-    }
-  }, [checkCode]);
+    const handleMessage = (event: MessageEvent) => {
+      // Handle commands from parent
+      if (event.data.type === 'check-code-result') {
+        console.log('Check code result', event.data);
+
+        const syncedDocuments = event.data.syncedDocuments;
+
+        const filesCodeSynced = syncedDocuments.reduce((acc: any, x: any) => {
+          const key = x.key.split('/').pop();
+          acc[key] = x.value;
+          return acc;
+        }, {});
+
+        const socket = new WebSocket(
+          'wss://eserver.blockfirst.io/eserver?authorization=UserAuth' //'ws://localhost:30002/eserver?authorization=UserAuth'
+        );
+
+        setEServerSocket(socket);
+
+        console.log('filesCode ===>>>', taskData.filesCode);
+        console.log('Synced documents ===>>>', syncedDocuments);
+        console.log('filesCodeSynced ===>>>', filesCodeSynced);
+
+        socket.onopen = () => {
+          console.log('Connected to server');
+          socket.send(
+            JSON.stringify({
+              action: 'execute',
+              filesCode: filesCodeSynced,
+            })
+          );
+        };
+
+        socket.onmessage = (event) => {
+          setEServerOutput((prevOutput) => {
+            const newOutput = prevOutput + event.data;
+
+            if (event.data.includes('Command failed with exit code 1')) {
+              console.log('Setting output', newOutput);
+              setCheckCode(false);
+              setSuccess(undefined);
+              setError({
+                message: 'Ошибка при выполнении кода. ' + newOutput,
+                tests: ['Требование 2', 'Требование 3', 'Требование 4'],
+              });
+              return ''; // Reset output after setting error
+            } else if (event.data.includes(' Solidity files successfully')) {
+              setCheckCode(false);
+              setError(undefined);
+              setSuccess({
+                advancedTasksCompleted: false,
+              });
+            }
+
+            return newOutput;
+          });
+
+          console.log(
+            'Message from server',
+            event.data,
+            event.data.includes('Command failed with exit code 1')
+          );
+        };
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    return () => {
+      window.removeEventListener('message', handleMessage);
+    };
+  }, []);
 
   return (
     <div
@@ -879,32 +951,34 @@ export const FloatingActionBar = ({
                   checkCode && 'border-[#1242B2] bg-[#1242B2]'
                 )}
                 disabled={checkCode}
-                onClick={() => {
+                onClick={async () => {
                   setCheckCode(true);
                   sendMessageToIframe({
-                    type: 'check-code'
-                  })
-                  
+                    type: 'check-code',
+                  });
+
+                  // socket.co
+
                   // Randomly choose action
-                  if (Math.random() > 0.5) {
-                    setError(undefined);
-                    setSuccess(undefined);
-                    setError({
-                      message: `Line 5: Char 5: error: non-void function does not return a value [-Werror,-Wreturn-type]
-      5 |     }
-        |
-        ^
-    1 error generated.`,
-                      tests: ['Требование 2', 'Требование 3', 'Требование 4'],
-                    });
-                    setIsAiMentorActive(true);
-                  } else {
-                    setError(undefined);
-                    setSuccess(undefined);
-                    setSuccess({
-                      advancedTasksCompleted: Math.random() > 0.5,
-                    });
-                  }
+                  //               if (Math.random() > 0.5) {
+                  //                 setError(undefined);
+                  //                 setSuccess(undefined);
+                  //                 setError({
+                  //                   message: `Line 5: Char 5: error: non-void function does not return a value [-Werror,-Wreturn-type]
+                  //   5 |     }
+                  //     |
+                  //     ^
+                  // 1 error generated.`,
+                  //                   tests: ['Требование 2', 'Требование 3', 'Требование 4'],
+                  //                 });
+                  //                 setIsAiMentorActive(true);
+                  //               } else {
+                  //                 setError(undefined);
+                  //                 setSuccess(undefined);
+                  //                 setSuccess({
+                  //                   advancedTasksCompleted: Math.random() > 0.5,
+                  //                 });
+                  //               }
                 }}
               >
                 {checkCode ? (
