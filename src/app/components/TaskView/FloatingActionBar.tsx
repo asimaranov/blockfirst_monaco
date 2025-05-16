@@ -307,6 +307,11 @@ export const FloatingActionBar = ({
           return acc;
         }, {});
 
+        setEServerOutput((eserverOutput) => {
+          return eserverOutput + 'Connecting to server' + '\n';
+        });
+
+
         const socket = new WebSocket(
           'wss://eserver.blockfirst.io/eserver?authorization=UserAuth' //'ws://localhost:30002/eserver?authorization=UserAuth'
         );
@@ -319,6 +324,9 @@ export const FloatingActionBar = ({
 
         socket.onopen = () => {
           console.log('Connected to server');
+          setEServerOutput((eserverOutput) => {
+            return eserverOutput + 'Connected to server' + '\n';
+          });
           socket.send(
             JSON.stringify({
               action: 'execute',
@@ -405,7 +413,7 @@ export const FloatingActionBar = ({
         />
       )}
       <div className="flex flex-grow flex-col">
-        {error && (
+        {error ? (
           <div className="relative">
             <div
               ref={errorPanelRef}
@@ -510,9 +518,7 @@ export const FloatingActionBar = ({
               </svg>
             </div>
           </div>
-        )}
-
-        {success && (
+        ) : success ? (
           <div className="relative">
             <div
               ref={successPanelRef}
@@ -924,6 +930,103 @@ export const FloatingActionBar = ({
               </svg>
             </div>
           </div>
+        ) : eServerOutput ? (
+          <div className="relative">
+            <div
+              ref={errorPanelRef}
+              className="border-t-primary flex flex-col gap-8 border-t bg-[#0F1622] px-8 py-6"
+              style={{
+                height: errorPanelHeight ? `${errorPanelHeight}px` : undefined,
+                overflow: 'auto',
+              }}
+            >
+              <div className="flex w-full flex-row">
+                <div className="flex flex-col gap-3">
+                  <div className="flex flex-row items-center gap-3">
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 animate-spin"
+                    >
+                      <path
+                        opacity="0.5"
+                        d="M18 10C18 14.4183 14.4183 18 10 18C5.58172 18 2 14.4183 2 10C2 5.58172 5.58172 2 10 2C14.4183 2 18 5.58172 18 10ZM3.04 10C3.04 13.8439 6.1561 16.96 10 16.96C13.8439 16.96 16.96 13.8439 16.96 10C16.96 6.1561 13.8439 3.04 10 3.04C6.1561 3.04 3.04 6.1561 3.04 10Z"
+                        fill="#195AF4"
+                      />
+                      <path
+                        d="M10 2.52C10 2.23281 10.2331 1.99824 10.5196 2.01689C11.761 2.09769 12.969 2.4671 14.0462 3.09869C15.2733 3.81813 16.2864 4.85173 16.9811 6.09299C17.6757 7.33425 18.0269 8.73829 17.9984 10.1604C17.9699 11.5826 17.5627 12.9714 16.8188 14.1838C16.0749 15.3962 15.0212 16.3884 13.7662 17.058C12.5113 17.7277 11.1005 18.0506 9.67919 17.9936C8.2579 17.9365 6.87752 17.5016 5.68027 16.7335C4.62922 16.0592 3.75268 15.1496 3.11833 14.0795C2.97188 13.8325 3.07543 13.5185 3.33146 13.3884V13.3884C3.58749 13.2583 3.89886 13.3616 4.0477 13.6072C4.59666 14.513 5.34647 15.2837 6.24184 15.8581C7.28344 16.5264 8.48437 16.9048 9.72089 16.9544C10.9574 17.004 12.1848 16.7231 13.2766 16.1405C14.3684 15.5579 15.2851 14.6947 15.9323 13.6399C16.5795 12.5851 16.9338 11.3769 16.9586 10.1396C16.9834 8.90231 16.6779 7.6808 16.0735 6.6009C15.4692 5.521 14.5878 4.62177 13.5202 3.99586C12.6025 3.45782 11.5758 3.13848 10.5195 3.05942C10.2331 3.03798 10 2.80719 10 2.52V2.52Z"
+                        fill="#195AF4"
+                      />
+                    </svg>
+
+                    <span className="text-base">Проверка задачи</span>
+                  </div>
+                  <span className="text-secondary text-sm">
+                    Пожалуйста, подождите. Мы проверяем ваш код на требования
+                    задачи.
+                  </span>
+                </div>
+                <div className="ml-auto pb-7 pl-7">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 cursor-pointer hover:opacity-50"
+                    onClick={() => {
+                      setError(undefined);
+                      setErrorPanelHeight(null); // Reset height on close
+                    }}
+                  >
+                    <path
+                      d="M5.91797 15.2474C5.5958 15.5696 5.07347 15.5696 4.7513 15.2474C4.42914 14.9252 4.42914 14.4029 4.7513 14.0807L8.83464 9.9974L4.7513 5.91406C4.42914 5.5919 4.42914 5.06956 4.7513 4.7474C5.07347 4.42523 5.5958 4.42523 5.91797 4.7474L10.0013 8.83073L14.0846 4.74739C14.4068 4.42523 14.9291 4.42523 15.2513 4.7474C15.5735 5.06956 15.5735 5.5919 15.2513 5.91406L11.168 9.9974L15.2513 14.0807C15.5735 14.4029 15.5735 14.9252 15.2513 15.2474C14.9291 15.5696 14.4068 15.5696 14.0846 15.2474L10.0013 11.1641L5.91797 15.2474Z"
+                      fill="#F2F2F2"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <div className="flex flex-col gap-6">
+                <pre className="text-primary text-xs">{eServerOutput}</pre>
+              </div>
+            </div>
+            <div
+              className="absolute top-0 left-1/2 mr-auto ml-auto -translate-x-1/2 -translate-y-1/2 cursor-ns-resize touch-none p-1"
+              onPointerDown={(e) => handlePointerDown(e, 'error')}
+            >
+              <svg
+                width="32"
+                height="12"
+                viewBox="0 0 32 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-3 w-8"
+              >
+                <rect
+                  x="0.5"
+                  y="0.5"
+                  width="31"
+                  height="11"
+                  rx="5.5"
+                  fill="#0F1217"
+                  stroke="#195AF4"
+                />
+                <rect
+                  x="8"
+                  y="5.5"
+                  width="16"
+                  height="1"
+                  rx="0.5"
+                  fill="#F2F2F2"
+                />
+              </svg>
+            </div>
+          </div>
+        ) : (
+          <></>
         )}
 
         <div className="border-accent flex flex-row items-center justify-center border-t shadow-lg">
