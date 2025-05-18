@@ -24,6 +24,7 @@ import {
   getDocumentWithFields,
   extractCodeFromElements,
 } from '~/server/utils/document';
+import { SyncedDocument } from '~/app/models/SyncedDocument';
 
 const headingDepth: Record<string, number> = {
   [HEADING_KEYS.h1]: 1,
@@ -48,12 +49,20 @@ export interface TaskData {
   rating: string;
   status: 'available' | 'in-progress' | 'completed';
   advancedTasksSolved: boolean;
+  filesList?: TElement[];
+  filesCode?: Record<string, string>;
+  savedFilesCode?: Record<string, string>;
+  tests?: Array<{
+    name?: string;
+    Name?: string;
+    content: string;
+  }>;
 }
 
 export const tasksRouter = createTRPCRouter({
   getById: publicProcedure
     .input(z.object({ taskId: z.string() }))
-    .query(async ({ input }) => {
+    .query(async ({ input, ctx }) => {
       const { taskId } = input;
 
       try {
@@ -120,6 +129,27 @@ export const tasksRouter = createTRPCRouter({
 
         console.log('Files code', filesCode);
 
+        // Fetch saved documents from MongoDB
+        let savedFilesCode: Record<string, string> = {};
+
+        if (ctx.session?.user?.id) {
+          try {
+            const userId = ctx.session?.user?.id;
+            const query = userId ? { taskId, userId } : { taskId };
+            const savedDocument = await SyncedDocument.findOne(query);
+
+            if (savedDocument && savedDocument.documents) {
+              savedDocument.documents.forEach(
+                (doc: { key: string; value: string }) => {
+                  savedFilesCode[doc.key] = doc.value;
+                }
+              );
+            }
+          } catch (error) {
+            console.error('Error fetching saved documents:', error);
+          }
+        }
+
         // console.log('Found doc by id', taskId, document);
 
         return {
@@ -138,6 +168,7 @@ export const tasksRouter = createTRPCRouter({
           problemStatement: data['Problem Statement-Elements'] || [],
           filesList: filesList || [],
           filesCode: filesCode,
+          savedFilesCode: savedFilesCode,
           completionCount: '5+',
           rating: '4.9',
           tests: data['Tests-SubHeadings'].map((x) => ({
@@ -221,5 +252,34 @@ export const tasksRouter = createTRPCRouter({
       );
 
       return results.filter(Boolean);
+    }),
+
+  save: protectedProcedure
+    .input(
+      z.object({
+        taskId: z.string(),
+        documents: z.array(
+          z.object({
+            key: z.string(),
+            value: z.string(),
+          })
+        ),
+      })
+    )
+    .mutation(async ({ input, ctx }) => {
+      const userId = ctx.session.user.id;
+
+      // Upsert - update if exists, or create new document
+      const result = await SyncedDocument.findOneAndUpdate(
+        { taskId: input.taskId, userId },
+        {
+          taskId: input.taskId,
+          userId,
+          documents: input.documents,
+        },
+        { upsert: true, new: true }
+      );
+
+      return result;
     }),
 });

@@ -4,15 +4,32 @@ import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { configure } from './monaco/config';
 import { MonacoEditorReactComp } from './monaco/MonacoEditorReact';
 import { useLanguageClientStore } from '~/app/store/languageClientStore';
+import { api } from '~/trpc/react';
 
 export default function MonacoViewDynamic({ taskData }: { taskData: any }) {
   const editorRef = useRef<any>(null);
 
+  const saveDocumentMutation = api.tasks.save.useMutation({
+    onSuccess: () => {
+      console.log('Document saved');
+    },
+  });
+
   const languageClientStore = useLanguageClientStore();
 
   const configResult = useMemo(
-    () => configure(taskData, languageClientStore.setLanguageClient),
-    [taskData, languageClientStore.setLanguageClient]
+    () =>
+      configure(
+        taskData,
+        languageClientStore.setLanguageClient,
+        ({ taskId, documents }) =>
+          saveDocumentMutation.mutateAsync({ taskId, documents })
+      ),
+    [
+      taskData,
+      languageClientStore.setLanguageClient,
+      saveDocumentMutation.mutateAsync,
+    ]
   );
 
   useEffect(() => {

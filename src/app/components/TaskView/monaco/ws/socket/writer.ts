@@ -22,6 +22,9 @@ export class WebSocketMessageWriter extends AbstractMessageWriter implements Mes
     async write(msg: Message): Promise<void> {
         console.log('Writing message', msg);
         try {
+            if ((msg as any).method === 'textDocument/didChange') {
+                console.log('Did open message', msg);
+            }
             const content = JSON.stringify(msg);
             this.socket.send(content);
         } catch (e) {

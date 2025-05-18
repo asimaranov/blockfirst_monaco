@@ -334,6 +334,13 @@ export type ConfigResult = {
 export const configure = (
   taskData: any,
   setLanguageClient: (languageClient: MonacoLanguageClient | null) => void,
+  saveDocumentMutation: ({
+    taskId,
+    documents,
+  }: {
+    taskId: string;
+    documents: { key: string; value: string }[];
+  }) => Promise<void>,
   htmlContainer?: HTMLElement
 ): ConfigResult => {
   console.log('Calling configure');
@@ -345,8 +352,45 @@ export const configure = (
   const webSocketRaw = {
     readyState: WebSocket.OPEN,
     send: (data: string) => {
-      console.log('Sending message!', data);
+      const msg = JSON.parse(data);
       ioSocket.emit('lserver-request', data);
+
+      if (msg.method === 'textDocument/didChange') {
+        console.log('Did change message', msg);
+        const languageClient = (window as any).languageClient;
+        console.log('Language client', languageClient);
+        if (languageClient) {
+          const syncedDocuments = languageClient
+            ? // Access private field through reflection - avoids TypeScript error
+              Object.getOwnPropertyDescriptor(
+                Object.getPrototypeOf(languageClient),
+                '_syncedDocuments'
+              )?.get?.call(languageClient) ||
+              // Fallback to direct access if reflection fails
+              (languageClient as any)._syncedDocuments
+            : undefined;
+
+          const syncedDocumentsArray = Array.from(
+            syncedDocuments as Map<string, any>
+          ).map(([key, value]) => ({
+            key,
+            value: (value as any).getText(),
+          }));
+          console.log('Synced documents array', syncedDocumentsArray);
+
+          saveDocumentMutation({
+            taskId: taskData.id,
+            documents: syncedDocumentsArray,
+          });
+
+          (window as any).syncedDocuments = {
+            ...(window as any).syncedDocuments,
+            [taskData.id]: syncedDocumentsArray,
+          };
+          console.log('Set synced documents', (window as any).syncedDocuments);
+        }
+      }
+      console.log('Sending message!', data);
     },
     onmessage: (cb: (data: string) => void) => {
       console.log('Cb set!', cb);
@@ -527,6 +571,8 @@ export const configure = (
                   console.log('Oncall', languageClient);
                   setLanguageClient(languageClient || null);
 
+                  (window as any).languageClient = languageClient;
+
                   // setTimeout(() => {
                   //   [
                   //     'pyright.restartserver',
@@ -564,11 +610,24 @@ export const configure = (
 
   const fileSystemProvider = new RegisteredFileSystemProvider(false);
 
-  for (const [fileName, fileContent] of Object.entries(taskData.filesCode)) {
-    const uri = vscode.Uri.file(`/workspace/contracts/${fileName}`);
-    fileSystemProvider.registerFile(
-      new RegisteredMemoryFile(uri, fileContent as string)
-    );
+  const savedFiles = taskData.savedFilesCode;
+  console.log('Configure saved files', savedFiles);
+
+  if (savedFiles) {
+    for (const [fileName, fileContent] of Object.entries(savedFiles)) {
+      const fileName_ = fileName.split('/').pop();
+      const uri = vscode.Uri.file(`/workspace/contracts/${fileName_}`);
+      fileSystemProvider.registerFile(
+        new RegisteredMemoryFile(uri, fileContent as string)
+      );
+    }
+  } else {
+    for (const [fileName, fileContent] of Object.entries(taskData.filesCode)) {
+      const uri = vscode.Uri.file(`/workspace/contracts/${fileName}`);
+      fileSystemProvider.registerFile(
+        new RegisteredMemoryFile(uri, fileContent as string)
+      );
+    }
   }
 
   // const helloTsUri = vscode.Uri.file('playground/workspace/contracts/Lock.sol');
