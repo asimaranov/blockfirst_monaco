@@ -9,6 +9,7 @@ import { Modal } from '../shared/Modal';
 import { TaskReportForm } from './TaskReportForm';
 import { useParams } from 'next/navigation';
 import { StarIcon, StarIconFilled } from './MonacoView';
+import { io, Socket } from 'socket.io-client';
 
 export const FloatingActionBar = ({
   setIsAiMentorActive,
@@ -288,13 +289,14 @@ export const FloatingActionBar = ({
 
   const [checkCode, setCheckCode] = useState(false);
 
-  const [eServerSocket, setEServerSocket] = useState<WebSocket | null>(null);
+  const [eServerSocket, setEServerSocket] = useState<Socket | null>(null);
 
   const [eServerOutput, setEServerOutput] = useState<string>('');
 
   // Listen for messages from parent window
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
+      console.log('Event', event);
       // Handle commands from parent
       if (event.data.type === 'check-code-result') {
         console.log('Check code result', event.data);
@@ -311,9 +313,8 @@ export const FloatingActionBar = ({
           return eserverOutput + 'Connecting to server' + '\n';
         });
 
-
-        const socket = new WebSocket(
-          'wss://eserver.blockfirst.io/eserver?authorization=UserAuth' //'ws://localhost:30002/eserver?authorization=UserAuth'
+        const socket = io(
+          'https://eserver-1.blockfirst.io/' //'ws://localhost:30002/eserver?authorization=UserAuth'
         );
 
         setEServerSocket(socket);
@@ -322,24 +323,23 @@ export const FloatingActionBar = ({
         console.log('Synced documents ===>>>', syncedDocuments);
         console.log('filesCodeSynced ===>>>', filesCodeSynced);
 
-        socket.onopen = () => {
-          console.log('Connected to server');
+        socket.on('connect', () => {
+          console.log('Connected to eserver');
+          socket.emit('hello', 'world');
+
           setEServerOutput((eserverOutput) => {
             return eserverOutput + 'Connected to server' + '\n';
           });
-          socket.send(
-            JSON.stringify({
-              action: 'execute',
-              filesCode: filesCodeSynced,
-            })
-          );
-        };
+          socket.emit('execute-code', { filesCode: filesCodeSynced });
+          console.log('Emited');
+        });
 
-        socket.onmessage = (event) => {
+        socket.on('log', (log: string) => {
+          console.log('Execution log', log);
           setEServerOutput((prevOutput) => {
-            const newOutput = prevOutput + event.data;
+            const newOutput = prevOutput + '\n' + log;
 
-            if (event.data.includes('Command failed with exit code 1')) {
+            if (log.includes('Command failed with exit code 1') || log.includes('Process closed with code')) {
               console.log('Setting output', newOutput);
               setCheckCode(false);
               setSuccess(undefined);
@@ -348,7 +348,7 @@ export const FloatingActionBar = ({
                 tests: ['Требование 2', 'Требование 3', 'Требование 4'],
               });
               return ''; // Reset output after setting error
-            } else if (event.data.includes(' Solidity files successfully')) {
+            } else if (log.includes(' Solidity files successfully')) {
               setCheckCode(false);
               setError(undefined);
               setSuccess({
@@ -358,13 +358,11 @@ export const FloatingActionBar = ({
 
             return newOutput;
           });
+        });
 
-          console.log(
-            'Message from server',
-            event.data,
-            event.data.includes('Command failed with exit code 1')
-          );
-        };
+        socket.on('disconnect', () => {
+          console.log('Disconnected from eserver');
+        });
       }
     };
 

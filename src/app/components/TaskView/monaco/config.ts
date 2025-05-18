@@ -56,12 +56,13 @@ import { MonacoEditorLanguageClientWrapper } from 'monaco-editor-wrapper';
 import { defaultViewsInit } from './viewsService';
 import {
   toSocket,
-  WebSocketMessageReader,
-  WebSocketMessageWriter,
-} from 'vscode-ws-jsonrpc';
-import { createUrl } from 'monaco-languageclient/tools';
+} from './ws/connection';
+import { WebSocketMessageReader } from './ws/socket/reader';
+import { WebSocketMessageWriter } from './ws/socket/writer';
 import { MonacoLanguageClient } from 'monaco-languageclient';
 import { solidityManifest } from './solidity-extension';
+import { io } from 'socket.io-client';
+import { da } from '@faker-js/faker';
 
 export const createDefaultLocaleConfiguration = (): LocalizationOptions => {
   return {
@@ -338,9 +339,35 @@ export const configure = (
   htmlContainer?: HTMLElement
 ): ConfigResult => {
   console.log('Calling configure');
-  const webSocket = new WebSocket(
-    'wss://lserver.blockfirst.io/lserver?authorization=UserAuth' //'ws://localhost:30001/lserver?authorization=UserAuth'
+
+  const ioSocket = io(
+    'https://lserver-1.blockfirst.io/' //'http://localhost:3004'
   );
+
+  const webSocketRaw = {
+    readyState: WebSocket.OPEN,
+    send: (data: string) => {
+      console.log('Sending message!', data);
+      ioSocket.emit('lserver-request', data);
+    },
+    onmessage: (cb: (data: string) => void) => {
+      console.log('Cb set!', cb);
+      ioSocket.on('lserver-response', (data: string) => {
+        console.log('On message!!', data);
+        cb(JSON.stringify(data));
+      });
+    },
+    onError: (cb: (error: string) => void) => {
+      console.log('On error!', error);
+      ioSocket.on('error', (error: string) => cb(error));
+    },
+    onClose: (cb: (code: number, reason: string) => void) => {
+      console.log('On close!', code, reason);
+      ioSocket.on('close', (code: number, reason: string) => cb(code, reason));
+    }
+  } as unknown as WebSocket;
+  
+  const webSocket = webSocketRaw;
 
   const iWebSocket = toSocket(webSocket);
   const reader = new WebSocketMessageReader(iWebSocket);
