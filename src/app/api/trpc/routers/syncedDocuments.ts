@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc';
-import SyncedDocument from '~/app/models/SyncedDocument';
+import SyncedDocument from '~/server/models/SyncedDocument';
 
 export const syncedDocumentsRouter = createTRPCRouter({
   // Get synced documents for a specific task

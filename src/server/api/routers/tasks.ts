@@ -24,7 +24,7 @@ import {
   getDocumentWithFields,
   extractCodeFromElements,
 } from '~/server/utils/document';
-import { SyncedDocument } from '~/app/models/SyncedDocument';
+import { SyncedDocument } from '~/server/models/SyncedDocument';
 
 const headingDepth: Record<string, number> = {
   [HEADING_KEYS.h1]: 1,
