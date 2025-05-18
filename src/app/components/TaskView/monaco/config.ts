@@ -54,9 +54,7 @@ import type { WrapperConfig } from 'monaco-editor-wrapper';
 import type { RegisterLocalProcessExtensionResult } from '@codingame/monaco-vscode-api/extensions';
 import { MonacoEditorLanguageClientWrapper } from 'monaco-editor-wrapper';
 import { defaultViewsInit } from './viewsService';
-import {
-  toSocket,
-} from './ws/connection';
+import { toSocket } from './ws/connection';
 import { WebSocketMessageReader } from './ws/socket/reader';
 import { WebSocketMessageWriter } from './ws/socket/writer';
 import { MonacoLanguageClient } from 'monaco-languageclient';
@@ -358,15 +356,19 @@ export const configure = (
       });
     },
     onError: (cb: (error: string) => void) => {
-      console.log('On error!', error);
-      ioSocket.on('error', (error: string) => cb(error));
+      ioSocket.on('error', (error: string) => {
+        console.log('On error!', error);
+        cb(error);
+      });
     },
     onClose: (cb: (code: number, reason: string) => void) => {
-      console.log('On close!', code, reason);
-      ioSocket.on('close', (code: number, reason: string) => cb(code, reason));
-    }
+      ioSocket.on('close', (code: number, reason: string) => {
+        console.log('On close!', code, reason);
+        cb(code, reason);
+      });
+    },
   } as unknown as WebSocket;
-  
+
   const webSocket = webSocketRaw;
 
   const iWebSocket = toSocket(webSocket);
