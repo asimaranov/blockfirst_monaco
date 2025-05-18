@@ -613,7 +613,7 @@ export const configure = (
   const savedFiles = taskData.savedFilesCode;
   console.log('Configure saved files', savedFiles);
 
-  if (savedFiles) {
+  if (savedFiles && Object.keys(savedFiles).length > 0) {
     for (const [fileName, fileContent] of Object.entries(savedFiles)) {
       const fileName_ = fileName.split('/').pop();
       const uri = vscode.Uri.file(`/workspace/contracts/${fileName_}`);
