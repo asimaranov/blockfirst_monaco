@@ -741,8 +741,9 @@ export const FloatingActionBar = ({
                         </svg>
 
                         <span className="text-xs leading-4">
-                          Требования с <span className="text-[#F48E19]">*</span>{' '}
-                          выполнены. Отличный результат!
+                        Все требования выполнены. Отличный результат!
+                          {/* Требования с <span className="text-[#F48E19]">*</span>{' '}
+                          выполнены. Отличный результат! */}
                         </span>
                       </div>
                     ) : (
