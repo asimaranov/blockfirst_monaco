@@ -1,6 +1,7 @@
 'use client';
 
 import { useResetStore } from '~/store/monaco-actions/reset-store';
+import { api } from '~/trpc/react';
 
 import { useEffect, useRef } from 'react';
 import { cn } from '~/helpers';
@@ -41,10 +42,13 @@ const ScrollIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-export const ResetConfirmationModal = () => {
+export const ResetConfirmationModal = ({ taskId }: { taskId: string }) => {
   const { isResetModalOpen, buttonPosition, closeResetModal, resetCode } =
     useResetStore();
   const modalRef = useRef<HTMLDivElement>(null);
+
+  // Initialize the mutation
+  const clearSavedMutation = api.tasks.clearSaved.useMutation();
 
   // Close modal when clicking outside
   useEffect(() => {
@@ -78,6 +82,21 @@ export const ResetConfirmationModal = () => {
     left: `${(editorsDivRect?.left || 0) + buttonPosition.left}px`, // Position to the right of the button
     transform: 'translateX(-100%)', // Align bottom edge with buttonPosition.top
     zIndex: 9999,
+  };
+
+  const handleReset = async () => {
+    // Clear saved code if task ID exists
+    console.log('[t] Resetting code', taskId);
+    if (taskId) {
+      console.log('[t] Clearing saved code', taskId);
+      try {
+        await clearSavedMutation.mutateAsync({ taskId });
+
+        window?.location.reload();
+      } catch (error) {
+        console.error('Failed to clear saved code:', error);
+      }
+    }
   };
 
   return (
@@ -116,7 +135,7 @@ export const ResetConfirmationModal = () => {
             Отменить
           </button>
           <button
-            onClick={resetCode}
+            onClick={handleReset}
             className="bg-primary text-foreground flex-1 cursor-pointer rounded-full py-2.5 text-center text-sm hover:bg-[#1242B2]"
           >
             Сбросить

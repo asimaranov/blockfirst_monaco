@@ -47,7 +47,7 @@ export default async function TaskPage({
     <>
       <TaskView task={taskData} lessonId={lessonId} />
       <MonacoActionsListener />
-      <ResetConfirmationModal />
+      <ResetConfirmationModal taskId={taskId} />
       <ToolboxModal />
     </>
   );

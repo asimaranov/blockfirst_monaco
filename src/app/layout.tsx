@@ -6,7 +6,6 @@ import { lato, roboto, delight } from './fonts';
 import { TRPCReactProvider } from '~/trpc/react';
 import { NextIntlClientProvider } from 'next-intl';
 import { getLocale } from 'next-intl/server';
-import { ResetConfirmationModal } from './components/ResetConfirmationModal';
 
 export const metadata: Metadata = {
   title: 'Blockfirst - образовательная блокчейн платформа',

@@ -70,7 +70,6 @@ export const tasksRouter = createTRPCRouter({
 
       const cryptr = new Cryptr(process.env.CRYPTR_SECRET_KEY!);
 
-
       try {
         const { document, data, headings } = await getDocumentWithFields<{
           Title: string;
@@ -185,12 +184,14 @@ export const tasksRouter = createTRPCRouter({
             Math.floor(Math.random() * 3)
           ],
           advancedTasksSolved: Math.random() > 0.5,
-          data: cryptr.encrypt(JSON.stringify({
-            userId: ctx.session?.user?.id,
-            taskId,
-            testsCode,
-            testNames,
-          })),
+          data: cryptr.encrypt(
+            JSON.stringify({
+              userId: ctx.session?.user?.id,
+              taskId,
+              testsCode,
+              testNames,
+            })
+          ),
         } as TaskData;
       } catch (error) {
         console.error('Error fetching task:', error);
@@ -289,5 +290,19 @@ export const tasksRouter = createTRPCRouter({
       );
 
       return result;
+    }),
+
+  clearSaved: protectedProcedure
+    .input(z.object({ taskId: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      const userId = ctx.session.user.id;
+
+      // Delete the saved document for this task and user
+      const result = await SyncedDocument.findOneAndDelete({
+        taskId: input.taskId,
+        userId,
+      });
+
+      return { success: !!result };
     }),
 });

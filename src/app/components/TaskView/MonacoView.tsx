@@ -104,6 +104,8 @@ export default function MonacoView({
     };
   }, []);
 
+  const [iframeKey, setIframeKey] = useState(0);
+
 
   // useEffect(() => {
   //   createPortal(
