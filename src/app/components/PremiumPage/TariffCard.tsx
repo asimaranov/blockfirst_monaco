@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import CoinIcon from './assets/coin-icon.png';
 import NotPaidBadge from './assets/not-paid-badge.svg';
 import PaidBadge from './assets/paid-badge.svg';
 import { ReactNode } from 'react';

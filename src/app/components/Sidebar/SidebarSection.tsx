@@ -1,15 +1,11 @@
 'use server';
 
-import { ReactNode, Suspense, useState } from 'react';
+import { ReactNode, Suspense } from 'react';
 import { MenuItem } from './MenuItem';
 import { MenuLink } from './MenuLink';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
-import { NotificationsModal } from '../Notifications/NotificationsModal';
-import { useNotificationsModalStore } from '~/store/notificationsModal';
 import { api } from '~/trpc/server';
 import { getSidebarSectionsData } from './SidebarSectionsData';
-import { authClient } from '~/server/auth/client';
 import { auth } from '~/server/auth';
 import { headers } from 'next/headers';
 

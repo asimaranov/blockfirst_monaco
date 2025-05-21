@@ -14,8 +14,22 @@ const bundleAnalyzer = withBundleAnalyzer({
 
 /** @type {import("next").NextConfig} */
 const config = {
+  // logging: {
+  //   fetches: {
+  //     fullUrl: true,
+  //   },
+  // },
+
   experimental: {
     useCache: true,
+    turbo: {},
+    optimizePackageImports: [
+      '@codingame/monaco-vscode-extension-api',
+      '@codingame/monaco-vscode-api',
+      'codingame/monaco-vscode-files-service-override',
+      'vscode',
+      'monaco-editor',
+    ],
   },
   webpack: (config, { isServer }) => {
     if (!isServer) {
