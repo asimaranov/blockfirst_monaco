@@ -485,7 +485,7 @@ export const FloatingActionBar = ({
               className="border-t-error flex flex-col gap-8 border-t bg-[#191419] px-8 py-6"
               style={{
                 height: errorPanelHeight ? `${errorPanelHeight}px` : undefined,
-                maxHeight: '70vh',
+                maxHeight: '90vh',
                 overflow: 'auto',
               }}
             >
@@ -620,8 +620,8 @@ export const FloatingActionBar = ({
                 height: successPanelHeight
                   ? `${successPanelHeight}px`
                   : undefined,
-                maxHeight: '70vh',
-                overflow: 'auto',
+                  maxHeight: '90vh',
+                  overflow: 'auto',
               }}
             >
               <div className="flex w-full flex-row">
@@ -1032,7 +1032,7 @@ export const FloatingActionBar = ({
               className="border-t-primary flex flex-col gap-8 border-t bg-[#0F1622] px-8 py-6"
               style={{
                 height: errorPanelHeight ? `${errorPanelHeight}px` : undefined,
-                maxHeight: '70vh',
+                maxHeight: '90vh',
                 overflow: 'auto',
               }}
             >
