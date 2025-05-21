@@ -14,11 +14,12 @@ const headingDepth: Record<string, number> = {
 };
 
 /**
- * Gets content elements between a heading with the specified title and the next heading of the same level
+ * Gets content elements between a heading with the specified title and the next heading of the same level or a heading of any level
  */
 export function getContentBetweenHeadings(
   editor: SlateEditor,
-  startHeadingTitle: string
+  startHeadingTitle: string,
+  stopAtAnyHeading = true
 ) {
   // First get all headings
   const headingList: Heading[] = [];
@@ -42,16 +43,19 @@ export function getContentBetweenHeadings(
 
   if (!startHeading) return null;
 
-  // Find the next heading after the start heading with the same depth
+  // Find the next heading after the start heading
+  // If stopAtAnyHeading is true, we stop at any heading, regardless of level
+  // Otherwise, we only stop at headings of the same level
   const nextHeadingIndex = headingList.findIndex(
     (heading) =>
       heading.path[0] > startHeading.path[0] &&
-      heading.depth === startHeading.depth
+      (stopAtAnyHeading || heading.depth <= startHeading.depth)
   );
+
   const nextHeading =
     nextHeadingIndex !== -1 ? headingList[nextHeadingIndex] : null;
 
-  // Get all nodes between the start heading and next heading of the same level
+  // Get all nodes between the start heading and next heading
   const nodesBetween = editor.api.nodes<TElement>({
     at: [],
     match: (n, path) => {
@@ -208,7 +212,11 @@ export async function getDocumentWithFields<T extends Record<string, any>>(
 
       // Also get content between headings if needed
       if (includeElements) {
-        const sectionContent = getContentBetweenHeadings(editor, fieldTitle);
+        const sectionContent = getContentBetweenHeadings(
+          editor,
+          fieldTitle,
+          true // Stop at any heading
+        );
         const elements = sectionContent
           ? Array.from(sectionContent, ([node]) => node as TElement)
           : [];
@@ -289,7 +297,8 @@ export async function getDocumentWithFields<T extends Record<string, any>>(
             if (subConfig.includeElements) {
               const sectionContent = getContentBetweenHeadings(
                 editor,
-                subheading.title
+                subheading.title,
+                true // Stop at any heading
               );
               const elements = sectionContent
                 ? Array.from(sectionContent, ([node]) => node as TElement)
@@ -386,6 +395,11 @@ export function extractCodeFromElements(elements: TElement[]): string {
 
   // Process each element
   for (const element of elements) {
+    // Skip heading elements
+    if (isHeading(element)) {
+      continue;
+    }
+
     if (element.type === 'code_block') {
       // Process code block element
       if (Array.isArray(element.children)) {
@@ -402,8 +416,15 @@ export function extractCodeFromElements(elements: TElement[]): string {
         }
       }
     } else if (Array.isArray(element.children)) {
-      // Recursively process other elements with children
-      code += extractCodeFromElements(element.children as TElement[]);
+      // Check if any direct children are headings - if so, skip this entire element
+      const hasHeadingChild = element.children.some(
+        (child) => typeof child === 'object' && isHeading(child as TElement)
+      );
+
+      if (!hasHeadingChild) {
+        // Recursively process other elements with children
+        code += extractCodeFromElements(element.children as TElement[]);
+      }
     } else if (typeof element.text === 'string') {
       // Handle direct text nodes
       code += element.text;

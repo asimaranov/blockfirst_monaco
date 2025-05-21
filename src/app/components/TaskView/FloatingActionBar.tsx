@@ -10,6 +10,21 @@ import { TaskReportForm } from './TaskReportForm';
 import { useParams } from 'next/navigation';
 import { StarIcon, StarIconFilled } from './MonacoView';
 import { io, Socket } from 'socket.io-client';
+import { useTestResultStore } from '~/store/testResultStore';
+
+interface TestResult {
+  name: string;
+  status: 'passed' | 'failed';
+  failureId?: string;
+}
+
+interface TestResults {
+  passing: TestResult[];
+  failing: TestResult[];
+  all: TestResult[];
+  failureDetails: Record<string, string>;
+  summary?: string;
+}
 
 export const FloatingActionBar = ({
   setIsAiMentorActive,
@@ -29,11 +44,12 @@ export const FloatingActionBar = ({
   const actionBarRef = useRef<HTMLDivElement>(null);
   const [error, setError] = useState<
     | {
-        message: string;
-        tests: string[];
+        tests: number[];
+        message?: string;
       }
     | undefined
   >(undefined);
+  const [failureTabTestId, setFailureTabTestId] = useState<number | null>(null);
   const [rating, setRating] = useState(0);
 
   const [success, setSuccess] = useState<
@@ -63,6 +79,21 @@ export const FloatingActionBar = ({
   const errorPanelRef = useRef<HTMLDivElement>(null);
   const successPanelRef = useRef<HTMLDivElement>(null);
   const [isTaskReportFormOpen, setIsTaskReportFormOpen] = useState(false);
+
+  // Using the test result store
+  const {
+    testResults,
+    currentTest,
+    isRunningTests,
+    setTestResults,
+    setCurrentTest,
+    setIsRunningTests,
+    resetTestResults,
+  } = useTestResultStore();
+
+  useEffect(() => {
+    console.log('isRunningTests state', isRunningTests);
+  }, [isRunningTests]);
 
   // Function to send messages to iframe
   const sendMessageToIframe = useCallback((message: any) => {
@@ -287,8 +318,6 @@ export const FloatingActionBar = ({
     };
   }, [success]);
 
-  const [checkCode, setCheckCode] = useState(false);
-
   const [eServerSocket, setEServerSocket] = useState<Socket | null>(null);
 
   const [eServerOutput, setEServerOutput] = useState<string>('');
@@ -313,8 +342,16 @@ export const FloatingActionBar = ({
           return eserverOutput + 'Connecting to server' + '\n';
         });
 
+        console.log('Setting isRunningTests to true');
+
+        resetTestResults();
+
+        setIsRunningTests(true);
+
+        const test = false;
+
         const socket = io(
-          'https://eserver-1.blockfirst.io/' //'ws://localhost:30002/eserver?authorization=UserAuth'
+          test ? 'http://localhost:3005/' : 'https://eserver-1.blockfirst.io/'
         );
 
         setEServerSocket(socket);
@@ -330,31 +367,75 @@ export const FloatingActionBar = ({
           setEServerOutput((eserverOutput) => {
             return eserverOutput + 'Connected to server' + '\n';
           });
-          socket.emit('execute-code', { filesCode: filesCodeSynced });
+          socket.emit('execute-code', {
+            filesCode: filesCodeSynced,
+            data: taskData.data,
+          });
           console.log('Emited');
         });
+
+        socket.on('testResult', (testResult: TestResult) => {
+          console.log('[t] Test result', testResult);
+          // Update the current test in the store
+          setCurrentTest(testResult);
+        });
+
+        socket.on('build-error', (message: string) => {
+          console.log('[t] Build error', message);
+          setIsRunningTests(false);
+          setSuccess(undefined);
+          setError({
+            tests: [],
+            message: `Ошибка при компиляции кода.`,
+          });
+        });
+
+        socket.on(
+          'testResultsComplete',
+          ({ code, results }: { code: number; results: TestResults }) => {
+            console.log('[t] Test results', code, results);
+
+            // Use setIsRunningTests from the store
+            console.log('Setting isRunningTests to false');
+
+            setIsRunningTests(false);
+
+            if (code <= 1) {
+              // Update test results in the store
+              setTestResults(results);
+
+              if (results.failing.length > 0) {
+                setSuccess(undefined);
+
+                setFailureTabTestId(
+                  results.all.findIndex((x) => x.status === 'failed')
+                );
+
+                setError({
+                  tests: results.all
+                    .map((x, i) => (x.status === 'failed' ? i : null))
+                    .filter((x) => x !== null),
+                });
+              } else {
+                setError(undefined);
+                setSuccess({
+                  advancedTasksCompleted: true,
+                });
+              }
+            } else {
+              setIsRunningTests(false);
+              setError({
+                tests: [],
+                message: `Ошибка при проверке требований:`,
+              });
+            }
+          }
+        );
 
         socket.on('log', (log: string) => {
           console.log('Execution log', log);
           setEServerOutput((prevOutput) => {
             const newOutput = prevOutput + '\n' + log;
-
-            if (log.includes('Command failed with exit code 1') || log.includes('Process closed with code')) {
-              console.log('Setting output', newOutput);
-              setCheckCode(false);
-              setSuccess(undefined);
-              setError({
-                message: 'Ошибка при выполнении кода. ' + newOutput,
-                tests: ['Требование 2', 'Требование 3', 'Требование 4'],
-              });
-              return ''; // Reset output after setting error
-            } else if (log.includes(' Solidity files successfully')) {
-              setCheckCode(false);
-              setError(undefined);
-              setSuccess({
-                advancedTasksCompleted: false,
-              });
-            }
 
             return newOutput;
           });
@@ -418,6 +499,7 @@ export const FloatingActionBar = ({
               className="border-t-error flex flex-col gap-8 border-t bg-[#191419] px-8 py-6"
               style={{
                 height: errorPanelHeight ? `${errorPanelHeight}px` : undefined,
+                maxHeight: '70vh',
                 overflow: 'auto',
               }}
             >
@@ -463,6 +545,7 @@ export const FloatingActionBar = ({
                     onClick={() => {
                       setError(undefined);
                       setErrorPanelHeight(null); // Reset height on close
+                      setEServerOutput('');
                     }}
                   >
                     <path
@@ -475,13 +558,30 @@ export const FloatingActionBar = ({
               <div className="flex flex-col gap-6">
                 <div className="flex flex-row gap-2">
                   {error.tests.map((x) => (
-                    <div className="border-error flex flex-row items-center gap-2 rounded-[0.4167vw] border-[0.026vw] px-4 py-2">
+                    <button
+                      key={x}
+                      className={cn(
+                        'flex flex-row items-center gap-2 rounded-[0.4167vw] px-4 py-2',
+                        x === failureTabTestId
+                          ? 'bg-[#CF3336]/20'
+                          : 'border-error/50 hover:border-error cursor-pointer border-[0.026vw]'
+                      )}
+                      onClick={() => {
+                        setFailureTabTestId(x);
+                      }}
+                    >
                       <div className="bg-error h-1 w-1 rounded-full" />
-                      <span className="text-xs">{x}</span>
-                    </div>
+                      <span className="text-xs">{`Требование ${x + 1}`}</span>
+                    </button>
                   ))}
                 </div>
-                <pre className="text-error text-xs">{error.message}</pre>
+                <pre className="text-error text-xs">
+                  {error.message
+                    ? <>{error.message}<br/><br/>Log:<br/>{eServerOutput}</>
+                    : testResults?.failureDetails?.[
+                        testResults?.all[failureTabTestId!].failureId!
+                      ]}
+                </pre>
               </div>
             </div>
             <div
@@ -525,7 +625,8 @@ export const FloatingActionBar = ({
                 height: successPanelHeight
                   ? `${successPanelHeight}px`
                   : undefined,
-                overflow: 'auto', // Add overflow handling
+                maxHeight: '70vh',
+                overflow: 'auto',
               }}
             >
               <div className="flex w-full flex-row">
@@ -538,6 +639,7 @@ export const FloatingActionBar = ({
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5 cursor-pointer hover:opacity-50"
                     onClick={() => {
+                      setEServerOutput('');
                       setSuccess(undefined);
                       setSuccessPanelHeight(null); // Reset height on close
                     }}
@@ -935,6 +1037,7 @@ export const FloatingActionBar = ({
               className="border-t-primary flex flex-col gap-8 border-t bg-[#0F1622] px-8 py-6"
               style={{
                 height: errorPanelHeight ? `${errorPanelHeight}px` : undefined,
+                maxHeight: '70vh',
                 overflow: 'auto',
               }}
             >
@@ -976,6 +1079,7 @@ export const FloatingActionBar = ({
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5 cursor-pointer hover:opacity-50"
                     onClick={() => {
+                      setEServerOutput('');
                       setError(undefined);
                       setErrorPanelHeight(null); // Reset height on close
                     }}
@@ -988,6 +1092,19 @@ export const FloatingActionBar = ({
                 </div>
               </div>
               <div className="flex flex-col gap-6">
+                {currentTest && isRunningTests && (
+                  <div className="flex flex-row items-center gap-2 rounded-md bg-[#152133] p-3">
+                    <div
+                      className={`h-2 w-2 rounded-full ${currentTest.status === 'passed' ? 'bg-[#33CF8E]' : 'bg-[#CF3336]'}`}
+                    />
+                    <span className="text-sm">
+                      Тест: {currentTest.name} -{' '}
+                      {currentTest.status === 'passed'
+                        ? 'Пройден'
+                        : 'Не пройден'}
+                    </span>
+                  </div>
+                )}
                 <pre className="text-primary text-xs">{eServerOutput}</pre>
               </div>
             </div>
@@ -1049,42 +1166,23 @@ export const FloatingActionBar = ({
               <button
                 className={cn(
                   'not-disabled:border-primary group/run-button not-disabled:hover:bg-primary ml-auto flex gap-2 rounded-[5.2083vw] border px-6 py-3 text-sm not-disabled:cursor-pointer',
-                  checkCode && 'border-[#1242B2] bg-[#1242B2]'
+                  isRunningTests && 'border-[#1242B2] bg-[#1242B2]'
                 )}
-                disabled={checkCode}
+                disabled={isRunningTests}
                 onClick={async () => {
+                  setEServerOutput('');
                   setError(undefined);
                   setSuccess(undefined);
-                  setCheckCode(true);
+                  console.log('Setting isRunningTests to true');
+
+                  setIsRunningTests(true);
+                  resetTestResults();
                   sendMessageToIframe({
                     type: 'check-code',
                   });
-
-                  // socket.co
-
-                  // Randomly choose action
-                  //               if (Math.random() > 0.5) {
-                  //                 setError(undefined);
-                  //                 setSuccess(undefined);
-                  //                 setError({
-                  //                   message: `Line 5: Char 5: error: non-void function does not return a value [-Werror,-Wreturn-type]
-                  //   5 |     }
-                  //     |
-                  //     ^
-                  // 1 error generated.`,
-                  //                   tests: ['Требование 2', 'Требование 3', 'Требование 4'],
-                  //                 });
-                  //                 setIsAiMentorActive(true);
-                  //               } else {
-                  //                 setError(undefined);
-                  //                 setSuccess(undefined);
-                  //                 setSuccess({
-                  //                   advancedTasksCompleted: Math.random() > 0.5,
-                  //                 });
-                  //               }
                 }}
               >
-                {checkCode ? (
+                {isRunningTests ? (
                   <svg
                     width="20"
                     height="20"

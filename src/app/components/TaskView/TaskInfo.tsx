@@ -2,12 +2,27 @@ import Image from 'next/image';
 import { TaskNavigation, TaskStatusBadge } from '../LessonPage/plate/TaskCard';
 import { InfoPopover } from '../shared/InfoPopover';
 import PlateEditor from '../LessonPage/PlateEditor';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useTestResultStore } from '~/store/testResultStore';
 
 export default function TaskInfo({ task }: { task: any }) {
+  const {
+    testResults,
+    currentTest,
+    isRunningTests,
+    setTestResults,
+    setCurrentTest,
+    setIsRunningTests,
+    resetTestResults,
+  } = useTestResultStore();
+
+  useEffect(() => {
+    console.log('isRunningTests', isRunningTests);
+  }, [isRunningTests]);
+
   console.log('Task tests', task.tests);
   const tests = (task.tests as any[]).map((x: any) => ({
-    title: x.Name,
+    title: x.name,
     progress: 0,
     isAdvanced: false,
     result: true,
@@ -44,8 +59,6 @@ export default function TaskInfo({ task }: { task: any }) {
   //     result: true,
   //   },
   // ];
-
-  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <>
@@ -126,7 +139,53 @@ export default function TaskInfo({ task }: { task: any }) {
             <div className="flex flex-col gap-5">
               {tests.map((x, i) => (
                 <div className="flex flex-row gap-4" key={i}>
-                  {isLoading ? (
+                  {(testResults?.all.length || 0) > i ? (
+                    testResults?.all[i].status === 'passed' ? (
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z"
+                          fill="#195AF4"
+                        />
+                        <path
+                          d="M6.625 10.2104L8.73396 12.3194L13.3737 7.67969"
+                          stroke="#F2F2F2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    ) : (
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M19 10C19 14.9706 14.9706 19 10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1C14.9706 1 19 5.02944 19 10Z"
+                          fill="#CF3336"
+                        />
+                        <path
+                          d="M7.17188 12.8319L12.8319 7.17188"
+                          stroke="#F2F2F2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M12.8319 12.8319L7.17188 7.17188"
+                          stroke="#F2F2F2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    )
+                  ) : isRunningTests ? (
                     <svg
                       width="20"
                       height="20"

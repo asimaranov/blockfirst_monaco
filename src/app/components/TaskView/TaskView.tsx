@@ -26,6 +26,11 @@ export default function TaskView({
   const [isMentorPopoverShown, setIsMentorPopoverShown] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+  const [testsStatus, setTestsStatus] = useState<{
+    [key: string]: 'success' | 'error' | 'loading';
+  }>({});
+
   const labels = ['Глава 1', 'Глава 2', 'Глава 3'];
 
   useEffect(() => {

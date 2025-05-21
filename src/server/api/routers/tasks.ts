@@ -24,7 +24,9 @@ import {
   getDocumentWithFields,
   extractCodeFromElements,
 } from '~/server/utils/document';
+import { extractTestNames } from '~/server/utils/tests';
 import { SyncedDocument } from '~/server/models/SyncedDocument';
+import Cryptr from 'cryptr';
 
 const headingDepth: Record<string, number> = {
   [HEADING_KEYS.h1]: 1,
@@ -57,6 +59,7 @@ export interface TaskData {
     Name?: string;
     content: string;
   }>;
+  data?: string;
 }
 
 export const tasksRouter = createTRPCRouter({
@@ -64,6 +67,9 @@ export const tasksRouter = createTRPCRouter({
     .input(z.object({ taskId: z.string() }))
     .query(async ({ input, ctx }) => {
       const { taskId } = input;
+
+      const cryptr = new Cryptr(process.env.CRYPTR_SECRET_KEY!);
+
 
       try {
         const { document, data, headings } = await getDocumentWithFields<{
@@ -76,10 +82,6 @@ export const tasksRouter = createTRPCRouter({
           'Files list-Elements': TElement[];
           Tests: string;
           'Tests-Elements': TElement[];
-          'Tests-SubHeadings': {
-            Name: string;
-            'Content-Elements': TElement[];
-          }[];
         }>(taskId, [
           'Title',
           'Hero',
@@ -89,12 +91,16 @@ export const tasksRouter = createTRPCRouter({
           {
             field: 'Tests',
             includeElements: true,
-            includeSubHeadings: [
-              { field: 'Name', includeElements: false },
-              { field: 'Content', includeElements: true },
-            ],
           },
         ]);
+
+        console.log('Tests elements', data['Tests-Elements']);
+        const testsCode = extractCodeFromElements(data['Tests-Elements']);
+        console.log('Tests code', testsCode);
+
+        // Extract test names from tests code
+        const testNames = extractTestNames(testsCode);
+        console.log('Test names:', testNames);
 
         const filesList = data['Files list-Elements'].map(
           (x) => x.children[0].text
@@ -171,14 +177,20 @@ export const tasksRouter = createTRPCRouter({
           savedFilesCode: savedFilesCode,
           completionCount: '5+',
           rating: '4.9',
-          tests: data['Tests-SubHeadings'].map((x) => ({
-            ...x,
-            content: extractCodeFromElements(x['Content-Elements']),
-          })),
+          tests:
+            testNames?.map((x: string) => ({
+              name: x,
+            })) || [],
           status: ['available', 'in-progress', 'completed'][
             Math.floor(Math.random() * 3)
           ],
           advancedTasksSolved: Math.random() > 0.5,
+          data: cryptr.encrypt(JSON.stringify({
+            userId: ctx.session?.user?.id,
+            taskId,
+            testsCode,
+            testNames,
+          })),
         } as TaskData;
       } catch (error) {
         console.error('Error fetching task:', error);
@@ -239,10 +251,6 @@ export const tasksRouter = createTRPCRouter({
                 Math.floor(Math.random() * 3)
               ],
               advancedTasksSolved: Math.random() > 0.5,
-              tests: data['Tests-SubHeadings'].map((x) => ({
-                name: x.name,
-                content: extractCodeFromElements(x['Content-Elements']),
-              })),
             } as TaskData;
           } catch (error) {
             console.error(`Error fetching task ${taskId}:`, error);
