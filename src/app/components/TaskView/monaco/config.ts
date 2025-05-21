@@ -305,10 +305,14 @@ export const configurePostStart = async (
     configResult.taskData.filesCode
   )) {
     const uri = vscode.Uri.file(`/workspace/contracts/${fileName}`);
-    await vscode.workspace.openTextDocument(uri);
-    await vscode.window.showTextDocument(uri, {
-      preview: false,
-    });
+    try { 
+      await vscode.workspace.openTextDocument(uri);
+      await vscode.window.showTextDocument(uri, {
+        preview: false,
+      });
+    } catch (error) {
+      console.error('Error opening text document', error);
+    }
   }
 
   // await Promise.all([
