@@ -5,6 +5,8 @@ import { api } from '~/trpc/react';
 
 import { useEffect, useRef } from 'react';
 import { cn } from '~/helpers';
+import { useMonacoEditorStore } from '~/store/monacoEditorStore';
+import { useTestResultStore } from '~/store/testResultStore';
 
 const ScrollIcon = ({ className }: { className?: string }) => (
   <svg
@@ -45,6 +47,10 @@ const ScrollIcon = ({ className }: { className?: string }) => (
 export const ResetConfirmationModal = ({ taskId }: { taskId: string }) => {
   const { isResetModalOpen, buttonPosition, closeResetModal, resetCode } =
     useResetStore();
+  const { resetEditor, iframeKey, setIframeKey, setShowActionBar } =
+    useMonacoEditorStore();
+  const { resetTestResults } = useTestResultStore();
+
   const modalRef = useRef<HTMLDivElement>(null);
 
   // Initialize the mutation
@@ -85,17 +91,23 @@ export const ResetConfirmationModal = ({ taskId }: { taskId: string }) => {
   };
 
   const handleReset = async () => {
-    // Clear saved code if task ID exists
-    console.log('[t] Resetting code', taskId);
-    if (taskId) {
-      console.log('[t] Clearing saved code', taskId);
-      try {
-        await clearSavedMutation.mutateAsync({ taskId });
+    closeResetModal();
+    console.log('[t] Clearing saved code', taskId);
+    try {
+      resetEditor();
 
-        window?.location.reload();
-      } catch (error) {
-        console.error('Failed to clear saved code:', error);
+      await clearSavedMutation.mutateAsync({ taskId });
+
+      const iframe = document.getElementById(
+        'monaco-editor-iframe'
+      ) as HTMLIFrameElement;
+      if (iframe) {
+        setShowActionBar(false);
+        setIframeKey(iframeKey + 1);
+        resetTestResults();
       }
+    } catch (error) {
+      console.error('Failed to clear saved code:', error);
     }
   };
 

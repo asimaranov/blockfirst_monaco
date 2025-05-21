@@ -152,20 +152,6 @@ export const FloatingActionBar = ({
   );
 
   useEffect(() => {
-    //     setError({
-    //       message: `Line 5: Char 5: error: non-void function does not return a value [-Werror,-Wreturn-type]
-    //   5 |     }
-    //     |
-    //     ^
-    // 1 error generated.`,
-    //       tests: ['Требование 2', 'Требование 3', 'Требование 4'],
-    //     });
-    // setSuccess({
-    //   advancedTasksCompleted: true,
-    // });
-  }, []);
-
-  useEffect(() => {
     const updatePosition = () => {
       const editorsDiv = document.getElementById('editorsDiv');
       if (editorsDiv) {
@@ -576,11 +562,20 @@ export const FloatingActionBar = ({
                   ))}
                 </div>
                 <pre className="text-error text-xs">
-                  {error.message
-                    ? <>{error.message}<br/><br/>Log:<br/>{eServerOutput}</>
-                    : testResults?.failureDetails?.[
-                        testResults?.all[failureTabTestId!].failureId!
-                      ]}
+                  {error.message ? (
+                    <>
+                      {error.message}
+                      <br />
+                      <br />
+                      Log:
+                      <br />
+                      {eServerOutput}
+                    </>
+                  ) : (
+                    testResults?.failureDetails?.[
+                      testResults?.all[failureTabTestId!].failureId!
+                    ]
+                  )}
                 </pre>
               </div>
             </div>

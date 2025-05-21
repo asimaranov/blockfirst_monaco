@@ -12,6 +12,7 @@ import { TaskReportForm } from './TaskReportForm';
 import { useParams } from 'next/navigation';
 import { createPortal } from 'react-dom';
 import { FloatingActionBar } from './FloatingActionBar';
+import { useMonacoEditorStore } from '~/store/monacoEditorStore';
 
 export const StarIcon = ({ className }: { className?: string }) => {
   return (
@@ -62,10 +63,16 @@ export default function MonacoView({
   taskId: string;
   taskData: any;
 }) {
-  const [showActionBar, setShowActionBar] = useState(true);
-  const [iframeLoaded, setIframeLoaded] = useState(false);
-  const [editorReady, setEditorReady] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  const { 
+    editorReady, 
+    setEditorReady, 
+    setIframeLoaded,
+    iframeKey,
+    showActionBar,
+    setShowActionBar
+  } = useMonacoEditorStore();
 
   // Function to handle iframe load event
   const handleIframeLoad = () => {
@@ -84,6 +91,7 @@ export default function MonacoView({
         // Handle messages from iframe
         if (event.data.type === 'monaco-editor-ready') {
           console.log('Monaco editor is ready in iframe');
+          setShowActionBar(true);
           setEditorReady(true);
         } else if (event.data.type === 'monaco-editor-error') {
           console.error('Error in Monaco editor:', event.data.error);
@@ -104,8 +112,6 @@ export default function MonacoView({
     };
   }, []);
 
-  const [iframeKey, setIframeKey] = useState(0);
-
 
   // useEffect(() => {
   //   createPortal(
@@ -124,7 +130,9 @@ export default function MonacoView({
       {/* Editor container with iframe */}
       <div id="editorsDiv" className="relative h-full w-full">
         <iframe
+          id="monaco-editor-iframe"
           ref={iframeRef}
+          key={iframeKey}
           src={`/monaco-iframe/${taskId}`}
           className={cn('h-full w-full border-0', !editorReady && 'opacity-0')}
           onLoad={handleIframeLoad}
