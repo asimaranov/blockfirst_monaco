@@ -19,7 +19,7 @@ export const useMonacoEditorStore = create<MonacoEditorState>((set) => ({
   iframeKey: 0,
   editorReady: false,
   iframeLoaded: false,
-  showActionBar: true,
+  showActionBar: false,
 
   setEditorReady: (ready) => set({ editorReady: ready }),
   setShowActionBar: (show) => set({ showActionBar: show }),

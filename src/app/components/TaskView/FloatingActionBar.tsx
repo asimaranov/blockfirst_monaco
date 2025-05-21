@@ -11,6 +11,7 @@ import { useParams } from 'next/navigation';
 import { StarIcon, StarIconFilled } from './MonacoView';
 import { io, Socket } from 'socket.io-client';
 import { useTestResultStore } from '~/store/testResultStore';
+import { useMonacoEditorStore } from '~/store/monacoEditorStore';
 
 interface TestResult {
   name: string;
@@ -91,9 +92,8 @@ export const FloatingActionBar = ({
     resetTestResults,
   } = useTestResultStore();
 
-  useEffect(() => {
-    console.log('isRunningTests state', isRunningTests);
-  }, [isRunningTests]);
+  const { editorReady } = useMonacoEditorStore();
+
 
   // Function to send messages to iframe
   const sendMessageToIframe = useCallback((message: any) => {
@@ -1161,9 +1161,10 @@ export const FloatingActionBar = ({
               <button
                 className={cn(
                   'not-disabled:border-primary group/run-button not-disabled:hover:bg-primary ml-auto flex gap-2 rounded-[5.2083vw] border px-6 py-3 text-sm not-disabled:cursor-pointer',
-                  isRunningTests && 'border-[#1242B2] bg-[#1242B2]'
+                  isRunningTests && 'border-[#1242B2] bg-[#1242B2]',
+                  !editorReady && 'border-[#1242B2] opacity-50'
                 )}
-                disabled={isRunningTests}
+                disabled={isRunningTests || !editorReady}
                 onClick={async () => {
                   setEServerOutput('');
                   setError(undefined);
