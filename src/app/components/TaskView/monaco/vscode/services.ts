@@ -8,6 +8,7 @@ import * as monaco from '@codingame/monaco-vscode-editor-api';
 import type { OpenEditor } from '@codingame/monaco-vscode-editor-service-override';
 import { LogLevel } from '@codingame/monaco-vscode-api';
 import { mergeServices, type ViewsConfig, type VscodeApiConfig } from 'monaco-languageclient/vscode/services';
+import { Uri } from 'vscode';
 
 export type OverallConfigType = 'extended' | 'classic';
 
@@ -86,7 +87,7 @@ export const augmentWorkspaceConfig = (vscodeApiConfig: VscodeApiConfig) => {
             workspaceProvider: {
                 trusted: true,
                 workspace: {
-                    workspaceUri: vscode.Uri.file('/workspace.code-workspace')
+                    workspaceUri: Uri.file('/workspace.code-workspace')
                 },
                 async open() {
                     window.open(window.location.href);

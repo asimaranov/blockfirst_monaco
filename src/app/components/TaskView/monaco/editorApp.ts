@@ -3,7 +3,7 @@
  * Licensed under the MIT License. See LICENSE in the package root for license information.
  * ------------------------------------------------------------------------------------------ */
 
-import * as vscode from 'vscode';
+import { Uri } from 'vscode';
 import * as monaco from '@codingame/monaco-vscode-editor-api';
 import { createModelReference, type ITextFileEditorModel } from '@codingame/monaco-vscode-api/monaco';
 import { ConfigurationTarget, IConfigurationService, StandaloneServices } from '@codingame/monaco-vscode-api';
@@ -294,7 +294,7 @@ export const didModelContentChange = (textModels: TextModels, onTextChanged?: (t
 
 export const buildModelReference = async (code?: CodeContent, logger?: Logger): Promise<IReference<ITextFileEditorModel> | undefined> => {
     if (code) {
-        const modelRef = await createModelReference(vscode.Uri.parse(code.uri), code.text);
+        const modelRef = await createModelReference(Uri.parse(code.uri), code.text);
 
         // update the text if different
         if (modelRef.object.textEditorModel?.getValue() !== code.text) {
