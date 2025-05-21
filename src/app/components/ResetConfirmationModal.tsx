@@ -95,14 +95,13 @@ export const ResetConfirmationModal = ({ taskId }: { taskId: string }) => {
     console.log('[t] Clearing saved code', taskId);
     try {
       resetEditor();
-
+      setShowActionBar(false);
       await clearSavedMutation.mutateAsync({ taskId });
 
       const iframe = document.getElementById(
         'monaco-editor-iframe'
       ) as HTMLIFrameElement;
       if (iframe) {
-        setShowActionBar(false);
         setIframeKey(iframeKey + 1);
         resetTestResults();
       }
