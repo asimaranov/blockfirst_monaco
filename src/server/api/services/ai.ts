@@ -9,6 +9,7 @@ import { PlanType } from '~/server/models/userData';
 export const messageSchema = z.object({
   role: z.enum(['user', 'assistant']),
   content: z.string(),
+  lastFailure: z.string().nullable().optional(),
   timestamp: z
     .date()
     .optional()
@@ -184,12 +185,16 @@ export async function getAiCompletion(
     // Format messages for Claude API
     const formattedMessages = messages.map((msg) => ({
       role: msg.role,
-      content: msg.content,
+      content: msg.lastFailure
+        ? `${msg.content}\n\nUser's last failure log: ${msg.lastFailure}`
+        : msg.content,
     }));
 
     const response = await client.messages.create({
-      model: 'claude-3-5-sonnet-20240620',
+      model: 'claude-3-7-sonnet-20250219',
       max_tokens: 1024,
+      system:
+        "Ты – профессионал в solidity разработке. Ты работаешь аи ассистентом, помогающим студенту решить задачу. Если пользователь просит помощь, дай ему подсказку, которая поможет ему решить проблему, но НЕ ДАВАЙ ПРЯМОЕ РЕШЕНИЕ. Задавай наводящие вопросы, объясни концепцию или предложи направление для размышления. Отвечай коротко, только по проблеме.",
       messages: formattedMessages,
     });
 

@@ -29,12 +29,12 @@ interface TestResults {
 }
 
 export const FloatingActionBar = ({
-  setIsAiMentorActive,
+  setAiMentorLastFailure,
   iframeRef,
   taskData,
   setTaskStatus,
 }: {
-  setIsAiMentorActive: (isActive: boolean) => void;
+  setAiMentorLastFailure: (lastFailure: string) => void;
   iframeRef: React.RefObject<HTMLIFrameElement>;
   taskData: any;
   setTaskStatus: (status: string) => void;
@@ -364,6 +364,7 @@ export const FloatingActionBar = ({
 
   // Listen for messages from parent window
   useEffect(() => {
+    let localLog = eServerOutput;
     const handleMessage = (event: MessageEvent) => {
       console.log('Event', event);
       // Handle commands from parent
@@ -428,6 +429,8 @@ export const FloatingActionBar = ({
             tests: [],
             message: `Ошибка при компиляции кода.`,
           });
+          console.log(`[AI] Ошибка при компиляции кода. Log: ${localLog}`);
+          setAiMentorLastFailure(`Ошибка при компиляции кода. Log: ${localLog}`);
         });
 
         socket.on(
@@ -548,6 +551,8 @@ export const FloatingActionBar = ({
           setEServerOutput((prevOutput) => {
             const newOutput = prevOutput + '\n' + log;
 
+            localLog = newOutput;
+
             return newOutput;
           });
         });
@@ -610,7 +615,7 @@ export const FloatingActionBar = ({
               className="border-t-error flex flex-col gap-8 border-t bg-[#191419] px-8 py-6"
               style={{
                 height: errorPanelHeight ? `${errorPanelHeight}px` : undefined,
-                maxHeight: '90vh',
+                maxHeight: '80vh',
                 overflow: 'auto',
               }}
             >
@@ -745,7 +750,7 @@ export const FloatingActionBar = ({
                 height: successPanelHeight
                   ? `${successPanelHeight}px`
                   : undefined,
-                maxHeight: '90vh',
+                maxHeight: '80vh',
                 overflow: 'auto',
               }}
             >
@@ -1158,7 +1163,7 @@ export const FloatingActionBar = ({
               className="border-t-primary flex flex-col gap-8 border-t bg-[#0F1622] px-8 py-6"
               style={{
                 height: errorPanelHeight ? `${errorPanelHeight}px` : undefined,
-                maxHeight: '90vh',
+                maxHeight: '80vh',
                 overflow: 'auto',
               }}
             >
@@ -1278,7 +1283,9 @@ export const FloatingActionBar = ({
                   className="h-5 w-5 shrink-0"
                 />
                 <div className="flex items-center justify-center gap-1">
-                  <span className="text-foreground text-xl leading-5">{taskData.submissionCount}</span>
+                  <span className="text-foreground text-xl leading-5">
+                    {taskData.submissionCount}
+                  </span>
                   <span className="text-secondary text-xs leading-5">
                     — Проверок кода
                   </span>

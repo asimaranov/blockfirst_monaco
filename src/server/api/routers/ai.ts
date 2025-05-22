@@ -261,6 +261,7 @@ export const aiRouter = createTRPCRouter({
       z.object({
         content: z.string(),
         taskId: z.string().optional(),
+        lastFailure: z.string().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -289,12 +290,17 @@ export const aiRouter = createTRPCRouter({
           });
         }
 
+        console.log('input.lastFailure', input.lastFailure);
+
         // Add user message
         const userMessage: Message = {
           role: 'user' as const,
           content: input.content,
           timestamp: new Date(),
+          lastFailure: input.lastFailure,
         };
+
+        console.log('userMessage', userMessage);
 
         chatHistory.messages.push(userMessage);
 

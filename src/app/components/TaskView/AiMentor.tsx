@@ -12,7 +12,17 @@ import LoadingIndicator from './AiMentor/LoadingIndicator';
 import EmptyState from './AiMentor/EmptyState';
 import ChatLoading from './AiMentor/ChatLoading';
 
-export default function AiMentor({ task }: { task: any }) {
+export default function AiMentor({
+  task,
+  aiMentorLastFailure,
+  setAiMentorLastFailure,
+  setIsAiMentorActive,
+}: {
+  task: any;
+  aiMentorLastFailure: string;
+  setAiMentorLastFailure: (lastFailure: string) => void;
+  setIsAiMentorActive: (isActive: boolean) => void;
+}) {
   const [isGenerating, setIsGenerating] = useState(false);
   const [messages, setMessages] = useState<
     {
@@ -158,7 +168,10 @@ export default function AiMentor({ task }: { task: any }) {
       await sendMessageMutation.mutateAsync({
         content: messageContent,
         taskId: task?.id,
+        ...(aiMentorLastFailure && { lastFailure: aiMentorLastFailure }),
       });
+      setAiMentorLastFailure('');
+      setIsAiMentorActive(false);
     } catch (error) {
       // Error handling is done in the onError callback
     }

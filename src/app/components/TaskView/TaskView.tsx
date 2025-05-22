@@ -23,16 +23,16 @@ export default function TaskView({
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<'info' | 'ai-mentor'>('info');
   const [isAiMentorActive, setIsAiMentorActive] = useState(false);
+  const [aiMentorLastFailure, setAiMentorLastFailure] = useState('');
+
   const [isMentorPopoverShown, setIsMentorPopoverShown] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
 
   const [taskStatus, setTaskStatus] = useState(task.status);
 
-
   useEffect(() => {
     console.log('taskStatuss', taskStatus);
   }, [taskStatus]);
-
 
   useEffect(() => {
     if (!window.localStorage.aiPopoverShown) {
@@ -160,8 +160,17 @@ export default function TaskView({
             </button>
           </div>
 
-          {activeTab === 'info' && <TaskInfo task={task} taskStatus={taskStatus} />}
-          {activeTab === 'ai-mentor' && <AiMentor task={task} />}
+          {activeTab === 'info' && (
+            <TaskInfo task={task} taskStatus={taskStatus} />
+          )}
+          {activeTab === 'ai-mentor' && (
+            <AiMentor
+              task={task}
+              aiMentorLastFailure={aiMentorLastFailure}
+              setAiMentorLastFailure={setAiMentorLastFailure}
+              setIsAiMentorActive={setIsAiMentorActive}
+            />
+          )}
         </div>
       ) : (
         <div className="border-accent flex h-full w-26 shrink-0 flex-col items-center gap-8 border-r">
@@ -243,7 +252,10 @@ export default function TaskView({
 
       <div className="flex flex-col">
         <MonacoView
-          setIsAiMentorActive={setIsAiMentorActive}
+          setAiMentorLastFailure={(lastFailure: string) => {
+            setAiMentorLastFailure(lastFailure);
+            setIsAiMentorActive(true);
+          }}
           isCollapsed={collapsed}
           taskId={task.id}
           taskData={task}

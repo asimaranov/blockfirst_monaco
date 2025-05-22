@@ -54,13 +54,13 @@ export const StarIconFilled = ({ className }: { className?: string }) => {
 
 
 export default function MonacoView({
-  setIsAiMentorActive,
+  setAiMentorLastFailure,
   isCollapsed,
   taskId,
   taskData,
   setTaskStatus,
 }: {
-  setIsAiMentorActive: (isActive: boolean) => void;
+  setAiMentorLastFailure: (lastFailure: string) => void;
   isCollapsed: boolean;
   taskId: string;
   taskData: any;
@@ -155,7 +155,7 @@ export default function MonacoView({
 
       {showActionBar && (
         <FloatingActionBar
-          setIsAiMentorActive={setIsAiMentorActive}
+          setAiMentorLastFailure={setAiMentorLastFailure}
           iframeRef={iframeRef}
           taskData={lastTaskData || taskData}
           setTaskStatus={setTaskStatus}

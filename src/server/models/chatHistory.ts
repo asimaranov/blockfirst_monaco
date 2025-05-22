@@ -8,6 +8,7 @@ export interface ChatMessage {
   feedback?: 'upvote' | 'downvote' | null;
   messageType?: 'error' | 'success' | null;
   messageTypeExplanation?: string | null;
+  lastFailure?: string | null;
 }
 
 export interface ChatHistory extends Document {
@@ -28,6 +29,10 @@ const chatMessageSchema = new Schema<ChatMessage>(
     content: {
       type: String,
       required: true,
+    },
+    lastFailure: {
+      type: String,
+      required: false,
     },
     timestamp: {
       type: Date,
