@@ -110,7 +110,7 @@ export default function TaskInfo({ task, taskStatus }: { task: any, taskStatus: 
           <div className="flex flex-col gap-6">
             <div className="flex flex-row justify-between">
               <TaskNavigation labels={task.labels} task={task} />
-              <TaskStatusBadge status={taskStatus} />
+              <TaskStatusBadge status={taskStatus as 'available' | 'in-progress' | 'completed'} />
             </div>
             <div className="flex flex-col gap-4">
               <span className="text-2xl font-medium">{task.title}</span>
