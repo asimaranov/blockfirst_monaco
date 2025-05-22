@@ -33,7 +33,6 @@ export default function TaskView({
     console.log('taskStatuss', taskStatus);
   }, [taskStatus]);
 
-  const labels = task.path;
 
   useEffect(() => {
     if (!window.localStorage.aiPopoverShown) {
@@ -203,12 +202,12 @@ export default function TaskView({
               </svg>
               <span className="text-xs">Задача:</span>
               <div className="flex">
-                {labels.map((x, i) => (
+                {task.path.map((x: string, i: number) => (
                   <React.Fragment key={i}>
                     <div className="text-secondary/50 text-xs whitespace-nowrap">
                       {x}
                     </div>
-                    {i !== labels.length - 1 && (
+                    {i !== task.path.length - 1 && (
                       <div className="flex items-center justify-center px-2">
                         <div className="bg-secondary h-1 w-1 rounded-full opacity-50"></div>
                       </div>
