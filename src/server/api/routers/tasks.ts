@@ -50,6 +50,7 @@ export interface TaskData {
   labels: string[];
   title: any;
   description: any;
+  path: string[];
   problemStatement: TElement[];
   completionCount: string;
   rating: string;
@@ -84,10 +85,12 @@ export const tasksRouter = createTRPCRouter({
           'Files list-Elements': TElement[];
           Tests: string;
           'Tests-Elements': TElement[];
+          'Path-Elements': TElement[];
         }>(taskId, [
           'Title',
           'Hero',
           'Description',
+          { field: 'Path', includeElements: true },
           { field: 'Problem Statement', includeElements: true },
           { field: 'Files list', includeElements: true },
           {
@@ -95,6 +98,8 @@ export const tasksRouter = createTRPCRouter({
             includeElements: true,
           },
         ]);
+
+
 
         // console.log('Tests elements', data['Tests-Elements']);
         const testsCode = extractCodeFromElements(data['Tests-Elements']);
@@ -182,6 +187,8 @@ export const tasksRouter = createTRPCRouter({
 
         // console.log('Found doc by id', taskId, document);
 
+        console.log('Path elements', data['Path-Elements']?.map((x) => x.children[0].text) || []);
+
         return {
           id: document.id,
           updateDate: document.updatedAt.toLocaleDateString('ru-RU'),
@@ -192,9 +199,9 @@ export const tasksRouter = createTRPCRouter({
             document.user?.username ||
             'Алекс',
           heroTagline: 'Реши задачу за нашего героя!',
-          labels: ['Глава 1', 'Тема 2', 'Урок 2'],
           title: data.Title || document.title || 'Без названия',
           description: data.Description || document.content || '',
+          path: data['Path-Elements']?.map((x) => x.children[0].text) || [],
           problemStatement: data['Problem Statement-Elements'] || [],
           filesList: filesList || [],
           filesCode: filesCode,
@@ -266,6 +273,7 @@ export const tasksRouter = createTRPCRouter({
                 name: string;
                 'Content-Elements': TElement[];
               }[];
+              'Path-Elements': TElement[];
             }>(taskId, [
               'Title',
               'Hero',
@@ -276,6 +284,10 @@ export const tasksRouter = createTRPCRouter({
                 field: 'Tests',
                 includeElements: true,
                 includeSubHeadings: ['Name', 'Content'],
+              },
+              {
+                field: 'Path',
+                includeElements: true,
               },
             ]);
 
@@ -294,9 +306,9 @@ export const tasksRouter = createTRPCRouter({
                 document.user?.profileImageUrl || '/heroes/Alex.png',
               heroName: data.Hero || 'Герой',
               heroTagline: 'Реши задачу за нашего героя!',
-              labels: ['Глава 1', 'Тема 2', 'Урок 2'],
               title: data.Title || 'Без названия',
               description: data.Description || '',
+              path: data['Path-Elements']?.map((x) => x.children[0].text) || [],
               problemStatement: data['Problem StatementElements'] || [],
               filesList: data['Files listElements'] || [],
               completionCount: '5+',

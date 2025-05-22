@@ -33,7 +33,7 @@ export default function TaskView({
     console.log('taskStatuss', taskStatus);
   }, [taskStatus]);
 
-  const labels = ['Глава 1', 'Глава 2', 'Глава 3'];
+  const labels = task.path;
 
   useEffect(() => {
     if (!window.localStorage.aiPopoverShown) {

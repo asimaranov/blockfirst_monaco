@@ -336,7 +336,7 @@ export function TaskCard({
           </div>
           <div className="flex w-full flex-col p-5 sm:p-8">
             <div className="flex flex-row justify-between pb-8">
-              <TaskNavigation labels={labels} task={task} />
+              <TaskNavigation labels={task.path} task={task} />
 
               <div className="flex flex-row items-center gap-2">
                 <InfoPopover
@@ -639,7 +639,7 @@ export function TaskCardGridItem({
           </div>
           <div className="flex w-full flex-col p-5 sm:p-8">
             <div className="flex flex-row justify-between pb-8">
-              <TaskNavigation labels={labels} task={task} short={true} />
+              <TaskNavigation labels={task.path} task={task} short={true} />
 
               <div className="flex flex-row items-center gap-2">
                 <InfoPopover
