@@ -468,6 +468,13 @@ export const FloatingActionBar = ({
                     .filter((x) => x !== null),
                 });
 
+                setAiMentorLastFailure(
+                  `Ошибка требований. Не выполнены следующие требования: ${results.all
+                    .filter((x) => x.status === 'failed')
+                    .map((x) => x.name)
+                    .join(', ')}. Log: ${localLog}`
+                );
+
                 console.log(
                   'Submitting task failure status for ID:',
                   taskData.id
@@ -499,6 +506,7 @@ export const FloatingActionBar = ({
                   'Submitting task completion status for ID:',
                   taskData.id
                 );
+                
                 // Optimistically update the UI
                 if (taskData) {
                   // Apply optimistic update to make UI responsive immediately
