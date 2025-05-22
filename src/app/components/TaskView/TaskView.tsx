@@ -26,10 +26,12 @@ export default function TaskView({
   const [isMentorPopoverShown, setIsMentorPopoverShown] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
 
-  const [loading, setLoading] = useState(false);
-  const [testsStatus, setTestsStatus] = useState<{
-    [key: string]: 'success' | 'error' | 'loading';
-  }>({});
+  const [taskStatus, setTaskStatus] = useState(task.status);
+
+
+  useEffect(() => {
+    console.log('taskStatuss', taskStatus);
+  }, [taskStatus]);
 
   const labels = ['Глава 1', 'Глава 2', 'Глава 3'];
 
@@ -159,7 +161,7 @@ export default function TaskView({
             </button>
           </div>
 
-          {activeTab === 'info' && <TaskInfo task={task} />}
+          {activeTab === 'info' && <TaskInfo task={task} taskStatus={taskStatus} />}
           {activeTab === 'ai-mentor' && <AiMentor task={task} />}
         </div>
       ) : (
@@ -214,7 +216,7 @@ export default function TaskView({
                   </React.Fragment>
                 ))}
               </div>
-              <TaskStatusBadge status={task.status} className="ml-6" />
+              <TaskStatusBadge status={taskStatus} className="ml-6" />
             </div>
           </div>
           <button
@@ -246,8 +248,8 @@ export default function TaskView({
           isCollapsed={collapsed}
           taskId={task.id}
           taskData={task}
+          setTaskStatus={setTaskStatus}
         />
-        <div className="w-full flex-1 bg-blue-300"></div>
       </div>
     </div>
   );

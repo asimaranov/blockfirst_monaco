@@ -13,6 +13,7 @@ import { useParams } from 'next/navigation';
 import { createPortal } from 'react-dom';
 import { FloatingActionBar } from './FloatingActionBar';
 import { useMonacoEditorStore } from '~/store/monacoEditorStore';
+import { api } from '~/trpc/react';
 
 export const StarIcon = ({ className }: { className?: string }) => {
   return (
@@ -57,11 +58,13 @@ export default function MonacoView({
   isCollapsed,
   taskId,
   taskData,
+  setTaskStatus,
 }: {
   setIsAiMentorActive: (isActive: boolean) => void;
   isCollapsed: boolean;
   taskId: string;
   taskData: any;
+  setTaskStatus: (status: string) => void;
 }) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
@@ -125,6 +128,15 @@ export default function MonacoView({
   //   );
   // }, []);
 
+  const { data: lastTaskData } = api.tasks.getById.useQuery(
+    { taskId },
+    {
+      enabled: !!taskId,
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      initialData: taskData,
+    }
+  );
+
   return (
     <div className={cn('h-full w-272', isCollapsed && 'w-396')}>
       {/* Editor container with iframe */}
@@ -145,7 +157,8 @@ export default function MonacoView({
         <FloatingActionBar
           setIsAiMentorActive={setIsAiMentorActive}
           iframeRef={iframeRef}
-          taskData={taskData}
+          taskData={lastTaskData || taskData}
+          setTaskStatus={setTaskStatus}
         />
       )}
     </div>

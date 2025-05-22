@@ -29,6 +29,7 @@ const config = {
       'codingame/monaco-vscode-files-service-override',
       'vscode',
       'monaco-editor',
+      '@codingame/monaco-vscode-editor-api'
     ],
   },
   webpack: (config, { isServer }) => {

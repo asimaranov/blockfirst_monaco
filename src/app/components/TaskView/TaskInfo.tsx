@@ -5,7 +5,7 @@ import PlateEditor from '../LessonPage/PlateEditor';
 import { useEffect, useState } from 'react';
 import { useTestResultStore } from '~/store/testResultStore';
 
-export default function TaskInfo({ task }: { task: any }) {
+export default function TaskInfo({ task, taskStatus }: { task: any, taskStatus: string }) {
   const {
     testResults,
     isRunningTests,
@@ -110,7 +110,7 @@ export default function TaskInfo({ task }: { task: any }) {
           <div className="flex flex-col gap-6">
             <div className="flex flex-row justify-between">
               <TaskNavigation labels={task.labels} task={task} />
-              <TaskStatusBadge status={'completed'} />
+              <TaskStatusBadge status={taskStatus} />
             </div>
             <div className="flex flex-col gap-4">
               <span className="text-2xl font-medium">{task.title}</span>

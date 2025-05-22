@@ -12,6 +12,7 @@ import { StarIcon, StarIconFilled } from './MonacoView';
 import { io, Socket } from 'socket.io-client';
 import { useTestResultStore } from '~/store/testResultStore';
 import { useMonacoEditorStore } from '~/store/monacoEditorStore';
+import { api } from '~/trpc/react';
 
 interface TestResult {
   name: string;
@@ -31,10 +32,12 @@ export const FloatingActionBar = ({
   setIsAiMentorActive,
   iframeRef,
   taskData,
+  setTaskStatus,
 }: {
   setIsAiMentorActive: (isActive: boolean) => void;
   iframeRef: React.RefObject<HTMLIFrameElement>;
   taskData: any;
+  setTaskStatus: (status: string) => void;
 }) => {
   const [position, setPosition] = useState({
     bottom: 0,
@@ -94,6 +97,57 @@ export const FloatingActionBar = ({
 
   const { editorReady } = useMonacoEditorStore();
 
+  // Get the utils for cache invalidation
+  const utils = api.useUtils();
+
+  // Task submission mutation
+  const submitTaskMutation = api.tasks.submit.useMutation({
+    onSuccess: (data) => {
+      console.log('Task submission successful:', data);
+
+      // Invalidate the task queries to refresh the data
+      if (taskData?.id) {
+        console.log('Invalidating task queries for ID:', taskData.id);
+
+        // Invalidate specific task
+        utils.tasks.getById.invalidate({ taskId: taskData.id });
+
+        // Also invalidate any lists that might contain this task
+        utils.tasks.getMultiple.invalidate();
+      }
+    },
+    onError: (error) => {
+      console.error('Task submission failed:', error);
+    },
+  });
+
+  // Mark task as in-progress when component mounts
+  useEffect(() => {
+    // Only submit if we have a task ID and haven't already marked as in-progress
+    if (taskData?.id) {
+      console.log(
+        'Marking task as in-progress. Current status:',
+        taskData.status
+      );
+
+      submitTaskMutation.mutate(
+        {
+          taskId: taskData.id,
+          data: '', // Empty data means "in-progress"
+        },
+        {
+          onSuccess: () => {
+            setTaskStatus('in-progress');
+
+            console.log('Task marked as in-progress');
+          },
+          onError: (error) => {
+            console.error('Failed to mark task as in-progress:', error);
+          },
+        }
+      );
+    }
+  }, [taskData?.id]);
 
   // Function to send messages to iframe
   const sendMessageToIframe = useCallback((message: any) => {
@@ -334,7 +388,7 @@ export const FloatingActionBar = ({
 
         setIsRunningTests(true);
 
-        const test = false;
+        const test = true;
 
         const socket = io(
           test ? 'http://localhost:3005/' : 'https://eserver-1.blockfirst.io/'
@@ -378,7 +432,15 @@ export const FloatingActionBar = ({
 
         socket.on(
           'testResultsComplete',
-          ({ code, results }: { code: number; results: TestResults }) => {
+          ({
+            code,
+            results,
+            data,
+          }: {
+            code: number;
+            results: TestResults;
+            data: string;
+          }) => {
             console.log('[t] Test results', code, results);
 
             // Use setIsRunningTests from the store
@@ -402,11 +464,74 @@ export const FloatingActionBar = ({
                     .map((x, i) => (x.status === 'failed' ? i : null))
                     .filter((x) => x !== null),
                 });
+
+                console.log(
+                  'Submitting task failure status for ID:',
+                  taskData.id
+                );
+                submitTaskMutation.mutate(
+                  {
+                    taskId: taskData.id,
+                    data, // The encrypted data contains test results
+                  },
+                  {
+                    onSuccess: (response) => {
+                      console.log(
+                        'Task failure submitted successfully',
+                        response
+                      );
+                    },
+                    onError: (error) => {
+                      console.error('Failed to submit task failure:', error);
+                    },
+                  }
+                );
               } else {
                 setError(undefined);
                 setSuccess({
                   advancedTasksCompleted: true,
                 });
+
+                console.log(
+                  'Submitting task completion status for ID:',
+                  taskData.id
+                );
+                // Optimistically update the UI
+                if (taskData) {
+                  // Apply optimistic update to make UI responsive immediately
+                  utils.tasks.getById.setData(
+                    { taskId: taskData.id },
+                    (oldData) => {
+                      if (!oldData) return oldData;
+                      return {
+                        ...oldData,
+                        status: 'completed',
+                        advancedTasksSolved: true,
+                      };
+                    }
+                  );
+                }
+
+                submitTaskMutation.mutate(
+                  {
+                    taskId: taskData.id,
+                    data, // The encrypted data contains test results
+                  },
+                  {
+                    onSuccess: (response) => {
+                      console.log(
+                        'Task completion submitted successfully',
+                        response
+                      );
+                      if (response.success) {
+                        setTaskStatus('completed');
+                      }
+                    },
+                    onError: (error) => {
+                      console.error('Failed to submit task completion:', error);
+                    },
+                  }
+                );
               }
             } else {
               setIsRunningTests(false);
@@ -620,8 +745,8 @@ export const FloatingActionBar = ({
                 height: successPanelHeight
                   ? `${successPanelHeight}px`
                   : undefined,
-                  maxHeight: '90vh',
-                  overflow: 'auto',
+                maxHeight: '90vh',
+                overflow: 'auto',
               }}
             >
               <div className="flex w-full flex-row">
@@ -741,7 +866,7 @@ export const FloatingActionBar = ({
                         </svg>
 
                         <span className="text-xs leading-4">
-                        Все требования выполнены. Отличный результат!
+                          Все требования выполнены. Отличный результат!
                           {/* Требования с <span className="text-[#F48E19]">*</span>{' '}
                           выполнены. Отличный результат! */}
                         </span>
@@ -1153,7 +1278,7 @@ export const FloatingActionBar = ({
                   className="h-5 w-5 shrink-0"
                 />
                 <div className="flex items-center justify-center gap-1">
-                  <span className="text-foreground text-xl leading-5">0</span>
+                  <span className="text-foreground text-xl leading-5">{taskData.submissionCount}</span>
                   <span className="text-secondary text-xs leading-5">
                     — Проверок кода
                   </span>

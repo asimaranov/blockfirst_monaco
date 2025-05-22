@@ -3,7 +3,6 @@
  * Licensed under the MIT License. See LICENSE in the package root for license information.
  * ------------------------------------------------------------------------------------------ */
 
-import * as vscode from 'vscode';
 import * as monaco from '@codingame/monaco-vscode-editor-api';
 import type { OpenEditor } from '@codingame/monaco-vscode-editor-service-override';
 import { LogLevel } from '@codingame/monaco-vscode-api';
