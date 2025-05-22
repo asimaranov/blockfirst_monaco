@@ -96,13 +96,13 @@ export const tasksRouter = createTRPCRouter({
           },
         ]);
 
-        console.log('Tests elements', data['Tests-Elements']);
+        // console.log('Tests elements', data['Tests-Elements']);
         const testsCode = extractCodeFromElements(data['Tests-Elements']);
-        console.log('Tests code', testsCode);
+        // console.log('Tests code', testsCode);
 
         // Extract test names from tests code
         const testNames = extractTestNames(testsCode);
-        console.log('Test names:', testNames);
+        // console.log('Test names:', testNames);
 
         const filesList = data['Files list-Elements'].map(
           (x) => x.children[0].text

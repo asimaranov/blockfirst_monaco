@@ -388,7 +388,7 @@ export const FloatingActionBar = ({
 
         setIsRunningTests(true);
 
-        const test = true;
+        const test = false;
 
         const socket = io(
           test ? 'http://localhost:3005/' : 'https://eserver-1.blockfirst.io/'
