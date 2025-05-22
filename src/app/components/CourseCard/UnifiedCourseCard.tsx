@@ -203,11 +203,12 @@ export function UnifiedCourseCard({
           </div>
         ) : !course?.soon ? (
           <div className="mt-8 sm:mt-6 flex w-full gap-0 text-sm sm:gap-4">
-            <button
+            <Link
+            href={`/lesson/${course.firstLessonId}`}
               className={`border-primary hover:bg-primary flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-full border py-3.5 duration-300 sm:py-3`}
             >
               Начать <ChevronRight />
-            </button>
+            </Link>
             <Link
               href={`/course/${course.id}`}
               className="hover:border-secondary flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-full border border-transparent py-3.5 duration-300 sm:py-3"
