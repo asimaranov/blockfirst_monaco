@@ -51,69 +51,13 @@ const UserLessonProgressSchema = new mongoose.Schema(
 // Create a compound index for faster lookups
 UserLessonProgressSchema.index({ userId: 1, lessonId: 1 }, { unique: true });
 
-// Define the schema for tracking user progress on modules
-const UserModuleProgressSchema = new mongoose.Schema(
-  {
-    userId: { type: String, required: true, index: true },
-    moduleId: { type: String, required: true, index: true },
-    status: {
-      type: String,
-      required: true,
-      enum: ['available', 'in-progress', 'completed', 'locked', 'upcoming'],
-      default: 'locked',
-    },
-    completedAt: { type: Date },
-    completedLessonsCount: { type: Number, default: 0 },
-    totalLessonsCount: { type: Number, default: 0 },
-  },
-  { timestamps: true }
-);
-
-// Create a compound index for faster lookups
-UserModuleProgressSchema.index({ userId: 1, moduleId: 1 }, { unique: true });
-
-// Define the schema for tracking user progress on course sections
-const UserSectionProgressSchema = new mongoose.Schema(
-  {
-    userId: { type: String, required: true, index: true },
-    sectionId: { type: String, required: true, index: true },
-    status: {
-      type: String,
-      required: true,
-      enum: ['available', 'in-progress', 'completed', 'locked', 'upcoming'],
-      default: 'locked',
-    },
-    finalTestStatus: {
-      type: String,
-      enum: ['available', 'completed', 'locked'],
-      default: 'locked',
-    },
-    completedAt: { type: Date },
-    completedModulesCount: { type: Number, default: 0 },
-    totalModulesCount: { type: Number, default: 0 },
-  },
-  { timestamps: true }
-);
-
-// Create a compound index for faster lookups
-UserSectionProgressSchema.index({ userId: 1, sectionId: 1 }, { unique: true });
-
 // Define the schema for tracking user progress on courses
 const UserCourseProgressSchema = new mongoose.Schema(
   {
     userId: { type: String, required: true, index: true },
     courseId: { type: String, required: true, index: true },
-    status: {
-      type: String,
-      required: true,
-      enum: ['available', 'in-progress', 'completed', 'locked'],
-      default: 'available',
-    },
-    completedAt: { type: Date },
-    completedSectionsCount: { type: Number, default: 0 },
-    totalSectionsCount: { type: Number, default: 0 },
-    completedLessonsCount: { type: Number, default: 0 },
-    totalLessonsCount: { type: Number, default: 0 },
+
+    progressPercent: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
@@ -188,20 +132,6 @@ export const UserLessonProgress =
   mongoose.model<IUserLessonProgress>(
     'UserLessonProgress',
     UserLessonProgressSchema
-  );
-
-export const UserModuleProgress =
-  mongoose.models.UserModuleProgress ||
-  mongoose.model<IUserModuleProgress>(
-    'UserModuleProgress',
-    UserModuleProgressSchema
-  );
-
-export const UserSectionProgress =
-  mongoose.models.UserSectionProgress ||
-  mongoose.model<IUserSectionProgress>(
-    'UserSectionProgress',
-    UserSectionProgressSchema
   );
 
 export const UserCourseProgress =

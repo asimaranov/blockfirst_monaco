@@ -2,16 +2,16 @@ import {
   getCourseById,
   getDocumentChildren,
   getDocumentById,
+  getCourseInfo,
 } from '~/lib/documents';
 import {
   UserTaskProgress,
   UserLessonProgress,
-  UserModuleProgress,
-  UserSectionProgress,
   UserCourseProgress,
 } from '~/server/models/UserProgress';
 import { getDocumentWithFields } from './document';
 import { TElement } from '@udecode/plate';
+import { api } from '~/trpc/server';
 
 /**
  * Updates a task's status and propagates changes to parent lesson, module, section, and course
@@ -83,7 +83,10 @@ export async function updateLessonProgress(userId: string, lessonId: string) {
   ).length;
 
   console.log('[completedTasks] completedTasks', completedTasks);
-  console.log('[completedAdvancedTasks] completedAdvancedTasks', completedAdvancedTasks);
+  console.log(
+    '[completedAdvancedTasks] completedAdvancedTasks',
+    completedAdvancedTasks
+  );
 
   // // 4. Determine lesson status
   let status:
@@ -133,230 +136,46 @@ export async function updateLessonProgress(userId: string, lessonId: string) {
   }
 
   const moduleId = lesson.parentDocumentId;
-  await updateModuleProgress(userId, moduleId);
+  await updateCourseProgress(userId, lessonId);
 
   return lessonProgress;
 }
 
 /**
- * Updates a module's status based on its lessons and propagates changes upward
- */
-export async function updateModuleProgress(userId: string, moduleId: string) {
-  // 1. Get all lessons in the module
-  const lessons = await getDocumentChildren(moduleId);
-
-  if (!lessons.length) {
-    console.log(`No lessons found for module ${moduleId}`);
-    return null;
-  }
-
-  // 2. Get progress for all lessons
-  const lessonIds = lessons.map((lesson) => lesson.id);
-  const lessonProgressRecords = await UserLessonProgress.find({
-    userId,
-    lessonId: { $in: lessonIds },
-  });
-
-  // 3. Calculate module progress
-  const totalLessons = lessons.length;
-  const completedLessons = lessonProgressRecords.filter((record) =>
-    ['completed', 'completedNoExtra'].includes(record.status)
-  ).length;
-
-  // 4. Determine module status
-  let status:
-    | 'available'
-    | 'in-progress'
-    | 'completed'
-    | 'locked'
-    | 'upcoming' = 'available';
-
-  if (
-    completedLessons === 0 &&
-    lessonProgressRecords.some((record) => record.status === 'in-progress')
-  ) {
-    status = 'in-progress';
-  } else if (completedLessons === totalLessons) {
-    status = 'completed';
-  } else if (completedLessons > 0 && completedLessons < totalLessons) {
-    status = 'in-progress';
-  }
-
-  // 5. Update module progress
-  const moduleProgress = await UserModuleProgress.findOneAndUpdate(
-    { userId, moduleId },
-    {
-      status,
-      completedLessonsCount: completedLessons,
-      totalLessonsCount: totalLessons,
-      completedAt: status === 'completed' ? new Date() : undefined,
-    },
-    { upsert: true, new: true }
-  );
-
-  // 6. Get module's parent and update section progress
-  const module = await getDocumentById(moduleId);
-  if (!module || !module.parentDocumentId) {
-    console.error(`Module ${moduleId} not found or has no parent`);
-    return moduleProgress;
-  }
-
-  const sectionId = module.parentDocumentId;
-  await updateSectionProgress(userId, sectionId);
-
-  return moduleProgress;
-}
-
-/**
- * Updates a section's status based on its modules and propagates changes upward
- */
-export async function updateSectionProgress(userId: string, sectionId: string) {
-  // 1. Get all modules in the section
-  const modules = await getDocumentChildren(sectionId);
-
-  if (!modules.length) {
-    console.log(`No modules found for section ${sectionId}`);
-    return null;
-  }
-
-  // 2. Get progress for all modules
-  const moduleIds = modules.map((module) => module.id);
-  const moduleProgressRecords = await UserModuleProgress.find({
-    userId,
-    moduleId: { $in: moduleIds },
-  });
-
-  // 3. Calculate section progress
-  const totalModules = modules.length;
-  const completedModules = moduleProgressRecords.filter(
-    (record) => record.status === 'completed'
-  ).length;
-
-  // 4. Determine section status
-  let status:
-    | 'available'
-    | 'in-progress'
-    | 'completed'
-    | 'locked'
-    | 'upcoming' = 'available';
-  let finalTestStatus: 'available' | 'completed' | 'locked' = 'locked';
-
-  if (
-    completedModules === 0 &&
-    moduleProgressRecords.some((record) => record.status === 'in-progress')
-  ) {
-    status = 'in-progress';
-  } else if (completedModules === totalModules) {
-    status = 'completed';
-    finalTestStatus = 'available';
-  } else if (completedModules > 0 && completedModules < totalModules) {
-    status = 'in-progress';
-  }
-
-  // 5. Update section progress
-  const sectionProgress = await UserSectionProgress.findOneAndUpdate(
-    { userId, sectionId },
-    {
-      status,
-      finalTestStatus,
-      completedModulesCount: completedModules,
-      totalModulesCount: totalModules,
-      completedAt: status === 'completed' ? new Date() : undefined,
-    },
-    { upsert: true, new: true }
-  );
-
-  // 6. Get section's parent and update course progress
-  const section = await getDocumentById(sectionId);
-  if (!section || !section.parentDocumentId) {
-    console.error(`Section ${sectionId} not found or has no parent`);
-    return sectionProgress;
-  }
-
-  const courseId = section.parentDocumentId;
-  await updateCourseProgress(userId, courseId);
-
-  return sectionProgress;
-}
-
-/**
  * Updates a course's status based on its sections
  */
-export async function updateCourseProgress(userId: string, courseId: string) {
-  // 1. Get all sections in the course
-  const sections = await getDocumentChildren(courseId);
+export async function updateCourseProgress(userId: string, lessonId: string) {
+  const getCourseByLessonId = await getCourseById(lessonId);
 
-  if (!sections.length) {
-    console.log(`No sections found for course ${courseId}`);
-    return null;
-  }
+  const courseData = await getCourseInfo(getCourseByLessonId.courseId);
 
-  // 2. Get progress for all sections
-  const sectionIds = sections.map((section) => section.id);
-  const sectionProgressRecords = await UserSectionProgress.find({
-    userId,
-    sectionId: { $in: sectionIds },
-  });
-
-  // 3. Calculate course progress
-  const totalSections = sections.length;
-  const completedSections = sectionProgressRecords.filter(
-    (record) => record.status === 'completed'
-  ).length;
-
-  // Get all modules and lessons to calculate overall course completion
-  const moduleIds: string[] = [];
-  let totalLessons = 0;
-  let completedLessons = 0;
-
-  // Get all modules
-  for (const sectionId of sectionIds) {
-    const modules = await getDocumentChildren(sectionId);
-    moduleIds.push(...modules.map((module) => module.id));
-  }
-
-  // Get module progress data
-  const moduleProgressRecords = await UserModuleProgress.find({
-    userId,
-    moduleId: { $in: moduleIds },
-  });
-
-  // Sum up lessons
-  moduleProgressRecords.forEach((moduleProgress) => {
-    totalLessons += moduleProgress.totalLessonsCount;
-    completedLessons += moduleProgress.completedLessonsCount;
-  });
-
-  // 4. Determine course status
-  let status: 'available' | 'in-progress' | 'completed' | 'locked' =
-    'available';
-
-  if (
-    completedSections === 0 &&
-    sectionProgressRecords.some((record) => record.status === 'in-progress')
-  ) {
-    status = 'in-progress';
-  } else if (completedSections === totalSections) {
-    status = 'completed';
-  } else if (completedSections > 0 && completedSections < totalSections) {
-    status = 'in-progress';
-  }
-
-  // 5. Update course progress
-  const courseProgress = await UserCourseProgress.findOneAndUpdate(
-    { userId, courseId },
-    {
-      status,
-      completedSectionsCount: completedSections,
-      totalSectionsCount: totalSections,
-      completedLessonsCount: completedLessons,
-      totalLessonsCount: totalLessons,
-      completedAt: status === 'completed' ? new Date() : undefined,
-    },
-    { upsert: true, new: true }
+  const lessons = Object.values(courseData.documentsMap).filter(
+    (doc: any) => doc.type === 'lesson'
   );
 
-  return courseProgress;
+  const progress = await UserLessonProgress.find({
+    userId,
+    lessonId: { $in: lessons.map((lesson) => (lesson as any).id) },
+  });
+
+
+  const completedLessons = progress.filter(
+    (p: any) => p.status === 'completed'
+  );
+
+  if (progress) {
+    const progressPercent = Math.round(
+      (completedLessons!.length / lessons.length) * 100
+    );
+
+    await UserCourseProgress.findOneAndUpdate(
+      { userId, courseId: getCourseByLessonId.courseId },
+      {
+        progressPercent,
+      },
+      { upsert: true, new: true }
+    );
+  }
 }
 
 /**

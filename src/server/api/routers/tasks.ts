@@ -291,8 +291,6 @@ export const tasksRouter = createTRPCRouter({
               },
             ]);
 
-            console.log('Files list', data['Files listElements']);
-
             // Get task progress if it exists, otherwise use default values
             const taskProgress = taskProgressMap[taskId];
             const taskStatus = taskProgress?.status || 'available';

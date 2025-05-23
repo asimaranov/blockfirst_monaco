@@ -12,87 +12,9 @@ import {
   getDocumentById,
   getDocumentChildren,
   getCourseById,
+  getCourseInfo,
 } from '~/lib/documents';
 import { cacheTag } from 'next/dist/server/use-cache/cache-tag';
-
-const getCourseInfo = async (courseId: string) => {
-  'use cache';
-  cacheTag('course-info', courseId);
-  const courseSections = await getDocumentChildren(courseId);
-  const documentsMap: any = {};
-  
-
-  const sections = await Promise.all(
-    courseSections.map(async (section) => {
-      // Add section to map
-      documentsMap[section.id] = {
-        id: section.id,
-        type: 'section',
-        parentId: courseId,
-        title: section.title || '',
-      };
-
-      const modules = await getDocumentChildren(section.id);
-
-      const modulesWithLessons = await Promise.all(
-        modules.map(async (module) => {
-          // Add module to map
-          documentsMap[module.id] = {
-            id: module.id,
-            type: 'module',
-            parentId: section.id,
-            title: module.title || '',
-          };
-
-          const lessons = await getDocumentChildren(module.id);
-
-          // Add all lessons to map
-          lessons.forEach((lesson) => {
-            documentsMap[lesson.id] = {
-              id: lesson.id,
-              type: 'lesson',
-              parentId: module.id,
-              title: lesson.title || '',
-            };
-          });
-
-          return {
-            id: module.id,
-            title: module.title || '',
-            icon: undefined,
-            progress: 0,
-            total: lessons.length,
-            status: 'available',
-            parentId: section.id,
-            lessons: lessons.map((lesson) => ({
-              id: lesson.id,
-              title: lesson.title || '',
-              status: 'available',
-              parentId: module.id,
-            })),
-          };
-        })
-      );
-
-      return {
-        id: section.id,
-        title: section.title || '',
-        icon: undefined,
-        status: 'available',
-        finalTestStatus: 'available',
-        finalTestId: section.id,
-        parentId: courseId,
-        modules: modulesWithLessons,
-      };
-    })
-  );
-
-  return {
-    id: courseId,
-    sections,
-    documentsMap,
-  };
-};
 
 export default async function Layout({
   params,

@@ -7,9 +7,6 @@ import {
 import {
   UserTaskProgress,
   UserLessonProgress,
-  UserModuleProgress,
-  UserSectionProgress,
-  UserCourseProgress,
 } from '~/server/models/UserProgress';
 import { getDocumentChildren } from '~/lib/documents';
 
@@ -126,108 +123,6 @@ export const progressRouter = createTRPCRouter({
       });
     }),
 
-  // Get progress for a course and all its children
-  getCourseProgress: protectedProcedure
-    .input(z.object({ courseId: z.string() }))
-    .query(async ({ input, ctx }) => {
-      const userId = ctx.session.user.id;
-      const { courseId } = input;
-
-      // Get course progress
-      const courseProgress = await UserCourseProgress.findOne({
-        userId,
-        courseId,
-      });
-
-      // Get all sections in the course
-      const sections = await getDocumentChildren(courseId);
-      const sectionIds = sections.map((section) => section.id);
-
-      // Get progress for these sections
-      const sectionProgressRecords = await UserSectionProgress.find({
-        userId,
-        sectionId: { $in: sectionIds },
-      });
-
-      // Create a map of section progress by section ID
-      const sectionProgressMap = sectionProgressRecords.reduce(
-        (map, record) => {
-          map[record.sectionId] = record;
-          return map;
-        },
-        {} as Record<string, any>
-      );
-
-      // Get modules for each section
-      const modulePromises = sectionIds.map((sectionId) =>
-        getDocumentChildren(sectionId)
-      );
-      const modulesArrays = await Promise.all(modulePromises);
-
-      // Flatten modules array and get module IDs
-      const modules = modulesArrays.flat();
-      const moduleIds = modules.map((module) => module.id);
-
-      // Get progress for these modules
-      const moduleProgressRecords = await UserModuleProgress.find({
-        userId,
-        moduleId: { $in: moduleIds },
-      });
-
-      // Create a map of module progress by module ID
-      const moduleProgressMap = moduleProgressRecords.reduce(
-        (map, record) => {
-          map[record.moduleId] = record;
-          return map;
-        },
-        {} as Record<string, any>
-      );
-
-      // Prepare the response
-      return {
-        course: courseProgress || {
-          userId,
-          courseId,
-          status: 'available',
-          completedSectionsCount: 0,
-          totalSectionsCount: sections.length,
-          completedLessonsCount: 0,
-          totalLessonsCount: 0,
-        },
-        sections: sections.map((section) => {
-          const progress = sectionProgressMap[section.id];
-
-          // Get modules for this section
-          const sectionModules = modules.filter(
-            (module) => module.parentDocumentId === section.id
-          );
-
-          return {
-            sectionId: section.id,
-            title: section.title,
-            userId,
-            status: progress?.status || 'available',
-            finalTestStatus: progress?.finalTestStatus || 'locked',
-            completedModulesCount: progress?.completedModulesCount || 0,
-            totalModulesCount: sectionModules.length,
-            completedAt: progress?.completedAt,
-            modules: sectionModules.map((module) => {
-              const moduleProgress = moduleProgressMap[module.id];
-              return {
-                moduleId: module.id,
-                title: module.title,
-                userId,
-                status: moduleProgress?.status || 'available',
-                completedLessonsCount:
-                  moduleProgress?.completedLessonsCount || 0,
-                totalLessonsCount: moduleProgress?.totalLessonsCount || 0,
-                completedAt: moduleProgress?.completedAt,
-              };
-            }),
-          };
-        }),
-      };
-    }),
 
     markLessonAsInProgress: protectedProcedure
     .input(z.object({ lessonId: z.string() }))

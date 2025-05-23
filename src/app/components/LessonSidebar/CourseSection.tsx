@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { CourseModule } from './CourseModule';
 import { CourseBadge } from '../shared/CourseBadge';
 import CourseStatusBadge from '../shared/CourseStatusBadge';
@@ -44,19 +44,17 @@ export function CourseSection({
   const [isExpanded, setIsExpanded] = useState(!!expanded);
   const { open } = useExamStore();
 
-  // console.log('[modules] modules', modules.map((module) => module.lessons));
-
-  // Calculate overall section progress
-  let totalLessons = 0;
-  let completedLessons = 0;
-  modules.forEach((module) => {
-    totalLessons += module.lessons.length;
-    completedLessons += module.lessons.filter(
-      (lesson) => lesson.status === 'completed'
-    ).length;
-  });
-  const sectionProgress =
-    totalLessons > 0 ? completedLessons / totalLessons : 0;
+  const sectionProgress = useMemo(() => {
+    let totalLessons = 0;
+    let completedLessons = 0;
+    modules.forEach((module) => {
+      totalLessons += module.lessons.length;
+      completedLessons += module.lessons.filter(
+        (lesson) => lesson.status === 'completed'
+      ).length;
+    });
+    return totalLessons > 0 ? completedLessons / totalLessons : 0;
+  }, [modules]);
 
   return (
     <div className="mt-12 mb-8 flex w-full flex-col px-4">
