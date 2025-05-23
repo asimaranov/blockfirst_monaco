@@ -13,6 +13,150 @@ export async function getDocumentById(id: string) {
   });
 }
 
+export const getPrevNextLessonIds = async (lessonId: string) => {
+  'use cache';
+
+  cacheTag('prev-next-lesson-ids', lessonId);
+
+  const document = await getDocumentById(lessonId);
+
+  let prevLessonId: string | null = null;
+  let nextLessonId: string | null = null;
+
+  if (document?.parentDocumentId) {
+    const parentDocument = await getParentDocument(document.parentDocumentId);
+
+    if (parentDocument) {
+      const parentDocumentChildren = await getDocumentChildren(parentDocument.id);
+      const siblings = parentDocumentChildren.filter(
+        (sibling) => sibling.isArchived === false
+      );
+      const currentIndex = siblings.findIndex(
+        (sibling) => sibling.id === lessonId
+      );
+
+      if (currentIndex > 0) {
+        prevLessonId = siblings[currentIndex - 1].id;
+      }
+
+      if (currentIndex < siblings.length - 1) {
+        nextLessonId = siblings[currentIndex + 1].id;
+      } else {
+        // If this is the last lesson in the module, try to find the next module and its first lesson
+        if (parentDocument.parentDocumentId) {
+          const grandparentDocument = (await getParentDocument(
+            parentDocument.parentDocumentId
+          ))!;
+
+          const grandparentDocumentChildren = await getDocumentChildren(grandparentDocument.id);
+
+          const moduleIndex = grandparentDocumentChildren.findIndex(
+            (child) => child.id === parentDocument.id
+          );
+
+          // Check if there is a next module
+          if (
+            moduleIndex >= 0 &&
+            moduleIndex < grandparentDocumentChildren.length - 1
+          ) {
+            const nextModule = (await getDocumentChildren(
+              grandparentDocumentChildren[moduleIndex + 1]!.id
+            ))!;
+
+            // Get the first lesson of the next module
+            if (nextModule.length > 0) {
+              nextLessonId = nextModule[0].id;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return { prevLessonId, lessonDocument: document, nextLessonId };
+};
+
+const getParentDocument = async (parentDocumentId: string) => {
+  'use cache';
+
+  cacheTag('parent-document-by-id', parentDocumentId);
+
+  return await prisma.document.findUnique({
+    where: {
+      id: parentDocumentId,
+      isArchived: false,
+    },
+    include: {
+      children: {
+        where: {
+          isArchived: false,
+        },
+        orderBy: [
+          {
+            sortOrder: 'asc',
+          },
+          {
+            createdAt: 'asc',
+          },
+        ],
+      },
+      parentDocument: {
+        include: {
+          children: {
+            where: {
+              isArchived: false,
+            },
+            orderBy: [
+              {
+                sortOrder: 'asc',
+              },
+              {
+                createdAt: 'asc',
+              },
+            ],
+            include: {
+              children: {
+                where: {
+                  isArchived: false,
+                },
+                orderBy: [
+                  {
+                    sortOrder: 'asc',
+                  },
+                  {
+                    createdAt: 'asc',
+                  },
+                ],
+              },
+            },
+          },
+        },
+      },
+    },
+  });
+};
+
+const getDocumentChildren = async (documentId: string) => {
+  'use cache';
+
+  cacheTag('children-by-document-id', documentId);
+
+  return await prisma.document.findMany({
+    where: {
+      parentDocumentId: documentId,
+      isArchived: false,
+    },
+    orderBy: [
+      {
+        sortOrder: 'asc',
+      },
+      {
+        createdAt: 'asc',
+      },
+    ],
+  });
+};
+
 /**
  * Get course IDs from a lesson ID by traversing the document hierarchy
  */
@@ -40,13 +184,11 @@ export const getCourseById = async (lessonId: string) => {
   };
 };
 
-
 export const getCourseInfo = async (courseId: string) => {
   'use cache';
   cacheTag('course-info', courseId);
   const courseSections = await getDocumentChildren(courseId);
   const documentsMap: any = {};
-  
 
   const sections = await Promise.all(
     courseSections.map(async (section) => {
@@ -120,21 +262,7 @@ export const getCourseInfo = async (courseId: string) => {
   };
 };
 
-/**
- * Get children documents of a parent document
- */
-export async function getDocumentChildren(parentId: string) {
-  'use cache';
-  cacheTag('children-by-document-id', parentId);
-  cacheTag(`children-by-document-id:${parentId}`);
-  return prisma.document.findMany({
-    where: { parentDocumentId: parentId },
-    orderBy: [
-      { sortOrder: 'asc' },
-      { createdAt: 'asc' }, // Fallback for documents without sortOrder
-    ],
-  });
-}
+
 
 /**
  * Utility function to revalidate document cache
