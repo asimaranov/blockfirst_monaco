@@ -135,7 +135,7 @@ export const FloatingActionBar = ({
       submitTaskMutation.mutate(
         {
           taskId: taskData.id,
-          lessonId: taskData.lessonId,
+          lessonId: lessonId,
           data: '', // Empty data means "in-progress"
         },
         {

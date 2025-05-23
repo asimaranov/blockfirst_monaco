@@ -55,8 +55,10 @@ export async function updateLessonProgress(userId: string, lessonId: string) {
   });
 
   const taskIds = Array.from(tasks).flatMap((x) =>
-    (x[0].children[0].text as string).split(',')
+    (x[0].children[0].text as string).split(',').map((id) => id.trim())
   );
+
+  console.log('[taskIds] taskIds', taskIds);
 
   if (!taskIds.length) {
     console.log(`No tasks found for lesson ${lessonId}`);
@@ -69,6 +71,8 @@ export async function updateLessonProgress(userId: string, lessonId: string) {
     taskId: { $in: taskIds },
   });
 
+  console.log('[taskProgressRecords] taskProgressRecords', taskProgressRecords);
+
   // // 3. Calculate lesson progress
   const totalTasks = taskIds.length;
   const completedTasks = taskProgressRecords.filter(
@@ -77,6 +81,9 @@ export async function updateLessonProgress(userId: string, lessonId: string) {
   const completedAdvancedTasks = taskProgressRecords.filter(
     (record) => record.status === 'completed' && record.advancedTasksSolved
   ).length;
+
+  console.log('[completedTasks] completedTasks', completedTasks);
+  console.log('[completedAdvancedTasks] completedAdvancedTasks', completedAdvancedTasks);
 
   // // 4. Determine lesson status
   let status:
