@@ -18,7 +18,7 @@ export default function TaskView({
 }: {
   task: any;
   onClose?: () => void;
-  lessonId?: string;
+  lessonId: string;
 }) {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<'info' | 'ai-mentor'>('info');
