@@ -182,6 +182,7 @@ export function CourseSection({
                       open(finalTestId);
                     }
                   }}
+                  disabled={finalTestStatus === 'locked'}
                   isCompleted={finalTestStatus === 'completed'}
                 />
               )}

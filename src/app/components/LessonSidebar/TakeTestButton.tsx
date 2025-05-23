@@ -1,5 +1,7 @@
 'use client';
 
+import { cn } from "~/helpers";
+
 interface TakeTestButtonProps {
   onClick: () => void;
   disabled?: boolean;
@@ -41,8 +43,10 @@ export function TakeTestButton({
     <div className="px-4">
       <button
         onClick={onClick}
-        disabled={disabled}
-        className="not-disabled:hover:bg-primary bg-background border-primary flex h-11 w-full items-center justify-center rounded-full border transition-all duration-100 not-disabled:cursor-pointer disabled:opacity-50"
+        // disabled={disabled}
+        className={cn("not-disabled:hover:bg-primary bg-background border-primary flex h-11 w-full items-center justify-center rounded-full border transition-all duration-100 not-disabled:cursor-pointer disabled:opacity-50", 
+          disabled ? 'opacity-50 cursor-default' : 'hover:bg-primary cursor-pointer'
+        )}
       >
         <div className="flex items-center">
           <span className="text-sm text-white">Пройти зачет</span>

@@ -35,19 +35,6 @@ type SectionType = {
   modules: ModuleType[];
 };
 
-type CourseType = {
-  id: string;
-  sections: SectionType[];
-  // Map to quickly look up document information
-  documentsMap: {
-    [id: string]: {
-      type: 'lesson' | 'module' | 'section';
-      parentId: string;
-      title: string;
-    };
-  };
-};
-
 // Module type for component props
 type Module = {
   title: string;
@@ -201,7 +188,12 @@ export function CourseSections({
                 })),
               })) as Module[]
             }
-            finalTestStatus={section.finalTestStatus}
+            finalTestStatus={
+              section.modules.flatMap((module: any) => module.lessons)
+                .every((lesson: any) => lesson.status === 'completed')
+                ? 'available'
+                : 'locked'
+            }
             expanded={hierarchy ? section.id === hierarchy.sectionId : false}
             finalTestId={section.finalTestId}
           />
