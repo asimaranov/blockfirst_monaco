@@ -2,6 +2,7 @@
 
 import { CourseSection } from './CourseSection';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCourseProgressStore } from '~/store/courseProgressStore';
 import { api } from '~/trpc/react';
 
 // Type definitions for pre-loaded course data
@@ -102,12 +103,11 @@ const CodeIcon = () => {
 export function CourseSections({
   lessonId,
   courseInfo: courseData,
-  setCourseProgress,
 }: {
   lessonId: string;
   courseInfo: any;
-  setCourseProgress: (progress: number) => void;
 }) {
+  const { setCourseProgress } = useCourseProgressStore();
   const [activeLessonId, setActiveLessonId] = useState(lessonId);
   const lessons = Object.values(courseData.documentsMap).filter(
     (doc: any) => doc.type === 'lesson'

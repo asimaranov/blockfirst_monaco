@@ -5,6 +5,7 @@ import { CourseProgress } from '../CourseInfoTopCard/CourseProgress';
 import { NotificationsModal } from '../Notifications/NotificationsModal';
 import { useNotificationsModalStore } from '~/store/notificationsModal';
 import { cn } from '~/lib/utils';
+import { useCourseProgressStore } from '~/store/courseProgressStore';
 
 const NotificationButton = ({ className }: { className: string }) => {
   const { toggle } = useNotificationsModalStore();
@@ -139,7 +140,8 @@ const BackButton = () => {
     </svg>
   );
 };
-export default function LessonSidebarHeader({ courseProgress }: { courseProgress: number }) {
+export default function LessonSidebarHeader() {
+  const { courseProgress  } = useCourseProgressStore();
   return (
     <>
       <div className="bg-background sticky top-0 z-10 flex flex-row items-center px-8 pt-8 pb-5 text-base font-medium">
