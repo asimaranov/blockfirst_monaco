@@ -119,13 +119,14 @@ export function CourseSections({
     lessonIds: lessons.map((lesson) => (lesson as any).id),
   });
 
+  const completedLessons = useMemo(() => {
+    return progress.data?.filter((p: any) => p.status === 'completed');
+  }, [progress.data]);
+
   useEffect(() => {
     if (progress.data) {
-      const completedLessons = progress.data.filter(
-        (p: any) => p.status === 'completed'
-      ).length;
       const progressPercent = Math.round(
-        (completedLessons / lessons.length) * 100
+        (completedLessons!.length / lessons.length) * 100
       );
       setCourseProgress(progressPercent);
     }
@@ -176,7 +177,9 @@ export function CourseSections({
               section.modules.map((module: any) => ({
                 title: module.title,
                 icon: module.icon || <CodeIcon />,
-                progress: module.progress,
+                progress: module.lessons.filter((lesson: any) =>
+                  completedLessons?.some((p: any) => p.lessonId === lesson.id)
+                ).length,
                 total: module.total,
                 status: module.status,
                 lessons: module.lessons.map((lesson: any) => ({
