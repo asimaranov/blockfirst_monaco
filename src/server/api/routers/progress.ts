@@ -228,4 +228,17 @@ export const progressRouter = createTRPCRouter({
         }),
       };
     }),
+
+    markLessonAsInProgress: protectedProcedure
+    .input(z.object({ lessonId: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      const userId = ctx.session.user.id;
+      const { lessonId } = input;
+
+      // if not exists, create it
+      const lessonProgress = await UserLessonProgress.findOne({ userId, lessonId });
+      if (!lessonProgress) {
+        await UserLessonProgress.create({ userId, lessonId, status: 'in-progress' });
+      }
+    }),
 });

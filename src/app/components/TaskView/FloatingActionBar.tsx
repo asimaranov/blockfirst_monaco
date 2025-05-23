@@ -132,11 +132,15 @@ export const FloatingActionBar = ({
         taskData.status
       );
 
+      if (taskData.status === 'in-progress' || taskData.status === 'completed') {
+        return;
+      }
+
       submitTaskMutation.mutate(
         {
           taskId: taskData.id,
           lessonId: lessonId,
-          data: '', // Empty data means "in-progress"
+          data: '',
         },
         {
           onSuccess: () => {

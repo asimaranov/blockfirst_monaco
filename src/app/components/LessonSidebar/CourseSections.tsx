@@ -107,13 +107,14 @@ export function CourseSections({
   lessonId: string;
   courseInfo: any;
 }) {
+  const { mutate: markLessonAsInProgress } =
+    api.progress.markLessonAsInProgress.useMutation({});
+
   const { setCourseProgress } = useCourseProgressStore();
   const [activeLessonId, setActiveLessonId] = useState(lessonId);
   const lessons = Object.values(courseData.documentsMap).filter(
     (doc: any) => doc.type === 'lesson'
   );
-
-  console.log('[lessons] lessons', lessons);
 
   const progress = api.progress.getLessonsProgress.useQuery({
     lessonIds: lessons.map((lesson) => (lesson as any).id),
@@ -121,6 +122,14 @@ export function CourseSections({
 
   const completedLessons = useMemo(() => {
     return progress.data?.filter((p: any) => p.status === 'completed');
+  }, [progress.data]);
+
+  useEffect(() => {
+    if (
+      progress.data && !progress.data.find((p: any) => p.lessonId === lessonId)
+    ) {
+      markLessonAsInProgress({ lessonId: lessonId });
+    }
   }, [progress.data]);
 
   useEffect(() => {
