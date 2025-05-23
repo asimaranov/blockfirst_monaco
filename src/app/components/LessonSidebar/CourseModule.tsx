@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { cn } from '~/helpers';
 import { InfoPopover } from '../shared/InfoPopover';
 import Link from 'next/link';
+import { api } from '~/trpc/react';
 
 const LessonStates = {
   completed: (
@@ -87,7 +88,7 @@ interface CourseModuleProps {
   lessons: {
     id: string;
     title: string;
-    status?: 'available' | 'skipped' | 'completed' | 'completedNoExtra';
+    status?: 'available' | 'in-progress' | 'completed' | 'completedNoExtra';
     isActive: boolean;
   }[];
   progress: number;
@@ -152,7 +153,7 @@ export function CourseModule({
               {lesson.status === 'completedNoExtra' && (
                 <>{LessonStates.completedNoExtra}</>
               )}
-              {lesson.status === 'skipped' && <>{LessonStates.skipped}</>}
+              {lesson.status === 'in-progress' && <>{LessonStates.skipped}</>}
             </div>
           ))}
         </div>

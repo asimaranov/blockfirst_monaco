@@ -57,12 +57,14 @@ export default function MonacoView({
   setAiMentorLastFailure,
   isCollapsed,
   taskId,
+  lessonId,
   taskData,
   setTaskStatus,
 }: {
   setAiMentorLastFailure: (lastFailure: string) => void;
   isCollapsed: boolean;
   taskId: string;
+  lessonId: string;
   taskData: any;
   setTaskStatus: (status: string) => void;
 }) {
@@ -158,6 +160,7 @@ export default function MonacoView({
           setAiMentorLastFailure={setAiMentorLastFailure}
           iframeRef={iframeRef}
           taskData={lastTaskData || taskData}
+          lessonId={lessonId}
           setTaskStatus={setTaskStatus}
         />
       )}

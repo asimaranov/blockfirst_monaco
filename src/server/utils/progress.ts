@@ -10,6 +10,8 @@ import {
   UserSectionProgress,
   UserCourseProgress,
 } from '~/server/models/UserProgress';
+import { getDocumentWithFields } from './document';
+import { TElement } from '@udecode/plate';
 
 /**
  * Updates a task's status and propagates changes to parent lesson, module, section, and course
@@ -17,6 +19,7 @@ import {
 export async function updateTaskStatus(
   userId: string,
   taskId: string,
+  lessonId: string,
   status: 'available' | 'in-progress' | 'completed',
   advancedTasksSolved: boolean = false
 ) {
@@ -33,15 +36,6 @@ export async function updateTaskStatus(
     { upsert: true, new: true }
   );
 
-  // 2. Get task's parent hierarchy
-  const document = await getDocumentById(taskId);
-  if (!document || !document.parentDocumentId) {
-    console.error(`Task ${taskId} not found or has no parent`);
-    return taskProgress;
-  }
-
-  const lessonId = document.parentDocumentId;
-
   // 3. Update lesson progress
   await updateLessonProgress(userId, lessonId);
 
@@ -53,22 +47,30 @@ export async function updateTaskStatus(
  */
 export async function updateLessonProgress(userId: string, lessonId: string) {
   // 1. Get all tasks in the lesson
-  const tasks = await getDocumentChildren(lessonId);
+  const { editor } = await getDocumentWithFields(lessonId, ['Title']);
 
-  if (!tasks.length) {
+  const tasks = editor.api.nodes<TElement>({
+    at: [],
+    match: (n) => n.type === 'task',
+  });
+
+  const taskIds = Array.from(tasks).flatMap((x) =>
+    (x[0].children[0].text as string).split(',')
+  );
+
+  if (!taskIds.length) {
     console.log(`No tasks found for lesson ${lessonId}`);
     return null;
   }
 
-  // 2. Get progress for all tasks
-  const taskIds = tasks.map((task) => task.id);
+  // // 2. Get progress for all tasks
   const taskProgressRecords = await UserTaskProgress.find({
     userId,
     taskId: { $in: taskIds },
   });
 
-  // 3. Calculate lesson progress
-  const totalTasks = tasks.length;
+  // // 3. Calculate lesson progress
+  const totalTasks = taskIds.length;
   const completedTasks = taskProgressRecords.filter(
     (record) => record.status === 'completed'
   ).length;
@@ -76,13 +78,13 @@ export async function updateLessonProgress(userId: string, lessonId: string) {
     (record) => record.status === 'completed' && record.advancedTasksSolved
   ).length;
 
-  // 4. Determine lesson status
+  // // 4. Determine lesson status
   let status:
     | 'available'
     | 'in-progress'
     | 'completed'
     | 'completedNoExtra'
-    | 'skipped' = 'available';
+    | 'in-progress' = 'available';
 
   if (
     completedTasks === 0 &&
@@ -99,7 +101,7 @@ export async function updateLessonProgress(userId: string, lessonId: string) {
     status = 'in-progress';
   }
 
-  // 5. Update lesson progress
+  // // 5. Update lesson progress
   const lessonProgress = await UserLessonProgress.findOneAndUpdate(
     { userId, lessonId },
     {
@@ -116,7 +118,7 @@ export async function updateLessonProgress(userId: string, lessonId: string) {
     { upsert: true, new: true }
   );
 
-  // 6. Get lesson's parent hierarchy and update module progress
+  // // 6. Get lesson's parent hierarchy and update module progress
   const lesson = await getDocumentById(lessonId);
   if (!lesson || !lesson.parentDocumentId) {
     console.error(`Lesson ${lessonId} not found or has no parent`);

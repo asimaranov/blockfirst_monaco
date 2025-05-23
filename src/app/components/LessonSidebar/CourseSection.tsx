@@ -11,6 +11,7 @@ import ToggleMinus from '../shared/ToggleMinus/ToggleMinus';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '~/helpers';
 import { useExamStore } from '@/store/examStore';
+import { json } from 'stream/consumers';
 interface CourseSectionProps {
   title: string;
   status: 'available' | 'upcoming' | 'locked' | 'completed';
@@ -20,7 +21,7 @@ interface CourseSectionProps {
     lessons: {
       id: string;
       title: string;
-      status?: 'available' | 'skipped' | 'completed' | 'completedNoExtra';
+      status?: 'available' | 'in-progress' | 'completed' | 'completedNoExtra';
       isActive: boolean;
     }[];
     progress: number;
@@ -43,6 +44,8 @@ export function CourseSection({
   const [isExpanded, setIsExpanded] = useState(!!expanded);
   const { open } = useExamStore();
 
+  // console.log('[modules] modules', modules.map((module) => module.lessons));
+
   // Calculate overall section progress
   let totalLessons = 0;
   let completedLessons = 0;
@@ -57,6 +60,7 @@ export function CourseSection({
 
   return (
     <div className="mt-12 mb-8 flex w-full flex-col px-4">
+      
       <div className="w-full px-4">
         <div className="mb-4 flex items-center justify-between">
           {/* Available indicator */}

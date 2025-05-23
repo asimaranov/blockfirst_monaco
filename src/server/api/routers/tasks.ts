@@ -370,7 +370,7 @@ export const tasksRouter = createTRPCRouter({
     }),
 
   submit: protectedProcedure
-    .input(z.object({ data: z.string(), taskId: z.string() }))
+    .input(z.object({ data: z.string(), taskId: z.string(), lessonId: z.string() }))
     .mutation(async ({ input, ctx }) => {
       const userId = ctx.session.user.id;
 
@@ -392,6 +392,7 @@ export const tasksRouter = createTRPCRouter({
         const taskProgress = await updateTaskStatus(
           userId,
           input.taskId,
+          input.lessonId,
           'in-progress',
           false
         );
@@ -427,6 +428,7 @@ export const tasksRouter = createTRPCRouter({
         const taskProgress = await updateTaskStatus(
           userId,
           decryptedData.taskId,
+          input.lessonId,
           'completed',
           decryptedData.advancedTasksSolved || false
         );
@@ -444,6 +446,7 @@ export const tasksRouter = createTRPCRouter({
         const taskProgress = await updateTaskStatus(
           userId,
           decryptedData.taskId,
+          input.lessonId,
           'in-progress',
           false
         );

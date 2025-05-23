@@ -20,11 +20,13 @@ const getCourseInfo = async (courseId: string) => {
   cacheTag('course-info', courseId);
   const courseSections = await getDocumentChildren(courseId);
   const documentsMap: any = {};
+  
 
   const sections = await Promise.all(
     courseSections.map(async (section) => {
       // Add section to map
       documentsMap[section.id] = {
+        id: section.id,
         type: 'section',
         parentId: courseId,
         title: section.title || '',
@@ -36,6 +38,7 @@ const getCourseInfo = async (courseId: string) => {
         modules.map(async (module) => {
           // Add module to map
           documentsMap[module.id] = {
+            id: module.id,
             type: 'module',
             parentId: section.id,
             title: module.title || '',
@@ -46,6 +49,7 @@ const getCourseInfo = async (courseId: string) => {
           // Add all lessons to map
           lessons.forEach((lesson) => {
             documentsMap[lesson.id] = {
+              id: lesson.id,
               type: 'lesson',
               parentId: module.id,
               title: lesson.title || '',

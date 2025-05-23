@@ -96,6 +96,25 @@ export function getAllHeadings(editor: SlateEditor): Heading[] {
   return headingList;
 }
 
+
+/**
+ * Get all headings from a Slate editor
+ */
+export function getAllElements(editor: SlateEditor): TElement[] {
+  const elementsList: TElement[] = [];
+  const values = editor.api.nodes<TElement>({
+    at: [],
+    match: (n) => true,
+  });
+
+  Array.from(values, ([node, path]) => {
+    const { type } = node;
+    elementsList.push(node);
+  });
+
+  return elementsList;
+}
+
 /**
  * Get content of a specific heading section
  */

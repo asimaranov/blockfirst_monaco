@@ -5,7 +5,7 @@ import PlateEditor from '../LessonPage/PlateEditor';
 import { useEffect, useState } from 'react';
 import { useTestResultStore } from '~/store/testResultStore';
 
-export default function TaskInfo({ task, taskStatus }: { task: any, taskStatus: string }) {
+export default function TaskInfo({ task, lessonId, taskStatus }: { task: any, lessonId: string, taskStatus: string }) {
   const {
     testResults,
     isRunningTests,

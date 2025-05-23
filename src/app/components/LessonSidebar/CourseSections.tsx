@@ -1,6 +1,5 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
 import { CourseSection } from './CourseSection';
 import {
   useCallback,
@@ -9,12 +8,13 @@ import {
   createContext,
   useState,
 } from 'react';
+import { api } from '~/trpc/react';
 
 // Type definitions for pre-loaded course data
 type LessonType = {
   id: string;
   title: string;
-  status?: 'available' | 'skipped' | 'completed' | 'completedNoExtra';
+  status?: 'available' | 'in-progress' | 'completed' | 'completedNoExtra';
   parentId: string;
 };
 
@@ -60,7 +60,7 @@ type Module = {
   lessons: {
     id: string;
     title: string;
-    status?: 'available' | 'skipped' | 'completed' | 'completedNoExtra';
+    status?: 'available' | 'in-progress' | 'completed' | 'completedNoExtra';
     isActive: boolean;
   }[];
   progress: number;
@@ -178,6 +178,22 @@ export function CourseSections({
   courseInfo: any;
 }) {
   const [activeLessonId, setActiveLessonId] = useState(lessonId);
+  const lessons = Object.values(courseData.documentsMap).filter(
+    (doc: any) => doc.type === 'lesson'
+  );
+
+  console.log('[lessons] lessons', lessons);
+
+  const progress = api.progress.getLessonsProgress.useQuery({
+    lessonIds: lessons.map((lesson) => (lesson as any).id)
+  });
+
+  useEffect(() => {
+    if (progress.data) {
+      console.log('[progress] data', progress.data);
+    }
+  }, [progress.data]);
+
 
   const getHierarchy = useCallback(
     (lessonId: string) => {
@@ -230,7 +246,7 @@ export function CourseSections({
                 lessons: module.lessons.map((lesson: any) => ({
                   id: lesson.id,
                   title: lesson.title,
-                  status: lesson.status,
+                  status: progress.data?.find((p: any) => p.lessonId === lesson.id)?.status || lesson.status,
                   isActive: lesson.id === activeLessonId,
                 })),
               })) as Module[]

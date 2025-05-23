@@ -1,10 +1,9 @@
-'use client';
-
 import LessonSidebarHeader from './SidebarHeader';
 import { Suspense } from 'react';
 import { CourseSections } from './CourseSections';
 
-export default function LessonSidebar({ lessonId, courseInfo }: { lessonId: string, courseInfo: any }) {
+export default async function LessonSidebar({ lessonId, courseInfo }: { lessonId: string, courseInfo: any }) {
+
   return (
       <section className="bg-background relative z-10 hidden h-screen w-full max-w-86 flex-col overflow-y-scroll [scrollbar-width:none] sm:flex [&::-webkit-scrollbar]:hidden">
         <nav>

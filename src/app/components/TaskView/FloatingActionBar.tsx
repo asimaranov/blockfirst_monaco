@@ -33,11 +33,13 @@ export const FloatingActionBar = ({
   iframeRef,
   taskData,
   setTaskStatus,
+  lessonId,
 }: {
   setAiMentorLastFailure: (lastFailure: string) => void;
   iframeRef: React.RefObject<HTMLIFrameElement>;
   taskData: any;
   setTaskStatus: (status: string) => void;
+  lessonId: string;
 }) => {
   const [position, setPosition] = useState({
     bottom: 0,
@@ -133,6 +135,7 @@ export const FloatingActionBar = ({
       submitTaskMutation.mutate(
         {
           taskId: taskData.id,
+          lessonId: taskData.lessonId,
           data: '', // Empty data means "in-progress"
         },
         {
@@ -483,6 +486,7 @@ export const FloatingActionBar = ({
                   {
                     taskId: taskData.id,
                     data, // The encrypted data contains test results
+                    lessonId,
                   },
                   {
                     onSuccess: (response) => {
@@ -527,6 +531,7 @@ export const FloatingActionBar = ({
                   {
                     taskId: taskData.id,
                     data, // The encrypted data contains test results
+                    lessonId: lessonId,
                   },
                   {
                     onSuccess: (response) => {

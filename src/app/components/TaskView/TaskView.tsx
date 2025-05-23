@@ -161,7 +161,7 @@ export default function TaskView({
           </div>
 
           {activeTab === 'info' && (
-            <TaskInfo task={task} taskStatus={taskStatus} />
+            <TaskInfo task={task} lessonId={lessonId} taskStatus={taskStatus} />
           )}
           {activeTab === 'ai-mentor' && (
             <AiMentor
@@ -260,6 +260,7 @@ export default function TaskView({
           taskId={task.id}
           taskData={task}
           setTaskStatus={setTaskStatus}
+          lessonId={lessonId}
         />
       </div>
     </div>

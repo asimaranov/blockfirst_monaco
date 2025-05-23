@@ -37,53 +37,6 @@ export const progressRouter = createTRPCRouter({
       );
     }),
 
-  // Get progress for all tasks in a lesson
-  getLessonTasksProgress: protectedProcedure
-    .input(z.object({ lessonId: z.string() }))
-    .query(async ({ input, ctx }) => {
-      const userId = ctx.session.user.id;
-      const { lessonId } = input;
-
-      // Get all tasks in the lesson
-      const tasks = await getDocumentChildren(lessonId);
-
-      if (!tasks.length) {
-        return [];
-      }
-
-      const taskIds = tasks.map((task) => task.id);
-
-      // Get progress for these tasks
-      const progressRecords = await UserTaskProgress.find({
-        userId,
-        taskId: { $in: taskIds },
-      });
-
-      // Create a map of task progress by task ID
-      const progressMap = progressRecords.reduce(
-        (map, record) => {
-          map[record.taskId] = record;
-          return map;
-        },
-        {} as Record<string, any>
-      );
-
-      // Return progress for each task, using default values if no progress exists
-      return tasks.map((task) => {
-        const progress = progressMap[task.id];
-        return {
-          taskId: task.id,
-          title: task.title,
-          userId,
-          status: progress?.status || 'available',
-          advancedTasksSolved: progress?.advancedTasksSolved || false,
-          submissionCount: progress?.submissionCount || 0,
-          completedAt: progress?.completedAt,
-          lastSubmittedAt: progress?.lastSubmittedAt,
-        };
-      });
-    }),
-
   // Get progress for a specific lesson
   getLessonProgress: protectedProcedure
     .input(z.object({ lessonId: z.string() }))
@@ -109,6 +62,21 @@ export const progressRouter = createTRPCRouter({
       );
     }),
 
+
+  // Get progress for a specific lesson
+  getLessonsProgress: protectedProcedure
+  .input(z.object({ lessonIds: z.array(z.string()) }))
+  .query(async ({ input, ctx }) => {
+    const userId = ctx.session.user.id;
+    const { lessonIds } = input;
+
+    const progress = await UserLessonProgress.find({
+      userId,
+      lessonId: { $in: lessonIds },
+    });
+
+    return progress;
+  }),
   // Get progress for all lessons in a module
   getModuleLessonsProgress: protectedProcedure
     .input(z.object({ moduleId: z.string() }))
