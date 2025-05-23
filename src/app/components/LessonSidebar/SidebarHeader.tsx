@@ -139,7 +139,7 @@ const BackButton = () => {
     </svg>
   );
 };
-export default function LessonSidebarHeader() {
+export default function LessonSidebarHeader({ courseProgress }: { courseProgress: number }) {
   return (
     <>
       <div className="bg-background sticky top-0 z-10 flex flex-row items-center px-8 pt-8 pb-5 text-base font-medium">
@@ -157,7 +157,7 @@ export default function LessonSidebarHeader() {
       <div className="relative flex flex-col">
         <div className="">
           <CourseProgress
-            progress={40}
+            progress={courseProgress}
             className="bg-[#0B0D12] px-8 py-5"
             progressClassName="h-2"
           />

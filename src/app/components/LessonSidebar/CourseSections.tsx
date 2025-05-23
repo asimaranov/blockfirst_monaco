@@ -1,13 +1,7 @@
 'use client';
 
 import { CourseSection } from './CourseSection';
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  createContext,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { api } from '~/trpc/react';
 
 // Type definitions for pre-loaded course data
@@ -68,26 +62,6 @@ type Module = {
   status: 'available' | 'upcoming' | 'locked';
 };
 
-// Create context to store and share course data across renders
-type CourseContextType = {
-  courseData: CourseType | null;
-  loading: boolean;
-  setCourseData: (data: CourseType) => void;
-  getHierarchy: (lessonId: string) => {
-    lessonId: string;
-    moduleId: string;
-    sectionId: string;
-    courseId: string;
-  } | null;
-};
-
-const CourseContext = createContext<CourseContextType>({
-  courseData: null,
-  loading: true,
-  setCourseData: () => {},
-  getHierarchy: () => null,
-});
-
 // Icons remain unchanged
 const CodeIcon = () => {
   return (
@@ -124,58 +98,15 @@ const CodeIcon = () => {
   );
 };
 
-const MultiSigIcon = () => {
-  return (
-    <svg
-      width="20"
-      height="20"
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <g opacity="0.5">
-        <path
-          d="M5.33203 11.9987V7.33203"
-          stroke="#9AA6B5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M5.4987 16.6654C6.69531 16.6654 7.66536 15.6953 7.66536 14.4987C7.66536 13.3021 6.69531 12.332 5.4987 12.332C4.30208 12.332 3.33203 13.3021 3.33203 14.4987C3.33203 15.6953 4.30208 16.6654 5.4987 16.6654Z"
-          stroke="#9AA6B5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M5.33203 7.33203C6.4366 7.33203 7.33203 6.4366 7.33203 5.33203C7.33203 4.22746 6.4366 3.33203 5.33203 3.33203C4.22746 3.33203 3.33203 4.22746 3.33203 5.33203C3.33203 6.4366 4.22746 7.33203 5.33203 7.33203Z"
-          stroke="#9AA6B5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M14.668 7.33203C15.7725 7.33203 16.668 6.4366 16.668 5.33203C16.668 4.22746 15.7725 3.33203 14.668 3.33203C13.5634 3.33203 12.668 4.22746 12.668 5.33203C12.668 6.4366 13.5634 7.33203 14.668 7.33203Z"
-          stroke="#9AA6B5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M5.41797 12.0019C5.71797 10.8353 6.78463 9.96859 8.04463 9.97526L10.3313 9.98193C12.078 9.9886 13.5646 8.86859 14.1113 7.30859"
-          stroke="#9AA6B5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </g>
-    </svg>
-  );
-};
-
 // Main component for course sections sidebar
 export function CourseSections({
   lessonId,
   courseInfo: courseData,
+  setCourseProgress,
 }: {
   lessonId: string;
   courseInfo: any;
+  setCourseProgress: (progress: number) => void;
 }) {
   const [activeLessonId, setActiveLessonId] = useState(lessonId);
   const lessons = Object.values(courseData.documentsMap).filter(
@@ -185,15 +116,20 @@ export function CourseSections({
   console.log('[lessons] lessons', lessons);
 
   const progress = api.progress.getLessonsProgress.useQuery({
-    lessonIds: lessons.map((lesson) => (lesson as any).id)
+    lessonIds: lessons.map((lesson) => (lesson as any).id),
   });
 
   useEffect(() => {
     if (progress.data) {
-      console.log('[progress] data', progress.data);
+      const completedLessons = progress.data.filter(
+        (p: any) => p.status === 'completed'
+      ).length;
+      const progressPercent = Math.round(
+        (completedLessons / lessons.length) * 100
+      );
+      setCourseProgress(progressPercent);
     }
   }, [progress.data]);
-
 
   const getHierarchy = useCallback(
     (lessonId: string) => {
@@ -246,7 +182,9 @@ export function CourseSections({
                 lessons: module.lessons.map((lesson: any) => ({
                   id: lesson.id,
                   title: lesson.title,
-                  status: progress.data?.find((p: any) => p.lessonId === lesson.id)?.status || lesson.status,
+                  status:
+                    progress.data?.find((p: any) => p.lessonId === lesson.id)
+                      ?.status || lesson.status,
                   isActive: lesson.id === activeLessonId,
                 })),
               })) as Module[]
