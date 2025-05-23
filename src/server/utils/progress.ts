@@ -158,10 +158,16 @@ export async function updateCourseProgress(userId: string, lessonId: string) {
     lessonId: { $in: lessons.map((lesson) => (lesson as any).id) },
   });
 
-
   const completedLessons = progress.filter(
     (p: any) => p.status === 'completed'
   );
+
+  const lastCompletedLessonId = completedLessons[completedLessons.length - 1].lessonId as string;
+
+  const lastCompletedLessonIndex = lessons.findIndex(
+    (lesson) => (lesson as any).id === lastCompletedLessonId
+  );
+  const nextLesson = lessons[lastCompletedLessonIndex + 1];
 
   if (progress) {
     const progressPercent = Math.round(
@@ -172,6 +178,7 @@ export async function updateCourseProgress(userId: string, lessonId: string) {
       { userId, courseId: getCourseByLessonId.courseId },
       {
         progressPercent,
+        lastLessonId: (nextLesson as any).id,
       },
       { upsert: true, new: true }
     );
