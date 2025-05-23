@@ -136,7 +136,7 @@ const getParentDocument = async (parentDocumentId: string) => {
   });
 };
 
-const getDocumentChildren = async (documentId: string) => {
+export const getDocumentChildren = async (documentId: string) => {
   'use cache';
 
   cacheTag('children-by-document-id', documentId);
