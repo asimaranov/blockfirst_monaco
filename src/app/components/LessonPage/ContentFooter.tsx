@@ -272,6 +272,7 @@ export default function ContentFooter({
   const url = `https://app.blockfirst.io${pathname}`;
   const jsConfettiRef = useRef<JSConfetti>();
   const [currentEmojies, setCurrentEmojies] = useState<string[]>([]);
+  const isReactionSubmitted = useRef(false);
 
   const userRating = userRatingAndReaction?.userRating;
   const userReaction = userRatingAndReaction?.userReaction;
@@ -304,16 +305,27 @@ export default function ContentFooter({
     removeRatingMutation.mutate({ lessonId });
   };
 
-  const handleReaction = (reactionType: ReactionType) => {
+  useEffect(() => {
+    if (!isReactionSubmitted.current) return;
+    if (userReaction === ReactionType.LIKE) {
+      setCurrentEmojies(['🔥', '😻']);
+    } else if (userReaction === ReactionType.DISLIKE) {
+      setCurrentEmojies(['😡', '🤮']);
+    }
+  }, [userReaction]);
+  
+
+  const handleReaction = async (reactionType: ReactionType) => {
     if (!session.data?.user) return;
 
     if (userReaction === reactionType) {
       // Remove reaction if clicking the same type
-      removeReactionMutation.mutate({ lessonId });
+      await removeReactionMutation.mutateAsync({ lessonId });
     } else {
       // Add or update reaction
-      reactToLessonMutation.mutate({ lessonId, reactionType });
+      await reactToLessonMutation.mutateAsync({ lessonId, reactionType });
     }
+    isReactionSubmitted.current = true;
   };
 
   return (
@@ -445,9 +457,8 @@ export default function ContentFooter({
               'bg-secondary/10 group flex h-8 w-8 cursor-pointer items-center justify-center rounded-[0.3021vw] text-sm',
               userReaction === ReactionType.DISLIKE && 'bg-red-500/20'
             )}
-            onClick={() => {
-              setCurrentEmojies(['💔', '🤮']);
-              handleReaction(ReactionType.DISLIKE);
+            onClick={async () => {
+              await handleReaction(ReactionType.DISLIKE);
             }}
           >
             <Image
@@ -477,9 +488,8 @@ export default function ContentFooter({
               'bg-secondary/10 group flex h-8 w-8 cursor-pointer items-center justify-center rounded-[0.3021vw] text-sm',
               userReaction === ReactionType.LIKE && 'bg-green-500/20'
             )}
-            onClick={() => {
-              setCurrentEmojies(['🔥', '😻']);
-              handleReaction(ReactionType.LIKE);
+            onClick={async () => {
+              await handleReaction(ReactionType.LIKE);
             }}
           >
             <Image
