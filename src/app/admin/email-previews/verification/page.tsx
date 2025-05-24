@@ -1,18 +1,22 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import VerificationEmailTemplate from '~/email-templates/verification-email';
 import { Preview, render } from '@react-email/components';
 import Link from 'next/link';
 
-export default async function VerificationEmailPreviewPage() {
+export default function VerificationEmailPreviewPage() {
   const [otp, setOtp] = useState('12345');
+  const [html, setHtml] = useState('');
 
-  const html = await render(
-    <VerificationEmailTemplate otp={otp} />
-  );
+  useEffect(() => {
+    render(
+      <VerificationEmailTemplate otp={otp} />
+    ).then((html) => {
+      setHtml(html);
+    });
+  }, [otp]);
 
-  console.log(html);
 
   return (
     <div className="p-6">

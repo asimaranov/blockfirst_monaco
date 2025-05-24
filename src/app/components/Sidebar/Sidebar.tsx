@@ -17,7 +17,7 @@ import ReferralIcon from './assets/section_icons/referral';
 import NotificationsIcon from './assets/section_icons/notifications';
 import { api } from '~/trpc/server';
 import SignOutButton from './SignOutButton';
-import { SidebarSection, SidebarSections } from './SidebarSection';
+import { ISidebarSection, SidebarSections } from './SidebarSection';
 import { auth } from '~/server/auth';
 import { headers } from 'next/headers';
 import { planTypeToSubscriptionType } from '~/app/lib/utils';
@@ -33,7 +33,7 @@ export default async function Sidebar() {
         <nav className={'flex w-full flex-col'}>
           <SidebarHeader />
           <Suspense>
-            <SidebarSections/>
+            <SidebarSections />
           </Suspense>
         </nav>
         <Suspense>

@@ -20,6 +20,16 @@ const config = {
   //   },
   // },
 
+  
+
+  eslint: {
+    // ignoreDuringBuilds: true,
+    ignoreDuringBuilds: ['generated'],
+
+
+  
+  },
+
   experimental: {
     useCache: true,
     turbo: {},

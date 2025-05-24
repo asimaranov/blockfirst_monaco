@@ -10,7 +10,7 @@ import { useNotificationsModalStore } from '~/store/notificationsModal';
 import { api } from '~/trpc/react';
 import { getSidebarSectionsData } from './SidebarSectionsData';
 
-export interface SidebarSection {
+export interface ISidebarSection {
   title: string;
   isPro: boolean;
   items: ISidebarItem[];
@@ -50,7 +50,11 @@ function SidebarSection({
   });
 
   return (
-    <MenuItem key={section.title} title={section.title} isPro={section.isPro && userData?.plan !== 'pro'}>
+    <MenuItem
+      key={section.title}
+      title={section.title}
+      isPro={section.isPro && userData?.plan !== 'pro'}
+    >
       {section.items.map((item) => (
         <MenuLink
           key={item.title}
@@ -94,7 +98,6 @@ function SidebarSection({
 export function SidebarSections() {
   const { toggle } = useNotificationsModalStore();
   const sections = getSidebarSectionsData({ unreadCount: 0 });
-
 
   return (
     <>

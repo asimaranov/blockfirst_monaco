@@ -461,7 +461,7 @@ export default function CVPage({ session }: { session: Session }) {
                 </div>
                 <p className="text-secondary text-sm">
                   Мы собрали для вас топ самых популярных и часто задаваемых
-                  вопросов, которые касаются раздела "Подготовка резюме".
+                  вопросов, которые касаются раздела &quot;Подготовка резюме&quot;.
                   <span className="text-foreground">
                     {' '}
                     Не нашли ответа? Напишите нам

@@ -321,13 +321,15 @@ export const referralsRouter = createTRPCRouter({
       let startDate = new Date(0); // Default to epoch time for "all"
 
       switch (input.timePeriod) {
-        case '7d': // Last 7 days
+        case '7d': {
           startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
           break;
-        case '30d': // Current month
+        }
+        case '30d': {
           startDate = new Date(now.getFullYear(), now.getMonth(), 1);
           break;
-        case '90d': // Previous month
+        }
+        case '90d': {
           startDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
           const lastDayPrevMonth = new Date(
             now.getFullYear(),
@@ -337,7 +339,8 @@ export const referralsRouter = createTRPCRouter({
           now.setDate(lastDayPrevMonth);
           now.setMonth(now.getMonth() - 1);
           break;
-        case 'lm': // Month before previous
+        }
+        case 'lm': {
           startDate = new Date(now.getFullYear(), now.getMonth() - 2, 1);
           const lastDayBeforePrevMonth = new Date(
             now.getFullYear(),
@@ -347,13 +350,15 @@ export const referralsRouter = createTRPCRouter({
           now.setDate(lastDayBeforePrevMonth);
           now.setMonth(now.getMonth() - 2);
           break;
-        case 'year': // Last year
+        }
+        case 'year': {
           startDate = new Date(
             now.getFullYear() - 1,
             now.getMonth(),
             now.getDate()
           );
           break;
+        }
         default: // 'all' - no filtering needed
           break;
       }

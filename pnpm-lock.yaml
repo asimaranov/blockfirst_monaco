@@ -313,7 +313,7 @@ importers:
         version: 44.0.0(@udecode/plate@48.0.1(@types/react@18.3.20)(immer@10.1.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(scheduler@0.26.0)(slate-dom@0.114.0(slate@0.114.0))(slate@0.114.0)(use-sync-external-store@1.5.0(react@19.1.0)))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@uploadthing/react':
         specifier: 7.3.0
-        version: 7.3.0(next@15.4.0-canary.50(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)(uploadthing@7.3.0(express@5.1.0)(next@15.4.0-canary.50(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@4.1.5))
+        version: 7.3.0(next@15.4.0-canary.50(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)(uploadthing@7.3.0(express@5.1.0)(next@15.4.0-canary.50(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@4.1.7))
       ai:
         specifier: ^4.3.9
         version: 4.3.13(react@19.1.0)(zod@3.24.3)
@@ -451,10 +451,10 @@ importers:
         version: 3.2.0
       tailwind-scrollbar-hide:
         specifier: ^2.0.0
-        version: 2.0.0(tailwindcss@4.1.5)
+        version: 2.0.0(tailwindcss@4.1.7)
       tailwindcss-animate:
         specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@4.1.5)
+        version: 1.0.7(tailwindcss@4.1.7)
       transliteration:
         specifier: ^2.3.5
         version: 2.3.5
@@ -463,7 +463,7 @@ importers:
         version: 5.3.4
       uploadthing:
         specifier: 7.3.0
-        version: 7.3.0(express@5.1.0)(next@15.4.0-canary.50(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@4.1.5)
+        version: 7.3.0(express@5.1.0)(next@15.4.0-canary.50(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@4.1.7)
       use-file-picker:
         specifier: ^2.1.2
         version: 2.1.2(react@19.1.0)
@@ -522,6 +522,9 @@ importers:
       eslint-config-next:
         specifier: ^15.3.1
         version: 15.3.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3)
+      eslint-plugin-jsx-a11y:
+        specifier: ^6.10.2
+        version: 6.10.2(eslint@9.26.0(jiti@2.4.2))
       knip:
         specifier: ^5.46.5
         version: 5.52.0(@types/node@20.17.32)(typescript@5.8.3)
@@ -544,8 +547,8 @@ importers:
         specifier: ^1.8.0
         version: 1.8.0
       tailwindcss:
-        specifier: ^4.1.5
-        version: 4.1.5
+        specifier: ^4.1.7
+        version: 4.1.7
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@20.17.32)(typescript@5.8.3)
@@ -6369,6 +6372,9 @@ packages:
   tailwindcss@4.1.5:
     resolution: {integrity: sha512-nYtSPfWGDiWgCkwQG/m+aX83XCwf62sBgg3bIlNiiOcggnS1x3uVRDAuyelBFL+vJdOPPCGElxv9DjHJjRHiVA==}
 
+  tailwindcss@4.1.7:
+    resolution: {integrity: sha512-kr1o/ErIdNhTz8uzAYL7TpaUuzKIE6QPQ4qmSdxnoX/lo+5wmUHQA6h3L5yIqEImSRnAAURDirLu/BgiXGPAhg==}
+
   tapable@2.2.1:
     resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==}
     engines: {node: '>=6'}
@@ -10330,12 +10336,12 @@ snapshots:
 
   '@uploadthing/mime-types@0.3.4': {}
 
-  '@uploadthing/react@7.3.0(next@15.4.0-canary.50(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)(uploadthing@7.3.0(express@5.1.0)(next@15.4.0-canary.50(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@4.1.5))':
+  '@uploadthing/react@7.3.0(next@15.4.0-canary.50(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)(uploadthing@7.3.0(express@5.1.0)(next@15.4.0-canary.50(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@4.1.7))':
     dependencies:
       '@uploadthing/shared': 7.1.7
       file-selector: 0.6.0
       react: 19.1.0
-      uploadthing: 7.3.0(express@5.1.0)(next@15.4.0-canary.50(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@4.1.5)
+      uploadthing: 7.3.0(express@5.1.0)(next@15.4.0-canary.50(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@4.1.7)
     optionalDependencies:
       next: 15.4.0-canary.50(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
 
@@ -14072,15 +14078,17 @@ snapshots:
 
   tailwind-merge@3.2.0: {}
 
-  tailwind-scrollbar-hide@2.0.0(tailwindcss@4.1.5):
+  tailwind-scrollbar-hide@2.0.0(tailwindcss@4.1.7):
     dependencies:
-      tailwindcss: 4.1.5
+      tailwindcss: 4.1.7
 
-  tailwindcss-animate@1.0.7(tailwindcss@4.1.5):
+  tailwindcss-animate@1.0.7(tailwindcss@4.1.7):
     dependencies:
-      tailwindcss: 4.1.5
+      tailwindcss: 4.1.7
 
   tailwindcss@4.1.5: {}
+
+  tailwindcss@4.1.7: {}
 
   tapable@2.2.1: {}
 
@@ -14365,7 +14373,7 @@ snapshots:
       '@unrs/resolver-binding-win32-ia32-msvc': 1.7.2
       '@unrs/resolver-binding-win32-x64-msvc': 1.7.2
 
-  uploadthing@7.3.0(express@5.1.0)(next@15.4.0-canary.50(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@4.1.5):
+  uploadthing@7.3.0(express@5.1.0)(next@15.4.0-canary.50(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(tailwindcss@4.1.7):
     dependencies:
       '@effect/platform': 0.69.8(effect@3.10.3)
       '@uploadthing/mime-types': 0.3.2
@@ -14374,7 +14382,7 @@ snapshots:
     optionalDependencies:
       express: 5.1.0
       next: 15.4.0-canary.50(@opentelemetry/api@1.9.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
-      tailwindcss: 4.1.5
+      tailwindcss: 4.1.7
 
   uri-js@4.4.1:
     dependencies:

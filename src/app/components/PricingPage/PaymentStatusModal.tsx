@@ -11,7 +11,7 @@ import { api } from '~/trpc/react';
 import { Modal } from '../shared/Modal';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-export default function PaymentStatusModal({}: {}) {
+export default function PaymentStatusModal() {
   const [formState, setFormState] = useState<'success' | 'error'>('success');
   const [isOpen, setIsOpen] = useState(false);
   const searchParams = useSearchParams();

@@ -134,8 +134,8 @@ export function CourseSections({
 
       const lesson = courseData.documentsMap[lessonId];
       const moduleId = lesson.parentId;
-      const module = courseData.documentsMap[moduleId];
-      const sectionId = module.parentId;
+      const module_ = courseData.documentsMap[moduleId];
+      const sectionId = module_.parentId;
 
       return {
         lessonId,

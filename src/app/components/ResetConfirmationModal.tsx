@@ -45,7 +45,7 @@ const ScrollIcon = ({ className }: { className?: string }) => (
 );
 
 export const ResetConfirmationModal = ({ taskId }: { taskId: string }) => {
-  const { isResetModalOpen, buttonPosition, closeResetModal, resetCode } =
+  const { isResetModalOpen, buttonPosition, closeResetModal } =
     useResetStore();
   const { resetEditor, iframeKey, setIframeKey, setShowActionBar } =
     useMonacoEditorStore();

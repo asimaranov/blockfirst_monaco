@@ -9,7 +9,7 @@ import { getSidebarSectionsData } from './SidebarSectionsData';
 import { auth } from '~/server/auth';
 import { headers } from 'next/headers';
 
-export interface SidebarSection {
+export interface ISidebarSection {
   title: string;
   isPro: boolean;
   items: ISidebarItem[];

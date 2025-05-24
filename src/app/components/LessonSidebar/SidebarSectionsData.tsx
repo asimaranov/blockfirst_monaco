@@ -1,4 +1,4 @@
-import { SidebarSection } from './SidebarSection';
+import { ISidebarSection } from './SidebarSection';
 import LightningIcon from './assets/section_icons/lightning';
 import TariffIcon from './assets/section_icons/tariff';
 import CertIcon from './assets/section_icons/cert';
@@ -15,8 +15,8 @@ interface SidebarSectionsDataProps {
 // This is a regular function, not a hook, so it can be used in server components
 export function getSidebarSectionsData({
   unreadCount,
-}: SidebarSectionsDataProps): SidebarSection[] {
-  const sidebarSections: SidebarSection[] = [
+}: SidebarSectionsDataProps): ISidebarSection[] {
+  const sidebarSections: ISidebarSection[] = [
     {
       title: 'Основное',
       isPro: false,
