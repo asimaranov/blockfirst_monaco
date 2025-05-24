@@ -16,6 +16,7 @@ import ExpandIcon from './assets/expand';
 import DownloadIcon from './assets/download';
 import { Progress } from '../shared/Progress';
 import { InfoPopover } from '../shared/InfoPopover';
+import { api } from '~/trpc/react';
 
 const competencies = [
   'Изучите блокчейны Ethereum, BSC, Polygon и библиотеки',
@@ -99,15 +100,13 @@ export default function DiplomaPage({ session }: { session: Session }) {
     }));
   };
 
-  const userProgress = {
-    [COURSES[0]!.id]: 10,
-    [COURSES[1]!.id]: 5,
-    [COURSES[2]!.id]: 0,
-    [COURSES[3]!.id]: 0,
-    [COURSES[4]!.id]: 0,
-    [COURSES[5]!.id]: 0,
-    [COURSES[6]!.id]: 0,
-  };
+  const { data: userProgress } = api.progress.getCoursesProgress.useQuery({
+    courseIds: COURSES.map((course) => course.courseId!).filter(
+      (courseId) => courseId !== undefined
+    ),
+  });
+
+  console.log('[userProgress] userProgress', userProgress);
 
   return (
     <main className="border-accent flex min-h-screen w-full flex-col border-r-0 border-l-0 sm:border-r sm:border-l">
@@ -276,17 +275,23 @@ export default function DiplomaPage({ session }: { session: Session }) {
                         </div>
 
                         <span className="text-foreground text-sm">
-                          {userProgress[course.id]}
+                          {userProgress?.find(
+                            (p) => p.courseId === course.courseId
+                          )?.solvedLessonsCount || 0}
                           <span className="text-secondary text-xs">
-                            /{course.info?.lessonsCount || 0}
+                            /{userProgress?.find(
+                            (p) => p.courseId === course.courseId
+                          )?.totalLessonsCount || course.info?.lessonsCount || 0}
                           </span>
                         </span>
 
                         <div className="relative">
                           <Progress
                             inactive={!!course.soon}
-                            value={userProgress[course.id]}
-                            max={course.info?.lessonsCount || 100}
+                            value={userProgress?.find(
+                              (p) => p.courseId === course.courseId
+                            )?.progressPercent || 0}
+                            max={100}
                             className="h-2"
                           />
                         </div>
@@ -347,8 +352,12 @@ export default function DiplomaPage({ session }: { session: Session }) {
                           <div className="relative h-2 flex-1">
                             <Progress
                               inactive={!!course.soon}
-                              value={userProgress[course.id]}
-                              max={course.info?.lessonsCount || 100}
+                              value={
+                                userProgress?.find(
+                                  (p) => p.courseId === course.courseId
+                                )?.progressPercent || 0
+                              }
+                              max={100}
                               className="h-2 rounded-full"
                             />
                           </div>

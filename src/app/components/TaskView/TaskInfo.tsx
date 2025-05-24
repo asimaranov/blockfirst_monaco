@@ -151,8 +151,8 @@ export default function TaskInfo({ task, lessonId, taskStatus }: { task: any, le
                         <path
                           d="M6.625 10.2104L8.73396 12.3194L13.3737 7.67969"
                           stroke="#F2F2F2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         />
                       </svg>
                     ) : (
@@ -171,14 +171,14 @@ export default function TaskInfo({ task, lessonId, taskStatus }: { task: any, le
                         <path
                           d="M7.17188 12.8319L12.8319 7.17188"
                           stroke="#F2F2F2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         />
                         <path
                           d="M12.8319 12.8319L7.17188 7.17188"
                           stroke="#F2F2F2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
                         />
                       </svg>
                     )

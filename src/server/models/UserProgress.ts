@@ -58,6 +58,10 @@ const UserCourseProgressSchema = new mongoose.Schema(
     courseId: { type: String, required: true, index: true },
 
     progressPercent: { type: Number, default: 0 },
+    
+    solvedLessonsCount: { type: Number, default: 0 },
+    totalLessonsCount: { type: Number, default: 0 },
+
     lastLessonId: { type: String, default: '' },
   },
   { timestamps: true }

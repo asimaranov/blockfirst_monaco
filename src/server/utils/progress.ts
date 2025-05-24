@@ -179,6 +179,8 @@ export async function updateCourseProgress(userId: string, lessonId: string) {
       {
         progressPercent,
         lastLessonId: (nextLesson as any).id,
+        solvedLessonsCount: completedLessons!.length,
+        totalLessonsCount: lessons.length,
       },
       { upsert: true, new: true }
     );

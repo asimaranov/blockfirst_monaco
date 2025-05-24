@@ -88,6 +88,20 @@ export const progressRouter = createTRPCRouter({
 
       return progress;
     }),
+
+  getCoursesProgress: protectedProcedure
+  .input(z.object({ courseIds: z.array(z.string()) }))
+  .query(async ({ input, ctx }) => {
+    const userId = ctx.session.user.id;
+    const { courseIds } = input;
+
+    const progress = await UserCourseProgress.find({
+      userId,
+      courseId: { $in: courseIds },
+    });
+
+    return progress;
+  }),
   markLessonAsInProgress: protectedProcedure
     .input(z.object({ lessonId: z.string() }))
     .mutation(async ({ input, ctx }) => {
