@@ -1,12 +1,14 @@
 'use client';
 
 import { useEffect } from 'react';
+import { useConnectionInfoStore } from '~/store/ls-connection-info-store';
 import { useResetStore } from '~/store/monaco-actions/reset-store';
 import { useToolboxStore } from '~/store/monaco-actions/toolbox-store';
 
 export const MonacoActionsListener = () => {
   const { openResetModal } = useResetStore();
   const { openToolboxModal } = useToolboxStore();
+  const { setTotalClients } = useConnectionInfoStore();
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
@@ -21,6 +23,9 @@ export const MonacoActionsListener = () => {
       }
       if (event.data?.command === 'toolboxButtonClicked') {
         openToolboxModal();
+      }
+      if (event.data?.command === 'connection-info') {
+        setTotalClients(event.data.data.totalClients);
       }
     };
 

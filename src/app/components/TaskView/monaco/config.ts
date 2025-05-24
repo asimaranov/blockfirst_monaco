@@ -353,6 +353,16 @@ export const configure = (
     'https://lserver-1.blockfirst.io/' //'http://localhost:3004'
   );
 
+  ioSocket.on('connection-info', (data: {
+    totalClients: number;
+  }) => {
+    console.log('Connection info', data);
+    window.parent.postMessage({
+      command: 'connection-info',
+      data,
+    }, '*');
+  });
+
   const webSocketRaw = {
     readyState: WebSocket.OPEN,
     send: (data: string) => {

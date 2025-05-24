@@ -4,6 +4,7 @@ import { InfoPopover } from '../shared/InfoPopover';
 import PlateEditor from '../LessonPage/PlateEditor';
 import { useEffect, useState } from 'react';
 import { useTestResultStore } from '~/store/testResultStore';
+import { useConnectionInfoStore } from '~/store/ls-connection-info-store';
 
 export default function TaskInfo({ task, lessonId, taskStatus }: { task: any, lessonId: string, taskStatus: string }) {
   const {
@@ -22,38 +23,7 @@ export default function TaskInfo({ task, lessonId, taskStatus }: { task: any, le
     isAdvanced: false,
     result: true,
   }));
-  // const tests = [
-  //   {
-  //     title: 'Нельзя изменять строки отвечающие за вывод в консоль.',
-  //     progress: 10,
-  //     isAdvanced: false,
-  //     result: true,
-  //   },
-  //   {
-  //     title: 'Нельзя изменять строки с объявленными переменными int a и int b',
-  //     progress: 100,
-  //     isAdvanced: false,
-  //     result: false,
-  //   },
-  //   {
-  //     title: 'Нужно написать подробные комментарии к коду',
-  //     progress: 0,
-  //     isAdvanced: true,
-  //     result: false,
-  //   },
-  //   {
-  //     title: 'Нужно сделать чистый код',
-  //     progress: 50,
-  //     isAdvanced: true,
-  //     result: true,
-  //   },
-  //   {
-  //     title: 'Нужно использовать только простые переменные',
-  //     progress: 100,
-  //     isAdvanced: true,
-  //     result: true,
-  //   },
-  // ];
+  const { totalClients } = useConnectionInfoStore();
 
   return (
     <>
@@ -289,7 +259,7 @@ export default function TaskInfo({ task, lessonId, taskStatus }: { task: any, le
           </div>
           <div className="ml-auto flex flex-row items-center gap-1">
             <div className="bg-success h-1 w-1 rounded-full" />
-            <span className="text-sm leading-4">32</span>
+            <span className="text-sm leading-4">{totalClients}</span>
             <span className="text-secondary/50 text-sm leading-4">
               — Online
             </span>
