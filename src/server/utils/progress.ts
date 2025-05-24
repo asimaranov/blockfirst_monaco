@@ -1,5 +1,5 @@
 import {
-  getCourseById,
+  getCourseByLessonId,
   getDocumentChildren,
   getDocumentById,
   getCourseInfo,
@@ -145,9 +145,9 @@ export async function updateLessonProgress(userId: string, lessonId: string) {
  * Updates a course's status based on its sections
  */
 export async function updateCourseProgress(userId: string, lessonId: string) {
-  const getCourseByLessonId = await getCourseById(lessonId);
+  const courseByLessonId = await getCourseByLessonId(lessonId);
 
-  const courseData = await getCourseInfo(getCourseByLessonId.courseId);
+  const courseData = await getCourseInfo(courseByLessonId.courseId);
 
   const lessons = Object.values(courseData.documentsMap).filter(
     (doc: any) => doc.type === 'lesson'
@@ -175,7 +175,7 @@ export async function updateCourseProgress(userId: string, lessonId: string) {
     );
 
     await UserCourseProgress.findOneAndUpdate(
-      { userId, courseId: getCourseByLessonId.courseId },
+      { userId, courseId: courseByLessonId.courseId },
       {
         progressPercent,
         lastLessonId: (nextLesson as any).id,
@@ -197,5 +197,5 @@ export async function getTaskHierarchy(taskId: string) {
   }
 
   const lessonId = task.parentDocumentId;
-  return getCourseById(lessonId);
+  return getCourseByLessonId(lessonId);
 }

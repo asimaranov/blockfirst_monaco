@@ -2,6 +2,9 @@ import { z } from 'zod';
 import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc';
 import { TRPCError } from '@trpc/server';
 import { type SortOrder } from 'mongoose';
+import { LikeNotification } from '../../models/notification';
+import NotificationSettingModel from '../../models/notificationSetting';
+import { getCourseByLessonId, getCourseInfo, getDocumentById } from '~/lib/documents';
 
 const commentImageSchema = z.object({
   id: z.string(),
@@ -174,6 +177,7 @@ export const commentsRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { commentId } = input;
       const userId = ctx.session.user.id;
+      const userName = ctx.session.user.name || 'User';
 
       const comment = await ctx.mongo.models.comment.findById(commentId);
       if (!comment) {
@@ -199,6 +203,39 @@ export const commentsRouter = createTRPCRouter({
         updateOperation,
         { new: true }
       );
+
+      // If this is a new like (not unlike), create a notification for the comment author
+      if (!isLiked && comment.author?.id && comment.author.id !== userId) {
+        try {
+          // Check if the comment author has comment notifications enabled
+          const notificationSettings = await NotificationSettingModel.findOne({
+            userId: comment.author.id,
+          });
+
+          const commentsEnabled =
+            notificationSettings?.settings?.comments ?? true; // Default to true if no settings found
+
+          if (commentsEnabled) {
+            const comment = await ctx.mongo.models.comment.findById(commentId);
+            const course = await getCourseByLessonId(comment.lessonId);
+            const courseDocument = await getDocumentById(course.courseId);
+            
+
+            // Create like notification
+            await LikeNotification.create({
+              userId: comment.author.id,
+              username: userName,
+              course: courseDocument?.title || 'Course',
+              timestamp: new Date().toISOString(),
+              category: 'like',
+              avatar: userName.charAt(0).toUpperCase(),
+            });
+          }
+        } catch (error) {
+          // Log error but don't fail the like operation
+          console.error('Failed to create like notification:', error);
+        }
+      }
 
       return {
         isLiked: !isLiked,

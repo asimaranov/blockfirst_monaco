@@ -11,7 +11,7 @@ import LessonPage from '~/app/components/LessonPage/LessonPage';
 import {
   getDocumentById,
   getDocumentChildren,
-  getCourseById,
+  getCourseByLessonId,
   getCourseInfo,
 } from '~/lib/documents';
 import { cacheTag } from 'next/dist/server/use-cache/cache-tag';
@@ -28,9 +28,9 @@ export default async function Layout({
   // await api.userData.getUserData.prefetch();
   // await api.notifications.getSettings.prefetch();
 
-  const getCourseByLessonId = await getCourseById(lessonId);
+  const courseByLessonId = await getCourseByLessonId(lessonId);
 
-  const courseInfo = await getCourseInfo(getCourseByLessonId.courseId);
+  const courseInfo = await getCourseInfo(courseByLessonId.courseId);
 
   return (
     <div className="bg-dark-bg relative flex max-h-screen flex-col sm:flex-row">

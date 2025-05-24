@@ -191,10 +191,10 @@ export const getDocumentChildren = async (documentId: string) => {
 /**
  * Get course IDs from a lesson ID by traversing the document hierarchy
  */
-export const getCourseById = async (lessonId: string) => {
+export const getCourseByLessonId = async (lessonId: string) => {
   'use cache';
-  cacheTag('course-id', lessonId);
-  cacheTag(`course-id:${lessonId}`);
+  cacheTag('course-by-lesson-id', lessonId);
+  cacheTag(`course-by-lesson-id:${lessonId}`);
   const lessonDocument = await getDocumentById(lessonId);
 
   // Get module
