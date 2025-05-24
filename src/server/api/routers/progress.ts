@@ -60,21 +60,20 @@ export const progressRouter = createTRPCRouter({
       );
     }),
 
-
   // Get progress for a specific lesson
   getLessonsProgress: protectedProcedure
-  .input(z.object({ lessonIds: z.array(z.string()) }))
-  .query(async ({ input, ctx }) => {
-    const userId = ctx.session.user.id;
-    const { lessonIds } = input;
+    .input(z.object({ lessonIds: z.array(z.string()) }))
+    .query(async ({ input, ctx }) => {
+      const userId = ctx.session.user.id;
+      const { lessonIds } = input;
 
-    const progress = await UserLessonProgress.find({
-      userId,
-      lessonId: { $in: lessonIds },
-    });
+      const progress = await UserLessonProgress.find({
+        userId,
+        lessonId: { $in: lessonIds },
+      });
 
-    return progress;
-  }),
+      return progress;
+    }),
 
   getCourseProgress: protectedProcedure
     .input(z.object({ courseId: z.string() }))
@@ -88,5 +87,24 @@ export const progressRouter = createTRPCRouter({
       });
 
       return progress;
+    }),
+  markLessonAsInProgress: protectedProcedure
+    .input(z.object({ lessonId: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      const userId = ctx.session.user.id;
+      const { lessonId } = input;
+
+      // if not exists, create it
+      const lessonProgress = await UserLessonProgress.findOne({
+        userId,
+        lessonId,
+      });
+      if (!lessonProgress) {
+        await UserLessonProgress.create({
+          userId,
+          lessonId,
+          status: 'in-progress',
+        });
+      }
     }),
 });
