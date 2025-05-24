@@ -4,12 +4,19 @@ import Image from 'next/image';
 import { AlumniCounter } from './AlumniCounter';
 import { RatingCounter } from './RatingCounter';
 import { CourseProgress } from './CourseProgress';
-import { useTranslations } from 'next-intl';
 import GridSvg from './assets/grid.svg';
 import { CourseBadge } from '../shared/CourseBadge';
+import { api } from '~/trpc/server';
+import { getTranslations } from 'next-intl/server';
 
-export function CourseTopCard({ course }: { course: ICourse }) {
-  const t = useTranslations('UserSpace');
+export async function CourseTopCard({ course }: { course: ICourse }) {
+  const t = await getTranslations('UserSpace');
+
+  const progress = await api.progress.getCourseProgress({
+    courseId: course.courseId!,
+  });
+
+  console.log('[progress] progress', course.courseId, progress);
 
   return (
     <section className="border-accent group relative flex-row gap-10 border-t border-b hover:bg-[#14171C] sm:flex">
@@ -67,10 +74,15 @@ export function CourseTopCard({ course }: { course: ICourse }) {
           <span className="sm:text-2xll text-xl font-bold">{course.title}</span>
           <span className="text-secondary text-sm">{course.description}</span>
         </div>
-        <CourseProgress progress={4} className="mt-8 sm:mt-6" />
+        <CourseProgress
+          progress={progress?.progressPercent || 0}
+          className="mt-8 sm:mt-6"
+        />
         <div className="mt-8 flex flex-row items-center justify-between gap-4">
           <Link
-            href={`/lesson/${course.firstLessonId}`}
+            href={`/lesson/${
+              progress?.lastLessonId || course.firstLessonId
+            }`}
             className={
               'bg-primary border-primary flex w-full flex-col items-center justify-center rounded-full border py-3 duration-300 hover:bg-transparent'
             }

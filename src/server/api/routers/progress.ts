@@ -7,6 +7,7 @@ import {
 import {
   UserTaskProgress,
   UserLessonProgress,
+  UserCourseProgress,
 } from '~/server/models/UserProgress';
 import { getDocumentChildren } from '~/lib/documents';
 
@@ -74,66 +75,18 @@ export const progressRouter = createTRPCRouter({
 
     return progress;
   }),
-  // Get progress for all lessons in a module
-  getModuleLessonsProgress: protectedProcedure
-    .input(z.object({ moduleId: z.string() }))
+
+  getCourseProgress: protectedProcedure
+    .input(z.object({ courseId: z.string() }))
     .query(async ({ input, ctx }) => {
       const userId = ctx.session.user.id;
-      const { moduleId } = input;
+      const { courseId } = input;
 
-      // Get all lessons in the module
-      const lessons = await getDocumentChildren(moduleId);
-
-      if (!lessons.length) {
-        return [];
-      }
-
-      const lessonIds = lessons.map((lesson) => lesson.id);
-
-      // Get progress for these lessons
-      const progressRecords = await UserLessonProgress.find({
+      const progress = await UserCourseProgress.findOne({
         userId,
-        lessonId: { $in: lessonIds },
+        courseId,
       });
 
-      // Create a map of lesson progress by lesson ID
-      const progressMap = progressRecords.reduce(
-        (map, record) => {
-          map[record.lessonId] = record;
-          return map;
-        },
-        {} as Record<string, any>
-      );
-
-      // Return progress for each lesson, using default values if no progress exists
-      return lessons.map((lesson) => {
-        const progress = progressMap[lesson.id];
-        return {
-          lessonId: lesson.id,
-          title: lesson.title,
-          userId,
-          status: progress?.status || 'available',
-          completedTasksCount: progress?.completedTasksCount || 0,
-          totalTasksCount: progress?.totalTasksCount || 0,
-          completedAdvancedTasksCount:
-            progress?.completedAdvancedTasksCount || 0,
-          totalAdvancedTasksCount: progress?.totalAdvancedTasksCount || 0,
-          completedAt: progress?.completedAt,
-        };
-      });
-    }),
-
-
-    markLessonAsInProgress: protectedProcedure
-    .input(z.object({ lessonId: z.string() }))
-    .mutation(async ({ input, ctx }) => {
-      const userId = ctx.session.user.id;
-      const { lessonId } = input;
-
-      // if not exists, create it
-      const lessonProgress = await UserLessonProgress.findOne({ userId, lessonId });
-      if (!lessonProgress) {
-        await UserLessonProgress.create({ userId, lessonId, status: 'in-progress' });
-      }
+      return progress;
     }),
 });

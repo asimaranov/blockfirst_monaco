@@ -14,6 +14,7 @@ import TheoryIcon from './assets/TheoryIcon.svg';
 import PracticeIcon from './assets/PracticeIcon.svg';
 import VideoIcon from './assets/VideoIcon.svg';
 import ClockIcon from './assets/clock.svg';
+import { api } from '~/trpc/server';
 
 export default async function CourseInfoTopCard({
   course,
@@ -21,6 +22,10 @@ export default async function CourseInfoTopCard({
   course: ICourse;
 }) {
   const t = await getTranslations('UserSpace');
+
+  const progress = await api.progress.getCourseProgress({
+    courseId: course.courseId!,
+  });
 
   return (
     <section className="border-accent static top-0 flex flex-col gap-10 self-start sm:sticky">
@@ -106,10 +111,12 @@ export default async function CourseInfoTopCard({
             </div>
           </div>
         </div>
-        <CourseProgress progress={4} className="mt-8 sm:mt-6" />
+        <CourseProgress progress={progress?.progressPercent || 0} className="mt-8 sm:mt-6" />
         <div className="mt-8 flex flex-col-reverse items-center justify-between gap-5 sm:gap-4 sm:flex-row">
           <Link
-            href={`/lesson/${course.firstLessonId}`}
+            href={`/lesson/${
+              progress?.lastLessonId || course.firstLessonId
+            }`}
             className={
               'bg-primary border-primary flex w-full flex-col items-center justify-center rounded-full border py-3 duration-300 hover:bg-transparent'
             }

@@ -15,6 +15,7 @@ export interface ICourseBageInfo {
 }
 export interface ICourse {
   id: string;
+  courseId?: string;
   firstLessonId?: string;
   title: string;
   description: string;
@@ -29,6 +30,7 @@ export interface ICourse {
 export const COURSES: ICourse[] = [
   {
     id: 'solidity',
+    courseId: '8lfrp9b9b1j8rn8',
     firstLessonId: 'g6wz95skvzwc3z9',
     title: 'Путешествие по Solidity & DeFi',
     description:
@@ -56,12 +58,13 @@ export const COURSES: ICourse[] = [
   },
   {
     id: 'uniswap_advanced',
+    
     title: 'Продвинутый Uniswap курс',
     description:
       'Реализуйте свой собственный uniswap с нуля и помогите Алексу запустить его новую блестящую ...',
     smallImg: '/courses/uniswap/small.png',
     bigImg: '/courses/uniswap/big.png',
-    soon: false,
+    soon: true,
     bage: {
       title: 'Uniswap',
       img: '/courses/uniswap/label.svg',
