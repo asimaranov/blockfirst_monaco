@@ -13,6 +13,7 @@ import { createCallerFactory, createTRPCRouter } from '~/server/api/trpc';
 import { examAiRouter } from './routers/examAi';
 import { commentsRouter } from './routers/comments';
 import { progressRouter } from '~/server/api/routers/progress';
+import { lessonsRouter } from './routers/lessons';
 
 /**
  * This is the primary router for your server.
@@ -34,6 +35,7 @@ export const appRouter = createTRPCRouter({
   examAi: examAiRouter,
   comments: commentsRouter,
   progress: progressRouter,
+  lessons: lessonsRouter,
 });
 
 // export type definition of API

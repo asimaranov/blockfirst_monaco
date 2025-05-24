@@ -23,6 +23,8 @@ import CommentModel from '../models/comment';
 import dbConnect from '../mongodb';
 import ExamChatHistoryModel from '../models/examChatHistory';
 import ExamRatingModel from '../models/examRating';
+import LessonRatingModel from '../models/lessonRating';
+import LessonReactionModel from '../models/lessonReaction';
 
 /**
  * 1. CONTEXT
@@ -58,6 +60,8 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
         examChatHistory: ExamChatHistoryModel,
         comment: CommentModel,
         ExamRating: ExamRatingModel,
+        lessonRating: LessonRatingModel,
+        lessonReaction: LessonReactionModel,
       },
     },
     ...opts,

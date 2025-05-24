@@ -359,6 +359,9 @@ importers:
       highlightjs-solidity:
         specifier: ^2.0.6
         version: 2.0.6
+      js-confetti:
+        specifier: ^0.12.0
+        version: 0.12.0
       kysely:
         specifier: ^0.28.2
         version: 0.28.2
@@ -4777,6 +4780,9 @@ packages:
         optional: true
       react:
         optional: true
+
+  js-confetti@0.12.0:
+    resolution: {integrity: sha512-1R0Akxn3Zn82pMqW65N1V2NwKkZJ75bvBN/VAb36Ya0YHwbaSiAJZVRr/19HBxH/O8x2x01UFAbYI18VqlDN6g==}
 
   js-sha3@0.8.0:
     resolution: {integrity: sha512-gF1cRrHhIzNfToc802P800N8PpXS+evLLXfsVpowqmAFR9uwbi89WvXg2QspOmXL8QL86J4T1EpFu+yUkwJY3Q==}
@@ -12199,6 +12205,8 @@ snapshots:
     optionalDependencies:
       '@types/react': 18.3.20
       react: 19.1.0
+
+  js-confetti@0.12.0: {}
 
   js-sha3@0.8.0: {}
 

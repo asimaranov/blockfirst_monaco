@@ -5,11 +5,14 @@ import BrokenHeart from './assets/BrokenHeart.png';
 import FireAction from './assets/FireAction.png';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import DropDownAction from '../shared/DropDownAction';
 import { usePathname } from 'next/navigation';
 import { authClient } from '~/server/auth/client';
 import Link from 'next/link';
+import JSConfetti from 'js-confetti';
+import { api } from '~/trpc/react';
+import { ReactionType } from '~/server/models/lessonReaction';
 
 const ShareIcon = () => {
   return (
@@ -214,20 +217,104 @@ export default function ContentFooter({
   nextLocked,
   nextLessonId,
   prevLessonId,
+  lessonId,
 }: {
   nextLocked: boolean;
   nextLessonId: string | null;
   prevLessonId: string | null;
+  lessonId: string;
 }) {
-  const [rating, setRating] = useState<number | undefined>(undefined);
   const pathname = usePathname();
-
-  const totalRating = rating ? rating : 4.5;
   const session = authClient.useSession();
+  const utils = api.useUtils();
+
+  // Get lesson stats
+  const { data: lessonStats } = api.lessons.getStats.useQuery({ lessonId });
+
+  // Get user's rating and reaction if logged in
+  const { data: userRatingAndReaction } =
+    api.lessons.getUserRatingAndReaction.useQuery(
+      { lessonId },
+      { enabled: !!session.data?.user }
+    );
+
+  // Mutations
+  const rateLessonMutation = api.lessons.rateLesson.useMutation({
+    onSuccess: () => {
+      utils.lessons.getStats.invalidate({ lessonId });
+      utils.lessons.getUserRatingAndReaction.invalidate({ lessonId });
+    },
+  });
+
+  const removeRatingMutation = api.lessons.removeRating.useMutation({
+    onSuccess: () => {
+      utils.lessons.getStats.invalidate({ lessonId });
+      utils.lessons.getUserRatingAndReaction.invalidate({ lessonId });
+    },
+  });
+
+  const reactToLessonMutation = api.lessons.reactToLesson.useMutation({
+    onSuccess: () => {
+      utils.lessons.getStats.invalidate({ lessonId });
+      utils.lessons.getUserRatingAndReaction.invalidate({ lessonId });
+    },
+  });
+
+  const removeReactionMutation = api.lessons.removeReaction.useMutation({
+    onSuccess: () => {
+      utils.lessons.getStats.invalidate({ lessonId });
+      utils.lessons.getUserRatingAndReaction.invalidate({ lessonId });
+    },
+  });
 
   const title = 'Изучи блокчейн разработку с blockfirst';
   const description = 'Изучи блокчейн разработку с blockfirst';
   const url = `https://app.blockfirst.io${pathname}`;
+  const jsConfettiRef = useRef<JSConfetti>();
+  const [currentEmojies, setCurrentEmojies] = useState<string[]>([]);
+
+  const userRating = userRatingAndReaction?.userRating;
+  const userReaction = userRatingAndReaction?.userReaction;
+  const averageRating = lessonStats?.averageRating || 0;
+  const totalReactions = lessonStats?.totalReactions || 0;
+
+  useEffect(() => {
+    if (!currentEmojies.length) return;
+
+    jsConfettiRef.current = new JSConfetti();
+    if (jsConfettiRef.current) {
+      jsConfettiRef.current
+        .addConfetti({
+          emojis: currentEmojies,
+          confettiRadius: 6,
+          confettiNumber: 100,
+        })
+        .then(() => console.log('Initial batch completed'));
+    }
+    setCurrentEmojies([]);
+  }, [currentEmojies]);
+
+  const handleRateLesson = (rating: number) => {
+    if (!session.data?.user) return;
+    rateLessonMutation.mutate({ lessonId, rating });
+  };
+
+  const handleRemoveRating = () => {
+    if (!session.data?.user || !userRating) return;
+    removeRatingMutation.mutate({ lessonId });
+  };
+
+  const handleReaction = (reactionType: ReactionType) => {
+    if (!session.data?.user) return;
+
+    if (userReaction === reactionType) {
+      // Remove reaction if clicking the same type
+      removeReactionMutation.mutate({ lessonId });
+    } else {
+      // Add or update reaction
+      reactToLessonMutation.mutate({ lessonId, reactionType });
+    }
+  };
 
   return (
     <div className="border-accent mt-20 flex flex-row justify-between border-b px-5 pb-10 sm:px-16">
@@ -307,17 +394,19 @@ export default function ContentFooter({
         <div
           className={cn(
             'group/rating z-1000 mx-2 flex h-8 items-center rounded-[0.3472vw] px-5',
-            !!rating && 'hover:bg-secondary/10 relative',
+            !!userRating && 'hover:bg-secondary/10 relative',
             !!session.data?.user && 'cursor-pointer'
           )}
           onClick={() => {
             if (!session.data?.user) {
               return;
             }
-            rating && setRating(undefined);
+            if (userRating) {
+              handleRemoveRating();
+            }
           }}
         >
-          {rating || !session.data?.user ? (
+          {userRating || !session.data?.user ? (
             <button
               className={cn(
                 'relative flex flex-row items-center justify-center gap-2',
@@ -325,9 +414,8 @@ export default function ContentFooter({
               )}
             >
               <StarIconFilled className="" />
-
               <span className="text-sm leading-5">
-                {totalRating.toFixed(2)}
+                {userRating ? userRating.toFixed(1) : averageRating.toFixed(2)}
               </span>
             </button>
           ) : (
@@ -336,8 +424,9 @@ export default function ContentFooter({
                 <button
                   className="group cursor-pointer"
                   key={index}
-                  onClick={() => {
-                    setRating(index + 1);
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleRateLesson(index + 1);
                   }}
                 >
                   <StarIcon className="block not-first:ml-[-0.0521vw] group-hover:hidden group-has-[~button:hover]:hidden" />
@@ -351,7 +440,16 @@ export default function ContentFooter({
         <Separator />
 
         <div className="ml-7 flex flex-row items-center justify-center gap-3">
-          <div className="bg-secondary/10 group flex h-8 w-8 cursor-pointer items-center justify-center rounded-[0.3021vw] text-sm">
+          <button
+            className={cn(
+              'bg-secondary/10 group flex h-8 w-8 cursor-pointer items-center justify-center rounded-[0.3021vw] text-sm',
+              userReaction === ReactionType.DISLIKE && 'bg-red-500/20'
+            )}
+            onClick={() => {
+              setCurrentEmojies(['💔', '🤮']);
+              handleReaction(ReactionType.DISLIKE);
+            }}
+          >
             <Image
               src={BrokenHeart}
               className="h-4 w-4 group-hover:hidden"
@@ -372,9 +470,18 @@ export default function ContentFooter({
                 fill="#F2F2F2"
               />
             </svg>
-          </div>
-          <span className="text-sm">123</span>
-          <div className="bg-secondary/10 group flex h-8 w-8 cursor-pointer items-center justify-center rounded-[0.3021vw] text-sm">
+          </button>
+          <span className="text-sm">{totalReactions}</span>
+          <button
+            className={cn(
+              'bg-secondary/10 group flex h-8 w-8 cursor-pointer items-center justify-center rounded-[0.3021vw] text-sm',
+              userReaction === ReactionType.LIKE && 'bg-green-500/20'
+            )}
+            onClick={() => {
+              setCurrentEmojies(['🔥', '😻']);
+              handleReaction(ReactionType.LIKE);
+            }}
+          >
             <Image
               src={FireAction}
               className="h-4 w-4 group-hover:hidden"
@@ -395,7 +502,7 @@ export default function ContentFooter({
                 fill="#F2F2F2"
               />
             </svg>
-          </div>
+          </button>
         </div>
       </div>
       {nextLessonId && (

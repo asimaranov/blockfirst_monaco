@@ -23,6 +23,7 @@ export default async function LessonPage({ lessonId }: { lessonId: string }) {
             <PlateEditor richText={lessonDocument?.contentRich as Value} />
           </div>
           <ContentFooter
+            lessonId={lessonId}
             nextLocked={false}
             nextLessonId={nextLessonId}
             prevLessonId={prevLessonId}
