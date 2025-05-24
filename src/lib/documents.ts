@@ -27,7 +27,9 @@ export const getPrevNextLessonIds = async (lessonId: string) => {
     const parentDocument = await getParentDocument(document.parentDocumentId);
 
     if (parentDocument) {
-      const parentDocumentChildren = await getDocumentChildren(parentDocument.id);
+      const parentDocumentChildren = await getDocumentChildren(
+        parentDocument.id
+      );
       const siblings = parentDocumentChildren.filter(
         (sibling) => sibling.isArchived === false
       );
@@ -37,6 +39,33 @@ export const getPrevNextLessonIds = async (lessonId: string) => {
 
       if (currentIndex > 0) {
         prevLessonId = siblings[currentIndex - 1].id;
+      } else {
+        // If this is the first lesson in the module, try to find the previous module and its last lesson
+        if (parentDocument.parentDocumentId) {
+          const grandparentDocument = (await getParentDocument(
+            parentDocument.parentDocumentId
+          ))!;
+
+          const grandparentDocumentChildren = await getDocumentChildren(
+            grandparentDocument.id
+          );
+
+          const moduleIndex = grandparentDocumentChildren.findIndex(
+            (child) => child.id === parentDocument.id
+          );
+
+          // Check if there is a previous module
+          if (moduleIndex > 0) {
+            const prevModule = await getDocumentChildren(
+              grandparentDocumentChildren[moduleIndex - 1]!.id
+            );
+
+            // Get the last lesson of the previous module
+            if (prevModule.length > 0) {
+              prevLessonId = prevModule[prevModule.length - 1].id;
+            }
+          }
+        }
       }
 
       if (currentIndex < siblings.length - 1) {
@@ -48,7 +77,9 @@ export const getPrevNextLessonIds = async (lessonId: string) => {
             parentDocument.parentDocumentId
           ))!;
 
-          const grandparentDocumentChildren = await getDocumentChildren(grandparentDocument.id);
+          const grandparentDocumentChildren = await getDocumentChildren(
+            grandparentDocument.id
+          );
 
           const moduleIndex = grandparentDocumentChildren.findIndex(
             (child) => child.id === parentDocument.id
@@ -261,8 +292,6 @@ export const getCourseInfo = async (courseId: string) => {
     documentsMap,
   };
 };
-
-
 
 /**
  * Utility function to revalidate document cache
