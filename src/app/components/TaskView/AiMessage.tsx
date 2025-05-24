@@ -89,7 +89,6 @@ import { useEditorStore } from '~/store/editorStore';
 import { TableRowElementStatic } from '../LessonPage/plate/table';
 import { TableCellElementStatic } from '../LessonPage/plate/table';
 import { TableElementStatic } from '../LessonPage/plate/table';
-import { CodeBlockElement } from '~/components/plate-ui/code-block-element';
 import { CodeLineElementStatic } from '~/components/plate-ui/code-line-element-static';
 import { CodeLeafStatic } from '~/components/plate-ui/code-leaf-static';
 import { CodeSyntaxLeafStatic } from '~/components/plate-ui/code-syntax-leaf-static';

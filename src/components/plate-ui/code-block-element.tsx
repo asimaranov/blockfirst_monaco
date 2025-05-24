@@ -4,12 +4,9 @@ import React from 'react';
 
 import { cn, withRef } from '@udecode/cn';
 import { NodeApi } from '@udecode/plate';
-import { formatCodeBlock, isLangSupported } from '@udecode/plate-code-block';
 import { PlateElement } from '@udecode/plate/react';
-import { BracesIcon, CheckIcon, CopyIcon } from 'lucide-react';
 
 import { Button } from './button';
-import { CodeBlockCombobox } from './code-block-combobox';
 
 export const CodeBlockElement = withRef<typeof PlateElement>(
   ({ children, className, ...props }, ref) => {
@@ -79,13 +76,16 @@ export const CodeBlockElementTask = withRef<typeof PlateElement>(
           className,
           'bg-[#14171C]',
           'py-1',
+          '**:[.slate-code_syntax]:text-[#cccccc]',
           '**:[.hljs-comment,.hljs-code,.hljs-formula]:text-[#6a737d]',
-          '**:[.hljs-keyword,.hljs-doctag,.hljs-template-tag,.hljs-template-variable,.hljs-type,.hljs-variable.language_]:text-[#d73a49]',
+          '**:[.hljs-keyword,.hljs-doctag,.hljs-template-tag,.hljs-template-variable,.hljs-type,.hljs-variable.language_]:!text-[#569cd6]',
+          '**:[.hljs-primitive]:text-[#4ec9b0]',
           '**:[.hljs-title,.hljs-title.class_,.hljs-title.class_.inherited__,.hljs-title.function_]:text-[#6f42c1]',
-          '**:[.hljs-attr,.hljs-attribute,.hljs-literal,.hljs-meta,.hljs-number,.hljs-operator,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id,.hljs-variable]:text-[#005cc5]',
-          '**:[.hljs-regexp,.hljs-string,.hljs-meta_.hljs-string]:text-[#032f62]',
+          '**:[.hljs-title]:!text-[#dcdcaa]',
+          '**:[.hljs-attr,.hljs-attribute,.hljs-literal,.hljs-meta,.hljs-number,.hljs-operator,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id,.hljs-variable]:text-[#cccccc]',
+          '**:[.hljs-regexp,.hljs-string,.hljs-meta_.hljs-string]:text-[#ce9178]',
           '**:[.hljs-built_in,.hljs-symbol]:text-[#e36209]',
-          '**:[.hljs-name,.hljs-quote,.hljs-selector-tag,.hljs-selector-pseudo]:text-[#22863a]',
+          '**:[.hljs-name,.hljs-quote,.hljs-selector-tag,.hljs-selector-pseudo]:text-[#b5cea8]',
           '**:[.hljs-emphasis]:italic',
           '**:[.hljs-strong]:font-bold',
           '**:[.hljs-section]:font-bold **:[.hljs-section]:text-[#005cc5]',
