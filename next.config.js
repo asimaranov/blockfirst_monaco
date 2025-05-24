@@ -14,20 +14,8 @@ const bundleAnalyzer = withBundleAnalyzer({
 
 /** @type {import("next").NextConfig} */
 const config = {
-  // logging: {
-  //   fetches: {
-  //     fullUrl: true,
-  //   },
-  // },
-
-  
-
   eslint: {
-    // ignoreDuringBuilds: true,
-    ignoreDuringBuilds: ['generated'],
-
-
-  
+    ignoreDuringBuilds: true,
   },
 
   experimental: {
