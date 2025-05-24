@@ -142,7 +142,7 @@
     "mongoose": "^8.14.1",
     "motion": "^12.9.4",
     "nanoid": "^5.1.5",
-    "next": "^v15.4.0-canary.48",
+    "next": "^v15.4.0-canary.50",
     "next-intl": "^4.0.2",
     "qr-code-styling": "^1.9.1",
     "qrcode.react": "^4.2.0",
