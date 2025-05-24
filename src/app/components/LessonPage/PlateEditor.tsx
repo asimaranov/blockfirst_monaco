@@ -99,7 +99,7 @@ import { CodeLineElementStatic } from '~/components/plate-ui/code-line-element-s
 import { CodeLeafStatic } from '~/components/plate-ui/code-leaf-static';
 import { CodeSyntaxLeafStatic } from '~/components/plate-ui/code-syntax-leaf-static';
 // import { CodeBlockElement } from '~/components/plate-ui/code-block-element';
-import { createLowlight } from 'lowlight';
+import { createLowlight, all } from 'lowlight';
 import { CalloutElementStatic } from './plate/callout-element-static';
 import { MediaVideoElement } from './plate/media-video-element';
 import { TaskElement } from './plate/task-element';
@@ -109,6 +109,10 @@ import { ColumnGroupElement } from './plate/column-group-element';
 import { ColumnElement } from './plate/column-element';
 import { LinkElement } from '~/components/plate-ui/link-element';
 import solidityGrammar from './hljs/languages/solidity';
+import typescript from 'highlight.js/lib/languages/typescript'
+import javascript from 'highlight.js/lib/languages/javascript'
+import json from 'highlight.js/lib/languages/json'
+import plaintext from 'highlight.js/lib/languages/plaintext'
 
 export function ImageElementStatic({
   children,
@@ -154,9 +158,13 @@ export function ImageElementStatic({
   );
 }
 
-const hl = createLowlight();
-
-hl.register('solidity', solidityGrammar);
+const hl = createLowlight({
+  typescript,
+  javascript,
+  json,
+  plaintext,
+  solidity: solidityGrammar
+});
 
 const plugins = [
   BaseEquationPlugin,

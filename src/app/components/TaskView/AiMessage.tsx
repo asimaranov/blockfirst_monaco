@@ -94,13 +94,19 @@ import { CodeLineElementStatic } from '~/components/plate-ui/code-line-element-s
 import { CodeLeafStatic } from '~/components/plate-ui/code-leaf-static';
 import { CodeSyntaxLeafStatic } from '~/components/plate-ui/code-syntax-leaf-static';
 // import { CodeBlockElement } from '~/components/plate-ui/code-block-element';
-import { all, createLowlight } from 'lowlight';
+import { createLowlight } from 'lowlight';
 import { CalloutElementStatic } from '../LessonPage/plate/callout-element-static';
 import { MediaVideoElement } from '../LessonPage/plate/media-video-element';
 import { TaskElement } from '../LessonPage/plate/task-element';
 import { BaseTaskPlugin } from '../LessonPage/plate/plugins/task-plugins';
 import { TableCellHeaderStaticElement } from '../LessonPage/plate/table';
 import { CodeBlockElementAiMentor } from '~/components/plate-ui/code-block-element-ai-mentor';
+import solidityGrammar from '../LessonPage/hljs/languages/solidity';
+import typescript from 'highlight.js/lib/languages/typescript'
+import javascript from 'highlight.js/lib/languages/javascript'
+import json from 'highlight.js/lib/languages/json'
+import plaintext from 'highlight.js/lib/languages/plaintext'
+
 
 export function ImageElementStatic({
   children,
@@ -146,6 +152,15 @@ export function ImageElementStatic({
   );
 }
 
+const hl = createLowlight({
+  typescript,
+  javascript,
+  json,
+  plaintext,
+  solidity: solidityGrammar
+});
+
+
 const plugins = [
   BaseEquationPlugin,
   BaseColumnPlugin,
@@ -169,7 +184,7 @@ const plugins = [
   BaseCalloutPlugin,
   BaseCodeBlockPlugin.configure({
     options: {
-      lowlight: createLowlight(all),
+      lowlight: hl,
     },
   }),
   BaseIndentPlugin.extend({
