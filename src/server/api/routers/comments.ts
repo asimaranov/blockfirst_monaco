@@ -2,9 +2,19 @@ import { z } from 'zod';
 import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc';
 import { TRPCError } from '@trpc/server';
 import { type SortOrder } from 'mongoose';
-import { LikeNotification } from '../../models/notification';
+import { CommentNotification, LikeNotification } from '../../models/notification';
 import NotificationSettingModel from '../../models/notificationSetting';
-import { getCourseByLessonId, getCourseInfo, getDocumentById } from '~/lib/documents';
+import {
+  getCourseByLessonId,
+  getCourseInfo,
+  getDocumentById,
+} from '~/lib/documents';
+import { MarkdownPlugin } from '@udecode/plate-markdown';
+import { remarkMention } from '@udecode/plate-markdown';
+import { remarkMdx } from '@udecode/plate-markdown';
+import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
+import { createSlateEditor } from '@udecode/plate-core';
 
 const commentImageSchema = z.object({
   id: z.string(),
@@ -37,6 +47,18 @@ interface FormattedComment {
   replies: number;
   answers?: FormattedComment[];
 }
+
+
+const editor = createSlateEditor({
+    plugins: [
+    MarkdownPlugin.configure({
+      options: {
+        remarkPlugins: [remarkMath, remarkGfm, remarkMdx, remarkMention],
+      },
+    }),
+  ]
+});
+
 
 export const commentsRouter = createTRPCRouter({
   getByLessonId: publicProcedure
@@ -164,6 +186,47 @@ export const commentsRouter = createTRPCRouter({
         likes: [],
       });
 
+      if (parentId) {
+        const parentComment = await ctx.mongo.models.comment.findById(parentId);
+        if (!parentComment) {
+          throw new TRPCError({
+            code: 'NOT_FOUND',
+            message: 'Comment not found',
+          });
+        }
+
+        try {
+          // Check if the comment author has comment notifications enabled
+          const notificationSettings = await NotificationSettingModel.findOne({
+            userId: parentComment.author.id,
+          });
+
+          const commentsEnabled =
+            notificationSettings?.settings?.comments ?? true; // Default to true if no settings found
+
+          if (commentsEnabled) {
+            const course = await getCourseByLessonId(parentComment.lessonId);
+            const courseDocument = await getDocumentById(course.courseId);
+
+            // Create reply notification
+            await CommentNotification.create({
+              userId: parentComment.author.id,
+              username: userName,
+              course: courseDocument?.title || 'Course',
+              timestamp: new Date().toISOString(),
+              category: 'reply',
+              avatar: userName.charAt(0).toUpperCase(),
+              message: editor.getApi(MarkdownPlugin).markdown.serialize({
+                value: content,
+              }),
+            });
+          }
+        } catch (error) {
+          // Log error but don't fail the like operation
+          console.error('Failed to create reply notification:', error);
+        }
+      }
+
       return {
         ...newComment.toObject(),
         id: newComment._id.toString(),
@@ -219,7 +282,6 @@ export const commentsRouter = createTRPCRouter({
             const comment = await ctx.mongo.models.comment.findById(commentId);
             const course = await getCourseByLessonId(comment.lessonId);
             const courseDocument = await getDocumentById(course.courseId);
-            
 
             // Create like notification
             await LikeNotification.create({

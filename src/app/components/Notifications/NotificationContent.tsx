@@ -48,13 +48,21 @@ export function NotificationContent({
       <div className="">
         <div className="relative flex space-x-4">
           <div className="flex h-9 w-9 shrink-0">
-            <Image
-              src={notification.avatar}
-              width={36}
-              height={36}
-              alt=""
-              className="h-9 w-9 object-cover"
-            />
+            {notification.avatar.length == 1 ? (
+              <div className="bg-secondary/20 flex h-9 w-9 items-center justify-center rounded-full">
+                <span className="text-secondary text-xs">
+                  {notification.avatar}
+                </span>
+              </div>
+            ) : (
+              <Image
+                src={notification.avatar}
+                width={36}
+                height={36}
+                alt=""
+                className="h-9 w-9 object-cover"
+              />
+            )}
           </div>
           <div className="flex flex-col gap-2">
             <div className="flex w-full justify-between">
@@ -174,13 +182,21 @@ export function ArchievedNotificationContent({
       <div className="opacity-70">
         <div className="relative flex space-x-4">
           <div className="flex h-9 w-9 shrink-0">
-            <Image
-              src={notification.avatar}
-              width={36}
-              height={36}
-              alt=""
-              className="h-9 w-9 object-cover"
-            />
+            {notification.avatar.length == 1 ? (
+              <div className="bg-secondary/20 flex h-9 w-9 items-center justify-center rounded-full">
+                <span className="text-secondary text-xs">
+                  {notification.avatar}
+                </span>
+              </div>
+            ) : (
+              <Image
+                src={notification.avatar}
+                width={36}
+                height={36}
+                alt=""
+                className="h-9 w-9 object-cover"
+              />
+            )}
           </div>
           <div className="flex flex-col gap-2">
             <div className="flex w-full justify-between">

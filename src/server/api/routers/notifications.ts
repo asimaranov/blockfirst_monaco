@@ -152,7 +152,10 @@ export const notificationsRouter = createTRPCRouter({
     });
 
     return (
-      settings || {
+      settings ? {
+        userId: ctx.session.user.id,
+        settings: settings.settings,
+      } : {
         userId: ctx.session.user.id,
         settings: {
           news: true,
