@@ -36,7 +36,7 @@ export default async function Layout({
     <div className="bg-dark-bg relative flex max-h-screen flex-col sm:flex-row">
       <MobileNavbar />
       <ExamComponent />
-      <LessonSidebar lessonId={lessonId} courseInfo={courseInfo} />
+      <LessonSidebar lessonId={lessonId} courseInfo={courseInfo} courseTitle={courseByLessonId.courseTitle!} />
       <NotificationsModal />
       <Suspense>
         <div
@@ -44,7 +44,13 @@ export default async function Layout({
           id="content-view"
         >
           <div className="px-0 sm:px-16">
-            <LessonPage lessonId={lessonId} />
+            <LessonPage
+              lessonId={lessonId}
+              courseTitle={courseByLessonId.courseTitle!}
+              sectionTitle={courseByLessonId.sectionTitle!}
+              moduleTitle={courseByLessonId.moduleTitle!}
+              lessonTitle={courseByLessonId.lessonTitle!}
+            />
           </div>
         </div>
       </Suspense>

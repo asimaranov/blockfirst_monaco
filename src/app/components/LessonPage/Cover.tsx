@@ -62,7 +62,7 @@ const ShareIcon = () => (
     className="h-4 w-4"
   >
     <path
-      d="M9.85603 1.5V5.21429C2.42746 5.21429 0.570312 9.02143 0.570312 14.5C1.53603 10.8229 4.2846 8.92857 7.99888 8.92857H9.85603V12.6429L15.4275 6.77429L9.85603 1.5Z"
+      d="M9.85603 1.50049V5.21477C2.42746 5.21477 0.570312 9.02192 0.570312 14.5005C1.53603 10.8233 4.2846 8.92906 7.99888 8.92906H9.85603V12.6433L15.4275 6.77477L9.85603 1.50049Z"
       fill="#01050D"
       className="group-hover:fill-foreground transition-colors duration-100"
     />
@@ -224,36 +224,48 @@ const BackButton = () => {
 
 const MobilePremiumTariffs = () => {
   return (
-    <div className="flex h-12 items-center gap-3 rounded-lg bg-[linear-gradient(98deg,_rgba(255,_32,_162,_0.10)_1.97%,_rgba(255,_91,_32,_0.10)_104.5%)] px-5 py-3.5 sm:hidden">
-      <Image src={MobileCoins} alt="MobileCoins" className="h-5 w-9.5" />
-      <span className="bg-[linear-gradient(90deg,_#FF20A2_0.2%,_#FF5B20_102.13%)] bg-clip-text text-sm text-transparent">
-        Премиум тарифы
-      </span>
+    <Link href="/premium">
+      <div className="flex h-12 items-center gap-3 rounded-lg bg-[linear-gradient(98deg,_rgba(255,_32,_162,_0.10)_1.97%,_rgba(255,_91,_32,_0.10)_104.5%)] px-5 py-3.5 sm:hidden">
+        <Image src={MobileCoins} alt="MobileCoins" className="h-5 w-9.5" />
+        <span className="bg-[linear-gradient(90deg,_#FF20A2_0.2%,_#FF5B20_102.13%)] bg-clip-text text-sm text-transparent">
+          Премиум тарифы
+        </span>
 
-      <div className="ml-auto flex gap-1">
-        <div className="pt-1.125 text-xxs rounded-[100px] bg-[#CF3336] px-2 pt-1 pb-0.75 uppercase">
-          Sale 16%
+        <div className="ml-auto flex gap-1">
+          <div className="pt-1.125 text-xxs rounded-[100px] bg-[#CF3336] px-2 pt-1 pb-0.75 uppercase">
+            Sale 16%
+          </div>
+          <svg
+            width="21"
+            height="20"
+            viewBox="0 0 21 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+          >
+            <path
+              d="M14.2305 4.4327C14.5107 4.16382 14.9458 4.15525 15.2354 4.40145L15.2911 4.45419L19.9063 9.26278C20.1848 9.55299 20.1848 10.0116 19.9063 10.3018L15.2911 15.1104C15.0042 15.4093 14.5294 15.4187 14.2305 15.1319C13.932 14.8451 13.9223 14.3701 14.209 14.0714L18.3252 9.78231L14.209 5.49325L14.1583 5.43466C13.9245 5.13528 13.9506 4.70148 14.2305 4.4327Z"
+              fill="#F2F2F2"
+            />
+          </svg>
         </div>
-        <svg
-          width="21"
-          height="20"
-          viewBox="0 0 21 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5"
-        >
-          <path
-            d="M14.2305 4.4327C14.5107 4.16382 14.9458 4.15525 15.2354 4.40145L15.2911 4.45419L19.9063 9.26278C20.1848 9.55299 20.1848 10.0116 19.9063 10.3018L15.2911 15.1104C15.0042 15.4093 14.5294 15.4187 14.2305 15.1319C13.932 14.8451 13.9223 14.3701 14.209 14.0714L18.3252 9.78231L14.209 5.49325L14.1583 5.43466C13.9245 5.13528 13.9506 4.70148 14.2305 4.4327Z"
-            fill="#F2F2F2"
-          />
-        </svg>
       </div>
-    </div>
+    </Link>
   );
 };
 
 // --- Component ---
-const Cover = () => {
+const Cover = ({
+  courseTitle,
+  moduleTitle,
+  sectionTitle,
+  lessonTitle,
+}: {
+  courseTitle: string;
+  moduleTitle: string;
+  sectionTitle: string;
+  lessonTitle: string;
+}) => {
   // Glassmorphism style
   const glassStyle =
     'bg-foreground/1 border-[0.026vw] border-foreground/20 backdrop-blur-lg';
@@ -329,6 +341,7 @@ const Cover = () => {
     setIsMenuOpen(false);
   };
 
+  const userData = api.userData.getUserData.useQuery();
   return (
     <>
       <div className="relative sm:hidden">
@@ -336,7 +349,9 @@ const Cover = () => {
           leftContent={
             <div className="flex items-center gap-2">
               <BackButton />
-              <span className="text-base">Путешествие по Solidity</span>
+              <span className="line-clamp-1 max-w-45 overflow-hidden text-base wrap-break-word text-ellipsis">
+                {courseTitle}
+              </span>
             </div>
           }
           hasNotifications={(notifications.data || 0) > 0}
@@ -345,12 +360,12 @@ const Cover = () => {
           isMenuOpen={isMenuOpen}
         />
         <MobileBurgerMenu isOpen={isMenuOpen} onClose={handleCloseMenu} />
-        <MobilePremiumTariffs />
+        {userData.data?.plan === 'free' && <MobilePremiumTariffs />}
       </div>
-      <div className="bg-background text-foreground border-accent relative h-62.5 w-full overflow-hidden border-x">
+      <div className="bg-background text-foreground border-accent relative w-full overflow-hidden border-x sm:h-62.5">
         {/* <MobileHeader></MobileHeader> */}
         {/* Background Image */}
-        <div className="absolute inset-0 bg-[url('/images/covers/LessonCover.png')] bg-cover bg-center bg-no-repeat">
+        <div className="absolute inset-0 bg-[url('/images/covers/LessonCoverMobile.png')] bg-cover bg-center bg-no-repeat sm:bg-[url('/images/covers/LessonCover.png')]">
           <div className="from-background/0 via-background/50 to-background absolute inset-0 bg-gradient-to-t"></div>
         </div>
 
@@ -560,8 +575,7 @@ const Cover = () => {
                   <button
                     key={action.id}
                     onClick={action.onClick}
-                    className={`border-foreground bg-foreground hover:bg-background group cursor-pointer rounded-full border p-3 transition-colors duration-100`}
-                    // Add onClick handlers here if needed: onClick={() => handleAction(action.id)}
+                    className={`border-foreground bg-foreground hover:bg-background group flex cursor-pointer items-center justify-center rounded-full border p-3 transition-colors duration-100`}
                   >
                     {action.content}
                   </button>
@@ -569,56 +583,100 @@ const Cover = () => {
               </div>
             </div>
           </div>
-          <div className="flex sm:hidden"></div>
 
-          {/* Bottom Row */}
-          <div className="flex items-start justify-between sm:items-center">
-            {/* User Info */}
-            <div className="flex items-center gap-5">
-              <div className="relative h-12 w-12 flex-shrink-0">
-                <img
-                  src={user.avatarUrl}
-                  alt={`${user.name}'s Avatar`}
-                  className="h-full w-full rounded-full object-cover"
-                />
-                <VerifyIcon className="absolute right-0 bottom-0" />
-              </div>
-              <div className="flex flex-col">
-                <div className="mb-3 flex items-center gap-3">
-                  <span className="text-2xl leading-6 font-medium">
-                    {user.name}
-                  </span>
-                  <span
-                    className={`border-foreground/20 font-delight rounded-full border px-3 pt-1 pb-1 text-xs leading-3.75 ${glassStyle}`}
+          <div className="mt-auto flex flex-col gap-8">
+            <div className="flex items-center gap-3 sm:hidden">
+              {stats.map((stat) => (
+                <div className="border-foreground/20 rounded-[100px] border-[0.5px] bg-[foreground]/1 px-5 py-3">
+                  <div className="flex items-center gap-2">
+                    <Image src={stat.icon} alt={stat.alt} className="h-4 w-4" />
+                    <span className="text-sm leading-4">{stat.value}</span>
+                  </div>
+                </div>
+              ))}
+              <div className="ml-auto flex">
+                {actions.map((action) => (
+                  <button
+                    key={action.id}
+                    onClick={action.onClick}
+                    className={`border-foreground bg-foreground hover:bg-background group h-10 w-10 shrink-0 cursor-pointer rounded-full border p-3 transition-colors duration-100`}
                   >
-                    {user.badge}
-                  </span>
-                </div>
-                <div className="text-secondary text-xxs flex items-center gap-3 uppercase">
-                  {user.tags.map((tag, index) => (
-                    <div key={tag} className="flex items-center gap-3">
-                      <span key={tag} className="leading-3">
-                        {tag}
-                      </span>
-                      {index < user.tags.length - 1 && (
-                        <span className="bg-secondary/20 h-3 w-px"></span>
-                      )}
-                    </div>
-                  ))}
-                </div>
+                    {action.content}
+                  </button>
+                ))}
               </div>
             </div>
+            <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-6 sm:hidden">
+                <div className="flex flex-col gap-3">
+                  <span className="text-xl">{lessonTitle}</span>
+                  <span className="text-secondary/50 text-xs">
+                    {[moduleTitle, sectionTitle].join(', ')}
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 sm:hidden">
+                {tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className={`rounded-lg px-3 py-2 text-xxs font-delight ${glassStyle}`}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="flex items-start justify-between sm:items-center">
+              {/* User Info */}
+              <div className="flex w-full items-center gap-5 sm:w-auto">
+                <div className="relative h-12 w-12 flex-shrink-0">
+                  <img
+                    src={user.avatarUrl}
+                    alt={`${user.name}'s Avatar`}
+                    className="h-full w-full rounded-full object-cover"
+                  />
+                  <VerifyIcon className="absolute right-0 bottom-0" />
+                </div>
+                <div className="flex w-full flex-col">
+                  <div className="mb-3 flex w-full items-center gap-3">
+                    <span className="text-2xl leading-6 font-medium">
+                      {user.name}
+                    </span>
+                    <span
+                      className={`border-foreground/20 font-delight ml-auto rounded-full border px-3 pt-1 pb-1 text-xs leading-3.75 ${glassStyle}`}
+                    >
+                      {user.badge}
+                    </span>
+                  </div>
+                  <div className="text-secondary text-xxs flex items-center gap-3 uppercase">
+                    {user.tags.map((tag, index) => (
+                      <div key={tag} className="flex items-center gap-3">
+                        <span
+                          key={tag}
+                          className="font-delight text-xxs leading-3"
+                        >
+                          {tag}
+                        </span>
+                        {index < user.tags.length - 1 && (
+                          <span className="bg-secondary/20 h-3 w-px"></span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
 
-            {/* Tags */}
-            <div className="hidden items-center gap-2 sm:flex">
-              {tags.map((tag) => (
-                <span
-                  key={tag}
-                  className={`rounded-lg px-4 py-2 text-xs ${glassStyle}`}
-                >
-                  {tag}
-                </span>
-              ))}
+              {/* Tags */}
+              <div className="hidden items-center gap-2 sm:flex">
+                {tags.map((tag) => (
+                  <span
+                    key={tag}
+                    className={`rounded-lg px-4 py-2 text-xs ${glassStyle}`}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </div>

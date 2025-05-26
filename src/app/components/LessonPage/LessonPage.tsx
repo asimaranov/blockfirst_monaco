@@ -10,13 +10,30 @@ import Footer from '../Footer';
 import { Value } from '@udecode/plate';
 import { getPrevNextLessonIds } from '~/lib/documents';
 
-
-export default async function LessonPage({ lessonId }: { lessonId: string }) {
-  const { nextLessonId, lessonDocument, prevLessonId } = await getPrevNextLessonIds(lessonId);
+export default async function LessonPage({
+  lessonId,
+  courseTitle,
+  sectionTitle,
+  moduleTitle,
+  lessonTitle,
+}: {
+  lessonId: string;
+  sectionTitle: string;
+  moduleTitle: string;
+  courseTitle: string;
+  lessonTitle: string;
+}) {
+  const { nextLessonId, lessonDocument, prevLessonId } =
+    await getPrevNextLessonIds(lessonId);
 
   return (
     <div>
-      <Cover />
+      <Cover
+        courseTitle={courseTitle}
+        moduleTitle={moduleTitle}
+        sectionTitle={sectionTitle}
+        lessonTitle={lessonTitle}
+      />
       <div className="border-accent flex min-h-screen flex-row border-x">
         <div className="w-full flex-1 sm:w-238">
           <div className="px-5 sm:px-16">

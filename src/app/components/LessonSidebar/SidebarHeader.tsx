@@ -140,7 +140,7 @@ const BackButton = () => {
     </svg>
   );
 };
-export default function LessonSidebarHeader() {
+export default function LessonSidebarHeader({ courseTitle }: { courseTitle: string }) {
   const { courseProgress  } = useCourseProgressStore();
   return (
     <>
@@ -151,7 +151,7 @@ export default function LessonSidebarHeader() {
         >
           <BackButton />
           <span className="line-clamp-1 flex-1 overflow-hidden wrap-break-word text-ellipsis">
-            Путешествие Solidity & DeFi
+            {courseTitle}
           </span>
         </Link>
         <NotificationButton className="ml-8 h-9 w-9" />

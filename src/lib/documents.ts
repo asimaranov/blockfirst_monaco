@@ -207,11 +207,19 @@ export const getCourseByLessonId = async (lessonId: string) => {
     moduleDocument!.parentDocumentId!
   );
 
+  const courseDocument = await getDocumentById(
+    sectionDocument!.parentDocumentId!
+  );
+
   return {
+    courseTitle: courseDocument!.title,
     courseId: sectionDocument!.parentDocumentId!,
     sectionId: sectionDocument!.id,
+    sectionTitle: sectionDocument!.title,
     moduleId: moduleDocument!.id,
+    moduleTitle: moduleDocument!.title,
     lessonId: lessonDocument!.id,
+    lessonTitle: lessonDocument!.title,
   };
 };
 
