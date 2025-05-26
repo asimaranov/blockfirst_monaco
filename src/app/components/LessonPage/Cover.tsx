@@ -15,6 +15,10 @@ import { motion, AnimatePresence } from 'motion/react';
 import { InfoPopover, InfoPopoverIcon } from '../shared/InfoPopover';
 import { authClient } from '~/server/auth/client';
 import { api } from '~/trpc/react';
+import MobileHeader from '../mobile/MobileHeader';
+import MobileCoins from './assets/mobile-coins.png';
+import { useNotificationsModalStore } from '~/store/notificationsModal';
+import MobileBurgerMenu from '../mobile/MobileBurgerMenu';
 
 // Helper Icon Components (moved from LessonPage.tsx)
 const ChevronRightIcon = () => (
@@ -200,6 +204,54 @@ const Popover = ({
   );
 };
 
+const BackButton = () => {
+  return (
+    <svg
+      width="20"
+      height="21"
+      viewBox="0 0 20 21"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-5 w-5"
+    >
+      <path
+        d="M9.1001 4.97106C8.82562 4.69672 8.39169 4.67939 8.09717 4.9193L8.03955 4.97106L3.03955 9.97106C2.89918 10.1117 2.81983 10.3026 2.81982 10.5013C2.81993 10.7 2.89906 10.8911 3.03955 11.0316L8.03955 16.0316C8.3323 16.3243 8.80719 16.324 9.1001 16.0316C9.39297 15.7387 9.39292 15.264 9.1001 14.9711L5.38037 11.2513H16.4272C16.8413 11.2513 17.177 10.9154 17.1772 10.5013C17.1772 10.0871 16.8415 9.75133 16.4272 9.75133H5.38037L9.1001 6.0316L9.15186 5.97496C9.39226 5.68041 9.37467 5.24571 9.1001 4.97106Z"
+        fill="#F2F2F2"
+      />
+    </svg>
+  );
+};
+
+const MobilePremiumTariffs = () => {
+  return (
+    <div className="flex h-12 items-center gap-3 rounded-lg bg-[linear-gradient(98deg,_rgba(255,_32,_162,_0.10)_1.97%,_rgba(255,_91,_32,_0.10)_104.5%)] px-5 py-3.5 sm:hidden">
+      <Image src={MobileCoins} alt="MobileCoins" className="h-5 w-9.5" />
+      <span className="bg-[linear-gradient(90deg,_#FF20A2_0.2%,_#FF5B20_102.13%)] bg-clip-text text-sm text-transparent">
+        Премиум тарифы
+      </span>
+
+      <div className="ml-auto flex gap-1">
+        <div className="pt-1.125 text-xxs rounded-[100px] bg-[#CF3336] px-2 pt-1 pb-0.75 uppercase">
+          Sale 16%
+        </div>
+        <svg
+          width="21"
+          height="20"
+          viewBox="0 0 21 20"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+        >
+          <path
+            d="M14.2305 4.4327C14.5107 4.16382 14.9458 4.15525 15.2354 4.40145L15.2911 4.45419L19.9063 9.26278C20.1848 9.55299 20.1848 10.0116 19.9063 10.3018L15.2911 15.1104C15.0042 15.4093 14.5294 15.4187 14.2305 15.1319C13.932 14.8451 13.9223 14.3701 14.209 14.0714L18.3252 9.78231L14.209 5.49325L14.1583 5.43466C13.9245 5.13528 13.9506 4.70148 14.2305 4.4327Z"
+            fill="#F2F2F2"
+          />
+        </svg>
+      </div>
+    </div>
+  );
+};
+
 // --- Component ---
 const Cover = () => {
   // Glassmorphism style
@@ -267,276 +319,311 @@ const Cover = () => {
     });
   }, []);
 
+  const notifications = api.notifications.getUnreadCount.useQuery();
+  const { toggle } = useNotificationsModalStore();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const handleMenuToggle = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+  const handleCloseMenu = () => {
+    setIsMenuOpen(false);
+  };
+
   return (
-    <div className="bg-background text-foreground border-accent relative h-62.5 w-full overflow-hidden border-x">
-      {/* Background Image */}
-      <div className="absolute inset-0 bg-[url('/images/covers/LessonCover.png')] bg-cover bg-center bg-no-repeat">
-        <div className="from-background/0 via-background/50 to-background absolute inset-0 bg-gradient-to-t"></div>
-      </div>
-
-      <div className="relative z-10 flex h-full flex-col justify-between px-5 py-8 sm:px-16">
-        {/* Top Row */}
-        <div className="hidden items-start justify-between sm:flex">
-          {/* Left Section: Last Updated */}
-          <div className="flex flex-col gap-2">
+    <>
+      <div className="relative sm:hidden">
+        <MobileHeader
+          leftContent={
             <div className="flex items-center gap-2">
-              <div className="bg-success h-1.5 w-1.5 rounded-full"></div>
-              <span className="text-foreground text-sm leading-4">
-                08.03.2025
-              </span>{' '}
-              {/* Example Date */}
+              <BackButton />
+              <span className="text-base">Путешествие по Solidity</span>
             </div>
-            <span className="text-secondary/50 text-xs leading-3.5">
-              Последнее обновление
-            </span>
-          </div>
-
-          {/* Right Section: Stats & Actions */}
-          <div className="flex items-center gap-8">
-            {/* Stats */}
-            <div className="flex items-center gap-3">
-              {stats.map((stat) => (
-                <div
-                  key={stat.alt}
-                  ref={statRefs.current[stat.alt]}
-                  className={`flex cursor-pointer items-center gap-2 rounded-full px-4 py-2.5 pr-5 ${glassStyle} hover:border-foreground hover:bg-foreground/10 z-10 border`}
-                  onClick={() =>
-                    setStatPopoverOpen(
-                      statPopoverOpen === stat.alt ? null : stat.alt
-                    )
-                  }
-                >
-                  <Image src={stat.icon} alt={stat.alt} className="h-5 w-5" />
-                  <span className="text-sm">
-                    {stat.value}
-                    <span className="text-foreground/50"> — {stat.label}</span>
-                  </span>
-
-                  {statRefs.current[stat.alt] && (
-                    <Popover
-                      isOpen={statPopoverOpen === stat.alt}
-                      onClose={() => setStatPopoverOpen(null)}
-                      triggerRef={statRefs.current[stat.alt]}
-                    >
-                      <div className="mb-6 flex w-77.25 flex-col items-center gap-3">
-                        <span className="text-xl">Стрик & Опыт</span>
-                        <span className="text-secondary text-center text-sm">
-                          Ежедневно заходите на платформу, что бы попасть в
-                          лидерборд и получать бонусы!
-                        </span>
-                      </div>
-                      <div className="grid grid-cols-3 gap-3">
-                        {Array.from({ length: 6 }).map((_, i) => (
-                          <div
-                            className={cn(
-                              'group relative flex flex-col items-center justify-center gap-2 rounded-[0.4167vw] px-4 py-5',
-                              i < activeDay
-                                ? 'not-last:bg-success/10 last:bg-[linear-gradient(98deg,_rgba(255,_32,_162,_0.10)_1.97%,_rgba(255,_91,_32,_0.10)_104.5%)]'
-                                : i != 5 &&
-                                    'outline-accent rounded-[0.4167vw] outline-[0.1042vw]',
-                              ''
-                            )}
-                            key={i}
-                          >
-                            {i == 5 && activeDay != 6 && (
-                              <Image
-                                src={PremiumBorder}
-                                alt="PremiumBorder"
-                                className="absolute top-0 right-0 h-21 w-23.75"
-                              />
-                            )}
-                            {i < activeDay && (
-                              <div className="absolute top-0 right-0 translate-x-1/4 -translate-y-1/4">
-                                {i != 5 ? (
-                                  <svg
-                                    width="16"
-                                    height="16"
-                                    viewBox="0 0 16 16"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-4 w-4"
-                                  >
-                                    <rect
-                                      width="16"
-                                      height="16"
-                                      rx="8"
-                                      fill="#33CF8E"
-                                    />
-                                    <path
-                                      d="M5.26953 8.39078L6.82953 9.95078L10.7295 6.05078"
-                                      stroke="#01050D"
-                                      strokeWidth="1.5"
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                    />
-                                  </svg>
-                                ) : (
-                                  <svg
-                                    width="16"
-                                    height="16"
-                                    viewBox="0 0 16 16"
-                                    fill="none"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="h-4 w-4"
-                                  >
-                                    <rect
-                                      width="16"
-                                      height="16"
-                                      rx="8"
-                                      fill="url(#paint0_linear_3623_24863)"
-                                    />
-                                    <path
-                                      d="M5.26953 8.39078L6.82953 9.95078L10.7295 6.05078"
-                                      stroke="#01050D"
-                                      strokeWidth="1.5"
-                                      strokeLinecap="round"
-                                      strokeLinejoin="round"
-                                    />
-                                    <defs>
-                                      <linearGradient
-                                        id="paint0_linear_3623_24863"
-                                        x1="-1.95918"
-                                        y1="16"
-                                        x2="16.4375"
-                                        y2="18.6683"
-                                        gradientUnits="userSpaceOnUse"
-                                      >
-                                        <stop stop-color="#FF20A2" />
-                                        <stop offset="1" stop-color="#FF5B20" />
-                                      </linearGradient>
-                                    </defs>
-                                  </svg>
-                                )}
-                              </div>
-                            )}
-
-                            <Image
-                              src={
-                                i == 5
-                                  ? FirePremium
-                                  : i < activeDay
-                                    ? FireIcon
-                                    : FireGrey
-                              }
-                              alt="fire"
-                              className="h-5 w-5"
-                            />
-                            <div className="flex w-15.75 flex-row items-center justify-center">
-                              <span
-                                className={cn(
-                                  i < activeDay
-                                    ? 'text-success group-last:text-[#FE20A2]'
-                                    : '',
-                                  'text-sm leading-4'
-                                )}
-                              >
-                                {50 * (i + 1)}&nbsp;
-                              </span>
-                              <span
-                                className={cn(
-                                  'text-sm leading-4',
-                                  i < activeDay
-                                    ? 'text-success/50 group-last:text-[#FE20A2]/50'
-                                    : 'text-secondary/50'
-                                )}
-                              >
-                                {' '}
-                                – XP
-                              </span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      <div className="flex items-center justify-center gap-2 pt-6 text-xs leading-3.5">
-                        <InfoPopoverIcon empty={true} />
-                        {/* <InfoPopover title={''} content={''}></InfoPopover> */}
-                        <span className="text-secondary text-xs">
-                          Лидерборд в разработке, поинты сохранятся
-                        </span>
-                      </div>
-                    </Popover>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            {/* Actions */}
-            <div className="flex items-center gap-3">
-              {/* Premium Button (kept separate due to unique styling/content) */}
-              <Link href="/premium" target="_blank">
-                <button className="bg-primary flex cursor-pointer items-center rounded-full px-6 py-2.5 text-sm transition-colors hover:bg-[#1242B2]">
-                  Премиум тариф
-                  <ChevronRightIcon />
-                </button>
-              </Link>
-              {/* Icon Buttons */}
-              {actions.map((action) => (
-                <button
-                  key={action.id}
-                  onClick={action.onClick}
-                  className={`border-foreground bg-foreground hover:bg-background group cursor-pointer rounded-full border p-3 transition-colors duration-100`}
-                  // Add onClick handlers here if needed: onClick={() => handleAction(action.id)}
-                >
-                  {action.content}
-                </button>
-              ))}
-            </div>
-          </div>
+          }
+          hasNotifications={(notifications.data || 0) > 0}
+          onNotificationClick={() => toggle('mobile')}
+          onMenuClick={handleMenuToggle}
+          isMenuOpen={isMenuOpen}
+        />
+        <MobileBurgerMenu isOpen={isMenuOpen} onClose={handleCloseMenu} />
+        <MobilePremiumTariffs />
+      </div>
+      <div className="bg-background text-foreground border-accent relative h-62.5 w-full overflow-hidden border-x">
+        {/* <MobileHeader></MobileHeader> */}
+        {/* Background Image */}
+        <div className="absolute inset-0 bg-[url('/images/covers/LessonCover.png')] bg-cover bg-center bg-no-repeat">
+          <div className="from-background/0 via-background/50 to-background absolute inset-0 bg-gradient-to-t"></div>
         </div>
-        <div className="flex sm:hidden"></div>
 
-        {/* Bottom Row */}
-        <div className="flex items-start justify-between sm:items-center">
-          {/* User Info */}
-          <div className="flex items-center gap-5">
-            <div className="relative h-12 w-12 flex-shrink-0">
-              <img
-                src={user.avatarUrl}
-                alt={`${user.name}'s Avatar`}
-                className="h-full w-full rounded-full object-cover"
-              />
-              <VerifyIcon className="absolute right-0 bottom-0" />
-            </div>
-            <div className="flex flex-col">
-              <div className="mb-3 flex items-center gap-3">
-                <span className="text-2xl leading-6 font-medium">
-                  {user.name}
-                </span>
-                <span
-                  className={`border-foreground/20 font-delight rounded-full border px-3 pt-1 pb-1 text-xs leading-3.75 ${glassStyle}`}
-                >
-                  {user.badge}
-                </span>
+        <div className="relative z-10 flex h-full flex-col justify-between px-5 py-8 sm:px-16">
+          {/* Top Row */}
+          <div className="hidden items-start justify-between sm:flex">
+            {/* Left Section: Last Updated */}
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-2">
+                <div className="bg-success h-1.5 w-1.5 rounded-full"></div>
+                <span className="text-foreground text-sm leading-4">
+                  08.03.2025
+                </span>{' '}
+                {/* Example Date */}
               </div>
-              <div className="text-secondary text-xxs flex items-center gap-3 uppercase">
-                {user.tags.map((tag, index) => (
-                  <div key={tag} className="flex items-center gap-3">
-                    <span key={tag} className="leading-3">
-                      {tag}
+              <span className="text-secondary/50 text-xs leading-3.5">
+                Последнее обновление
+              </span>
+            </div>
+
+            {/* Right Section: Stats & Actions */}
+            <div className="flex items-center gap-8">
+              {/* Stats */}
+              <div className="flex items-center gap-3">
+                {stats.map((stat) => (
+                  <div
+                    key={stat.alt}
+                    ref={statRefs.current[stat.alt]}
+                    className={`flex cursor-pointer items-center gap-2 rounded-full px-4 py-2.5 pr-5 ${glassStyle} hover:border-foreground hover:bg-foreground/10 z-10 border`}
+                    onClick={() =>
+                      setStatPopoverOpen(
+                        statPopoverOpen === stat.alt ? null : stat.alt
+                      )
+                    }
+                  >
+                    <Image src={stat.icon} alt={stat.alt} className="h-5 w-5" />
+                    <span className="text-sm">
+                      {stat.value}
+                      <span className="text-foreground/50">
+                        {' '}
+                        — {stat.label}
+                      </span>
                     </span>
-                    {index < user.tags.length - 1 && (
-                      <span className="bg-secondary/20 h-3 w-px"></span>
+
+                    {statRefs.current[stat.alt] && (
+                      <Popover
+                        isOpen={statPopoverOpen === stat.alt}
+                        onClose={() => setStatPopoverOpen(null)}
+                        triggerRef={statRefs.current[stat.alt]}
+                      >
+                        <div className="mb-6 flex w-77.25 flex-col items-center gap-3">
+                          <span className="text-xl">Стрик & Опыт</span>
+                          <span className="text-secondary text-center text-sm">
+                            Ежедневно заходите на платформу, что бы попасть в
+                            лидерборд и получать бонусы!
+                          </span>
+                        </div>
+                        <div className="grid grid-cols-3 gap-3">
+                          {Array.from({ length: 6 }).map((_, i) => (
+                            <div
+                              className={cn(
+                                'group relative flex flex-col items-center justify-center gap-2 rounded-[0.4167vw] px-4 py-5',
+                                i < activeDay
+                                  ? 'not-last:bg-success/10 last:bg-[linear-gradient(98deg,_rgba(255,_32,_162,_0.10)_1.97%,_rgba(255,_91,_32,_0.10)_104.5%)]'
+                                  : i != 5 &&
+                                      'outline-accent rounded-[0.4167vw] outline-[0.1042vw]',
+                                ''
+                              )}
+                              key={i}
+                            >
+                              {i == 5 && activeDay != 6 && (
+                                <Image
+                                  src={PremiumBorder}
+                                  alt="PremiumBorder"
+                                  className="absolute top-0 right-0 h-21 w-23.75"
+                                />
+                              )}
+                              {i < activeDay && (
+                                <div className="absolute top-0 right-0 translate-x-1/4 -translate-y-1/4">
+                                  {i != 5 ? (
+                                    <svg
+                                      width="16"
+                                      height="16"
+                                      viewBox="0 0 16 16"
+                                      fill="none"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      className="h-4 w-4"
+                                    >
+                                      <rect
+                                        width="16"
+                                        height="16"
+                                        rx="8"
+                                        fill="#33CF8E"
+                                      />
+                                      <path
+                                        d="M5.26953 8.39078L6.82953 9.95078L10.7295 6.05078"
+                                        stroke="#01050D"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      />
+                                    </svg>
+                                  ) : (
+                                    <svg
+                                      width="16"
+                                      height="16"
+                                      viewBox="0 0 16 16"
+                                      fill="none"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      className="h-4 w-4"
+                                    >
+                                      <rect
+                                        width="16"
+                                        height="16"
+                                        rx="8"
+                                        fill="url(#paint0_linear_3623_24863)"
+                                      />
+                                      <path
+                                        d="M5.26953 8.39078L6.82953 9.95078L10.7295 6.05078"
+                                        stroke="#01050D"
+                                        strokeWidth="1.5"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                      />
+                                      <defs>
+                                        <linearGradient
+                                          id="paint0_linear_3623_24863"
+                                          x1="-1.95918"
+                                          y1="16"
+                                          x2="16.4375"
+                                          y2="18.6683"
+                                          gradientUnits="userSpaceOnUse"
+                                        >
+                                          <stop stop-color="#FF20A2" />
+                                          <stop
+                                            offset="1"
+                                            stop-color="#FF5B20"
+                                          />
+                                        </linearGradient>
+                                      </defs>
+                                    </svg>
+                                  )}
+                                </div>
+                              )}
+
+                              <Image
+                                src={
+                                  i == 5
+                                    ? FirePremium
+                                    : i < activeDay
+                                      ? FireIcon
+                                      : FireGrey
+                                }
+                                alt="fire"
+                                className="h-5 w-5"
+                              />
+                              <div className="flex w-15.75 flex-row items-center justify-center">
+                                <span
+                                  className={cn(
+                                    i < activeDay
+                                      ? 'text-success group-last:text-[#FE20A2]'
+                                      : '',
+                                    'text-sm leading-4'
+                                  )}
+                                >
+                                  {50 * (i + 1)}&nbsp;
+                                </span>
+                                <span
+                                  className={cn(
+                                    'text-sm leading-4',
+                                    i < activeDay
+                                      ? 'text-success/50 group-last:text-[#FE20A2]/50'
+                                      : 'text-secondary/50'
+                                  )}
+                                >
+                                  {' '}
+                                  – XP
+                                </span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="flex items-center justify-center gap-2 pt-6 text-xs leading-3.5">
+                          <InfoPopoverIcon empty={true} />
+                          {/* <InfoPopover title={''} content={''}></InfoPopover> */}
+                          <span className="text-secondary text-xs">
+                            Лидерборд в разработке, поинты сохранятся
+                          </span>
+                        </div>
+                      </Popover>
                     )}
                   </div>
                 ))}
               </div>
+
+              {/* Actions */}
+              <div className="flex items-center gap-3">
+                {/* Premium Button (kept separate due to unique styling/content) */}
+                <Link href="/premium" target="_blank">
+                  <button className="bg-primary flex cursor-pointer items-center rounded-full px-6 py-2.5 text-sm transition-colors hover:bg-[#1242B2]">
+                    Премиум тариф
+                    <ChevronRightIcon />
+                  </button>
+                </Link>
+                {/* Icon Buttons */}
+                {actions.map((action) => (
+                  <button
+                    key={action.id}
+                    onClick={action.onClick}
+                    className={`border-foreground bg-foreground hover:bg-background group cursor-pointer rounded-full border p-3 transition-colors duration-100`}
+                    // Add onClick handlers here if needed: onClick={() => handleAction(action.id)}
+                  >
+                    {action.content}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
+          <div className="flex sm:hidden"></div>
 
-          {/* Tags */}
-          <div className="hidden items-center gap-2 sm:flex">
-            {tags.map((tag) => (
-              <span
-                key={tag}
-                className={`rounded-lg px-4 py-2 text-xs ${glassStyle}`}
-              >
-                {tag}
-              </span>
-            ))}
+          {/* Bottom Row */}
+          <div className="flex items-start justify-between sm:items-center">
+            {/* User Info */}
+            <div className="flex items-center gap-5">
+              <div className="relative h-12 w-12 flex-shrink-0">
+                <img
+                  src={user.avatarUrl}
+                  alt={`${user.name}'s Avatar`}
+                  className="h-full w-full rounded-full object-cover"
+                />
+                <VerifyIcon className="absolute right-0 bottom-0" />
+              </div>
+              <div className="flex flex-col">
+                <div className="mb-3 flex items-center gap-3">
+                  <span className="text-2xl leading-6 font-medium">
+                    {user.name}
+                  </span>
+                  <span
+                    className={`border-foreground/20 font-delight rounded-full border px-3 pt-1 pb-1 text-xs leading-3.75 ${glassStyle}`}
+                  >
+                    {user.badge}
+                  </span>
+                </div>
+                <div className="text-secondary text-xxs flex items-center gap-3 uppercase">
+                  {user.tags.map((tag, index) => (
+                    <div key={tag} className="flex items-center gap-3">
+                      <span key={tag} className="leading-3">
+                        {tag}
+                      </span>
+                      {index < user.tags.length - 1 && (
+                        <span className="bg-secondary/20 h-3 w-px"></span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Tags */}
+            <div className="hidden items-center gap-2 sm:flex">
+              {tags.map((tag) => (
+                <span
+                  key={tag}
+                  className={`rounded-lg px-4 py-2 text-xs ${glassStyle}`}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -9,6 +9,7 @@ import MobileBurgerMenu from '../../mobile/MobileBurgerMenu';
 import MobilePremiumTopbar from './MobilePremiumTopbar';
 import { useNotificationsModalStore } from '~/store/notificationsModal';
 import { planTypeToSubscriptionType } from '~/app/lib/utils';
+import { api } from '~/trpc/react';
 export interface TopbarProps {
   /**
    * Left side content
@@ -55,6 +56,7 @@ export function Topbar({
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { toggle } = useNotificationsModalStore();
+  const notifications = api.notifications.getUnreadCount.useQuery();
 
   const handleMenuToggle = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -71,17 +73,34 @@ export function Topbar({
       {mobileNav && (
         <div className="relative sm:hidden">
           <MobileHeader
-            hasNotifications={true}
+            leftContent={
+              <div className="flex items-center gap-4">
+                <div className="bg-primary text-foreground relative flex h-10 w-10 items-center justify-center rounded-full">
+                  <span className="text-base font-medium">
+                    {user.name.charAt(0).toUpperCase()}
+                  </span>
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <h2 className="text-foreground text-base">{user.name}</h2>
+                  <div className="flex items-center gap-[3px]">
+                    <span className="text-secondary text-xs">Старт —</span>
+                    <span className="text-foreground text-xs">
+                      {new Date(user?.startTimestamp).toLocaleDateString(
+                        'ru-RU',
+                        {
+                          day: '2-digit',
+                          month: '2-digit',
+                          year: '2-digit',
+                        }
+                      )}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            }
+            hasNotifications={(notifications.data || 0) > 0}
             onNotificationClick={() => toggle('mobile')}
-            username={user.name}
-            startDate={new Date(user?.startTimestamp).toLocaleDateString(
-              'ru-RU',
-              {
-                day: '2-digit',
-                month: '2-digit',
-                year: '2-digit',
-              }
-            )}
             onMenuClick={handleMenuToggle}
             isMenuOpen={isMenuOpen}
           />

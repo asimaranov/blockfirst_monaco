@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { ReactNode } from 'react';
 
 interface MobileHeaderProps {
   username?: string;
@@ -7,19 +8,16 @@ interface MobileHeaderProps {
   onNotificationClick?: () => void;
   onMenuClick?: () => void;
   isMenuOpen?: boolean;
+  leftContent?: ReactNode;
 }
 
 export const MobileHeader = ({
-  username = 'User',
-  startDate = '01.01.24',
+  leftContent,
   hasNotifications = false,
   onNotificationClick = () => {},
   onMenuClick = () => {},
   isMenuOpen = false,
 }: MobileHeaderProps) => {
-  // Get first letter of username for avatar
-  const userInitial = username.charAt(0).toUpperCase();
-
   return (
     <div className="group" data-is-menu-open={isMenuOpen}>
       <div className="h-[75px] w-full"></div>
@@ -27,19 +25,7 @@ export const MobileHeader = ({
         className={`${isMenuOpen ? 'border-accent fixed border-b' : 'absolute'} top-0 z-[100000000] block h-auto w-full bg-[#01050d] py-4 sm:hidden`}
       >
         <div className="flex w-full items-center justify-between px-5">
-          <div className="flex items-center gap-4">
-            <div className="bg-primary text-foreground relative flex h-10 w-10 items-center justify-center rounded-full">
-              <span className="text-base font-medium">{userInitial}</span>
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <h2 className="text-foreground text-base">{username}</h2>
-              <div className="flex items-center gap-[3px]">
-                <span className="text-secondary text-xs">Старт —</span>
-                <span className="text-foreground text-xs">{startDate}</span>
-              </div>
-            </div>
-          </div>
+          {leftContent}
 
           <div className="flex items-center gap-3">
             <button

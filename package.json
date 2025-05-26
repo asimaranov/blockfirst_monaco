@@ -143,7 +143,7 @@
     "monaco-languageclient": "^9.6.0",
     "mongodb": "^6.16.0",
     "mongoose": "^8.14.1",
-    "motion": "^12.9.4",
+    "motion": "^12.14.0",
     "nanoid": "^5.1.5",
     "next": "^v15.4.0-canary.50",
     "next-intl": "^4.0.2",
