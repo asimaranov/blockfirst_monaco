@@ -61,9 +61,13 @@ export const progressRouter = createTRPCRouter({
     }),
 
   // Get progress for a specific lesson
-  getLessonsProgress: protectedProcedure
+  getLessonsProgress: publicProcedure
     .input(z.object({ lessonIds: z.array(z.string()) }))
     .query(async ({ input, ctx }) => {
+      if (!ctx.session) {
+        return [];
+      }
+      
       const userId = ctx.session.user.id;
       const { lessonIds } = input;
 

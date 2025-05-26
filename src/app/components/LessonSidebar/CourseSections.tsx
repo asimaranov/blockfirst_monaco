@@ -2,6 +2,7 @@
 
 import { CourseSection } from './CourseSection';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { authClient } from '~/server/auth/client';
 import { useCourseProgressStore } from '~/store/courseProgressStore';
 import { api } from '~/trpc/react';
 
@@ -102,10 +103,16 @@ export function CourseSections({
   const lessons = Object.values(courseData.documentsMap).filter(
     (doc: any) => doc.type === 'lesson'
   );
+  const session = authClient.useSession();
 
-  const progress = api.progress.getLessonsProgress.useQuery({
-    lessonIds: lessons.map((lesson) => (lesson as any).id),
-  });
+  const progress = api.progress.getLessonsProgress.useQuery(
+    {
+      lessonIds: lessons.map((lesson) => (lesson as any).id),
+    },
+    {
+      enabled: !!session.data?.user,
+    }
+  );
 
   const completedLessons = useMemo(() => {
     return progress.data?.filter((p: any) => p.status === 'completed');
@@ -113,7 +120,8 @@ export function CourseSections({
 
   useEffect(() => {
     if (
-      progress.data && !progress.data.find((p: any) => p.lessonId === lessonId)
+      progress.data &&
+      !progress.data.find((p: any) => p.lessonId === lessonId)
     ) {
       markLessonAsInProgress({ lessonId: lessonId });
     }
@@ -189,7 +197,8 @@ export function CourseSections({
               })) as Module[]
             }
             finalTestStatus={
-              section.modules.flatMap((module: any) => module.lessons)
+              section.modules
+                .flatMap((module: any) => module.lessons)
                 .every((lesson: any) => lesson.status === 'completed')
                 ? 'available'
                 : 'locked'

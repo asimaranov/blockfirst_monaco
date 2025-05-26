@@ -76,7 +76,11 @@ export const notificationsRouter = createTRPCRouter({
   }),
 
   // Get only unread notifications count
-  getUnreadCount: protectedProcedure.query(async ({ ctx }) => {
+  getUnreadCount: publicProcedure.query(async ({ ctx }) => {
+    if (!ctx.session) {
+      return 1;
+    }
+
     await dbConnect();
 
     const count = await NotificationModel.countDocuments({

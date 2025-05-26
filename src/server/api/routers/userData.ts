@@ -82,7 +82,16 @@ const updateUserStreak = async (userId: string) => {
 
 export const userDataRouter = createTRPCRouter({
   // Get user data for current user
-  getUserData: protectedProcedure.query(async ({ ctx }) => {
+  getUserData: publicProcedure.query(async ({ ctx }) => {
+    if (!ctx.session) {
+      return {
+        userId: null,
+        plan: 'free',
+        coursesProgress: [],
+        curator: { isAssigning: false },
+      };
+    }
+
     await dbConnect();
 
     const userData = await UserDataModel.findOne({

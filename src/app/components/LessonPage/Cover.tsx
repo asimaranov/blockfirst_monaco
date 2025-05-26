@@ -360,7 +360,7 @@ const Cover = ({
           isMenuOpen={isMenuOpen}
         />
         <MobileBurgerMenu isOpen={isMenuOpen} onClose={handleCloseMenu} />
-        {userData.data?.plan === 'free' && <MobilePremiumTariffs />}
+        {(userData.data?.plan === 'free' || !userData.data?.userId) && <MobilePremiumTariffs />}
       </div>
       <div className="bg-background text-foreground border-accent relative w-full overflow-hidden sm:border-x sm:h-62.5">
         {/* <MobileHeader></MobileHeader> */}
@@ -587,7 +587,7 @@ const Cover = ({
           <div className="mt-auto flex flex-col gap-8">
             <div className="flex items-center gap-3 sm:hidden">
               {stats.map((stat) => (
-                <div className="border-foreground/20 rounded-[100px] border-[0.5px] bg-[foreground]/1 px-5 py-3">
+                <div className="border-foreground/20 rounded-[100px] border-[0.5px] bg-[foreground]/1 px-5 py-3" key={stat.alt}>
                   <div className="flex items-center gap-2">
                     <Image src={stat.icon} alt={stat.alt} className="h-4 w-4" />
                     <span className="text-sm leading-4">{stat.value}</span>

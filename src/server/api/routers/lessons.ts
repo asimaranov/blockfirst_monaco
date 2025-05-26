@@ -10,6 +10,16 @@ export const lessonsRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const { lessonId } = input;
 
+      if (!ctx.session) {
+        return {
+          averageRating: 0,
+          totalRatings: 0,
+          likes: 0,
+          dislikes: 0,
+          totalReactions: 0,
+        };
+      }
+
       // Get average rating
       const ratingStats = await ctx.mongo.models.lessonRating.aggregate([
         { $match: { lessonId } },
