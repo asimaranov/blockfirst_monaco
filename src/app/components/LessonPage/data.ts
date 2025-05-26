@@ -6,7 +6,6 @@ export const ARTICLE_DATA = [
       {
         text: '1. Начало',
         color: 'inherit',
-        
       },
     ],
   },
@@ -85,7 +84,6 @@ export const ARTICLE_DATA = [
       {
         text: '. Герои',
         color: 'inherit',
-        
       },
     ],
   },
@@ -153,7 +151,6 @@ export const ARTICLE_DATA = [
       {
         text: '',
         color: 'rgb(23, 43, 83)',
-        
       },
     ],
   },
@@ -165,7 +162,6 @@ export const ARTICLE_DATA = [
       {
         text: '. Знакомство с Алексом',
         color: 'inherit',
-        
       },
     ],
   },
@@ -186,7 +182,6 @@ export const ARTICLE_DATA = [
       {
         text: '',
         color: 'rgb(23, 43, 83)',
-        
       },
     ],
   },
@@ -197,7 +192,6 @@ export const ARTICLE_DATA = [
       {
         text: '',
         color: 'rgb(23, 43, 83)',
-        
       },
     ],
   },
@@ -209,7 +203,6 @@ export const ARTICLE_DATA = [
       {
         text: '. В добрый путь',
         color: 'inherit',
-        
       },
     ],
   },
@@ -225,12 +218,10 @@ export const ARTICLE_DATA = [
         bold: true,
         text: '.',
         color: 'inherit',
-        
       },
       {
         text: ' Но давайте начнем с малого: сначала дойдите до второго уровня уроков по Solidity на BlockFirst. Может быть, вам так понравится, что вы не заметите, как пройдете весь курс и пойдете работать 😉',
         color: 'inherit',
-        
       },
     ],
   },
@@ -242,18 +233,15 @@ export const ARTICLE_DATA = [
         bold: true,
         text: 'P.S.',
         color: 'inherit',
-        
       },
       {
         text: ' А теперь перейдем к обучению — жмите на кнопку ',
         color: 'inherit',
-        
       },
       {
         bold: true,
         text: '«Следующее занятие»',
         color: 'inherit',
-        
       },
     ],
   },

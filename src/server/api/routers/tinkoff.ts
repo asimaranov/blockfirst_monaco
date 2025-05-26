@@ -12,14 +12,6 @@ import { authClient } from '~/server/auth/client';
 const password = process.env.TINKOFF_PASSWORD!;
 
 export const tinkoffRouter = createTRPCRouter({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
-    }),
-
   createPaymentLink: protectedProcedure
     .input(z.object({ tariff: z.string() }))
     .output(z.string())
@@ -108,9 +100,4 @@ export const tinkoffRouter = createTRPCRouter({
       return response.PaymentURL;
     }),
 
-  getLatest: protectedProcedure.query(async ({ ctx }) => {}),
-
-  getSecretMessage: protectedProcedure.query(() => {
-    return 'you can now see this secret message!';
-  }),
 });

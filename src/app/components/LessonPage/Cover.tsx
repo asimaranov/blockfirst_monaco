@@ -222,12 +222,20 @@ const Cover = () => {
       refetchOnWindowFocus: false,
     });
 
+  // Get the tRPC utils for invalidation
+  const utils = api.useUtils();
+
   // tRPC mutation for updating streak
-  const updateStreakMutation = api.userData.updateStreak.useMutation();
+  const updateStreakMutation = api.userData.updateStreak.useMutation({
+    onSuccess: () => {
+      // Invalidate and refetch the streak data after successful mutation
+      utils.userData.getStreakAndXp.invalidate();
+    },
+  });
 
   // Update streak when component mounts (user visits the page)
   useEffect(() => {
-    if (session?.user) {
+    if (session?.user && !updateStreakMutation.isPending) {
       updateStreakMutation.mutate();
     }
   }, [session?.user]);

@@ -2,7 +2,10 @@ import { z } from 'zod';
 import { createTRPCRouter, protectedProcedure, publicProcedure } from '../trpc';
 import { TRPCError } from '@trpc/server';
 import { type SortOrder } from 'mongoose';
-import { CommentNotification, LikeNotification } from '../../models/notification';
+import {
+  CommentNotification,
+  LikeNotification,
+} from '../../models/notification';
 import NotificationSettingModel from '../../models/notificationSetting';
 import {
   getCourseByLessonId,
@@ -48,17 +51,15 @@ interface FormattedComment {
   answers?: FormattedComment[];
 }
 
-
 const editor = createSlateEditor({
-    plugins: [
+  plugins: [
     MarkdownPlugin.configure({
       options: {
         remarkPlugins: [remarkMath, remarkGfm, remarkMdx, remarkMention],
       },
     }),
-  ]
+  ],
 });
-
 
 export const commentsRouter = createTRPCRouter({
   getByLessonId: publicProcedure
@@ -195,35 +196,39 @@ export const commentsRouter = createTRPCRouter({
           });
         }
 
-        try {
-          // Check if the comment author has comment notifications enabled
-          const notificationSettings = await NotificationSettingModel.findOne({
-            userId: parentComment.author.id,
-          });
+        if (parentComment.author.id !== userId) {
+          try {
+            // Check if the comment author has comment notifications enabled
+            const notificationSettings = await NotificationSettingModel.findOne(
+              {
+                userId: parentComment.author.id,
+              }
+            );
 
-          const commentsEnabled =
-            notificationSettings?.settings?.comments ?? true; // Default to true if no settings found
+            const commentsEnabled =
+              notificationSettings?.settings?.comments ?? true; // Default to true if no settings found
 
-          if (commentsEnabled) {
-            const course = await getCourseByLessonId(parentComment.lessonId);
-            const courseDocument = await getDocumentById(course.courseId);
+            if (commentsEnabled) {
+              const course = await getCourseByLessonId(parentComment.lessonId);
+              const courseDocument = await getDocumentById(course.courseId);
 
-            // Create reply notification
-            await CommentNotification.create({
-              userId: parentComment.author.id,
-              username: userName,
-              course: courseDocument?.title || 'Course',
-              timestamp: new Date().toISOString(),
-              category: 'reply',
-              avatar: userName.charAt(0).toUpperCase(),
-              message: editor.getApi(MarkdownPlugin).markdown.serialize({
-                value: content,
-              }),
-            });
+              // Create reply notification
+              await CommentNotification.create({
+                userId: parentComment.author.id,
+                username: userName,
+                course: courseDocument?.title || 'Course',
+                timestamp: new Date().toISOString(),
+                category: 'reply',
+                avatar: userName.charAt(0).toUpperCase(),
+                message: editor.getApi(MarkdownPlugin).markdown.serialize({
+                  value: content,
+                }),
+              });
+            }
+          } catch (error) {
+            // Log error but don't fail the like operation
+            console.error('Failed to create reply notification:', error);
           }
-        } catch (error) {
-          // Log error but don't fail the like operation
-          console.error('Failed to create reply notification:', error);
         }
       }
 

@@ -197,7 +197,7 @@ const UserDataSchema = new mongoose.Schema<IUserData>(
       },
       lastLoginDate: {
         type: Date,
-        default: Date.now,
+        default: new Date(0),
       },
       maxCount: {
         type: Number,
