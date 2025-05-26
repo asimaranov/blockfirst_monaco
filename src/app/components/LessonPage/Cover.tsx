@@ -362,7 +362,7 @@ const Cover = ({
         <MobileBurgerMenu isOpen={isMenuOpen} onClose={handleCloseMenu} />
         {userData.data?.plan === 'free' && <MobilePremiumTariffs />}
       </div>
-      <div className="bg-background text-foreground border-accent relative w-full overflow-hidden border-x sm:h-62.5">
+      <div className="bg-background text-foreground border-accent relative w-full overflow-hidden sm:border-x sm:h-62.5">
         {/* <MobileHeader></MobileHeader> */}
         {/* Background Image */}
         <div className="absolute inset-0 bg-[url('/images/covers/LessonCoverMobile.png')] bg-cover bg-center bg-no-repeat sm:bg-[url('/images/covers/LessonCover.png')]">

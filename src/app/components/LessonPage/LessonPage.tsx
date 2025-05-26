@@ -34,7 +34,7 @@ export default async function LessonPage({
         sectionTitle={sectionTitle}
         lessonTitle={lessonTitle}
       />
-      <div className="border-accent flex min-h-screen flex-row border-x">
+      <div className="border-accent flex min-h-screen flex-row sm:border-x">
         <div className="w-full flex-1 sm:w-238">
           <div className="px-5 sm:px-16">
             <PlateEditor richText={lessonDocument?.contentRich as Value} />
@@ -49,7 +49,7 @@ export default async function LessonPage({
         </div>
         <RightSidebar />
       </div>
-      <Footer className="border-accent border-x border-t" />
+      <Footer className="border-accent sm:border-x border-t" />
     </div>
   );
 }
