@@ -86,9 +86,10 @@ export const userDataRouter = createTRPCRouter({
     if (!ctx.session) {
       return {
         userId: null,
-        plan: 'free',
+        plan: 'free' as PlanType,
         coursesProgress: [],
         curator: { isAssigning: false },
+        premiumEndDate: null,
       };
     }
 
