@@ -276,7 +276,7 @@ export default function TaskInfo({
         </div>
       </div>
 
-      <div className="border-accent sticky bottom-0 mt-auto h-22 items-center border-t bg-[#14171c] p-5 sm:hidden">
+      <div className="border-accent sticky bottom-0 mt-auto h-22 items-center border-t bg-[#14171c] p-5 sm:hidden shrink-0">
         <div
           className="border-primary flex h-full w-full items-center justify-center rounded-[100px] border"
           onClick={() => setActiveTab('mobile-editor')}

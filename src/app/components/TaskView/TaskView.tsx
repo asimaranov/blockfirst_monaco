@@ -74,11 +74,11 @@ export default function TaskView({
           }
         />
       </div>
-      <div className="top-0 left-0 z-1000 flex w-full shrink-0 grow flex-row justify-between bg-[#0F1217] sm:fixed sm:h-full">
+      <div className="top-0 left-0 z-1000 flex w-full flex-row justify-between overflow-hidden bg-[#0F1217] sm:fixed sm:h-full">
         {!collapsed ? (
           <div
             className={cn(
-              'border-accent flex w-full shrink-0 grow flex-col border-r sm:w-150 sm:shrink sm:grow-0',
+              'border-accent flex w-full shrink-0 grow flex-col overflow-hidden border-r sm:w-150 sm:shrink sm:grow-0',
               activeTab === 'mobile-editor' && 'hidden'
             )}
           >

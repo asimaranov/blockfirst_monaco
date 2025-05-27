@@ -1,9 +1,10 @@
 import React from 'react';
 import AiTokensInfo from '../AiTokensInfo';
+import { cn } from '~/lib/utils';
 
-const ChatFooter = () => {
+const ChatFooter = ({ className }: { className?: string }) => {
   return (
-    <div className="border-accent sticky bottom-0 border-t px-8 py-4">
+    <div className={cn('border-accent sticky bottom-0 border-t px-8 py-4', className)}>
       <div className="flex flex-row items-center gap-5">
         <div className="flex flex-row items-center gap-2">
           <svg

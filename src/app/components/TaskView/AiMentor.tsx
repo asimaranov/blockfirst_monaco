@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { api } from '~/trpc/react';
 import ChatInput from './ChatInput';
 import { authClient } from '~/server/auth/client';
@@ -35,13 +35,9 @@ export default function AiMentor({
       md?: any;
     }[]
   >([]);
-  const chatContainerRef = useRef<HTMLDivElement>(null);
-  const [isAtBottom, setIsAtBottom] = useState(true);
 
   // Add a reference to the token query to manually invalidate it
   const utils = api.useUtils();
-
-  const { data: session } = authClient.useSession();
 
   // Load chat history from API
   const { data: chatHistory, isLoading } = api.ai.getChatHistory.useQuery(
@@ -71,38 +67,6 @@ export default function AiMentor({
       setMessages(parsedMessages);
     }
   }, [chatHistory]);
-
-  // Handle scroll position
-  useEffect(() => {
-    const chatContainer = chatContainerRef.current;
-    if (!chatContainer) return;
-
-    // Check if user is at the bottom (or close to it)
-    const handleScroll = () => {
-      if (!chatContainer) return;
-
-      // In a reversed container, we need to check if scrollTop is close to 0 to determine if at the "bottom"
-      const isAtBottom = chatContainer.scrollTop <= 10;
-      setIsAtBottom(isAtBottom);
-    };
-
-    chatContainer.addEventListener('scroll', handleScroll);
-
-    return () => {
-      chatContainer.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  // Scroll handling when messages change
-  useEffect(() => {
-    const chatContainer = chatContainerRef.current;
-    if (!chatContainer) return;
-
-    // If user was at the bottom before new messages, scroll back to bottom
-    if (isAtBottom) {
-      chatContainer.scrollTop = 0;
-    }
-  }, [messages, isAtBottom]);
 
   // Send message mutation
   const sendMessageMutation = api.ai.sendMessage.useMutation({
@@ -178,59 +142,61 @@ export default function AiMentor({
   };
 
   return (
-    <>
-      {isLoading ? (
-        <ChatLoading />
-      ) : messages.length === 0 ? (
-        <EmptyState />
-      ) : (
-        <div
-          ref={chatContainerRef}
-          className="mb-auto flex flex-col-reverse gap-8 overflow-y-scroll px-8 pt-6 pb-5"
-        >
-          {[...messages].reverse().map((message, index) =>
-            message.role === 'assistant' && !message.messageType ? (
-              <AiMessageItem
-                key={`assistant-${index}`}
-                message={message}
-                index={messages.length - 1 - index}
-                handleFeedback={handleFeedback}
-              />
-            ) : message.role === 'assistant' && message.messageType ? (
-              <ServiceMessage
-                key={`service-${index}`}
-                header={
-                  message.messageTypeExplanation === 'NO_TOKENS'
-                    ? 'Недостаточно AI токенов'
-                    : 'Неизвестная ошибка'
-                }
-                message={
-                  message.messageTypeExplanation === 'NO_TOKENS'
-                    ? {
-                        content:
-                          'У вас исчерпаны AI-токены или недостаточно токенов для запроса. Пожалуйста, дождитесь обновления лимита или измените тарифный план.',
-                      }
-                    : {
-                        content: 'Произошла неизвестная ошибка',
-                      }
-                }
-                type={message.messageType}
-              />
-            ) : (
-              <UserMessageItem key={`user-${index}`} message={message} />
-            )
-          )}
-        </div>
-      )}
-      <div className="flex flex-col">
+    <div className="flex h-full flex-col overflow-hidden">
+      <div className="flex flex-1 flex-col-reverse overflow-y-auto">
+        {isLoading ? (
+          <div className="flex flex-1 items-center justify-center">
+            <ChatLoading />
+          </div>
+        ) : messages.length === 0 ? (
+          <div className="flex flex-1 items-center justify-center">
+            <EmptyState />
+          </div>
+        ) : (
+          <div className="flex flex-col-reverse gap-8 px-8 pt-6 pb-5">
+            {[...messages].reverse().map((message, index) =>
+              message.role === 'assistant' && !message.messageType ? (
+                <AiMessageItem
+                  key={`assistant-${index}`}
+                  message={message}
+                  index={messages.length - 1 - index}
+                  handleFeedback={handleFeedback}
+                />
+              ) : message.role === 'assistant' && message.messageType ? (
+                <ServiceMessage
+                  key={`service-${index}`}
+                  header={
+                    message.messageTypeExplanation === 'NO_TOKENS'
+                      ? 'Недостаточно AI токенов'
+                      : 'Неизвестная ошибка'
+                  }
+                  message={
+                    message.messageTypeExplanation === 'NO_TOKENS'
+                      ? {
+                          content:
+                            'У вас исчерпаны AI-токены или недостаточно токенов для запроса. Пожалуйста, дождитесь обновления лимита или измените тарифный план.',
+                        }
+                      : {
+                          content: 'Произошла неизвестная ошибка',
+                        }
+                  }
+                  type={message.messageType}
+                />
+              ) : (
+                <UserMessageItem key={`user-${index}`} message={message} />
+              )
+            )}
+          </div>
+        )}
+      </div>
+      <div className="border-accent bg-background flex flex-col">
         <LoadingIndicator isGenerating={isGenerating} />
         <ChatInput
           onSendMessage={handleSendMessage}
           isGenerating={isGenerating}
         />
       </div>
-
-      <ChatFooter />
-    </>
+      <ChatFooter className="bg-background" />
+    </div>
   );
 }
