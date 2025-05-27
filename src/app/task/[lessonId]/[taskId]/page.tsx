@@ -6,6 +6,7 @@ import MonacoActionsListener from '~/app/components/MonacoActionsListener';
 import { ResetConfirmationModal } from '~/app/components/ResetConfirmationModal';
 import { ToolboxModal } from '~/app/components/ToolboxModal/ToolboxModal';
 import { headers } from 'next/headers';
+import { MobileBackNav } from '~/app/components/mobile/MobileBackNav';
 
 export default async function TaskPage({
   params,
@@ -45,6 +46,9 @@ export default async function TaskPage({
 
   return (
     <>
+      <div className="sm:hidden h-15 flex items-center p-5 border-b border-accent">
+        <MobileBackNav href={`/lesson/${lessonId}`} label="Назад" />
+      </div>
       <TaskView task={taskData} lessonId={lessonId} />
       <MonacoActionsListener />
       <ResetConfirmationModal taskId={taskId} />

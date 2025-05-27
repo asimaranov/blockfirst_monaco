@@ -28,7 +28,7 @@ export default function TaskInfo({ task, lessonId, taskStatus }: { task: any, le
   return (
     <>
       <div className="overflow-y-scroll">
-        <div className="bg-w-150 flex h-24 flex-row gap-5 bg-[#01050D] bg-[url('/images/grids/task-info-grid.svg')] bg-cover bg-right-bottom bg-no-repeat px-8 py-6">
+        <div className="bg-w-150 flex h-24 flex-row gap-5 bg-[#01050D] bg-[url('/images/grids/task-info-grid.svg')] bg-cover bg-right-bottom bg-no-repeat px-5 sm:px-8 py-6">
           <div className="relative shrink-0">
             <Image
               src={task.heroImageSrc}
@@ -68,7 +68,7 @@ export default function TaskInfo({ task, lessonId, taskStatus }: { task: any, le
               <span className="font-delight border-accent rounded-[100px] border-[0.5px] px-3 pt-1 pb-1.25 text-xs leading-3.75">
                 BF Heroes
               </span>
-              <div className="ml-auto flex flex-row items-center gap-1">
+              <div className="ml-auto hidden sm:flex flex-row items-center gap-1 ">
                 <div className="bg-success h-1 w-1 rounded-full" />
                 <span className="text-xs">12.04.2025</span>
               </div>
@@ -76,7 +76,7 @@ export default function TaskInfo({ task, lessonId, taskStatus }: { task: any, le
             <span className="text-secondary text-xs">{task.heroTagline}</span>
           </div>
         </div>
-        <div className="flex flex-col gap-8 p-8">
+        <div className="flex flex-col gap-8 p-5 sm:p-8">
           <div className="flex flex-col gap-6">
             <div className="flex flex-row justify-between">
               <TaskNavigation labels={task.path} task={task} />
@@ -178,7 +178,7 @@ export default function TaskInfo({ task, lessonId, taskStatus }: { task: any, le
                       viewBox="0 0 20 20"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5"
+                      className="h-5 w-5 shrink-0"
                     >
                       <path
                         d="M10 2.5C14.1421 2.5 17.5 5.85786 17.5 10C17.5 14.1421 14.1421 17.5 10 17.5C5.85786 17.5 2.5 14.1421 2.5 10C2.5 5.85786 5.85786 2.5 10 2.5Z"
@@ -215,7 +215,7 @@ export default function TaskInfo({ task, lessonId, taskStatus }: { task: any, le
         </div>
       </div>
 
-      <div className="border-accent sticky bottom-0 mt-auto border-t px-8 py-4">
+      <div className="border-accent sm:sticky bottom-0 mt-auto border-t px-8 py-4">
         <div className="flex flex-row items-center gap-5">
           <div className="flex flex-row items-center gap-2">
             <svg

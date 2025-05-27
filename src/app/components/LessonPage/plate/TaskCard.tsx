@@ -58,7 +58,7 @@ export const TaskNavigation = ({
             fill="#F2F2F2"
           />
         </svg>
-        {!short && <span className="text-xs">Задача:</span>}
+        {!short && <span className="text-xs hidden sm:block">Задача:</span>}
       </div>
 
       <div className="flex">
