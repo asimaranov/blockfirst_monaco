@@ -37,7 +37,7 @@ export default async function RootLayout({
         {/* <meta name="twitter:site" content="@blockfirst" />
         <meta name="twitter:creator" content="@blockfirst" /> */}
       </head>
-      <body className='h-screen w-screen flex flex-col'>
+      <body className='h-dvh'>
         <TRPCReactProvider>
           <NextIntlClientProvider>
             {children}
