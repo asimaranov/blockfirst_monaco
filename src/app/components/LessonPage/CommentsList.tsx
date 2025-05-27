@@ -159,14 +159,17 @@ const EditIcon = () => (
 const UserAvatar = ({
   avatarInitial,
   isSelf,
+  className,
 }: {
   avatarInitial: string;
   isSelf: boolean;
+  className?: string;
 }) => (
   <div
     className={cn(
-      'bg-accent text-foreground flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full text-sm leading-5',
-      isSelf && 'bg-primary'
+      'bg-accent text-foreground flex size-8 sm:size-10 flex-shrink-0 items-center justify-center rounded-full text-sm leading-5',
+      isSelf && 'bg-primary',
+      className
     )}
   >
     {avatarInitial}
@@ -281,7 +284,7 @@ function CommentItem({
         onClose={() => setModalImage(null)}
       />
 
-      <div className="flex flex-row gap-5">
+      <div className="flex flex-row gap-4 sm:gap-5">
         <UserAvatar
           avatarInitial={comment.avatarInitial}
           isSelf={!!comment.isSelf}
@@ -295,7 +298,7 @@ function CommentItem({
           </span>{' '}
         </div>
       </div>
-      <div className="flex flex-grow flex-col px-15 pr-0 sm:pr-15">
+      <div className="flex flex-grow flex-col pr-0 pl-12 sm:pr-15 sm:pl-15">
         {!(
           comment.content.length == 0 ||
           (comment.content.length == 1 &&
@@ -958,15 +961,16 @@ export default function CommentsList({ lessonId }: { lessonId?: string }) {
                   transition={{ duration: 0.3, ease: 'easeInOut' }}
                   className="overflow-hidden"
                 >
-                  <div className="flex flex-row gap-5 overflow-hidden pt-8 pl-15">
+                  <div className="flex flex-row gap-5 overflow-hidden pt-8 pl-12 sm:pl-15">
                     <UserAvatar
                       avatarInitial={
                         session?.user?.name?.[0]?.toUpperCase() || 'U'
                       }
                       isSelf={true}
+                      className="hidden sm:flex"
                     />
                     <CommentsEditor
-                      className="w-175"
+                      className="sm:w-175"
                       value={replyToUser ? `@${replyToUser}, ` : ''}
                       id="sub-editor"
                       lessonId={commentLessonId}

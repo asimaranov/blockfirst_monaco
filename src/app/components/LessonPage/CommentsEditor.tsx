@@ -12,7 +12,6 @@ import { useEffect, useState } from 'react';
 import type { Value } from '@udecode/plate';
 import { cn } from '~/lib/utils';
 import { api } from '~/trpc/react';
-import { MarkdownPlugin } from '@udecode/plate-markdown';
 import Image from 'next/image';
 
 export default function CommentsEditor({
