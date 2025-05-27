@@ -61,9 +61,9 @@ export default function LoadingComponent() {
   const stageCircumference = 2 * Math.PI * stageRadius;
 
   return (
-    <div className="absolute top-0 left-0 flex h-full w-272 flex-col items-center justify-between pt-6 pb-5 border-accent border-l">
+    <div className="border-accent absolute top-0 left-0 flex h-full w-screen flex-col items-center justify-between border-l pt-6 pb-5 sm:w-272">
       <Image src={BfBadge} alt="logo" className="h-10 w-36.25" />
-      <div className="flex flex-col items-center gap-10">
+      <div className="flex w-full flex-col items-center gap-10 sm:w-auto">
         <div className="relative h-fit w-fit">
           <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center">
             <span className="text-2xl">
@@ -104,8 +104,8 @@ export default function LoadingComponent() {
             </defs>
           </svg>
         </div>
-        <div className="flex flex-row gap-10">
-          <div className="flex flex-row gap-3">
+        <div className="flex flex-col gap-6 sm:flex-row sm:gap-10 w-full sm:w-auto px-5 sm:px-0">
+          <div className="flex flex-row-reverse sm:flex-row gap-3 justify-between sm:justify-start">
             {stageProgress[0] === 100 ? (
               <svg
                 width="20"
@@ -158,7 +158,7 @@ export default function LoadingComponent() {
               Подготовка среды ...
             </span>
           </div>
-          <div className="flex flex-row gap-3">
+          <div className="flex flex-row-reverse sm:flex-row gap-3 justify-between sm:justify-start">
             {stageProgress[1] === 100 ? (
               <svg
                 width="20"
@@ -211,7 +211,7 @@ export default function LoadingComponent() {
               Настройка IDE...
             </span>
           </div>
-          <div className="flex flex-row gap-3">
+          <div className="flex flex-row-reverse sm:flex-row gap-3 justify-between sm:justify-start">
             {stageProgress[2] === 100 ? (
               <svg
                 width="20"

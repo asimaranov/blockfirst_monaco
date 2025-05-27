@@ -46,9 +46,7 @@ export default async function TaskPage({
 
   return (
     <>
-      <div className="sm:hidden h-15 flex items-center p-5 border-b border-accent">
-        <MobileBackNav href={`/lesson/${lessonId}`} label="Назад" />
-      </div>
+      
       <TaskView task={taskData} lessonId={lessonId} />
       <MonacoActionsListener />
       <ResetConfirmationModal taskId={taskId} />

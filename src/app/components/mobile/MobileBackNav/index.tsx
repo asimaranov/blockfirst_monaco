@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 const BackButton = () => {
   return (
@@ -20,16 +20,27 @@ const BackButton = () => {
 
 export const MobileBackNav = ({
   href,
+  onClick,
   label,
 }: {
   href: string;
   label: string;
+  onClick?: () => void;
 }) => {
-  return (
+  return onClick ? (
+    <button onClick={onClick}>
+      <div className="flex items-center gap-2">
+        <BackButton />
+        <span className="line-clamp-1 max-w-48 overflow-hidden text-base text-left wrap-break-word text-ellipsis">
+          {label}
+        </span>
+      </div>
+    </button>
+  ) : (
     <Link href={href}>
       <div className="flex items-center gap-2">
         <BackButton />
-        <span className="line-clamp-1 max-w-45 overflow-hidden text-base wrap-break-word text-ellipsis">
+        <span className="line-clamp-1 max-w-48 overflow-hidden text-base text-left wrap-break-word text-ellipsis">
           {label}
         </span>
       </div>

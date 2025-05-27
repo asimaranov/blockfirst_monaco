@@ -10,6 +10,7 @@ import Image from 'next/image';
 import React from 'react';
 import { TaskStatusBadge } from '../LessonPage/plate/TaskCard';
 import Link from 'next/link';
+import { MobileBackNav } from '../mobile/MobileBackNav';
 
 export default function TaskView({
   task,
@@ -21,7 +22,9 @@ export default function TaskView({
   lessonId: string;
 }) {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<'info' | 'ai-mentor'>('info');
+  const [activeTab, setActiveTab] = useState<
+    'info' | 'ai-mentor' | 'mobile-editor'
+  >('info');
   const [isAiMentorActive, setIsAiMentorActive] = useState(false);
   const [aiMentorLastFailure, setAiMentorLastFailure] = useState('');
 
@@ -58,9 +61,27 @@ export default function TaskView({
 
   return (
     <>
-      <div className="sm:fixed top-0 left-0 z-1000 flex h-full w-full shrink-0 flex-row justify-between bg-[#0F1217]">
+      <div className="border-accent flex h-15 items-center border-b p-5 sm:hidden">
+        <MobileBackNav
+          href={`/lesson/${lessonId}`}
+          onClick={
+            activeTab === 'mobile-editor'
+              ? () => setActiveTab('info')
+              : undefined
+          }
+          label={
+            activeTab === 'mobile-editor' ? 'Вернуться к требованию' : 'Назад'
+          }
+        />
+      </div>
+      <div className="top-0 left-0 z-1000 flex w-full shrink-0 grow flex-row justify-between bg-[#0F1217] sm:fixed sm:h-full">
         {!collapsed ? (
-          <div className="border-accent flex h-full w-full shrink-0 flex-col border-r sm:w-150">
+          <div
+            className={cn(
+              'border-accent flex w-full shrink-0 grow flex-col overflow-y-scroll border-r sm:w-150 sm:shrink sm:grow-0',
+              activeTab === 'mobile-editor' && 'hidden'
+            )}
+          >
             <div className="flex flex-row items-center px-8 py-6">
               <Link
                 href={`/lesson/${lessonId}`}
@@ -166,6 +187,7 @@ export default function TaskView({
                 task={task}
                 lessonId={lessonId}
                 taskStatus={taskStatus}
+                setActiveTab={setActiveTab}
               />
             )}
             {activeTab === 'ai-mentor' && (
@@ -255,7 +277,12 @@ export default function TaskView({
           </div>
         )}
 
-        <div className="hidden flex-col sm:flex">
+        <div
+          className={cn(
+            'hidden flex-col sm:flex',
+            activeTab === 'mobile-editor' && 'flex'
+          )}
+        >
           <MonacoView
             setAiMentorLastFailure={(lastFailure: string) => {
               setAiMentorLastFailure(lastFailure);

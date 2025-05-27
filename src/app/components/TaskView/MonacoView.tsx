@@ -52,7 +52,6 @@ export const StarIconFilled = ({ className }: { className?: string }) => {
   );
 };
 
-
 export default function MonacoView({
   setAiMentorLastFailure,
   isCollapsed,
@@ -70,13 +69,13 @@ export default function MonacoView({
 }) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
-  const { 
-    editorReady, 
-    setEditorReady, 
+  const {
+    editorReady,
+    setEditorReady,
     setIframeLoaded,
     iframeKey,
     showActionBar,
-    setShowActionBar
+    setShowActionBar,
   } = useMonacoEditorStore();
 
   // Function to handle iframe load event
@@ -117,7 +116,6 @@ export default function MonacoView({
     };
   }, []);
 
-
   // useEffect(() => {
   //   createPortal(
   //     <button
@@ -140,7 +138,7 @@ export default function MonacoView({
   );
 
   return (
-    <div className={cn('h-full w-272', isCollapsed && 'w-396')}>
+    <div className={cn('h-full w-screen sm:w-272', isCollapsed && 'w-396')}>
       {/* Editor container with iframe */}
       <div id="editorsDiv" className="relative h-full w-full">
         <iframe

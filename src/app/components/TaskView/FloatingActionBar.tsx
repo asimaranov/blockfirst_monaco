@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import BfLogo from './assets/bf-logo.svg';
 import { InfoPopover, InfoPopoverIcon } from '../shared/InfoPopover';
-import LoadingComponent from './LoadingComponent';
 import Confetti from 'react-confetti';
 import { cn } from '~/helpers';
 import { Modal } from '../shared/Modal';

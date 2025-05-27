@@ -6,11 +6,18 @@ import { useEffect, useState } from 'react';
 import { useTestResultStore } from '~/store/testResultStore';
 import { useConnectionInfoStore } from '~/store/ls-connection-info-store';
 
-export default function TaskInfo({ task, lessonId, taskStatus }: { task: any, lessonId: string, taskStatus: string }) {
-  const {
-    testResults,
-    isRunningTests,
-  } = useTestResultStore();
+export default function TaskInfo({
+  task,
+  lessonId,
+  taskStatus,
+  setActiveTab,
+}: {
+  task: any;
+  lessonId: string;
+  taskStatus: string;
+  setActiveTab: (tab: 'info' | 'ai-mentor' | 'mobile-editor') => void;
+}) {
+  const { testResults, isRunningTests } = useTestResultStore();
 
   useEffect(() => {
     console.log('isRunningTests', isRunningTests);
@@ -28,7 +35,7 @@ export default function TaskInfo({ task, lessonId, taskStatus }: { task: any, le
   return (
     <>
       <div className="overflow-y-scroll">
-        <div className="bg-w-150 flex h-24 flex-row gap-5 bg-[#01050D] bg-[url('/images/grids/task-info-grid.svg')] bg-cover bg-right-bottom bg-no-repeat px-5 sm:px-8 py-6">
+        <div className="bg-w-150 flex h-24 flex-row gap-5 bg-[#01050D] bg-[url('/images/grids/task-info-grid.svg')] bg-cover bg-right-bottom bg-no-repeat px-5 py-6 sm:px-8">
           <div className="relative shrink-0">
             <Image
               src={task.heroImageSrc}
@@ -68,7 +75,7 @@ export default function TaskInfo({ task, lessonId, taskStatus }: { task: any, le
               <span className="font-delight border-accent rounded-[100px] border-[0.5px] px-3 pt-1 pb-1.25 text-xs leading-3.75">
                 BF Heroes
               </span>
-              <div className="ml-auto hidden sm:flex flex-row items-center gap-1 ">
+              <div className="ml-auto hidden flex-row items-center gap-1 sm:flex">
                 <div className="bg-success h-1 w-1 rounded-full" />
                 <span className="text-xs">12.04.2025</span>
               </div>
@@ -80,7 +87,9 @@ export default function TaskInfo({ task, lessonId, taskStatus }: { task: any, le
           <div className="flex flex-col gap-6">
             <div className="flex flex-row justify-between">
               <TaskNavigation labels={task.path} task={task} />
-              <TaskStatusBadge status={taskStatus as 'available' | 'in-progress' | 'completed'} />
+              <TaskStatusBadge
+                status={taskStatus as 'available' | 'in-progress' | 'completed'}
+              />
             </div>
             <div className="flex flex-col gap-4">
               <span className="text-2xl font-medium">{task.title}</span>
@@ -215,7 +224,7 @@ export default function TaskInfo({ task, lessonId, taskStatus }: { task: any, le
         </div>
       </div>
 
-      <div className="border-accent sm:sticky bottom-0 mt-auto border-t px-8 py-4">
+      <div className="border-accent sticky bottom-0 mt-auto hidden border-t px-8 py-4 sm:block bg-[#0f1217]">
         <div className="flex flex-row items-center gap-5">
           <div className="flex flex-row items-center gap-2">
             <svg
@@ -264,6 +273,29 @@ export default function TaskInfo({ task, lessonId, taskStatus }: { task: any, le
               — Online
             </span>
           </div>
+        </div>
+      </div>
+
+      <div className="border-accent sticky bottom-0 mt-auto h-22 items-center border-t bg-[#14171c] p-5 sm:hidden">
+        <div
+          className="border-primary flex h-full w-full rounded-[100px] border items-center justify-center"
+          onClick={() => setActiveTab('mobile-editor')}
+        >
+          <span className="text-sm">Редактор кода</span>
+
+          <svg
+            width="21"
+            height="20"
+            viewBox="0 0 21 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+          >
+            <path
+              d="M14.2305 4.20907C14.5107 3.94019 14.9458 3.93161 15.2354 4.17782L15.2911 4.23056L19.9063 9.03915C20.1848 9.32936 20.1848 9.78801 19.9063 10.0782L15.2911 14.8868C15.0042 15.1856 14.5294 15.1951 14.2305 14.9083C13.932 14.6214 13.9223 14.1465 14.209 13.8477L18.3252 9.55868L14.209 5.26962L14.1583 5.21103C13.9245 4.91164 13.9506 4.47785 14.2305 4.20907Z"
+              fill="#F2F2F2"
+            />
+          </svg>
         </div>
       </div>
     </>
