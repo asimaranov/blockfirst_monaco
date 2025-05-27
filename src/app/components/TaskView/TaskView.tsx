@@ -74,7 +74,7 @@ export default function TaskView({
           }
         />
       </div>
-      <div className="top-0 left-0 z-1000 flex w-full flex-row justify-between overflow-hidden bg-[#0F1217] sm:fixed sm:h-full">
+      <div className="top-0 left-0 z-1000 flex w-full flex-row justify-between overflow-hidden bg-[#0F1217] sm:fixed sm:h-full grow">
         {!collapsed ? (
           <div
             className={cn(

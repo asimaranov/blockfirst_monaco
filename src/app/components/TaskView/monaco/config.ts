@@ -236,7 +236,8 @@ const resetSvgIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none
 
 export const configurePostStart = async (
   wrapper: MonacoEditorLanguageClientWrapper,
-  configResult: ConfigResult
+  configResult: ConfigResult,
+  isMobile: boolean
 ) => {
   console.log('configurePostStart');
   const result = wrapper.getExtensionRegisterResult(
@@ -297,15 +298,19 @@ export const configurePostStart = async (
     }
   });
 
-  // WA: Force show explorer and not search
-  await vscode.commands.executeCommand('workbench.view.explorer');
+  if (!isMobile) {
+    await vscode.commands.executeCommand('workbench.view.explorer');
+  } else {
+    console.log('Closing sidebar');
+    await vscode.commands.executeCommand('workbench.action.closeSidebar');
+  }
 
   // taskdata is an object
   for (const [fileName, fileContent] of Object.entries(
     configResult.taskData.filesCode
   )) {
     const uri = vscode.Uri.file(`/workspace/contracts/${fileName}`);
-    try { 
+    try {
       await vscode.workspace.openTextDocument(uri);
       await vscode.window.showTextDocument(uri, {
         preview: false,
@@ -353,14 +358,15 @@ export const configure = (
     'https://lserver-1.blockfirst.io/' //'http://localhost:3004'
   );
 
-  ioSocket.on('connection-info', (data: {
-    totalClients: number;
-  }) => {
+  ioSocket.on('connection-info', (data: { totalClients: number }) => {
     console.log('Connection info', data);
-    window.parent.postMessage({
-      command: 'connection-info',
-      data,
-    }, '*');
+    window.parent.postMessage(
+      {
+        command: 'connection-info',
+        data,
+      },
+      '*'
+    );
   });
 
   const webSocketRaw = {

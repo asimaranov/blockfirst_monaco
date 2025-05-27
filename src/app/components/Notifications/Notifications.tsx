@@ -4,6 +4,7 @@ import { motion, useMotionValue, PanInfo, useTransform } from 'motion/react';
 
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { cn } from '~/helpers';
+import { useIsMobile } from '~/hooks/use-is-mobile';
 import {
   AllNotificationSettingTypes,
   defaultNotificationSettings,
@@ -105,7 +106,7 @@ const Notifications = ({ onClose }: NotificationsProps) => {
     }
   }, [notificationSettings]);
 
-  const [isMobile, setIsMobile] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (isMobile) {
@@ -117,20 +118,6 @@ const Notifications = ({ onClose }: NotificationsProps) => {
       document.body.style.overflow = '';
     };
   }, [isMobile]);
-
-  // Check if device is mobile
-  useEffect(() => {
-    const checkIfMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    checkIfMobile();
-    window.addEventListener('resize', checkIfMobile);
-
-    return () => {
-      window.removeEventListener('resize', checkIfMobile);
-    };
-  }, []);
 
   // Dismiss notification (move to archive)
   const dismissNotification = (id: string) => {

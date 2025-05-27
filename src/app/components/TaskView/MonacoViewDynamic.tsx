@@ -5,6 +5,7 @@ import { configure } from './monaco/config';
 import { MonacoEditorReactComp } from './monaco/MonacoEditorReact';
 import { useLanguageClientStore } from '~/app/store/languageClientStore';
 import { api } from '~/trpc/react';
+import { useIsMobile } from '~/hooks/use-is-mobile';
 
 export default function MonacoViewDynamic({ taskData }: { taskData: any }) {
   const editorRef = useRef<any>(null);
@@ -116,6 +117,8 @@ export default function MonacoViewDynamic({ taskData }: { taskData: any }) {
     };
   }, [languageClientStore.languageClient]);
 
+  const breakpoint = 768;
+
   const memoizedEditor = useMemo(
     () => (
       <MonacoEditorReactComp
@@ -125,7 +128,7 @@ export default function MonacoViewDynamic({ taskData }: { taskData: any }) {
         onLoad={async (wrapper: any) => {
           editorRef.current = wrapper;
           try {
-            await configResult.configurePostStart(wrapper, configResult);
+            await configResult.configurePostStart(wrapper, configResult, window.innerWidth <= breakpoint);
             console.log('Monaco editor loaded successfully');
             if (window.parent !== window) {
               // Small delay to ensure everything is rendered properly

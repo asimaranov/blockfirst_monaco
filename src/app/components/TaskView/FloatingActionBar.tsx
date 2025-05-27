@@ -1288,7 +1288,7 @@ export const FloatingActionBar = ({
 
         <div className="border-accent flex flex-row items-center justify-center border-t shadow-lg">
           <div className="flex w-full flex-col">
-            <div className="flex w-full flex-row px-8 py-6">
+            <div className="flex w-full flex-row px-5 sm:px-8 py-6">
               {/* Action buttons go here */}
               <div className="flex flex-row items-center gap-4">
                 <Image
@@ -1302,14 +1302,18 @@ export const FloatingActionBar = ({
                   <span className="text-foreground text-xl leading-5">
                     {taskData.submissionCount}
                   </span>
-                  <span className="text-secondary text-xs leading-5">
+                  <span className="text-secondary text-xs leading-5 hidden sm:block">
                     — Проверок кода
                   </span>
+                  <span className="text-secondary text-xs leading-5 block sm:hidden">
+                    — Проверок
+                  </span>
+
                 </div>
               </div>
               <button
                 className={cn(
-                  'not-disabled:border-primary group/run-button not-disabled:hover:bg-primary ml-auto flex gap-2 rounded-[5.2083vw] border px-6 py-3 text-sm not-disabled:cursor-pointer',
+                  'not-disabled:border-primary group/run-button not-disabled:hover:bg-primary ml-auto flex gap-2 rounded-[5.2083vw] border px-5 sm:px-6 py-3 text-sm not-disabled:cursor-pointer',
                   isRunningTests && 'border-[#1242B2] bg-[#1242B2]',
                   !editorReady && 'border-[#1242B2] opacity-50'
                 )}
