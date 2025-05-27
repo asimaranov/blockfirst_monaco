@@ -224,7 +224,7 @@ export default function TaskInfo({
         </div>
       </div>
 
-      <div className="border-accent sticky bottom-0 mt-auto hidden border-t px-8 py-4 sm:block bg-[#0f1217]">
+      <div className="border-accent sticky bottom-0 mt-auto hidden border-t bg-[#0f1217] px-8 py-4 sm:block">
         <div className="flex flex-row items-center gap-5">
           <div className="flex flex-row items-center gap-2">
             <svg
@@ -278,7 +278,7 @@ export default function TaskInfo({
 
       <div className="border-accent sticky bottom-0 mt-auto h-22 items-center border-t bg-[#14171c] p-5 sm:hidden">
         <div
-          className="border-primary flex h-full w-full rounded-[100px] border items-center justify-center"
+          className="border-primary flex h-full w-full items-center justify-center rounded-[100px] border"
           onClick={() => setActiveTab('mobile-editor')}
         >
           <span className="text-sm">Редактор кода</span>

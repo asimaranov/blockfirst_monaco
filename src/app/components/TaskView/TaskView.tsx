@@ -60,7 +60,7 @@ export default function TaskView({
   };
 
   return (
-    <>
+    <div className="flex h-full flex-col">
       <div className="border-accent flex h-15 items-center border-b p-5 sm:hidden">
         <MobileBackNav
           href={`/lesson/${lessonId}`}
@@ -78,7 +78,7 @@ export default function TaskView({
         {!collapsed ? (
           <div
             className={cn(
-              'border-accent flex w-full shrink-0 grow flex-col overflow-y-scroll border-r sm:w-150 sm:shrink sm:grow-0',
+              'border-accent flex w-full shrink-0 grow flex-col border-r sm:w-150 sm:shrink sm:grow-0',
               activeTab === 'mobile-editor' && 'hidden'
             )}
           >
@@ -296,6 +296,6 @@ export default function TaskView({
           />
         </div>
       </div>
-    </>
+    </div>
   );
 }
