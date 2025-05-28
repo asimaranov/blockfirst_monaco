@@ -2,11 +2,6 @@ import { betterAuth, type BetterAuthOptions } from 'better-auth';
 import { openAPI, admin, customSession } from 'better-auth/plugins';
 import { emailOTP } from 'better-auth/plugins';
 import { mongodbAdapter } from 'better-auth/adapters/mongodb';
-import {
-  sendChangeEmailVerification,
-  sendResetPasswordEmail,
-  sendVerificationEmail,
-} from '~/server/auth/email';
 import { MongoClient } from 'mongodb';
 import { env } from '~/env';
 import UserDataModel, { IUserData } from '../models/userData';
@@ -37,16 +32,7 @@ const options = {
   ],
   database: mongodbAdapter(db),
   plugins: [
-    emailOTP({
-      sendVerificationOnSignUp: true,
-      sendVerificationOTP: async ({ email, otp, type }) => {
-        const { error } = await sendVerificationEmail({
-          otp: otp,
-          email,
-        });
-      },
-      otpLength: 5,
-    }),
+    
 
     openAPI(), // /api/auth/reference
     admin({
@@ -72,13 +58,6 @@ const options = {
     changeEmail: {
       enabled: true,
       sendChangeEmailVerification: async ({ newEmail, url }, _request) => {
-        const { error } = await sendChangeEmailVerification({
-          email: newEmail,
-          verificationUrl: url,
-        });
-
-        if (error)
-          return console.log('sendChangeEmailVerification Error: ', error);
       },
     },
   },
@@ -107,14 +86,6 @@ const options = {
     requireEmailVerification: true,
 
     autoSignIn: true,
-    sendResetPassword: async ({ user, url }) => {
-      const { error } = await sendResetPasswordEmail({
-        email: user.email,
-        verificationUrl: url,
-      });
-
-      if (error) return console.log('sendResetPasswordEmail Error: ', error);
-    },
   },
 } satisfies BetterAuthOptions;
 
