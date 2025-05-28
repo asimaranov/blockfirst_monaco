@@ -4,10 +4,14 @@ import CopyButton from '../../shared/CopyButton/CopyButton';
 import { authClient } from '~/server/auth/client';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useIsMobile } from '~/hooks/use-is-mobile';
+import { cn } from '~/lib/utils';
 
 interface MobileBurgerMenuProps {
   isOpen: boolean;
   onClose: () => void;
+  menu?: React.ReactNode;
+  className?: string;
 }
 
 const menuSections = [
@@ -103,8 +107,138 @@ const contactSections = [
   },
 ];
 
-const MobileBurgerMenu = ({ isOpen, onClose }: MobileBurgerMenuProps) => {
+const DefaultMenu = () => {
   const router = useRouter();
+  return (
+    <div className="flex h-[calc(100dvh-69px)] flex-col overflow-y-auto px-5 pt-10 pb-5">
+      <div className="flex flex-col space-y-10">
+        {/* Menu sections */}
+        <div className="grid grid-cols-2 gap-x-4">
+          {menuSections.map((section, i) => (
+            <div key={i} className="flex flex-col">
+              <span className="mb-5 text-xs text-[#9AA6B5]/50 uppercase">
+                {section.title}
+              </span>
+              <div className="flex flex-col space-y-4">
+                {section.links.map((link, i) => (
+                  <Link
+                    key={i}
+                    href={link.href}
+                    className="text-sm text-[#f2f2f2]"
+                    target={link.href.startsWith('http') ? '_blank' : undefined}
+                    rel={
+                      link.href.startsWith('http')
+                        ? 'noopener noreferrer'
+                        : undefined
+                    }
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Contact sections */}
+        <div className="flex flex-col space-y-0">
+          {contactSections.map((section) => (
+            <div key={section.title} className="border-t border-[#282D33] py-6">
+              <div className="flex flex-col space-y-3">
+                <span className="text-xs text-[#9AA6B5]">{section.title}</span>
+                <div className="flex flex-row items-center gap-3">
+                  {section.icon}
+                  <div>{section.content}</div>
+                  {section.type === 'copy' && (
+                    <CopyButton
+                      textToCopy={section.content}
+                      className="ml-auto"
+                      appearanceType="near"
+                    />
+                  )}
+                  {section.type === 'link' && (
+                    <Link href={section.href ?? ''} className="ml-auto">
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                          d="M11.0778 4.6461C11.2731 4.45083 11.5897 4.45083 11.7849 4.64609L16.7849 9.64604C16.8787 9.73981 16.9314 9.86699 16.9314 9.9996C16.9314 10.1322 16.8787 10.2594 16.7849 10.3532L11.7849 15.3532C11.5897 15.5484 11.2731 15.5484 11.0778 15.3532C10.8825 15.1579 10.8825 14.8413 11.0778 14.646L15.2243 10.4996H3.57422C3.29808 10.4996 3.07422 10.2757 3.07422 9.9996C3.07422 9.72346 3.29808 9.4996 3.57422 9.4996H15.2242L11.0778 5.3532C10.8825 5.15794 10.8825 4.84136 11.0778 4.6461Z"
+                          fill="#F2F2F2"
+                        />
+                      </svg>
+                    </Link>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Logout Button */}
+      <div className="mt-auto">
+        <button
+          className="flex w-full items-center justify-center rounded-full border border-[#195AF4] py-3"
+          onClick={async () => {
+            try {
+              await authClient.signOut();
+            } catch (error) {
+              console.error('Sign out error', error);
+            } finally {
+              router.push('/signin');
+            }
+          }}
+        >
+          <div className="flex items-center space-x-2">
+            <span className="text-base text-[#f2f2f2]">Выход</span>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12.5859 6.30001C12.3276 3.30001 10.7859 2.07501 7.41094 2.07501H7.3026C3.5776 2.07501 2.08594 3.56668 2.08594 7.29168V12.725C2.08594 16.45 3.5776 17.9417 7.3026 17.9417H7.41094C10.7609 17.9417 12.3026 16.7333 12.5776 13.7833"
+                stroke="#F2F2F2"
+                strokeWidth="1.25"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M7.49713 10H16.9805"
+                stroke="#F2F2F2"
+                strokeWidth="1.25"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M15.1263 7.20833L17.918 10L15.1263 12.7917"
+                stroke="#F2F2F2"
+                strokeWidth="1.25"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const MobileBurgerMenu = ({
+  isOpen,
+  onClose,
+  menu,
+  className,
+}: MobileBurgerMenuProps) => {
   const menuVariants = {
     closed: {
       y: '-100%',
@@ -124,21 +258,7 @@ const MobileBurgerMenu = ({ isOpen, onClose }: MobileBurgerMenuProps) => {
     },
   };
 
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Check if device is mobile
-  useEffect(() => {
-    const checkIfMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    checkIfMobile();
-    window.addEventListener('resize', checkIfMobile);
-
-    return () => {
-      window.removeEventListener('resize', checkIfMobile);
-    };
-  }, []);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (isOpen && isMobile) {
@@ -153,138 +273,15 @@ const MobileBurgerMenu = ({ isOpen, onClose }: MobileBurgerMenuProps) => {
 
   return (
     <motion.div
-      className="text-foreground absolute top-[69px] right-0 left-0 z-[10000000] flex flex-col bg-[#01050d] sm:hidden"
+      className={cn(
+        'text-foreground absolute top-[69px] right-0 left-0 z-[10000000] flex flex-col bg-[#01050d] sm:hidden',
+        className
+      )}
       initial="closed"
       animate={isOpen ? 'open' : 'closed'}
       variants={menuVariants}
     >
-      <div className="flex h-[calc(100dvh-69px)] flex-col overflow-y-auto px-5 pt-10 pb-5">
-        <div className="flex flex-col space-y-10">
-          {/* Menu sections */}
-          <div className="grid grid-cols-2 gap-x-4">
-            {menuSections.map((section, i) => (
-              <div key={i} className="flex flex-col">
-                <span className="mb-5 text-xs text-[#9AA6B5]/50 uppercase">
-                  {section.title}
-                </span>
-                <div className="flex flex-col space-y-4">
-                  {section.links.map((link, i) => (
-                    <Link
-                      key={i}
-                      href={link.href}
-                      className="text-sm text-[#f2f2f2]"
-                      target={
-                        link.href.startsWith('http') ? '_blank' : undefined
-                      }
-                      rel={
-                        link.href.startsWith('http')
-                          ? 'noopener noreferrer'
-                          : undefined
-                      }
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Contact sections */}
-          <div className="flex flex-col space-y-0">
-            {contactSections.map((section) => (
-              <div
-                key={section.title}
-                className="border-t border-[#282D33] py-6"
-              >
-                <div className="flex flex-col space-y-3">
-                  <span className="text-xs text-[#9AA6B5]">
-                    {section.title}
-                  </span>
-                  <div className="flex flex-row items-center gap-3">
-                    {section.icon}
-                    <div>{section.content}</div>
-                    {section.type === 'copy' && (
-                      <CopyButton
-                        textToCopy={section.content}
-                        className="ml-auto"
-                        appearanceType="near"
-                      />
-                    )}
-                    {section.type === 'link' && (
-                      <Link href={section.href ?? ''} className="ml-auto">
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 20 20"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            clipRule="evenodd"
-                            d="M11.0778 4.6461C11.2731 4.45083 11.5897 4.45083 11.7849 4.64609L16.7849 9.64604C16.8787 9.73981 16.9314 9.86699 16.9314 9.9996C16.9314 10.1322 16.8787 10.2594 16.7849 10.3532L11.7849 15.3532C11.5897 15.5484 11.2731 15.5484 11.0778 15.3532C10.8825 15.1579 10.8825 14.8413 11.0778 14.646L15.2243 10.4996H3.57422C3.29808 10.4996 3.07422 10.2757 3.07422 9.9996C3.07422 9.72346 3.29808 9.4996 3.57422 9.4996H15.2242L11.0778 5.3532C10.8825 5.15794 10.8825 4.84136 11.0778 4.6461Z"
-                            fill="#F2F2F2"
-                          />
-                        </svg>
-                      </Link>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Logout Button */}
-        <div className="mt-auto">
-          <button
-            className="flex w-full items-center justify-center rounded-full border border-[#195AF4] py-3"
-            onClick={async () => {
-              try {
-                await authClient.signOut();
-              } catch (error) {
-                console.error('Sign out error', error);
-              } finally {
-                router.push('/signin');
-              }
-            }}
-          >
-            <div className="flex items-center space-x-2">
-              <span className="text-base text-[#f2f2f2]">Выход</span>
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M12.5859 6.30001C12.3276 3.30001 10.7859 2.07501 7.41094 2.07501H7.3026C3.5776 2.07501 2.08594 3.56668 2.08594 7.29168V12.725C2.08594 16.45 3.5776 17.9417 7.3026 17.9417H7.41094C10.7609 17.9417 12.3026 16.7333 12.5776 13.7833"
-                  stroke="#F2F2F2"
-                  strokeWidth="1.25"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M7.49713 10H16.9805"
-                  stroke="#F2F2F2"
-                  strokeWidth="1.25"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M15.1263 7.20833L17.918 10L15.1263 12.7917"
-                  stroke="#F2F2F2"
-                  strokeWidth="1.25"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
-          </button>
-        </div>
-      </div>
+      {menu || <DefaultMenu />}
     </motion.div>
   );
 };

@@ -6,32 +6,16 @@ import { NotificationsModal } from '../Notifications/NotificationsModal';
 import { useNotificationsModalStore } from '~/store/notificationsModal';
 import { cn } from '~/lib/utils';
 import { useCourseProgressStore } from '~/store/courseProgressStore';
+import { api } from '~/trpc/react';
 
-const NotificationButton = ({ className }: { className: string }) => {
+const NotificationButton = ({
+  className,
+  isActive,
+}: {
+  className: string;
+  isActive: boolean;
+}) => {
   const { toggle } = useNotificationsModalStore();
-
-  <svg
-    width="36"
-    height="36"
-    viewBox="0 0 36 36"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className="h-9 w-9"
-  >
-    <g clipPath="url(#clip0_3635_45745)">
-      <rect width="36" height="36" rx="18" fill="#F2F2F2" />
-      <circle cx="23.5992" cy="12.4" r="2.4" fill="#CF3336" />
-      <path
-        d="M24.1737 15.9575C24.1579 15.9575 24.142 15.9654 24.1262 15.9654C24.047 15.9813 23.9679 15.9892 23.8808 16.005C23.5483 16.0367 23.192 16.0208 22.8279 15.9496C22.7329 15.9258 22.6537 15.91 22.5666 15.8783C22.3054 15.815 22.0599 15.7121 21.8304 15.5775C21.7354 15.53 21.6404 15.4667 21.5533 15.4112C21.1733 15.15 20.8487 14.8254 20.5874 14.4454C20.532 14.3583 20.4687 14.2633 20.4212 14.1683C20.2866 13.9388 20.1837 13.6933 20.1204 13.4321C20.0887 13.345 20.0729 13.2658 20.0491 13.1708C19.9779 12.8067 19.962 12.4504 19.9937 12.1179C20.0095 12.0308 20.0174 11.9517 20.0333 11.8725C20.0333 11.8567 20.0412 11.8408 20.0412 11.825C20.1362 11.3342 19.772 10.875 19.2654 10.875H14.452C14.3412 10.875 14.2304 10.8829 14.1274 10.8908C14.0324 10.8987 13.9454 10.9067 13.8504 10.9225C13.7554 10.9304 13.6604 10.9462 13.5733 10.9621C11.6654 11.2392 10.4462 12.4504 10.1691 14.3663C10.1533 14.4533 10.1374 14.5483 10.1295 14.6433C10.1137 14.7383 10.1058 14.8254 10.0979 14.9204C10.0899 15.0233 10.082 15.1342 10.082 15.245V21.5467C10.082 21.6575 10.0899 21.7683 10.0979 21.8713C10.1058 21.9662 10.1137 22.0533 10.1295 22.1483C10.1374 22.2433 10.1533 22.3383 10.1691 22.4254C10.4462 24.3413 11.6654 25.5525 13.5733 25.8296C13.6604 25.8454 13.7554 25.8613 13.8504 25.8692C13.9454 25.885 14.0324 25.8929 14.1274 25.9008C14.2304 25.9087 14.3412 25.9167 14.452 25.9167H20.7537C20.8645 25.9167 20.9754 25.9087 21.0783 25.9008C21.1733 25.8929 21.2604 25.885 21.3554 25.8692C21.4504 25.8613 21.5454 25.8454 21.6324 25.8296C23.5404 25.5525 24.7595 24.3413 25.0366 22.4254C25.0524 22.3383 25.0683 22.2433 25.0762 22.1483C25.092 22.0533 25.0999 21.9662 25.1079 21.8713C25.1158 21.7683 25.1237 21.6575 25.1237 21.5467V16.7333C25.1237 16.2267 24.6645 15.8625 24.1737 15.9575ZM13.8424 18.3958H17.8008C18.1254 18.3958 18.3945 18.665 18.3945 18.9896C18.3945 19.3142 18.1254 19.5833 17.8008 19.5833H13.8424C13.5179 19.5833 13.2487 19.3142 13.2487 18.9896C13.2487 18.665 13.5179 18.3958 13.8424 18.3958ZM20.9674 22.75H13.8424C13.5179 22.75 13.2487 22.4808 13.2487 22.1562C13.2487 21.8317 13.5179 21.5625 13.8424 21.5625H20.9674C21.292 21.5625 21.5612 21.8317 21.5612 22.1562C21.5612 22.4808 21.292 22.75 20.9674 22.75Z"
-        fill="#01050D"
-      />
-    </g>
-    <defs>
-      <clipPath id="clip0_3635_45745">
-        <rect width="36" height="36" rx="18" fill="white" />
-      </clipPath>
-    </defs>
-  </svg>;
 
   return (
     <button
@@ -78,7 +62,12 @@ const NotificationButton = ({ className }: { className: string }) => {
             className="hidden group-hover:block"
           />
 
-          <circle cx="23.5992" cy="12.4" r="2.4" fill="#CF3336" />
+          <circle
+            cx="23.5992"
+            cy="12.4"
+            r="2.4"
+            fill={isActive ? '#CF3336' : '#9AA6B5'}
+          />
         </g>
         <rect
           x="0.5"
@@ -140,8 +129,14 @@ const BackButton = () => {
     </svg>
   );
 };
-export default function LessonSidebarHeader({ courseTitle }: { courseTitle: string }) {
-  const { courseProgress  } = useCourseProgressStore();
+export default function LessonSidebarHeader({
+  courseTitle,
+}: {
+  courseTitle: string;
+}) {
+  const { courseProgress } = useCourseProgressStore();
+  const unreadCount = api.notifications.getUnreadCount.useQuery();
+
   return (
     <>
       <div className="bg-background sticky top-0 z-10 flex flex-row items-center px-8 pt-8 pb-5 text-base font-medium">
@@ -154,7 +149,10 @@ export default function LessonSidebarHeader({ courseTitle }: { courseTitle: stri
             {courseTitle}
           </span>
         </Link>
-        <NotificationButton className="ml-8 h-9 w-9" />
+        <NotificationButton
+          isActive={(unreadCount?.data || 0) > 0}
+          className="ml-8 h-9 w-9"
+        />
       </div>
       <div className="relative flex flex-col">
         <div className="">

@@ -46,6 +46,7 @@ export default async function Layout({
           <div className="px-0 sm:px-16">
             <LessonPage
               lessonId={lessonId}
+              courseInfo={courseInfo}
               courseTitle={courseByLessonId.courseTitle!}
               sectionTitle={courseByLessonId.sectionTitle!}
               moduleTitle={courseByLessonId.moduleTitle!}

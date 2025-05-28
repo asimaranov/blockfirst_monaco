@@ -301,7 +301,6 @@ export const configurePostStart = async (
   if (!isMobile) {
     await vscode.commands.executeCommand('workbench.view.explorer');
   } else {
-    console.log('Closing sidebar');
     await vscode.commands.executeCommand('workbench.action.closeSidebar');
   }
 

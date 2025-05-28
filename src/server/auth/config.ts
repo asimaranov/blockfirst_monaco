@@ -9,7 +9,6 @@ import {
 } from '~/server/auth/email';
 import { MongoClient } from 'mongodb';
 import { env } from '~/env';
-import { api } from '~/trpc/server';
 import UserDataModel, { IUserData } from '../models/userData';
 import dbConnect from '../mongodb';
 

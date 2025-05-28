@@ -1,5 +1,5 @@
 import LessonSidebarHeader from './SidebarHeader';
-import { Suspense, useState } from 'react';
+import { Suspense } from 'react';
 import { CourseSections } from './CourseSections';
 
 export default async function LessonSidebar({ lessonId, courseInfo, courseTitle }: { lessonId: string, courseInfo: any, courseTitle: string }) {

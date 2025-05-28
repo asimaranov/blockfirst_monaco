@@ -7,17 +7,8 @@ import {
 import UserDataModel, { IUserData, PlanType } from '~/server/models/userData';
 import dbConnect from '~/server/mongodb';
 
-/**
- * Helper function to check and update user streak
- */
-const updateUserStreak = async (userId: string) => {
-  await dbConnect();
-
-  const userData = await UserDataModel.findOne({ userId });
-  if (!userData) return null;
-
+export function getStreakAction(lastLogin: Date) {
   const now = new Date();
-  const lastLogin = userData.streak?.lastLoginDate || new Date(0);
 
   // Normalize dates to start of day (midnight) for proper comparison
   const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -31,14 +22,39 @@ const updateUserStreak = async (userId: string) => {
   const isToday = lastLoginStart.getTime() === todayStart.getTime();
   const isYesterday = lastLoginStart.getTime() === yesterdayStart.getTime();
 
+  // Only increment streak if this is a new day and we haven't already logged in today
+  if (!isToday) {
+    if (isYesterday) {
+      // Increment streak if login was yesterday
+      return 'increment';
+    } else {
+      return 'reset';
+    }
+  }
+  return 'noop';
+}
+/**
+ * Helper function to check and update user streak
+ */
+export async function updateUserStreak(userId: string) {
+  await dbConnect();
+
+  const userData = await UserDataModel.findOne({ userId });
+  if (!userData) return null;
+
+  const now = new Date();
+  const lastLogin = userData.streak?.lastLoginDate || new Date(0);
+
 
   let newStreak = userData.streak?.count || 0;
   let updatedMaxStreak = userData.streak?.maxCount || 0;
   let earnedXp = 0;
 
+  const action = getStreakAction(lastLogin);
+
   // Only increment streak if this is a new day and we haven't already logged in today
-  if (!isToday) {
-    if (isYesterday) {
+  if (action === 'increment' || action === 'reset') {
+    if (action === 'increment') {
       // Increment streak if login was yesterday
       newStreak += 1;
     } else {
@@ -153,6 +169,7 @@ export const userDataRouter = createTRPCRouter({
       return {
         streak: { count: 0, maxCount: 0 },
         xp: { total: 0 },
+        lastLoginDate: new Date()
       };
     }
 
@@ -166,6 +183,7 @@ export const userDataRouter = createTRPCRouter({
       xp: {
         total: userData.xp?.total || 0,
       },
+      lastLoginDate: userData?.streak?.lastLoginDate || new Date(0)
     };
   }),
 
