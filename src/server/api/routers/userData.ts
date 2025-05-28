@@ -156,7 +156,15 @@ export const userDataRouter = createTRPCRouter({
   }),
 
   // Get user streak and XP
-  getStreakAndXp: protectedProcedure.query(async ({ ctx }) => {
+  getStreakAndXp: publicProcedure.query(async ({ ctx }) => {
+    if (!ctx.session) {
+      return {
+        streak: { count: 0, maxCount: 0 },
+        xp: { total: 0 },
+        lastLoginDate: new Date()
+      };
+    }
+    
     await dbConnect();
 
     const userData = await UserDataModel.findOne(
