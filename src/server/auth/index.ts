@@ -16,5 +16,6 @@ export const getServerSession = async () => {
 };
 
 export { auth };
-export type Session = typeof auth.$Infer.Session;
+export type SessionPromise = ReturnType<typeof auth.api.getSession>;
+export type Session = NonNullable<Awaited<SessionPromise>>;
 export type AuthUserType = Session['user'];

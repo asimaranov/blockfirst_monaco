@@ -159,11 +159,13 @@ async function Cover({
   if (streakData === 'increment' || streakData === 'reset') {
     await updateUserStreak(session?.user?.id || '');
   }
+  
 
   return (
     <>
       <div className="relative sm:hidden">
         <MobileNavbar
+          session={session}
           notifications={notifications}
           courseTitle={courseTitle}
           lessonId={lessonId}

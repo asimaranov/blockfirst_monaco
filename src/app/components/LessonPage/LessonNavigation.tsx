@@ -22,23 +22,6 @@ interface NavigationItem {
   type: NavigationItemType;
 }
 
-const heightToTop = (
-  ele: HTMLElement,
-  editorContentRef?: React.RefObject<HTMLDivElement | null>
-) => {
-  const root = editorContentRef ? editorContentRef.current : document.body;
-
-  if (!root || !ele) return 0;
-
-  const containerRect = root.getBoundingClientRect();
-  const elementRect = ele.getBoundingClientRect();
-
-  const scrollY = root.scrollTop;
-  const absoluteElementTop = elementRect.top + scrollY - containerRect.top;
-
-  return absoluteElementTop;
-};
-
 const headingDepth: Record<string, number> = {
   [HEADING_KEYS.h1]: 1,
   [HEADING_KEYS.h2]: 2,
