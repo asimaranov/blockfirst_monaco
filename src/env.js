@@ -11,19 +11,10 @@ export const env = createEnv({
       process.env.NODE_ENV === 'production'
         ? z.string()
         : z.string().optional(),
-    AUTH_DISCORD_ID: z.string(),
-    AUTH_DISCORD_SECRET: z.string(),
+    
     DATABASE_URL: z.string().url(),
     MONGODB_URI: z.string().url(),
     DATABASE_NAME: z.string().optional().default('blockfirst'),
-    RESERND_API_KEY: z.string(),
-    EMAIL_FROM: z.string(),
-    GOOGLE_CLIENT_ID: z.string(),
-    GOOGLE_CLIENT_SECRET: z.string(),
-    VK_CLIENT_ID: z.string(),
-    VK_CLIENT_SECRET: z.string(),
-    BETTER_AUTH_URL: z.string(),
-    EMAIL_VERIFICATION_CALLBACK_URL: z.string(),
     NODE_ENV: z
       .enum(['development', 'test', 'production'])
       .default('development'),
@@ -45,21 +36,10 @@ export const env = createEnv({
    */
   runtimeEnv: {
     AUTH_SECRET: process.env.AUTH_SECRET,
-    AUTH_DISCORD_ID: process.env.AUTH_DISCORD_ID,
-    AUTH_DISCORD_SECRET: process.env.AUTH_DISCORD_SECRET,
     DATABASE_URL: process.env.DATABASE_URL,
     MONGODB_URI: process.env.MONGODB_URI,
     DATABASE_NAME: process.env.DATABASE_NAME,
     NODE_ENV: process.env.NODE_ENV,
-    RESERND_API_KEY: process.env.RESERND_API_KEY,
-    EMAIL_FROM: process.env.EMAIL_FROM,
-    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
-    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
-    VK_CLIENT_ID: process.env.VK_CLIENT_ID,
-    VK_CLIENT_SECRET: process.env.VK_CLIENT_SECRET,
-    BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
-    EMAIL_VERIFICATION_CALLBACK_URL:
-      process.env.EMAIL_VERIFICATION_CALLBACK_URL,
     ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY,
   },
   /**
