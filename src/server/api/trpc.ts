@@ -12,19 +12,8 @@ import superjson from 'superjson';
 import { ZodError } from 'zod';
 
 import { auth } from '~/server/auth';
-import NotificationModel from '../models/notification';
-import NotificationSettingModel from '../models/notificationSetting';
 import UserDataModel from '../models/userData';
-import ReferralModel from '../models/referral';
-import TronWalletModel from '../models/tronWallet';
-import VacancyModel from '../models/vacancy';
-import ChatHistoryModel from '../models/chatHistory';
-import CommentModel from '../models/comment';
 import dbConnect from '../mongodb';
-import ExamChatHistoryModel from '../models/examChatHistory';
-import ExamRatingModel from '../models/examRating';
-import LessonRatingModel from '../models/lessonRating';
-import LessonReactionModel from '../models/lessonReaction';
 
 /**
  * 1. CONTEXT
@@ -50,18 +39,7 @@ export const createTRPCContext = async (opts: { headers: Headers }) => {
     session,
     mongo: {
       models: {
-        notification: NotificationModel,
-        notificationSetting: NotificationSettingModel,
         userData: UserDataModel,
-        referral: ReferralModel,
-        tronWallet: TronWalletModel,
-        vacancy: VacancyModel,
-        chatHistory: ChatHistoryModel,
-        examChatHistory: ExamChatHistoryModel,
-        comment: CommentModel,
-        ExamRating: ExamRatingModel,
-        lessonRating: LessonRatingModel,
-        lessonReaction: LessonReactionModel,
       },
     },
     ...opts,

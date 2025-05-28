@@ -531,6 +531,9 @@ importers:
       eslint-plugin-jsx-a11y:
         specifier: ^6.10.2
         version: 6.10.2(eslint@9.26.0(jiti@2.4.2))
+      highlight.js:
+        specifier: ^11.11.1
+        version: 11.11.1
       knip:
         specifier: ^5.46.5
         version: 5.52.0(@types/node@20.17.32)(typescript@5.8.3)

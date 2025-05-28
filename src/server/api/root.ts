@@ -1,41 +1,16 @@
-import { postRouter } from '~/server/api/routers/post';
-import { tinkoffRouter } from '~/server/api/routers/tinkoff';
-import { notificationsRouter } from '~/server/api/routers/notifications';
-import { userDataRouter } from '~/server/api/routers/userData';
-import { subscribersRouter } from '~/server/api/routers/subscribers';
-import { formSubmissionsRouter } from '~/server/api/routers/formSubmissions';
-import { referralsRouter } from '~/server/api/routers/referrals';
-import { trc20Router } from '~/server/api/routers/trc20';
-import { vacanciesRouter } from '~/server/api/routers/vacancies';
-import { tasksRouter } from '~/server/api/routers/tasks';
-import { aiRouter } from '~/server/api/routers/ai';
-import { createCallerFactory, createTRPCRouter } from '~/server/api/trpc';
-import { examAiRouter } from './routers/examAi';
-import { commentsRouter } from './routers/comments';
-import { progressRouter } from '~/server/api/routers/progress';
-import { lessonsRouter } from './routers/lessons';
 
+import { userDataRouter } from '~/server/api/routers/userData';
+
+import { tasksRouter } from '~/server/api/routers/tasks';
+import { createCallerFactory, createTRPCRouter } from '~/server/api/trpc';
 /**
  * This is the primary router for your server.
  *
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  post: postRouter,
-  tinkoff: tinkoffRouter,
-  notifications: notificationsRouter,
   userData: userDataRouter,
-  subscribers: subscribersRouter,
-  formSubmissions: formSubmissionsRouter,
-  referrals: referralsRouter,
-  trc20: trc20Router,
-  vacancies: vacanciesRouter,
   tasks: tasksRouter,
-  ai: aiRouter,
-  examAi: examAiRouter,
-  comments: commentsRouter,
-  progress: progressRouter,
-  lessons: lessonsRouter,
 });
 
 // export type definition of API
