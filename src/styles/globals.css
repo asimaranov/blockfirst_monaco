@@ -1177,3 +1177,9 @@
 #editors {
   border-right: 0 !important;
 }
+
+@media (max-width: 768px) {
+  .editor-actions {
+    display: none;
+  }
+}
