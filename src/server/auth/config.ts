@@ -29,6 +29,7 @@ const options = {
     'https://app.blockfirst.io',
     'https://editor.blockfirst.io',
     'https://blog.blockfirst.io',
+    'https://vscode.blockfirst.io',
   ],
   database: mongodbAdapter(db),
   plugins: [
