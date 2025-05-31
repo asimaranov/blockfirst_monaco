@@ -46,6 +46,7 @@
     "@codingame/monaco-vscode-view-title-bar-service-override": "~17.1.2",
     "@codingame/monaco-vscode-views-service-override": "~17.1.2",
     "@codingame/monaco-vscode-workbench-service-override": "~17.1.2",
+    "@codingame/monaco-vscode-editor-api": "~17.1.2",
     "@emoji-mart/data": "1.2.1",
     "@faker-js/faker": "^9.6.0",
     "@next/bundle-analyzer": "^15.3.2",

@@ -3,7 +3,7 @@
  * Licensed under the MIT License. See LICENSE in the package root for license information.
  * ------------------------------------------------------------------------------------------ */
 
-import * as monaco from '@codingame/monaco-vscode-editor-api';
+import * as monaco from 'monaco-editor';
 import { DisposableStore } from '@codingame/monaco-vscode-api/monaco';
 import { LogLevel } from '@codingame/monaco-vscode-api';
 import {
@@ -82,8 +82,7 @@ export class MonacoEditorLanguageClientWrapper {
     new Map();
   private disposableStoreExtensions?: DisposableStore = new DisposableStore();
   private disposableStoreMonaco?: DisposableStore = new DisposableStore();
-   languageClientWrappers: Map<string, LanguageClientWrapper> =
-    new Map();
+  languageClientWrappers: Map<string, LanguageClientWrapper> = new Map();
   private wrapperConfig?: WrapperConfig;
   private logger: Logger = new ConsoleLogger();
 
@@ -91,10 +90,14 @@ export class MonacoEditorLanguageClientWrapper {
   private initResolve: ((value: void | PromiseLike<void>) => void) | undefined;
 
   private startingAwait?: Promise<void>;
-  private startingResolve: ((value: void | PromiseLike<void>) => void) | undefined;
+  private startingResolve:
+    | ((value: void | PromiseLike<void>) => void)
+    | undefined;
 
   private disposingAwait?: Promise<void>;
-  private disposingResolve: ((value: void | PromiseLike<void>) => void) | undefined;
+  private disposingResolve:
+    | ((value: void | PromiseLike<void>) => void)
+    | undefined;
 
   /**
    * Perform an isolated initialization of the user services and the languageclient wrapper (if used).
@@ -491,8 +494,8 @@ export class MonacoEditorLanguageClientWrapper {
         if (textModels.original !== undefined) {
           this.disposableStoreMonaco?.add(
             textModels.original.onDidChangeContent(() => {
-                didModelContentChange(textModels, () => {
-                  console.log('textModels', textModels);
+              didModelContentChange(textModels, () => {
+                console.log('textModels', textModels);
               });
             })
           );

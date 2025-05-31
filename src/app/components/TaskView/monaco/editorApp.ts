@@ -4,56 +4,63 @@
  * ------------------------------------------------------------------------------------------ */
 
 import { Uri } from 'vscode';
-import * as monaco from '@codingame/monaco-vscode-editor-api';
-import { createModelReference, type ITextFileEditorModel } from '@codingame/monaco-vscode-api/monaco';
-import { ConfigurationTarget, IConfigurationService, StandaloneServices } from '@codingame/monaco-vscode-api';
+import * as monaco from 'monaco-editor';
+import {
+  createModelReference,
+  type ITextFileEditorModel,
+} from '@codingame/monaco-vscode-api/monaco';
+import {
+  ConfigurationTarget,
+  IConfigurationService,
+  StandaloneServices,
+} from '@codingame/monaco-vscode-api';
 import type { IReference } from '@codingame/monaco-vscode-editor-service-override';
 import type { Logger } from 'monaco-languageclient/tools';
 import type { OverallConfigType } from './vscode/services';
 
 export interface ModelRefs {
-    modelRefModified?: IReference<ITextFileEditorModel>;
-    modelRefOriginal?: IReference<ITextFileEditorModel>;
+  modelRefModified?: IReference<ITextFileEditorModel>;
+  modelRefOriginal?: IReference<ITextFileEditorModel>;
 }
 
 export interface TextModels {
-    modified?: monaco.editor.ITextModel;
-    original?: monaco.editor.ITextModel;
+  modified?: monaco.editor.ITextModel;
+  original?: monaco.editor.ITextModel;
 }
 
 export interface TextContents {
-    modified?: string;
-    original?: string;
+  modified?: string;
+  original?: string;
 }
 
 export interface CodeContent {
-    text: string;
-    uri: string;
-    enforceLanguageId?: string;
+  text: string;
+  uri: string;
+  enforceLanguageId?: string;
 }
 
 export interface CodeResources {
-    modified?: CodeContent;
-    original?: CodeContent;
+  modified?: CodeContent;
+  original?: CodeContent;
 }
 
 export interface EditorAppConfig {
-    codeResources?: CodeResources;
-    useDiffEditor?: boolean;
-    domReadOnly?: boolean;
-    readOnly?: boolean;
-    overrideAutomaticLayout?: boolean;
-    editorOptions?: monaco.editor.IStandaloneEditorConstructionOptions;
-    diffEditorOptions?: monaco.editor.IStandaloneDiffEditorConstructionOptions;
-    monacoWorkerFactory?: (logger?: Logger) => void;
-    languageDef?: {
-        languageExtensionConfig: monaco.languages.ILanguageExtensionPoint;
-        monarchLanguage?: monaco.languages.IMonarchLanguage;
-        theme?: {
-            name: monaco.editor.BuiltinTheme | string;
-            data: monaco.editor.IStandaloneThemeData;
-        }
-    }
+  codeResources?: CodeResources;
+  useDiffEditor?: boolean;
+  domReadOnly?: boolean;
+  readOnly?: boolean;
+  overrideAutomaticLayout?: boolean;
+  editorOptions?: monaco.editor.IStandaloneEditorConstructionOptions;
+  diffEditorOptions?: monaco.editor.IStandaloneDiffEditorConstructionOptions;
+  monacoWorkerFactory?: (logger?: Logger) => void;
+  languageDef?: {
+    languageExtensionConfig: monaco.languages.ILanguageExtensionPoint;
+    monarchLanguage?: monaco.languages.IMonarchLanguage;
+    theme?: {
+      name: monaco.editor.BuiltinTheme | string;
+      data: monaco.editor.IStandaloneThemeData;
+    };
+  };
 }
 
 /**
@@ -64,251 +71,309 @@ export interface EditorAppConfig {
  * It provides the generic functionality for both implementations.
  */
 export class EditorApp {
+  protected logger: Logger | undefined;
 
-    protected logger: Logger | undefined;
+  private editor: monaco.editor.IStandaloneCodeEditor | undefined;
+  private diffEditor: monaco.editor.IStandaloneDiffEditor | undefined;
 
-    private editor: monaco.editor.IStandaloneCodeEditor | undefined;
-    private diffEditor: monaco.editor.IStandaloneDiffEditor | undefined;
+  private modelRefModified: IReference<ITextFileEditorModel> | undefined;
+  private modelRefOriginal: IReference<ITextFileEditorModel> | undefined;
 
-    private modelRefModified: IReference<ITextFileEditorModel> | undefined;
-    private modelRefOriginal: IReference<ITextFileEditorModel> | undefined;
+  private modelUpdateCallback?: (textModels: TextModels) => void;
+  private config: EditorAppConfig;
 
-    private modelUpdateCallback?: (textModels: TextModels) => void;
-    private config: EditorAppConfig;
+  constructor(
+    $type: OverallConfigType,
+    userAppConfig?: EditorAppConfig,
+    logger?: Logger
+  ) {
+    console.log('EditorApp constructor');
+    this.logger = logger;
+    this.config = {
+      codeResources: userAppConfig?.codeResources ?? undefined,
+      useDiffEditor: userAppConfig?.useDiffEditor ?? false,
+      readOnly: userAppConfig?.readOnly ?? false,
+      domReadOnly: userAppConfig?.domReadOnly ?? false,
+      overrideAutomaticLayout: userAppConfig?.overrideAutomaticLayout ?? true,
+    };
+    this.config.editorOptions = {
+      ...userAppConfig?.editorOptions,
+      automaticLayout: userAppConfig?.overrideAutomaticLayout ?? true,
+    };
+    this.config.diffEditorOptions = {
+      ...userAppConfig?.diffEditorOptions,
+      automaticLayout: userAppConfig?.overrideAutomaticLayout ?? true,
+    };
+    this.config.languageDef = userAppConfig?.languageDef;
 
-    constructor($type: OverallConfigType, userAppConfig?: EditorAppConfig, logger?: Logger) {
-        console.log('EditorApp constructor');
-        this.logger = logger;
-        this.config = {
-            codeResources: userAppConfig?.codeResources ?? undefined,
-            useDiffEditor: userAppConfig?.useDiffEditor ?? false,
-            readOnly: userAppConfig?.readOnly ?? false,
-            domReadOnly: userAppConfig?.domReadOnly ?? false,
-            overrideAutomaticLayout: userAppConfig?.overrideAutomaticLayout ?? true
+    const languageDef = this.config.languageDef;
+    if (languageDef) {
+      if ($type === 'extended') {
+        throw new Error(
+          'Language definition is not supported for extended editor apps where textmate is used.'
+        );
+      }
+      // register own language first
+      monaco.languages.register(languageDef.languageExtensionConfig);
+
+      const languageRegistered = monaco.languages
+        .getLanguages()
+        .filter((x) => x.id === languageDef.languageExtensionConfig.id);
+      if (languageRegistered.length === 0) {
+        // this is only meaningful for languages supported by monaco out of the box
+        monaco.languages.register({
+          id: languageDef.languageExtensionConfig.id,
+        });
+      }
+
+      // apply monarch definitions
+      if (languageDef.monarchLanguage) {
+        monaco.languages.setMonarchTokensProvider(
+          languageDef.languageExtensionConfig.id,
+          languageDef.monarchLanguage
+        );
+      }
+
+      if (languageDef.theme) {
+        monaco.editor.defineTheme(
+          languageDef.theme.name,
+          languageDef.theme.data
+        );
+        monaco.editor.setTheme(languageDef.theme.name);
+      }
+    }
+
+    if (
+      this.config.editorOptions['semanticHighlighting.enabled'] !== undefined
+    ) {
+      StandaloneServices.get(IConfigurationService).updateValue(
+        'editor.semanticHighlighting.enabled',
+        this.config.editorOptions['semanticHighlighting.enabled'],
+        ConfigurationTarget.USER
+      );
+    }
+
+    this.logger?.info('Init of EditorApp was completed.');
+  }
+
+  getConfig(): EditorAppConfig {
+    return this.config;
+  }
+
+  haveEditor() {
+    return this.editor !== undefined || this.diffEditor !== undefined;
+  }
+
+  getEditor(): monaco.editor.IStandaloneCodeEditor | undefined {
+    return this.editor;
+  }
+
+  getDiffEditor(): monaco.editor.IStandaloneDiffEditor | undefined {
+    return this.diffEditor;
+  }
+
+  async createEditors(htmlContainer: HTMLElement): Promise<void> {
+    const modelRefs = await this.buildModelRefs(this.config.codeResources);
+
+    if (this.config.useDiffEditor ?? false) {
+      this.diffEditor = monaco.editor.createDiffEditor(
+        htmlContainer,
+        this.config.diffEditorOptions
+      );
+    } else {
+      this.editor = monaco.editor.create(
+        htmlContainer,
+        this.config.editorOptions
+      );
+    }
+
+    this.updateEditorModels(modelRefs);
+  }
+
+  protected disposeEditors() {
+    if (this.editor) {
+      this.modelRefModified?.dispose();
+      this.editor.dispose();
+      this.editor = undefined;
+    }
+    if (this.diffEditor) {
+      this.modelRefModified?.dispose();
+      this.modelRefOriginal?.dispose();
+      this.diffEditor.dispose();
+      this.diffEditor = undefined;
+    }
+  }
+
+  getTextContents(): TextContents {
+    const modelRefs = this.getModelRefs();
+    return {
+      modified:
+        modelRefs.modelRefModified?.object.textEditorModel?.getValue() ??
+        undefined,
+      original:
+        modelRefs.modelRefOriginal?.object.textEditorModel?.getValue() ??
+        undefined,
+    };
+  }
+
+  getTextModels(): TextModels {
+    const modelRefs = this.getModelRefs();
+    return {
+      modified: modelRefs.modelRefModified?.object.textEditorModel ?? undefined,
+      original: modelRefs.modelRefOriginal?.object.textEditorModel ?? undefined,
+    };
+  }
+
+  getModelRefs(): ModelRefs {
+    return {
+      modelRefModified: this.modelRefModified,
+      modelRefOriginal: this.modelRefOriginal,
+    };
+  }
+
+  registerModelUpdate(modelUpdateCallback: (textModels: TextModels) => void) {
+    this.modelUpdateCallback = modelUpdateCallback;
+  }
+
+  async updateCodeResources(codeResources?: CodeResources): Promise<void> {
+    const modelRefs = await this.buildModelRefs(codeResources);
+    this.updateEditorModels(modelRefs);
+  }
+
+  async buildModelRefs(codeResources?: CodeResources): Promise<ModelRefs> {
+    const modelRefModified = await buildModelReference(
+      codeResources?.modified,
+      this.logger
+    );
+    const modelRefOriginal = await buildModelReference(
+      codeResources?.original,
+      this.logger
+    );
+
+    return {
+      modelRefModified,
+      modelRefOriginal,
+    };
+  }
+
+  updateEditorModels(modelRefs: ModelRefs) {
+    let updateModified = false;
+    let updateOriginal = false;
+    let modelRefModifiedOld;
+    let modelRefOriginalOld;
+
+    if (modelRefs.modelRefModified !== this.modelRefModified) {
+      modelRefModifiedOld = this.modelRefModified;
+      this.modelRefModified = modelRefs.modelRefModified;
+      updateModified = true;
+    }
+    if (modelRefs.modelRefOriginal !== this.modelRefOriginal) {
+      modelRefOriginalOld = this.modelRefOriginal;
+      this.modelRefOriginal = modelRefs.modelRefOriginal;
+      updateOriginal = true;
+    }
+
+    if (this.editor) {
+      const textModelModified = this.modelRefModified?.object.textEditorModel;
+      if (
+        updateModified &&
+        textModelModified !== undefined &&
+        textModelModified !== null
+      ) {
+        this.editor.setModel(textModelModified);
+        this.modelUpdateCallback?.({
+          modified: textModelModified,
+        });
+      }
+    } else if (this.diffEditor) {
+      const textModelModified = this.modelRefModified?.object.textEditorModel;
+      const textModelOriginal = this.modelRefOriginal?.object.textEditorModel;
+      if (
+        (updateModified || updateOriginal) &&
+        textModelModified !== undefined &&
+        textModelModified !== null &&
+        textModelOriginal !== undefined &&
+        textModelOriginal !== null
+      ) {
+        const textModels = {
+          original: textModelOriginal,
+          modified: textModelModified,
         };
-        this.config.editorOptions = {
-            ...userAppConfig?.editorOptions,
-            automaticLayout: userAppConfig?.overrideAutomaticLayout ?? true
-        };
-        this.config.diffEditorOptions = {
-            ...userAppConfig?.diffEditorOptions,
-            automaticLayout: userAppConfig?.overrideAutomaticLayout ?? true
-        };
-        this.config.languageDef = userAppConfig?.languageDef;
 
-        const languageDef = this.config.languageDef;
-        if (languageDef) {
-            if ($type === 'extended') {
-                throw new Error('Language definition is not supported for extended editor apps where textmate is used.');
-            }
-            // register own language first
-            monaco.languages.register(languageDef.languageExtensionConfig);
-
-            const languageRegistered = monaco.languages.getLanguages().filter(x => x.id === languageDef.languageExtensionConfig.id);
-            if (languageRegistered.length === 0) {
-                // this is only meaningful for languages supported by monaco out of the box
-                monaco.languages.register({
-                    id: languageDef.languageExtensionConfig.id
-                });
-            }
-
-            // apply monarch definitions
-            if (languageDef.monarchLanguage) {
-                monaco.languages.setMonarchTokensProvider(languageDef.languageExtensionConfig.id, languageDef.monarchLanguage);
-            }
-
-            if (languageDef.theme) {
-                monaco.editor.defineTheme(languageDef.theme.name, languageDef.theme.data);
-                monaco.editor.setTheme(languageDef.theme.name);
-            }
-        }
-
-        if (this.config.editorOptions['semanticHighlighting.enabled'] !== undefined) {
-            StandaloneServices.get(IConfigurationService).updateValue('editor.semanticHighlighting.enabled',
-                this.config.editorOptions['semanticHighlighting.enabled'], ConfigurationTarget.USER);
-        }
-
-        this.logger?.info('Init of EditorApp was completed.');
+        this.diffEditor.setModel(textModels);
+        this.modelUpdateCallback?.(textModels);
+      } else {
+        throw new Error(
+          'You cannot update models, because original model ref is not contained, but required for DiffEditor.'
+        );
+      }
     }
 
-    getConfig(): EditorAppConfig {
-        return this.config;
+    modelRefModifiedOld?.dispose();
+    modelRefOriginalOld?.dispose();
+  }
+
+  updateLayout() {
+    if (this.config.useDiffEditor ?? false) {
+      this.diffEditor?.layout();
+    } else {
+      this.editor?.layout();
     }
+  }
 
-    haveEditor() {
-        return this.editor !== undefined || this.diffEditor !== undefined;
-    }
+  updateMonacoEditorOptions(
+    options: monaco.editor.IEditorOptions & monaco.editor.IGlobalEditorOptions
+  ) {
+    this.getEditor()?.updateOptions(options);
+  }
 
-    getEditor(): monaco.editor.IStandaloneCodeEditor | undefined {
-        return this.editor;
-    }
-
-    getDiffEditor(): monaco.editor.IStandaloneDiffEditor | undefined {
-        return this.diffEditor;
-    }
-
-    async createEditors(htmlContainer: HTMLElement): Promise<void> {
-        const modelRefs = await this.buildModelRefs(this.config.codeResources);
-
-        if (this.config.useDiffEditor ?? false) {
-            this.diffEditor = monaco.editor.createDiffEditor(htmlContainer, this.config.diffEditorOptions);
-        } else {
-            this.editor = monaco.editor.create(htmlContainer, this.config.editorOptions);
-        }
-
-        this.updateEditorModels(modelRefs);
-    }
-
-    protected disposeEditors() {
-        if (this.editor) {
-            this.modelRefModified?.dispose();
-            this.editor.dispose();
-            this.editor = undefined;
-        }
-        if (this.diffEditor) {
-            this.modelRefModified?.dispose();
-            this.modelRefOriginal?.dispose();
-            this.diffEditor.dispose();
-            this.diffEditor = undefined;
-        }
-    }
-
-    getTextContents(): TextContents {
-        const modelRefs = this.getModelRefs();
-        return {
-            modified: modelRefs.modelRefModified?.object.textEditorModel?.getValue() ?? undefined,
-            original: modelRefs.modelRefOriginal?.object.textEditorModel?.getValue() ?? undefined
-        };
-    }
-
-    getTextModels(): TextModels {
-        const modelRefs = this.getModelRefs();
-        return {
-            modified: modelRefs.modelRefModified?.object.textEditorModel ?? undefined,
-            original: modelRefs.modelRefOriginal?.object.textEditorModel ?? undefined
-        };
-    }
-
-    getModelRefs(): ModelRefs {
-        return {
-            modelRefModified: this.modelRefModified,
-            modelRefOriginal: this.modelRefOriginal
-        };
-    }
-
-    registerModelUpdate(modelUpdateCallback: (textModels: TextModels) => void) {
-        this.modelUpdateCallback = modelUpdateCallback;
-    }
-
-    async updateCodeResources(codeResources?: CodeResources): Promise<void> {
-        const modelRefs = await this.buildModelRefs(codeResources);
-        this.updateEditorModels(modelRefs);
-    }
-
-    async buildModelRefs(codeResources?: CodeResources): Promise<ModelRefs> {
-        const modelRefModified = await buildModelReference(codeResources?.modified, this.logger);
-        const modelRefOriginal = await buildModelReference(codeResources?.original, this.logger);
-
-        return {
-            modelRefModified,
-            modelRefOriginal
-        };
-    }
-
-    updateEditorModels(modelRefs: ModelRefs) {
-        let updateModified = false;
-        let updateOriginal = false;
-        let modelRefModifiedOld;
-        let modelRefOriginalOld;
-
-        if (modelRefs.modelRefModified !== this.modelRefModified) {
-            modelRefModifiedOld = this.modelRefModified;
-            this.modelRefModified = modelRefs.modelRefModified;
-            updateModified = true;
-        }
-        if (modelRefs.modelRefOriginal !== this.modelRefOriginal) {
-            modelRefOriginalOld = this.modelRefOriginal;
-            this.modelRefOriginal = modelRefs.modelRefOriginal;
-            updateOriginal = true;
-        }
-
-        if (this.editor) {
-            const textModelModified = this.modelRefModified?.object.textEditorModel;
-            if (updateModified && textModelModified !== undefined && textModelModified !== null) {
-                this.editor.setModel(textModelModified);
-                this.modelUpdateCallback?.({
-                    modified: textModelModified
-                });
-            }
-        } else if (this.diffEditor) {
-            const textModelModified = this.modelRefModified?.object.textEditorModel;
-            const textModelOriginal = this.modelRefOriginal?.object.textEditorModel;
-            if ((updateModified || updateOriginal) &&
-                textModelModified !== undefined && textModelModified !== null && textModelOriginal !== undefined && textModelOriginal !== null) {
-                const textModels = {
-                    original: textModelOriginal,
-                    modified: textModelModified
-                };
-
-                this.diffEditor.setModel(textModels);
-                this.modelUpdateCallback?.(textModels);
-            } else {
-                throw new Error('You cannot update models, because original model ref is not contained, but required for DiffEditor.');
-            }
-        }
-
-        modelRefModifiedOld?.dispose();
-        modelRefOriginalOld?.dispose();
-    }
-
-    updateLayout() {
-        if (this.config.useDiffEditor ?? false) {
-            this.diffEditor?.layout();
-        } else {
-            this.editor?.layout();
-        }
-    }
-
-    updateMonacoEditorOptions(options: monaco.editor.IEditorOptions & monaco.editor.IGlobalEditorOptions) {
-        this.getEditor()?.updateOptions(options);
-    }
-
-    disposeApp(): void {
-        this.disposeEditors();
-    }
-
+  disposeApp(): void {
+    this.disposeEditors();
+  }
 }
 
 export const verifyUrlOrCreateDataUrl = (input: string | URL) => {
-    return (input instanceof URL) ? input.href : new URL(`data:text/plain;base64,${btoa(input)}`).href;
+  return input instanceof URL
+    ? input.href
+    : new URL(`data:text/plain;base64,${btoa(input)}`).href;
 };
 
-export const didModelContentChange = (textModels: TextModels, onTextChanged?: (textChanges: TextContents) => void) => {
-    const modified = textModels.modified?.getValue() ?? '';
-    const original = textModels.original?.getValue() ?? '';
-    onTextChanged?.({
-        modified,
-        original
-    });
+export const didModelContentChange = (
+  textModels: TextModels,
+  onTextChanged?: (textChanges: TextContents) => void
+) => {
+  const modified = textModels.modified?.getValue() ?? '';
+  const original = textModels.original?.getValue() ?? '';
+  onTextChanged?.({
+    modified,
+    original,
+  });
 };
 
-export const buildModelReference = async (code?: CodeContent, logger?: Logger): Promise<IReference<ITextFileEditorModel> | undefined> => {
-    if (code) {
-        const modelRef = await createModelReference(Uri.parse(code.uri), code.text);
+export const buildModelReference = async (
+  code?: CodeContent,
+  logger?: Logger
+): Promise<IReference<ITextFileEditorModel> | undefined> => {
+  if (code) {
+    const modelRef = await createModelReference(Uri.parse(code.uri), code.text);
 
-        // update the text if different
-        if (modelRef.object.textEditorModel?.getValue() !== code.text) {
-            modelRef.object.textEditorModel?.setValue(code.text);
-        }
-        checkEnforceLanguageId(modelRef, code.enforceLanguageId, logger);
-        return modelRef;
+    // update the text if different
+    if (modelRef.object.textEditorModel?.getValue() !== code.text) {
+      modelRef.object.textEditorModel?.setValue(code.text);
     }
-    return undefined;
+    checkEnforceLanguageId(modelRef, code.enforceLanguageId, logger);
+    return modelRef;
+  }
+  return undefined;
 };
 
-export const checkEnforceLanguageId = (modelRef: IReference<ITextFileEditorModel>, enforceLanguageId?: string, logger?: Logger) => {
-    if (enforceLanguageId !== undefined) {
-        modelRef.object.setLanguageId(enforceLanguageId);
-        logger?.info(`Main languageId is enforced: ${enforceLanguageId}`);
-    }
+export const checkEnforceLanguageId = (
+  modelRef: IReference<ITextFileEditorModel>,
+  enforceLanguageId?: string,
+  logger?: Logger
+) => {
+  if (enforceLanguageId !== undefined) {
+    modelRef.object.setLanguageId(enforceLanguageId);
+    logger?.info(`Main languageId is enforced: ${enforceLanguageId}`);
+  }
 };

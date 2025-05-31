@@ -23,6 +23,9 @@ importers:
       '@codingame/monaco-vscode-configuration-service-override':
         specifier: ~17.1.2
         version: 17.1.2
+      '@codingame/monaco-vscode-editor-api':
+        specifier: ~17.1.2
+        version: 17.1.2
       '@codingame/monaco-vscode-editor-service-override':
         specifier: ~17.1.2
         version: 17.1.2
