@@ -1,0 +1,70 @@
+diff --git a/dist/shared/better-auth.D6-2nUlx.mjs b/dist/shared/better-auth.D6-2nUlx.mjs
+index bf8f83b5e75e1a8d39a79c77d9bd8be1d8215b08..047b71ca0f3d32df289c408c4b4b0ad0b0dce96e 100644
+--- a/dist/shared/better-auth.D6-2nUlx.mjs
++++ b/dist/shared/better-auth.D6-2nUlx.mjs
+@@ -341,14 +341,19 @@ const getSession = () => createAuthEndpoint(
+         ctx.context.authCookies.sessionToken.name,
+         ctx.context.secret
+       );
++      console.log('sessionCookieToken', sessionCookieToken);
+       if (!sessionCookieToken) {
++        console.log('no sessionCookieToken');
+         return null;
+       }
+       const sessionDataCookie = ctx.getCookie(
+         ctx.context.authCookies.sessionData.name
+       );
++      console.log('sessionDataCookie', sessionDataCookie);
+       const sessionDataPayload = sessionDataCookie ? safeJSONParse(binary.decode(base64.decode(sessionDataCookie))) : null;
++      console.log('sessionDataPayload', sessionDataPayload);
+       if (sessionDataPayload) {
++        console.log('sessionDataPayload');
+         const isValid = await createHMAC("SHA-256", "base64urlnopad").verify(
+           ctx.context.secret,
+           JSON.stringify({
+@@ -357,7 +362,9 @@ const getSession = () => createAuthEndpoint(
+           }),
+           sessionDataPayload.signature
+         );
++        console.log('isValid', isValid);
+         if (!isValid) {
++          console.log('no isValid');
+           const dataCookie = ctx.context.authCookies.sessionData.name;
+           ctx.setCookie(dataCookie, "", {
+             maxAge: 0
+@@ -365,10 +372,12 @@ const getSession = () => createAuthEndpoint(
+           return ctx.json(null);
+         }
+       }
++      console.log('sessionDataPayload?.session', sessionDataPayload?.session);
+       const dontRememberMe = await ctx.getSignedCookie(
+         ctx.context.authCookies.dontRememberToken.name,
+         ctx.context.secret
+       );
++      console.log('dontRememberMe', dontRememberMe);
+       if (sessionDataPayload?.session && ctx.context.options.session?.cookieCache?.enabled && !ctx.query?.disableCookieCache) {
+         const session2 = sessionDataPayload.session;
+         const hasExpired = sessionDataPayload.expiresAt < Date.now() || session2.session.expiresAt < /* @__PURE__ */ new Date();
+@@ -383,8 +392,10 @@ const getSession = () => createAuthEndpoint(
+           });
+         }
+       }
++      console.log('sessionCookieToken', sessionCookieToken);
+       const session = await ctx.context.internalAdapter.findSession(sessionCookieToken);
+       ctx.context.session = session;
++      console.log('session', session);
+       if (!session || session.session.expiresAt < /* @__PURE__ */ new Date()) {
+         deleteSessionCookie(ctx);
+         if (session) {
+@@ -392,9 +403,11 @@ const getSession = () => createAuthEndpoint(
+             session.session.token
+           );
+         }
++        console.log('no session');
+         return ctx.json(null);
+       }
+       if (dontRememberMe || ctx.query?.disableRefresh) {
++        console.log('dontRememberMe || ctx.query?.disableRefresh');
+         return ctx.json(
+           session
+         );

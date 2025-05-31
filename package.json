@@ -23,6 +23,7 @@
     "@ariakit/react": "^0.4.17",
     "@codingame/monaco-vscode-api": "~17.1.2",
     "@codingame/monaco-vscode-configuration-service-override": "~17.1.2",
+    "@codingame/monaco-vscode-editor-api": "~17.1.2",
     "@codingame/monaco-vscode-editor-service-override": "~17.1.2",
     "@codingame/monaco-vscode-environment-service-override": "~17.1.2",
     "@codingame/monaco-vscode-explorer-service-override": "~17.1.2",
@@ -46,7 +47,6 @@
     "@codingame/monaco-vscode-view-title-bar-service-override": "~17.1.2",
     "@codingame/monaco-vscode-views-service-override": "~17.1.2",
     "@codingame/monaco-vscode-workbench-service-override": "~17.1.2",
-    "@codingame/monaco-vscode-editor-api": "~17.1.2",
     "@emoji-mart/data": "1.2.1",
     "@faker-js/faker": "^9.6.0",
     "@next/bundle-analyzer": "^15.3.2",
@@ -194,6 +194,7 @@
     "eslint": "^9.6.1",
     "eslint-config-next": "^15.3.1",
     "eslint-plugin-jsx-a11y": "^6.10.2",
+    "highlight.js": "^11.11.1",
     "knip": "^5.46.5",
     "postcss": "^8.4.39",
     "prettier": "^3.3.2",
@@ -205,15 +206,18 @@
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "tsx": "^4.19.3",
-    "typescript": "^5.8.2",
-    "highlight.js": "^11.11.1"
+    "typescript": "^5.8.2"
   },
   "ct3aMetadata": {
     "initVersion": "7.38.1"
   },
   "packageManager": "pnpm@10.6.2",
-  "pnpm": {},
+  "pnpm": {
+    "patchedDependencies": {
+      "better-auth": "patches/better-auth.patch"
+    }
+  },
   "overrides": {
-   "monaco-editor": "npm:@codingame/monaco-vscode-editor-api@~17.1.2"
+    "monaco-editor": "npm:@codingame/monaco-vscode-editor-api@~17.1.2"
   }
 }
