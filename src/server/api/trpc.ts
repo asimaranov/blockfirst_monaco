@@ -28,9 +28,14 @@ import dbConnect from '../mongodb';
  * @see https://trpc.io/docs/server/context
  */
 export const createTRPCContext = async (opts: { headers: Headers }) => {
+  console.log('headers', opts.headers.get('cookie'));
+  console.log('AuthKey', process.env.AUTH_KEY);
+  console.log('TRPC_URL', process.env.TRPC_URL);
   const session = await auth.api.getSession({
     headers: opts.headers,
   });
+
+  console.log('session', session);
 
   // Connect to MongoDB
   await dbConnect();
