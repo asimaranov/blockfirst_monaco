@@ -1,12 +1,13 @@
 diff --git a/dist/shared/better-auth.D6-2nUlx.mjs b/dist/shared/better-auth.D6-2nUlx.mjs
-index bf8f83b5e75e1a8d39a79c77d9bd8be1d8215b08..047b71ca0f3d32df289c408c4b4b0ad0b0dce96e 100644
+index bf8f83b5e75e1a8d39a79c77d9bd8be1d8215b08..2f2015754b99e7e71b09ebf88faa022504e56c6c 100644
 --- a/dist/shared/better-auth.D6-2nUlx.mjs
 +++ b/dist/shared/better-auth.D6-2nUlx.mjs
-@@ -341,14 +341,19 @@ const getSession = () => createAuthEndpoint(
+@@ -341,14 +341,20 @@ const getSession = () => createAuthEndpoint(
          ctx.context.authCookies.sessionToken.name,
          ctx.context.secret
        );
 +      console.log('sessionCookieToken', sessionCookieToken);
++      console.log('[sessionCookieToken]', ctx.context.authCookies.sessionToken.name, ctx.context.secret);
        if (!sessionCookieToken) {
 +        console.log('no sessionCookieToken');
          return null;
@@ -22,7 +23,7 @@ index bf8f83b5e75e1a8d39a79c77d9bd8be1d8215b08..047b71ca0f3d32df289c408c4b4b0ad0
          const isValid = await createHMAC("SHA-256", "base64urlnopad").verify(
            ctx.context.secret,
            JSON.stringify({
-@@ -357,7 +362,9 @@ const getSession = () => createAuthEndpoint(
+@@ -357,7 +363,9 @@ const getSession = () => createAuthEndpoint(
            }),
            sessionDataPayload.signature
          );
@@ -32,7 +33,7 @@ index bf8f83b5e75e1a8d39a79c77d9bd8be1d8215b08..047b71ca0f3d32df289c408c4b4b0ad0
            const dataCookie = ctx.context.authCookies.sessionData.name;
            ctx.setCookie(dataCookie, "", {
              maxAge: 0
-@@ -365,10 +372,12 @@ const getSession = () => createAuthEndpoint(
+@@ -365,10 +373,12 @@ const getSession = () => createAuthEndpoint(
            return ctx.json(null);
          }
        }
@@ -45,7 +46,7 @@ index bf8f83b5e75e1a8d39a79c77d9bd8be1d8215b08..047b71ca0f3d32df289c408c4b4b0ad0
        if (sessionDataPayload?.session && ctx.context.options.session?.cookieCache?.enabled && !ctx.query?.disableCookieCache) {
          const session2 = sessionDataPayload.session;
          const hasExpired = sessionDataPayload.expiresAt < Date.now() || session2.session.expiresAt < /* @__PURE__ */ new Date();
-@@ -383,8 +392,10 @@ const getSession = () => createAuthEndpoint(
+@@ -383,8 +393,10 @@ const getSession = () => createAuthEndpoint(
            });
          }
        }
@@ -56,7 +57,7 @@ index bf8f83b5e75e1a8d39a79c77d9bd8be1d8215b08..047b71ca0f3d32df289c408c4b4b0ad0
        if (!session || session.session.expiresAt < /* @__PURE__ */ new Date()) {
          deleteSessionCookie(ctx);
          if (session) {
-@@ -392,9 +403,11 @@ const getSession = () => createAuthEndpoint(
+@@ -392,9 +404,11 @@ const getSession = () => createAuthEndpoint(
              session.session.token
            );
          }

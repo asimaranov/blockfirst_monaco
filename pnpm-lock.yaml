@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   better-auth:
-    hash: d2105925690e5d35b094c3d82c05738eccbdb593a7aa4a0ae87133652f4813a0
+    hash: f7755a14b88e097193fa262073bdef0721dbf79aa17d37a093f222dc80598d0b
     path: patches/better-auth.patch
 
 importers:
@@ -327,7 +327,7 @@ importers:
         version: 3.0.2
       better-auth:
         specifier: '=v1.2.9-beta.6'
-        version: 1.2.9-beta.6(patch_hash=d2105925690e5d35b094c3d82c05738eccbdb593a7aa4a0ae87133652f4813a0)
+        version: 1.2.9-beta.6(patch_hash=f7755a14b88e097193fa262073bdef0721dbf79aa17d37a093f222dc80598d0b)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -10623,7 +10623,7 @@ snapshots:
 
   bcryptjs@3.0.2: {}
 
-  better-auth@1.2.9-beta.6(patch_hash=d2105925690e5d35b094c3d82c05738eccbdb593a7aa4a0ae87133652f4813a0):
+  better-auth@1.2.9-beta.6(patch_hash=f7755a14b88e097193fa262073bdef0721dbf79aa17d37a093f222dc80598d0b):
     dependencies:
       '@better-auth/utils': 0.2.5
       '@better-fetch/fetch': 1.1.18
