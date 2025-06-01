@@ -212,11 +212,6 @@
     "initVersion": "7.38.1"
   },
   "packageManager": "pnpm@10.6.2",
-  "pnpm": {
-    "patchedDependencies": {
-      "better-auth": "patches/better-auth.patch"
-    }
-  },
   "overrides": {
     "monaco-editor": "npm:@codingame/monaco-vscode-editor-api@~17.1.2"
   }
