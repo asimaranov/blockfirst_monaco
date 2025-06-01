@@ -4,11 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-patchedDependencies:
-  better-auth:
-    hash: b227843cd2ad858e90bcc6edc990bf196ef9b71d0d35c3f9cf72bbab8a715be8
-    path: patches/better-auth.patch
-
 importers:
 
   .:
@@ -327,7 +322,7 @@ importers:
         version: 3.0.2
       better-auth:
         specifier: '=v1.2.9-beta.6'
-        version: 1.2.9-beta.6(patch_hash=b227843cd2ad858e90bcc6edc990bf196ef9b71d0d35c3f9cf72bbab8a715be8)
+        version: 1.2.9-beta.6
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -10623,7 +10618,7 @@ snapshots:
 
   bcryptjs@3.0.2: {}
 
-  better-auth@1.2.9-beta.6(patch_hash=b227843cd2ad858e90bcc6edc990bf196ef9b71d0d35c3f9cf72bbab8a715be8):
+  better-auth@1.2.9-beta.6:
     dependencies:
       '@better-auth/utils': 0.2.5
       '@better-fetch/fetch': 1.1.18
