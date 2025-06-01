@@ -1,3 +1,26 @@
+diff --git a/dist/cookies/index.mjs b/dist/cookies/index.mjs
+index 5ae04e6273adbddaeda4a06e48eac3c45bf57b8c..5358ae4d9dbacc6bda17e3157e0a22b2d4020969 100644
+--- a/dist/cookies/index.mjs
++++ b/dist/cookies/index.mjs
+@@ -187,8 +187,18 @@ function setCookieToHeader(headers) {
+ }
+ 
+ function createCookieGetter(options) {
++  console.log('createCookieGetter', options);
++  console.log('options.advanced?.useSecureCookies', options.advanced?.useSecureCookies);
++  console.log('options.baseURL', options.baseURL);
++  console.log('options.baseURL.startsWith("https://")', options.baseURL.startsWith("https://"));
++  console.log('isProduction', isProduction);
++
+   const secure = options.advanced?.useSecureCookies !== void 0 ? options.advanced?.useSecureCookies : options.baseURL !== void 0 ? options.baseURL.startsWith("https://") ? true : false : isProduction;
+   const secureCookiePrefix = secure ? "__Secure-" : "";
++
++  console.log('secure', secure);
++  console.log('secureCookiePrefix', secureCookiePrefix);
++
+   const crossSubdomainEnabled = !!options.advanced?.crossSubDomainCookies?.enabled;
+   const domain = crossSubdomainEnabled ? options.advanced?.crossSubDomainCookies?.domain || (options.baseURL ? new URL(options.baseURL).hostname : void 0) : void 0;
+   if (crossSubdomainEnabled && !domain) {
 diff --git a/dist/shared/better-auth.D6-2nUlx.mjs b/dist/shared/better-auth.D6-2nUlx.mjs
 index bf8f83b5e75e1a8d39a79c77d9bd8be1d8215b08..2f2015754b99e7e71b09ebf88faa022504e56c6c 100644
 --- a/dist/shared/better-auth.D6-2nUlx.mjs
