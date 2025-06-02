@@ -353,11 +353,29 @@ export const configure = (
 ): ConfigResult => {
   console.log('Calling configure');
 
+  if (window.parent) {
+    window.parent.postMessage(
+      {
+        type: 'monaco-configure',
+      },
+      '*'
+    );
+  }
+
   const ioSocket = io(
-    'https://lserver-1.blockfirst.io/' //'http://localhost:3004'
+    'https://lserver.blockfirst.io/' //'http://localhost:3004'
   );
 
   ioSocket.on('connection-info', (data: { totalClients: number }) => {
+    if (window.parent) {
+      window.parent.postMessage(
+        {
+          type: 'monaco-socket-connect',
+        },
+        '*'
+      );
+    }
+
     console.log('Connection info', data);
     window.parent.postMessage(
       {
