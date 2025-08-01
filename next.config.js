@@ -28,6 +28,7 @@ const config = {
       'vscode',
       'monaco-editor',
     ],
+    reactCompiler: true,
   },
   webpack: (config, { isServer }) => {
     if (!isServer) {
