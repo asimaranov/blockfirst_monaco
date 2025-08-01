@@ -199,7 +199,7 @@
     "postcss": "^8.4.39",
     "prettier": "^3.3.2",
     "prettier-plugin-tailwindcss": "^0.6.11",
-    "prisma": "^6.7.0-dev.27",
+    "prisma": "^6.13.0",
     "prisma-json-schema-generator": "^5.1.5",
     "prisma-kysely": "^1.8.0",
     "tailwindcss": "^4.1.7",
