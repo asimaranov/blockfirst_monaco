@@ -12,11 +12,7 @@ const bundleAnalyzer = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 });
 
-const _require = createRequire(import.meta.url);
-const prismaClientRequire = path.relative(
-  fileURLToPath(import.meta.url),
-  path.dirname(_require.resolve("@prisma/client"))
-);
+
 
 /** @type {import("next").NextConfig} */
 const config = {
@@ -24,10 +20,8 @@ const config = {
     ignoreDuringBuilds: true,
   },
   outputFileTracingIncludes: {
-    "**": [
-      path
-        .join(prismaClientRequire, "runtime/*.postgresql.wasm")
-        .replace("../", ""),
+    "/**/*": [
+      "node_modules/@prisma/client/runtime/query_compiler_bg.postgresql.wasm",
     ],
   },
 
