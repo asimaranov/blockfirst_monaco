@@ -50,7 +50,7 @@
     "@emoji-mart/data": "1.2.1",
     "@faker-js/faker": "^9.6.0",
     "@next/bundle-analyzer": "^15.3.2",
-    "@prisma/client": "6.6.0",
+    "@prisma/client": "^6.13.0",
     "@prisma/extension-accelerate": "^1.3.0",
     "@radix-ui/react-alert-dialog": "^1.1.11",
     "@radix-ui/react-avatar": "^1.1.4",
@@ -145,7 +145,7 @@
     "mongoose": "^8.14.1",
     "motion": "^12.14.0",
     "nanoid": "^5.1.5",
-    "next": "^v15.4.0-canary.50",
+    "next": "=v15.4.2-canary.21",
     "next-intl": "^4.0.2",
     "qr-code-styling": "^1.9.1",
     "qrcode.react": "^4.2.0",
@@ -214,5 +214,25 @@
   "packageManager": "pnpm@10.6.2",
   "overrides": {
     "monaco-editor": "npm:@codingame/monaco-vscode-editor-api@~17.1.2"
+  },
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "@prisma/client",
+      "@prisma/engines",
+      "esbuild",
+      "msgpackr-extract",
+      "prisma",
+      "sharp",
+      "unrs-resolver"
+    ],
+    "onlyBuiltDependencies": [
+      "@prisma/client",
+      "@prisma/engines",
+      "esbuild",
+      "msgpackr-extract",
+      "prisma",
+      "sharp",
+      "unrs-resolver"
+    ]
   }
 }
