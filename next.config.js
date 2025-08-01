@@ -12,11 +12,25 @@ const bundleAnalyzer = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 });
 
+const _require = createRequire(import.meta.url);
+const prismaClientRequire = path.relative(
+  fileURLToPath(import.meta.url),
+  path.dirname(_require.resolve("@prisma/client"))
+);
+
 /** @type {import("next").NextConfig} */
 const config = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  outputFileTracingIncludes: {
+    "**": [
+      path
+        .join(prismaClientRequire, "runtime/*.postgresql.wasm")
+        .replace("../", ""),
+    ],
+  },
+
 
   experimental: {
     useCache: true,
