@@ -25,7 +25,6 @@ const config = {
     ],
   },
 
-
   experimental: {
     useCache: true,
     turbo: {},
