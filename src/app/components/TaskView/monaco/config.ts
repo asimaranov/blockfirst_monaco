@@ -363,7 +363,7 @@ export const configure = (
   }
 
   const ioSocket = io(
-    'https://lserver.blockfirst.io/' //'http://localhost:3004'
+    process.env.NEXT_PUBLIC_LSERVER_URL || 'https://lserver.blockfirst.io/'
   );
 
   ioSocket.on('connection-info', (data: { totalClients: number }) => {
