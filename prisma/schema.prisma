@@ -9,7 +9,6 @@ generator client {
   binaryTargets = ["native", "rhel-openssl-3.0.x", "debian-openssl-3.0.x"]
   previewFeatures = ["fullTextSearchPostgres", "driverAdapters", "queryCompiler"]
 
-  output   = "../src/app/generated/prisma"
 }
 
 datasource db {

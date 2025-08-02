@@ -19,12 +19,6 @@ const config = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  outputFileTracingIncludes: {
-    "/**/*": [
-      "node_modules/@prisma/client/runtime/query_compiler_bg.postgresql.wasm",
-    ],
-  },
-
   experimental: {
     useCache: true,
     turbo: {},
