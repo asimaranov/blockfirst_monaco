@@ -26,6 +26,7 @@ const options = {
       sameSite: env.NODE_ENV === 'production' ? 'none' : 'lax', // Allows CORS-based cookie sharing across subdomains in production
       partitioned: env.NODE_ENV === 'production', // New browser standards will mandate this for foreign cookies
     },
+    useSecureCookies: env.NODE_ENV === 'production',
   },
   trustedOrigins: [
     'http://localhost:3000',
