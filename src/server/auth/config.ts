@@ -21,12 +21,12 @@ const options = {
           : 'localhost', // Domain with leading period for production, localhost for dev
     },
     defaultCookieAttributes: {
-      secure: env.NODE_ENV === 'production',
+      secure: true,
       httpOnly: true,
       sameSite: env.NODE_ENV === 'production' ? 'none' : 'lax', // Allows CORS-based cookie sharing across subdomains in production
       partitioned: env.NODE_ENV === 'production', // New browser standards will mandate this for foreign cookies
     },
-    useSecureCookies: env.NODE_ENV === 'production',
+    useSecureCookies: true,
   },
   trustedOrigins: [
     'http://localhost:3000',

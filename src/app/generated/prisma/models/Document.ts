@@ -80,6 +80,8 @@ export type DocumentCountAggregateOutputType = {
   templateId: number
   userId: number
   parentDocumentId: number
+  hero: number
+  tags: number
   title: number
   content: number
   contentRich: number
@@ -154,6 +156,8 @@ export type DocumentCountAggregateInputType = {
   templateId?: true
   userId?: true
   parentDocumentId?: true
+  hero?: true
+  tags?: true
   title?: true
   content?: true
   contentRich?: true
@@ -263,6 +267,8 @@ export type DocumentGroupByOutputType = {
   templateId: string | null
   userId: string
   parentDocumentId: string | null
+  hero: runtime.JsonValue | null
+  tags: string[]
   title: string | null
   content: string | null
   contentRich: runtime.JsonValue | null
@@ -308,6 +314,8 @@ export type DocumentWhereInput = {
   templateId?: Prisma.StringNullableFilter<"Document"> | string | null
   userId?: Prisma.StringFilter<"Document"> | string
   parentDocumentId?: Prisma.StringNullableFilter<"Document"> | string | null
+  hero?: Prisma.JsonNullableFilter<"Document">
+  tags?: Prisma.StringNullableListFilter<"Document">
   title?: Prisma.StringNullableFilter<"Document"> | string | null
   content?: Prisma.StringNullableFilter<"Document"> | string | null
   contentRich?: Prisma.JsonNullableFilter<"Document">
@@ -336,6 +344,8 @@ export type DocumentOrderByWithRelationInput = {
   templateId?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
   parentDocumentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  hero?: Prisma.SortOrderInput | Prisma.SortOrder
+  tags?: Prisma.SortOrder
   title?: Prisma.SortOrderInput | Prisma.SortOrder
   content?: Prisma.SortOrderInput | Prisma.SortOrder
   contentRich?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -369,6 +379,8 @@ export type DocumentWhereUniqueInput = Prisma.AtLeast<{
   templateId?: Prisma.StringNullableFilter<"Document"> | string | null
   userId?: Prisma.StringFilter<"Document"> | string
   parentDocumentId?: Prisma.StringNullableFilter<"Document"> | string | null
+  hero?: Prisma.JsonNullableFilter<"Document">
+  tags?: Prisma.StringNullableListFilter<"Document">
   title?: Prisma.StringNullableFilter<"Document"> | string | null
   content?: Prisma.StringNullableFilter<"Document"> | string | null
   contentRich?: Prisma.JsonNullableFilter<"Document">
@@ -397,6 +409,8 @@ export type DocumentOrderByWithAggregationInput = {
   templateId?: Prisma.SortOrderInput | Prisma.SortOrder
   userId?: Prisma.SortOrder
   parentDocumentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  hero?: Prisma.SortOrderInput | Prisma.SortOrder
+  tags?: Prisma.SortOrder
   title?: Prisma.SortOrderInput | Prisma.SortOrder
   content?: Prisma.SortOrderInput | Prisma.SortOrder
   contentRich?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -427,6 +441,8 @@ export type DocumentScalarWhereWithAggregatesInput = {
   templateId?: Prisma.StringNullableWithAggregatesFilter<"Document"> | string | null
   userId?: Prisma.StringWithAggregatesFilter<"Document"> | string
   parentDocumentId?: Prisma.StringNullableWithAggregatesFilter<"Document"> | string | null
+  hero?: Prisma.JsonNullableWithAggregatesFilter<"Document">
+  tags?: Prisma.StringNullableListFilter<"Document">
   title?: Prisma.StringNullableWithAggregatesFilter<"Document"> | string | null
   content?: Prisma.StringNullableWithAggregatesFilter<"Document"> | string | null
   contentRich?: Prisma.JsonNullableWithAggregatesFilter<"Document">
@@ -447,6 +463,8 @@ export type DocumentScalarWhereWithAggregatesInput = {
 export type DocumentCreateInput = {
   id: string
   templateId?: string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentCreatetagsInput | string[]
   title?: string | null
   content?: string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -475,6 +493,8 @@ export type DocumentUncheckedCreateInput = {
   templateId?: string | null
   userId: string
   parentDocumentId?: string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentCreatetagsInput | string[]
   title?: string | null
   content?: string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -499,6 +519,8 @@ export type DocumentUncheckedCreateInput = {
 export type DocumentUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentUpdatetagsInput | string[]
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -527,6 +549,8 @@ export type DocumentUncheckedUpdateInput = {
   templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   parentDocumentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentUpdatetagsInput | string[]
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -553,6 +577,8 @@ export type DocumentCreateManyInput = {
   templateId?: string | null
   userId: string
   parentDocumentId?: string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentCreatetagsInput | string[]
   title?: string | null
   content?: string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -573,6 +599,8 @@ export type DocumentCreateManyInput = {
 export type DocumentUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentUpdatetagsInput | string[]
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -595,6 +623,8 @@ export type DocumentUncheckedUpdateManyInput = {
   templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   parentDocumentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentUpdatetagsInput | string[]
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -622,6 +652,14 @@ export type DocumentOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type StringNullableListFilter<$PrismaModel = never> = {
+  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
+  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
+  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
+}
+
 export type DocumentNullableScalarRelationFilter = {
   is?: Prisma.DocumentWhereInput | null
   isNot?: Prisma.DocumentWhereInput | null
@@ -643,6 +681,8 @@ export type DocumentCountOrderByAggregateInput = {
   templateId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   parentDocumentId?: Prisma.SortOrder
+  hero?: Prisma.SortOrder
+  tags?: Prisma.SortOrder
   title?: Prisma.SortOrder
   content?: Prisma.SortOrder
   contentRich?: Prisma.SortOrder
@@ -757,6 +797,10 @@ export type DocumentUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.DocumentScalarWhereInput | Prisma.DocumentScalarWhereInput[]
 }
 
+export type DocumentCreatetagsInput = {
+  set: string[]
+}
+
 export type DocumentCreateNestedOneWithoutChildrenInput = {
   create?: Prisma.XOR<Prisma.DocumentCreateWithoutChildrenInput, Prisma.DocumentUncheckedCreateWithoutChildrenInput>
   connectOrCreate?: Prisma.DocumentCreateOrConnectWithoutChildrenInput
@@ -775,6 +819,11 @@ export type DocumentUncheckedCreateNestedManyWithoutParentDocumentInput = {
   connectOrCreate?: Prisma.DocumentCreateOrConnectWithoutParentDocumentInput | Prisma.DocumentCreateOrConnectWithoutParentDocumentInput[]
   createMany?: Prisma.DocumentCreateManyParentDocumentInputEnvelope
   connect?: Prisma.DocumentWhereUniqueInput | Prisma.DocumentWhereUniqueInput[]
+}
+
+export type DocumentUpdatetagsInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
 export type BoolFieldUpdateOperationsInput = {
@@ -878,6 +927,8 @@ export type DocumentUpdateOneWithoutFilesNestedInput = {
 export type DocumentCreateWithoutUserInput = {
   id: string
   templateId?: string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentCreatetagsInput | string[]
   title?: string | null
   content?: string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -904,6 +955,8 @@ export type DocumentUncheckedCreateWithoutUserInput = {
   id: string
   templateId?: string | null
   parentDocumentId?: string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentCreatetagsInput | string[]
   title?: string | null
   content?: string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -959,6 +1012,8 @@ export type DocumentScalarWhereInput = {
   templateId?: Prisma.StringNullableFilter<"Document"> | string | null
   userId?: Prisma.StringFilter<"Document"> | string
   parentDocumentId?: Prisma.StringNullableFilter<"Document"> | string | null
+  hero?: Prisma.JsonNullableFilter<"Document">
+  tags?: Prisma.StringNullableListFilter<"Document">
   title?: Prisma.StringNullableFilter<"Document"> | string | null
   content?: Prisma.StringNullableFilter<"Document"> | string | null
   contentRich?: Prisma.JsonNullableFilter<"Document">
@@ -979,6 +1034,8 @@ export type DocumentScalarWhereInput = {
 export type DocumentCreateWithoutChildrenInput = {
   id: string
   templateId?: string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentCreatetagsInput | string[]
   title?: string | null
   content?: string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1006,6 +1063,8 @@ export type DocumentUncheckedCreateWithoutChildrenInput = {
   templateId?: string | null
   userId: string
   parentDocumentId?: string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentCreatetagsInput | string[]
   title?: string | null
   content?: string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1034,6 +1093,8 @@ export type DocumentCreateOrConnectWithoutChildrenInput = {
 export type DocumentCreateWithoutParentDocumentInput = {
   id: string
   templateId?: string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentCreatetagsInput | string[]
   title?: string | null
   content?: string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1060,6 +1121,8 @@ export type DocumentUncheckedCreateWithoutParentDocumentInput = {
   id: string
   templateId?: string | null
   userId: string
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentCreatetagsInput | string[]
   title?: string | null
   content?: string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1105,6 +1168,8 @@ export type DocumentUpdateToOneWithWhereWithoutChildrenInput = {
 export type DocumentUpdateWithoutChildrenInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentUpdatetagsInput | string[]
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1132,6 +1197,8 @@ export type DocumentUncheckedUpdateWithoutChildrenInput = {
   templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   parentDocumentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentUpdatetagsInput | string[]
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1171,6 +1238,8 @@ export type DocumentUpdateManyWithWhereWithoutParentDocumentInput = {
 export type DocumentCreateWithoutDocumentVersionsInput = {
   id: string
   templateId?: string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentCreatetagsInput | string[]
   title?: string | null
   content?: string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1198,6 +1267,8 @@ export type DocumentUncheckedCreateWithoutDocumentVersionsInput = {
   templateId?: string | null
   userId: string
   parentDocumentId?: string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentCreatetagsInput | string[]
   title?: string | null
   content?: string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1237,6 +1308,8 @@ export type DocumentUpdateToOneWithWhereWithoutDocumentVersionsInput = {
 export type DocumentUpdateWithoutDocumentVersionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentUpdatetagsInput | string[]
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1264,6 +1337,8 @@ export type DocumentUncheckedUpdateWithoutDocumentVersionsInput = {
   templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   parentDocumentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentUpdatetagsInput | string[]
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1287,6 +1362,8 @@ export type DocumentUncheckedUpdateWithoutDocumentVersionsInput = {
 export type DocumentCreateWithoutDiscussionsInput = {
   id: string
   templateId?: string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentCreatetagsInput | string[]
   title?: string | null
   content?: string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1314,6 +1391,8 @@ export type DocumentUncheckedCreateWithoutDiscussionsInput = {
   templateId?: string | null
   userId: string
   parentDocumentId?: string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentCreatetagsInput | string[]
   title?: string | null
   content?: string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1353,6 +1432,8 @@ export type DocumentUpdateToOneWithWhereWithoutDiscussionsInput = {
 export type DocumentUpdateWithoutDiscussionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentUpdatetagsInput | string[]
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1380,6 +1461,8 @@ export type DocumentUncheckedUpdateWithoutDiscussionsInput = {
   templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   parentDocumentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentUpdatetagsInput | string[]
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1403,6 +1486,8 @@ export type DocumentUncheckedUpdateWithoutDiscussionsInput = {
 export type DocumentCreateWithoutFilesInput = {
   id: string
   templateId?: string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentCreatetagsInput | string[]
   title?: string | null
   content?: string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1430,6 +1515,8 @@ export type DocumentUncheckedCreateWithoutFilesInput = {
   templateId?: string | null
   userId: string
   parentDocumentId?: string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentCreatetagsInput | string[]
   title?: string | null
   content?: string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1469,6 +1556,8 @@ export type DocumentUpdateToOneWithWhereWithoutFilesInput = {
 export type DocumentUpdateWithoutFilesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentUpdatetagsInput | string[]
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1496,6 +1585,8 @@ export type DocumentUncheckedUpdateWithoutFilesInput = {
   templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   parentDocumentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentUpdatetagsInput | string[]
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1520,6 +1611,8 @@ export type DocumentCreateManyUserInput = {
   id: string
   templateId?: string | null
   parentDocumentId?: string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentCreatetagsInput | string[]
   title?: string | null
   content?: string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1540,6 +1633,8 @@ export type DocumentCreateManyUserInput = {
 export type DocumentUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentUpdatetagsInput | string[]
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1566,6 +1661,8 @@ export type DocumentUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentDocumentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentUpdatetagsInput | string[]
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1591,6 +1688,8 @@ export type DocumentUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   parentDocumentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentUpdatetagsInput | string[]
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1612,6 +1711,8 @@ export type DocumentCreateManyParentDocumentInput = {
   id: string
   templateId?: string | null
   userId: string
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentCreatetagsInput | string[]
   title?: string | null
   content?: string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1632,6 +1733,8 @@ export type DocumentCreateManyParentDocumentInput = {
 export type DocumentUpdateWithoutParentDocumentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentUpdatetagsInput | string[]
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1658,6 +1761,8 @@ export type DocumentUncheckedUpdateWithoutParentDocumentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentUpdatetagsInput | string[]
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1683,6 +1788,8 @@ export type DocumentUncheckedUpdateManyWithoutParentDocumentInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   templateId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   userId?: Prisma.StringFieldUpdateOperationsInput | string
+  hero?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  tags?: Prisma.DocumentUpdatetagsInput | string[]
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   contentRich?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
@@ -1763,6 +1870,8 @@ export type DocumentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   templateId?: boolean
   userId?: boolean
   parentDocumentId?: boolean
+  hero?: boolean
+  tags?: boolean
   title?: boolean
   content?: boolean
   contentRich?: boolean
@@ -1792,6 +1901,8 @@ export type DocumentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   templateId?: boolean
   userId?: boolean
   parentDocumentId?: boolean
+  hero?: boolean
+  tags?: boolean
   title?: boolean
   content?: boolean
   contentRich?: boolean
@@ -1816,6 +1927,8 @@ export type DocumentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   templateId?: boolean
   userId?: boolean
   parentDocumentId?: boolean
+  hero?: boolean
+  tags?: boolean
   title?: boolean
   content?: boolean
   contentRich?: boolean
@@ -1840,6 +1953,8 @@ export type DocumentSelectScalar = {
   templateId?: boolean
   userId?: boolean
   parentDocumentId?: boolean
+  hero?: boolean
+  tags?: boolean
   title?: boolean
   content?: boolean
   contentRich?: boolean
@@ -1857,7 +1972,7 @@ export type DocumentSelectScalar = {
   sortOrder?: boolean
 }
 
-export type DocumentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "templateId" | "userId" | "parentDocumentId" | "title" | "content" | "contentRich" | "coverImage" | "icon" | "isPublished" | "isArchived" | "textStyle" | "smallText" | "fullWidth" | "lockPage" | "toc" | "createdAt" | "updatedAt" | "sortOrder", ExtArgs["result"]["document"]>
+export type DocumentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "templateId" | "userId" | "parentDocumentId" | "hero" | "tags" | "title" | "content" | "contentRich" | "coverImage" | "icon" | "isPublished" | "isArchived" | "textStyle" | "smallText" | "fullWidth" | "lockPage" | "toc" | "createdAt" | "updatedAt" | "sortOrder", ExtArgs["result"]["document"]>
 export type DocumentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   parentDocument?: boolean | Prisma.Document$parentDocumentArgs<ExtArgs>
@@ -1891,6 +2006,8 @@ export type $DocumentPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     templateId: string | null
     userId: string
     parentDocumentId: string | null
+    hero: runtime.JsonValue | null
+    tags: string[]
     title: string | null
     content: string | null
     contentRich: runtime.JsonValue | null
@@ -2339,6 +2456,8 @@ export interface DocumentFieldRefs {
   readonly templateId: Prisma.FieldRef<"Document", 'String'>
   readonly userId: Prisma.FieldRef<"Document", 'String'>
   readonly parentDocumentId: Prisma.FieldRef<"Document", 'String'>
+  readonly hero: Prisma.FieldRef<"Document", 'Json'>
+  readonly tags: Prisma.FieldRef<"Document", 'String[]'>
   readonly title: Prisma.FieldRef<"Document", 'String'>
   readonly content: Prisma.FieldRef<"Document", 'String'>
   readonly contentRich: Prisma.FieldRef<"Document", 'Json'>
