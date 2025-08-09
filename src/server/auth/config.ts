@@ -15,7 +15,10 @@ const options = {
   advanced: {
     crossSubDomainCookies: {
       enabled: true,
-      domain: env.NODE_ENV === 'production' ? '.blockfirst.io' : 'localhost', // Domain with leading period for production, localhost for dev
+      domain:
+        process.env.NODE_ENV === 'production'
+          ? `.${process.env.NEXT_PUBLIC_BLOCKFIRST_WILDCARD_DOMAIN}`
+          : 'localhost', // Domain with leading period for production, localhost for dev
     },
     defaultCookieAttributes: {
       secure: env.NODE_ENV === 'production',
@@ -26,15 +29,15 @@ const options = {
   },
   trustedOrigins: [
     'http://localhost:3000',
-    'https://app.blockfirst.io',
-    'https://editor.blockfirst.io',
-    'https://blog.blockfirst.io',
-    'https://vscode.blockfirst.io',
+    'http://localhost:3001',
+    `https://app.${process.env.NEXT_PUBLIC_BLOCKFIRST_WILDCARD_DOMAIN}`,
+    `https://dev.${process.env.NEXT_PUBLIC_BLOCKFIRST_WILDCARD_DOMAIN}`,
+    `https://editor.${process.env.NEXT_PUBLIC_BLOCKFIRST_WILDCARD_DOMAIN}`,
+    `https://blog.${process.env.NEXT_PUBLIC_BLOCKFIRST_WILDCARD_DOMAIN}`,
+    `https://vscode.${process.env.NEXT_PUBLIC_BLOCKFIRST_WILDCARD_DOMAIN}`,
   ],
   database: mongodbAdapter(db),
   plugins: [
-    
-
     openAPI(), // /api/auth/reference
     admin({
       impersonationSessionDuration: 60 * 60 * 24 * 7, // 7 days
