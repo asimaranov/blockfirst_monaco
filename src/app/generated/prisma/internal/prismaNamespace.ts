@@ -92,12 +92,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 6.13.0
- * Query Engine version: 361e86d0ea4987e9f53a565309b3eed797a6bcbd
+ * Prisma Client JS version: 6.14.0-integration-feat-client-wasm-base64-on-nodejs.6
+ * Query Engine version: b2e5a6c3a6936784f3aefb57ce847e4e7d28986a
  */
 export const prismaVersion: PrismaVersion = {
-  client: "6.13.0",
-  engine: "361e86d0ea4987e9f53a565309b3eed797a6bcbd"
+  client: "6.14.0-integration-feat-client-wasm-base64-on-nodejs.6",
+  engine: "b2e5a6c3a6936784f3aefb57ce847e4e7d28986a"
 }
 
 /**
