@@ -78,6 +78,11 @@ export type Comment = Prisma.CommentModel
  * 
  */
 export type File = Prisma.FileModel
+/**
+ * Model EditorToken
+ * 
+ */
+export type EditorToken = Prisma.EditorTokenModel
 
 export type UserRole = $Enums.UserRole
 export const UserRole = $Enums.UserRole

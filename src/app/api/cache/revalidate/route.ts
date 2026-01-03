@@ -17,30 +17,30 @@ export async function POST(request: NextRequest) {
     // If documentId is provided, revalidate all document-related cache tags
     if (documentId) {
       // Revalidate document by ID
-      revalidateTag(`document-by-id`);
-      revalidateTag(`document-by-id:${documentId}`);
+      revalidateTag(`document-by-id`, 'max');
+      revalidateTag(`document-by-id:${documentId}`, 'max');
       revalidatedTags.push('document-by-id');
 
       // Revalidate course ID cache
-      revalidateTag(`course-id`);
-      revalidateTag(`course-id:${documentId}`);
+      revalidateTag(`course-id`, 'max');
+      revalidateTag(`course-id:${documentId}`, 'max');
       revalidatedTags.push('course-id');
 
       // Revalidate children documents
-      revalidateTag(`children-by-document-id`);
-      revalidateTag(`children-by-document-id:${documentId}`);
+      revalidateTag(`children-by-document-id`, 'max');
+      revalidateTag(`children-by-document-id:${documentId}`, 'max');
       revalidatedTags.push('children-by-document-id');
 
       // Also revalidate course-info cache if relevant
-      revalidateTag(`course-info`);
-      revalidateTag(`course-info:${documentId}`);
+      revalidateTag(`course-info`, 'max');
+      revalidateTag(`course-info:${documentId}`, 'max');
       revalidatedTags.push('course-info');
     }
 
     // Allow revalidating specific tags if needed
     if (tags.length > 0) {
       for (const tag of tags) {
-        revalidateTag(tag);
+        revalidateTag(tag, 'max');
         revalidatedTags.push(tag);
       }
     }

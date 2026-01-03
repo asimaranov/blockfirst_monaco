@@ -5,7 +5,7 @@ import { lato, roboto, delight } from './fonts';
 
 import { TRPCReactProvider } from '~/trpc/react';
 import { NextIntlClientProvider } from 'next-intl';
-import { getLocale } from 'next-intl/server';
+import { getLocale, getMessages } from 'next-intl/server';
 
 export const metadata: Metadata = {
   title: 'Blockfirst - образовательная блокчейн платформа',
@@ -24,6 +24,7 @@ export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const locale = await getLocale();
+  const messages = await getMessages();
 
   return (
     <html
@@ -39,7 +40,7 @@ export default async function RootLayout({
       </head>
       <body className='h-dvh'>
         <TRPCReactProvider>
-          <NextIntlClientProvider>
+          <NextIntlClientProvider messages={messages}>
             {children}
           </NextIntlClientProvider>
         </TRPCReactProvider>

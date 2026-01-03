@@ -306,6 +306,7 @@ export type UserWhereInput = {
   files?: Prisma.FileListRelationFilter
   discussions?: Prisma.DiscussionListRelationFilter
   documentVersions?: Prisma.DocumentVersionListRelationFilter
+  editorTokens?: Prisma.EditorTokenListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -331,6 +332,7 @@ export type UserOrderByWithRelationInput = {
   files?: Prisma.FileOrderByRelationAggregateInput
   discussions?: Prisma.DiscussionOrderByRelationAggregateInput
   documentVersions?: Prisma.DocumentVersionOrderByRelationAggregateInput
+  editorTokens?: Prisma.EditorTokenOrderByRelationAggregateInput
   _relevance?: Prisma.UserOrderByRelevanceInput
 }
 
@@ -360,6 +362,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   files?: Prisma.FileListRelationFilter
   discussions?: Prisma.DiscussionListRelationFilter
   documentVersions?: Prisma.DocumentVersionListRelationFilter
+  editorTokens?: Prisma.EditorTokenListRelationFilter
 }, "id" | "username" | "email" | "stripeCustomerId">
 
 export type UserOrderByWithAggregationInput = {
@@ -429,6 +432,7 @@ export type UserCreateInput = {
   files?: Prisma.FileCreateNestedManyWithoutUserInput
   discussions?: Prisma.DiscussionCreateNestedManyWithoutUserInput
   documentVersions?: Prisma.DocumentVersionCreateNestedManyWithoutUserInput
+  editorTokens?: Prisma.EditorTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -454,6 +458,7 @@ export type UserUncheckedCreateInput = {
   files?: Prisma.FileUncheckedCreateNestedManyWithoutUserInput
   discussions?: Prisma.DiscussionUncheckedCreateNestedManyWithoutUserInput
   documentVersions?: Prisma.DocumentVersionUncheckedCreateNestedManyWithoutUserInput
+  editorTokens?: Prisma.EditorTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -479,6 +484,7 @@ export type UserUpdateInput = {
   files?: Prisma.FileUpdateManyWithoutUserNestedInput
   discussions?: Prisma.DiscussionUpdateManyWithoutUserNestedInput
   documentVersions?: Prisma.DocumentVersionUpdateManyWithoutUserNestedInput
+  editorTokens?: Prisma.EditorTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -504,6 +510,7 @@ export type UserUncheckedUpdateInput = {
   files?: Prisma.FileUncheckedUpdateManyWithoutUserNestedInput
   discussions?: Prisma.DiscussionUncheckedUpdateManyWithoutUserNestedInput
   documentVersions?: Prisma.DocumentVersionUncheckedUpdateManyWithoutUserNestedInput
+  editorTokens?: Prisma.EditorTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -749,6 +756,20 @@ export type UserUpdateOneRequiredWithoutFilesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutFilesInput, Prisma.UserUpdateWithoutFilesInput>, Prisma.UserUncheckedUpdateWithoutFilesInput>
 }
 
+export type UserCreateNestedOneWithoutEditorTokensInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEditorTokensInput, Prisma.UserUncheckedCreateWithoutEditorTokensInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEditorTokensInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutEditorTokensNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEditorTokensInput, Prisma.UserUncheckedCreateWithoutEditorTokensInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEditorTokensInput
+  upsert?: Prisma.UserUpsertWithoutEditorTokensInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutEditorTokensInput, Prisma.UserUpdateWithoutEditorTokensInput>, Prisma.UserUncheckedUpdateWithoutEditorTokensInput>
+}
+
 export type UserCreateWithoutSessionsInput = {
   id: string
   username: string
@@ -771,6 +792,7 @@ export type UserCreateWithoutSessionsInput = {
   files?: Prisma.FileCreateNestedManyWithoutUserInput
   discussions?: Prisma.DiscussionCreateNestedManyWithoutUserInput
   documentVersions?: Prisma.DocumentVersionCreateNestedManyWithoutUserInput
+  editorTokens?: Prisma.EditorTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -795,6 +817,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   files?: Prisma.FileUncheckedCreateNestedManyWithoutUserInput
   discussions?: Prisma.DiscussionUncheckedCreateNestedManyWithoutUserInput
   documentVersions?: Prisma.DocumentVersionUncheckedCreateNestedManyWithoutUserInput
+  editorTokens?: Prisma.EditorTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -835,6 +858,7 @@ export type UserUpdateWithoutSessionsInput = {
   files?: Prisma.FileUpdateManyWithoutUserNestedInput
   discussions?: Prisma.DiscussionUpdateManyWithoutUserNestedInput
   documentVersions?: Prisma.DocumentVersionUpdateManyWithoutUserNestedInput
+  editorTokens?: Prisma.EditorTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -859,6 +883,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   files?: Prisma.FileUncheckedUpdateManyWithoutUserNestedInput
   discussions?: Prisma.DiscussionUncheckedUpdateManyWithoutUserNestedInput
   documentVersions?: Prisma.DocumentVersionUncheckedUpdateManyWithoutUserNestedInput
+  editorTokens?: Prisma.EditorTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutOauthAccountsInput = {
@@ -883,6 +908,7 @@ export type UserCreateWithoutOauthAccountsInput = {
   files?: Prisma.FileCreateNestedManyWithoutUserInput
   discussions?: Prisma.DiscussionCreateNestedManyWithoutUserInput
   documentVersions?: Prisma.DocumentVersionCreateNestedManyWithoutUserInput
+  editorTokens?: Prisma.EditorTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOauthAccountsInput = {
@@ -907,6 +933,7 @@ export type UserUncheckedCreateWithoutOauthAccountsInput = {
   files?: Prisma.FileUncheckedCreateNestedManyWithoutUserInput
   discussions?: Prisma.DiscussionUncheckedCreateNestedManyWithoutUserInput
   documentVersions?: Prisma.DocumentVersionUncheckedCreateNestedManyWithoutUserInput
+  editorTokens?: Prisma.EditorTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOauthAccountsInput = {
@@ -947,6 +974,7 @@ export type UserUpdateWithoutOauthAccountsInput = {
   files?: Prisma.FileUpdateManyWithoutUserNestedInput
   discussions?: Prisma.DiscussionUpdateManyWithoutUserNestedInput
   documentVersions?: Prisma.DocumentVersionUpdateManyWithoutUserNestedInput
+  editorTokens?: Prisma.EditorTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOauthAccountsInput = {
@@ -971,6 +999,7 @@ export type UserUncheckedUpdateWithoutOauthAccountsInput = {
   files?: Prisma.FileUncheckedUpdateManyWithoutUserNestedInput
   discussions?: Prisma.DiscussionUncheckedUpdateManyWithoutUserNestedInput
   documentVersions?: Prisma.DocumentVersionUncheckedUpdateManyWithoutUserNestedInput
+  editorTokens?: Prisma.EditorTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutDocumentsInput = {
@@ -995,6 +1024,7 @@ export type UserCreateWithoutDocumentsInput = {
   files?: Prisma.FileCreateNestedManyWithoutUserInput
   discussions?: Prisma.DiscussionCreateNestedManyWithoutUserInput
   documentVersions?: Prisma.DocumentVersionCreateNestedManyWithoutUserInput
+  editorTokens?: Prisma.EditorTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDocumentsInput = {
@@ -1019,6 +1049,7 @@ export type UserUncheckedCreateWithoutDocumentsInput = {
   files?: Prisma.FileUncheckedCreateNestedManyWithoutUserInput
   discussions?: Prisma.DiscussionUncheckedCreateNestedManyWithoutUserInput
   documentVersions?: Prisma.DocumentVersionUncheckedCreateNestedManyWithoutUserInput
+  editorTokens?: Prisma.EditorTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDocumentsInput = {
@@ -1059,6 +1090,7 @@ export type UserUpdateWithoutDocumentsInput = {
   files?: Prisma.FileUpdateManyWithoutUserNestedInput
   discussions?: Prisma.DiscussionUpdateManyWithoutUserNestedInput
   documentVersions?: Prisma.DocumentVersionUpdateManyWithoutUserNestedInput
+  editorTokens?: Prisma.EditorTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDocumentsInput = {
@@ -1083,6 +1115,7 @@ export type UserUncheckedUpdateWithoutDocumentsInput = {
   files?: Prisma.FileUncheckedUpdateManyWithoutUserNestedInput
   discussions?: Prisma.DiscussionUncheckedUpdateManyWithoutUserNestedInput
   documentVersions?: Prisma.DocumentVersionUncheckedUpdateManyWithoutUserNestedInput
+  editorTokens?: Prisma.EditorTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutDocumentVersionsInput = {
@@ -1107,6 +1140,7 @@ export type UserCreateWithoutDocumentVersionsInput = {
   comments?: Prisma.CommentCreateNestedManyWithoutUserInput
   files?: Prisma.FileCreateNestedManyWithoutUserInput
   discussions?: Prisma.DiscussionCreateNestedManyWithoutUserInput
+  editorTokens?: Prisma.EditorTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDocumentVersionsInput = {
@@ -1131,6 +1165,7 @@ export type UserUncheckedCreateWithoutDocumentVersionsInput = {
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutUserInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutUserInput
   discussions?: Prisma.DiscussionUncheckedCreateNestedManyWithoutUserInput
+  editorTokens?: Prisma.EditorTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDocumentVersionsInput = {
@@ -1171,6 +1206,7 @@ export type UserUpdateWithoutDocumentVersionsInput = {
   comments?: Prisma.CommentUpdateManyWithoutUserNestedInput
   files?: Prisma.FileUpdateManyWithoutUserNestedInput
   discussions?: Prisma.DiscussionUpdateManyWithoutUserNestedInput
+  editorTokens?: Prisma.EditorTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDocumentVersionsInput = {
@@ -1195,6 +1231,7 @@ export type UserUncheckedUpdateWithoutDocumentVersionsInput = {
   comments?: Prisma.CommentUncheckedUpdateManyWithoutUserNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutUserNestedInput
   discussions?: Prisma.DiscussionUncheckedUpdateManyWithoutUserNestedInput
+  editorTokens?: Prisma.EditorTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutDiscussionsInput = {
@@ -1219,6 +1256,7 @@ export type UserCreateWithoutDiscussionsInput = {
   comments?: Prisma.CommentCreateNestedManyWithoutUserInput
   files?: Prisma.FileCreateNestedManyWithoutUserInput
   documentVersions?: Prisma.DocumentVersionCreateNestedManyWithoutUserInput
+  editorTokens?: Prisma.EditorTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDiscussionsInput = {
@@ -1243,6 +1281,7 @@ export type UserUncheckedCreateWithoutDiscussionsInput = {
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutUserInput
   files?: Prisma.FileUncheckedCreateNestedManyWithoutUserInput
   documentVersions?: Prisma.DocumentVersionUncheckedCreateNestedManyWithoutUserInput
+  editorTokens?: Prisma.EditorTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDiscussionsInput = {
@@ -1283,6 +1322,7 @@ export type UserUpdateWithoutDiscussionsInput = {
   comments?: Prisma.CommentUpdateManyWithoutUserNestedInput
   files?: Prisma.FileUpdateManyWithoutUserNestedInput
   documentVersions?: Prisma.DocumentVersionUpdateManyWithoutUserNestedInput
+  editorTokens?: Prisma.EditorTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDiscussionsInput = {
@@ -1307,6 +1347,7 @@ export type UserUncheckedUpdateWithoutDiscussionsInput = {
   comments?: Prisma.CommentUncheckedUpdateManyWithoutUserNestedInput
   files?: Prisma.FileUncheckedUpdateManyWithoutUserNestedInput
   documentVersions?: Prisma.DocumentVersionUncheckedUpdateManyWithoutUserNestedInput
+  editorTokens?: Prisma.EditorTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutCommentsInput = {
@@ -1331,6 +1372,7 @@ export type UserCreateWithoutCommentsInput = {
   files?: Prisma.FileCreateNestedManyWithoutUserInput
   discussions?: Prisma.DiscussionCreateNestedManyWithoutUserInput
   documentVersions?: Prisma.DocumentVersionCreateNestedManyWithoutUserInput
+  editorTokens?: Prisma.EditorTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCommentsInput = {
@@ -1355,6 +1397,7 @@ export type UserUncheckedCreateWithoutCommentsInput = {
   files?: Prisma.FileUncheckedCreateNestedManyWithoutUserInput
   discussions?: Prisma.DiscussionUncheckedCreateNestedManyWithoutUserInput
   documentVersions?: Prisma.DocumentVersionUncheckedCreateNestedManyWithoutUserInput
+  editorTokens?: Prisma.EditorTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCommentsInput = {
@@ -1395,6 +1438,7 @@ export type UserUpdateWithoutCommentsInput = {
   files?: Prisma.FileUpdateManyWithoutUserNestedInput
   discussions?: Prisma.DiscussionUpdateManyWithoutUserNestedInput
   documentVersions?: Prisma.DocumentVersionUpdateManyWithoutUserNestedInput
+  editorTokens?: Prisma.EditorTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCommentsInput = {
@@ -1419,6 +1463,7 @@ export type UserUncheckedUpdateWithoutCommentsInput = {
   files?: Prisma.FileUncheckedUpdateManyWithoutUserNestedInput
   discussions?: Prisma.DiscussionUncheckedUpdateManyWithoutUserNestedInput
   documentVersions?: Prisma.DocumentVersionUncheckedUpdateManyWithoutUserNestedInput
+  editorTokens?: Prisma.EditorTokenUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutFilesInput = {
@@ -1443,6 +1488,7 @@ export type UserCreateWithoutFilesInput = {
   comments?: Prisma.CommentCreateNestedManyWithoutUserInput
   discussions?: Prisma.DiscussionCreateNestedManyWithoutUserInput
   documentVersions?: Prisma.DocumentVersionCreateNestedManyWithoutUserInput
+  editorTokens?: Prisma.EditorTokenCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutFilesInput = {
@@ -1467,6 +1513,7 @@ export type UserUncheckedCreateWithoutFilesInput = {
   comments?: Prisma.CommentUncheckedCreateNestedManyWithoutUserInput
   discussions?: Prisma.DiscussionUncheckedCreateNestedManyWithoutUserInput
   documentVersions?: Prisma.DocumentVersionUncheckedCreateNestedManyWithoutUserInput
+  editorTokens?: Prisma.EditorTokenUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutFilesInput = {
@@ -1507,6 +1554,7 @@ export type UserUpdateWithoutFilesInput = {
   comments?: Prisma.CommentUpdateManyWithoutUserNestedInput
   discussions?: Prisma.DiscussionUpdateManyWithoutUserNestedInput
   documentVersions?: Prisma.DocumentVersionUpdateManyWithoutUserNestedInput
+  editorTokens?: Prisma.EditorTokenUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFilesInput = {
@@ -1531,6 +1579,123 @@ export type UserUncheckedUpdateWithoutFilesInput = {
   comments?: Prisma.CommentUncheckedUpdateManyWithoutUserNestedInput
   discussions?: Prisma.DiscussionUncheckedUpdateManyWithoutUserNestedInput
   documentVersions?: Prisma.DocumentVersionUncheckedUpdateManyWithoutUserNestedInput
+  editorTokens?: Prisma.EditorTokenUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutEditorTokensInput = {
+  id: string
+  username: string
+  password_hash?: string | null
+  email?: string | null
+  role?: $Enums.UserRole
+  uploadLimit?: number
+  name?: string | null
+  firstName?: string | null
+  lastName?: string | null
+  profileImageUrl?: string | null
+  version?: number
+  stripeCustomerId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  oauthAccounts?: Prisma.OauthAccountCreateNestedManyWithoutUserInput
+  documents?: Prisma.DocumentCreateNestedManyWithoutUserInput
+  comments?: Prisma.CommentCreateNestedManyWithoutUserInput
+  files?: Prisma.FileCreateNestedManyWithoutUserInput
+  discussions?: Prisma.DiscussionCreateNestedManyWithoutUserInput
+  documentVersions?: Prisma.DocumentVersionCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutEditorTokensInput = {
+  id: string
+  username: string
+  password_hash?: string | null
+  email?: string | null
+  role?: $Enums.UserRole
+  uploadLimit?: number
+  name?: string | null
+  firstName?: string | null
+  lastName?: string | null
+  profileImageUrl?: string | null
+  version?: number
+  stripeCustomerId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  oauthAccounts?: Prisma.OauthAccountUncheckedCreateNestedManyWithoutUserInput
+  documents?: Prisma.DocumentUncheckedCreateNestedManyWithoutUserInput
+  comments?: Prisma.CommentUncheckedCreateNestedManyWithoutUserInput
+  files?: Prisma.FileUncheckedCreateNestedManyWithoutUserInput
+  discussions?: Prisma.DiscussionUncheckedCreateNestedManyWithoutUserInput
+  documentVersions?: Prisma.DocumentVersionUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutEditorTokensInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutEditorTokensInput, Prisma.UserUncheckedCreateWithoutEditorTokensInput>
+}
+
+export type UserUpsertWithoutEditorTokensInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutEditorTokensInput, Prisma.UserUncheckedUpdateWithoutEditorTokensInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutEditorTokensInput, Prisma.UserUncheckedCreateWithoutEditorTokensInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutEditorTokensInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutEditorTokensInput, Prisma.UserUncheckedUpdateWithoutEditorTokensInput>
+}
+
+export type UserUpdateWithoutEditorTokensInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  password_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  uploadLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  oauthAccounts?: Prisma.OauthAccountUpdateManyWithoutUserNestedInput
+  documents?: Prisma.DocumentUpdateManyWithoutUserNestedInput
+  comments?: Prisma.CommentUpdateManyWithoutUserNestedInput
+  files?: Prisma.FileUpdateManyWithoutUserNestedInput
+  discussions?: Prisma.DiscussionUpdateManyWithoutUserNestedInput
+  documentVersions?: Prisma.DocumentVersionUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutEditorTokensInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  password_hash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  uploadLimit?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  firstName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lastName?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  profileImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  version?: Prisma.IntFieldUpdateOperationsInput | number
+  stripeCustomerId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  oauthAccounts?: Prisma.OauthAccountUncheckedUpdateManyWithoutUserNestedInput
+  documents?: Prisma.DocumentUncheckedUpdateManyWithoutUserNestedInput
+  comments?: Prisma.CommentUncheckedUpdateManyWithoutUserNestedInput
+  files?: Prisma.FileUncheckedUpdateManyWithoutUserNestedInput
+  discussions?: Prisma.DiscussionUncheckedUpdateManyWithoutUserNestedInput
+  documentVersions?: Prisma.DocumentVersionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1546,6 +1711,7 @@ export type UserCountOutputType = {
   files: number
   discussions: number
   documentVersions: number
+  editorTokens: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1556,6 +1722,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   files?: boolean | UserCountOutputTypeCountFilesArgs
   discussions?: boolean | UserCountOutputTypeCountDiscussionsArgs
   documentVersions?: boolean | UserCountOutputTypeCountDocumentVersionsArgs
+  editorTokens?: boolean | UserCountOutputTypeCountEditorTokensArgs
 }
 
 /**
@@ -1617,6 +1784,13 @@ export type UserCountOutputTypeCountDocumentVersionsArgs<ExtArgs extends runtime
   where?: Prisma.DocumentVersionWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountEditorTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.EditorTokenWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1641,6 +1815,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   files?: boolean | Prisma.User$filesArgs<ExtArgs>
   discussions?: boolean | Prisma.User$discussionsArgs<ExtArgs>
   documentVersions?: boolean | Prisma.User$documentVersionsArgs<ExtArgs>
+  editorTokens?: boolean | Prisma.User$editorTokensArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1707,6 +1882,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   files?: boolean | Prisma.User$filesArgs<ExtArgs>
   discussions?: boolean | Prisma.User$discussionsArgs<ExtArgs>
   documentVersions?: boolean | Prisma.User$documentVersionsArgs<ExtArgs>
+  editorTokens?: boolean | Prisma.User$editorTokensArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1722,6 +1898,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     files: Prisma.$FilePayload<ExtArgs>[]
     discussions: Prisma.$DiscussionPayload<ExtArgs>[]
     documentVersions: Prisma.$DocumentVersionPayload<ExtArgs>[]
+    editorTokens: Prisma.$EditorTokenPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2140,6 +2317,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   files<T extends Prisma.User$filesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$filesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$FilePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   discussions<T extends Prisma.User$discussionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$discussionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DiscussionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   documentVersions<T extends Prisma.User$documentVersionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$documentVersionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DocumentVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  editorTokens<T extends Prisma.User$editorTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$editorTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EditorTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2737,6 +2915,30 @@ export type User$documentVersionsArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   distinct?: Prisma.DocumentVersionScalarFieldEnum | Prisma.DocumentVersionScalarFieldEnum[]
+}
+
+/**
+ * User.editorTokens
+ */
+export type User$editorTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the EditorToken
+   */
+  select?: Prisma.EditorTokenSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the EditorToken
+   */
+  omit?: Prisma.EditorTokenOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EditorTokenInclude<ExtArgs> | null
+  where?: Prisma.EditorTokenWhereInput
+  orderBy?: Prisma.EditorTokenOrderByWithRelationInput | Prisma.EditorTokenOrderByWithRelationInput[]
+  cursor?: Prisma.EditorTokenWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.EditorTokenScalarFieldEnum | Prisma.EditorTokenScalarFieldEnum[]
 }
 
 /**

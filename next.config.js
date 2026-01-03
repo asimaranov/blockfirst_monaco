@@ -6,22 +6,17 @@ import './src/env.js';
 import createNextIntlPlugin from 'next-intl/plugin';
 import withBundleAnalyzer from '@next/bundle-analyzer';
 
-const withNextIntl = createNextIntlPlugin();
+const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 
 const bundleAnalyzer = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 });
 
-
-
 /** @type {import("next").NextConfig} */
 const config = {
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  reactCompiler: true,
   experimental: {
     useCache: true,
-    turbo: {},
     optimizePackageImports: [
       '@codingame/monaco-vscode-extension-api',
       '@codingame/monaco-vscode-api',
@@ -29,7 +24,6 @@ const config = {
       'vscode',
       'monaco-editor',
     ],
-    reactCompiler: true,
   },
   webpack: (config, { isServer }) => {
     if (!isServer) {

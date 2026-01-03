@@ -401,7 +401,8 @@ export const ModelName = {
   DocumentVersion: 'DocumentVersion',
   Discussion: 'Discussion',
   Comment: 'Comment',
-  File: 'File'
+  File: 'File',
+  EditorToken: 'EditorToken'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -417,7 +418,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "session" | "oauthAccount" | "user" | "document" | "documentVersion" | "discussion" | "comment" | "file"
+    modelProps: "session" | "oauthAccount" | "user" | "document" | "documentVersion" | "discussion" | "comment" | "file" | "editorToken"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1013,6 +1014,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    EditorToken: {
+      payload: Prisma.$EditorTokenPayload<ExtArgs>
+      fields: Prisma.EditorTokenFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EditorTokenFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EditorTokenPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EditorTokenFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EditorTokenPayload>
+        }
+        findFirst: {
+          args: Prisma.EditorTokenFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EditorTokenPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EditorTokenFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EditorTokenPayload>
+        }
+        findMany: {
+          args: Prisma.EditorTokenFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EditorTokenPayload>[]
+        }
+        create: {
+          args: Prisma.EditorTokenCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EditorTokenPayload>
+        }
+        createMany: {
+          args: Prisma.EditorTokenCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.EditorTokenCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EditorTokenPayload>[]
+        }
+        delete: {
+          args: Prisma.EditorTokenDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EditorTokenPayload>
+        }
+        update: {
+          args: Prisma.EditorTokenUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EditorTokenPayload>
+        }
+        deleteMany: {
+          args: Prisma.EditorTokenDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EditorTokenUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.EditorTokenUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EditorTokenPayload>[]
+        }
+        upsert: {
+          args: Prisma.EditorTokenUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EditorTokenPayload>
+        }
+        aggregate: {
+          args: Prisma.EditorTokenAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEditorToken>
+        }
+        groupBy: {
+          args: Prisma.EditorTokenGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EditorTokenGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EditorTokenCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EditorTokenCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1177,6 +1252,21 @@ export const FileScalarFieldEnum = {
 export type FileScalarFieldEnum = (typeof FileScalarFieldEnum)[keyof typeof FileScalarFieldEnum]
 
 
+export const EditorTokenScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  token: 'token',
+  documentPath: 'documentPath',
+  isActive: 'isActive',
+  expiresAt: 'expiresAt',
+  lastUsedAt: 'lastUsedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type EditorTokenScalarFieldEnum = (typeof EditorTokenScalarFieldEnum)[keyof typeof EditorTokenScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1308,6 +1398,16 @@ export const FileOrderByRelevanceFieldEnum = {
 } as const
 
 export type FileOrderByRelevanceFieldEnum = (typeof FileOrderByRelevanceFieldEnum)[keyof typeof FileOrderByRelevanceFieldEnum]
+
+
+export const EditorTokenOrderByRelevanceFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  token: 'token',
+  documentPath: 'documentPath'
+} as const
+
+export type EditorTokenOrderByRelevanceFieldEnum = (typeof EditorTokenOrderByRelevanceFieldEnum)[keyof typeof EditorTokenOrderByRelevanceFieldEnum]
 
 
 
@@ -1515,6 +1615,7 @@ export type GlobalOmitConfig = {
   discussion?: Prisma.DiscussionOmit
   comment?: Prisma.CommentOmit
   file?: Prisma.FileOmit
+  editorToken?: Prisma.EditorTokenOmit
 }
 
 /* Types for Logging */
